@@ -1,40 +1,43 @@
-<div [@routerTransition]>
-    <div class="row">
-        <div class="col-lg-3">
+<div [@routerTransition] style="overflow: hidden;">
+    <div class="row" style="margin-right:0px;">
+        <div class="col-lg-3" style="padding:0px;">
             <div class="card card-default mb-3">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-4 offset-md-2">
+                <div class="row" style="margin:0px;">
+                        <div class="col-md-4 offset-md-2 card-header" style="border-right: 1px solid black;">
                             <i class="fa fa-user-circle fa-fw"></i>
                         </div>
-                        <div class="col-md-2">
-                            <i class="fa fa-user-circle fa-fw"></i>
+                        <div class="col-md-2 card-header" style="border-right: 1px solid black;">
+                            <i class="fa fa-user-plus fa-fw"></i>
                         </div>
-                        <div class="col-md-2">
-                            <i class="fa fa-user-circle fa-fw"></i>
+                        <div class="col-md-2 card-header" style="border-right: 1px solid black;">
+                            <i class="fa fa-users fa-fw"></i>
                         </div>
-                        <div class="col-md-2">
-                            <i class="fa fa-user-circle fa-fw"></i>
+                        <div class="col-md-2 card-header">
+                            <i class="fa fa-bullhorn fa-fw"></i>
                         </div>
                     </div>
-                </div>
+                
                 <!-- /.card-header -->
                 <app-notification></app-notification>
                 <!-- /.card-body -->
             </div>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5"  style="padding:0px">
             <div class="card card-default">
-                <div class="card-header">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
-                </div>
+                <div class="row" style="margin:0px;">
+                    <div class="col-md-8 card-header" style="border-right: 1px solid black;">Black widow</div>
+                    <div class="col-md-1 card-header" style="border-right: 1px solid black;"><i class="fa fa-video-camera"></i></div>
+                    <div class="col-md-1 card-header" style="border-right: 1px solid black;"> <i class="fa fa-phone"></i></div>
+                    <div class="col-md-1 card-header" style="border-right: 1px solid black;"><i class="fa fa-desktop"></i></div>
+                    <div class="col-md-1 card-header"><i class="fa fa-times"></i></div>
+                    </div>
                 <!-- /.card-header -->
                 <app-timeline></app-timeline>
                 <!-- /.card-body -->
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-4" style="padding:1rem;">
             <app-chat></app-chat>
         </div>
     </div>
