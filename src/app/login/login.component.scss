@@ -1,4 +1,4 @@
-$topnav-background-color: #222;
+$topnav-background-color: rgb(59, 88, 102);
 :host {
     display: block;
 }
@@ -13,6 +13,7 @@ $topnav-background-color: #222;
     text-align: center;
     color: #fff;
     padding: 3em;
+
     .col-lg-4 {
         padding: 0;
     }
@@ -92,4 +93,38 @@ $topnav-background-color: #222;
         border-radius: 50%;
         border: 2px solid #fff;
     }
+}
+header {
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    // background-color: red;
+  }
+  #content {
+    width: 100%;
+    // background-color: rgb(221, 221, 221);
+    position: absolute;
+    top:70px;
+    bottom: 0px;
+    overflow: auto;
+  }
+  footer {
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+     background-color: #fff;
+     text-align: center;
+
+  }
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.style-links{
+    color: orange;
+    font-size: 14px;
 }
