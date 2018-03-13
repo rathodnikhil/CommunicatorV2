@@ -9,6 +9,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { DefaultChatComponent } from './default-chat/default-chat.component';
+import { DefaultMeetingComponent } from './default-meeting/default-meeting.component';
+
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -32,7 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
         }),
         AppRoutingModule
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent, DefaultChatComponent, DefaultMeetingComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })

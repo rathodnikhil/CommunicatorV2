@@ -1,8 +1,15 @@
+
+<header>
+        <img  src="assets/images/logo.jpg" width="350px" />
+      </header>
+      <section id="content" >
 <div class="login-page" [@routerTransition]>
     <div class="row justify-content-md-center">
         <div class="col-md-4">
-            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>SB Admin BS4 Angular5</h1>
+            <!-- <img src="assets/images/logo.png" width="150px" class="user-avatar" /> -->
+            <h4>SignUp to Coreflex Communicator</h4>
+            <p class="style-links">Start your Communication</p>
+            <p>________________________</p>
             <form role="form">
                 <div class="form-content">
                     <div class="form-group">
@@ -12,11 +19,22 @@
                     <div class="form-group">
                         <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
                     </div>
+                    <label class="checkbox" class="float-left">
+                            <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+                          </label>
+                          <a class="btn rounded-btn float-right"
+                           [routerLink]="['/dashboard']" (click)="onLoggedin()"> Log in </a>
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Log in </a>
+                <div class="float-left">
+                <span class="style-links">Don't Have An Account ? </span>
                 &nbsp;
-                <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
+                <a class="btn rounded-btn"  [routerLink]="['/signup']">Register</a>
+            </div>
             </form>
         </div>
     </div>
 </div>
+</section>
+<footer>
+        <a>@Coreflex Solutions Inc</a>
+        </footer>

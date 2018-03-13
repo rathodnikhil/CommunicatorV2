@@ -1,28 +1,42 @@
-<div class="login-page" [@routerTransition]>
-    <div class="row justify-content-md-center">
-        <div class="col-md-4">
-            <img class="user-avatar" src="assets/images/logo.png" width="150px" />
-            <h1>SB Admin BS4 Angular5</h1>
-            <form role="form">
-                <div class="form-content">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Full Name">
+
+<header>
+    <img  src="assets/images/logo.jpg" width="350px" />
+  </header>
+  <section id="content" >
+
+    <div class="login-page" [@routerTransition]>
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                <!-- <img  src="assets/images/logo.jpg" width="350px" /> -->
+                <h4>Create An Account</h4>
+                <p class="style-links">(Communication is Easy now)</p>
+            <p>___________________</p>
+                <form role="form">
+                    <div class="form-content">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-underline input-lg" id="" placeholder="Full Name">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password">
-                    </div>
-                </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']"> Register </a>&nbsp;
-                <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
-            </form>
+                    <a class="btn rounded-btn" [routerLink]="['/dashboard']"> Register </a>&nbsp;
+                    <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
+  </section>
+  <footer>
+  <a>@Coreflex Solutions Inc</a>
+  </footer>
