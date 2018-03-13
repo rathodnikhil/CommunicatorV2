@@ -1,5 +1,3 @@
-
-
 div.example input[type=text] {
     padding: 8px;
     font-size: 15px;
@@ -31,3 +29,13 @@ div.example::after {
     display: table;
 }
 
+.circle {
+    position: relative;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background: #83d125;
+    float: right;
+    right: 8px;
+    top: -2px;
+}
