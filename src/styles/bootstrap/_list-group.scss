@@ -9,6 +9,9 @@
   // No need to set list-style: none; since .list-group-item is block level
   padding-left: 0; // reset padding because ul and ol
   margin-bottom: 0;
+  a{
+      color:#dadadc;
+  }
 }
 
 
@@ -46,9 +49,14 @@
   padding: $list-group-item-padding-y $list-group-item-padding-x;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -$list-group-border-width;
-  background-color: $list-group-bg;
-  border: $list-group-border-width solid $list-group-border-color;
-
+//   background-color: $list-group-bg;
+//   border: $list-group-border-width solid $list-group-border-color;
+background: #1488CC;
+    background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);
+    background: linear-gradient(to right, #2B32B2, #1488CC);
+    span{
+        color:#dadadc;
+    }
   &:first-child {
     @include border-top-radius($list-group-border-radius);
   }
