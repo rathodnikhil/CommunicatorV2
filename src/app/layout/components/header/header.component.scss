@@ -105,7 +105,7 @@
         }
     }
     .sidebar-brand {
-        height: 65px;
+        height: auto;
         font-size: 20px;
         line-height: 44px;
     }
@@ -174,7 +174,7 @@
     .hamb-top,
     .hamb-middle,
     .hamb-bottom {
-        background-color: #1a1a1a;
+        background-color:#dadadc;;
     }
     .hamb-top {
         top: 2px;
@@ -251,7 +251,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(1, 45, 68,0.8);
+    // background-color: rgba(1, 45, 68,0.8);
+    background: #0575E6;
+    background: -webkit-linear-gradient(to right, #E12A2E, #0575E6);
+    background: linear-gradient(to right, #E12A2E, #0575E6);
+    opacity: 0.7;
     z-index: 101;
 }
 
