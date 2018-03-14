@@ -1,4 +1,4 @@
-<button type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-2': !isClosed}" (click)="hamburger_cross()">
+<button type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}" (click)="hamburger_cross()">
     <span class="hamb-top"></span>
     <span class="hamb-middle"></span>
     <span class="hamb-bottom"></span>
@@ -6,7 +6,7 @@
 <div class="overlay" [hidden]="isClosed"></div>
 
 <!-- Sidebar -->
-<nav class="navbar navbar-inverse navbar-fixed-top col-md-2" id="sidebar-wrapper" role="navigation" [ngStyle]="{'margin-left': !isClosed? '0%':'-100%'}">
+<nav class="navbar navbar-inverse navbar-fixed-top col-md-3" id="sidebar-wrapper" role="navigation" [ngStyle]="{'margin-left': !isClosed? '0%':'-100%'}">
     <ul class="nav sidebar-nav">
         <li class="sidebar-brand">
             <a href="#">
