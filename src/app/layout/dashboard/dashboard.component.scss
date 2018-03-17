@@ -1,10 +1,11 @@
 .userlist-header{
-    background: #1488CC;
-    background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);
-    background: linear-gradient(to right, #2B32B2, #1488CC);
-    color:#dadadc;
+    background: #187bd0;//#0044ce;//#1e9bc0;
+    // background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);
+    // background: linear-gradient(to right, #2B32B2, #1488CC);
+    color:#ffffff;
     border-right: 1px solid #dadadc;
     opacity: 0.85;
+    height:5vh;
     &:first-child{
         opacity: 1;
     }
