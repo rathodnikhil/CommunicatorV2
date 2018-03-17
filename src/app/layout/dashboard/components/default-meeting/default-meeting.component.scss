@@ -1,0 +1,269 @@
+.chat-panel {
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    .chat-dropdown {
+        margin-top: -3px;
+    }
+    .chat {
+        .left {
+            img {
+                margin-right: 15px;
+            }
+        }
+        .right {
+            img {
+                margin-left: 15px;
+            }
+        } // height: 75vh;
+        overflow-y: hidden;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            margin-bottom: 10px;
+            margin-right: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px dotted #999;
+        }
+    }
+    .card-footer {
+        input {
+            padding: 3px;
+        }
+    }
+}
+
+.div1 {
+    float: left;
+}
+
+.div2 {
+    float: right;
+}
+
+.style-links {
+    color: #d2cccc;
+    font-size: 12px;
+}
+
+.defaultMeetSelect {
+    background-color: #fff;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.date-period-select {
+    border-left: 2px solid #999;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 15%;
+}
+
+.align-center {
+    margin: auto;
+    width: 100%;
+}
+
+.align-center a {
+    color: #999;
+}
+
+#ex4 .p1[data-count]:after {
+    position: absolute;
+    right: 10%;
+    top: 8%;
+    content: attr(data-count);
+    font-size: 40%;
+    padding: .2em;
+    border-radius: 50%;
+    line-height: 1em;
+    color: white;
+    background: rgba(255, 0, 0, .85);
+    text-align: center;
+    min-width: 1em; //font-weight:bold;
+}
+
+.ul-meet {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    & li {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 4px;
+        padding-top: 18px;
+        border-top: 1px dotted #dce7eb;
+        & i {
+            position: absolute;
+            transform: translate(-6px, 0);
+            margin-top: 9px;
+            right: 0;
+            &:before,
+            &:after {
+                content: "";
+                position: absolute;
+                background-color: #000;
+                width: 3px;
+                height: 16px;
+            }
+            &:before {
+                transform: translate(2px, 0) rotate(45deg);
+            }
+            &:after {
+                transform: translate(2px, 0) rotate(-45deg);
+            }
+        }
+        & input[type=checkbox] {
+            position: absolute;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            &:checked~p {
+                margin-top: 0;
+                max-height: 0;
+                opacity: 0;
+                transform: translate(0, 50%);
+            }
+            &:checked~i:before {
+                margin-top: 9px;
+                height: 9px;
+                transform: translate(2px, 0) rotate(45deg);
+            }
+            &:checked~i:after {
+                margin-top: 9px;
+                height: 9px;
+                transform: translate(-2px, 0) rotate(-45deg);
+            }
+        }
+    }
+}
+
+#accordion {
+    width: 100%;
+    list-style: none;
+    padding-left: 0px;
+    li {
+        border: none;
+    }
+}
+
+#accordion li div.content {
+    display: none;
+    background: #f9f9f9;
+}
+
+#accordion li.active div.content {
+    display: inherit;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #e7e2e2;
+}
+
+.chat {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body {
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body {
+    margin-right: 60px;
+}
+
+.chat li .chat-body p {
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon,
+.chat .glyphicon {
+    margin-right: 5px;
+}
+
+.panel-body {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+.overall-padding {
+    padding: 20px;
+}
+
+.btndefault {
+    border: 1px solid gray;
+}
+
+.icon-wrapper {
+    position: relative;
+    float: left;
+}
+
+.badge {
+    background: rgba(86, 196, 216, 1);
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: -12px;
+    right: -2px;
+    padding: 5px;
+    color: #fff;
+}
+
+.card-body {
+    /* IE10+ */
+    background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* Opera */
+    background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #BDBDBD));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* W3C Markup */
+    background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #BDBDBD 100%);
+}
+
+.btn-cayn {
+    background: #57c4d8;
+    color:#fff;
+}
+.meetingHeader{
+    background:#848484;
+    color:#FFFFFF;
+    border-radius:5px 5px 0px 0px;
+}
+
+
