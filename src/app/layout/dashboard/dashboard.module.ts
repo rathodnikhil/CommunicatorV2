@@ -11,6 +11,7 @@ import {
 } from './components';
 import { StatModule } from '../../shared';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
+import { DefaultMeetingComponent } from './components/default-meeting/default-meeting.component';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { DefaultChatComponent } from './components/default-chat/default-chat.com
         TimelineComponent,
         NotificationComponent,
         ChatComponent,
-        DefaultChatComponent
+        DefaultChatComponent,
+        DefaultMeetingComponent
     ]
 })
 export class DashboardModule {}
