@@ -12,6 +12,7 @@ import {
 import { StatModule } from '../../shared';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
 import { DefaultMeetingComponent } from './components/default-meeting/default-meeting.component';
+import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule-meeting.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { DefaultMeetingComponent } from './components/default-meeting/default-me
         NotificationComponent,
         ChatComponent,
         DefaultChatComponent,
-        DefaultMeetingComponent
+        DefaultMeetingComponent,
+        ScheduleMeetingComponent
     ]
 })
 export class DashboardModule {}

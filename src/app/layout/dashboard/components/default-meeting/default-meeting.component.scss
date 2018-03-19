@@ -265,5 +265,16 @@
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
 }
-
-
+.btn.btn-secondary {
+    background:  #57c4d8;
+    /* color: #187bd0; */
+    border-color:  #40a4b6;
+    border-radius: 0px 5px 5px 0px;
+}
+.form-control {
+    border-radius: 5px 0px 0px 5px;
+}
+.hr-partition{
+    border-top: 2px dotted #848484;
+    width: 100%;
+}
