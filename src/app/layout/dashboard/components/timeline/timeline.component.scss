@@ -125,11 +125,15 @@
 .timeline-title {
     margin-top: 0;
     color: inherit;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
 }
 
 .timeline-body > p,
 .timeline-body > ul {
     margin-bottom: 0;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
 }
 
 .timeline-body > p + p {
@@ -171,5 +175,15 @@
         border-left-width: 0;
     }
 }
-
-
+#view-profile{
+    font-size: 12px; cursor: pointer;text-decoration: underline; color:#187bd0;
+}
+#timeline-icon{
+    border-right: 1px solid black;
+}
+.send-box{
+    border-radius: 5px;margin:10px;
+}
+a{
+    cursor: pointer;
+}
