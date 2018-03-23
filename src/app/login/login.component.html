@@ -1,45 +1,47 @@
+<header>
+    <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid"  style="height:5rem;"/>
+</header>
+<section id="content">
+    <div class="login-page" [@routerTransition]>
 
-<header >
-        <img src="assets/images/logo.jpg" width="350px" />
-        </header>
-        <section id="content" >
-   <div class="login-page" [@routerTransition]>
+        <h4 class="welcome text-center">Welcome to Coreflex Communicator</h4>
+        <p class="style-links">Communication is Easy</p>
+        <p>_______________________</p>
+        <div class="card card-container">
+            <h2 class='login_title text-center'>Login</h2>
+            <hr>
+            <form class="form-signin">
 
-                  <h4 class="welcome text-center">Welcome to Coreflex Communicator</h4>
-                  <p class="style-links">Communication is Easy</p>
-                  <p>_______________________</p>
-                      <div class="card card-container">
-                      <h2 class='login_title text-center'>Login</h2>
-                      <hr>
-                          <form class="form-signin">
-
-                                          <div class="row">
-                                                <div class="col-md-3">
-                                                        <p class="input_title">Username</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                        <input type="text" id="inputPassword" class="login_box" placeholder="Enter Username" required>
-                                                </div>
-                                              </div>
-                                <div class="row">
-                                        <div class="col-md-3">
-                                                <p class="input_title">Password</p>
-                                        </div>
-                                        <div class="col-md-9">
-                                                <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
-                                        </div>
-                                      </div>
-
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="input_title">Username</p>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" id="inputPassword" class="login_box" placeholder="Enter Username" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="input_title">Password</p>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
+                    </div>
+                </div>
 
 
-                              <a class="btn rounded-btn"  [routerLink]="['/signup']">Register</a>
-                      <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
-                          </form><!-- /form -->
-                      </div><!-- /card-container -->
-                  </div><!-- /container -->
+
+                <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
+                <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
+            </form>
+            <!-- /form -->
+        </div>
+        <!-- /card-container -->
+    </div>
+    <!-- /container -->
 
 
-  </section>
-  <footer>
-          <a>@Coreflex Solutions Inc</a>
-          </footer>
+</section>
+<footer>
+    <a>@Coreflex Solutions Inc</a>
+</footer>

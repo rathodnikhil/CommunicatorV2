@@ -47,7 +47,7 @@
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    background: #006599;
+    background: radial-gradient(at center center, rgb(6, 86, 201) -144%, rgb(87, 196, 216) 100%);
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -75,7 +75,7 @@
     list-style: none;
     li {
         position: relative;
-        line-height: 20px;
+        line-height: 2rem;
         display: inline-block;
         width: 100%;
         :first-child a {
@@ -84,7 +84,7 @@
         }
         a {
             display: block;
-            color: #ddd;
+            color: #fff;
             text-decoration: none;
             padding: 10px 15px 10px 30px;
             &:hover,
@@ -103,11 +103,24 @@
             -ms-transition: width .2s ease-in;
             transition: width .2s ease-in;
         }
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #848484;
+        }
     }
     .sidebar-brand {
         height: auto;
         font-size: 20px;
         line-height: 44px;
+        background: #fff;
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: #fff;
+        }
     }
 }
 
@@ -120,7 +133,7 @@
 .hamburger {
     position: fixed;
     top: 15px;
-    left:5px;
+    left: 5px;
     z-index: 999;
     display: block;
     width: 22px;
@@ -174,7 +187,8 @@
     .hamb-top,
     .hamb-middle,
     .hamb-bottom {
-        background-color:#dadadc;;
+        background-color: #dadadc;
+        ;
     }
     .hamb-top {
         top: 2px;
@@ -237,6 +251,7 @@
         -webkit-transition: all .35s ease-in-out;
     }
 }
+
 /*-------------------------------*/
 
 /*            Overlay            */
@@ -250,12 +265,11 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    // background-color: rgba(1, 45, 68,0.8);
-    background: #0575E6;
-    background: -webkit-linear-gradient(to right, #E12A2E, #0575E6);
-    background: linear-gradient(to right, #E12A2E, #0575E6);
-    opacity: 0.7;
+    bottom: 0; // background-color: rgba(1, 45, 68,0.8);
+    background: #000000;
+    // background: -webkit-linear-gradient(to left, #57c4d8, #0575E6);
+    // background: linear-gradient(to left, #57c4d8, #0575E6);
+    opacity: 0.8;
     z-index: 101;
 }
 

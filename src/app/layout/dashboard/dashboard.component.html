@@ -1,7 +1,7 @@
 <div [@routerTransition] style="overflow: hidden;">
     <div class="row" style="margin-right:0px;">
         <div class="col-lg-3" style="padding:0px;">
-            <div class="card card-default mb-3">
+            <div class="card card-default">
                 <div class="row" style="margin:0px;">
                     <div class="col-md-6 card-header userlist-header" style="text-align: center;">
                         <i class="fa fa-user-circle fa-fw"></i>
@@ -23,7 +23,8 @@
             </div>
         </div>
         <div class="col-lg-5" style="padding:0px">
-            <div class="card card-default">
+                <router-outlet></router-outlet>
+            <!-- <div class="card card-default">
                 <div class="row" style="margin:0px;">
                     <div class="col-md-8 card-header" style="border-right: 1px solid black;">Black widow</div>
                     <div class="col-md-1 card-header" style="border-right: 1px solid black;">
@@ -39,14 +40,16 @@
                         <i class="fa fa-times"></i>
                     </div>
                 </div>
-                <!-- /.card-header -->
+
                 <app-timeline></app-timeline>
-                <!-- /.card-body -->
-            </div>
+
+            </div> -->
         </div>
 
         <div class="col-lg-4" style="padding:1rem;">
-            <app-chat></app-chat>
+            <!-- <app-default-meeting></app-default-meeting> -->
+            <!-- <app-chat></app-chat> -->
+            <app-schedule-meeting></app-schedule-meeting>
         </div>
     </div>
 </div>
