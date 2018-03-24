@@ -17,7 +17,7 @@
                         <p class="input_title">Username</p>
                     </div>
                     <div class="col-md-9">
-                        <input type="text" id="inputPassword" class="login_box" placeholder="Enter Username" required>
+                        <input type="text" id="inputUserName" class="login_box" placeholder="Enter Username" required>
                     </div>
                 </div>
                 <div class="row">
@@ -32,7 +32,7 @@
 
 
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
-                <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
+                <a class="btn rounded-btn" ng-click="onLoggedin()"> Log in </a>
             </form>
             <!-- /form -->
         </div>
