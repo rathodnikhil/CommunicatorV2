@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-schedule-meeting',
@@ -6,8 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule-meeting.component.scss']
 })
 export class ScheduleMeetingComponent implements OnInit {
+    @Output() CurrentRoute = new EventEmitter();
+    meeting: any = {
+        meridianTime : {hour: 13, minute: 30},
+        meridian : true,
+        datePicker: {}
+    };
 
-    isActive = false;
     ngOnInit() {
     }
+    switchRoute() {
+        this.CurrentRoute.emit(0);
+      }
 }
