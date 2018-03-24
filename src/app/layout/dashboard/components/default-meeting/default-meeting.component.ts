@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-default-meeting',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./default-meeting.component.scss']
 })
 export class DefaultMeetingComponent implements OnInit {
-    isActive = false;
+   @Output() CurrentRoute = new EventEmitter();
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {}
+  switchRoute() {
+    this.CurrentRoute.emit(1);
   }
 
 }
