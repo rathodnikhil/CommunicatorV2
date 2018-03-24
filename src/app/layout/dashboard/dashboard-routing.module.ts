@@ -11,7 +11,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'default' },
             { path: 'default', component: DefaultChatComponent },
-            { path: 'chat', component: TimelineComponent },
+            { path: 'chat/:id', component: TimelineComponent },
         ]
     }
 ];
