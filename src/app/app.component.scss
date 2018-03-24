@@ -6,6 +6,7 @@
     top: 0;
     overflow-x: hidden;
     padding-top: 20px;
+
 }
 .split-tab {
     height: 100%;
@@ -15,6 +16,7 @@
     top: 0;
     overflow-x: hidden;
     padding-top: 20px;
+
 }
 .left {
     left: 0;
@@ -44,11 +46,6 @@
 	clear: both;
 }
 
-body {
-	font-family: sans-serif;
-	background: #f6f9fa;
-}
-
 h1 {
 	color: #ccc;
 	text-align: center;
@@ -63,13 +60,12 @@ a {
 /*Fun begins*/
 .tab_container {
 	width: 90%;
-	margin: 0 auto;
+    margin: 0 auto;
     position: relative;
 }
 
 input, section {
   clear: both;
-  padding-top: 10px;
   display: none;
 }
 
@@ -80,7 +76,6 @@ label {
   float: left;
   width: 33%;
   padding: 1.5em;
-  color: #757575;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
@@ -94,9 +89,8 @@ label {
 #tab5:checked ~ #content5 {
   display: block;
   background: #fff;
-  color: #999;
-  border: 2px solid #dddddd;
-  border-radius: 7px;
+  border: 1px solid rgb(219, 216, 216);
+  border-radius: 5px;
     padding:5px;
 }
 
@@ -143,7 +137,7 @@ label .fa {
 
 .no_wrap {
   text-align:center;
-  color: #0ce;
+  color:#57c4d8;
 }
 .link {
   text-align:center;
@@ -161,7 +155,7 @@ li:nth-child(odd) {
     padding:5px;
 }
 li:nth-child(even) {
-   border:2px solid #dddd;
+   border:1px solid #848484;
    border-radius:6px;
     margin: 10px;
     padding:5px;
@@ -170,6 +164,8 @@ li:nth-child(even) {
 li {
   padding: 10p  x;
   overflow: auto;
+  font-size: 14px;
+  font-family: 'Times New Roman', Times, serif;
 }
 .meetingHeader{
     background:#57c4d8;
@@ -207,3 +203,49 @@ li {
   height:80%;
   border-radius: 5px;
 }
+.page {
+    height: 100%; /* needed for proper layout */
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-header {
+    flex: 0 0 auto;
+   border : 1px solid gray;
+   border-radius :5px;
+   margin:5px;
+   height: 70%;
+  }
+
+  .page-content {
+    flex: 1 1 auto;
+    position: relative;/* need this to position inner content */
+    padding-left:15px;
+  }
+
+  .page-footer {
+    flex: 0 0 auto;
+    background-color: #dcdcdc;
+    margin:5px;
+    height: 6%;
+  }
+  .container {
+    position: relative;
+}
+
+.topleft {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-size: 18px;
+}
+.btn-select{
+    background: #dcdcdc;
+    border:1px solid #848484;
+    border-radius: 5px;
+}
+
+

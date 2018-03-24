@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
+import { ScheduleMeetingComponent } from 'app/layout/dashboard/components/schedule-meeting/schedule-meeting.component';
 
 const routes: Routes = [
     {
@@ -11,7 +12,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'default' },
             { path: 'default', component: DefaultChatComponent },
-            { path: 'chat/:id', component: TimelineComponent },
+            { path: 'chat', component: TimelineComponent },
+            { path: 'schedule-meeting', component: ScheduleMeetingComponent },
         ]
     }
 ];
