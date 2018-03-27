@@ -23,15 +23,14 @@
             </div>
         </div>
         <div class="col-lg-5" style="padding:0px">
-                <router-outlet></router-outlet>
+            <router-outlet></router-outlet>
         </div>
 
         <div class="col-lg-4" style="padding:1rem;">
-
-             <app-default-meeting></app-default-meeting>
-              <router-outlet></router-outlet>
-            <!-- <app-chat></app-chat> -->
-            <!-- <app-schedule-meeting></app-schedule-meeting> -->
+            <div [ngSwitch]="currentRoute">
+                <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
+                <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
+            </div>
         </div>
     </div>
 </div>

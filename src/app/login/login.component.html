@@ -1,5 +1,5 @@
 <header>
-    <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid"  style="height:5rem;"/>
+    <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
 </header>
 <section id="content">
     <div class="login-page" [@routerTransition]>
@@ -32,7 +32,7 @@
 
 
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
-                <a class="btn rounded-btn" ng-click="onLoggedin()"> Log in </a>
+                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Log in </a>
             </form>
             <!-- /form -->
         </div>

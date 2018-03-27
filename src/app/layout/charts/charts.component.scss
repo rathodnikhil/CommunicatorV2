@@ -1,0 +1,45 @@
+
+.style-links {
+    color: #d2cccc;
+    font-size: 12px;
+}
+
+.defaultMeetSelect {
+    background-color: #fff;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-body {
+    /* IE10+ */
+    background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* Mozilla Firefox */
+    background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* Opera */
+    background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #BDBDBD));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    /* W3C Markup */
+    background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #BDBDBD 100%);
+}
+
+.btn-cayn {
+    background: #57c4d8;
+    color:#fff;
+}
+.meetingHeader{
+    background:#848484;
+    color:#FFFFFF;
+    border-radius:5px 5px 0px 0px;
+}
+.btn.btn-secondary {
+    background:  #57c4d8;
+    /* color: #187bd0; */
+    border-color:  #40a4b6;
+    border-radius: 0px 5px 5px 0px;
+}
+.form-control {
+    border-radius: 5px 0px 0px 5px;
+}

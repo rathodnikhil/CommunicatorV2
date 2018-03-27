@@ -1,16 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Output , EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
 @Component({
-    selector: 'app-modal',
-    templateUrl: './modal.component.html',
-    styleUrls: ['./modal.component.scss']
+  selector: 'app-custom-modal',
+  templateUrl: './custom-modal.component.html',
+  styleUrls: ['./custom-modal.component.scss']
 })
-export class ModalComponent {
+export class CustomModalComponent implements OnInit {
     closeResult: string;
-
     constructor(private modalService: NgbModal) { }
-
     open(content) {
         this.modalService.open(content).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
@@ -28,4 +25,8 @@ export class ModalComponent {
             return  `with: ${reason}`;
         }
     }
+
+  ngOnInit() {
+  }
+
 }
