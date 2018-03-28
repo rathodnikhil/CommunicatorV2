@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbCarouselModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -13,14 +13,24 @@ import { StatModule } from '../../shared';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
 import { DefaultMeetingComponent } from './components/default-meeting/default-meeting.component';
 import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule-meeting.component';
+import { ChartsModule } from '../charts/charts.module';
+import { BsComponentModule } from '../bs-component/bs-component.module';
+import { MeetingVideoCallComponent } from './components/meeting-video-call/meeting-video-call.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
 
 @NgModule({
     imports: [
+        // BrowserModule,
+        FormsModule,
         CommonModule,
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
-        StatModule
+        StatModule,
+        BsComponentModule,
+        NgbModule.forRoot()
     ],
     declarations: [
         DashboardComponent,
@@ -29,7 +39,9 @@ import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule
         ChatComponent,
         DefaultChatComponent,
         DefaultMeetingComponent,
-        ScheduleMeetingComponent
+        ScheduleMeetingComponent,
+        MeetingVideoCallComponent,
+        CustomModalComponent
     ]
 })
 export class DashboardModule {}

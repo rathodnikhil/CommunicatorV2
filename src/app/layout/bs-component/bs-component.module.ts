@@ -46,6 +46,9 @@ import { PageHeaderModule } from '../../shared';
         RatingComponent,
         TooltipComponent,
         TimepickerComponent
+    ],
+    exports: [
+        BsComponentComponent
     ]
 })
 export class BsComponentModule {}

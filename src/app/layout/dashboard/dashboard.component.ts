@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,EventEmitter} from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { Output } from '@angular/core/src/metadata/directives';
+import { AlertComponent } from 'app/layout/bs-component/components';
 
 @Component({
     selector: 'app-dashboard',
@@ -10,6 +12,7 @@ import { routerTransition } from '../../router.animations';
 export class DashboardComponent implements OnInit {
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
+    currentRoute: number = 0;
 
     constructor() {
         this.sliders.push(
@@ -58,4 +61,10 @@ export class DashboardComponent implements OnInit {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
     }
+    switchRoute(newRoute) {
+        this.currentRoute = newRoute;
+    }
+    openModal(showModal: boolean) {
+       // alert('d');
+      }
 }
