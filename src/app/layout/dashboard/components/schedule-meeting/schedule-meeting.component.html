@@ -126,46 +126,33 @@
                                 <label>Subject</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="descField" placeholder="Your Comments" />
+                                <input type="text" class="form-control" id="descField" placeholder="Meeting Subject" />
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>Date</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="card-header">
-                                    <div class="align-center">
-                                        <a class="date-period-first">Today</a>
-                                        <a class="date-period-select">Tomorrow</a>
-                                        <a class="date-period-select">Select Date</a>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group datepicker-input">
-                                            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
-                                            <button class="input-group-addon" (click)="d.toggle()" type="button">
-                                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                                <span class="fa fa-calendar"></span>
-                                            </button>
-                                        </div>
-                                    </div>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-4">
+                                        <div class="form-group">
+                                                <div class="input-group datepicker-input">
+                                                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
+                                                    <button class="input-group-addon" (click)="d.toggle()" type="button">
+                                                        <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                                        <span class="fa fa-calendar"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>Start Time</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <ngb-timepicker [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>End Time</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input id="endTime" class="form-control" type="datetime-local" name="partydate" value="2017-06-01T08:30">
+                                <div class="col-md-4">
+                                        <ngb-timepicker [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
+                                </div>
+                                <div>
+                                        <div ngbDropdown class="d-inline-block dropdown">
+                                                <button class="btn btn-outline-primary" ngbDropdownToggle>Select Duration</button>
+                                                <div ngbDropdownMenu>
+                                                    <button  *ngFor="let duration of durationArray" class="dropdown-item">{{duration}}</button>
+                                                </div>
+                                            </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -201,6 +188,7 @@
                             <div class="col-sm-9">
                             <a href="mailto:?subject=Schedule meeting" class="btn btn-secondary btn-border-radius">Schedule Meeting & Send Invitation</a>
                             </div>
+                            <button class="btn btn-primary" (click)="childModal.open(childModal)">Large modal</button>
                         </div>
                     </form>
                 </div>
