@@ -19,6 +19,7 @@ import { MeetingVideoCallComponent } from './components/meeting-video-call/meeti
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
+import { SeachMemberPipe } from './components/notification/seach-member.pipe';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { CustomModalComponent } from './components/custom-modal/custom-modal.com
         DefaultMeetingComponent,
         ScheduleMeetingComponent,
         MeetingVideoCallComponent,
-        CustomModalComponent
+        CustomModalComponent,
+        SeachMemberPipe
     ]
 })
 export class DashboardModule {}

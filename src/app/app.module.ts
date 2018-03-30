@@ -9,7 +9,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
-
+// import { SeachMemberPipe} from './../../src/app/layout/dashboard/components/notification/seach-member.pipe';
 
 
 
@@ -35,7 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
         }),
         AppRoutingModule
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent], // , SeachMemberPipe
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
