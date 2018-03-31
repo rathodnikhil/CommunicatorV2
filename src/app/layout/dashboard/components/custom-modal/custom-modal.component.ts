@@ -1,20 +1,26 @@
-import { Component, OnInit, Output , EventEmitter , ViewChild} from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Output, EventEmitter, ViewChild, Input } from '@angular/core';
+import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-custom-modal',
   templateUrl: './custom-modal.component.html',
   styleUrls: ['./custom-modal.component.scss']
 })
-export class CustomModalComponent implements OnInit {
+export class CustomModalComponent {
     closeResult: string;
-
-  @ViewChild('childModal') public childModal: NgbModal;
+    @ViewChild('content') public content2: NgbActiveModal;
+    @Input() model: CustomModalModel;
+    @Output() Button1Event = new EventEmitter();
+    @Output() Button2Event = new EventEmitter();
+    @Output() CancelEvent = new EventEmitter();
     constructor(private modalService: NgbModal) { }
-    open(childModal) {
-        this.modalService.open(childModal).result.then((result) => {
+
+    open() {
+        // debugger;
+        this.modalService.open(this.content2).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            this.CancelEvent.emit(reason);
         });
     }
 
@@ -27,8 +33,17 @@ export class CustomModalComponent implements OnInit {
             return  `with: ${reason}`;
         }
     }
-
-  ngOnInit() {
-  }
-
+    button1Click(e) {
+        this.Button1Event.emit(e);
+    }
+    button2Click(e) {
+        this.Button2Event.emit(e);
+    }
+}
+export class CustomModalModel {
+    title: string;
+    smallHeading: string;
+    body: string;
+    Button1Content: string;
+    Button2Content: string;
 }
