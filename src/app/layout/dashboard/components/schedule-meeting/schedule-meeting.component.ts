@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
-import { CustomModalComponent } from '../custom-modal/custom-modal.component';
-
+import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-schedule-meeting',
   templateUrl: './schedule-meeting.component.html',
@@ -8,7 +8,14 @@ import { CustomModalComponent } from '../custom-modal/custom-modal.component';
 })
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
-    @ViewChild('childModal') childModal: CustomModalComponent;
+    @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
+    InviteAttendees: CustomModalModel = {
+        title: 'Invite Attendees',
+        smallHeading: 'Copy and paste to your calendar or share with your attendees',
+        body: '<div style="text-align: center; font-weight: bold;">custom</div>',
+        Button1Content: '<i class="fa fa-envelope"></i> Outlook',
+        Button2Content: '<i class="fa fa-copy"></i> Copy'
+    };
     meeting: any = {
         meridianTime : {hour: 13, minute: 30},
         meridian : true,
@@ -56,6 +63,21 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
+      }
+      open() {
+        //   debugger;
+          this.inviteAttendeesModal.open();
+      }
+      copyToOutLook(event) {
+        const a = document.createElement('a');
+        a.href = 'mailto:?subject=Schedule meeting';
+        document.body.appendChild(a);
+        // start download
+        a.click();
+        document.body.removeChild(a);
+      }
+      copytoClipBoard(event) {
+
       }
 }
 
