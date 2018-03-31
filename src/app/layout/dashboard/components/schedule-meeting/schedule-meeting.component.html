@@ -143,7 +143,7 @@
                                             </div>
                                 </div>
                                 <div class="col-md-4">
-                                        <ngb-timepicker [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
+                                        <ngb-timepicker [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian" name="timer"></ngb-timepicker>
                                 </div>
                                 <div>
                                         <div ngbDropdown class="d-inline-block dropdown">
@@ -186,9 +186,12 @@
 
                             </div>
                             <div class="col-sm-9">
-                            <a href="mailto:?subject=Schedule meeting" class="btn btn-secondary btn-border-radius">Schedule Meeting & Send Invitation</a>
+                            <a  class="btn btn-secondary btn-border-radius" (click)="open()">Schedule Meeting & Send Invitation</a>
+                            <!-- href="webcal:calendar.example.com" -->
+                            <!-- href="mailto:?subject=Schedule meeting" -->
                             </div>
-                            <button class="btn btn-primary" (click)="childModal.open(childModal)">Large modal</button>
+                            <!-- <button class="btn btn-primary">Large modal</button> -->
+                            <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="copyToOutLook($event)" (Button2Event)="copytoClipBoard($event)"></app-custom-modal>
                         </div>
                     </form>
                 </div>

@@ -1,15 +1,24 @@
-
-<ng-template #childModal let-c="close" let-d="dismiss">
-        <div class="modal-header">
-            <h4 class="modal-title">Modal title</h4>
-            <button type="button" class="close" aria-label="Close" (click)="hide()">
-                <span aria-hidden="true">&times;</span>
-            </button>
+<!-- <button class="btn btn-primary" (click)="open(content)">Large modal</button> -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header popHeaderMeeting">
+        <div class="popHeaderMeeting">
+            <span>
+                <h4 class="modal-title" style="font-size: 22px; color: #757575;">
+                    {{model.title}}</h4>
+            </span>
+            <p style="font-size: 12px; color: #757575;" *ngIf="model.smallHeading">{{model.smallHeading}}</p>
         </div>
-        <div class="modal-body">
-            <p>One fine body&hellip;</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="hide()">Close</button>
-        </div>
-    </ng-template>
+        <!-- <h4 class="modal-title"></h4> -->
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div [innerHTML]="model.body"></div>
+    </div>
+    <div class="modal-footer" style="background-color: #EEEEEE;">
+            <button type="button" class="btn btn-secondary" [innerHTML]="model.Button1Content" (click)="button1Click()"></button>
+            <button type="button" class="btn btn-secondary" [innerHTML]="model.Button2Content" *ngIf="model.Button2Content" (click)="button2Click()"></button>
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')" *ngIf="!model.Button2Content">Close</button>
+    </div>
+</ng-template>
