@@ -1,87 +1,3 @@
-<!-- <div class="chat-panel card card-default">
-    <div class="card-header row">
-            <div class="col-md-9">
-                   <h5>Schedule New Meeting</h5>
-                <h6 class="style-links">19 March 2018</h6></div>
-            <div class="col-md-3"><button class="btn btn-danger">Cancel</button></div>
-        </div>
-            <div class="container overall-padding">
-                <form>
-                    <div class="row form-group">
-                      <div class="col-sm-3">
-                   <label>Subject</label>
-                      </div>
-                      <div class="col-sm-9">
-                            <input type="text" class="form-control" id="descField" placeholder="Your Comments"/>
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                            <div class="col-sm-3">
-                         <label>Date</label>
-                            </div>
-                            <div class="col-sm-9">
-                                    <div class="card-header">
-                                            <div class="align-center">
-                                              <a>Today</a>
-                                              <a class="date-period-select">Tomorrow</a>
-                                              <a class="date-period-select">Select Date</a>
-                                           </div>
-                                       </div>
-                            </div>
-                          </div>
-                          <div class="row form-group">
-                                <div class="col-sm-3">
-                             <label>Start Time</label>
-                                </div>
-                                <div class="col-sm-9">
-                                        <input id="party" class="form-control" type="datetime-local" name="partydate" value="2017-06-01T08:30">
-                                </div>
-                              </div>
-                              <div class="row form-group">
-                                    <div class="col-sm-3">
-                                 <label>End Time</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                            <input id="endTime" class="form-control" type="datetime-local" name="partydate" value="2017-06-01T08:30">
-                                    </div>
-                                  </div>
-                                  <div class="row form-group">
-                                        <div class="col-sm-3">
-                                     <label>Recurring</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                                        <a class="btn btndefault">Yes</a>
-                                                       <a class="btn btn-secondary">No</a>
-                                        </div>
-                                        <div class="col-sm-2">
-                                                <label>Type</label>
-                                                   </div>
-                                                   <div class="col-sm-4">
-                                                        <a class="btn btndefault">Audio</a>
-                                                       <a class="btn btn-secondary">Video</a>
-                                                 </div>
-                                      </div>
-                                      <div class="row form-group">
-                                            <div class="col-sm-3">
-                                         <label>MOM</label>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                 <p>By default mom duty is with you.<br>
-                                                    you can transfer MOM duty during the call
-                                                </p>
-                                            </div>
-                                          </div>
-                                          <div class="row form-group">
-                                                <div class="col-sm-3">
-
-                                                </div>
-                                                <div class="col-sm-9">
-                                                        <button class="btn btn-primary">Schedule Meeting & Send Invitation</button>
-                                                </div>
-                                              </div>
-                        </form>
-                  </div>
-</div> -->
 <div class="chat-panel card card-default">
     <div class="card-header meetingHeader">
         <div class="row">
@@ -95,11 +11,11 @@
             </div>
         </div>
     </div>
-    <div class="card-header row defaultMeetSelect">
+    <!-- <div class="card-header row defaultMeetSelect">
         <h6 class="align-center">Schedule New Meeting</h6>
-    </div>
+    </div> -->
     <div class="card-header">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6">
                 <i class="fa fa-calendar"></i>
                 19th March 2018
@@ -115,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <hr class="hr-partition" />
+        <hr class="hr-partition" />-->
         <div class="row">
             <div class="card-body" style="height:74vh;">
                 <div class="container overall-padding">
@@ -129,29 +45,46 @@
                                 <input type="text" class="form-control" id="descField" placeholder="Meeting Subject" />
                             </div>
                         </div>
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-4">
-                                        <div class="form-group">
-                                                <div class="input-group datepicker-input">
-                                                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
-                                                    <button class="input-group-addon" (click)="d.toggle()" type="button">
-                                                        <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                                        <span class="fa fa-calendar"></span>
-                                                    </button>
-                                                </div>
-                                            </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label>Date</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="input-group datepicker-input">
+                                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
+                                    <button class="input-group-addon" (click)="d.toggle()" type="button">
+                                        <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                        <span class="fa fa-calendar"></span>
+                                    </button>
                                 </div>
-                                <div class="col-md-4">
-                                        <ngb-timepicker [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian" name="timer"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Time</label>
+                            </div>
+                            <div class="col-md-4">
+                                <ngb-timepicker [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
+                            </div>
+                            <div class="col-md-5">
+                                <div ngbDropdown class="d-inline-block dropdown">
+                                    <button class="btn btn-outline-primary" ngbDropdownToggle>Select Duration</button>
+                                    <div ngbDropdownMenu>
+                                        <button *ngFor="let duration of durationArray" class="dropdown-item">{{duration}}</button>
+                                    </div>
                                 </div>
-                                <div>
-                                        <div ngbDropdown class="d-inline-block dropdown">
-                                                <button class="btn btn-outline-primary" ngbDropdownToggle>Select Duration</button>
-                                                <div ngbDropdownMenu>
-                                                    <button  *ngFor="let duration of durationArray" class="dropdown-item">{{duration}}</button>
-                                                </div>
-                                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Timezone</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div ngbDropdown class="d-inline-block dropdown">
+                                    <button class="btn btn-outline-primary" ngbDropdownToggle>Select Duration</button>
+                                    <div ngbDropdownMenu>
+                                        <button *ngFor="let timezone of timeZoneArray" class="dropdown-item">{{timezone}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -186,9 +119,9 @@
 
                             </div>
                             <div class="col-sm-9">
-                            <a  class="btn btn-secondary btn-border-radius" (click)="open()">Schedule Meeting & Send Invitation</a>
-                            <!-- href="webcal:calendar.example.com" -->
-                            <!-- href="mailto:?subject=Schedule meeting" -->
+                                <a class="btn btn-secondary btn-border-radius" (click)="open()">Schedule Meeting & Send Invitation</a>
+                                <!-- href="webcal:calendar.example.com" -->
+                                <!-- href="mailto:?subject=Schedule meeting" -->
                             </div>
                             <!-- <button class="btn btn-primary">Large modal</button> -->
                             <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="copyToOutLook($event)" (Button2Event)="copytoClipBoard($event)"></app-custom-modal>
