@@ -23,7 +23,7 @@ import { SeachMemberPipe } from './components/notification/seach-member.pipe';
 
 @NgModule({
     imports: [
-        BrowserModule,
+        //BrowserModule,
         FormsModule,
         CommonModule,
         NgbCarouselModule.forRoot(),
