@@ -45,7 +45,19 @@
                                                 <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
                                         </div>
                                       </div>
-
+                                      <div class="row">
+                                        <div class="col-md-3">
+                                                <p class="input_title">Team</p>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div ngbDropdown class="d-inline-block dropdown">
+                                                <button class="btn btn-outline-primary" ngbDropdownToggle>Select team</button>
+                                                <div ngbDropdownMenu>
+                                                    <button *ngFor="let team of teamArray" class="dropdown-item">{{team}}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      </div>
                                       <div class="row">
                                             <div class="col-md-3">
                                                     <p class="input_title">Confirm</p>

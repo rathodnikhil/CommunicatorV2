@@ -8,6 +8,7 @@ import { routerTransition } from '../router.animations';
     animations: [routerTransition()]
 })
 export class SignupComponent implements OnInit {
+    teamArray = ['15 Min' , 'Team Two' , 'team Three' ];
     constructor() {}
 
     ngOnInit() {}
