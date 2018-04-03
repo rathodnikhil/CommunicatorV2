@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 // import { SeachMemberPipe} from './../../src/app/layout/dashboard/components/notification/seach-member.pipe';
+import { LoginService } from './services/login.service';
+import { HttpModule } from '@angular/http';
 
 
 
@@ -25,6 +27,7 @@ export function createTranslateLoader(http: HttpClient) {
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
+        HttpModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {
@@ -36,7 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule
     ],
     declarations: [AppComponent], // , SeachMemberPipe
-    providers: [AuthGuard],
+    providers: [AuthGuard, LoginService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
