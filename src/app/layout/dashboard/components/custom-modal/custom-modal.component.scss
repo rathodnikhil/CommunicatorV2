@@ -1,4 +1,24 @@
 .popHeaderMeeting {
 	padding: 10px;
-	background-color: #EEEEEE;
+    background-color: #EEEEEE;
+    border-bottom : 1px solid #848484;
+}
+.popHeaderMeeting p{
+    font-size: 12px; color: #5a5656;
+}
+.btn.btn-secondary {
+    background:  #57c4d8;
+    /* color: #187bd0; */
+    border-color:  #40a4b6;
+    border-radius: 0px 5px 5px 0px;
+}
+.btn.btn-secondary.btn-border-radius{
+    border-radius: 5px;
+}
+.popFooter{
+background-color: #EEEEEE; border-top:1px solid #848484;
+}
+
+.popTitle{
+font-size: 22px; color: #848484;
 }
