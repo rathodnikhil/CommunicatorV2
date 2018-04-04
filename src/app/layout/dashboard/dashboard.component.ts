@@ -1,8 +1,9 @@
-import { Component, OnInit ,EventEmitter} from '@angular/core';
-import { routerTransition } from '../../router.animations';
-import { Output } from '@angular/core/src/metadata/directives';
-import { AlertComponent } from 'app/layout/bs-component/components';
 
+import { routerTransition } from '../../router.animations';
+import { AlertComponent } from 'app/layout/bs-component/components';
+import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
+import { CustomModalComponent, CustomModalModel } from './components/custom-modal/custom-modal.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -10,6 +11,16 @@ import { AlertComponent } from 'app/layout/bs-component/components';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
+    @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
+    InviteAttendees: CustomModalModel = {
+        titleIcon: '<i class="fa fa-bullhorn"></i>',
+        title: 'Broadcast Message',
+        smallHeading: 'Send Message to everyone',
+        body: '<div class="row"><div class="col-md-4"><label>Type Message</label></div><div class="col-md-8"><textarea type="text">'
+            + '</textarea></div></div>',
+        Button1Content: '<i class="fa fa-comments"></i>&nbsp;Send Message',
+        Button2Content: '<i class="fa fa-refresh"></i>&nbsp;Cancel'
+    };
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     currentRoute: number = 0;
@@ -64,7 +75,14 @@ export class DashboardComponent implements OnInit {
     switchRoute(newRoute) {
         this.currentRoute = newRoute;
     }
-    openModal(showModal: boolean) {
-       // alert('d');
+    open() {
+        //   debugger;
+          this.inviteAttendeesModal.open();
+      }
+      broadcastMsg(event) {
+       alert('broadcast msg');
+      }
+      resetMsg(event) {
+        alert('text reset');
       }
 }

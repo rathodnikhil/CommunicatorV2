@@ -10,16 +10,17 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class TimelineComponent implements OnInit {
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
     InviteAttendees: CustomModalModel = {
+        titleIcon: '<i class="fa fa-user"></i>',
         title: 'Profile Details',
         smallHeading: 'You can change your profile details here',
-        body: '<div class="row"><div class="col-md-4"><label>Display Name</label></div><div> <input type="password" id="inputPassword"'
-            + '/></div></div><div class="row"><div class="col-md-4">'
+        body: '<div class="row"><div class="col-md-4"><label>Display Name</label></div><div class="col-md-5"> Chetan Patwardhan</div>'
+           +  '<div class="col-md-3"><a>Change</a></div></div><div class="row"><div class="col-md-4">'
             + 'Display Picture</div>'
              + '<div class="col-md-3">'
             + '<i class="fa fa-user" style="font-size:200px;"></i></div>'
             + '<div class="col-md-5"><a style="text-decoration : underline">Change Picture</a><br><a>Remove Picture</a></div>'
             + '<hr></div>',
-        Button1Content: '<i class="fa fa-user"></i>Update Profile',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Profile',
         Button2Content: ''
     };
   constructor() { }
@@ -29,4 +30,7 @@ export class TimelineComponent implements OnInit {
   open() {
       this.inviteAttendeesModal.open();
   }
+  updateProfile(event) {
+    alert('profile updated');
+   }
 }

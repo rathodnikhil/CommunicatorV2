@@ -1,5 +1,4 @@
 <div class="card-body">
-
     <div class="form-group input-group">
         <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" >
         <div class="input-group-append">
@@ -10,13 +9,13 @@
     </div>
     <hr class="hr-partition" />
     <div class="list-group">
-        <!-- <a href="#" class="list-group-item clearfix d-block">
-            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-            <span class="float-right text-muted small"><em>12 minutes ago</em></span>
-        </a> -->
         <a *ngFor="let member of memberArray | seachMember : searchText" href="#" [routerLink]="['chat']" class="list-group-item clearfix d-block">
             <i class="fa fa-user-circle fa-2x"></i>
-            <div class="circle"></div>
+            <div  [ngClass]=" {'circleOnline': activeStatus == true && joinMeeting == false &&  meetingMember == false,
+            'circleMeetingJoin':activeStatus == true && joinMeeting == true &&  meetingMember == true,
+            'circleMeetingNotJoinOnline': activeStatus == true && joinMeeting == false &&  meetingMember == true,
+            'circleOfflineMem': activeStatus == false && joinMeeting == false &&  meetingMember == true,
+            'circleOffline': activeStatus == false && joinMeeting == false &&  meetingMember == false}"></div>
             <span style="padding-left: 1rem;">{{member}}</span>
             <hr class="list-group-partition" />
         </a>

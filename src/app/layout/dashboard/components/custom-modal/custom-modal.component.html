@@ -3,12 +3,11 @@
     <div class="modal-header popHeaderMeeting">
         <div>
             <span>
-                <h4 class="modal-title popTitle" >
-                    {{model.title}}</h4>
+                <h5 class="modal-title popTitle" >
+                   <a [innerHTML]="model.titleIcon"></a>&nbsp;{{model.title}}</h5>
             </span>
             <p  *ngIf="model.smallHeading">{{model.smallHeading}}</p>
         </div>
-        <!-- <h4 class="modal-title"></h4> -->
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>

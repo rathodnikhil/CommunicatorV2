@@ -12,7 +12,40 @@
     height: 94.5vh;
 }
 
-.circle {
+.circleMeetingJoin {
+    position: relative;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    // background: #7EE203;
+    background: #f9a159;
+    float: left;
+    left: 35px;
+    top: -5px;
+}
+.circleMeetingNotJoinOnline {
+    position: relative;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    // background: #7EE203;
+    background: #e2d041;
+
+    float: left;
+    left: 35px;
+    top: -5px;
+}
+.circleOffline {
+    position: relative;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    background: #b5b7b7;
+    float: left;
+    left: 35px;
+    top: -5px;
+}
+.circleOnline {
     position: relative;
     border-radius: 50%;
     width: 13px;
@@ -22,7 +55,16 @@
     left: 35px;
     top: -5px;
 }
-
+.circleOfflineMem {
+    position: relative;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    background: #57c4d8;
+    float: left;
+    left: 35px;
+    top: -5px;
+}
 .btn.btn-secondary {
     background: #187bd0;
     /* color: #187bd0; */
