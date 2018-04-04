@@ -42,6 +42,7 @@ export class CustomModalComponent {
 }
 export class CustomModalModel {
     title: string;
+    titleIcon: string;
     smallHeading: string;
     body: string;
     Button1Content: string;

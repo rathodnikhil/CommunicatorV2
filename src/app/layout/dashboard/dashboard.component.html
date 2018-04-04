@@ -4,16 +4,17 @@
             <div class="card card-default">
                 <div class="row" style="margin:0px;">
                     <div class="col-md-6 card-header userlist-header" style="text-align: center;">
-                        <i class="fa fa-user-circle fa-fw"></i>
+                        <i class="fa fa-user-circle fa-fw cursorPointer"></i>
                     </div>
                     <div class="col-md-2 card-header userlist-header">
-                        <i class="fa fa-user-plus fa-fw"></i>
+                        <i class="fa fa-user-plus fa-fw cursorPointer"></i>
                     </div>
                     <div class="col-md-2 card-header userlist-header">
-                        <i class="fa fa-users fa-fw"></i>
+                        <i class="fa fa-users fa-fw cursorPointer"></i>
                     </div>
                     <div class="col-md-2 card-header userlist-header">
-                        <i class="fa fa-bullhorn fa-fw"></i>
+                        <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>
+                        <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="broadcastMsg($event)" (Button2Event)="resetMsg($event)"></app-custom-modal>
                     </div>
                 </div>
 

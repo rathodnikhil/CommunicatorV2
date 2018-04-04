@@ -5,7 +5,14 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
+    joinMeeting: boolean;
+    activeStatus: boolean;
+    meetingMember: boolean;
     memberArray = ['Mahadev Mandale', 'Kuldeep Kulkarni', 'Martina Makasare', 'Avinash Prachand'];
     constructor() { }
-    ngOnInit() { }
+    ngOnInit() {
+        this.activeStatus = true;
+        this.joinMeeting = true;
+        this.meetingMember = true;
+     }
 }

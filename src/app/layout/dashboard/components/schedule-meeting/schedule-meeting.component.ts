@@ -10,6 +10,7 @@ export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
     InviteAttendees: CustomModalModel = {
+        titleIcon: '<i class="fa fa-calendar-check-o"></i>',
         title: 'Invite Attendees',
         smallHeading: 'Copy and paste to your calendar or share with your attendees',
         body: '<div class="alert alert-success alert-dismissable" id="meetingScheduleSuccess"> Meeting Scheduled Successfully</div>'
@@ -31,7 +32,6 @@ export class ScheduleMeetingComponent implements OnInit {
     durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)' , '90 Min (1.5 Hour)' , '120 Min (2 Hour)', '150 Min (2.5 Hour)',
     '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
     timeZoneArray = [
-
         '(GMT+13:00) Nukualofa',
         '(GMT+12:00) Fiji, Kamchatka, Marshall Is/',
         '(GMT+12:00) Auckland, Wellington',
