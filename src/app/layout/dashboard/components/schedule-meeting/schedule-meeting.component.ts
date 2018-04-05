@@ -127,7 +127,7 @@ export class ScheduleMeetingComponent implements OnInit {
         document.body.removeChild(a);
       }
       copytoClipBoard(event) {
-
+        alert('copy text');
       }
 }
 
