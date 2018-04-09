@@ -9,7 +9,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
-// import { SeachMemberPipe} from './../../src/app/layout/dashboard/components/notification/seach-member.pipe';
 import { LoginService } from './services/login.service';
 import { HttpModule } from '@angular/http';
 

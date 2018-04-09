@@ -31,6 +31,6 @@ export class TimelineComponent implements OnInit {
       this.inviteAttendeesModal.open();
   }
   updateProfile(event) {
-    alert('profile updated');
-   }
+    alert('copy text');
+  }
 }
