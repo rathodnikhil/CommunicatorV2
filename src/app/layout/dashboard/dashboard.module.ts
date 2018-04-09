@@ -20,7 +20,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
 import { SeachMemberPipe } from './components/notification/seach-member.pipe';
-import { SearchMeetingPipe } from './components/default-meeting/search-meeting.pipe';
+import { BroadcastMessageComponent } from './broadcast-message/broadcast-message.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import { SearchMeetingPipe } from './components/default-meeting/search-meeting.p
         MeetingVideoCallComponent,
         CustomModalComponent,
         SeachMemberPipe,
-        SearchMeetingPipe
+        BroadcastMessageComponent,
+        CreateGroupComponent
     ]
 })
 export class DashboardModule {}
