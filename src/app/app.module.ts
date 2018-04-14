@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { LoginService } from './services/login.service';
 import { HttpModule } from '@angular/http';
+import { UserService } from './services/user.service';
 
 
 
@@ -38,7 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule
     ],
     declarations: [AppComponent], // , SeachMemberPipe
-    providers: [AuthGuard, LoginService],
+    providers: [AuthGuard, LoginService, UserService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
