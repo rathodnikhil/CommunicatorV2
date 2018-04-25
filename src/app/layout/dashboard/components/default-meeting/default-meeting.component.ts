@@ -7,9 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DefaultMeetingComponent implements OnInit {
    @Output() CurrentRoute = new EventEmitter();
-  constructor() { }
-
-  ngOnInit() {}
+    constructor() {}
+  ngOnInit() { }
   switchRoute() {
     this.CurrentRoute.emit(1);
   }

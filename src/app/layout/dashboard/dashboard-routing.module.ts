@@ -15,6 +15,7 @@ const routes: Routes = [
             { path: 'default', component: DefaultChatComponent },
             { path: 'chat', component: TimelineComponent},
             { path: 'videoMeeting', component: MeetingVideoCallComponent},
+            { path: 'videoCall', component: MeetingVideoCallComponent}
         ]
     }
 ];

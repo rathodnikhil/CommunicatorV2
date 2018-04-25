@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
+import { UserService } from '../../../../services/user.service';
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
@@ -23,11 +23,21 @@ export class TimelineComponent implements OnInit {
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Profile',
         Button2Content: ''
     };
-  constructor() { }
+
+    loggedInUser: any;
+    _userService: UserService;
+  constructor(userService: UserService) {
+    this._userService = userService;
+   }
 
   ngOnInit() {
+    const payload = {loggedInUserId: 2};
+    this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
+        this.loggedInUser = data.json();
+    });
   }
-  open() {
+  open(loggedInUser) {
+      alert(loggedInUser.name + loggedInUser.lastName);
       this.inviteAttendeesModal.open();
   }
   updateProfile(event) {
