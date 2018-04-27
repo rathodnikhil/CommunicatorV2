@@ -4,7 +4,7 @@ import * as urlConstants from './urlConstants';
 
 @Injectable()
 export class UserService {
-
+    loggedInUser: any;
     constructor(private http: Http) { }
     getUserList(payload) {
       const url = urlConstants.baseUrl + 'memberListByUser?loggedInUserId=' + payload.loggedInUserId;

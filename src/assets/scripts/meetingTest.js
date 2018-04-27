@@ -71,11 +71,13 @@
 document.createElement('article');
 document.createElement('footer');
 var meeting = new Meeting();
-debugger;
+// debugger;
 var meetingsList = document.getElementById('meetings-list');
+var meetingChat = document.getElementById('meetingChat');
+var inputText = document.getElementById('textInput');
 var meetingRooms = {};
 meeting.onmeeting = function (room) {
-debugger;
+    // debugger;
     if (meetingRooms[room.roomid]) return;
     meetingRooms[room.roomid] = room;
 
@@ -116,6 +118,7 @@ meeting.openSignalingChannel = function (onmessage) {
         }));
     };
     websocket.push = websocket.send;
+
     websocket.send = function (data) {
         if (websocket.readyState != 1) {
             return setTimeout(function () {
@@ -129,8 +132,20 @@ meeting.openSignalingChannel = function (onmessage) {
         }));
     };
     websocket.onmessage = function (e) {
-        onmessage(JSON.parse(e.data));
+        var data = JSON.parse(e.data);
+        if (data.indexOf('Text')>0) {
+            debugger;
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td> other user' + JSON.parse(data).Text + '</td>' +
+                '<td></td>';
+
+            meetingChat.insertBefore(tr, meetingChat.firstChild);
+        }
+        onmessage(data);
+
+
     };
+    meeting.customSend = websocket.send;
     return websocket;
 };
 
@@ -154,3 +169,11 @@ document.getElementById('setup-meeting').onclick = function () {
     this.disabled = true;
     this.parentNode.innerHTML = '<h2><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
 };
+
+document.getElementById('sendText').onclick = function () {
+
+    debugger;
+    var customMessage = { "userid": "", "Text": textInput.value };
+    meeting.customSend(JSON.stringify(customMessage));
+};
+
