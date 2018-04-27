@@ -9,7 +9,7 @@ export class NotificationComponent implements OnInit {
     joinMeeting: boolean;
     activeStatus: boolean;
     meetingMember: boolean;
-    memberArray = ['Mahadev Mandale', 'Kuldeep Kulkarni', 'Martina Makasare', 'Avinash Prachand'];
+    // memberArray = ['Mahadev Mandale', 'Kuldeep Kulkarni', 'Martina Makasare', 'Avinash Prachand'];
     userList = [];
     _userService: UserService;
     constructor(userService: UserService) {
@@ -26,4 +26,7 @@ export class NotificationComponent implements OnInit {
             this.userList = data.json();
         });
      }
+     viewMemeberDetails(user) {
+        alert('Selected Memeber is : ' + user.name + user.lastName);
+      }
 }

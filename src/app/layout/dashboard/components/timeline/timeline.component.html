@@ -1,7 +1,7 @@
 <div class="card card-default">
     <div class="row" style="margin:0px;">
         <div class="col-md-8 card-header" id="timeline-icon">
-            Chetan Patwardhan&nbsp;<a id="view-profile" (click)="open()" (Button1Event)="updateProfile($event)">(View Full Profile)</a></div>
+            {{loggedInUser.name}}    {{loggedInUser.lastName}}&nbsp;<a id="view-profile" (click)="open(loggedInUser)" (Button1Event)="updateProfile($event)">(View Full Profile)</a></div>
             <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees"></app-custom-modal>
         <div class="col-md-1 card-header" id="timeline-icon">
             <i class="fa fa-video-camera"></i>
