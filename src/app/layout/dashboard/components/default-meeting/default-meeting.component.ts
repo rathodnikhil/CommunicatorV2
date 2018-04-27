@@ -13,6 +13,7 @@ export class DefaultMeetingComponent implements OnInit {
        this._userService = userService;
     }
   ngOnInit() {
+      this.loggedInUser = {};
     const payload = {loggedInUserId: 2};
     this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
         this.loggedInUser = data.json();
