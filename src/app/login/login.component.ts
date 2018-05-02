@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // this.onLoggedin();
+        this.onLoggedin();
     }
 
     async onLoggedin() {
