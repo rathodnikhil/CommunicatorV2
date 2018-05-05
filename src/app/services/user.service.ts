@@ -13,7 +13,7 @@ export class UserService {
     }
     getLoggedInUSerDetails(payload) {
         const url = urlConstants.baseUrl + 'loggedInUserDetails?loggedInUserId=' + payload.loggedInUserId;
-        return this.http.get(url, payload);
+        return this.http.post(url, payload);
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
       }
 }
