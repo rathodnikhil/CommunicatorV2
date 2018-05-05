@@ -11,4 +11,13 @@ export class MeetingServiceService {
         return this.http.post(url, payload);
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
+    getRecentMetingByLoggedInUSer(payload) {
+        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+      // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+    }
+    getAttendeeByMeetingId(payload) {
+        const url = urlConstants.baseUrl + 'getAttendeeByMeetingId?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+    }
 }
