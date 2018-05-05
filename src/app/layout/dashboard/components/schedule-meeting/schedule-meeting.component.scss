@@ -1,50 +1,72 @@
-
-.meetingHeader{
-    background:#848484;
-    color:#FFFFFF;
-    border-radius:5px 5px 0px 0px;
+.meetingHeader {
+    background: #848484;
+    color: #FFFFFF;
+    border-radius: 5px 5px 0px 0px;
 }
+
 .style-links {
     color: #d2cccc;
     font-size: 12px;
 }
 
 .btn.btn-secondary {
-    background:  #57c4d8;
+    background: #57c4d8;
     /* color: #187bd0; */
-    border-color:  #40a4b6;
+    border-color: #40a4b6;
     border-radius: 0px 5px 5px 0px;
 }
-.btn.btn-secondary.btn-border-radius{
+
+.btn.btn-secondary.btn-border-radius {
     border-radius: 5px;
 }
+
 .form-control {
     border-radius: 5px 0px 0px 5px;
 }
-.hr-partition{
+
+.hr-partition {
     border-top: 2px dotted #848484;
     width: 100%;
 }
+
 .align-center {
     margin: auto;
     width: 100%;
-    color :#848484;
+    color: #848484;
 }
-.mom-duty{
-    color :#848484;
+
+.mom-duty {
+    color: #848484;
 }
+
 .defaultMeetSelect {
     background-color: #fff;
     text-align: center;
     border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
+
 .date-period-select {
     border-left: 2px solid #848484;
     padding-left: 10px;
     padding-right: 10px;
     height: 15%;
 }
-.date-period-first{
+
+.date-period-first {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.d-inline-block {
+    width: 100% !important;
+    button {
+        width: 100% !important;
+    }
+    .dropdown-menu.show {
+        height: 200px;
+        overflow-y: scroll;
+        width: 100%;
+        overflow-x: hidden
+    }
+}
+
