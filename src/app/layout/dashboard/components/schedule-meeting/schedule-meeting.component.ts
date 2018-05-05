@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-schedule-meeting',
   templateUrl: './schedule-meeting.component.html',
@@ -9,6 +10,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
+
+    // public radioGroupForm: FormGroup;
     InviteAttendees: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
         title: 'Invite Attendees',
@@ -24,11 +27,7 @@ export class ScheduleMeetingComponent implements OnInit {
         Button1Content: '<i class="fa fa-envelope"></i> Outlook',
         Button2Content: '<i class="fa fa-copy"></i> Copy'
     };
-    meeting: any = {
-        meridianTime : {hour: 13, minute: 30},
-        meridian : true,
-        datePicker: {}
-    };
+    meeting: any;
     durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)' , '90 Min (1.5 Hour)' , '120 Min (2 Hour)', '150 Min (2.5 Hour)',
     '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
     timeZoneArray = [
@@ -110,12 +109,39 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     ngOnInit() {
+        const today = new Date();
+        this.meeting = {
+            meridianTime : {hour: today.getHours(), minute: today.getMinutes()},
+            meridian : true,
+            datePicker: {
+                day : today.getDate(),
+                month : today.getMonth() + 1,
+                year : today.getFullYear()
+            },
+            isRecurring: 1,
+            callType: 1,
+            selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
+            selectedDuration: 'Select Duration'
+        };
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
       }
       open() {
-        //   debugger;
+         debugger;
+        const payload = {
+            'meetingDate': '2018-04-30',
+            'createdDate': 1525065550000,
+            'attendee': 'test@gmail.com, aivnah@gmail.com, kuldeep@gmail.com, mahadev@gmail.com',
+            'meetingStartDateTime': 1525069150000,
+            'meetingEndDateTime': 1525067350000,
+            'subject': 'Test Meeting Subject',
+            'duration': '02:00',
+            'recurringType': null,
+            'callType': null,
+            'timeZone': 'Asia/Calcutta',
+            'timeType': '12Hours'
+        };
           this.inviteAttendeesModal.open();
       }
       copyToOutLook(event) {
@@ -128,6 +154,16 @@ export class ScheduleMeetingComponent implements OnInit {
       }
       copytoClipBoard(event) {
         document.execCommand('copy');
+      }
+      changeTimeZone(timezone) {
+          this.meeting.selectedTimeZone = timezone;
+      }
+      changeDuration(duration) {
+          this.meeting.selectedDuration = duration;
+      }
+       getTimeZone() {
+        const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+        return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
       }
 }
 
