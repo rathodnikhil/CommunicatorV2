@@ -3,21 +3,21 @@
         <div class="row">
             <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
-                Good Morning {{loggedInUser.name}}
+                Good Morning {{loggedInUser.name}}    {{loggedInUser.lastName}}
                 <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
             </div>
             <div class="col-md-4">
-                <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-cayn pull-right" type="button">Schedule</a>
+                <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-primary pull-right" type="button">Schedule</a>
             </div>
         </div>
 
     </div>
     <div class="card-header row defaultMeetSelect">
         <div class="align-center">
-            <a style="padding-right:10px;">All</a>
+            <a style="padding-right:10px; cursor: pointer;">All</a>
             <a class="date-period-select">Today</a>
             <a class="date-period-select">Tomorrow</a>
-            <a class="date-period-select">Select Date</a>
+            <a (click)="meetingByDate()" class="date-period-select">Select Date</a>
         </div>
     </div>
     <div class="card-header">
@@ -30,7 +30,7 @@
                 <div class="form-group input-group">
                     <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
+                        <button class="btn btn-primary" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>

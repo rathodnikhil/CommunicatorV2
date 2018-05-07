@@ -11,14 +11,16 @@
     <div class="list-group">
         <a *ngFor="let user of userList | seachMember : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)" class="list-group-item clearfix d-block">
             <i class="fa fa-user-circle fa-2x"></i>
-            <div  [ngClass]=" {'circleOnline': user.onlineStatus.statusId == 1 && joinMeeting == false &&  meetingMember == false,
-            'circleMeetingJoin':user.onlineStatus.statusId == 1 && joinMeeting == true &&  meetingMember == true,
-            'circleMeetingNotJoinOnline': user.onlineStatus.statusId == 1 && joinMeeting == false &&  meetingMember == true,
-            'circleOfflineMem': user.onlineStatus.statusId == 2 && joinMeeting == false &&  meetingMember == true,
-            'circleOffline': user.onlineStatus.statusId == 2 && joinMeeting == false &&  meetingMember == false}"></div>
+            <div  [ngClass]=" {'circleOnline': user.onlineStatus.statusId == 1,
+            'circleOffline': user.onlineStatus.statusId == 2 }"></div>
             <span style="padding-left: 1rem;">{{user.name+ ' '+user.lastName}}</span>
             <hr class="list-group-partition" />
         </a>
     </div>
     <!-- /.list-group -->
 </div>
+<!-- <div  [ngClass]=" {'circleOnline': user.onlineStatus.statusId == 1 && joinMeeting == false &&  meetingMember == false,
+'circleMeetingJoin':user.onlineStatus.statusId == 1 && joinMeeting == true &&  meetingMember == true,
+'circleMeetingNotJoinOnline': user.onlineStatus.statusId == 1 && joinMeeting == false &&  meetingMember == true,
+'circleOfflineMem': user.onlineStatus.statusId == 2 && joinMeeting == false &&  meetingMember == true,
+'circleOffline': user.onlineStatus.statusId == 2 && joinMeeting == false &&  meetingMember == false}"></div> -->

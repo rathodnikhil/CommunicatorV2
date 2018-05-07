@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} 
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
+import {MeetingServiceService } from '../../../../services/meeting-service.service';
 @Component({
   selector: 'app-schedule-meeting',
   templateUrl: './schedule-meeting.component.html',
@@ -10,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
-
+    _meetingService: MeetingServiceService;
     // public radioGroupForm: FormGroup;
     InviteAttendees: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
@@ -128,7 +129,7 @@ export class ScheduleMeetingComponent implements OnInit {
         this.CurrentRoute.emit(0);
       }
       open() {
-         debugger;
+      //   debugger;
         const payload = {
             'meetingDate': '2018-04-30',
             'createdDate': 1525065550000,
@@ -142,6 +143,7 @@ export class ScheduleMeetingComponent implements OnInit {
             'timeZone': 'Asia/Calcutta',
             'timeType': '12Hours'
         };
+       // this._meetingService.scheduleMeeting(payload);
           this.inviteAttendeesModal.open();
       }
       copyToOutLook(event) {
