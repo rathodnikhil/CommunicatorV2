@@ -20,4 +20,8 @@ export class MeetingServiceService {
         const url = urlConstants.baseUrl + 'getAttendeeByMeetingId?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
     }
+    scheduleMeeting(payload) {
+        const url = urlConstants.baseUrl + 'scheduleMeeting';
+        return this.http.post(url, payload);
+    }
 }

@@ -22,5 +22,7 @@ export class DefaultMeetingComponent implements OnInit {
   switchRoute() {
     this.CurrentRoute.emit(1);
   }
-
+  meetingByDate() {
+      alert('select date');
+  }
 }
