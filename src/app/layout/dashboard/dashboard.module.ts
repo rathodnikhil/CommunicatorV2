@@ -23,7 +23,6 @@ import { SearchMemberPipe } from './components/notification/search-member.pipe';
 import { BroadcastMessageComponent } from './broadcast-message/broadcast-message.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { SearchFutureMeetingPipe } from './components/default-meeting/search-future-meeting.pipe';
-import { PastMeetingsComponent } from './components/past-meetings/past-meetings.component';
 
 @NgModule({
     imports: [
@@ -49,8 +48,7 @@ import { PastMeetingsComponent } from './components/past-meetings/past-meetings.
         SearchMemberPipe,
         BroadcastMessageComponent,
         CreateGroupComponent,
-        SearchFutureMeetingPipe,
-        PastMeetingsComponent
+        SearchFutureMeetingPipe
     ]
 })
 export class DashboardModule {}
