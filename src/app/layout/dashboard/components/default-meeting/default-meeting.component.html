@@ -1,163 +1,156 @@
 <div class="chat-panel card card-default">
-    <div class="card-header meetingHeader">
-        <div class="row">
-            <div class="col-md-8">
-                <i class="fa fa-calendar-check-o"></i>
-                Good Morning {{loggedInUser.name}}    {{loggedInUser.lastName}}
-                <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
+   <div class="card-header meetingHeader">
+      <div class="row">
+         <div class="col-md-8">
+            <i class="fa fa-calendar-check-o"></i>
+            Good Morning {{loggedInUser.name}}    {{loggedInUser.lastName}}
+            <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
+         </div>
+         <div class="col-md-4">
+            <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-primary pull-right" type="button">Schedule</a>
+         </div>
+      </div>
+   </div>
+   <div class="card-header row defaultMeetSelect">
+      <div class="align-center">
+         <a style="padding-right:10px; cursor: pointer;">All</a>
+         <a class="date-period-select">Today</a>
+         <a class="date-period-select">Tomorrow</a>
+         <a (click)="meetingByDate()" class="date-period-select">Select Date</a>
+      </div>
+   </div>
+   <div class="card-header">
+      <div class="row">
+         <div class="col-md-6">
+            <i class="fa fa-calendar"></i>
+            <span style="font-weight: bold; font-size: 14px;">{{currentDate | date:'fullDate'}}</span>
+         </div>
+         <div class="col-md-6">
+            <div class="form-group input-group">
+               <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+               <div class="input-group-append">
+                  <button class="btn btn-primary" type="button">
+                  <i class="fa fa-search"></i>
+                  </button>
+               </div>
             </div>
-            <div class="col-md-4">
-                <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-primary pull-right" type="button">Schedule</a>
-            </div>
-        </div>
-
-    </div>
-    <div class="card-header row defaultMeetSelect">
-        <div class="align-center">
-            <a style="padding-right:10px; cursor: pointer;">All</a>
-            <a class="date-period-select">Today</a>
-            <a class="date-period-select">Tomorrow</a>
-            <a (click)="meetingByDate()" class="date-period-select">Select Date</a>
-        </div>
-    </div>
-    <div class="card-header">
-        <div class="row">
-            <div class="col-md-6">
-                <i class="fa fa-calendar"></i>
-                <span style="font-weight: bold; font-size: 14px;">{{currentDate | date:'fullDate'}}</span>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group input-group">
-                    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <hr class="hr-partition" />
-        </div>
-        <div class="row">
-            <div class="card-body" style="height:76vh;">
-                <ul class="chat">
-                     <li class="left clearfix">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <button class="btn btn-cayn">Now</button>
-                            </div>
-                            <div class="col-md-7">
-                                <p>
-                                    <strong class="primary-font">{{recentMeeting.subject}}</strong>
-                                    <br> Meeting Id : {{recentMeeting.meetingId}}
-                                    <!-- <br> Meeting Host : {{recentMeeting.createdBy.name}}&nbsp;{{recentMeeting.createdBy.lastname}} -->
-                                    <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime  | date:'yyyy-MM-dd HH:mm:ss'}}
-                                    <br> Meeting Duration : {{recentMeeting.duration}} Hour
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-
-        <!-- <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"> -->
-                <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"></li>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h6>  <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime  | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
-                            </div>
-                            <div class="col-md-7">
-                                <p>
-                                    <strong class="primary-font">{{meeting.subject}}</strong>
-                                    <br> Meeting Id : {{meeting.meetingId}}
-                                    <br> Meeting Host : {{meeting.createdBy.name}}&nbsp;{{meeting.createdBy.lastName}}
-                                    <br> Meeting Duration : {{meeting.duration}} Hour
-                                    <br> Meeting End Date/Time : {{meeting.meetingEndDateTime  | date:'yyyy-MM-dd HH:mm:ss'}}
-                                </p>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="icon-wrapper">
-                                    <i class="fa fa-comments fa-2x"></i>
-                                    <span class="badge">10</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </li>
-             <li class="left clearfix">
-                        <div class="">
-                            <ul id="accordion">
-                                <li [ngClass]="{'active': isActive}">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <h6>10:00 am</h6>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <p>
-                                                <strong class="primary-font">Daily Review Meeting For Java Team</strong>
-                                                <br> Meeting Id : Mcore145298537
-                                                <br> Meeting Host : Chetan Patwardhan
-                                            </p>
-                                        </div>
-                                        <div class="col-md-2" (click)="isActive=!isActive">
-                                            <span class="p1 fa-stack fa-1x has-badge" data-count="4">
-                                                <i class="p3 fa fa-chevron-down fa-stack-1x xfa-inverse" data-count="4b"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-
-                                        <div class="panel-body">
-                                            <ul class="chat">
-                                                <li class="left clearfix">
-                                                    <span class="chat-img pull-left">
-                                                        <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                                    </span>
-                                                    <div class="chat-body clearfix">
-                                                        <div class="header">
-                                                            <strong class="primary-font">Jack Sparrow</strong>
-                                                            <small class="pull-right text-muted">
-                                                                <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                                        </div>
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                                        </p>
-                                                    </div>
-                                                </li>
-
-                                                <li class="right clearfix">
-                                                    <span class="chat-img pull-right">
-                                                        <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                                    </span>
-                                                    <div class="chat-body clearfix">
-                                                        <div class="header">
-                                                            <small class=" text-muted">
-                                                                <span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                                        </div>
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <div class="input-group">
-                                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                                        Send</button>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+         </div>
+         <hr class="hr-partition" />
+      </div>
+      <div class="row">
+         <div class="card-body" style="height:76vh;">
+            <ul class="chat">
+               <li class="left clearfix">
+                  <div class="row">
+                     <div class="col-md-3">
+                        <button class="btn btn-cayn">Now</button>
+                     </div>
+                     <div class="col-md-7">
+                        <p>
+                           <strong class="primary-font">{{recentMeeting.subject}}</strong>
+                           <br> Meeting Id : {{recentMeeting.meetingId}}
+                           <!-- <br> Meeting Host : {{recentMeeting.createdBy.name}}&nbsp;{{recentMeeting.createdBy.lastname}} -->
+                           <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime  | date:'yyyy-MM-dd HH:mm:ss'}}
+                           <br> Meeting Duration : {{recentMeeting.duration}} Hour
+                        </p>
+                     </div>
+                  </div>
+               </li>
+               <!-- <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"> -->
+               <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix">
+               <div class="row">
+                  <div class="col-md-3">
+                     <h6>  <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime  | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
+                  </div>
+                  <div class="col-md-7">
+                     <p>
+                        <strong class="primary-font">{{meeting.subject}}</strong>
+                        <br> Meeting Id : {{meeting.meetingId}}
+                        <br> Meeting Host : {{meeting.createdBy.name}}&nbsp;{{meeting.createdBy.lastName}}
+                        <br> Meeting Duration : {{meeting.duration}} Hour
+                        <br> Meeting End Date/Time : {{meeting.meetingEndDateTime  | date:'yyyy-MM-dd HH:mm:ss'}}
+                     </p>
+                  </div>
+                  <div class="col-md-2">
+                     <div class="icon-wrapper">
+                        <i class="fa fa-comments fa-2x"></i>
+                        <span class="badge">10</span>
+                     </div>
+                  </div>
+               </div>
+               </li>
+               <li class="left clearfix">
+                  <div class="">
+                     <ul id="accordion">
+                        <li [ngClass]="{'active': isActive}">
+                           <div class="row">
+                              <div class="col-md-3">
+                                 <h6>10:00 am</h6>
+                              </div>
+                              <div class="col-md-7">
+                                 <p>
+                                    <strong class="primary-font">Daily Review Meeting For Java Team</strong>
+                                    <br> Meeting Id : Mcore145298537
+                                    <br> Meeting Host : Chetan Patwardhan
+                                 </p>
+                              </div>
+                              <div class="col-md-2" (click)="isActive=!isActive">
+                                 <span class="p1 fa-stack fa-1x has-badge" data-count="4">
+                                 <i class="p3 fa fa-chevron-down fa-stack-1x xfa-inverse" data-count="4b"></i>
+                                 </span>
+                              </div>
+                           </div>
+                           <div class="content">
+                              <div class="panel-body">
+                                 <ul class="chat">
+                                    <li class="left clearfix">
+                                       <span class="chat-img pull-left">
+                                       <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                       </span>
+                                       <div class="chat-body clearfix">
+                                          <div class="header">
+                                             <strong class="primary-font">Jack Sparrow</strong>
+                                             <small class="pull-right text-muted">
+                                             <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                          </div>
+                                          <p>
+                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                          </p>
+                                       </div>
+                                    </li>
+                                    <li class="right clearfix">
+                                       <span class="chat-img pull-right">
+                                       <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                       </span>
+                                       <div class="chat-body clearfix">
+                                          <div class="header">
+                                             <small class=" text-muted">
+                                             <span class="glyphicon glyphicon-time"></span>15 mins ago</small>
+                                             <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                          </div>
+                                          <p>
+                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                          </p>
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div class="panel-footer">
+                                 <div class="input-group">
+                                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                    Send</button>
+                                    </span>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
 </div>
