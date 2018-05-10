@@ -17,7 +17,8 @@ const routes: Routes = [
             { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'ManageTeam', loadChildren: './manage-team/manage-team.module#ManageTeamModule' },
-            { path: 'userSettings', loadChildren: './user-settings/user-settings.module#UserSettingsModule' }
+            { path: 'userSettings', loadChildren: './user-settings/user-settings.module#UserSettingsModule' },
+            { path: 'pastMeetings', loadChildren: './past-mettings/past-mettings.module#PastMettingsModule' }
         ]
     }
 ];
