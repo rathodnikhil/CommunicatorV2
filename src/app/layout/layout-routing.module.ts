@@ -18,7 +18,10 @@ const routes: Routes = [
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'ManageTeam', loadChildren: './manage-team/manage-team.module#ManageTeamModule' },
             { path: 'userSettings', loadChildren: './user-settings/user-settings.module#UserSettingsModule' },
-            { path: 'pastMeetings', loadChildren: './past-mettings/past-mettings.module#PastMettingsModule' }
+            { path: 'pastMeetings', loadChildren: './past-mettings/past-mettings.module#PastMettingsModule' },
+            { path: 'myProfile', loadChildren: './my-profile/my-profile.module#MyProfileModule' },
+            { path: 'changeRights', loadChildren: './user-rights/user-rights.module#UserRightsModule' },
+            { path: 'myCalendar', loadChildren: './my-calendar/my-calendar.module#MyCalendarModule' },
         ]
     }
 ];

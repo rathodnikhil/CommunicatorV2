@@ -17,17 +17,17 @@
             <a [routerLink]="['/pastMeetings']" (click)="hamburger_cross()"><i class="fa fa-undo" aria-hidden="true"></i>  Past Meetings</a>
         </li>
         <li>
-            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>  My Calendar</a>
+            <a [routerLink]="['/myCalendar']" (click)="hamburger_cross()"><i class="fa fa-calendar" aria-hidden="true"></i>  My Calendar</a>
         </li>
         <li>
-            <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i>  My Profile</a>
+            <a [routerLink]="['/myProfile']" (click)="hamburger_cross()"><i class="fa fa-user-circle-o" aria-hidden="true"></i>  My Profile</a>
         </li>
         <li>
             <a [routerLink]="['/ManageTeam']" (click)="hamburger_cross()"><i class="fa fa-users" aria-hidden="true"></i>  Manage Teams</a>
         </li>
 
         <li>
-            <a href="#"><i class="fa fa-toggle-on" aria-hidden="true"></i>  Add / Revoke Rights</a>
+            <a [routerLink]="['/changeRights']" (click)="hamburger_cross()" ><i class="fa fa-toggle-on" aria-hidden="true"></i>  Add / Revoke Rights</a>
         </li>
         <li>
             <a [routerLink]="['/userSettings']" (click)="hamburger_cross()"><i class="fa fa-cog" aria-hidden="true"></i>  Settings</a>
