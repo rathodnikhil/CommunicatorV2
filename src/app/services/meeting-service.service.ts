@@ -6,8 +6,8 @@ import * as urlConstants from './urlConstants';
 export class MeetingServiceService {
 
   constructor(private http: Http) { }
-    getMetingListByLoggedInUSer(payload) {
-        const url = urlConstants.baseUrl + 'meetingListByUser?loggedInUserId=' + payload.loggedInUserId;
+  getFutureMeetingByUser(payload) {
+        const url = urlConstants.baseUrl + 'getFutureMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
@@ -22,6 +22,11 @@ export class MeetingServiceService {
     }
     scheduleMeeting(payload) {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
+        return this.http.post(url, payload);
+    }
+    getRecentMeetingByUser(payload) {
+        debugger;
+        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
     }
 }

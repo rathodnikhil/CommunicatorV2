@@ -1,9 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'seachMember'
+  name: 'SearchFutureMeeting'
 })
-export class SeachMemberPipe implements PipeTransform {
+export class SearchFutureMeetingPipe implements PipeTransform {
+
     transform(items: any[], searchText: string): any[] {
         if (!items) {
             return [];

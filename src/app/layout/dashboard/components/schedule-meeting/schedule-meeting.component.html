@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
                 Schedule New Meeting
-                <h6 class="style-links">19 March 2018</h6>
+                <h6 class="style-links">{{currentDate | date:'fullDate'}}</h6>
             </div>
             <div class="col-md-4">
                 <button class="btn btn-danger pull-right" type="button" (click)="switchRoute()">Cancel</button>
