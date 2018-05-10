@@ -9,7 +9,8 @@
     </div>
     <hr class="hr-partition" />
     <div class="list-group">
-        <a *ngFor="let user of userList | seachMember : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)" class="list-group-item clearfix d-block">
+        <a *ngFor="let user of userList | searchMember : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
+         class="list-group-item clearfix d-block">
             <i class="fa fa-user-circle fa-2x"></i>
             <div  [ngClass]=" {'circleOnline': user.onlineStatus.statusId == 1,
             'circleOffline': user.onlineStatus.statusId == 2 }"></div>

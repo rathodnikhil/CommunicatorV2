@@ -19,9 +19,10 @@ import { MeetingVideoCallComponent } from './components/meeting-video-call/meeti
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
-import { SeachMemberPipe } from './components/notification/seach-member.pipe';
+import { SearchMemberPipe } from './components/notification/search-member.pipe';
 import { BroadcastMessageComponent } from './broadcast-message/broadcast-message.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { SearchFutureMeetingPipe } from './components/default-meeting/search-future-meeting.pipe';
 
 @NgModule({
     imports: [
@@ -44,9 +45,10 @@ import { CreateGroupComponent } from './create-group/create-group.component';
         ScheduleMeetingComponent,
         MeetingVideoCallComponent,
         CustomModalComponent,
-        SeachMemberPipe,
+        SearchMemberPipe,
         BroadcastMessageComponent,
-        CreateGroupComponent
+        CreateGroupComponent,
+        SearchFutureMeetingPipe
     ]
 })
 export class DashboardModule {}

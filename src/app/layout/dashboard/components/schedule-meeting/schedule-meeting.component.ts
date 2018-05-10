@@ -11,6 +11,7 @@ import {MeetingServiceService } from '../../../../services/meeting-service.servi
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
+    currentDate: any;
     _meetingService: MeetingServiceService;
     // public radioGroupForm: FormGroup;
     InviteAttendees: CustomModalModel = {
@@ -124,6 +125,9 @@ export class ScheduleMeetingComponent implements OnInit {
             selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
             selectedDuration: 'Select Duration'
         };
+
+          //current date and time
+   this.currentDate = Date.now();
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
@@ -167,5 +171,6 @@ export class ScheduleMeetingComponent implements OnInit {
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
       }
+
 }
 
