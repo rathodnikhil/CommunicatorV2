@@ -11,22 +11,21 @@ export class MeetingServiceService {
         return this.http.post(url, payload);
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
-    getRecentMetingByLoggedInUSer(payload) {
-        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
+    getPastMeetingByUser(payload) {
+        const url = urlConstants.baseUrl + 'getPastMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
-    }
-    getAttendeeByMeetingId(payload) {
-        const url = urlConstants.baseUrl + 'getAttendeeByMeetingId?loggedInUserId=' + payload.loggedInUserId;
-        return this.http.post(url, payload);
     }
     scheduleMeeting(payload) {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
         return this.http.post(url, payload);
     }
     getRecentMeetingByUser(payload) {
-        debugger;
         const url = urlConstants.baseUrl + 'getRecentMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+    }
+    getTotalMeetingCountByLoggedInUserId(payload) {
+        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
     }
 }
