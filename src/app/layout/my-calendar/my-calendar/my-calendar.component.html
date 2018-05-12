@@ -1,3 +1,23 @@
-<p>
-  my-calendar works!
-</p>
+<div class="top">
+        <div class="col-md-12 header">
+            <div class="row">
+               <h3 style="float:left;" class="col-md-8">Meeting Calendar&nbsp;<i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i></h3>
+               <div style="float:right">
+                    <div class="align-center">
+                        <a style="padding-right:10px; cursor: pointer;">Day</a>
+                        <a class="date-period-select">Week</a>
+                        <a class="date-period-select">Month</a>
+                        <a class="date-period-select">Year</a>
+                        <input type="text" placeholder="Search by name"  />
+                    </div>
+                </div>
+            </div>
+     </div>
+</div>
+<div class="left filter-list">
+</div>
+<div class="main" >
+        <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
+        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
+
+</div>

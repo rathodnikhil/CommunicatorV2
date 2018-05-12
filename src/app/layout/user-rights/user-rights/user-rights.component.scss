@@ -1,0 +1,57 @@
+
+.top {
+    height: 92px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    background: #2980b9;
+    color: #ffffff;
+}
+.left {
+    width: 15%;
+    float:left;
+    padding: 15px;
+    background: #eaf3f8;
+}
+.main {
+  margin-left:15%;
+  padding: 15px;
+ }
+ table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    padding:30px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+th{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background: #2980b9;
+    color: #ffffff;
+}
+tr:nth-child(even) {
+    background-color: #eaf3f8;
+}
+.filter-list{
+ border-right: 1px solid rgba(0, 0, 0, 0.125);
+ height: 90vh;
+}
+.filter-list ul{
+    list-style-type: none;
+}
+.filter-list ul li input{
+cursor: pointer;
+}
+.date-period-select {
+    border-left: 2px solid #999;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 15%;
+    cursor: pointer;
+}

@@ -1,3 +1,49 @@
-<p>
-  past-meetings works!
-</p>
+<div class="top">
+    <div class="col-md-12 header">
+        <div class="row">
+           <h3 style="float:left;" class="col-md-8">Past Meetings&nbsp;<a href="/dashboard/default" style="color:#fff"><i class="fa fa-home" style="float:left; font-size: 28px;"
+             aria-hidden="true"></i></a></h3>
+            <div style="float:right">
+                    <div class="align-center">
+                        <span style="font-size:14px;font-weight: bold;">Filter By:&nbsp;</span>
+                        <a style="padding-right:10px; cursor: pointer;">Day</a>
+                        <a class="date-period-select">Month</a>
+                        <a class="date-period-select">Year</a>
+                        <input type="text" placeholder="Search by name"  />
+                    </div>
+                </div>
+            </div>
+ </div>
+</div>
+<div class="left filter-list">
+<h4><i class="fa fa-filter"></i>&nbsp;FILTERS</h4>
+<hr>
+<h5>General</h5>
+<ul>
+<input type="checkbox" name="vehicle" value="Bike"> Schdule By Me<br>
+<input type="checkbox" name="vehicle" value="Car" checked="checked">MOM By Me<br>
+</ul>
+</div>
+<div class="main">
+    <h4>Past Meeting Details</h4>
+    <table>
+      <tr>
+        <th>Sr. No</th>
+        <th>Date</th>
+        <th>Meeting Id</th>
+        <th>Subject</th>
+        <th>Attendees</th>
+        <th>MOM</th>
+        <th>Chat History</th>
+      </tr>
+      <tr *ngFor="let meeting of pastMeetingList ;let srNo = index">
+            <td>{{srNo+1}}</td>
+            <td>{{meeting.meetingDate}}</td>
+            <td>{{meeting.meetingId}}</td>
+            <td>{{meeting.subject}}</td>
+            <td>{{meeting.attendee}}</td>
+            <td><i (click)="downloadFile()"  class="fa fa-file-text-o download-file" ></i></td>
+            <td><i (click)="downloadFile()" class="fa fa-file-text-o download-file"></i></td>
+      </tr>
+    </table>
+</div>

@@ -1,0 +1,55 @@
+.top {
+    height: 92px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    background: #2980b9;
+    color: #ffffff;
+}
+.left {
+    width: 15%;
+    float:left;
+    padding: 15px;
+    background: #eaf3f8;
+}
+.main {
+  margin-left:15%;
+  padding: 15px;
+  border: 1px solid #ccd1d4;
+
+ }
+ table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    padding:30px;
+}
+
+td, th {
+   // border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+th{
+    //border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+.main table tr td a {
+    cursor: pointer;
+    color: #2980b9;
+    text-decoration: underline;
+  }
+  .filter-list{
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+    height: 90vh;
+   }
+   .date-period-select {
+    border-left: 2px solid #999;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 15%;
+    cursor: pointer;
+}
+.fc-toolbar{
+    height: 20px !important;
+}

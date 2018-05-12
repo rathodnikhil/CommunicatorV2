@@ -1,3 +1,42 @@
-<p>
-  user-rights works!
-</p>
+<div class="top">
+    <div class="col-md-12 header">
+        <div class="row">
+           <h3 style="float:left;" class="col-md-9">Add / Revoke Rights&nbsp;<i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i></h3>
+            <div style="float:right">
+                    <div class="align-center">
+                        <input type="text" placeholder="search by name"  />
+                    </div>
+                </div>
+            </div>
+ </div>
+</div>
+<div class="left filter-list">
+<h4><i class="fa fa-filter"></i>&nbsp;Filter by Team</h4>
+<hr>
+  <ul>
+        <li *ngFor="let userPermission of userPermissionList"><input type="checkbox"> {{userPermission.teamId.teamName}}</li>
+        <li><input type="checkbox"> All</li>
+      </ul>
+</div>
+<div class="main">
+    <h5>Team/user Rights Details</h5>
+    <table>
+      <tr>
+        <th>Sr. No</th>
+        <th>UserName</th>
+        <th>Team</th>
+        <th>Status</th>
+        <th>Schedule Meeting</th>
+        <th>Broadcast Message</th>
+      </tr>
+      <tr *ngFor="let userPermission of userPermissionMemberList; let srNo = index">
+            <td>{{srNo+1}}</td>
+            <td>{{userPermission.user.name}} {{userPermission.user.lastName}}</td>
+            <td>{{userPermission.teamId.teamName}}</td>
+            <td>{{userPermission.user.status.statusId.status}}</td>
+            <td>Yes/No</td>
+            <td>Yes/No</td>
+      </tr>
+    </table>
+
+</div>
