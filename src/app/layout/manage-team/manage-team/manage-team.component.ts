@@ -10,18 +10,28 @@ import { TeamService } from '../../../services/team.service';
 export class ManageTeamComponent implements OnInit {
 _teamService: TeamService;
 userPermissionList = [];
+userPermissionMemList = [];
   constructor(teamService: TeamService) {
       this._teamService = teamService;
    }
 
   ngOnInit() {
+      //getTeamsByLoggedInUserId webservice call
     this.userPermissionList = [];
     const payload = {loggedInUserId: 1};
     this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
-       // debugger;
         this.userPermissionList = data.json();
     });
 
-  }
+    //getMembersByTeamId webservice call
+this.userPermissionMemList = [];
+const teamPayload = {teamId: 1};
+    this._teamService.getMembersByTeam(teamPayload).subscribe(data => {
+         this.userPermissionMemList = data.json();
+     });
 
+  }
+displayTeamDetails(teamId) {
+alert(teamId);
+}
 }

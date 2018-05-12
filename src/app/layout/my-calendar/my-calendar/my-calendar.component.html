@@ -17,37 +17,7 @@
 <div class="left filter-list">
 </div>
 <div class="main" >
-      <table style="width: 80%; ">
-          <tr>  <h4>Profile Details</h4></tr>
-          <tr >
-                <td>Profile Picture</td>
-                <td>  <img src="assets/images/default.png"  alt="Responsive image" class="img-fluid" /></td>
-          </tr>
-          <tr>
-                <td>Full Name</td>
-                <td><input value="Chetan Patwardhan" type="text"/></td>
-          </tr>
-          <!-- <tr>  <h4>General Settings</h4></tr> -->
-          <tr>
-                <td>Email / Username</td>
-                <td><input value="aa@gmail.com" type="text"/></td>
-          </tr>
-          <tr>
-                <td>Register By</td>
-                <td><input value="Chetan Patwardhan" type="text"/></td>
-          </tr>
-          <tr>
-                <td>Team Name</td>
-                <td><input value="Sales Team Banglore" type="text"/></td>
-          </tr>
-          <tr>
-                <td>Status</td>
-                <td><input value="Online" type="text"/></td>
-          </tr>
-        </table>
-        <div style="text-align:center;">
-            <button class="btn btn-primary" style="align:align-center">Save Changes</button>
-            <button class="btn btn-aecondary">Reset Changes</button>
-        </div>
+        <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
+        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
 
 </div>

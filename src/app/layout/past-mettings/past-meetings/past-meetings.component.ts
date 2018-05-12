@@ -26,8 +26,5 @@ this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
 downloadFile() {
     alert('File Downloaded successfully');
 }
-//download recording
-downloadRecording() {
-    alert('downloadRecording successfully');
-}
+
 }

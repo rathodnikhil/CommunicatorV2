@@ -1,7 +1,7 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'searchMember'
+    name: "searchMember"
 })
 export class SearchMemberPipe implements PipeTransform {
     transform(items: any[], searchText: string): any[] {
@@ -9,11 +9,14 @@ export class SearchMemberPipe implements PipeTransform {
             return [];
         }
         if (!searchText) {
-         return items;
+            return items;
         }
-    searchText = searchText.toLowerCase();
-    return items.filter( it => {
-          return it.toLowerCase().includes(searchText);
+        searchText = searchText.toLowerCase();
+        return items.filter(it => {
+            if (it !== null && it !== undefined) {
+                const fullName = it.name + ' ' + it.lastName;
+                return fullName.toLowerCase().includes(searchText);
+            }
         });
-       }
+    }
 }
