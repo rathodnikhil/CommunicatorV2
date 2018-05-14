@@ -7,7 +7,7 @@ export class GroupService {
     loggedInUser: any;
     constructor(private http: Http) { }
     getTotalGroupByLoggedInUserId(payload) {
-      const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
+      const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId?loggedInUserId' + payload.loggedInUserId;
       return this.http.post(url, payload);
     // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }

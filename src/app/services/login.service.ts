@@ -7,7 +7,7 @@ export class LoginService {
 
     constructor(private http: Http) { }
     authUser(payload) {
-        debugger;
+        //debugger;
       const url = urlConstants.baseUrl + 'getUser?userNameAndMeetingId=' + payload;
       return this.http.get(url);
     }

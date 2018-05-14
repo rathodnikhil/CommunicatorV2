@@ -1,7 +1,8 @@
 <div class="top">
     <div class="col-md-12 header">
         <div class="row">
-           <h3 style="float:left;" class="col-md-9">Add / Revoke Rights&nbsp;<i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i></h3>
+           <h3 style="float:left;" class="col-md-9"><a href="/dashboard/default">Add / Revoke Rights&nbsp;<i class="fa fa-home" style="float:left;
+            font-size: 28px;" aria-hidden="true"></i></a></h3>
             <div style="float:right">
                     <div class="align-center">
                         <input type="text" placeholder="search by name"  />
@@ -19,7 +20,10 @@
       </ul>
 </div>
 <div class="main">
-    <h5>Team/user Rights Details</h5>
+    <h4>Team/user Rights Details</h4>
+    <hr>
+
+
     <table>
       <tr>
         <th>Sr. No</th>
@@ -34,9 +38,18 @@
             <td>{{userPermission.user.name}} {{userPermission.user.lastName}}</td>
             <td>{{userPermission.teamId.teamName}}</td>
             <td>{{userPermission.user.status.statusId.status}}</td>
-            <td>Yes/No</td>
-            <td>Yes/No</td>
+            <td><div class="switch-field">
+                    <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
+                    <label for="switch_left">Yes</label>
+                    <input type="radio" id="switch_right" name="switch_2" value="no" />
+                    <label for="switch_right">No</label>
+                  </div></td>
+            <td><div class="switch-field">
+                    <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
+                    <label for="switch_left">Yes</label>
+                    <input type="radio" id="switch_right" name="switch_2" value="no" />
+                    <label for="switch_right">No</label>
+                  </div></td>
       </tr>
     </table>
-
 </div>

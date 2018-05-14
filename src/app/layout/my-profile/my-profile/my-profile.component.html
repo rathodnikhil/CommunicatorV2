@@ -1,7 +1,8 @@
 <div class="top">
         <div class="col-md-12 header">
             <div class="row">
-               <h3 style="float:left;" class="col-md-8">My Profile&nbsp;<i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i></h3>
+               <h3 style="float:left;" class="col-md-8"><a href="/dashboard/default">My Profile&nbsp;<i class="fa fa-home"
+                 style="float:left; font-size: 28px;" aria-hidden="true"></i></a></h3>
             </div>
      </div>
 </div>
@@ -15,30 +16,26 @@
           <tr >
                 <td>Profile Picture</td>
                 <td>  <img src="assets/images/default.png"  alt="Responsive image" class="img-fluid" /></td>
+                <td><input type="file"/></td>
           </tr>
           <tr>
                 <td>Full Name</td>
                 <td><input value="{{loggedInUser.name}}  {{loggedInUser.lastName}}" type="text"/></td>
           </tr>
-          <!-- <tr>  <h4>General Settings</h4></tr> -->
           <tr>
                 <td>Email / Username</td>
-                <td><input value="{{loggedInUser.email}}" type="text"/></td>
+                <td><input value="{{loggedInUser.email}}" type="text" readonly/></td>
           </tr>
-          <!-- <tr>
-                <td>Register By</td>
-                <td><input value="{{loggedInUser.registeredBy.name}}  {{loggedInUser.registeredBy.lastName}}" type="text"/></td>
-          </tr> -->
           <tr>
                 <td>Team Name</td>
-                <td><input value="{{loggedInUser.teamId.teamName}}" type="text"/></td>
+                <td><input value="{{loggedInUser.teamId.teamName}}" type="text" readonly/></td>
           </tr>
           <tr><h4>Other Details</h4></tr>
           <tr> <td>Total Meeting</td>
-            <td><input value="{{totalMeetingCount}}" type="text"/></td>
+            <td><input value="{{totalMeetingCount}}" type="text" readonly/></td>
         </tr>
         <tr> <td>Total Groups</td>
-            <td><input value="{{totalGroupCount}}" type="text"/></td>
+            <td><input value="{{totalGroupCount}}" type="text" readonly/></td>
         </tr>
         </table>
         <div style="text-align:center;">

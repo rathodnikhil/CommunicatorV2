@@ -63,7 +63,8 @@ tr:nth-child(even) {
     cursor: pointer;
   }
 .member-block{
-    float: right; padding-left: 30px;width: 50%;
+    //float: right;width: 50%;
+     padding-left: 15px;
 }
 .member-block label{
     color: #000000;
@@ -99,3 +100,7 @@ tr:nth-child(even) {
       margin-right: 25px;
       color: #eb223d;
   }
+a{
+    cursor: pointer;
+    color: #ffffff;
+}

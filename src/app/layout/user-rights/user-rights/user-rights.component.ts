@@ -20,11 +20,9 @@ userPermissionMemberList = [];
     const payload = {loggedInUserId: 1};
     this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
          this.userPermissionList = data.json();
-         alert(this.userPermissionList.length);
      });
      this._teamService.getMembersByLoggedInUserId(payload).subscribe(data => {
         this.userPermissionMemberList = data.json();
-        alert(this.userPermissionMemberList.length);
     });
   }
 
