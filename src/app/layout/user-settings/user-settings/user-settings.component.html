@@ -1,7 +1,8 @@
 <div class="top">
         <div class="col-md-12 header">
             <div class="row">
-               <h3 style="float:left;" class="col-md-8">Settings&nbsp;<i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i></h3>
+               <h3 style="float:left;" class="col-md-8"><a href="/dashboard/default">Settings&nbsp;<i class="fa fa-home" style="float:left; font-size: 28px;"
+                 aria-hidden="true"></i></a></h3>
             </div>
      </div>
 </div>
@@ -25,19 +26,35 @@
           <tr>  <h4>General Settings</h4></tr>
           <tr>
                 <td>Chat Notification</td>
-                <td>On / Off</td>
+                <td><div class="switch-field">
+                        <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
+                        <label for="switch_left">On</label>
+                        <input type="radio" id="switch_right" name="switch_2" value="no" />
+                        <label for="switch_right">Off</label>
+                      </div></td>
           </tr>
           <tr>
                 <td>Meeting Reminders</td>
-                <td>On / Off</td>
+                <td><div class="switch-field">
+                        <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
+                        <label for="switch_left">On</label>
+                        <input type="radio" id="switch_right" name="switch_2" value="no" />
+                        <label for="switch_right">Off</label>
+                      </div></td>
           </tr>
           <tr>
                 <td>File Download Location</td>
-                <td><input placeholder="Enter Name" type="file"/></td>
-                <td><a>Change Location</a></td>
+                <td colspan="2"><input placeholder="Enter Name" type="text" readonly value="D://communicator/fileLocation" class="col-md-12"/></td>
+                <td>
+                        <div id="hide" class="col-lg-8 col-xs-8">
+                                <label class="hand-cursor">
+                                 <input type="file" nv-file-select uploader="$ctrl.uploader"style="visibility:hidden;"/>
+                                 <a><span class="fa fa-folder-open">change Location</span></a>
+                                  </label>
+                             </div></td>
           </tr>
         </table>
-        <div style="text-align:center;">
+        <div class="button-block">
             <button class="btn btn-primary" style="align:align-center">Save Changes</button>
             <button class="btn btn-aecondary">Reset Changes</button>
         </div>

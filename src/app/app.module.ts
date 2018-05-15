@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,7 +12,7 @@ import { AuthGuard } from './shared';
 import { LoginService } from './services/login.service';
 import { HttpModule } from '@angular/http';
 import { UserService } from './services/user.service';
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 // AoT requires an exported function for factories
@@ -40,6 +40,8 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     declarations: [AppComponent], // , SeachMemberPipe
     providers: [AuthGuard, LoginService, UserService],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent], schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ]
 })
 export class AppModule {}

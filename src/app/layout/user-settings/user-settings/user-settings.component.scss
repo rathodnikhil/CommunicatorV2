@@ -1,3 +1,4 @@
+@import '../../user-rights/user-rights/user-rights.component.scss';
 .top {
     height: 92px;
     padding: 15px;
@@ -6,16 +7,15 @@
     color: #ffffff;
 }
 .left {
-    width: 15%;
+    width: 0%;
     float:left;
     padding: 15px;
 }
 .main {
-  margin-left:15%;
+ // margin-left:15%;
   padding: 15px;
   border: 1px solid #ccd1d4;
-  width: 50%;
-  margin-top: 55px;
+  margin:5%;
   box-shadow: 5px 10px 5px 5px #ccd1d4;
  }
  table {
@@ -41,6 +41,23 @@ th{
     color: #2980b9;
     text-decoration: underline;
   }
+  .main table tr td div a span {
+    cursor: pointer;
+    color: #2980b9;
+    text-decoration: underline;
+    font-size: 14px;
+  }
   .setting-header{
     background: #2980b9;color: #ffffff;padding: 8px;
   }
+.button-block{
+    text-align:center; padding-top: 15px;
+}
+a{
+    color: #ffffff;
+    cursor: pointer;
+}
+input[type="file"]
+{
+   color: transparent;
+}
