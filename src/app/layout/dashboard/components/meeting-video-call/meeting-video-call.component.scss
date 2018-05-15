@@ -1,251 +1,182 @@
-.split {
-    height: 100%;
-    // width: 70%;
-    // position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
 
-}
-.split-tab {
-    height: 100%;
-    // width: 30%;
-    // position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-
-}
-// .left {
-//     left: 0;
-// }
-
-// .right {
-//     right: 0;
-
-// }
-// @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
-
-*,
-*:after,
-*:before {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+//video calling
+#container {
+    width:100%;
+    text-align:center;
 }
 
-.clearfix:before,
-.clearfix:after {
-	content: " ";
-	display: table;
+#left {
+    float:left;
 }
 
-.clearfix:after {
-	clear: both;
-}
-
-h1 {
-	color: #ccc;
-	text-align: center;
-}
-
-a {
-  color: #ccc;
-  text-decoration: none;
-  outline: none;
-}
-
-/*Fun begins*/
-.tab_container {
-	width: 90%;
-    margin: 0 auto;
-    position: relative;
-}
-
-input, section {
-  clear: both;
-  display: none;
-}
-
-label {
-  font-weight: 300;
-  font-size: 14px;
-  display: block;
-  float: left;
-//   width: 33%;
-  padding: 1.5em;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  background: #f0f0f0;
-}
-
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content2,
-#tab3:checked ~ #content3,
-#tab4:checked ~ #content4,
-#tab5:checked ~ #content5 {
-  display: block;
-  background: #fff;
-  border: 1px solid rgb(219, 216, 216);
-  border-radius: 5px;
-    padding:5px;
+#center {
+    display: inline-block;
+    margin:0 auto;
 }
 
 
-.tab_container [id^="tab"]:checked + label {
-  background: #fff;
-  box-shadow: inset 0 3px #57c4d8;
+div.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
 }
 
-.tab_container [id^="tab"]:checked + label .fa {
-  color: #57c4d8;
-}
-
-label .fa {
-  font-size: 1.3em;
-  margin: 0 0.4em 0 0;
-}
-
-/*Media query*/
-@media only screen and (max-width: 900px) {
-  label span {
-    display: none;
-  }
-
-  .tab_container {
-    width: 100%;
-  }
-}
-
-
-
-/*Content Animation*/
-@keyframes fadeInScale {
-  0% {
-  	transform: scale(0.9);
-  	opacity: 0;
-  }
-
-  100% {
-  	transform: scale(1);
-  	opacity: 1;
-  }
-}
-
-.no_wrap {
-  text-align:center;
-  color:#57c4d8;
-}
-.link {
-  text-align:center;
-}
-.icon-size{
-    font-size: 28px;
-    cursor: pointer;
-}
-
-
-li:nth-child(odd) {
-    background: #eee;
-    border-radius:6px;
-    margin: 10px;
-    padding:5px;
-}
-li:nth-child(even) {
-   border:1px solid #848484;
-   border-radius:6px;
-    margin: 10px;
-    padding:5px;
-}
-
-li {
-  padding: 10p  x;
-  overflow: auto;
-  font-size: 14px;
-  font-family: 'Times New Roman', Times, serif;
-}
-.meetingHeader{
-    background:#57c4d8;
-    color:#FFFFFF;
-    border-radius:5px 5px 0px 0px;
-}
-.style-links {
-    color: #848484;
-    font-size: 14px;
-}
-.defaultMeetSelect {
-    background-color: #fff;
+div.scrollmenu div {
+    display: inline-block;
     text-align: center;
-    border-top: 1px solid rgba(0, 0, 0, 0.125);
-}
-.align-center {
-    margin: auto;
-    width: 100%;
-    color :#848484;
+    text-decoration: none;
 }
 
-  .btn.btn-secondary {
-    background:  #57c4d8;
-    /* color: #187bd0; */
-    border-color:  #40a4b6;
-  }
-.video-view{
-    margin:8px;
+div.scrollmenu a:hover {
+    background-color: #ddd;
 }
-.video-box{
-    padding: 50px;
-     margin-top:5px;
-      border:1px solid gray;
-      display: inline-block;
-  height:80%;
-  border-radius: 5px;
+
+#grid {
+   width: 100%;
+    float:left;
 }
-.page {
-    height: 100%; /* needed for proper layout */
+#grid div {
+    float: left;
+    padding: 10px;
+}
+
+#grid div img{
+    width: 95px;
+
+}
+.parent {
+    background-color:f1f1f1;
+    position:relative;
+    height: 70vh;
+    border:1px solid #dedede;
+    border-radius:8px;
+     background:rgb(238, 235, 235);
+    padding: 5px;
+    margin:2px;
   }
 
-  .page {
-    display: flex;
-    flex-direction: column;
+  .child {
+    width:47%;
+    height:35%;
+    background-color:#ddd;
+    position:absolute;
+    bottom:0px;
+    right:0px;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-radius: 8px;
   }
 
-  .page-header {
-    flex: 0 0 auto;
-   border : 1px solid gray;
-   border-radius :5px;
-   margin:5px;
-   height: 70%;
-  }
-
-  .page-content {
-    flex: 1 1 auto;
-    position: relative;/* need this to position inner content */
-    padding-left:15px;
-  }
-
-  .page-footer {
-    flex: 0 0 auto;
-    background-color: #dcdcdc;
-    margin:5px;
-    height: 6%;
-  }
-  .container {
+  /* Acordeon styles */
+  .tab {
     position: relative;
-}
-
-.topleft {
+    margin-bottom: 1px;
+    width: 100%;
+    overflow: hidden;
+  }
+  input {
     position: absolute;
-    top: 8px;
-    left: 16px;
-    font-size: 18px;
+    opacity: 0;
+    z-index: -1;
+  }
+  label {
+    position: relative;
+    display: block;
+    padding: 0 0 0 1em;
+    background: #2980b9;
+    color: #ffffff;
+    font-weight: bold;
+    line-height: 3;
+    cursor: pointer;
+  }
+  .blue label {
+    background: #2980b9;
+  }
+  .tab-content {
+    max-height: 0;
+    overflow: hidden;
+    background-color:f1f1f1;
+    -webkit-transition: max-height .35s;
+    -o-transition: max-height .35s;
+    transition: max-height .35s;
+  }
+  .blue .tab-content {
+    background-color:f1f1f1;
+  }
+  .tab-content p {
+    margin: 1em;
+  }
+  /* :checked */
+  input:checked ~ .tab-content {
+    max-height: 10em;
+    height: 100%;
+  }
+  /* Icon */
+  label::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all .35s;
+    -o-transition: all .35s;
+    transition: all .35s;
+    font-weight: bold;
+  }
+  input[type=checkbox] + label::after {
+    content: "+";
+  }
+  input[type=radio] + label::after {
+    content: "\25BC";
+  }
+  input[type=checkbox]:checked + label::after {
+    transform: rotate(315deg);
+  }
+  input[type=radio]:checked + label::after {
+    transform: rotateX(180deg);
+  }
+
+  .card-header{
+    background: #2980b9;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  .dropdown{
+    margin-top: 15px;
+  }
+.meeting-activity{
+    border:1px solid #dedede;border-radius:8px;  padding: 5px;
 }
-.btn-select{
-    background: #dcdcdc;
-    border:1px solid #848484;
+.content-tab{
+    border:1px solid #dee2e6;border-radius: 8px;height:77vh; padding: 5px;margin:4px;
+}
+.container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
     border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
 }
 
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
 
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.time-right {
+    float: right;
+    color:#2980b9;
+}
+
+.time-left {
+    float: left;
+    color: #2980b9;
+}
