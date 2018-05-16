@@ -49,6 +49,7 @@ import { SearchFutureMeetingPipe } from './components/default-meeting/search-fut
         BroadcastMessageComponent,
         CreateGroupComponent,
         SearchFutureMeetingPipe
-    ]
+    ],
+    exports: [CustomModalComponent]
 })
 export class DashboardModule {}

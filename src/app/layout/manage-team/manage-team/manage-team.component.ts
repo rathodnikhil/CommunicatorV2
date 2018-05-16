@@ -1,4 +1,4 @@
-import { Component, OnInit, Output , ViewChild , ViewContainerRef} from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -23,7 +23,7 @@ export class ManageTeamComponent implements OnInit {
             + '<i class="fa fa-user" style="font-size:200px;"></i></div>'
             + '<div class="col-md-5"><a style="text-decoration : underline">Change Picture</a><br><a>Remove Picture</a></div>'
             + '<hr></div>',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Profile',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add team',
         Button2Content: ''
     };
 
@@ -31,6 +31,7 @@ _teamService: TeamService;
 userPermissionList = [];
 userPermissionMemList = [];
 selectedTeamName: any;
+
   constructor(teamService: TeamService) {
       this._teamService = teamService;
    }
@@ -68,4 +69,6 @@ open() {
 updateProfileevent(event) {
 
 }
+
+
 }
