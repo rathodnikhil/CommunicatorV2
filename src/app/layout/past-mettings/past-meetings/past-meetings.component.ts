@@ -30,11 +30,14 @@ downloadFile() {
 
 scheduleByLoggedInUserId(event) {
 if (event.target.checked) {
-  this._meetingService.getPastMeetingsByUser(this.payloadSearch).subscribe(data => {
+  this._meetingService.getPastMeetingsScheduledByUser(this.payloadSearch).subscribe(data => {
     this.pastMeetingList = data.json();
   });
 } else {
-    alert('2');
+    const payload = {loggedInUserId: 1};
+    this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
+        this.pastMeetingList = data.json();
+    });
 }
 }
 momByLoggedInuser() {

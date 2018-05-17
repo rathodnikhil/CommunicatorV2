@@ -36,4 +36,8 @@ export class MeetingServiceService {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
     }
+    getPastMeetingsScheduledByUser(payload) {
+        const url = urlConstants.baseUrl + 'getPastMeetingsScheduledByUser?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+    }
 }
