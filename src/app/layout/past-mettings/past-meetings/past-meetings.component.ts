@@ -10,6 +10,7 @@ import { MeetingServiceService } from '../../../services/meeting-service.service
 export class PastMeetingsComponent implements OnInit {
     pastMeetingList = [];
     _meetingService: MeetingServiceService;
+    payloadSearch = {loggedInUserId: 1};
   constructor(meetingService: MeetingServiceService) {
     this._meetingService = meetingService;
    }
@@ -18,13 +19,28 @@ export class PastMeetingsComponent implements OnInit {
 //past meeting list web service call
 this.pastMeetingList = [];
 const payload = {loggedInUserId: 1};
-this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
+this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
     this.pastMeetingList = data.json();
 });
   }
   //download chat and mom file
 downloadFile() {
-    alert('File Downloaded successfully');
+  this._meetingService.downloadPdfReportFile();
 }
 
+scheduleByLoggedInUserId(event) {
+if (event.target.checked) {
+  this._meetingService.getPastMeetingsScheduledByUser(this.payloadSearch).subscribe(data => {
+    this.pastMeetingList = data.json();
+  });
+} else {
+    const payload = {loggedInUserId: 1};
+    this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
+        this.pastMeetingList = data.json();
+    });
+}
+}
+momByLoggedInuser() {
+
+}
 }

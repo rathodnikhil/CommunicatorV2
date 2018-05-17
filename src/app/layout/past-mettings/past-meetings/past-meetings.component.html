@@ -19,8 +19,8 @@
 <h4><i class="fa fa-filter"></i>&nbsp;FILTERS</h4>
 <hr>
 <h5>General</h5>
-<input type="checkbox" name="vehicle" value="Bike"> Schdule By Me<br>
-<input type="checkbox" name="vehicle" value="Car" checked="checked">MOM By Me<br>
+<input type="checkbox" id="scheduledByMe" (change)="scheduleByLoggedInUserId($event)"> Schdule By Me<br>
+<input type="checkbox" id="momByMe"  (change)="momByLoggedInuser($event)">MOM By Me<br>
 </div>
 <div class="main">
     <h4>Past Meeting Details</h4>
