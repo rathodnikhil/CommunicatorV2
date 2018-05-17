@@ -1,24 +1,27 @@
 .popHeaderMeeting {
 	padding: 10px;
-    background-color: #EEEEEE;
-    border-bottom : 1px solid #848484;
+    background-color: #eaf3f8;
+    border-bottom : 1px solid  #2980b9;
 }
 .popHeaderMeeting p{
-    font-size: 12px; color: #5a5656;
+    font-size: 12px; color:  #2980b9;
 }
 .btn.btn-secondary {
-    background:  #57c4d8;
+    background:  #2980b9;
     /* color: #187bd0; */
-    border-color:  #40a4b6;
+    border-color:  #75b3dd;
     border-radius: 0px 5px 5px 0px;
 }
 .btn.btn-secondary.btn-border-radius{
     border-radius: 5px;
 }
 .popFooter{
-background-color: #EEEEEE; border-top:1px solid #848484;
+background-color: #eaf3f8; border-top:1px solid  #2980b9;
 }
 
 .popTitle{
-font-size: 22px; color: #848484;
+font-size: 22px; color:  #2980b9;font-weight: bold;
+}
+.btn-border-radius{
+    border-radius: 5px;
 }

@@ -11,6 +11,7 @@ export class UserRightsComponent implements OnInit {
 _teamService: TeamService;
 userPermissionList = [];
 userPermissionMemberList = [];
+payloadSearch: any;
   constructor(teamService: TeamService) {
       this._teamService = teamService;
    }
@@ -25,5 +26,14 @@ userPermissionMemberList = [];
         this.userPermissionMemberList = data.json();
     });
   }
-
+  filterMemberByTeam(event , selectedTeamId) {
+    this.payloadSearch = {teamId: selectedTeamId};
+      if (event.target.checked) {
+        this._teamService.getMembersByTeam(this.payloadSearch).subscribe(data => {
+            this.userPermissionMemberList = data.json();
+        });
+      } else {
+        alert('checkbox is unchecked');
+      }
+  }
 }

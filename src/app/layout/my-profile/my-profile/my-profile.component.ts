@@ -33,13 +33,12 @@ export class MyProfileComponent implements OnInit {
     this.totalMeetingCount = {};
     this._meetingservice.getTotalMeetingCountByLoggedInUserId(payload).subscribe(data => {
         this.totalMeetingCount = data.json();
-       // alert(JSON.parse(this.totalMeetingCount));
     });
 
   this.totalGroupCount = {};
     this._groupService.getTotalGroupByLoggedInUserId(payload).subscribe(data => {
         this.totalGroupCount = data.json();
-       // alert(JSON.parse(this.totalMeetingCount));
+        alert(this.totalGroupCount);
     });
   }
 

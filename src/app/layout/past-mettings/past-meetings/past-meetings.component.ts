@@ -40,7 +40,16 @@ if (event.target.checked) {
     });
 }
 }
-momByLoggedInuser() {
-
+momByLoggedInuser(event) {
+    const payload = {loggedInUserId: 2};
+    if (event.target.checked) {
+        this._meetingService.getMomListByUser(payload).subscribe(data => {
+            this.pastMeetingList = data.json();
+        });
+    } else {
+        this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
+            this.pastMeetingList = data.json();
+        });
+    }
 }
 }

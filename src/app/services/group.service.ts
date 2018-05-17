@@ -11,4 +11,9 @@ export class GroupService {
       return this.http.post(url, payload);
     // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
+    getTeamsByLoggedInUserId(payload) {
+        const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+      // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+      }
 }
