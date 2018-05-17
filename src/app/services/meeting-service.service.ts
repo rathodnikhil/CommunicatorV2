@@ -28,4 +28,12 @@ export class MeetingServiceService {
         const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
     }
+    downloadPdfReportFile() {
+        const url = urlConstants.baseUrl + 'downloadPdfReportFile';
+        return this.http.post(url , null);
+    }
+    getPastMeetingsByUser(payload) {
+        const url = urlConstants.baseUrl + 'getPastMeetingsByUser?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+    }
 }
