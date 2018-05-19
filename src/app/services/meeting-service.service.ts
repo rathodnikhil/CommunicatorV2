@@ -40,8 +40,12 @@ export class MeetingServiceService {
         const url = urlConstants.baseUrl + 'getPastMeetingsScheduledByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
     }
-    getMomListByUser(payload) {
-        const url = urlConstants.baseUrl + 'getMomListByUser?loggedInUserId=' + payload.loggedInUserId;
+    getMeetingsMomByUser(payload) {
+        const url = urlConstants.baseUrl + 'getMeetingsMomByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
+    }
+    download() {
+        const url = urlConstants.baseUrl + 'downloadFile';
+        return this.http.get(url);
     }
 }
