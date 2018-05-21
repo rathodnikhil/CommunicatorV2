@@ -74,4 +74,6 @@ open() {
 openMemberPopup() {
 this.addNewMemberModal.open();
 }
+
+
 }

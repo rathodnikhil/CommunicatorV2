@@ -31,6 +31,7 @@ export class TimelineComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.loggedInUser = {name: 'NIkitesh', lastName: 'Kolpe'};
     const payload = {loggedInUserId: 2};
     this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
         this.loggedInUser = data.json();

@@ -13,7 +13,7 @@ export class DefaultChatComponent implements OnInit {
         this._userService = userService;
      }
   ngOnInit() {
-      this.loggedInUser = {};
+      this.loggedInUser = {name: 'NIkitesh', lastName: 'Kolpe'};
     const payload = {loggedInUserId: 2};
     this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
         this.loggedInUser = data.json();
