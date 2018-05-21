@@ -91,7 +91,6 @@ download() {
     const ajax = new XMLHttpRequest();
     const URL = "http://localhost:8080/download/abc";
 
-
        ajax.open("GET", URL);
        // xhr.overrideMimeType("application/octet-stream");
        //  xhr.send();
