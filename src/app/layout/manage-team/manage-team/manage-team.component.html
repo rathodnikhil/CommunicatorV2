@@ -23,7 +23,7 @@
     <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
 </div>
 </div>
- <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees"></app-custom-modal>
+ <app-custom-modal #addNewTeamModal [model]="newTeam"></app-custom-modal>
 <div class="main">
     <h4>Team Details</h4>
     <hr>
@@ -49,9 +49,10 @@
      <input type="text" value="{{userMemPermission.user.name}} {{userMemPermission.user.lastName}}" /></div>
     </div>
       <div style="text-align:center;">
-            <button class="btn btn-primary" style="align:align-center">Add New Member</button>
+            <button class="btn btn-primary" style="align:align-center" (click)="openMemberPopup()">Add New Member</button>
             <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
         </div>
+        <app-custom-modal #addNewMemberModal [model]="newMember"></app-custom-modal>
     </div>
     </div>
 </div>

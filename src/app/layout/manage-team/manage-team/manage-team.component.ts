@@ -11,19 +11,25 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 })
 export class ManageTeamComponent implements OnInit {
 
-    @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
-    InviteAttendees: CustomModalModel = {
+    @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
+    newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
-        title: 'Profile Details',
-        smallHeading: 'You can change your profile details here',
-        body: '<div class="row"><div class="col-md-4"><label>Display Name</label></div><div class="col-md-5"> Chetan Patwardhan</div>'
-           +  '<div class="col-md-3"><a>Change</a></div></div><div class="row"><div class="col-md-4">'
-            + 'Display Picture</div>'
-             + '<div class="col-md-3">'
-            + '<i class="fa fa-user" style="font-size:200px;"></i></div>'
-            + '<div class="col-md-5"><a style="text-decoration : underline">Change Picture</a><br><a>Remove Picture</a></div>'
-            + '<hr></div>',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add team',
+        title: 'New Team',
+        smallHeading: 'You can add new team details here',
+        body: '<div class="row"><div class="col-md-3"><label>Team Name</label></div><div><input placeholder="Type Name Here.."/>' +
+              '</div></div>',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Team',
+        Button2Content: ''
+    };
+
+    @ViewChild('addNewMemberModal') public addNewMemberModal: CustomModalComponent;
+    newMember: CustomModalModel = {
+        titleIcon: '<i class="fa fa-user"></i>',
+        title: 'New Member',
+        smallHeading: 'You can add new member details here',
+        body: '<div class="row"><div class="col-md-3"><label>Member Name</label></div><div><input placeholder="Type Name Here.."/>' +
+              '</div></div>',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Member',
         Button2Content: ''
     };
 
@@ -63,11 +69,10 @@ displayTeamDetails(teamId , teamName) {
 }
 //to open modal popup
 open() {
-  alert();
-    this.inviteAttendeesModal.open();
+    this.addNewTeamModal.open();
 }
-updateProfileevent(event) {
-
+openMemberPopup() {
+this.addNewMemberModal.open();
 }
 
 

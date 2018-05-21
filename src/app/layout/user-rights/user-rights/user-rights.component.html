@@ -15,7 +15,7 @@
 <h4><i class="fa fa-filter"></i>&nbsp;Filter by Team</h4>
 <hr>
   <ul>
-        <li *ngFor="let userPermission of userPermissionList"><input type="checkbox"> {{userPermission.teamId.teamName}}</li>
+        <li *ngFor="let userPermission of userPermissionList"><input type="checkbox" (change)="filterMemberByTeam($event , userPermission.teamId.teamId)"> {{userPermission.teamId.teamName}}</li>
         <li><input type="checkbox"> All</li>
       </ul>
 </div>
