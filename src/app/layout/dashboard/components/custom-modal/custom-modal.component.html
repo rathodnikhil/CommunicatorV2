@@ -18,6 +18,6 @@
     <div class="modal-footer popFooter">
             <button type="button" class="btn btn-secondary btn-border-radius" [innerHTML]="model.Button1Content" (click)="button1Click()"></button>
             <button type="button" class="btn btn-secondary btn-border-radius" [innerHTML]="model.Button2Content" *ngIf="model.Button2Content" (click)="button2Click()"></button>
-        <button type="button" class="btn btn-secondary" (click)="c('Close click')" *ngIf="!model.Button2Content">Close</button>
+        <button type="button" class="btn btn-danger  btn-border-radius" (click)="c('Close click')" *ngIf="!model.Button2Content">Close</button>
     </div>
 </ng-template>

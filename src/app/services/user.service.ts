@@ -16,4 +16,8 @@ export class UserService {
         return this.http.post(url, payload);
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
       }
+      getUserSettingsByLoggedInUser(payload) {
+        const url = urlConstants.baseUrl + ' getUserSettingsByLoggedInUser?loggedInUserId=' + payload.loggedInUserId;
+        return this.http.post(url, payload);
+      }
 }

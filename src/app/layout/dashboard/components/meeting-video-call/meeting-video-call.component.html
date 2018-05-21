@@ -74,12 +74,13 @@
                             <ngb-tab title="Chat">
                                 <ng-template ngbTabContent>
                                         <div ngbDropdown class="d-inline-block dropdown" >
-                                                <button class="btn btn-outline-primary" ngbDropdownToggle>Send Message to:</button>
+                                                <button class="btn btn-outline-primary" ngbDropdownToggle>{{messageSendTo}}</button>
                                                 <div ngbDropdownMenu>
-                                                    <button class="dropdown-item">Everyone</button>
-                                                    <button class="dropdown-item">Vinita Kolhapure</button>
+                                                    <button *ngFor="let member of userList" class="dropdown-item" on-click="changeMessageTo(member)">
+                                                        {{member.name+ ' '+member.lastName}}</button>
+                                                    <!-- <button class="dropdown-item">Vinita Kolhapure</button>
                                                     <button class="dropdown-item">Namita Pandit</button>
-                                                    <button class="dropdown-item">You</button>
+                                                    <button class="dropdown-item">You</button> -->
                                                 </div>
                                             </div>
             <div style="height: 70vh;">
@@ -122,12 +123,10 @@
                                 <ng-template ngbTabContent>
                                     <div class="row content-tab">
                                         <div ngbDropdown class="d-inline-block dropdown" >
-                                                        <button class="btn btn-outline-primary" ngbDropdownToggle>Set MOM Duty</button>
+                                                        <button class="btn btn-outline-primary" ngbDropdownToggle>{{momTo}}</button>
                                                         <div ngbDropdownMenu>
-                                                            <button class="dropdown-item">Everyone</button>
-                                                            <button class="dropdown-item">Vinita Kolhapure</button>
-                                                            <button class="dropdown-item">Namita Pandit</button>
-                                                            <button class="dropdown-item">You</button>
+                                                                <button *ngFor="let member of userList" class="dropdown-item" on-click="changeMomTo(member)">
+                                                                    {{member.name+ ' '+member.lastName}}</button>
                                                         </div>
                                                     </div>
                                               <div class="row">

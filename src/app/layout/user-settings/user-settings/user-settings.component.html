@@ -21,8 +21,13 @@
           </tr>
           <tr>
                 <td>Display Name</td>
-                <td><input placeholder="Enter Name" type="text"/></td>
+                <td><input placeholder="Enter Name" type="text" value="{{userSettings.fullName}}"/></td>
           </tr>
+          <tr>  <h4>Meeting Settings</h4></tr>
+          <tr>
+                <td>Meeting Code</td>
+                <td><input placeholder="Enter Meeting Code" value="userSettings.meetingCode.meetingCode"/></td>
+        </tr>
           <tr>  <h4>General Settings</h4></tr>
           <tr>
                 <td>Chat Notification</td>
@@ -44,7 +49,7 @@
           </tr>
           <tr>
                 <td>File Download Location</td>
-                <td colspan="2"><input placeholder="Enter Name" type="text" readonly value="D://communicator/fileLocation" class="col-md-12"/></td>
+                <td colspan="2"><input placeholder="Enter Name" type="text" readonly value="{{userSettings.downloadLocation}}" class="col-md-12"/></td>
                 <td>
                         <div id="hide" class="col-lg-8 col-xs-8">
                                 <label class="hand-cursor">

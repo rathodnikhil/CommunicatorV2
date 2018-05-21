@@ -12,6 +12,7 @@ export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
     currentDate: any;
+    meeting: any;
     _meetingService: MeetingServiceService;
     // public radioGroupForm: FormGroup;
     InviteAttendees: CustomModalModel = {
@@ -29,7 +30,6 @@ export class ScheduleMeetingComponent implements OnInit {
         Button1Content: '<i class="fa fa-envelope"></i> Outlook',
         Button2Content: '<i class="fa fa-copy"></i> Copy'
     };
-    meeting: any;
     durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)' , '90 Min (1.5 Hour)' , '120 Min (2 Hour)', '150 Min (2.5 Hour)',
     '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
     timeZoneArray = [
