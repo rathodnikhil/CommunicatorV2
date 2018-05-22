@@ -48,4 +48,8 @@ export class MeetingServiceService {
         const url = urlConstants.baseUrl + 'downloadFile';
         return this.http.get(url);
     }
+    getMeetingAttendee(payload) {
+        const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingId=' + payload.meetingId;
+        return this.http.post(url, payload);
+    }
 }
