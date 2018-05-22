@@ -2,78 +2,68 @@
           <div class="fixed-header">
                 <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
             </div>
-            <div class="container">
+            <div>
                     <div class="login-page" [@routerTransition]>
-                            <div class="logincontent">
-                                <div class="loginheading">
-                                    Register
-                                </div>
-                                <form class="form-signin">
-                                        <div class="row">
-                                                <div class="col-md-3">
-                                                        <p class="input_title">Full Name</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                        <input type="text" id="inputFName" class="login_box" placeholder="Enter Full Name" required>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                    <div class="col-md-3">
-                                                            <p class="input_title">Email</p>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                            <input type="text" id="inputPassword" class="login_box" placeholder="Enter Email" required>
-                                                    </div>
-                                                  </div>
-                                                  <div class="row">
-                                                        <div class="col-md-3">
-                                                                <p class="input_title">Username</p>
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                                <input type="text" id="inputPassword" class="login_box" placeholder="Enter Username" required>
-                                                        </div>
-                                                      </div>
-                                        <div class="row">
-                                                <div class="col-md-3">
-                                                        <p class="input_title">Password</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                        <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                    <div class="col-md-3">
-                                                            <p class="input_title">Confirm</p>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                            <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
-                                                    </div>
-                                                  </div>
-                                                  <div class="row">
-                                                    <div class="col-md-3">
-                                                            <p class="input_title">Team</p>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <div ngbDropdown class="d-inline-block dropdown">
-                                                            <button class="btn btn-outline-primary" ngbDropdownToggle>Select team</button>
+                        <div class="container" >
+                            <h3>SignUp</h3>
+                            <p style="text-align: center;">________________</p>
+
+                            <form action="" method="" id="login-form" >
+                                    <div class="form-field">
+                                            <label for="user-name">
+                                              Full Name
+                                            </label>
+                                            <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
+                                          </div>
+                              <div class="form-field">
+                                <label for="user-name">
+                                  Username or Email
+                                </label>
+                                <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
+                              </div>
+
+                              <div class="form-field">
+                                <label for="pass">
+                                  Password
+                                </label>
+                                <input type="password" name="password" id="pass" size="50" required />
+                              </div>
+
+                              <div class="form-field">
+                                    <label for="pass">
+                                     Confirm  Password
+                                    </label>
+                                    <input type="password" name="password" id="pass" size="50" required />
+                                  </div>
+                                                    <div ngbDropdown class="d-inline-block dropdown" >
+                                                            <button class="btn btn-outline-primary" ngbDropdownToggle>Select Team</button>
                                                             <div ngbDropdownMenu>
-                                                                <button *ngFor="let team of teamArray" class="dropdown-item">{{team}}</button>
+                                                                <!-- <button *ngFor="let team of teamArray" class="dropdown-item">{{team.teamName}}</button> -->
+                                                                 <button class="dropdown-item">Namita Pandit</button>
+                                                                <button class="dropdown-item">You</button>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="loginremember">
-                                                            <a type="submit" class="loginbtn" value="Login" id="btnSubmit" [routerLink]="['/login']"> Log in </a>
-                                                            <a type="submit" class="loginbtn" value="Register" id="btnSubmit" [routerLink]="['/dashboard']">
-                                                                Register </a>
-                                                        </div>
-                                                  </div>
-                                  </form><!-- /form -->
-                                </div>
-                            </div>
+                              <div id="form-submit">
+                               <a [routerLink]="['/dashboard']" ><input type="submit" value="Register" /></a>
+                              </div>
+                              <!-- <div id="forgot-link">
+                                <a href="">Forgot Password</a>
+                              </div> -->
+                            </form>
+
+                          <div id="register-link">
+                            <span>
+                              Already Have an Account?
+                              <a style="color:#2980b9;text-decoration: underline;font-weight: bold;"  [routerLink]="['/login']">
+                                Sign In
+                              </a>
+                            </span>
+                          </div>
+                        </div>
                             <!-- /form -->
                         <!-- /card-container -->
                     </div>
 
-            <div class="fixed-footer">
-                <div class="container">Copyright &copy; 2018 Coreflex Solutions</div>
+            <div class="fixed-footer" style="width: 100%; text-align: center;">
+                <div >Copyright &copy; 2018 Coreflex Solutions</div>
             </div>

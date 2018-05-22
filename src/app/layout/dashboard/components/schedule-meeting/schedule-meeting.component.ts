@@ -23,7 +23,8 @@ export class ScheduleMeetingComponent implements OnInit {
              + '<div class="alert alert-success alert-dismissable" id="meetingDetailsCopiedAlert">'
              + 'Meeting Details Copied. Kindly share via your preferred Mail Id.</div>'
              + '<div><p  style=" color: #757575;">Meeting Subject</h5><p style="font-size:14px;">'
-             + 'Sat Mar 24 2018 from 4:15 PM - 6PM (Indian Standard Time)</p>'
+            //  + 'Sat Mar 24 2018 from 4:15 PM - 6PM (Indian Standard Time)</p>'
+             + 'Date : {{payload.meetingDate}}'
              + '<p style="color: #757575;">Please join my meeting from your computer,tablet or smartphone</p>'
              + '<a style="text-decoration :underline;">https://184.171.162.250:9090/demos/demo_multiparty.html</a>'
              + '<p>Access Code : MeetCore657400248</p></div>',
