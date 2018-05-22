@@ -25,7 +25,7 @@ export class TeamService {
        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
        }
        getAllEnableTeams() {
-        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId';
+        const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.http.get(url);
        }
 }

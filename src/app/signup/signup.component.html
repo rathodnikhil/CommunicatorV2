@@ -1,69 +1,71 @@
+<div class="fixed-header">
+    <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
+</div>
+<div>
+    <div class="login-page" [@routerTransition]>
+        <div class="container">
+            <h3>SignUp</h3>
+            <p style="text-align: center;">________________</p>
 
-          <div class="fixed-header">
-                <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
-            </div>
-            <div>
-                    <div class="login-page" [@routerTransition]>
-                        <div class="container" >
-                            <h3>SignUp</h3>
-                            <p style="text-align: center;">________________</p>
+            <form action="" method="" id="login-form">
+                <div class="form-field">
+                    <label for="user-name">
+                        Full Name
+                    </label>
+                    <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
+                </div>
+                <div class="form-field">
+                    <label for="user-name">
+                        Username or Email
+                    </label>
+                    <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
+                </div>
 
-                            <form action="" method="" id="login-form" >
-                                    <div class="form-field">
-                                            <label for="user-name">
-                                              Full Name
-                                            </label>
-                                            <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
-                                          </div>
-                              <div class="form-field">
-                                <label for="user-name">
-                                  Username or Email
-                                </label>
-                                <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
-                              </div>
+                <div class="form-field">
+                    <label for="pass">
+                        Password
+                    </label>
+                    <input type="password" name="password" id="pass" size="50" required />
+                </div>
 
-                              <div class="form-field">
-                                <label for="pass">
-                                  Password
-                                </label>
-                                <input type="password" name="password" id="pass" size="50" required />
-                              </div>
-
-                              <div class="form-field">
-                                    <label for="pass">
-                                     Confirm  Password
-                                    </label>
-                                    <input type="password" name="password" id="pass" size="50" required />
-                                  </div>
-                                                    <div ngbDropdown class="d-inline-block dropdown" >
-                                                            <button class="btn btn-outline-primary" ngbDropdownToggle>Select Team</button>
-                                                            <div ngbDropdownMenu>
-                                                                <!-- <button *ngFor="let team of teamArray" class="dropdown-item">{{team.teamName}}</button> -->
-                                                                 <button class="dropdown-item">Namita Pandit</button>
-                                                                <button class="dropdown-item">You</button>
-                                                            </div>
-                                                        </div>
-                              <div id="form-submit">
-                               <a [routerLink]="['/dashboard']" ><input type="submit" value="Register" /></a>
-                              </div>
-                              <!-- <div id="forgot-link">
+                <div class="form-field">
+                    <label for="pass">
+                        Confirm Password
+                    </label>
+                    <input type="password" name="password" id="pass" size="50" required />
+                </div>
+                <div ngbDropdown class="d-inline-block dropdown">
+                    <button class="btn btn-outline-primary" ngbDropdownToggle>Select Team</button>
+                    <div ngbDropdownMenu>
+                        <!-- <button *ngFor="let team of teamArray" class="dropdown-item">{{team.teamName}}</button> -->
+                        <button class="dropdown-item">Namita Pandit</button>
+                        <button class="dropdown-item">You</button>
+                    </div>
+                </div>
+                <div id="form-submit">
+                    <a [routerLink]="['/dashboard']">
+                        <input type="submit" value="Register" />
+                    </a>
+                </div>
+                <!-- <div id="forgot-link">
                                 <a href="">Forgot Password</a>
                               </div> -->
-                            </form>
+            </form>
 
-                          <div id="register-link">
-                            <span>
-                              Already Have an Account?
-                              <a style="color:#2980b9;text-decoration: underline;font-weight: bold;"  [routerLink]="['/login']">
-                                Sign In
-                              </a>
-                            </span>
-                          </div>
-                        </div>
-                            <!-- /form -->
-                        <!-- /card-container -->
-                    </div>
-
-            <div class="fixed-footer" style="width: 100%; text-align: center;">
-                <div >Copyright &copy; 2018 Coreflex Solutions</div>
+            <div id="register-link">
+                <span>
+                    Already Have an Account?
+                    <a style="color:#2980b9;text-decoration: underline;font-weight: bold;" [routerLink]="['/login']">
+                        Sign In
+                    </a>
+                </span>
             </div>
+        </div>
+        <!-- /form -->
+        <!-- /card-container -->
+    </div>
+
+    <div class="fixed-footer" style="width: 100%; text-align: center;">
+        <div>Copyright &copy; 2018 Coreflex Solutions</div>
+    </div>
+
