@@ -31,7 +31,27 @@ export class TimelineComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.loggedInUser = {name: 'NIkitesh', lastName: 'Kolpe'};
+    this.loggedInUser ={
+        'id': 2,
+        'email': 'b@gmail.com',
+        'password': '1235',
+        'name': 'sunita',
+        'lastName': 'kolhapure',
+        'active': 1,
+        'teamId': {
+            'prime': null,
+            'errorFl': false,
+            'warningFl': false,
+            'message': null,
+            'teamId': 1,
+            'teamName': 'cfs_pune',
+            'status': {
+                'statusId': 1,
+                'status': 'Active'
+            }
+        },
+        'profileImgPath': null
+    };
     const payload = {loggedInUserId: 2};
     this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
         this.loggedInUser = data.json();
