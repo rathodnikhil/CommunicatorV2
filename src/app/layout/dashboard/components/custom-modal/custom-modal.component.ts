@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter, ViewChild, Input } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, Input, ElementRef, Inject } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-custom-modal',
   templateUrl: './custom-modal.component.html',
@@ -8,11 +9,12 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
 export class CustomModalComponent {
     closeResult: string;
     @ViewChild('content') public content2: NgbActiveModal;
+    @ViewChild('closeBtn') closeBtn: ElementRef;
     @Input() model: CustomModalModel;
     @Output() Button1Event = new EventEmitter();
     @Output() Button2Event = new EventEmitter();
     @Output() CancelEvent = new EventEmitter();
-    constructor(private modalService: NgbModal) { }
+    constructor(private modalService: NgbModal, @Inject(DOCUMENT) private document) { }
 
     open() {
         // debugger;
@@ -38,6 +40,10 @@ export class CustomModalComponent {
     }
     button2Click(e) {
         this.Button2Event.emit(e);
+    }
+    close() {
+        const closeBtn = this.document.getElementById('closeBtn');
+        closeBtn.click();
     }
 }
 export class CustomModalModel {

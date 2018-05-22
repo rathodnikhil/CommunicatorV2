@@ -8,16 +8,9 @@
             </span>
             <p  *ngIf="model.smallHeading">{{model.smallHeading}}</p>
         </div>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button id="closeBtn" type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
-        <div [innerHTML]="model.body"></div>
-    </div>
-    <div class="modal-footer popFooter">
-            <button type="button" class="btn btn-secondary btn-border-radius" [innerHTML]="model.Button1Content" (click)="button1Click()"></button>
-            <button type="button" class="btn btn-secondary btn-border-radius" [innerHTML]="model.Button2Content" *ngIf="model.Button2Content" (click)="button2Click()"></button>
-        <button type="button" class="btn btn-danger  btn-border-radius" (click)="c('Close click')" *ngIf="!model.Button2Content">Close</button>
-    </div>
+    <ng-content></ng-content>
 </ng-template>
