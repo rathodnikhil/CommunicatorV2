@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     async onLoggedin() {
         // debugger;
         const userid = '123';
-        debugger;
+      //  debugger;
         const abc = await this._loginService
             .authUser(userid)
             .subscribe(
