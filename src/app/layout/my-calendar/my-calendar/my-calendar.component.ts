@@ -74,7 +74,7 @@ export class MyCalendarComponent implements OnInit {
 
     ngOnInit() {
             this.calendarOptions = {
-                theme: true,
+                // theme: true,
                 editable: true,
                 eventLimit: false,
                 header: {

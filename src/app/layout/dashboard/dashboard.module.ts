@@ -23,6 +23,7 @@ import { SearchMemberPipe } from './components/notification/search-member.pipe';
 import { BroadcastMessageComponent } from './broadcast-message/broadcast-message.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { SearchFutureMeetingPipe } from './components/default-meeting/search-future-meeting.pipe';
+import { VideoCallComponent } from './components/video-call/video-call.component';
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import { SearchFutureMeetingPipe } from './components/default-meeting/search-fut
         SearchMemberPipe,
         BroadcastMessageComponent,
         CreateGroupComponent,
-        SearchFutureMeetingPipe
+        SearchFutureMeetingPipe,
+        VideoCallComponent
     ],
     exports: [CustomModalComponent]
 })
