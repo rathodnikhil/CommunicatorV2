@@ -10,6 +10,7 @@ import { TeamService } from '../services/team.service';
     animations: [routerTransition()]
 })
 export class SignupComponent implements OnInit {
+    selectedTeam: any;
     teamArray = [];
     _teamService: TeamService;
     constructor(teamService: TeamService) {
@@ -17,9 +18,12 @@ export class SignupComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.selectedTeam = 'Select Team';
         this._teamService.getAllEnableTeams().subscribe(data => {
             this.teamArray = data.json();
-            alert(this.teamArray.length);
         });
+    }
+    changeTeam(teamName) {
+        this.selectedTeam = teamName;
     }
 }
