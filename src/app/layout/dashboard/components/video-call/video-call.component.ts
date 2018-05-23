@@ -50,7 +50,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         };
     }
     afterScriptAdded() {
-        // debugger;
+         debugger;
         const meetingName = this.document.getElementById('meeting-name');
         meetingName.value = 'Nikitesh Kolpe- Vrushali';
         this.document.getElementById('setup-meeting').click();
