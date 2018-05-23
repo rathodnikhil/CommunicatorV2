@@ -34,12 +34,17 @@
                     </label>
                     <input type="password" name="password" id="pass" size="50" required />
                 </div>
-                <div ngbDropdown class="d-inline-block dropdown">
-                    <button class="btn btn-outline-primary" ngbDropdownToggle>Select Team</button>
-                    <div ngbDropdownMenu>
-                        <!-- <button *ngFor="let team of teamArray" class="dropdown-item">{{team.teamName}}</button> -->
-                        <button class="dropdown-item">Namita Pandit</button>
-                        <button class="dropdown-item">You</button>
+
+                <div class="form-field">
+                    <label for="pass">
+                       Teams
+                    </label>
+                    <div ngbDropdown class="d-inline-block dropdown">
+                        <button class="btn btn-outline-primary col-md-12" ngbDropdownToggle>{{selectedTeam}}</button>
+                        <div ngbDropdownMenu>
+                             <button  *ngFor="let team of teamArray" on-click="changeTeam(team.teamName)"
+                             class="dropdown-item">{{team.teamName}}</button>
+                        </div>
                     </div>
                 </div>
                 <div id="form-submit">
@@ -47,15 +52,12 @@
                         <input type="submit" value="Register" />
                     </a>
                 </div>
-                <!-- <div id="forgot-link">
-                                <a href="">Forgot Password</a>
-                              </div> -->
             </form>
 
             <div id="register-link">
                 <span>
                     Already Have an Account?
-                    <a style="color:#2980b9;text-decoration: underline;font-weight: bold;" [routerLink]="['/login']">
+                    <a class="signIn-link" [routerLink]="['/login']">
                         Sign In
                     </a>
                 </span>
@@ -66,6 +68,6 @@
     </div>
 
     <div class="fixed-footer" style="width: 100%; text-align: center;">
-        <div>Copyright &copy; 2018 Coreflex Solutions</div>
+        <div>Copyright &copy; 2018 Coreflex Solutions.</div>
     </div>
 
