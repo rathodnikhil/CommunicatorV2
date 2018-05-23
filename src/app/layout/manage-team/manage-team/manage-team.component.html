@@ -1,34 +1,55 @@
 <div class="top">
     <div class="col-md-12 header">
         <div class="row">
-           <h3 style="float:left;" class="col-md-9"><a href="/dashboard/default">Manage Teams&nbsp;<i class="fa fa-home"
-            style="float:left; font-size: 28px;" aria-hidden="true"></i></a></h3>
+            <h3 style="float:left;" class="col-md-9">
+                <a href="/dashboard/default">Manage Teams&nbsp;
+                    <i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i>
+                </a>
+            </h3>
             <div style="float:right" class="defaultMeetSelect">
-                    <div class="align-center">
-                        <input type="text" placeholder="Search by name"  />
-                    </div>
+                <div class="align-center">
+                    <input type="text" placeholder="Search by name" />
                 </div>
             </div>
- </div>
+        </div>
+    </div>
 </div>
 <div class="left filter-list">
-<h4><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Teams</h4>
-<hr>
-<ul *ngFor="let userPermission of userPermissionList">
-   <li><label (click)="displayTeamDetails(userPermission.teamId.teamId , userPermission.teamId.teamName)">{{userPermission.teamId.teamName}}</label></li>
-</ul>
-<div style="text-align:center;">
-    <button class="btn btn-primary" style="align:align-center" (click)="open()">Add New Team</button>
-    <!-- <a id="view-profile" (click)="open()">(View Full Profile)</a> -->
-    <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
+    <h4>
+        <i class="fa fa-users" aria-hidden="true"></i>&nbsp;Teams</h4>
+    <hr>
+    <ul *ngFor="let userPermission of userPermissionList">
+        <li>
+            <label (click)="displayTeamDetails(userPermission.teamId.teamId , userPermission.teamId.teamName)">{{userPermission.teamId.teamName}}</label>
+        </li>
+    </ul>
+    <div style="text-align:center;">
+        <button class="btn btn-primary" style="align:align-center" (click)="open()">Add New Team</button>
+        <!-- <a id="view-profile" (click)="open()">(View Full Profile)</a> -->
+        <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
+    </div>
 </div>
-</div>
- <app-custom-modal #addNewTeamModal [model]="newTeam"></app-custom-modal>
+<app-custom-modal #addNewTeamModal [model]="newTeam">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Team Name</label>
+            </div>
+            <div>
+                <input placeholder="Type Name Here.." [(ngModel)]="newTeamCreate"/>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer popFooter">
+            <button type="button" class="btn btn-secondary btn-border-radius" (click)="CreateTeam(newTeamCreate)">Add Team</button>
+        <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('AddNewTeam')">Close</button>
+    </div>
+</app-custom-modal>
 <div class="main">
     <h4>Team Details</h4>
     <hr>
-<div class="row">
-    <!-- <table class="member-table">
+    <div class="row">
+        <!-- <table class="member-table">
       <tr *ngFor="let userPermission of userPermissionList">
         <th>{{userPermissionList[1].teamId.teamName}}</th>
         <th>{{userPermissionMemList.length}} Members</th>
@@ -38,22 +59,26 @@
             <td><a>Remove</a></td>
       </tr>
     </table> -->
-    <div class="member-block">
-       <h4 style="font-weight:bold; color:#2980b9; ">{{selectedTeamName}}<span>&nbsp;[{{userPermissionMemList.length}} Members]</span></h4>
-      <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member"/>
-      <div class="member-details">
-          <h5><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
-          <hr>
-        <div class="row" style="padding: 15px;">
-<div *ngFor="let userMemPermission of userPermissionMemList" class="search-box-container">
-     <input type="text" value="{{userMemPermission.user.name}} {{userMemPermission.user.lastName}}" /></div>
-    </div>
-      <div style="text-align:center;">
-            <button class="btn btn-primary" style="align:align-center" (click)="openMemberPopup()">Add New Member</button>
-            <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
+        <div class="member-block">
+            <h4 style="font-weight:bold; color:#2980b9; ">{{selectedTeamName}}
+                <span>&nbsp;[{{userPermissionMemList.length}} Members]</span>
+            </h4>
+            <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member" />
+            <div class="member-details">
+                <h5>
+                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
+                <hr>
+                <div class="row" style="padding: 15px;">
+                    <div *ngFor="let userMemPermission of userPermissionMemList" class="search-box-container">
+                        <input type="text" value="{{userMemPermission.user.name}} {{userMemPermission.user.lastName}}" />
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="btn btn-primary" style="align:align-center" (click)="openMemberPopup()">Add New Member</button>
+                    <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
+                </div>
+                <app-custom-modal #addNewMemberModal [model]="newMember"></app-custom-modal>
+            </div>
         </div>
-        <app-custom-modal #addNewMemberModal [model]="newMember"></app-custom-modal>
     </div>
-    </div>
-</div>
 </div>
