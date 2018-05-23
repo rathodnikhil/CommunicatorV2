@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { MeetingServiceService } from '../../../../services/meeting-service.service';
 @Component({
@@ -8,6 +8,7 @@ import { MeetingServiceService } from '../../../../services/meeting-service.serv
   providers: [MeetingServiceService]
 })
 export class DefaultMeetingComponent implements OnInit {
+
    @Output() CurrentRoute = new EventEmitter();
    currentDate: any;
    loggedInUser: any;
@@ -15,11 +16,13 @@ export class DefaultMeetingComponent implements OnInit {
    futureMeetingList = [];
    recentMeeting: any;
    _meetingService: MeetingServiceService;
+   selectDateFlag: boolean;
    constructor(userService: UserService, meetingService: MeetingServiceService) {
        this._userService = userService;
        this._meetingService = meetingService;
     }
   ngOnInit() {
+    this.selectDateFlag =  false;
       //loggedInUser Details webservice call
       this.loggedInUser = {
         'id': 2,
@@ -47,11 +50,7 @@ export class DefaultMeetingComponent implements OnInit {
         this.loggedInUser = data.json();
     });
 
-    //future meeting list web service call
-    this.futureMeetingList = [];
-    this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
-        this.futureMeetingList = data.json();
-    });
+    this.getAllFutureMeetingList();
 
     //recent meeting webservice call
     this.recentMeeting = {};
@@ -66,6 +65,17 @@ export class DefaultMeetingComponent implements OnInit {
     this.CurrentRoute.emit(1);
   }
   meetingByDate() {
-      alert('select date');
+  this.selectDateFlag = true;
+  }
+  serachByDate(fromDate , toDate) {
+    alert(fromDate);
+  }
+  getAllFutureMeetingList() {
+  //future meeting list web service call
+  const payload = {loggedInUserId: 1};
+  this.futureMeetingList = [];
+  this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
+      this.futureMeetingList = data.json();
+  });
   }
 }

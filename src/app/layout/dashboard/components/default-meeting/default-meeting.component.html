@@ -13,11 +13,39 @@
    </div>
    <div class="card-header row defaultMeetSelect">
       <div class="align-center">
-         <a style="padding-right:10px; cursor: pointer;">All</a>
+         <a style="padding-right:10px; cursor: pointer;" (click)="getAllFutureMeetingList()">All</a>
          <a class="date-period-select">Today</a>
          <a class="date-period-select">Tomorrow</a>
          <a (click)="meetingByDate()" class="date-period-select">Select Date</a>
       </div>
+      <div class="row" *ngIf="selectDateFlag === true" style="border-top:1px solid rgb(224, 222, 222);margin-top:10px;">
+
+        <div class="col-sm-6">
+               <label>From Date</label>
+               <div class="input-group datepicker-input">
+                   <input class="form-control"  placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate" [(ngModel)]="searchtext"
+                   value="{{currentDate | date:'fullDate'}}" ngbDatepicker #fromDate="ngbDatepicker">
+                   <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
+                       <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                       <span class="fa fa-calendar"></span>
+                   </button>
+               </div>
+           </div>
+
+           <div class="col-sm-6" *ngIf="selectDateFlag === true">
+                   <label>To Date</label>
+                   <div class="input-group datepicker-input">
+                       <input   class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate" [(ngModel)]="searchtext"
+                       value="{{currentDate | date:'fullDate'}}" ngbDatepicker #toDate="ngbDatepicker">
+                       <button class="input-group-addon" (click)="toDate.toggle()" type="button">
+                           <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                           <span class="fa fa-calendar"></span>
+                       </button>
+                   </div>
+               </div>
+             <div style="text-align: center;margin:0 auto;padding: 10px;" >
+                 <button class="btn btn-primary" onclick="serachByDate('2018/5/20', '2018/5/23');">Search</button></div>
+           </div>
    </div>
    <div class="card-header">
       <div class="row">
@@ -27,7 +55,7 @@
          </div>
          <div class="col-md-6">
             <div class="form-group input-group">
-               <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+               <input type="text" id="searchMeeting" value="sdasd"   class="form-control" placeholder="Search" [(ngModel)]="searchText">
                <div class="input-group-append">
                   <button class="btn btn-primary" type="button">
                   <i class="fa fa-search"></i>
