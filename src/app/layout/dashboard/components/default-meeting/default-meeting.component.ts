@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { MeetingServiceService } from '../../../../services/meeting-service.service';
 @Component({
@@ -7,7 +7,8 @@ import { MeetingServiceService } from '../../../../services/meeting-service.serv
   styleUrls: ['./default-meeting.component.scss'],
   providers: [MeetingServiceService]
 })
-export class DefaultMeetingComponent implements OnInit {
+export class DefaultMeetingComponent implements OnInit, AfterViewInit {
+
 
    @Output() CurrentRoute = new EventEmitter();
    currentDate: any;
@@ -17,13 +18,15 @@ export class DefaultMeetingComponent implements OnInit {
    recentMeeting: any;
    _meetingService: MeetingServiceService;
    selectDateFlag: boolean;
+   @ViewChild('chatPanel') chatPanel: ElementRef;
+   @ViewChild('chatBody') chatBody: ElementRef;
    constructor(userService: UserService, meetingService: MeetingServiceService) {
        this._userService = userService;
        this._meetingService = meetingService;
     }
   ngOnInit() {
     this.selectDateFlag =  false;
-      //loggedInUser Details webservice call
+      // loggedInUser Details webservice call
       this.loggedInUser = {
         'id': 2,
         'email': 'b@gmail.com',
@@ -61,6 +64,12 @@ export class DefaultMeetingComponent implements OnInit {
     //current date and time
    this.currentDate = Date.now();
   }
+
+  ngAfterViewInit(): void {
+    // debugger;
+     this.chatBody.nativeElement.style.height = (this.chatPanel.nativeElement.offsetHeight
+        - (this.chatBody.nativeElement.offsetTop + 30)) + 'px';
+}
   switchRoute() {
     this.CurrentRoute.emit(1);
   }

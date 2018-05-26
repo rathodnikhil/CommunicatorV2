@@ -1,6 +1,12 @@
 .chat-panel {
     border-radius: 5px;
     border: 1px solid #d3d3d3;
+    position: absolute;
+    bottom: 1rem;
+    top: 1rem;
+    height: 100%;
+    left: 1rem;
+    right: 1rem;
     .chat-dropdown {
         margin-top: -3px;
     }
