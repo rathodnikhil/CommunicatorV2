@@ -44,10 +44,10 @@
                             <div class="col-sm-3">
                                 <label>Time</label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-9">
                                 <ngb-timepicker class="customTimePicker" [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
                             </div>
-                            <div class="col-md-5" style="    padding-top: 1.2rem;">
+                            <!-- <div class="col-md-5" style="    padding-top: 1.2rem;">
                                 <div ngbDropdown class="d-inline-block dropdown">
                                     <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
                                     <div ngbDropdownMenu>
@@ -55,11 +55,25 @@
                                          on-click="changeDuration(duration)">{{duration}}</button>
                                     </div>
                                 </div>
+                            </div> -->
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Meeting duration</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div ngbDropdown class="d-inline-block dropdown">
+                                    <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
+                                    <div ngbDropdownMenu>
+                                        <button *ngFor="let duration of durationArray" class="dropdown-item"
+                                        on-click="changeDuration(duration)">{{duration}}</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-3">
-                                <label>Timezone</label>
+                                <label style="padding-top:50%;">Timezone</label>
                             </div>
                             <div class="col-md-9">
                                 <div ngbDropdown class="d-inline-block dropdown">
@@ -75,7 +89,7 @@
                             <div class="col-sm-3">
                                 <label>Recurring</label>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-9">
                                 <!-- <a class="btn btndefault">Yes</a>
                                 <a class="btn btn-secondary">No</a> -->
                                 <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.isRecurring">
@@ -87,12 +101,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
                                 <label>Call Type</label>
                             </div>
-                            <div class="col-sm-4">
-                                <!-- <a class="btn btndefault">Audio</a>
-                                <a class="btn btn-secondary">Video</a> -->
+                            <div class="col-sm-9">
                                 <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.callType">
                                     <label ngbButtonLabel class="btn-outline-primary">
                                         <input ngbButton type="radio" [value]="1"> Audio
@@ -100,7 +114,6 @@
                                     <label ngbButtonLabel class="btn-outline-primary">
                                         <input ngbButton type="radio" value="2"> Video
                                     </label>
-                                </div>
                             </div>
                         </div>
                         <div class="row form-group">
