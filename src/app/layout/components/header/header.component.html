@@ -1,4 +1,5 @@
-<button type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}" (click)="hamburger_cross()">
+<button type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}"
+    (click)="hamburger_cross()">
     <span class="hamb-top"></span>
     <span class="hamb-middle"></span>
     <span class="hamb-bottom"></span>
@@ -10,30 +11,41 @@
     <ul class="nav sidebar-nav">
         <li class="sidebar-brand">
             <a href="#">
-                <img src="assets/images/com_logo_new.png" class="img-fluid" alt="Responsive image"/>
+                <img src="assets/images/com_logo_new.png" class="img-fluid" alt="Responsive image" />
             </a>
         </li>
         <li>
-            <a [routerLink]="['/pastMeetings']" (click)="hamburger_cross()"><i class="fa fa-undo" aria-hidden="true"></i>  Past Meetings</a>
+            <a [routerLink]="['/dashboard/default']" (click)="hamburger_cross()">
+                <i class="fa fa-home" aria-hidden="true"></i> Dashboard</a>
         </li>
         <li>
-            <a [routerLink]="['/myCalendar']" (click)="hamburger_cross()"><i class="fa fa-calendar" aria-hidden="true"></i>  My Calendar</a>
+            <a [routerLink]="['/pastMeetings']" (click)="hamburger_cross()">
+                <i class="fa fa-undo" aria-hidden="true"></i> Past Meetings</a>
         </li>
         <li>
-            <a [routerLink]="['/myProfile']" (click)="hamburger_cross()"><i class="fa fa-user-circle-o" aria-hidden="true"></i>  My Profile</a>
+            <a [routerLink]="['/myCalendar']" (click)="hamburger_cross()">
+                <i class="fa fa-calendar" aria-hidden="true"></i> My Calendar</a>
         </li>
         <li>
-            <a [routerLink]="['/ManageTeam']" (click)="hamburger_cross()"><i class="fa fa-users" aria-hidden="true"></i>  Manage Teams</a>
+            <a [routerLink]="['/myProfile']" (click)="hamburger_cross()">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i> My Profile</a>
+        </li>
+        <li>
+            <a [routerLink]="['/ManageTeam']" (click)="hamburger_cross()">
+                <i class="fa fa-users" aria-hidden="true"></i> Manage Teams</a>
         </li>
 
         <li>
-            <a [routerLink]="['/changeRights']" (click)="hamburger_cross()" ><i class="fa fa-toggle-on" aria-hidden="true"></i>  Add / Revoke Rights</a>
+            <a [routerLink]="['/changeRights']" (click)="hamburger_cross()">
+                <i class="fa fa-toggle-on" aria-hidden="true"></i> Add / Revoke Rights</a>
         </li>
         <li>
-            <a [routerLink]="['/userSettings']" (click)="hamburger_cross()"><i class="fa fa-cog" aria-hidden="true"></i>  Settings</a>
+            <a [routerLink]="['/userSettings']" (click)="hamburger_cross()">
+                <i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
         </li>
         <li>
-            <a href="/login"><i class="fa fa-sign-out" aria-hidden="true"></i>logout</a>
+            <a href="/login">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>logout</a>
         </li>
     </ul>
 </nav>
@@ -184,3 +196,4 @@
         <i class="fa fa-bars"></i>
     </a>
 </nav> -->
+

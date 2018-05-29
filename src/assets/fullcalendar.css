@@ -142,9 +142,16 @@ body .fc { /* extra precedence to overcome jqui */
 --------------------------------------------------------------------------------------------------*/
 
 .fc-button-group {
-	display: inline-block;
-}
+    display: inline-block;
 
+}
+.fc-button-group button,.fc-today-button{
+    background: #2980b9;
+    border-color: #2980b9;
+    color: #ffffff;
+    /* box-shadow: none;
+    border-left-color: #fff; */
+}
 /*
 every button that is not first in a button group should scootch over one pixel and cover the
 previous button's border...
@@ -156,7 +163,7 @@ previous button's border...
 }
 
 .fc .fc-button-group > :first-child { /* same */
-	margin-left: 0;
+    margin-left: 0;
 }
 
 
@@ -912,12 +919,19 @@ NOTE: use percentage font sizes or else old IE chokes
 --------------------------------------------------------------------------------------------------*/
 
 .fc-toolbar {
-    height:20px;
-	text-align: center;
+    height:40px;
+    text-align: center;
+    background: #2980b9;
+    color: #ffffff;
+    position: fixed;
+    width: 84.3%;
+    z-index: 10;
 }
 
 .fc-toolbar.fc-header-toolbar {
-	margin-bottom: 1em;
+    margin-bottom: 1em;
+    margin-left: -16px;
+    margin-right: -15px;
 }
 
 .fc-toolbar.fc-footer-toolbar {
@@ -983,6 +997,9 @@ NOTE: use percentage font sizes or else old IE chokes
 
 /* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */
 /* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */
+.fc-view-container{
+    padding-top:50px;
+}
 .fc-view-container *,
 .fc-view-container *:before,
 .fc-view-container *:after {
