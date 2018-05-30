@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import * as urlConstants from './urlConstants';
+import 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
+import { RequestOptions, ResponseContentType } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class MeetingServiceService {
@@ -52,4 +56,10 @@ export class MeetingServiceService {
         const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingId=' + payload.meetingId;
         return this.http.post(url, payload);
     }
+    filedownload(payload): Observable<any> {
+        const url = urlConstants.baseUrl + 'filedownload?fileName=' + payload.fileName;
+        return this.http.post(url,{ responseType: ResponseContentType.Blob }).map((res) =>{
+        return new Blob([res.arrayBuffer()], { type: 'application/octet-stream' })
+       });
+      } 
 }
