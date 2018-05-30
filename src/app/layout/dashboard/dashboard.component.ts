@@ -11,13 +11,24 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
-    @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
-    InviteAttendees: CustomModalModel = {
+    createGroupsVal:string = '';
+    broadcastMessage:string = '';
+    showtypeMessage: boolean = false;
+    @ViewChild('braodcastMessageModal') public braodcastMessageModal: CustomModalComponent;
+    broadcastMessagecontent: CustomModalModel = {
         titleIcon: '<i class="fa fa-bullhorn"></i>',
         title: 'Broadcast Message',
         smallHeading: 'Send Message to everyone',
-        body: '<div class="row"><div class="col-md-4"><label>Type Message</label></div><div class="col-md-8"><textarea type="text">'
-            + '</textarea></div></div>',
+        body: '',
+        Button1Content: '<i class="fa fa-comments"></i>&nbsp;Send Message',
+        Button2Content: '<i class="fa fa-refresh"></i>&nbsp;Cancel'
+    };
+    @ViewChild('createGroupModal') public createGroupModal: CustomModalComponent;
+    createGroups: CustomModalModel = {
+        titleIcon: '<i class="fa fa-bullhorn"></i>',
+        title: 'Create Group',
+        smallHeading: 'Create groups to have communication',
+        body: '',
         Button1Content: '<i class="fa fa-comments"></i>&nbsp;Send Message',
         Button2Content: '<i class="fa fa-refresh"></i>&nbsp;Cancel'
     };
@@ -66,7 +77,9 @@ export class DashboardComponent implements OnInit {
         );
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.showtypeMessage = false;
+    }
 
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
@@ -77,12 +90,24 @@ export class DashboardComponent implements OnInit {
     }
     open() {
         //   debugger;
-          this.inviteAttendeesModal.open();
+          this.braodcastMessageModal.open();
       }
-      broadcastMsg(event) {
-       alert('broadcast msg');
+      openCreateGroupPopup() {
+        this.createGroupModal.open();
+    }
+    broadcastMessages(broadcastMessage) {
+        alert(broadcastMessage);
+        if(broadcastMessage == " " || broadcastMessage == null){
+            this.showtypeMessage = true;
+        }
+      this.broadcastMessage = ' ';
+
       }
       resetMsg(event) {
         alert('text reset');
+      }
+      createGroup(createGroupsVal){
+      alert(createGroupsVal);
+      this.createGroupsVal = ' ';
       }
 }

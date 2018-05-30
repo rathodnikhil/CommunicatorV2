@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MeetingServiceService } from '../../../services/meeting-service.service';
-
+import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-past-meetings',
   templateUrl: './past-meetings.component.html',
@@ -8,6 +8,7 @@ import { MeetingServiceService } from '../../../services/meeting-service.service
   providers: [MeetingServiceService]
 })
 export class PastMeetingsComponent implements OnInit {
+    fileName: String;
     pastMeetingList = [];
     _meetingService: MeetingServiceService;
     payloadSearch = {loggedInUserId: 2};
@@ -82,31 +83,19 @@ getMeetingsMomByUser() {
         this.pastMeetingList = data.json();
     });
 }
+
 download() {
-    alert();
-    // this._meetingService.download().subscribe(data => {
-    //     //data.json();
-    //     alert('1');
-    // });
-    const ajax = new XMLHttpRequest();
-    const URL = "http://localhost:8080/download/abc";
 
-       ajax.open("GET", URL);
-       // xhr.overrideMimeType("application/octet-stream");
-       //  xhr.send();
+    this.fileName = ' ';
+    const payload = {fileName: 'test.docx' };
 
-       ajax.responseType = 'blob';
-       ajax.send();
-       ajax.onreadystatechange = function () {
-         if (this.readyState == 4) {
+    this._meetingService.filedownload(payload).subscribe(
+      (res) => {
+          alert();
+        //  saveAs(res, payload.fileName); 
+      }
+  );
 
-           console.log(typeof this.response);
-           var blob = new Blob([this.response], { type: "application/octet-stream" });
+  }
 
-           window.open(location.href = window.URL.createObjectURL(blob), '_blank');
-
-         }
-       };
-
-}
 }
