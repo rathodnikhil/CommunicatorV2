@@ -76,13 +76,14 @@ export class ManageTeamComponent implements OnInit {
         this.addNewMemberModal.open();
     }
     CreateTeam(newTeamName) {
-            alert(newTeamName);
-            this.newTeamName = ' ';
-            this.userPermissionList.push(newTeamName);
-            const teamPayload = {"teamName" : 'new Team' }
-            this._teamService.saveTeamDetails(teamPayload).subscribe(data => {
-              alert('1');
-            });    
+
+            this._teamService.saveTeamDetails(newTeamName).subscribe(data => {
+               // add a check to add to list only in case of success
+                const team = { teamId: { teamName: newTeamName } };
+                this.userPermissionList.push(team);
+                this.newTeamName = ' ';
+                this.addNewTeamModal.close();
+            });
        }
     createMember(newMemberName) {
         alert(newMemberName);
