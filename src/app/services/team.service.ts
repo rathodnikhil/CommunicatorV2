@@ -31,6 +31,9 @@ export class TeamService {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.http.get(url);
        }
-    
+       saveTeamDetails(payload) {
+        const url = urlConstants.baseUrl + 'saveTeamDetails?team=' + payload.team;
+        return this.http.post(url, payload);
+       }
   
 }

@@ -14,12 +14,24 @@
                         <i class="fa fa-users fa-fw cursorPointer" (click) = "openCreateGroupPopup()"></i>
                         <app-custom-modal #createGroupModal [model]="createGroups">
                             <div class="modal-body">
+                                    <div style="margin-top: 20px;" *ngIf="showNewGroup === true"
+						class="alert alert-danger alert-dismissable" [(ngModel)]="showNewGroup">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<strong>Error: </strong>Enter Group Name.
+                    </div>
+                    <div style="margin-top: 20px;" *ngIf="showNewGroupSuccess === true"
+                    class="alert alert-success alert-dismissable" [(ngModel)]="showNewGroupSuccess">
+                    <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">&times;</button>
+                    <strong>Error: </strong>Group has been Created Successfully.
+                </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Group Name</label>
                                     </div>
                                     <div>
-                                        <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal"></textarea>
+                                        <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal" onfocus="groupNameFocus()"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -35,24 +47,31 @@
                              (Button2Event)="resetMsg($event)"></app-custom-modal> -->
                         <app-custom-modal #braodcastMessageModal [model]="broadcastMessagecontent">
                             <div class="modal-body">
-                        <div style="margin-top: 20px;" ng-show="showtypeMessage == true"
+                        <div style="margin-top: 20px;" *ngIf="showtypeMessage === true"
 						class="alert alert-danger alert-dismissable" [(ngModel)]="showtypeMessage">
 						<button type="button" class="close" data-dismiss="alert"
 							aria-hidden="true">&times;</button>
-						<strong>Error: </strong>Enter Message.
-					</div>
+                        <strong>Error: </strong>Enter Message.
+                    </div>
+                    
+                    <div style="margin-top: 20px;" *ngIf="showBroadcastMessageSuccess === true"
+                    class="alert alert-success alert-dismissable" [(ngModel)]="showBroadcastMessageSuccess">
+                    <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">&times;</button>
+                    <strong>Error: </strong>Message has been Broadcast Successfully.
+                </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Messgage</label>
                                     </div>
                                     <div>
-                                        <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage"></textarea>
+                                        <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage" (click)="typeBroadcastMessageFocus()"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer popFooter">
                                     <button type="button" class="btn btn-secondary btn-border-radius" (click)="broadcastMessages(broadcastMessage)">Broadcast Message</button>
-                                <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('broadcastMessage')">Close</button>
+                                <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('broadcastMessagecontent')">Close</button>
                             </div>
                         </app-custom-modal>
                     </div>

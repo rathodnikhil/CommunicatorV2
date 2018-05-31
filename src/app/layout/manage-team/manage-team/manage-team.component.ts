@@ -10,7 +10,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     providers: [TeamService],
 })
 export class ManageTeamComponent implements OnInit {
-    newTeamCreate: any;
+    newTeamName: any = ' ';
+    newMemberName: any = ' ';
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -74,8 +75,18 @@ export class ManageTeamComponent implements OnInit {
     openMemberPopup() {
         this.addNewMemberModal.open();
     }
-    CreateTeam(newTeamCreate) {
-        debugger;
+    CreateTeam(newTeamName) {
+            alert(newTeamName);
+            this.newTeamName = ' ';
+            this.userPermissionList.push(newTeamName);
+            const teamPayload = {"teamName" : 'new Team' }
+            this._teamService.saveTeamDetails(teamPayload).subscribe(data => {
+              alert('1');
+            });    
+       }
+    createMember(newMemberName) {
+        alert(newMemberName);
+            this.newMemberName = ' ';
     }
     close(popupType) {
         switch (popupType) {

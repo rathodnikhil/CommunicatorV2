@@ -1,19 +1,15 @@
-<div class="top">
-    <div class="col-md-12 header">
-        <div class="row">
-            <h3 style="float:left;" class="col-md-9">
-                <a href="/dashboard/default">Manage Teams&nbsp;
-                    <i class="fa fa-home" style="float:left; font-size: 28px;" aria-hidden="true"></i>
-                </a>
-            </h3>
-            <div style="float:right" class="defaultMeetSelect">
-                <div class="align-center">
-                    <input type="text" placeholder="Search by name" />
-                </div>
+
+    <div class="top">
+        <div class="col-md-12 header" style="text-align: center;">
+            <h3>Manage Team</h3>
+        </div>
+        <div style="float:right" class="defaultMeetSelect">
+            <div class="align-center">
+                <input type="text" placeholder="Search by name" />
             </div>
         </div>
     </div>
-</div>
+
 <div class="left filter-list">
     <h4>
         <i class="fa fa-users" aria-hidden="true"></i>&nbsp;Teams</h4>
@@ -25,40 +21,28 @@
     </ul>
     <div style="text-align:center;">
         <button class="btn btn-primary" style="align:align-center" (click)="open()">Add New Team</button>
-        <!-- <a id="view-profile" (click)="open()">(View Full Profile)</a> -->
-        <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
+        <app-custom-modal #addNewTeamModal [model]="newTeam">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Team Name</label>
+                    </div>
+                    <div>
+                        <input placeholder="Type Name Here.." [(ngModel)]="newTeamName"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer popFooter">
+                    <button type="button" class="btn btn-secondary btn-border-radius" (click)="CreateTeam(newTeamName)">Add Team</button>
+                <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('AddNewTeam')">Close</button>
+            </div>
+        </app-custom-modal>
     </div>
 </div>
-<app-custom-modal #addNewTeamModal [model]="newTeam">
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-3">
-                <label>Team Name</label>
-            </div>
-            <div>
-                <input placeholder="Type Name Here.." [(ngModel)]="newTeamCreate"/>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer popFooter">
-            <button type="button" class="btn btn-secondary btn-border-radius" (click)="CreateTeam(newTeamCreate)">Add Team</button>
-        <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('AddNewTeam')">Close</button>
-    </div>
-</app-custom-modal>
 <div class="main">
     <h4>Team Details</h4>
     <hr>
     <div class="row">
-        <!-- <table class="member-table">
-      <tr *ngFor="let userPermission of userPermissionList">
-        <th>{{userPermissionList[1].teamId.teamName}}</th>
-        <th>{{userPermissionMemList.length}} Members</th>
-      </tr>
-      <tr *ngFor="let userMemPermission of userPermissionMemList">
-            <td>{{userMemPermission.user.name}}  {{userMemPermission.user.lastName}}</td>
-            <td><a>Remove</a></td>
-      </tr>
-    </table> -->
         <div class="member-block">
             <h4 style="font-weight:bold; color:#2980b9; ">{{selectedTeamName}}
                 <span>&nbsp;[{{userPermissionMemList.length}} Members]</span>
@@ -77,7 +61,22 @@
                     <button class="btn btn-primary" style="align:align-center" (click)="openMemberPopup()">Add New Member</button>
                     <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
                 </div>
-                <app-custom-modal #addNewMemberModal [model]="newMember"></app-custom-modal>
+                <app-custom-modal #addNewMemberModal [model]="newMember">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Team Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="Type Name Here.." [(ngModel)]="newMemberName"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="createMember(newMemberName)">Add Team</button>
+                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('newMemberName')">Close</button>
+                    </div>
+                </app-custom-modal>
             </div>
         </div>
     </div>

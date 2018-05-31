@@ -14,6 +14,10 @@ export class DashboardComponent implements OnInit {
     createGroupsVal:string = '';
     broadcastMessage:string = '';
     showtypeMessage: boolean = false;
+    showNewGroup: boolean = false;
+    showNewGroupSuccess: boolean = false;
+    showBroadcastMessageSuccess: boolean = false;
+    
     @ViewChild('braodcastMessageModal') public braodcastMessageModal: CustomModalComponent;
     broadcastMessagecontent: CustomModalModel = {
         titleIcon: '<i class="fa fa-bullhorn"></i>',
@@ -78,7 +82,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.showtypeMessage = false;
+       
     }
 
     public closeAlert(alert: any) {
@@ -96,18 +100,33 @@ export class DashboardComponent implements OnInit {
         this.createGroupModal.open();
     }
     broadcastMessages(broadcastMessage) {
-        alert(broadcastMessage);
-        if(broadcastMessage == " " || broadcastMessage == null){
-            this.showtypeMessage = true;
-        }
-      this.broadcastMessage = ' ';
 
+        if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
+            this.showtypeMessage = true;
+        } else{
+            this.showtypeMessage = false;
+            this.showBroadcastMessageSuccess = true;
+        }
+        this.broadcastMessage = ' ';
+      }
+      typeBroadcastMessageFocus() {
+            this.showtypeMessage = false;
+      }
+
+      groupNameFocus() {
+         this.showNewGroup = false; 
       }
       resetMsg(event) {
         alert('text reset');
       }
       createGroup(createGroupsVal){
-      alert(createGroupsVal);
+        alert(createGroupsVal);
+        if(createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined"){
+            this.showNewGroup = true;
+        } else{
+            this.showNewGroup = false;
+            this.showNewGroupSuccess =true;
+        }
       this.createGroupsVal = ' ';
       }
 }
