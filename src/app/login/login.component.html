@@ -1,18 +1,21 @@
 <div class="fixed-header">
     <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
 </div>
-<form id="login">
-    <h1>Log In</h1>
-    <fieldset id="inputs">
-        <input id="username" type="text" placeholder="Username" autofocus required>
-        <input id="password" type="password" placeholder="Password" required>
-    </fieldset>
-    <fieldset id="actions">
-        <input type="submit" id="submit" value="Log in">
-        <a href="">Forgot your password?</a>
-        <a href="">Register</a>
-    </fieldset>
-</form>
+<div class="body">
+    <form id="login">
+        <h1>Log In</h1>
+        <fieldset id="inputs">
+            <input id="username" type="text" placeholder="Username" autofocus required>
+            <input id="password" type="password" placeholder="Password" required>
+        </fieldset>
+        <fieldset id="actions">
+            <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']">
+            <a href="">Forgot your password?</a>
+            <a href="">Register</a>
+        </fieldset>
+    </form>
+</div>
 <div class="fixed-footer" style="width: 100%; text-align: center;">
     <div>Copyright &copy; 2018 Coreflex Solutions</div>
 </div>
+

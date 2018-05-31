@@ -1,4 +1,4 @@
-<div class="fixed-header">
+<!-- <div class="fixed-header">
     <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
 </div>
 <div>
@@ -37,13 +37,12 @@
 
                 <div class="form-field">
                     <label for="pass">
-                       Teams
+                        Teams
                     </label>
                     <div ngbDropdown class="d-inline-block dropdown">
                         <button class="btn btn-outline-primary col-md-12" ngbDropdownToggle>{{selectedTeam}}</button>
                         <div ngbDropdownMenu>
-                             <button  *ngFor="let team of teamArray" on-click="changeTeam(team.teamName)"
-                             class="dropdown-item">{{team.teamName}}</button>
+                            <button *ngFor="let team of teamArray" on-click="changeTeam(team.teamName)" class="dropdown-item">{{team.teamName}}</button>
                         </div>
                     </div>
                 </div>
@@ -63,11 +62,34 @@
                 </span>
             </div>
         </div>
-        <!-- /form -->
-        <!-- /card-container -->
     </div>
 
     <div class="fixed-footer" style="width: 100%; text-align: center;">
         <div>Copyright &copy; 2018 Coreflex Solutions.</div>
     </div>
+ -->
+
+
+ <div class="fixed-header">
+    <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
+</div>
+<div class="body">
+    <form id="signup">
+        <h1>Sign up</h1>
+        <fieldset id="inputs">
+            <input id="fullName" type="text" placeholder="Full Name" autofocus required>
+            <input id="username" type="text" placeholder="Username" required>
+            <input id="password" type="password" placeholder="Password" required>
+            <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+        </fieldset>
+        <fieldset id="actions">
+            <input type="submit" id="submit" value="Sign up" [routerLink]="['/dashboard/default']">
+            <a href="">Forgot your password?</a>
+            <a [routerLink]="['/login']">Login</a>
+        </fieldset>
+    </form>
+</div>
+<div class="fixed-footer" style="width: 100%; text-align: center;">
+    <div>Copyright &copy; 2018 Coreflex Solutions</div>
+</div>
 
