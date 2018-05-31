@@ -22,7 +22,7 @@ const routes: Routes = [
             { path: 'myProfile', loadChildren: './my-profile/my-profile.module#MyProfileModule' },
             { path: 'changeRights', loadChildren: './user-rights/user-rights.module#UserRightsModule' },
             { path: 'myCalendar', loadChildren: './my-calendar/my-calendar.module#MyCalendarModule' },
-            { path: 'meeting', loadChildren: './meeting/meeting.module#MeetingModule' },
+            { path: 'meeting', loadChildren: './meeting/meeting.module#MeetingModule' }
         ]
     }
 ];
