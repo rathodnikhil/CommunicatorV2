@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MeetingServiceService } from '../../../services/meeting-service.service';
-import * as fileSaver from 'file-saver';
+// import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-past-meetings',
   templateUrl: './past-meetings.component.html',
@@ -92,7 +92,7 @@ download() {
     this._meetingService.filedownload(payload).subscribe(
       (res) => {
           alert();
-        //  saveAs(res, payload.fileName); 
+        //  saveAs(res, payload.fileName);
       }
   );
 
