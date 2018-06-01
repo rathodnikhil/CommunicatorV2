@@ -14,20 +14,14 @@ export class ScheduleMeetingComponent implements OnInit {
     currentDate: any;
     meeting: any;
     _meetingService: MeetingServiceService;
+    showScheduleMeetingSuccess: boolean = true;
+    showCopyDetailsSuccess: boolean = false;
     // public radioGroupForm: FormGroup;
     InviteAttendees: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
         title: 'Invite Attendees',
         smallHeading: 'Copy and paste to your calendar or share with your attendees',
-        body: '<div class="alert alert-success alert-dismissable" id="meetingScheduleSuccess"> Meeting Scheduled Successfully</div>'
-             + '<div class="alert alert-success alert-dismissable" id="meetingDetailsCopiedAlert">'
-             + 'Meeting Details Copied. Kindly share via your preferred Mail Id.</div>'
-             + '<div><p  style=" color: #757575;">Meeting Subject</h5><p style="font-size:14px;">'
-            //  + 'Sat Mar 24 2018 from 4:15 PM - 6PM (Indian Standard Time)</p>'
-             + 'Date : {{payload.meetingDate}}'
-             + '<p style="color: #757575;">Please join my meeting from your computer,tablet or smartphone</p>'
-             + '<a style="text-decoration :underline;">https://184.171.162.250:9090/demos/demo_multiparty.html</a>'
-             + '<p>Access Code : MeetCore657400248</p></div>',
+        body: '',
         Button1Content: '<i class="fa fa-envelope"></i> Outlook',
         Button2Content: '<i class="fa fa-copy"></i> Copy'
     };
@@ -158,9 +152,12 @@ export class ScheduleMeetingComponent implements OnInit {
         // start download
         a.click();
         document.body.removeChild(a);
+        this.showScheduleMeetingSuccess = false;
       }
       copytoClipBoard(event) {
+        this.showScheduleMeetingSuccess = false;
         document.execCommand('copy');
+        this.showCopyDetailsSuccess = true;
       }
       changeTimeZone(timezone) {
           this.meeting.selectedTimeZone = timezone;

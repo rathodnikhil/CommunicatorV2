@@ -136,8 +136,31 @@
                                 <!-- href="mailto:?subject=Schedule meeting" -->
                             </div>
                             <!-- <button class="btn btn-primary">Large modal</button> -->
-                            <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="copyToOutLook($event)"
-                             (Button2Event)="copytoClipBoard($event)"></app-custom-modal>
+                            <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees">
+                                    <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true"
+                                    class="alert alert-success alert-dismissable" [(ngModel)]="showScheduleMeetingSuccess">
+                                    <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">&times;</button>
+                                    <strong>Success: </strong>Meeting has been scheduled Successfully.
+                                </div>
+                                <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true"
+                                class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
+                            </div>
+                                    <div style="padding: 10px;"> <p  style=" color: #757575;"><h5>Meeting Subject</h5><p style="font-size:14px;">Date : Fri june 5 2018 from 
+                                        7pm to 8:30pm Indian Standard Time</p>
+                                        <h5 style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone</h5>
+                                        <a style="text-decoration :underline; color: blue; cursor: pointer;">https://184.171.162.250:9090/demos/demo_multiparty.html</a>
+                                        <h5 style="padding-top: 40px;">Access Code : MeetCore657400248</h5>
+                                    </div>
+                                    <div class="modal-footer popFooter">
+                                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
+                                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="copytoClipBoard($event)">Copy</button>
+                                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('InviteAttendees')">Close</button>
+                                    </div>  
+                            </app-custom-modal>
                         </div>
                     <!-- </form> -->
                 </div>

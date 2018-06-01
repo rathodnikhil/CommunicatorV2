@@ -9,12 +9,7 @@
     font-size: 12px;
 }
 
-.btn.btn-secondary {
-    background: #57c4d8;
-    /* color: #187bd0; */
-    border-color: #40a4b6;
-    border-radius: 0px 5px 5px 0px;
-}
+
 
 .btn.btn-secondary.btn-border-radius {
     border-radius: 5px;
@@ -25,7 +20,7 @@
 }
 
 .hr-partition {
-    border-top: 2px dotted #848484;
+    border-top: 2px dotted #19191a;
     width: 100%;
 }
 
@@ -69,4 +64,14 @@
         overflow-x: hidden
     }
 }
-
+.popFooter{
+    background-color: #eaf3f8; border-top:1px solid  #19191a;
+    }
+    
+    .popTitle{
+    font-size: 22px;
+    }
+    .btn-border-radius{
+        border-radius: 5px;
+    }
+    
