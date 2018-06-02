@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { MeetingServiceService } from '../../../../services/meeting-service.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-default-meeting',
   templateUrl: './default-meeting.component.html',
@@ -20,7 +21,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
    selectDateFlag: boolean;
    @ViewChild('chatPanel') chatPanel: ElementRef;
    @ViewChild('chatBody') chatBody: ElementRef;
-   constructor(userService: UserService, meetingService: MeetingServiceService) {
+   constructor(userService: UserService, meetingService: MeetingServiceService, private router: Router) {
        this._userService = userService;
        this._meetingService = meetingService;
     }
@@ -49,19 +50,29 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         'profileImgPath': null
     };
     const payload = {loggedInUserId: 1};
-    this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
-        this.loggedInUser = data.json();
+    this._userService.getLoggedInUSerDetails().subscribe(data => {
+        if (Object.keys(data).length === 0) {
+            this.router.navigate(['/login']);
+        } else {
+            this.loggedInUser = data;
+        }
     });
 
     this.getAllFutureMeetingList();
 
-    //recent meeting webservice call
+    // recent meeting webservice call
     this.recentMeeting = {};
     this._meetingService.getRecentMeetingByUser(payload).subscribe(data => {
-        this.recentMeeting = data.json();
+        const resp = data.json();
+        if (resp.errorFl || resp.warningFl) {
+            this.recentMeeting  = {};
+        } else {
+            this.recentMeeting  = resp;
+        }
+        // this.recentMeeting = data.json();
     });
 
-    //current date and time
+    // current date and time
    this.currentDate = Date.now();
   }
 
@@ -80,11 +91,17 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     alert(fromDate);
   }
   getAllFutureMeetingList() {
-  //future meeting list web service call
+  // future meeting list web service call
   const payload = {loggedInUserId: 1};
   this.futureMeetingList = [];
   this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
-      this.futureMeetingList = data.json();
+    //  debugger;
+      const resp = data.json();
+      if (resp.errorFl || resp.warningFl) {
+          this.futureMeetingList = [];
+      } else {
+          this.futureMeetingList = resp;
+      }
   });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-default-chat',
     templateUrl: './default-chat.component.html',
@@ -9,7 +10,7 @@ export class DefaultChatComponent implements OnInit {
 
     loggedInUser: any;
     _userService: UserService;
-    constructor(userService: UserService) {
+    constructor(userService: UserService, private router: Router) {
         this._userService = userService;
     }
     ngOnInit() {
@@ -35,8 +36,12 @@ export class DefaultChatComponent implements OnInit {
             'profileImgPath': null
         };
         const payload = { loggedInUserId: 2 };
-        this._userService.getLoggedInUSerDetails(payload).subscribe(data => {
-            this.loggedInUser = data.json();
+        this._userService.getLoggedInUSerDetails().subscribe(data => {
+            if (Object.keys(data).length === 0) {
+                this.router.navigate(['/login']);
+            } else {
+                this.loggedInUser = data;
+            }
         });
     }
 

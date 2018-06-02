@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
+import { UserService } from '../services/user.service';
 
 @Component({
     selector: 'app-login',
@@ -12,8 +13,10 @@ import { LoginService } from '../services/login.service';
 export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
     user = {};
-    constructor(public router: Router, loginService: LoginService) {
+    _userService: UserService;
+    constructor(public router: Router, loginService: LoginService, userService: UserService) {
         this._loginService = loginService;
+        this._userService = userService;
     }
 
     ngOnInit() {
@@ -32,6 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                         username: data['username']
                     })
             );
+            const payload = { loggedInUserId: 2 };
+        this._userService.setLoggedInUserDetails(payload);
         localStorage.setItem('isLoggedin', 'true');
     }
     ngOnDestroy(): void {

@@ -9,7 +9,7 @@
             <a style="padding-right:10px; cursor: pointer;">Day</a>
             <a class="date-period-select">Month</a>
             <a class="date-period-select">Year</a>
-            <input type="text" placeholder="Search by name"  />
+            <input type="text" placeholder="Search by name"  [(ngModel)]="searchText"/>
         </div>
     </div>
 </div>
@@ -33,7 +33,7 @@
         <th>MOM</th>
         <th>Chat History</th>
       </tr>
-      <tr *ngFor="let meeting of pastMeetingList ;let srNo = index">
+      <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText ;let srNo = index">
             <td>{{srNo+1}}</td>
             <td>{{meeting.meetingDate}}</td>
             <td>{{meeting.meetingId}}</td>

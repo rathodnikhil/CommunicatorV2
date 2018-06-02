@@ -14,19 +14,20 @@ export class NotificationComponent implements OnInit {
     _userService: UserService;
     constructor(userService: UserService) {
         this._userService = userService;
-     }
+    }
     ngOnInit() {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
 
-        const payload = {loggedInUserId: 2};
+        const payload = { loggedInUserId: 2 };
         this._userService.getUserList(payload).subscribe(data => {
             // debugger;
             this.userList = data.json();
         });
-     }
-     viewMemeberDetails(user) {
-        alert('Selected Memeber is : ' + user.name + user.lastName);
-      }
+    }
+    viewMemeberDetails(user) {
+        // alert('Selected Memeber is : ' + user.name + user.lastName);
+        this._userService.setSelectedUser(user);
+    }
 }
