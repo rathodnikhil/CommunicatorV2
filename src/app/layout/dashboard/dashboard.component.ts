@@ -129,4 +129,21 @@ export class DashboardComponent implements OnInit {
         }
       this.createGroupsVal = ' ';
       }
+
+         //close create group modal popup
+     closeGroupPopup(popupType) {
+        switch (popupType) {
+            case 'addCreateGroup':
+                this.createGroupModal.close();
+                break;
+        }
+    }
+        //close create group modal popup
+        closeBroadcastPopup(popupType) {
+            switch (popupType) {
+                case 'addBroadcastMsg':
+                    this.braodcastMessageModal.close();
+                    break;
+            }
+        }
 }

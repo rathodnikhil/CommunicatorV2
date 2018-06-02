@@ -12,6 +12,17 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export class ManageTeamComponent implements OnInit {
     newTeamName: any = ' ';
     newMemberName: any = ' ';
+    showAddTeam: boolean = false;
+    showAddTeamSuccess: boolean = false;
+    showAddMemberFirstName: boolean = false;
+    showAddMemberLastName: boolean = false;
+    showAddMemberSuccess: boolean = false;
+    memObj: any = {};
+    _teamService: TeamService;
+    userPermissionList = [];
+    userPermissionMemList = [];
+    selectedTeamName: any;
+    user: any = {}
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -34,10 +45,7 @@ export class ManageTeamComponent implements OnInit {
         Button2Content: ''
     };
 
-    _teamService: TeamService;
-    userPermissionList = [];
-    userPermissionMemList = [];
-    selectedTeamName: any;
+   
 
     constructor(teamService: TeamService) {
         this._teamService = teamService;
@@ -75,24 +83,68 @@ export class ManageTeamComponent implements OnInit {
     openMemberPopup() {
         this.addNewMemberModal.open();
     }
-    CreateTeam(newTeamName) {
-
+    addTeam(newTeamName) {
+        alert(newTeamName);
+        if(newTeamName === "" || newTeamName === null || typeof newTeamName === "undefined"){
+            alert('1');
+            this.showAddTeam = true;
+        } else{
+            alert('2');
+            this.showAddTeam = false;
+            this.showAddTeamSuccess = true;
             this._teamService.saveTeamDetails(newTeamName).subscribe(data => {
+                alert('1');
                // add a check to add to list only in case of success
                 const team = { teamId: { teamName: newTeamName } };
                 this.userPermissionList.push(team);
                 this.newTeamName = ' ';
                 this.addNewTeamModal.close();
             });
+            const team = { teamId: { teamName: newTeamName } };
+            this.userPermissionList.push(team);
+        }
        }
-    createMember(newMemberName) {
-        alert(newMemberName);
-            this.newMemberName = ' ';
+    //focus on team name text field
+      typeTeamNameFocus() {
+       this.showAddTeam = false;
+        }
+     // add new member  
+    addMember(newMemberName,newMemberLastName) {
+        if(newMemberName === "" || newMemberName === null || typeof newMemberName === "undefined"){
+            this.showAddMemberFirstName = true;
+        } else  if(newMemberLastName === "" || newMemberLastName === null || typeof newMemberLastName === "undefined"){
+            this.showAddMemberLastName = true;
+        }
+        else{
+            this.showAddMemberFirstName = false;
+            this.showAddMemberLastName = false;
+            this.showAddMemberSuccess = true;
+            alert(newMemberName);
+           this.memObj = {user: {name: newMemberName , lastName : newMemberLastName }}
+            this.userPermissionMemList.push(this.memObj);
+        }
+           // this.newMemberName = ' ';
     }
-    close(popupType) {
+
+    //focus on member name text field
+    typeMemberNameFocus() {
+        this.showAddMemberFirstName = false;
+        this.showAddMemberLastName = false;
+  }
+    //close team modal popup
+    closeTeamPopup(popupType) {
         switch (popupType) {
-            case 'AddNewTeam':
+            case 'addNewTeam':
                 this.addNewTeamModal.close();
+                break;
+        }
+    }
+
+     //close member modal popup
+     closeMemberPopup(popupType) {
+        switch (popupType) {
+            case 'addNewMember':
+                this.addNewMemberModal.close();
                 break;
         }
     }

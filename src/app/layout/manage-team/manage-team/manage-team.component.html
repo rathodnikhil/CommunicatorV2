@@ -23,18 +23,32 @@
         <button class="btn btn-primary" style="align:align-center" (click)="open()">Add New Team</button>
         <app-custom-modal #addNewTeamModal [model]="newTeam">
             <div class="modal-body">
+                    <div style="margin-top: 20px;" *ngIf="showAddTeam === true"
+                    class="alert alert-danger alert-dismissable" [(ngModel)]="showAddTeam">
+                    <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">&times;</button>
+                    <strong>Error: </strong>Enter Team Name.
+                </div>
+                
+                <div style="margin-top: 20px;" *ngIf="showAddTeamSuccess === true"
+                class="alert alert-success alert-dismissable" [(ngModel)]="showAddTeamSuccess">
+                <button type="button" class="close" data-dismiss="alert"
+                    aria-hidden="true">&times;</button>
+                <strong>Error: </strong>Team has been added Successfully.
+            </div>
                 <div class="row">
                     <div class="col-md-3">
                         <label>Team Name</label>
                     </div>
                     <div>
-                        <input placeholder="Type Name Here.." [(ngModel)]="newTeamName"/>
+                        <textarea placeholder="Type Name Here.." [(ngModel)]="newTeamName" onfocus="typeTeamNameFocus()"></textarea>
+
                     </div>
                 </div>
             </div>
             <div class="modal-footer popFooter">
-                    <button type="button" class="btn btn-secondary btn-border-radius" (click)="CreateTeam(newTeamName)">Add Team</button>
-                <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('AddNewTeam')">Close</button>
+                    <button type="button" class="btn btn-secondary btn-border-radius" (click)="addTeam(newTeamName)">Add Team</button>
+                <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('addNewTeam')">Close</button>
             </div>
         </app-custom-modal>
     </div>
@@ -63,18 +77,48 @@
                 </div>
                 <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body">
+                                    <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true"
+                                    class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
+                                    <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">&times;</button>
+                                    <strong>Error: </strong>Enter Member First Name.
+                                </div>
+                                
+                                <div style="margin-top: 20px;" *ngIf="showAddMemberLastName === true"
+                                class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberLastName">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                <strong>Error: </strong>Enter Member Last Name.
+                            </div>
+
+                                <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true"
+                                class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                <strong>Error: </strong>Member has been added Successfully.
+                            </div>
+
+                            
                         <div class="row">
                             <div class="col-md-3">
-                                <label>Team Name</label>
+                                <label>First Name</label>
                             </div>
                             <div>
-                                <input placeholder="Type Name Here.." [(ngModel)]="newMemberName"/>
+                                <input placeholder="Type First Name Here.." [(ngModel)]="newMemberName" onfocus="typeMemberNameFocus()" />  
                             </div>
                         </div>
+                        <div class="row">
+                                <div class="col-md-3">
+                                    <label>Last Name</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Last Name Here.." [(ngModel)]="newMemberLastName" onfocus="typeMemberLastNameFocus()" />
+                                </div>
+                            </div>
                     </div>
                     <div class="modal-footer popFooter">
-                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="createMember(newMemberName)">Add Team</button>
-                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('newMemberName')">Close</button>
+                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="addMember(newMemberName ,newMemberLastName)">Add Team</button>
+                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMemberPopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>
             </div>
