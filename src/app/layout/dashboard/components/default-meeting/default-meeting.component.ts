@@ -19,6 +19,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
    recentMeeting: any;
    _meetingService: MeetingServiceService;
    selectDateFlag: boolean;
+   selectedDate: Date;
+   fromDate1: Date;
    @ViewChild('chatPanel') chatPanel: ElementRef;
    @ViewChild('chatBody') chatBody: ElementRef;
    constructor(userService: UserService, meetingService: MeetingServiceService, private router: Router) {
@@ -26,7 +28,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
        this._meetingService = meetingService;
     }
   ngOnInit() {
-    this.selectDateFlag =  false;
+    this.selectDateFlag =  true;
       // loggedInUser Details webservice call
       this.loggedInUser = {
         'id': 2,
@@ -84,11 +86,15 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
   switchRoute() {
     this.CurrentRoute.emit(1);
   }
-  meetingByDate() {
-  this.selectDateFlag = true;
-  }
-  serachByDate(fromDate , toDate) {
-    alert(fromDate);
+
+  serachMeetingByDate(fromDate , toDate) {
+    // this.selectedDate = new Date(
+    //     fromDate.getFullYear(),
+    //     fromDate.getMonth() + 2,
+    //     fromDate.getDate()
+    //   );
+    //fromDate = fromDate.
+      alert(fromDate);
   }
   getAllFutureMeetingList() {
   // future meeting list web service call
@@ -103,5 +109,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
           this.futureMeetingList = resp;
       }
   });
+  }
+  selectMeetingFilterDate() {
+  this.selectDateFlag = !this.selectDateFlag ;
   }
 }

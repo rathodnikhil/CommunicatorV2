@@ -1,3 +1,4 @@
+//border-left: 2px solid #3277d3;
 .chat-panel {
     border-radius: 5px;
     border: 1px solid #d3d3d3;
@@ -60,10 +61,10 @@
 }
 
 .date-period-select {
-    border-left: 2px solid #999;
+    border-left: 2px solid #3277d3;
     padding-left: 10px;
     padding-right: 10px;
-    height: 15%;
+   // height: 25%;
     cursor: pointer;
 }
 
@@ -73,7 +74,8 @@
 }
 
 .align-center a {
-    color: #999;
+    color: #3277d3;
+    font-weight: bold;
 }
 
 #ex4 .p1[data-count]:after {
@@ -224,7 +226,7 @@
 }
 
 .overall-padding {
-    padding: 20px;
+    padding: 15px;
 }
 
 .btndefault {
@@ -237,7 +239,7 @@
 }
 
 .badge {
-    background: rgba(86, 196, 216, 1);
+    background: #3277d3;
     width: auto;
     height: auto;
     margin: 0;
@@ -251,32 +253,33 @@
 
 .card-body {
     /* IE10+ */
-    background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
     /* Mozilla Firefox */
-    background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
     /* Opera */
-    background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
     /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #BDBDBD));
+    background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #e8f0fc));
     /* Webkit (Chrome 11+) */
-    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #BDBDBD 100%);
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
     /* W3C Markup */
-    background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #BDBDBD 100%);
+    background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #e8f0fc 100%);
 }
 
 .btn-cayn {
-    background: #57c4d8;
+    background: #3277d3;
     color:#fff;
 }
 .meetingHeader{
-    background:#848484;
+    background:#3277d3;
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
 }
 .btn.btn-secondary {
-    background:  #57c4d8;
-    /* color: #187bd0; */
-    border-color:  #40a4b6;
+    background:  #e8f0fc;
+     color: #000000;
+   // border-color:  #40a4b6;
+   font-weight: bold;
     border-radius: 0px 5px 5px 0px;
 }
 .form-control {
@@ -285,4 +288,75 @@
 .hr-partition{
     border-top: 2px dotted #848484;
     width: 100%;
+}
+
+
+////////////
+$border-color: #e0e0e0;
+
+*,*:before,*:after{
+  box-sizing: border-box;
+}
+
+
+
+.hide{
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+ // padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.accordion{
+  background: #e8f0fc;
+  list-style-type: none;
+  border: 1px solid $border-color;
+  width: 100%;
+  text-align: center;
+  padding-right: 35px;
+  font-weight: bold;
+}
+
+.accordion-item{
+	position: relative;
+	width: 100%;
+  border-bottom: 1px solid $border-color;
+  
+	&:last-child{
+		border-bottom: none;
+	}
+
+}
+
+.accordion-label{
+    padding: 10px;
+    padding-left: 0px;
+	width: 100%;
+    display: block;
+   // color: #999;
+ 
+}
+
+.accordion-child{
+
+  transition: all 0.3s ; 
+  opacity: 0;
+  height: 0;
+  transform: scale(1,0);
+  transform-origin: center top;
+	input[type=checkbox]:checked ~ &{
+    border: 1px solid $border-color;
+    margin-left :0px;
+    background: #fff;
+    box-shadow: 0 3px 6px 1px rgba(0,0,0,0.16);
+    padding: 10px;
+    height: auto;
+    opacity: 1;
+    transform: scale(1,1);
+    text-align: center;
+ //   padding:  0px;
+    
+  }
 }
