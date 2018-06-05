@@ -3,7 +3,8 @@ import { Http } from '@angular/http';
 import * as urlConstants from './urlConstants';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
-
+import { RequestOptions, ResponseContentType } from '@angular/http';
+import { Headers, Response } from '@angular/http';
 
 @Injectable()
 export class TeamService {
@@ -31,9 +32,17 @@ export class TeamService {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.http.get(url);
        }
-       saveTeamDetails(payload) {
-        const url = urlConstants.baseUrl + 'saveTeamDetails?team=' + payload;
-        return this.http.post(url, payload);
-       }
-
+      //  saveTeamDetails(payload) {
+      //   const url = urlConstants.baseUrl + 'saveTeamDetails?team=' + payload;
+      //   return this.http.post(url, payload);
+      //  }
+       saveTeamDetails(payload){
+        alert(payload.teamId.teamName);
+        const url = urlConstants.baseUrl + 'saveTeamDetails';
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('authentication', `${payload.token}`);
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(url,payload, options)
+        }
 }
