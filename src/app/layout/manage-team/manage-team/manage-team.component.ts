@@ -92,18 +92,28 @@ export class ManageTeamComponent implements OnInit {
             alert('2');
             this.showAddTeam = false;
             this.showAddTeamSuccess = true;
-            this._teamService.saveTeamDetails(newTeamName).subscribe(data => {
-                alert('1');
-               // add a check to add to list only in case of success
-                const team = { teamId: { teamName: newTeamName } };
-                this.userPermissionList.push(team);
-                this.newTeamName = ' ';
-                this.addNewTeamModal.close();
-            });
-            const team = { teamId: { teamName: newTeamName } };
+            // this._teamService.saveTeamDetails(newTeamName).subscribe(data => {
+            //     alert('1');
+            //    // add a check to add to list only in case of success
+            //     const team = { teamId: { teamName: newTeamName } };
+            //     this.userPermissionList.push(team);
+            //     this.newTeamName = ' ';
+            //     this.addNewTeamModal.close();
+            // });
+
+            const payload = { teamId: { teamName: newTeamName } };
+              //  const payload = {firstName,lastName};
+                this._teamService.saveTeamDetails(payload).subscribe(
+                  (res) => {
+                    alert(res);
+                     // saveAs(res, payload.firstName,payload.lastName); 
+                  });
+            
+              }
+            const team = { team: { teamName: newTeamName } };
             this.userPermissionList.push(team);
         }
-       }
+       
     //focus on team name text field
       typeTeamNameFocus() {
        this.showAddTeam = false;

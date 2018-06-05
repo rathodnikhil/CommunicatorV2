@@ -65,6 +65,7 @@
     ::-webkit-scrollbar {
         display: none;
     }
+    background-image: url("/assets/images/logobg.gif");
 }
 
 /*-------------------------------*/
@@ -97,7 +98,7 @@
             &:hover,
             &:active,
             &:focus {
-                color: #000000;
+                color: #ffffff;
                 font-weight: bold;
                 text-decoration: none;
                 background-color: transparent;
@@ -116,7 +117,8 @@
         &:focus {
             color: #3277d3;
             text-decoration: none;
-            background-color: #e5efff;
+            background-color: #3277d3;
+            color: #fff;
         }
     }
     .sidebar-brand {

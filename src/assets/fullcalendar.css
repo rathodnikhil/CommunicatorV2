@@ -146,8 +146,8 @@ body .fc { /* extra precedence to overcome jqui */
 
 }
 .fc-button-group button,.fc-today-button{
-    background: #2980b9;
-    border-color: #2980b9;
+    background: #3277d3;
+    border-color: #3277d3;
     color: #ffffff;
     /* box-shadow: none;
     border-left-color: #fff; */
@@ -921,7 +921,7 @@ NOTE: use percentage font sizes or else old IE chokes
 .fc-toolbar {
     height:40px;
     text-align: center;
-    background: #2980b9;
+    background: #3277d3;
     color: #ffffff;
     position: fixed;
     width: 84.3%;
