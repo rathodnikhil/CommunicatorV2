@@ -7,23 +7,24 @@
   background-image: url("/assets/images/logobg.gif");
     widows: 100%;
     height:100vh;
-   
+
 }
 .fixed-header,
 .fixed-footer {
     width: 100%;
     position: fixed;
-    background: #fff;
+    background: transparent;
     padding: 10px 0;
-    color: #3277d3;
+    color: #fff;
 }
 
 .fixed-header {
-    top: 0;
+    left: 40%;
+    top: 15%;
 }
 
 .fixed-footer {
-    bottom: 0;
+    bottom: 20%;
 }
 
 #login {

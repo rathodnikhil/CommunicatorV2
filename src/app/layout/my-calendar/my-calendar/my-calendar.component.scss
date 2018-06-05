@@ -1,8 +1,13 @@
 .top {
-    height: 50px;
+    height: 105px;
     padding: 15px; // border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     background: #3277d3;
     color: #ffffff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-image: url(/assets/images/logobg.gif);
+    background-position-y: bottom;
 }
 
 .left {
@@ -19,12 +24,14 @@
 }
 
 .main {
-    margin-left: 15%;
+    // margin-left: 15%;
     padding: 0px 15px 15px 15px;
     border: 1px solid #ccd1d4;
     border-top: none;
     height: 90vh;
     overflow-y: scroll;
+    top: 70px;
+    position: fixed;
 }
 
 table {

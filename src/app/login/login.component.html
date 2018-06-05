@@ -1,5 +1,5 @@
 <div class="fixed-header">
-    <img src="assets/images/logo.jpg" alt="Responsive image" class="img-fluid" style="height:3.5rem; " />
+    <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " />
 </div>
 <div class="body">
     <form id="login">
@@ -11,7 +11,7 @@
         <fieldset id="actions">
             <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']">
             <a href="">Forgot your password?</a>
-            <a href="">Register</a>
+            <a [routerLink]="['/signup']">Register</a>
         </fieldset>
     </form>
 </div>
