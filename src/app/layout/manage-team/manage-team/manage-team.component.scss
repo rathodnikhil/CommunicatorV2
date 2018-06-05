@@ -3,14 +3,16 @@
     height: 92px;
     padding: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background-color: #2980b9;
+    background-color: #3277d3;
     color: #ffffff;
 }
 .left {
     width: 15%;
     float:left;
     padding: 15px;
-    background-color: #eaf3f8;
+    background-color:  #e5efff;
+    
+    
 }
 .main {
   margin-left:15%;
@@ -32,11 +34,11 @@ th{
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-    background: #2980b9;;
+    background: #3277d3;;
     color: #FFFFFF;
 }
 tr:nth-child(even) {
-    background-color: #eaf3f8;
+    background-color: #e5efff;
 }
 .filter-list{
  border-right: 1px solid rgba(0, 0, 0, 0.125);
@@ -77,12 +79,12 @@ tr:nth-child(even) {
 }
 .member-details{
     height: 100%;  border: 1px solid #ccd1d4;
-      box-shadow: 5px 5px 5px 5px #ccd1d4; background: #eaf3f8;
+      box-shadow: 5px 5px 5px 5px #ccd1d4; background: #e5efff;
     padding:10px;
      margin:15px;
 }
 .search-member{
-  background-color: #eaf3f8;
+  background-color: #e5efff;
     height:50px;
     margin :15px;
     border: 1px solid #ccd1d4;

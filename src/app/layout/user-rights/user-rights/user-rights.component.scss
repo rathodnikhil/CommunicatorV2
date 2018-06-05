@@ -3,14 +3,14 @@
     height: 92px;
     padding: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background: #2980b9;
+    background: #3277d3;
     color: #ffffff;
 }
 .left {
     width: 15%;
     float:left;
     padding: 15px;
-    background: #eaf3f8;
+    background: #e5efff;
 }
 .main {
   margin-left:15%;
@@ -32,11 +32,11 @@ th{
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-    background: #2980b9;
+    background: #3277d3;
     color: #ffffff;
 }
 tr:nth-child(even) {
-    background-color: #eaf3f8;
+    background-color: #e5efff;
 }
 .filter-list{
  border-right: 1px solid rgba(0, 0, 0, 0.125);
@@ -94,7 +94,7 @@ cursor: pointer;
   }
 
   .switch-field input:checked + label {
-    background-color: #2980b9;
+    background-color: #3277d3;
     -webkit-box-shadow: none;
     box-shadow: none;
     color:  #ffffff;
