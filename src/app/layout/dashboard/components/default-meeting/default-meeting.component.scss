@@ -61,7 +61,7 @@
 }
 
 .date-period-select {
-    border-left: 2px solid #3277d3;
+    border-left: 2px solid #8f5a0a;;
     padding-left: 10px;
     padding-right: 10px;
    // height: 25%;
@@ -74,7 +74,8 @@
 }
 
 .align-center a {
-    color: #3277d3;
+   // color: #8f5a0a;
+   color: #8f5a0a;
     font-weight: bold;
 }
 
@@ -275,12 +276,28 @@
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
 }
-.btn.btn-secondary {
-    background:  #e8f0fc;
-     color: #000000;
-   // border-color:  #40a4b6;
-   font-weight: bold;
-    border-radius: 0px 5px 5px 0px;
+.btn-sec {
+
+ background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+    cursor: pointer;
+    text-align: center;
+    font: Arial, Helvetica;
+    font-weight: bold;
+    color: #8f5a0a;
 }
 .form-control {
     border-radius: 5px 0px 0px 5px;
@@ -310,13 +327,21 @@ $border-color: #e0e0e0;
 }
 
 .accordion{
-  background: #e8f0fc;
+ // background: #e8f0fc;
+  background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
   list-style-type: none;
   border: 1px solid $border-color;
   width: 100%;
   text-align: center;
   padding-right: 35px;
   font-weight: bold;
+  color:#8f5a0a;
 }
 
 .accordion-item{
