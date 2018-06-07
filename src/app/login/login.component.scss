@@ -35,7 +35,7 @@
     background-image: -ms-linear-gradient(top, #fff, #eee);
     background-image: -o-linear-gradient(top, #fff, #eee);
     background-image: linear-gradient(top, #fff, #eee);
-    height: 300px;
+    height:auto;
     width: 450px;
     margin: -150px 0 0 -230px;
     padding: 30px;
@@ -71,7 +71,7 @@ h1 {
     text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
     text-transform: uppercase;
     text-align: center;
-    color: #666;
+    color: #3277d3;
     margin: 0 0 30px 0;
     letter-spacing: 4px;
     font: normal 26px/1 Verdana, Helvetica;
@@ -80,7 +80,7 @@ h1 {
 
 h1:after,
 h1:before {
-    background-color: #777;
+    background-color:#3277d3;
     content: "";
     height: 1px;
     position: absolute;
@@ -89,22 +89,22 @@ h1:before {
 }
 
 h1:after {
-    background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#fff));
-    background-image: -webkit-linear-gradient(left, #777, #fff);
-    background-image: -moz-linear-gradient(left, #777, #fff);
-    background-image: -ms-linear-gradient(left, #777, #fff);
-    background-image: -o-linear-gradient(left, #777, #fff);
-    background-image: linear-gradient(left, #777, #fff);
+    background-image: -webkit-gradient(linear, left top, right top, from(rgb(44, 95, 224)), to(#fff));
+    background-image: -webkit-linear-gradient(left, rgb(44, 95, 224), #fff);
+    background-image: -moz-linear-gradient(left, rgb(44, 95, 224), #fff);
+    background-image: -ms-linear-gradient(left, rgb(44, 95, 224), #fff);
+    background-image: -o-linear-gradient(left,rgb(44, 95, 224), #fff);
+    background-image: linear-gradient(left, rgb(44, 95, 224), #fff);
     right: 0;
 }
 
 h1:before {
-    background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#fff));
-    background-image: -webkit-linear-gradient(right, #777, #fff);
-    background-image: -moz-linear-gradient(right, #777, #fff);
-    background-image: -ms-linear-gradient(right, #777, #fff);
-    background-image: -o-linear-gradient(right, #777, #fff);
-    background-image: linear-gradient(right, #777, #fff);
+    background-image: -webkit-gradient(linear, left top, right top, from(rgb(44, 95, 224)), to(#fff));
+    background-image: -webkit-linear-gradient(left, rgb(44, 95, 224), #fff);
+    background-image: -moz-linear-gradient(left, rgb(44, 95, 224), #fff);
+    background-image: -ms-linear-gradient(left, rgb(44, 95, 224), #fff);
+    background-image: -o-linear-gradient(left,rgb(44, 95, 224), #fff);
+    background-image: linear-gradient(left, rgb(44, 95, 224), #fff);
     left: 0;
 }
 
@@ -212,3 +212,6 @@ fieldset {
     margin-left: 10px;
 }
 
+.communication-logo{
+    text-align: center;padding-bottom:15px;
+}

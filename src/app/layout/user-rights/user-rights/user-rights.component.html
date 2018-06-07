@@ -14,7 +14,7 @@
 <hr>
   <ul>
         <li *ngFor="let userPermission of userPermissionList"><input type="checkbox" (change)="filterMemberByTeam($event , userPermission.teamId.teamId)"> {{userPermission.teamId.teamName}}</li>
-        <li><input type="checkbox"> All</li>
+        <li><input type="checkbox" id="userPermission.teamId.teamId"> All</li>
       </ul>
 </div>
 <div class="main">

@@ -4,11 +4,13 @@ import { AlertComponent } from 'app/layout/bs-component/components';
 import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from './components/custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { GroupService } from '../../services/group.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
-    animations: [routerTransition()]
+    animations: [routerTransition()],
+    providers: [GroupService]
 })
 export class DashboardComponent implements OnInit {
     createGroupsVal:string = '';
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
     showNewGroup: boolean = false;
     showNewGroupSuccess: boolean = false;
     showBroadcastMessageSuccess: boolean = false;
+    _groupService: GroupService;
     
     @ViewChild('braodcastMessageModal') public braodcastMessageModal: CustomModalComponent;
     broadcastMessagecontent: CustomModalModel = {
@@ -40,7 +43,8 @@ export class DashboardComponent implements OnInit {
     public sliders: Array<any> = [];
     currentRoute: number = 0;
 
-    constructor() {
+    constructor(private groupService: GroupService) {
+        this._groupService = groupService;
         this.sliders.push(
             {
                 imagePath: 'assets/images/slider1.jpg',
@@ -126,7 +130,16 @@ export class DashboardComponent implements OnInit {
         } else{
             this.showNewGroup = false;
             this.showNewGroupSuccess =true;
-        }
+            const payload = { group: { groupName: createGroupsVal } };
+            //  const payload = {firstName,lastName};
+              this._groupService.saveGroupDetails(payload).subscribe(
+                (res) => {
+                  alert(res);
+                   // saveAs(res, payload.firstName,payload.lastName); 
+                });
+          
+            }
+        
       this.createGroupsVal = ' ';
       }
 

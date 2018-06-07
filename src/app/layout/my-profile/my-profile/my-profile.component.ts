@@ -45,7 +45,7 @@ export class MyProfileComponent implements OnInit {
             },
             'profileImgPath': null
         };
-        const payload = { loggedInUserId: 1 };
+        const payload = { loggedInUserId: 2 };
         this._userService.getLoggedInUSerDetails().subscribe(data => {
             if (Object.keys(data).length === 0) {
                 this.router.navigate(['/login']);
