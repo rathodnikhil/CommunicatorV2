@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
     styleUrls: ['./timeline.component.scss']
 })
 export class TimelineComponent implements OnInit {
-    @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
-    InviteAttendees: CustomModalModel = {
+    @ViewChild('viewProfileModal') public viewProfileModal: CustomModalComponent;
+    viewProfile: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
         title: 'Profile Details',
         smallHeading: 'User profile details',
@@ -72,9 +72,17 @@ export class TimelineComponent implements OnInit {
     }
     open() {
         // alert(loggedInUser.name + loggedInUser.lastName);
-        this.inviteAttendeesModal.open();
+        this.viewProfileModal.open();
     }
     updateProfile(event) {
         alert('copy text');
     }
+
+    closeviewProfilePopup(popupType){
+            switch (popupType) {
+                case 'viewProfile':
+                    this.viewProfileModal.close();
+                    break;
+            }
+        }
 }

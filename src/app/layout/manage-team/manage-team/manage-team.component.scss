@@ -1,72 +1,5 @@
+@import "styles/customStyle.css";
 
-.top {
-    height: 92px;
-    padding: 15px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background-color: #3277d3;
-    color: #ffffff;
-    width: 100%;
-    background-image: url(/assets/images/logobg.gif);
-    background-position-y: bottom;
-}
-.left {
-    width: 15%;
-    float:left;
-    padding: 15px;
-    background-color:  #e5efff;
-
-
-}
-.main {
-  margin-left:15%;
-  padding: 15px;
- }
- table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    padding:30px;
-}
-
-td, th {
-   border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-th{
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    background: #3277d3;;
-    color: #FFFFFF;
-}
-tr:nth-child(even) {
-    background-color: #e5efff;
-}
-.filter-list{
- border-right: 1px solid rgba(0, 0, 0, 0.125);
- height: 90vh;
-}
-.main table tr td a {
-    cursor: pointer;
-    color: #eb223d;
-    text-decoration: underline;
-  }
-
-.date-period-select {
-    border-left: 2px solid #999;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 15%;
-    cursor: pointer;
-}
-.filter-list ul {
-    list-style-type: none;
-  }
-  .filter-list ul li label {
-    color: #000000;
-    cursor: pointer;
-  }
 .member-block{
     //float: right;width: 50%;
      padding-left: 15px;
@@ -105,7 +38,10 @@ tr:nth-child(even) {
       margin-right: 25px;
       color: #eb223d;
   }
-a{
-    cursor: pointer;
-    color: #ffffff;
-}
+    .row-label label{
+     font-weight: bold;
+    }
+    .selected-team{
+        color:#3277d3;   
+     }
+   

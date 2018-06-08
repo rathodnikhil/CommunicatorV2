@@ -20,9 +20,9 @@
         </li>
     </ul>
     <div style="text-align:center;">
-        <button class="btn btn-primary" style="align:align-center" (click)="open()">Add New Team</button>
+        <button class="btn btn-sec" style="align:align-center" (click)="open()">Add New Team</button>
         <app-custom-modal #addNewTeamModal [model]="newTeam">
-            <div class="modal-body">
+            <div class="modal-body row-label">
                     <div style="margin-top: 20px;" *ngIf="showAddTeam === true"
                     class="alert alert-danger alert-dismissable" [(ngModel)]="showAddTeam">
                     <button type="button" class="close" data-dismiss="alert"
@@ -48,7 +48,7 @@
             </div>
             <div class="modal-footer popFooter">
                     <button type="button" class="btn btn-sec" (click)="addTeam(newTeamName)">Add Team</button>
-                <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('addNewTeam')">Close</button>
+                <button type="button" class="btn btn-cancel" (click)="closeTeamPopup('addNewTeam')">Close</button>
             </div>
         </app-custom-modal>
     </div>
@@ -58,7 +58,7 @@
     <hr>
     <div class="row">
         <div class="member-block">
-            <h4 style="font-weight:bold; color:#3277d3; ">{{selectedTeamName}}
+            <h4 class="selected-team">{{selectedTeamName}}
                 <span>&nbsp;[{{userPermissionMemList.length}} Members]</span>
             </h4>
             <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member" />
@@ -76,7 +76,7 @@
                     <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
                 </div>
                 <app-custom-modal #addNewMemberModal [model]="newMember">
-                    <div class="modal-body">
+                    <div class="modal-body row-label">
                                     <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true"
                                     class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
                                     <button type="button" class="close" data-dismiss="alert"
@@ -104,7 +104,7 @@
                                 <label>First Name</label>
                             </div>
                             <div>
-                                <input placeholder="Type First Name Here.." [(ngModel)]="newMemberName" onfocus="typeMemberNameFocus()" />  
+                                <textarea placeholder="Type First Name Here.." [(ngModel)]="newMemberName" onfocus="typeMemberNameFocus()"></textarea>  
                             </div>
                         </div>
                         <div class="row">
@@ -112,13 +112,13 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Last Name Here.." [(ngModel)]="newMemberLastName" onfocus="typeMemberLastNameFocus()" />
+                                    <textarea placeholder="Type Last Name Here.." [(ngModel)]="newMemberLastName" onfocus="typeMemberLastNameFocus()"></textarea>
                                 </div>
                             </div>
                     </div>
                     <div class="modal-footer popFooter">
-                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="addMember(newMemberName ,newMemberLastName)">Add Team</button>
-                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMemberPopup('addNewMember')">Close</button>
+                            <button type="button" class="btn btn-sec" (click)="addMember(newMemberName ,newMemberLastName)">Add Team</button>
+                        <button type="button" class="btn btn-cancel" (click)="closeMemberPopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>
             </div>

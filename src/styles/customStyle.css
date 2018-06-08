@@ -1,0 +1,111 @@
+
+.btn-sec {
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
+    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+    cursor: pointer;
+    font: bold 15px Arial, Helvetica;
+    color: #8f5a0a;
+}
+.btn-cancel{
+    color: rgb(248, 87, 87);
+    background-color: rgb(248, 87, 87);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(253, 78, 78)), to(rgb(248, 87, 87)));
+    background-image: -webkit-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -moz-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -ms-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -o-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
+      -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+      -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(218, 10, 10);
+      cursor: pointer;
+      text-align: center;
+      font: Arial, Helvetica;
+      color: rgb(248, 241, 241);
+    }  
+    a{
+        cursor: pointer;
+        color: #ffffff;
+    }
+    .top {
+        height: 92px;
+        padding: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        background: #3277d3;
+        color: #ffffff;
+        background-image: url(/assets/images/logobg.png);
+        background-position-y: bottom;
+    }
+    .left {
+        width: 15%;
+        float:left;
+        padding: 15px;
+        background: #e5efff;
+        background-image: url(/assets/images/menuBg.png);
+        color: #ffffff;
+        font-weight: bold;
+    }
+    .main {
+      margin-left:15%;
+      padding: 15px;
+     }
+     table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        padding:30px;
+    }
+    
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th{
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        background: #3277d3;
+        color: #ffffff;
+    }
+    tr:nth-child(even) {
+        background-color: #e5efff;
+    }
+    .filter-list{
+     border-right: 1px solid rgba(0, 0, 0, 0.125);
+     height: 90vh;
+    }
+    .date-period-select {
+        border-left: 2px solid #999;
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 15%;
+        cursor: pointer;
+    }
+  
+    .filter-list{
+     border-right: 1px solid rgba(0, 0, 0, 0.125);
+     height: 90vh;
+    }
+    .filter-list ul{
+        list-style-type: none;
+    }
+    .filter-list ul li input{
+    cursor: pointer;
+    }
+ 

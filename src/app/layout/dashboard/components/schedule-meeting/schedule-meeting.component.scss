@@ -1,3 +1,4 @@
+@import "styles/customStyle.css";
 .meetingHeader {
     background: #3277d3;
     color: #FFFFFF;
@@ -7,12 +8,6 @@
 .style-links {
     color: #d2cccc;
     font-size: 12px;
-}
-
-
-
-.btn.btn-secondary.btn-border-radius {
-    border-radius: 5px;
 }
 
 .form-control {
@@ -74,25 +69,4 @@
     .btn-border-radius{
         border-radius: 5px;
     }
-.btn-cancel{
-
-color: rgb(248, 87, 87);
-font-weight: bold;
-background-color: rgb(248, 87, 87);
-background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(253, 78, 78)), to(rgb(248, 87, 87)));
-background-image: -webkit-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-background-image: -moz-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-background-image: -ms-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-background-image: -o-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-background-image: linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(218, 10, 10);
-  cursor: pointer;
-  text-align: center;
-  font: Arial, Helvetica;
-  color: rgb(248, 241, 241);
-}    
+   

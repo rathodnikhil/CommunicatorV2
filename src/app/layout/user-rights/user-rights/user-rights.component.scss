@@ -1,62 +1,5 @@
 
-.top {
-    height: 92px;
-    padding: 15px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background: #3277d3;
-    color: #ffffff;
-    background-image: url(/assets/images/logobg.gif);
-    background-position-y: bottom;
-}
-.left {
-    width: 15%;
-    float:left;
-    padding: 15px;
-    background: #e5efff;
-}
-.main {
-  margin-left:15%;
-  padding: 15px;
- }
- table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    padding:30px;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-th{
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    background: #3277d3;
-    color: #ffffff;
-}
-tr:nth-child(even) {
-    background-color: #e5efff;
-}
-.filter-list{
- border-right: 1px solid rgba(0, 0, 0, 0.125);
- height: 90vh;
-}
-.filter-list ul{
-    list-style-type: none;
-}
-.filter-list ul li input{
-cursor: pointer;
-}
-.date-period-select {
-    border-left: 2px solid #999;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 15%;
-    cursor: pointer;
-}
+@import "styles/customStyle.css";
 
 
   .switch-field input {
@@ -109,7 +52,4 @@ cursor: pointer;
   .switch-field label:last-of-type {
     border-radius: 0 4px 4px 0;
   }
-  a{
-    color: #ffffff;
-    cursor: pointer;
-}
+
