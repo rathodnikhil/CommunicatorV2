@@ -1,24 +1,40 @@
-<div class="fixed-header">
-    <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " />
-</div>
-<div class="body">
-    <form id="login">
-        <div class="communication-logo">
-            <img src="assets/images/comm.png" alt="Responsive image"  class="img-fluid" style="height:3.5rem; " />
+<div class="container-bg">
+    <div class="col-md-12" style="top: 20%;">
+        <div class="row h-100 d-flex justify-content-center fixed-header">
+            <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " />
+        </div>
+        <div class="row h-100 d-flex justify-content-center">
+            <div id="login" class="col-md-4">
+                <div class="inner-border">
+                    <h1>Log In</h1>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-user-o fa-fw"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="User name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-key fa-fw"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="password" placeholder="password">
+                    </div>
+                    <fieldset id="actions">
+                        <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']">
+                        <a href="">Forgot your password?</a>
+                        <a [routerLink]="['/signup']">Register</a>
+                    </fieldset>
+                </div>
             </div>
-        <h1>Log In</h1>
-        <fieldset id="inputs">
-            <input id="username" type="text" placeholder="Username" autofocus required>
-            <input id="password" type="password" placeholder="Password" required>
-        </fieldset>
-        <fieldset id="actions">
-            <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']">
-            <a href="">Forgot your password?</a>
-            <a [routerLink]="['/signup']">Register</a>
-        </fieldset>
-    </form>
-</div>
-<div class="fixed-footer" style="width: 100%; text-align: center;">
-    <div>Copyright &copy; 2018 Coreflex Solutions</div>
-</div>
+        </div>
 
+        <div class="row h-100 d-flex justify-content-center fixed-footer">
+            <div>Copyright &copy; 2018 Coreflex Solutions</div>
+        </div>
+    </div>
+
+</div>

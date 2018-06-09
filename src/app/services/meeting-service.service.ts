@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import * as urlConstants from './urlConstants';
 import 'rxjs/Rx';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { RequestOptions, ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class MeetingServiceService {
 
-  constructor(private http: Http) { }
-  getFutureMeetingByUser(payload) {
+    constructor(private http: Http) { }
+    getFutureMeetingByUser(payload) {
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
-      // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
     getPastMeetingByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload);
-      // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
     scheduleMeeting(payload) {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
@@ -34,7 +34,7 @@ export class MeetingServiceService {
     }
     downloadPdfReportFile() {
         const url = urlConstants.baseUrl + 'downloadPdfReportFile';
-        return this.http.post(url , null);
+        return this.http.post(url, null);
     }
     getPastMeetingsByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?loggedInUserId=' + payload.loggedInUserId;
@@ -58,8 +58,12 @@ export class MeetingServiceService {
     }
     filedownload(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'filedownload?fileName=' + payload.fileName;
-        return this.http.post(url,{ responseType: ResponseContentType.Blob }).map((res) =>{
-        return new Blob([res.arrayBuffer()], { type: 'application/octet-stream' })
-       });
-      } 
+        return this.http.post(url, { responseType: ResponseContentType.Blob }).map((res) => {
+            return new Blob([res.arrayBuffer()], { type: 'application/octet-stream' })
+        });
+    }
+    getAllMeetingsbyLoggedInUserId(payload) {
+        const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?loggedInUserId=' + payload;
+        return this.http.post(url, payload);
+    }
 }

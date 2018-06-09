@@ -13,23 +13,23 @@
     </div>
     <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true">
         <div class="align-center">
-            <a style="padding-right:10px; cursor: pointer;" (click)="getAllFutureMeetingList()">All</a>
-            <a class="date-period-select">Today</a>
-            <a class="date-period-select">Tomorrow</a>
+            <a style="padding-right:10px; cursor: pointer;" (click)="filterMeetingByDate('all')">All</a>
+            <a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a>
+            <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a>
             <!-- <a (click)="meetingByDate()" class="date-period-select">Select Date</a> -->
         </div>
     </div>
     <ul class="accordion btn-sec">
         <li class="accordion-item">
           <input id="s1" class="hide" type="checkbox">
-          <label for="s1"class="accordion-label" (click) = "selectMeetingFilterDate();"><i class="fa fa-calendar-check-o"></i>&nbsp;Select Date</label> 
+          <label for="s1"class="accordion-label" (click) = "selectMeetingFilterDate()"><i class="fa fa-calendar-check-o"></i>&nbsp;Select Date</label> 
           <ul class="accordion-child" >
               <div class="row overall-padding">
                 <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">
                             <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate"
-                             [(ngModel)]="searchtext" value="{{currentDate | date:'fullDate'}}"
+                             [(ngModel)]="selectedfromDate" value="{{currentDate | date:'fullDate'}}"
                                 ngbDatepicker #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -41,7 +41,7 @@
                     <div class="col-sm-6" >
                         <label>To Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate" [(ngModel)]="searchtext" value="{{currentDate | date:'fullDate'}}"
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate" [(ngModel)]="selectedtoDate" value="{{currentDate | date:'fullDate'}}"
                                 ngbDatepicker #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div style="text-align: center;margin:0 auto;padding: 10px;">
-                        <button class="btn btn-primary" (click)="serachMeetingByDate(currentDate, 2018/5/23);">Search</button>
+                        <button class="btn btn-primary" (click)="filterMeetingByDate('range')">Search</button>
                     </div>
                 </div>
          </ul>
@@ -81,7 +81,7 @@
                     <li class="left clearfix">
                         <div class="row">
                             <div class="col-md-3">
-                                <button class="btn btn-cayn">Now</button>
+                                <button class="btn btn-primary">Now</button>
                             </div>
                             <div class="col-md-7">
                                 <p *ngIf="recentMeeting.meetingId!=undefined">
@@ -96,7 +96,7 @@
                         </div>
                     </li>
                     <!-- <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"> -->
-                    <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix">
+                    <li *ngFor="let meeting of filteredFutureMeetingList | SearchFutureMeeting : searchText" class="left clearfix">
                         <div class="row">
                             <div class="col-md-3">
                                 <h6>
