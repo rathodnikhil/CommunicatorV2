@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
+import { UserService } from '../../../services/user.service';
+import { MeetingServiceService } from '../../../services/meeting-service.service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-my-calendar',
     templateUrl: './my-calendar.component.html',
@@ -11,8 +14,8 @@ export class MyCalendarComponent implements OnInit {
     displayEvent: any;
     dateObj = new Date();
     yearMonth = this.dateObj.getUTCFullYear() +
-    '-' +
-    (this.dateObj.getUTCMonth() + 1);
+        '-' +
+        (this.dateObj.getUTCMonth() + 1);
     data: any = [
         {
             title: 'All Day Event',
@@ -70,20 +73,39 @@ export class MyCalendarComponent implements OnInit {
         }
     ];
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-    constructor() {}
+    _meetingService: MeetingServiceService;
+    _userService: UserService;
+    loggedInUser: any;
+    constructor(meetingService: MeetingServiceService,userService:UserService, private router: Router) {
+        this._meetingService = meetingService;
+        this._userService=userService;
+    }
 
     ngOnInit() {
-            this.calendarOptions = {
-                // theme: true,
-                editable: true,
-                eventLimit: false,
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay,listMonth'
-                },
-                events: this.data
-            };
+        this._userService.getLoggedInUSerDetails().subscribe(data => {
+            if (Object.keys(data).length === 0) {
+                this.router.navigate(['/login']);
+            } else {
+                debugger;
+                this.loggedInUser = data;
+                this._meetingService.getAllMeetingsbyLoggedInUserId(this.loggedInUser.id).subscribe(data => { 
+                    const cal= data.json();
+                    
+                });
+            }
+        });
+        
+        this.calendarOptions = {
+            // theme: true,
+            editable: true,
+            eventLimit: false,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listMonth'
+            },
+            events: this.data
+        };
     }
     clickButton(model: any) {
         this.displayEvent = model;

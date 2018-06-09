@@ -14,13 +14,7 @@ export class TimelineComponent implements OnInit {
         titleIcon: '<i class="fa fa-user"></i>',
         title: 'Profile Details',
         smallHeading: 'User profile details',
-        body: '<div class="row"><div class="col-md-4"><label>Display Name</label></div><div class="col-md-5"> Chetan Patwardhan</div>'
-            + '<div class="col-md-3"><a>Change</a></div></div><div class="row"><div class="col-md-4">'
-            + 'Display Picture</div>'
-            + '<div class="col-md-3">'
-            + '<i class="fa fa-user" style="font-size:200px;"></i></div>'
-            + '<div class="col-md-5"><a style="text-decoration : underline">Change Picture</a><br><a>Remove Picture</a></div>'
-            + '<hr></div>',
+        body: '',
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Profile',
         Button2Content: ''
     };

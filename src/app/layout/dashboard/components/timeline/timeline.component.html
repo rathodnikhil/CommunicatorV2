@@ -2,7 +2,7 @@
     <div class="row" style="margin:0px;">
         <div class="col-md-8 card-header" id="timeline-icon">
             {{selectedUser.name}} {{selectedUser.lastName}}&nbsp;
-            <a id="view-profile"[routerLink]="['/myProfile']">(View Full Profile)</a>
+            <a id="view-profile" (click)="open(loggedInUser)">(View Full Profile)</a>
         </div>
         <div class="col-md-1 card-header" id="timeline-icon">
             <i class="fa fa-video-camera" [routerLink]="['/videoCall']"></i>
@@ -166,3 +166,33 @@
     </div>
 </div>
 
+<app-custom-modal #viewProfileModal [model]="viewProfile">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Display Name</label>
+            </div>
+            <div class="col-md-5">{{selectedUser.name}}</div>
+            <div class="col-md-3">
+                <a>Change</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                Display Picture</div>
+            <div class="col-md-3">
+                <i class="fa fa-user" style="font-size:200px;"></i>
+            </div>
+            <div class="col-md-5">
+                <a style="text-decoration : underline">Change Picture</a>
+                <br>
+                <a>Remove Picture</a>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div class="modal-footer popFooter">
+        <!-- <button type="button" class="btn btn-secondary btn-border-radius" (click)="addTeam(newTeamName)">Add Team</button>
+            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('addNewTeam')">Close</button> -->
+    </div>
+</app-custom-modal>
