@@ -108,8 +108,16 @@ export class DashboardComponent implements OnInit {
         if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
             this.showtypeMessage = true;
         } else{
+            alert
             this.showtypeMessage = false;
             this.showBroadcastMessageSuccess = true;
+            const payload = { broadcastMessageDetails: { broadcastMessage: broadcastMessage } };
+            //  const payload = {firstName,lastName};
+              this._groupService.saveBroadcastMessage(payload).subscribe(
+                (res) => {
+                  alert(res);
+                   // saveAs(res, payload.firstName,payload.lastName); 
+                });
         }
         this.broadcastMessage = ' ';
       }

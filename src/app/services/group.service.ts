@@ -27,4 +27,13 @@ export class GroupService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post(url,payload, options)
       }
+      saveBroadcastMessage(payload) {
+        alert(payload.broadcastMessageDetails.broadcastMessage);
+        const url = urlConstants.baseUrl + 'saveBroadcastMessage';
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('authentication', `${payload.token}`);
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(url,payload, options)
+      }
 }
