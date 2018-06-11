@@ -11,25 +11,21 @@ export class MeetingServiceService {
 
     constructor(private http: Http) { }
     getFutureMeetingByUser(payload) {
-        const url = urlConstants.baseUrl + 'getFutureMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'getFutureMeetingByUser';
         return this.http.post(url, payload);
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
-    getPastMeetingByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
-        return this.http.post(url, payload);
-        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
-    }
+ 
     scheduleMeeting(payload) {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
         return this.http.post(url, payload);
     }
     getRecentMeetingByUser(payload) {
-        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'getRecentMeetingByUser';
         return this.http.post(url, payload);
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId';
         return this.http.post(url, payload);
     }
     downloadPdfReportFile() {
@@ -37,7 +33,7 @@ export class MeetingServiceService {
         return this.http.post(url, null);
     }
     getPastMeetingsByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingsByUser?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'getPastMeetingsByUser';
         return this.http.post(url, payload);
     }
     getPastMeetingsScheduledByUser(payload) {

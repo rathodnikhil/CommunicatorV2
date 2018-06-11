@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
+import { GroupService } from '../../../../services/group.service';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
@@ -9,21 +10,27 @@ export class NotificationComponent implements OnInit {
     joinMeeting: boolean;
     activeStatus: boolean;
     meetingMember: boolean;
-    // memberArray = ['Mahadev Mandale', 'Kuldeep Kulkarni', 'Martina Makasare', 'Avinash Prachand'];
     userList = [];
+    groupList = [];
     _userService: UserService;
-    constructor(userService: UserService) {
+    _groupService: GroupService;
+    constructor(userService: UserService , groupService: GroupService) {
         this._userService = userService;
+        this._groupService = groupService;
     }
     ngOnInit() {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
 
-        const payload = { loggedInUserId: 2 };
+        const payload = { id: 2 };
         this._userService.getUserList(payload).subscribe(data => {
-            // debugger;
             this.userList = data.json();
+        });
+
+        //to fetch group list
+        this._groupService.getGroupByLoggedInUserId(payload).subscribe(data => {
+            this.groupList = data.json();
         });
     }
     viewMemeberDetails(user) {

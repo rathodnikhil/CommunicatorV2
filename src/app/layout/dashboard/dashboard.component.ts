@@ -108,14 +108,12 @@ export class DashboardComponent implements OnInit {
         if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
             this.showtypeMessage = true;
         } else{
-            alert
+            alert();
             this.showtypeMessage = false;
             this.showBroadcastMessageSuccess = true;
-            const payload = { broadcastMessageDetails: { broadcastMessage: broadcastMessage } };
-            //  const payload = {firstName,lastName};
+            const payload = { "broadcastMessage": broadcastMessage };
               this._groupService.saveBroadcastMessage(payload).subscribe(
                 (res) => {
-                  alert(res);
                    // saveAs(res, payload.firstName,payload.lastName); 
                 });
         }
@@ -138,14 +136,10 @@ export class DashboardComponent implements OnInit {
         } else{
             this.showNewGroup = false;
             this.showNewGroupSuccess =true;
-            const payload = { group: { groupName: createGroupsVal } };
-            //  const payload = {firstName,lastName};
+            const payload = { "groupName": createGroupsVal  };
               this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {
-                  alert(res);
-                   // saveAs(res, payload.firstName,payload.lastName); 
-                });
-          
+            });     
             }
         
       this.createGroupsVal = ' ';

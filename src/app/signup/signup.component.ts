@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
             this.teamArray = data.json();
         });
     }
-    changeTeam(teamName) {
+    onChangeTeam(teamName) {
         this.selectedTeam = teamName;
     }
 }

@@ -17,6 +17,18 @@
             <span style="padding-left: 1rem;">{{user.name+ ' '+user.lastName}}</span>
             <hr class="list-group-partition" />
         </a>
+        <h5 style ="color: #ffffff;">Groups</h5>
+        <a *ngFor="let group of groupList | searchMember : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
+        class="list-group-item clearfix d-block">
+           <!-- <i class="fa fa-user-circle fa-2x"></i> -->
+           <!-- <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus.statusId == 1,
+           'circleOffline':user.onlineStatus!=null &&  user.onlineStatus.statusId == 2 }"></div> -->
+           <span style="padding-left: 1rem;">{{group.groupId.groupName}}</span>
+           <p>
+               <label >{{group.userId.name}}</label>
+           </p>
+           <hr class="list-group-partition" />
+       </a>
     </div>
     <!-- /.list-group -->
 </div>
