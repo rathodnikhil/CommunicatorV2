@@ -69,9 +69,9 @@
     </div>
  -->
 
-
+<!-- 
 <div class="fixed-header">
-    <!-- <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" /> -->
+    <!-- <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" /> 
     <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem;" />
 </div>
 <div class="body">
@@ -95,5 +95,96 @@
 </div>
 <div class="fixed-footer" style="width: 100%; text-align: center; bottom: 5%;">
     <div>Copyright &copy; 2018 Coreflex Solutions</div>
-</div>
+</div> -->
 
+
+
+<div class="container-bg">
+        <div class="col-md-12" style="top: 20%;">
+            <div class="row h-100 d-flex justify-content-center fixed-header">
+                <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " />
+            </div>
+            <div class="row h-100 d-flex justify-content-center">
+                <div id="login" class="col-md-4">
+                    <div class="inner-border">
+                        <h1>Sign Up</h1>
+                        <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true"
+                        class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
+                        <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">&times;</button>
+                        <strong>Success: </strong>Member has been added Successfully.
+                    </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="First name" [(ngModel)]="firstName" required >
+                        </div>
+                        <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-user-o fa-fw"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required >
+                            </div>
+                            <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user-o fa-fw"></i>
+                                        </span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Userame" [(ngModel)]="userName" required >
+                                </div>
+                                <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-user-o fa-fw"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="Email" [(ngModel)]="email" required >
+                                    </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-key fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" required >
+                        </div>
+                        <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-key fa-fw"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="password" placeholder="Confirm Password" required >
+                            </div>
+                            <!-- <div class=" col-md-12">
+                                    <div ngbDropdown class="d-inline-block dropdown">
+                                            <button class="btn btn-outline-primary" ngbDropdownToggle>{{selectedTeam}}</button>
+                                            <div ngbDropdownMenu>
+                                                <button *ngFor="let team of teamArray" class="dropdown-item"
+                                                on-click="onChangeTeam(team.teamName)">{{team.teamName}}</button>
+                                            </div>
+                                        </div>
+                                </div> -->
+                        <fieldset id="actions">
+                                <input type="submit" id="submit" value="Sign up" [routerLink]="['/dashboard/default']" (click)="registerUser(email,firstName,lastName);">
+                                <a>already have an account?<a style="color:#3277d3;
+                                    " class="sign-in" [routerLink]="['/login']">login</a>
+                                </a>
+                            </fieldset>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row h-100 d-flex justify-content-center fixed-footer">
+                <div>Copyright &copy; 2018 Coreflex Solutions</div>
+            </div>
+        </div>
+    
+    </div>

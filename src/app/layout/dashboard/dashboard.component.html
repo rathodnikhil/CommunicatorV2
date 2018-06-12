@@ -34,6 +34,12 @@
                                         <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal" onfocus="groupNameFocus()"></textarea>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <ul>
+                                    <input type="checkbox" id="scheduledByMe" (change)="scheduleByLoggedInUserId($event)"> Schdule By Me<br>
+                                    <input type="checkbox" id="momByMe"  (change)="momByLoggedInuser($event)">MOM By Me<br>
+                                </ul>
+                                </div>
                             </div>
                             <div class="modal-footer popFooter">
                                     <button type="button" class="btn-sec btn" (click)="createGroup(createGroupsVal)">Add Group</button>

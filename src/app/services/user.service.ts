@@ -12,12 +12,13 @@ export class UserService {
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http) { }
     getUserList(payload) {
-        const url = urlConstants.baseUrl + 'memberListByUser?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'memberListByUser?email=' +payload.email;
         return this.http.post(url, payload);
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
     setLoggedInUserDetails(payload) {
-        const url = urlConstants.baseUrl + 'loggedInUserDetails?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'loggedInUserDetails' ;
+       //const url = 'http://localhost:8081/auth/login?'+ payload ;
         this.http.post(url, payload).subscribe(data => {
             this.loggedInUser$.next(data.json());
         });
@@ -26,7 +27,7 @@ export class UserService {
         return this.loggedInUser$;
     }
     getUserSettingsByLoggedInUser(payload) {
-        const url = urlConstants.baseUrl + ' getUserSettingsByLoggedInUser?loggedInUserId=' + payload.loggedInUserId;
+        const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser';
         return this.http.post(url, payload);
     }
     setSelectedUser(user) {
@@ -34,6 +35,10 @@ export class UserService {
     }
     getSelectedUser() {
         return this.selectedUser$;
+    }
+    saveUserDetails(payload) {
+        const url = urlConstants.baseUrl + 'saveUserDetails';
+        return this.http.post(url, payload);
     }
    
 }

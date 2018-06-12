@@ -107,15 +107,19 @@ export class DashboardComponent implements OnInit {
 
         if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
             this.showtypeMessage = true;
+            setTimeout(function() {
+                this.showtypeMessage = false;
+            }.bind(this), 5000);
         } else{
-            alert
+            alert();
             this.showtypeMessage = false;
             this.showBroadcastMessageSuccess = true;
-            const payload = { broadcastMessageDetails: { broadcastMessage: broadcastMessage } };
-            //  const payload = {firstName,lastName};
+            setTimeout(function() {
+                this.showBroadcastMessageSuccess = false;
+            }.bind(this), 5000);
+            const payload = { "broadcastMessage": broadcastMessage };
               this._groupService.saveBroadcastMessage(payload).subscribe(
                 (res) => {
-                  alert(res);
                    // saveAs(res, payload.firstName,payload.lastName); 
                 });
         }
@@ -132,20 +136,22 @@ export class DashboardComponent implements OnInit {
         alert('text reset');
       }
       createGroup(createGroupsVal){
-        alert(createGroupsVal);
+        //alert(createGroupsVal);
         if(createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined"){
             this.showNewGroup = true;
+            setTimeout(function() {
+                this.showNewGroup = false;
+            }.bind(this), 5000);
         } else{
             this.showNewGroup = false;
             this.showNewGroupSuccess =true;
-            const payload = { group: { groupName: createGroupsVal } };
-            //  const payload = {firstName,lastName};
+            setTimeout(function() {
+                this.showNewGroupSuccess = false;
+            }.bind(this), 5000);
+            const payload = { "groupName": createGroupsVal  };
               this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {
-                  alert(res);
-                   // saveAs(res, payload.firstName,payload.lastName); 
-                });
-          
+            });     
             }
         
       this.createGroupsVal = ' ';

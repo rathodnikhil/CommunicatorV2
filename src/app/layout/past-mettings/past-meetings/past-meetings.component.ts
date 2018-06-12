@@ -21,7 +21,7 @@ scheduledByMe: boolean;
       this.momByMe = false;
 //past meeting list web service call
 this.pastMeetingList = [];
-const payload = {loggedInUserId: 2};
+const payload = {id: 2};
 this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
     this.pastMeetingList = data.json();
 });

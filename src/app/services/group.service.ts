@@ -8,10 +8,16 @@ import { Headers, Response } from '@angular/http';
 export class GroupService {
     loggedInUser: any;
     constructor(private http: Http) { }
-    getTotalGroupByLoggedInUserId(payload) {
-      const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
+
+    //get groups by loggedinuser
+    getGroupByLoggedInUserId(payload) {
+      const url = urlConstants.baseUrl + 'getGroupByLoggedInUserId';
       return this.http.post(url, payload);
-    // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+    }
+
+    getTotalGroupByLoggedInUserId(payload) {
+      const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId';
+      return this.http.post(url, payload);
     }
     getTeamsByLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
@@ -19,7 +25,6 @@ export class GroupService {
       // return this.http.get(urlConstants.baseUrl + 'allMemberList');
       }
       saveGroupDetails(payload) {
-        alert(payload.group.groupName);
         const url = urlConstants.baseUrl + 'saveGroupDetails';
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -28,7 +33,6 @@ export class GroupService {
         return this.http.post(url,payload, options)
       }
       saveBroadcastMessage(payload) {
-        alert(payload.broadcastMessageDetails.broadcastMessage);
         const url = urlConstants.baseUrl + 'saveBroadcastMessage';
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');

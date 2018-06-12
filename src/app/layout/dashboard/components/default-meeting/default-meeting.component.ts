@@ -53,14 +53,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             },
             'profileImgPath': null
         };
-        const payload = { loggedInUserId: 1 };
-        this._userService.getLoggedInUSerDetails().subscribe(data => {
-            if (Object.keys(data).length === 0) {
-                this.router.navigate(['/login']);
-            } else {
-                this.loggedInUser = data;
-            }
-        });
+         const payload = { id: 1 };
+        // this._userService.getLoggedInUSerDetails().subscribe(data => {
+        //     if (Object.keys(data).length === 0) {
+        //         this.router.navigate(['/login']);
+        //     } else {
+        //         this.loggedInUser = data;
+        //     }
+        // });
 
         this.getAllFutureMeetingList();
 
@@ -101,7 +101,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     getAllFutureMeetingList() {
         // future meeting list web service call
-        const payload = { loggedInUserId: 1 };
+        const payload = { id: 1 };
         this.futureMeetingList = [];
         this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
             //  debugger;
