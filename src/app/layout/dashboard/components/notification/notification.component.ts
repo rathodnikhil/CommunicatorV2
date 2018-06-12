@@ -23,13 +23,14 @@ export class NotificationComponent implements OnInit {
         this.joinMeeting = true;
         this.meetingMember = true;
 
-        const payload = { id: 2 };
+        const payload = {email: 'rohit@coreflexsolutions.com' };
         this._userService.getUserList(payload).subscribe(data => {
             this.userList = data.json();
         });
 
         //to fetch group list
-        this._groupService.getGroupByLoggedInUserId(payload).subscribe(data => {
+        const payloadGroup = {id: 1 };
+        this._groupService.getGroupByLoggedInUserId(payloadGroup).subscribe(data => {
             this.groupList = data.json();
         });
     }

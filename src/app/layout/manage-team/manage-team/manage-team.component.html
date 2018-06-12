@@ -16,7 +16,8 @@
     <hr>
     <ul *ngFor="let userPermission of userPermissionList; let teamCount = index">
         <li>
-            <label (click)="displayTeamDetails(userPermission.teamId.teamId , userPermission.teamId.teamName)">{{teamCount+1}})&nbsp;{{userPermission.teamId.teamName}}</label>
+            <label (click)="displayTeamDetails(userPermission.team.teamCode , userPermission.team.teamName)">{{teamCount+1}})&nbsp;
+                {{userPermission.team.teamName}}</label>
         </li>
     </ul>
     <div style="text-align:center;">
@@ -68,7 +69,7 @@
                 <hr>
                 <div class="row" style="padding: 15px;">
                     <div *ngFor="let userMemPermission of userPermissionMemList" class="search-box-container">
-                        <input type="text" value="{{userMemPermission.user.name}} {{userMemPermission.user.lastName}}" />
+                        <input type="text" value="{{userMemPermission.user.firstName}} {{userMemPermission.user.lastName}}" />
                     </div>
                 </div>
                 <div style="text-align:center;">
@@ -84,12 +85,24 @@
                                     <strong>Error: </strong>Enter Member First Name.
                                 </div>
                                 
-                                <div style="margin-top: 20px;" *ngIf="showAddMemberLastName === true"
-                                class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberLastName">
+                                <div style="margin-top: 20px;" *ngIf="showAddMemberUserName === true"
+                                class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberUserName">
                                 <button type="button" class="close" data-dismiss="alert"
                                     aria-hidden="true">&times;</button>
-                                <strong>Error: </strong>Enter Member Last Name.
+                                <strong>Error: </strong>Enter UserName.
                             </div>
+                            <div style="margin-top: 20px;" *ngIf="showAddMemberPassword === true"
+                            class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberPassword">
+                            <button type="button" class="close" data-dismiss="alert"
+                                aria-hidden="true">&times;</button>
+                            <strong>Error: </strong>Enter Password.
+                        </div>
+                        <div style="margin-top: 20px;" *ngIf="showAddMemberEmail === true"
+                        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberEmail">
+                        <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">&times;</button>
+                        <strong>Error: </strong>Enter Email
+                        </div>
 
                                 <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true"
                                 class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
@@ -97,14 +110,13 @@
                                     aria-hidden="true">&times;</button>
                                 <strong>Success: </strong>Member has been added Successfully.
                             </div>
-
                             
                         <div class="row">
                             <div class="col-md-3">
                                 <label>First Name</label>
                             </div>
                             <div>
-                                <textarea placeholder="Type First Name Here.." [(ngModel)]="newMemberName" onfocus="typeMemberNameFocus()"></textarea>  
+                                <input placeholder="FirstName" [(ngModel)]="firstName" onfocus="typeMemberNameFocus()"/>
                             </div>
                         </div>
                         <div class="row">
@@ -112,12 +124,36 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <textarea placeholder="Type Last Name Here.." [(ngModel)]="newMemberLastName" onfocus="typeMemberLastNameFocus()"></textarea>
+                                    <input placeholder="LastName" [(ngModel)]="lastName" onfocus="typeMemberLastNameFocus()" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Email</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Email" [(ngModel)]="email" onfocus="typeMemberLastNameFocus()" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>UserName</label>
+                                </div>
+                                <div>
+                                    <input placeholder="UserName" [(ngModel)]="userName" onfocus="typeMemberLastNameFocus()" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Password</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Password" type="password" [(ngModel)]="password" onfocus="typeMemberLastNameFocus()" />
                                 </div>
                             </div>
                     </div>
                     <div class="modal-footer popFooter">
-                            <button type="button" class="btn btn-sec" (click)="addMember(newMemberName ,newMemberLastName)">Add Team</button>
+                            <button type="button" class="btn btn-sec" (click)="addMember(firstName ,lastName,userName,password,email)">Add Team</button>
                         <button type="button" class="btn btn-cancel" (click)="closeMemberPopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>

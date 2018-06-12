@@ -107,10 +107,16 @@ export class DashboardComponent implements OnInit {
 
         if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
             this.showtypeMessage = true;
+            setTimeout(function() {
+                this.showtypeMessage = false;
+            }.bind(this), 5000);
         } else{
             alert();
             this.showtypeMessage = false;
             this.showBroadcastMessageSuccess = true;
+            setTimeout(function() {
+                this.showBroadcastMessageSuccess = false;
+            }.bind(this), 5000);
             const payload = { "broadcastMessage": broadcastMessage };
               this._groupService.saveBroadcastMessage(payload).subscribe(
                 (res) => {
@@ -130,12 +136,18 @@ export class DashboardComponent implements OnInit {
         alert('text reset');
       }
       createGroup(createGroupsVal){
-        alert(createGroupsVal);
+        //alert(createGroupsVal);
         if(createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined"){
             this.showNewGroup = true;
+            setTimeout(function() {
+                this.showNewGroup = false;
+            }.bind(this), 5000);
         } else{
             this.showNewGroup = false;
             this.showNewGroupSuccess =true;
+            setTimeout(function() {
+                this.showNewGroupSuccess = false;
+            }.bind(this), 5000);
             const payload = { "groupName": createGroupsVal  };
               this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {

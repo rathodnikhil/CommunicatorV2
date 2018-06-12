@@ -8,22 +8,19 @@ import { Headers, Response } from '@angular/http';
 
 @Injectable()
 export class TeamService {
-    loggedInUser: any;
+    eamil: any;
     teamId: any;
     constructor(private http: Http) { }
     getTeamsByLoggedInUserId(payload) {
-      const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
+      const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?email=' + payload.email;
       return this.http.post(url, payload);
     // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
     getMembersByTeam(payload) {
-       // debugger;
-        const url = urlConstants.baseUrl + 'getMembersByTeam?teamId=' + payload.teamId;
+        const url = urlConstants.baseUrl + 'getMembersByTeam?teamCode=' + payload.teamCode;
         return this.http.post(url, payload);
-      // return this.http.get(urlConstants.baseUrl + 'allMemberList');
       }
       getMembersByLoggedInUserId(payload) {
-        // debugger;
          const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
          return this.http.post(url, payload);
        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
@@ -32,12 +29,8 @@ export class TeamService {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.http.get(url);
        }
-      //  saveTeamDetails(payload) {
-      //   const url = urlConstants.baseUrl + 'saveTeamDetails?team=' + payload;
-      //   return this.http.post(url, payload);
-      //  }
-       saveTeamDetails(payload){
-        alert(payload.teamId.teamName);
+
+      saveTeamDetails(payload){
         const url = urlConstants.baseUrl + 'saveTeamDetails';
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -45,4 +38,5 @@ export class TeamService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post(url,payload, options)
         }
+   
 }

@@ -108,13 +108,20 @@
                 <div id="login" class="col-md-4">
                     <div class="inner-border">
                         <h1>Sign Up</h1>
+                        <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true"
+                        class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
+                        <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">&times;</button>
+                        <strong>Success: </strong>Member has been added Successfully.
+                    </div>
+
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     <i class="fa fa-user-o fa-fw"></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" placeholder="First name">
+                            <input class="form-control" type="text" placeholder="First name" [(ngModel)]="firstName" required >
                         </div>
                         <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -122,7 +129,7 @@
                                         <i class="fa fa-user-o fa-fw"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" placeholder="Last Name">
+                                <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required >
                             </div>
                             <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -130,7 +137,7 @@
                                             <i class="fa fa-user-o fa-fw"></i>
                                         </span>
                                     </div>
-                                    <input class="form-control" type="text" placeholder="Userame">
+                                    <input class="form-control" type="text" placeholder="Userame" [(ngModel)]="userName" required >
                                 </div>
                                 <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -138,7 +145,7 @@
                                                 <i class="fa fa-user-o fa-fw"></i>
                                             </span>
                                         </div>
-                                        <input class="form-control" type="text" placeholder="Email">
+                                        <input class="form-control" type="text" placeholder="Email" [(ngModel)]="email" required >
                                     </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -146,7 +153,7 @@
                                     <i class="fa fa-key fa-fw"></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="password" placeholder="Password">
+                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" required >
                         </div>
                         <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -154,9 +161,9 @@
                                         <i class="fa fa-key fa-fw"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="password" placeholder="Confirm Password">
+                                <input class="form-control" type="password" placeholder="Confirm Password" required >
                             </div>
-                            <div class=" col-md-12">
+                            <!-- <div class=" col-md-12">
                                     <div ngbDropdown class="d-inline-block dropdown">
                                             <button class="btn btn-outline-primary" ngbDropdownToggle>{{selectedTeam}}</button>
                                             <div ngbDropdownMenu>
@@ -164,9 +171,9 @@
                                                 on-click="onChangeTeam(team.teamName)">{{team.teamName}}</button>
                                             </div>
                                         </div>
-                                </div>
+                                </div> -->
                         <fieldset id="actions">
-                                <input type="submit" id="submit" value="Sign up" [routerLink]="['/dashboard/default']">
+                                <input type="submit" id="submit" value="Sign up" [routerLink]="['/dashboard/default']" (click)="registerUser(email,firstName,lastName);">
                                 <a>already have an account?<a style="color:#3277d3;
                                     " class="sign-in" [routerLink]="['/login']">login</a>
                                 </a>

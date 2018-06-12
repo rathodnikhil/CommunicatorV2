@@ -12,7 +12,7 @@ export class UserService {
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http) { }
     getUserList(payload) {
-        const url = urlConstants.baseUrl + 'memberListByUser';
+        const url = urlConstants.baseUrl + 'memberListByUser?email=' +payload.email;
         return this.http.post(url, payload);
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
@@ -35,6 +35,10 @@ export class UserService {
     }
     getSelectedUser() {
         return this.selectedUser$;
+    }
+    saveUserDetails(payload) {
+        const url = urlConstants.baseUrl + 'saveUserDetails';
+        return this.http.post(url, payload);
     }
    
 }
