@@ -124,7 +124,7 @@ export class ScheduleMeetingComponent implements OnInit {
             subject: this.subject
         };
 alert(this.meeting.meridianTime);
-          //current date and time
+          // current date and time
    this.currentDate = Date.now();
     }
     switchRoute() {
@@ -132,25 +132,25 @@ alert(this.meeting.meridianTime);
       }
       scheduleMeeting() {
       //   debugger;
-      const today = new Date();
-      this.meeting = {
-          meridianTime : {hour: today.getHours(), minute: today.getMinutes()},
-          meridian : true,
-          datePicker: {
-              day : today.getDate(),
-              month : today.getMonth() + 1,
-              year : today.getFullYear()
-          },
-          isRecurring: 1,
-          callType: 1,
-          selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
-          selectedDuration: 'Select Duration',
-          subject: this.subject
-      };
-
+    //   const today = new Date();
+    //   this.meeting = {
+    //       meridianTime : {hour: today.getHours(), minute: today.getMinutes()},
+    //       meridian : true,
+    //       datePicker: {
+    //           day : today.getDate(),
+    //           month : today.getMonth() + 1,
+    //           year : today.getFullYear()
+    //       },
+    //       isRecurring: 1,
+    //       callType: 1,
+    //       selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
+    //     //   selectedDuration: 'Select Duration',
+    //       subject: this.subject
+    //   };
+debugger;
         const payload = {
-            'meetingDate': 1525069150000,
-            'meetingStartDateTime': 1525069150000,
+            'meetingDate': this.meeting.datePicker,
+            'meetingStartDateTime': this.meeting.meridianTime,
             'meetingEndDateTime': 1525067350000,
             'subject': this.subject,
             'duration': this.meeting.selectedDuration,
@@ -159,7 +159,7 @@ alert(this.meeting.meridianTime);
             'timeZone': this.meeting.selectedTimeZone,
             'timeType': '12Hours'
         };
-       
+
         this._meetingService.scheduleMeeting(payload).subscribe(data => {
            alert(data.json());
         });
@@ -184,6 +184,7 @@ alert(this.meeting.meridianTime);
           this.meeting.selectedTimeZone = timezone;
       }
       changeDuration(duration) {
+          debugger;
           this.meeting.selectedDuration = duration;
       }
        getTimeZone() {

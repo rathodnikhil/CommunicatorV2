@@ -49,13 +49,14 @@ export class TimelineComponent implements OnInit {
             'profileImgPath': null
         };
         const payload = { id: 2 };
-        this._userService.getLoggedInUSerDetails().subscribe(data => {
-            if (Object.keys(data).length === 0) {
-                this.router.navigate(['/login']);
-            } else {
-                this.loggedInUser = data;
-            }
-        });
+        // this._userService.getLoggedInUSerDetails().subscribe(data => {
+        //     debugger;
+        //     if (Object.keys(data).length === 0) {
+        //         this.router.navigate(['/login']);
+        //     } else {
+        //         this.loggedInUser = data;
+        //     }
+        // });
         this._userService.getSelectedUser().subscribe(data => {
             if (data == null || data === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
