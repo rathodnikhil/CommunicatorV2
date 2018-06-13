@@ -22,9 +22,10 @@
     <ul class="accordion btn-sec">
         <li class="accordion-item">
           <input id="s1" class="hide" type="checkbox">
-          <label for="s1"class="accordion-label" (click) = "selectMeetingFilterDate()"><i class="fa fa-calendar-check-o"></i>&nbsp;Select Date</label> 
+          <label for="s1"class="accordion-label" (click) = "selectMeetingFilterDate()"><i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
+         <span style="float: right; font-size: 20px;"(click)="closeDropdown()"><i class="fa fa-angle-down" aria-hidden="true"></i></span> </label>
           <ul class="accordion-child" >
-              <div class="row overall-padding">
+              <div class="row overall-padding">             
                 <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">

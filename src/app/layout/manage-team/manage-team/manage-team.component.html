@@ -16,7 +16,7 @@
     <hr>
     <ul *ngFor="let userPermission of userPermissionList; let teamCount = index">
         <li>
-            <label (click)="displayTeamDetails(userPermission.team.teamCode , userPermission.team.teamName)">{{teamCount+1}})&nbsp;
+            <label (click)="displayTeamDetails(userPermission.team.teamCode , userPermission.team.teamName ,userPermission.team)">{{teamCount+1}})&nbsp;
                 {{userPermission.team.teamName}}</label>
         </li>
     </ul>

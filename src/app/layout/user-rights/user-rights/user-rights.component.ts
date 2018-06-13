@@ -18,7 +18,7 @@ payloadSearch: any;
 
   ngOnInit() {
     this.userPermissionList = [];
-    const payload = {loggedInUserId: 1};
+    const payload = {email: 'rohit@coreflexsolutions.com'};
     this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
          this.userPermissionList = data.json();
      });

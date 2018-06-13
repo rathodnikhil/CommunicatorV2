@@ -13,15 +13,14 @@
 <h4><i class="fa fa-filter"></i>&nbsp;Filter by Team</h4>
 <hr>
   <ul>
-        <li *ngFor="let userPermission of userPermissionList"><input type="checkbox" (change)="filterMemberByTeam($event , userPermission.teamId.teamId)"> {{userPermission.teamId.teamName}}</li>
-        <li><input type="checkbox" id="userPermission.teamId.teamId"> All</li>
+        <li *ngFor="let userPermission of userPermissionList"><input type="checkbox" (change)="filterMemberByTeam($event , userPermission.team.teamId)">
+           {{userPermission.team.teamName}}</li>
+        <li><input type="checkbox" id="userPermission.team.teamId"> All</li>
       </ul>
 </div>
 <div class="main">
     <h4>Team/user Rights Details</h4>
     <hr>
-
-
     <table>
       <tr>
         <th>Sr. No</th>
@@ -34,7 +33,7 @@
       <tr *ngFor="let userPermission of userPermissionMemberList; let srNo = index">
             <td>{{srNo+1}}</td>
             <td>{{userPermission.user.name}} {{userPermission.user.lastName}}</td>
-            <td>{{userPermission.teamId.teamName}}</td>
+            <td>{{userPermission.team.teamName}}</td>
             <td>{{userPermission.user.status.statusId.status}}</td>
             <td><div class="switch-field">
                     <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
