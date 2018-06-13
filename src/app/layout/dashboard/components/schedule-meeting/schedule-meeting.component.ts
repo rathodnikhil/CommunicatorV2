@@ -13,6 +13,7 @@ export class ScheduleMeetingComponent implements OnInit {
     @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
     currentDate: any;
     meeting: any;
+    subject: any;
     _meetingService: MeetingServiceService;
     showScheduleMeetingSuccess: boolean = true;
     showCopyDetailsSuccess: boolean = false;
@@ -102,7 +103,8 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT-11:00) Midway Island, Samoa',
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
-    constructor(private viewContainerRef: ViewContainerRef) {
+    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingServiceService) {
+        this._meetingService = meetingService;
     }
 
     ngOnInit() {
@@ -118,30 +120,49 @@ export class ScheduleMeetingComponent implements OnInit {
             isRecurring: 1,
             callType: 1,
             selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
-            selectedDuration: 'Select Duration'
+            selectedDuration: 'Select Duration',
+            subject: this.subject
         };
-
+alert(this.meeting.meridianTime);
           //current date and time
    this.currentDate = Date.now();
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
       }
-      open() {
+      scheduleMeeting() {
       //   debugger;
+      const today = new Date();
+      this.meeting = {
+          meridianTime : {hour: today.getHours(), minute: today.getMinutes()},
+          meridian : true,
+          datePicker: {
+              day : today.getDate(),
+              month : today.getMonth() + 1,
+              year : today.getFullYear()
+          },
+          isRecurring: 1,
+          callType: 1,
+          selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
+          selectedDuration: 'Select Duration',
+          subject: this.subject
+      };
+
         const payload = {
-            'meetingDate': '2018-04-30',
-            'createdDate': 1525065550000,
-            'attendee': 'test@gmail.com, aivnah@gmail.com, kuldeep@gmail.com, mahadev@gmail.com',
+            'meetingDate': 1525069150000,
             'meetingStartDateTime': 1525069150000,
             'meetingEndDateTime': 1525067350000,
-            'subject': 'Test Meeting Subject',
-            'duration': '02:00',
-            'recurringType': null,
-            'callType': null,
-            'timeZone': 'Asia/Calcutta',
+            'subject': this.subject,
+            'duration': this.meeting.selectedDuration,
+            'recurringType': this.meeting.isRecurring,
+            'callType': this.meeting.callType,
+            'timeZone': this.meeting.selectedTimeZone,
             'timeType': '12Hours'
         };
+       
+        this._meetingService.scheduleMeeting(payload).subscribe(data => {
+           alert(data.json());
+        });
        // this._meetingService.scheduleMeeting(payload);
           this.inviteAttendeesModal.open();
       }

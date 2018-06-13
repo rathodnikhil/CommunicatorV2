@@ -167,29 +167,38 @@
 </div>
 
 <app-custom-modal #viewProfileModal [model]="viewProfile">
-    <div class="modal-body">
+    <div class="modal-body row-label">
         <div class="row">
             <div class="col-md-4">
-                <label>Display Name</label>
+                <label>FullName</label>
             </div>
-            <div class="col-md-5">{{selectedUser.name}} &nbsp; {{selectedUser.lastName}}</div>
-            <p>{{selectedUser.email}}</p>
-            <div class="col-md-3">
-                <a>Change</a>
-            </div>
+            <div class="col-md-8"><label>{{selectedUser.firstName}} &nbsp; {{selectedUser.lastName}}</label></div>
         </div>
         <div class="row">
+                <div class="col-md-4">
+                    <label>UserName</label>
+                </div>
+                <div class="col-md-8"><label>{{selectedUser.name}}</label></div>
+            </div>
+            <div class="row">
+                    <div class="col-md-4">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-8"><label>{{selectedUser.email}}</label></div>
+                </div>
+                <div class="row">
+                        <div class="col-md-4">
+                            <label>Team Name</label>
+                        </div>
+                        <div class="col-md-8"><label>{{selectedUser.team.teamName}}</label></div>
+                    </div>
+    
+        <div class="row">
             <div class="col-md-4">
-                Display Picture</div>
-            <div class="col-md-3">
-                <i class="fa fa-user" style="font-size:200px;"></i>
+                <label>Display Picture</label></div>
+            <div class="col-md-8">
+                <i class="fa fa-user" style="font-size:80px;"></i>
             </div>
-            <div class="col-md-5">
-                <a style="text-decoration : underline">Change Picture</a>
-                <br>
-                <a>Remove Picture</a>
-            </div>
-            <hr>
         </div>
     </div>
     <div class="modal-footer popFooter">

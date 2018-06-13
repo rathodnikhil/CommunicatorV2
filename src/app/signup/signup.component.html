@@ -1,102 +1,3 @@
-<!-- <div class="fixed-header">
-    <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" />
-</div>
-<div>
-    <div class="login-page" [@routerTransition]>
-        <div class="container">
-            <h3>SignUp</h3>
-            <p style="text-align: center;">________________</p>
-
-            <form action="" method="" id="login-form">
-                <div class="form-field">
-                    <label for="user-name">
-                        Full Name
-                    </label>
-                    <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
-                </div>
-                <div class="form-field">
-                    <label for="user-name">
-                        Username or Email
-                    </label>
-                    <input type="text" name="user-name" id="user-name" size="50" required autofocus/>
-                </div>
-
-                <div class="form-field">
-                    <label for="pass">
-                        Password
-                    </label>
-                    <input type="password" name="password" id="pass" size="50" required />
-                </div>
-
-                <div class="form-field">
-                    <label for="pass">
-                        Confirm Password
-                    </label>
-                    <input type="password" name="password" id="pass" size="50" required />
-                </div>
-
-                <div class="form-field">
-                    <label for="pass">
-                        Teams
-                    </label>
-                    <div ngbDropdown class="d-inline-block dropdown">
-                        <button class="btn btn-outline-primary col-md-12" ngbDropdownToggle>{{selectedTeam}}</button>
-                        <div ngbDropdownMenu>
-                            <button *ngFor="let team of teamArray" on-click="changeTeam(team.teamName)" class="dropdown-item">{{team.teamName}}</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="form-submit">
-                    <a [routerLink]="['/dashboard']">
-                        <input type="submit" value="Register" />
-                    </a>
-                </div>
-            </form>
-
-            <div id="register-link">
-                <span>
-                    Already Have an Account?
-                    <a class="signIn-link" [routerLink]="['/login']">
-                        Sign In
-                    </a>
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed-footer" style="width: 100%; text-align: center;">
-        <div>Copyright &copy; 2018 Coreflex Solutions.</div>
-    </div>
- -->
-
-<!-- 
-<div class="fixed-header">
-    <!-- <img src="assets/images/com_logo_new.png" alt="Responsive image" class="img-fluid" style="height:5rem;" /> 
-    <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem;" />
-</div>
-<div class="body">
-    <form id="signup">
-            <div class="communication-logo">
-                    <img src="assets/images/comm.png" alt="Responsive image"  class="img-fluid" style="height:3.5rem; " />
-                    </div>
-        <h1>Sign up</h1>
-        <fieldset id="inputs">
-            <input id="fullName" type="text" placeholder="Full Name" autofocus required>
-            <input id="username" type="text" placeholder="Username" required>
-            <input id="password" type="password" placeholder="Password" required>
-            <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
-        </fieldset>
-        <fieldset id="actions">
-            <input type="submit" id="submit" value="Sign up" [routerLink]="['/dashboard/default']">
-            <a href="">Forgot your password?</a>
-            <a [routerLink]="['/login']">Login</a>
-        </fieldset>
-    </form>
-</div>
-<div class="fixed-footer" style="width: 100%; text-align: center; bottom: 5%;">
-    <div>Copyright &copy; 2018 Coreflex Solutions</div>
-</div> -->
-
 
 
 <div class="container-bg">
@@ -110,10 +11,46 @@
                         <h1>Sign Up</h1>
                         <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true"
                         class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
-                        <button type="button" class="close" data-dismiss="alert"
-                            aria-hidden="true">&times;</button>
                         <strong>Success: </strong>Member has been added Successfully.
                     </div>
+                    <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true"
+                    class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
+                    <strong>Error: </strong>Enter Member First Name.
+                </div>
+                
+                <div style="margin-top: 20px;" *ngIf="showAddMemberUserName === true"
+                class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberUserName">
+                <strong>Error: </strong>Enter UserName.
+            </div>
+            <div style="margin-top: 20px;" *ngIf="showAddMemberEmail === true"
+            class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberEmail">
+            <strong>Error: </strong>Enter Email
+            </div>
+            <div style="margin-top: 20px;" *ngIf="showAddMemberPassword === true"
+            class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberPassword">
+            <strong>Error: </strong>Enter Password.
+        </div>
+        <div style="margin-top: 20px;" *ngIf="showAddMemberConfirmPass === true"
+        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberConfirmPass">
+        <strong>Error: </strong>Enter Confirm Password.
+        </div>
+        <div style="margin-top: 20px;" *ngIf="showAddMemberpasswordMatch === true"
+        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberpasswordMatch">
+        <strong>Error: </strong>Password and confirm password dose not match.
+        </div>
+        <div style="margin-top: 20px;" *ngIf="showAddMemberValidEmail === true"
+        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberValidEmail">
+        <strong>Error: </strong>Enter Valid Email
+        </div>
+        <div style="margin-top: 20px;" *ngIf="showAddMemberDuplicateUserName === true"
+        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberDuplicateUserName">
+        <strong>Error: </strong>UserName is already present
+        </div>
+        <div style="margin-top: 20px;" *ngIf="showAddMemberDuplicateEmail === true"
+        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberDuplicateEmail">
+        <strong>Error: </strong>Email is already present
+        </div>
+        
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -161,7 +98,7 @@
                                         <i class="fa fa-key fa-fw"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="password" placeholder="Confirm Password" required >
+                                <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required >
                             </div>
                             <!-- <div class=" col-md-12">
                                     <div ngbDropdown class="d-inline-block dropdown">
@@ -173,7 +110,7 @@
                                         </div>
                                 </div> -->
                         <fieldset id="actions">
-                                <input type="submit" id="submit" value="Sign up" [routerLink]="['/dashboard/default']" (click)="registerUser(email,firstName,lastName);">
+                                <input type="submit" id="submit" value="Sign up"  (click)="registerUser();">
                                 <a>already have an account?<a style="color:#3277d3;
                                     " class="sign-in" [routerLink]="['/login']">login</a>
                                 </a>

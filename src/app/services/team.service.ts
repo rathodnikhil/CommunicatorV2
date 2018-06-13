@@ -8,7 +8,7 @@ import { Headers, Response } from '@angular/http';
 
 @Injectable()
 export class TeamService {
-    eamil: any;
+    email: any;
     teamId: any;
     constructor(private http: Http) { }
     getTeamsByLoggedInUserId(payload) {

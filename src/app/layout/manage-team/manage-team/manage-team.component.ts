@@ -20,10 +20,12 @@ export class ManageTeamComponent implements OnInit {
     showAddMemberPassword: boolean = false;
     showAddMemberEmail: boolean = false;
     memObj: any = {};
+    i: number;
     _teamService: TeamService;
     _userService: UserService;
     userPermissionList = [];
     userPermissionMemList = [];
+    filterMemberList = [];
     selectedTeamName: any;
     user: any = {};
     firstName: any;
@@ -65,7 +67,7 @@ export class ManageTeamComponent implements OnInit {
         const payload = { email: 'rohit@coreflexsolutions.com' };
         this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
             this.userPermissionList = data.json();
-            this.selectedTeamName = this.userPermissionList[1].teamId.teamName;
+            this.selectedTeamName = this.userPermissionList[1].team.teamName;
         });
 
         //getMembersByTeamId webservice call
@@ -74,15 +76,21 @@ export class ManageTeamComponent implements OnInit {
         this._teamService.getMembersByTeam(teamPayload).subscribe(data => {
             this.userPermissionMemList = data.json();
         });
-
     }
-    displayTeamDetails(teamCode, teamName) {
+    displayTeamDetails(teamCode, teamName ,team) {
         this.selectedTeamName = teamName;
         this.userPermissionMemList = [];
         const teamPayload = { teamCode: teamCode };
         this._teamService.getMembersByTeam(teamPayload).subscribe(data => {
             this.userPermissionMemList = data.json();
         });
+        for(this.i=0; this.i<this.userPermissionList.length; this.i++) {
+            alert(team.id);
+            if(this.userPermissionList[1] == team) {
+                this.filterMemberList.push(this.userPermissionList[this.i]);
+            }
+        }
+        alert(this.filterMemberList.length);
     }
     //to open modal popup
     open() {

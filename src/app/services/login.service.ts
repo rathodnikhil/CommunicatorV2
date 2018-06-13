@@ -11,4 +11,12 @@ export class LoginService {
       const url = urlConstants.baseUrl + 'getUser?userNameAndMeetingId=' + payload;
       return this.http.get(url);
     }
+    getAllMemUserNameList() {
+        const url = urlConstants.baseUrl + 'getAllMemUserNameList';
+      return this.http.post(url , null);
+    }
+    getAllMemEmailList() {
+        const url = urlConstants.baseUrl + 'getAllMemEmailList';
+        return this.http.post(url , null);
+    }
 }
