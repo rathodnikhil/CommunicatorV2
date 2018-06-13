@@ -35,11 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                         username: data['username']
                     })
             );
-             const payload = { id: 2 };
-         this._userService.setLoggedInUserDetails(payload);
-       
-        // const payload = 'username=admin&password=password';
-        // this._userService.setLoggedInUserDetails(payload);
+        //      const payload = { id: 2 };
+        //  this._userService.setLoggedInUserDetails(payload);
+
+        const payload = { 'username': 'admin', 'password': 'password' };
+        this._userService.setLoggedInUserDetails(payload);
         localStorage.setItem('isLoggedin', 'true');
     }
     ngOnDestroy(): void {

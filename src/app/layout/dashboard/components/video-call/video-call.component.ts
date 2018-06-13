@@ -1,14 +1,20 @@
 import { Component, OnInit, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { UserService } from '../../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-video-call',
-  templateUrl: './video-call.component.html',
-  styleUrls: ['./video-call.component.scss']
+    selector: 'app-video-call',
+    templateUrl: './video-call.component.html',
+    styleUrls: ['./video-call.component.scss']
 })
 export class VideoCallComponent implements OnInit, AfterViewInit {
     loggedInUser: any;
-    constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef) { }
+    selectedUser: any;
+    _userService: UserService;
+    constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef, userService: UserService, private router: Router) {
+        this._userService = userService;
+    }
     ngAfterViewInit(): void {
         // const s = document.createElement('script');
         // s.type = 'text/javascript';
@@ -17,10 +23,10 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
-        s.src = '../../../assets/scripts/meetingTest.js';
+        s.src = '../../../assets/scripts/meetingPeer.js';
         const __this = this; // to store the current instance to call
-                             // afterScriptAdded function on onload event of
-                             // script.
+        // afterScriptAdded function on onload event of
+        // script.
         s.onload = function () { __this.afterScriptAdded(); };
         this.elementRef.nativeElement.appendChild(s);
     }
@@ -48,19 +54,37 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
             },
             'profileImgPath': null
         };
+        localStorage.setItem('loggedInuserName', this.loggedInUser.name + ' ' + this.loggedInUser.lastName);
+        // this._userService.getLoggedInUSerDetails().subscribe(data => {
+        //     debugger;
+        //     if (Object.keys(data).length === 0) {
+        //         this.router.navigate(['/login']);
+        //     } else {
+        //         this.loggedInUser = data;
+        //     }
+        // });
+        this._userService.getSelectedUser().subscribe(data => {
+            if (data == null || data === undefined || data.length === 0) {
+                this.router.navigate(['/dashboard/default']);
+            } else {
+                this.selectedUser = data;
+            }
+        });
     }
     afterScriptAdded() {
-         debugger;
+        debugger;
         const meetingName = this.document.getElementById('meeting-name');
-        meetingName.value = 'Nikitesh Kolpe- Vrushali';
+
+        meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
+            + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
         this.document.getElementById('setup-meeting').click();
         const params = {
-          width: '350px',
-          height: '420px',
+            width: '350px',
+            height: '420px',
         };
         if (typeof (window['functionFromExternalScript']) === 'function') {
-          window['functionFromExternalScript'](params);
+            window['functionFromExternalScript'](params);
         }
-      }
+    }
 
 }

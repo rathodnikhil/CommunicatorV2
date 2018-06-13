@@ -17,8 +17,8 @@ export class UserService {
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
     setLoggedInUserDetails(payload) {
-        const url = urlConstants.baseUrl + 'loggedInUserDetails' ;
-       //const url = 'http://localhost:8081/auth/login?'+ payload ;
+        // const url = urlConstants.baseUrl + 'loggedInUserDetails' ;
+       const url = urlConstants.authUrl + 'auth/login';
         this.http.post(url, payload).subscribe(data => {
             this.loggedInUser$.next(data.json());
         });
@@ -40,5 +40,5 @@ export class UserService {
         const url = urlConstants.baseUrl + 'saveUserDetails';
         return this.http.post(url, payload);
     }
-   
+
 }
