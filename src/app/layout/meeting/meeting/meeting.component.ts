@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-meeting',
@@ -8,13 +9,15 @@ import { UserService } from '../../../services/user.service';
   providers: [UserService]
 })
 export class MeetingComponent implements OnInit {
-
+    jwtToken: string;
     userList = [];
     _userService: UserService;
+    _loginService: LoginService;
     messageSendTo: any;
     momTo: any;
-  constructor(userService: UserService) {
+  constructor(userService: UserService , loginService: LoginService) {
       this._userService = userService;
+      this._loginService = loginService;
   }
 
   ngOnInit() {
@@ -23,7 +26,8 @@ export class MeetingComponent implements OnInit {
     const payload = {loggedInUserId: 2};
 
     // to get list of member
-    this._userService.getUserList(payload).subscribe(data => {
+    this.jwtToken = this._loginService.getJwtToken();
+    this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
         this.userList = data.json();
     });
  }

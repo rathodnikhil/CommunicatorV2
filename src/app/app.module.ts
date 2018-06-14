@@ -14,7 +14,7 @@ import { HttpModule } from '@angular/http';
 import { UserService } from './services/user.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MeetingServiceService } from './services/meeting-service.service';
-
+import { FormsModule } from '@angular/forms';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -29,6 +29,7 @@ export function createTranslateLoader(http: HttpClient) {
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
+        FormsModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {

@@ -7,13 +7,21 @@
             <div id="login" class="col-md-4">
                 <div class="inner-border">
                     <h1>Log In</h1>
+                    <div style="margin-top: 20px;" *ngIf="authFlag== true;" class="alert alert-danger alert-dismissable" >
+                        <strong>Error: </strong>Authentication Token is null</div>
+                        <div style="margin-top: 20px;" *ngIf="userNameFlag== true;" class="alert alert-danger alert-dismissable" >
+                                <strong>Error: </strong>Authentication Token is null
+                        </div>
+                        <div style="margin-top: 20px;" *ngIf="passwordFlag== true;" class="alert alert-danger alert-dismissable" >
+                                <strong>Error: </strong>Authentication Token is null
+                        </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="fa fa-user-o fa-fw"></i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" placeholder="User name">
+                        <input class="form-control" type="text" placeholder="User name"  required>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -21,10 +29,11 @@
                                 <i class="fa fa-key fa-fw"></i>
                             </span>
                         </div>
-                        <input class="form-control" type="password" placeholder="password">
+                        <input class="form-control" type="password" placeholder="password" required>
                     </div>
                     <fieldset id="actions">
-                        <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']">
+                        <!-- <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']"> -->
+                        <input type="submit" id="submit" value="Log in" (click)="login()" />
                         <a href="">Forgot your password?</a>
                         <a [routerLink]="['/signup']">Register</a>
                     </fieldset>

@@ -5,14 +5,26 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 import { RequestOptions, ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { LoginService } from './login.service';
+import { Headers, Response } from '@angular/http';
 @Injectable()
 export class MeetingServiceService {
+_loginService: LoginService;
+jwtToken: string;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http , loginService: LoginService) {
+        this._loginService = loginService;
+        this.jwtToken = this._loginService.getJwtToken();
+     }
     getFutureMeetingByUser(payload) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('authentication', `${payload.token}`);
+        headers.append('app-Subject' , 'admin');
+        headers.append('Authorization' , this.jwtToken);
+        let options = new RequestOptions({ headers: headers });
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser';
-        return this.http.post(url, payload);
+        return this.http.post(url, payload,options);
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
  
@@ -21,8 +33,14 @@ export class MeetingServiceService {
         return this.http.post(url, payload);
     }
     getRecentMeetingByUser(payload) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('authentication', `${payload.token}`);
+        headers.append('app-Subject' , 'admin');
+        headers.append('Authorization' , this.jwtToken);
+        let options = new RequestOptions({ headers: headers });
         const url = urlConstants.baseUrl + 'getRecentMeetingByUser';
-        return this.http.post(url, payload);
+        return this.http.post(url, payload,options);
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId';
@@ -59,7 +77,13 @@ export class MeetingServiceService {
         });
     }
     getAllMeetingsbyLoggedInUserId(payload) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('authentication', `${payload.token}`);
+        headers.append('app-Subject' , 'admin');
+        headers.append('Authorization' , this.jwtToken);
+        let options = new RequestOptions({ headers: headers });
         const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?loggedInUserId=' + payload;
-        return this.http.post(url, payload);
+        return this.http.post(url, payload,options);
     }
 }
