@@ -15,7 +15,7 @@ import { UserService } from './services/user.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MeetingServiceService } from './services/meeting-service.service';
 import { FormsModule } from '@angular/forms';
-
+import { AuthInterceptor} from './services/Authentication';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -41,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule
     ],
     declarations: [AppComponent], // , SeachMemberPipe
-    providers: [AuthGuard, LoginService, UserService, MeetingServiceService],
+    providers: [AuthGuard, LoginService, UserService, MeetingServiceService,AuthInterceptor],
     bootstrap: [AppComponent], schemas: [
         CUSTOM_ELEMENTS_SCHEMA
     ]

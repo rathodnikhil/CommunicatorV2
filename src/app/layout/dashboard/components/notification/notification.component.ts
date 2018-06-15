@@ -29,16 +29,16 @@ export class NotificationComponent implements OnInit {
 
         const payload = {email: 'rohit@coreflexsolutions.com' };
         this.jwtToken = this._loginService.getJwtToken();
-        this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
-            this.userList = data.json();
-        });
-
+        // this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
+        //     this.userList = data.json();
+        // });
+        this._userService.getUserList(payload,this.jwtToken);
         //to fetch group list
-        const payloadGroup = {id: 1 };
-        this._groupService.getGroupByLoggedInUserId(payloadGroup).subscribe(data => {
-            this.groupList = data.json();
-        });
-    }
+    //     const payloadGroup = {id: 1 };
+    //     this._groupService.getGroupByLoggedInUserId(payloadGroup).subscribe(data => {
+    //         this.groupList = data.json();
+    //     });
+     }
     viewMemeberDetails(user) {
         // alert('Selected Memeber is : ' + user.name + user.lastName);
         this._userService.setSelectedUser(user);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, RequestMethod } from '@angular/http';
 import * as urlConstants from './urlConstants';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -8,6 +8,7 @@ import { BehaviorSubject, Subject } from 'rxjs/Rx';
 // import { Headers, Response } from '@angular/http';
 import { LoginService } from './login.service';
 import { Headers, RequestOptions,Response } from '@angular/http';
+import 'rxjs/add/operator/catch';
 @Injectable()
 export class UserService  {
 
@@ -16,42 +17,55 @@ export class UserService  {
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
-    constructor(private http: Http , loginService: LoginService) {
+    constructor(private http: Http , loginService: LoginService ) {
         this._loginService = loginService;
        // this.jwtToken = this._loginService.getJwtToken();
      }
   
     getUserList(payload,token) {
-
-        
-        console.log("GET WITH HEADERS");
+        //alert('get user list'+token);
+      
         let headers = new Headers();
-        headers.set('Authorization',token);
-        headers.set("Content-Type", "application/json");
-        headers.set("app-Subject" , "admin");
-        let opts = new RequestOptions();
-        opts.headers = headers;
+        headers.append('Authorization',token);
+        headers.append("Content-Type", "application/json");
+        headers.append("app-Subject" , "admin");
+        let opts = new RequestOptions({headers:headers});
         const url = urlConstants.baseUrl + 'memberListByUser?email=' +payload.email;
-        alert('get user list'+token);
-        this.http.get(url, opts).subscribe(data => {
+     
+        let options = new RequestOptions({
+
+            // headers: this.appendFormHeader(),
+
+            headers: headers,
+
+            method: RequestMethod.Get,
+
+            url: url,
+
+          //  body: body
+
+            // withCredentials: true
+
+            //url    : this.appConfig.baseApiPath + url   //this.api + url,
+
+            // params:"username=admin&password=admin"
+
+        });
+
+        debugger;
+        alert('headers' + headers.get('Authorization'));
+      //  opts.headers = headers;
+      
+        this.http.request(url, options).subscribe(data => {
            alert(data.json());
             
-        });
-        this.http.get(url,  new RequestOptions({
-
-            headers: new Headers({
+        },
+          err => {
+            console.log("Error occured");
+            alert(err);
+          });
   
-              Authorization: `Bearer ${token}`,
-              'Content-Type':'application/json',
-              'app-Subject' : 'admin'
-  
-            }),
-  
-          }))
-  
-          .map(res => res.json());
-        return token;
-
+      return token;
    
 
        // let options = new RequestOptions({ headers: headers });

@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.jwtToken = this._loginService.getJwtToken();
         if(this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
             this.flag = true;
+            
         }else{
             this.router.navigate(['/dashboard/default']);
         }
