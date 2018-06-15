@@ -62,19 +62,19 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         //     }
         // });
 
-        this.getAllFutureMeetingList();
+       // this.getAllFutureMeetingList();
 
         // recent meeting webservice call
         this.recentMeeting = {};
-        this._meetingService.getRecentMeetingByUser(payload).subscribe(data => {
-            const resp = data.json();
-            if (resp.errorFl || resp.warningFl) {
-                this.recentMeeting = {};
-            } else {
-                this.recentMeeting = resp;
-            }
-            // this.recentMeeting = data.json();
-        });
+        // this._meetingService.getRecentMeetingByUser(payload).subscribe(data => {
+        //     const resp = data.json();
+        //     if (resp.errorFl || resp.warningFl) {
+        //         this.recentMeeting = {};
+        //     } else {
+        //         this.recentMeeting = resp;
+        //     }
+        //     // this.recentMeeting = data.json();
+        // });
 
         // current date and time
         // this.currentDate = Date.now();
