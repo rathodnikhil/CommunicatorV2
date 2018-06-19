@@ -26,11 +26,13 @@ export class NotificationComponent implements OnInit {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
-
-        const payload = {email: 'rohit@coreflexsolutions.com' };
-        this.jwtToken = this._loginService.getJwtToken();
-        // this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
-        //     this.userList = data.json();
+const payload = {
+	"name":"asdd"
+};
+      //  const payload = {email: 'rohit@coreflexsolutions.com' };
+        // this.jwtToken = this._loginService.getJwtToken();
+        //  this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
+        //     // this.userList = data.json();
         // });
         this._userService.getUserList(payload,this.jwtToken);
         //to fetch group list

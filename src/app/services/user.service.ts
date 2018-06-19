@@ -3,12 +3,14 @@ import { Http, RequestMethod } from '@angular/http';
 import * as urlConstants from './urlConstants';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { BehaviorSubject, Subject } from 'rxjs/Rx';
+import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 // import { RequestOptions, ResponseContentType } from '@angular/http';
 // import { Headers, Response } from '@angular/http';
 import { LoginService } from './login.service';
 import { Headers, RequestOptions,Response } from '@angular/http';
 import 'rxjs/add/operator/catch';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class UserService  {
 
@@ -17,62 +19,31 @@ export class UserService  {
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
-    constructor(private http: Http , loginService: LoginService ) {
+        
+        constructor(private http: Http , loginService: LoginService,private apiRequest: ApiRequestService ) {
         this._loginService = loginService;
        // this.jwtToken = this._loginService.getJwtToken();
      }
   
-    getUserList(payload,token) {
+    getUserList(payload,token): Observable<any>{
         //alert('get user list'+token);
-      
-        let headers = new Headers();
-        headers.append('Authorization',token);
-        headers.append("Content-Type", "application/json");
-        headers.append("app-Subject" , "admin");
-        let opts = new RequestOptions({headers:headers});
-        const url = urlConstants.baseUrl + 'memberListByUser?email=' +payload.email;
-     
-        let options = new RequestOptions({
-
-            // headers: this.appendFormHeader(),
-
-            headers: headers,
-
-            method: RequestMethod.Get,
-
-            url: url,
-
-          //  body: body
-
-            // withCredentials: true
-
-            //url    : this.appConfig.baseApiPath + url   //this.api + url,
-
-            // params:"username=admin&password=admin"
-
-        });
-
+         
+        const url = urlConstants.baseUrl + 'saveMomDetails';
+    payload = null;
         debugger;
-        alert('headers' + headers.get('Authorization'));
-      //  opts.headers = headers;
-      
-        this.http.request(url, options).subscribe(data => {
-           alert(data.json());
-            
+      let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+     // payload ={ "name":"asdd"   };
+        this.apiRequest.post(url,payload).subscribe(data => {
+          // alert(data.json());
+          alert('67576576');
+            resp.next(data);
         },
           err => {
-            console.log("Error occured");
+            alert("Error occured");
             alert(err);
           });
   
-      return token;
-   
-
-       // let options = new RequestOptions({ headers: headers });
-      //  alert(options);
-      
-      //  return this.http.get(url, opts);
-        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+      return resp;
     }
     setLoggedInUserDetails(payload) {
         // const url = urlConstants.baseUrl + 'loggedInUserDetails' ;

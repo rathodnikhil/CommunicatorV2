@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
@@ -16,6 +16,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MeetingServiceService } from './services/meeting-service.service';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor} from './services/Authentication';
+import { ApiRequestService } from  './services/api-request.service';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -41,7 +42,13 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule
     ],
     declarations: [AppComponent], // , SeachMemberPipe
-    providers: [AuthGuard, LoginService, UserService, MeetingServiceService,AuthInterceptor],
+    providers: [AuthGuard, LoginService, UserService, MeetingServiceService,ApiRequestService,
+        // ,AuthInterceptor{
+        //     provide : HTTP_INTERCEPTORS,
+        //     useClass: AuthInterceptor,
+        //     multi   : true,
+        //   }
+    ],
     bootstrap: [AppComponent], schemas: [
         CUSTOM_ELEMENTS_SCHEMA
     ]
