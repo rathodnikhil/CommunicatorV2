@@ -45,15 +45,15 @@ export class SignupComponent implements OnInit {
 
     ngOnInit() {
         this.selectedTeam = 'Select Team';
-        this._teamService.getAllEnableTeams().subscribe(data => {
-            this.teamArray = data.json();
-        });
-        this._loginService.getAllMemUserNameList().subscribe(data => {
-            this.userNameArray = data.json();
-        });
-        this._loginService.getAllMemEmailList().subscribe(data => {
-            this.emailArray = data.json();
-        });
+        // this._teamService.getAllEnableTeams().subscribe(data => {
+        //     this.teamArray = data.json();
+        // });
+        // this._loginService.getAllMemUserNameList().subscribe(data => {
+        //     this.userNameArray = data.json();
+        // });
+        // this._loginService.getAllMemEmailList().subscribe(data => {
+        //     this.emailArray = data.json();
+        // });
     }
     registerUser() {
         if(this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined"){
@@ -86,21 +86,21 @@ export class SignupComponent implements OnInit {
             const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
             const temporaryUserName = this.userNameArray.indexOf(this.userName);
             const temporaryEmail = this.emailArray.indexOf(this.email);
-            if(temporaryUserName != -1){
-                this.showAddMemberDuplicateUserName = true;
-                setTimeout(function() {
-                    this.showAddMemberDuplicateUserName = false;
-                }.bind(this), 5000);
-                this.userName = '';
-            }
-            else if(temporaryEmail != -1) {
-                this.showAddMemberDuplicateEmail = true;
-                setTimeout(function() {
-                    this.showAddMemberDuplicateEmail = false;
-                }.bind(this), 5000);
-                this.email = '';
-            }
-            else if (!EMAIL_REGEXP.test(this.email)) {
+            // if(temporaryUserName != -1){
+            //     this.showAddMemberDuplicateUserName = true;
+            //     setTimeout(function() {
+            //         this.showAddMemberDuplicateUserName = false;
+            //     }.bind(this), 5000);
+            //     this.userName = '';
+            // }
+            // else if(temporaryEmail != -1) {
+            //     this.showAddMemberDuplicateEmail = true;
+            //     setTimeout(function() {
+            //         this.showAddMemberDuplicateEmail = false;
+            //     }.bind(this), 5000);
+            //     this.email = '';
+            // }
+            if (!EMAIL_REGEXP.test(this.email)) {
                 this.showAddMemberValidEmail = true;
                 setTimeout(function() {
                     this.showAddMemberValidEmail = false;
@@ -136,7 +136,7 @@ export class SignupComponent implements OnInit {
             }.bind(this), 5000);
    
         this._userService.saveUserDetails(payload).subscribe(data => {
-          
+          alert('data has been saved');
         });
         this.showAddMemberSuccess = true;
         setTimeout(function() {

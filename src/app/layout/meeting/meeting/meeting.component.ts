@@ -27,7 +27,7 @@ export class MeetingComponent implements OnInit {
 
     // to get list of member
     this.jwtToken = this._loginService.getJwtToken();
-    this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
+    this._userService.getUserList(payload).subscribe(data => {
         this.userList = data.json();
     });
  }

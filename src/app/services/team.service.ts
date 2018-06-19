@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Rx';
 import { RequestOptions, ResponseContentType } from '@angular/http';
 import { Headers, Response } from '@angular/http';
 import { LoginService } from './login.service';
+import { ApiRequestService } from './api-request.service';
 
 @Injectable()
 export class TeamService {

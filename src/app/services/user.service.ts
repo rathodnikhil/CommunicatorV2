@@ -4,8 +4,6 @@ import * as urlConstants from './urlConstants';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
-// import { RequestOptions, ResponseContentType } from '@angular/http';
-// import { Headers, Response } from '@angular/http';
 import { LoginService } from './login.service';
 import { Headers, RequestOptions,Response } from '@angular/http';
 import 'rxjs/add/operator/catch';
@@ -13,29 +11,36 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class UserService  {
-
-    public jwtToken: string ;
-    //token: any;
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
-        
+    
+    caseDaSubject = new Subject<any>();    
         constructor(private http: Http , loginService: LoginService,private apiRequest: ApiRequestService ) {
         this._loginService = loginService;
-       // this.jwtToken = this._loginService.getJwtToken();
      }
-  
-    getUserList(payload,token): Observable<any>{
-        //alert('get user list'+token);
-         
-        const url = urlConstants.baseUrl + 'saveMomDetails';
-    payload = null;
-        debugger;
+     saveUserDetails(payload): Observable<any>{
+        const url = urlConstants.baseUrl + 'saveUserDetails';
+        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+          this.apiRequest.post(url,payload).subscribe(data => {
+              resp.next(data);
+          },
+            err => {
+              alert("Error occured");
+              alert(err);
+            });
+    
+        return resp;
+    }
+ //to verify whether user is registered or not
+    verifyUser(payload) {
+        const url = urlConstants.baseUrl + 'verifyUser';
+        return this.http.post(url,payload);
+    }
+    getUserList(payload): Observable<any>{
+        const url = urlConstants.baseUrl + 'memberListByUser';
       let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-     // payload ={ "name":"asdd"   };
         this.apiRequest.post(url,payload).subscribe(data => {
-          // alert(data.json());
-          alert('67576576');
             resp.next(data);
         },
           err => {
@@ -46,7 +51,6 @@ export class UserService  {
       return resp;
     }
     setLoggedInUserDetails(payload) {
-        // const url = urlConstants.baseUrl + 'loggedInUserDetails' ;
        const url = urlConstants.baseUrl + 'auth/login';
         this.http.post(url, payload).subscribe(data => {
             this.loggedInUser$.next(data.json());
@@ -66,15 +70,7 @@ export class UserService  {
     getSelectedUser() {
         return this.selectedUser$;
     }
-    saveUserDetails(payload) {
-        // let headers = new Headers();
-        // headers.append('Content-Type', 'application/json');
-        // headers.append('authentication', `${payload.token}`);
-        // headers.append('app-Subject' , 'admin');
-        // headers.append('Authorization' , this.jwtToken);
-        // let options = new RequestOptions({ headers: headers });
-        const url = urlConstants.baseUrl + 'saveUserDetails';
-        return this.http.post(url, payload);
+ 
     }
 
-}
+
