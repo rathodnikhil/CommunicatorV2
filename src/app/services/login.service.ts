@@ -22,9 +22,9 @@ export class LoginService {
         return this.http.post(url , null);
     }
     getAuthenticationToken(payload) {
-            const url = urlConstants.baseUrl + 'auth/login?username=' +payload.username + '&password=' + payload.password;
-            this.http.get(url).subscribe(data => {
-               this.jwtToken=data.json().jwtToken;
+            const url = urlConstants.baseUrl + 'token/generate-token';
+            this.http.post(url ,payload).subscribe(data => {
+               this.jwtToken=data.json().token;
                this.caseDaSubject.next(this.jwtToken);
             },
             err => {
@@ -35,7 +35,7 @@ export class LoginService {
     }
     getJwtToken()
     {
-        return this.jwtToken;
+        return "Bearer "+this.jwtToken;
     }
  
 }

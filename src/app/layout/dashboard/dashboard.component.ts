@@ -103,24 +103,21 @@ export class DashboardComponent implements OnInit {
       openCreateGroupPopup() {
         this.createGroupModal.open();
     }
+    //save broadcast message
     broadcastMessages(broadcastMessage) {
-
         if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
             this.showtypeMessage = true;
             setTimeout(function() {
                 this.showtypeMessage = false;
             }.bind(this), 5000);
         } else{
-            alert();
-            this.showtypeMessage = false;
-            this.showBroadcastMessageSuccess = true;
-            setTimeout(function() {
-                this.showBroadcastMessageSuccess = false;
-            }.bind(this), 5000);
             const payload = { "broadcastMessage": broadcastMessage };
-              this._groupService.saveBroadcastMessage(payload).subscribe(
-                (res) => {
-                   // saveAs(res, payload.firstName,payload.lastName); 
+              this._groupService.saveBroadcastMessage(payload).subscribe(res => {
+                   this.showtypeMessage = false;
+                   this.showBroadcastMessageSuccess = true;
+                   setTimeout(function() {
+                       this.showBroadcastMessageSuccess = false;
+                   }.bind(this), 5000);
                 });
         }
         this.broadcastMessage = ' ';
@@ -135,22 +132,21 @@ export class DashboardComponent implements OnInit {
       resetMsg(event) {
         alert('text reset');
       }
+      //create new group 
       createGroup(createGroupsVal){
-        //alert(createGroupsVal);
         if(createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined"){
             this.showNewGroup = true;
             setTimeout(function() {
                 this.showNewGroup = false;
             }.bind(this), 5000);
         } else{
-            this.showNewGroup = false;
-            this.showNewGroupSuccess =true;
-            setTimeout(function() {
-                this.showNewGroupSuccess = false;
-            }.bind(this), 5000);
-            const payload = { "groupName": createGroupsVal  };
-              this._groupService.saveGroupDetails(payload).subscribe(
-                (res) => {
+            const payload = {"groupName": createGroupsVal }
+              this._groupService.saveGroupDetails(payload).subscribe(res => {
+                this.showNewGroup = false;
+                this.showNewGroupSuccess =true;
+                setTimeout(function() {
+                    this.showNewGroupSuccess = false;
+                }.bind(this), 5000); 
             });     
             }
         

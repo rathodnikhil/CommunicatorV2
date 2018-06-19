@@ -4,16 +4,17 @@ import * as urlConstants from './urlConstants';
 import { RequestOptions, ResponseContentType } from '@angular/http';
 import { Headers, Response } from '@angular/http';
 import { LoginService } from './login.service';
-
+import { ApiRequestService } from './api-request.service';
+import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class GroupService {
     loggedInUser: any;
    public jwtToken: string ;
    token: any;
     _loginService: LoginService;
-    constructor(private http: Http , loginService: LoginService) { 
+    constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) { 
       this._loginService = loginService;
-      this.jwtToken = this._loginService.getJwtToken();
       this.token = this._loginService.caseDaSubject;
     }
    
@@ -42,26 +43,32 @@ export class GroupService {
       let options = new RequestOptions({ headers: headers });
         const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
         return this.http.post(url, payload ,options);
-      // return this.http.get(urlConstants.baseUrl + 'allMemberList');
       }
-      saveGroupDetails(payload) {
+      saveGroupDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveGroupDetails';
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('authentication', `${payload.token}`);
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(url,payload, options)
+        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+          this.apiRequest.post(url,payload).subscribe(data => {
+              resp.next(data);
+          },
+            err => {
+              alert("Error occured");
+              alert(err);
+            });
+    
+        return resp;
       }
       saveBroadcastMessage(payload) {
-     
-        alert(this.jwtToken);
+  
         const url = urlConstants.baseUrl + 'saveBroadcastMessage';
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('authentication', `${payload.token}`);
-        headers.append('app-Subject' , 'admin');
-        headers.append('Authorization' , this.jwtToken);
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(url,payload, options)
+        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+          this.apiRequest.post(url,payload).subscribe(data => {
+              resp.next(data);
+          },
+            err => {
+              alert("Error occured");
+              alert(err);
+            });
+    
+        return resp;
       }
 }

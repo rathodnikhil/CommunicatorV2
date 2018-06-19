@@ -5,11 +5,6 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { LoginService } from './login.service';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
-//import { UserInfoService, LoginInfoInStorage} from '../user-info.service';
-//import { AppConfig } from '../../app-config';
-
-
-
 
 
 @Injectable()
@@ -38,7 +33,7 @@ export class ApiRequestService {
     appendAuthHeader():Headers {
         
         let headers = new Headers({'Content-Type': 'application/json'});
-        headers.append("app-Subject", "admin");
+       // headers.append("app-Subject", "admin");
      //   headers.append("source", "BACKOFFICENBU");
         let token = this.loginService.getJwtToken();
         console.log(token);
@@ -53,8 +48,8 @@ export class ApiRequestService {
         let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
         // let headers = new Headers({'Content-Type': 'application/json'});
         // let token = this.userInfoService.getStoredToken();
-        // if (token !==null) {
-        //     headers.append("Authorization", token);
+         //if (token !==null) {
+          //   headers.append("Authorization", token);
         // }
         return headers;
     }
@@ -64,7 +59,6 @@ export class ApiRequestService {
      */
     getRequestOptions(requestMethod, url:string, urlParam?:URLSearchParams, body?:Object):RequestOptions {
         var header = null;
-        debugger;
         if(url === "login"){
             // var loginParams = "username=admin&password=admin";
             var loginParams = body;
@@ -102,8 +96,6 @@ export class ApiRequestService {
     }
 
     get(url:string, urlParams?:URLSearchParams):Observable<any>{
-
-        alert('get method');
         let me = this;
         let requestOptions = this.getRequestOptions(RequestMethod.Get, url, urlParams);
         return this.http.request(new Request(requestOptions))
@@ -124,6 +116,7 @@ export class ApiRequestService {
     post(url:string, body:Object):Observable<any>{
         let me = this;
         let requestOptions = this.getRequestOptions(RequestMethod.Post, url, undefined, body);
+        debugger;
         return this.http.request(new Request(requestOptions))
             .map((resp: any) => {
                if (typeof resp._body == 'string' && resp._body.includes('<html')) {
@@ -132,7 +125,7 @@ export class ApiRequestService {
                 }
                 if(url=='login'){
                     //resp.token = resp.headers.authorization;
-                    this.token = resp.headers.get('authorization');
+                    this.token = resp.headers.get('Authorization');
                     console.log(this.token);
                     //console.log(resp.token);
                }

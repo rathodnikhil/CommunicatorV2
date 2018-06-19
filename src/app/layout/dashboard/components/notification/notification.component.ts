@@ -26,23 +26,22 @@ export class NotificationComponent implements OnInit {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
-const payload = {
-	"name":"asdd"
-};
-      //  const payload = {email: 'rohit@coreflexsolutions.com' };
-        // this.jwtToken = this._loginService.getJwtToken();
-        //  this._userService.getUserList(payload,this.jwtToken).subscribe(data => {
-        //     // this.userList = data.json();
-        // });
-        this._userService.getUserList(payload,this.jwtToken);
-        //to fetch group list
-    //     const payloadGroup = {id: 1 };
-    //     this._groupService.getGroupByLoggedInUserId(payloadGroup).subscribe(data => {
-    //         this.groupList = data.json();
-    //     });
+
+        //const payload = {email: 'rohit@coreflexsolutions.com' };
+        const payload =  {
+           // "email": "gggg",
+            "password": "ghjhgjh",
+            "name": "kghghh",
+           "status":{
+            "status":   "Active",
+           "statusId":1 
+           }
+        }
+        //   this._userService.getUserList(payload).subscribe(data => {
+        //       this.userList = data.json();
+        //  });
      }
     viewMemeberDetails(user) {
-        // alert('Selected Memeber is : ' + user.name + user.lastName);
         this._userService.setSelectedUser(user);
     }
 }

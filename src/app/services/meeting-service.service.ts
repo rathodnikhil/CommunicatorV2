@@ -7,6 +7,7 @@ import { RequestOptions, ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { Headers, Response } from '@angular/http';
+import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class MeetingServiceService {
 _loginService: LoginService;
