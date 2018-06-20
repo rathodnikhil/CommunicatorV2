@@ -16,6 +16,15 @@
             <div class="card-body" style="height:74vh;">
                 <div class="container overall-padding">
                     <!-- <form> -->
+                            <div style="margin-top: 20px;" *ngIf="addSubjectFlag === true" class="alert alert-danger alert-dismissable"
+                             [(ngModel)]="addSubjectFlag"> <strong>Error: </strong>Enter Meeting Subject
+                            </div>
+                            <div style="margin-top: 20px;" *ngIf="addDurationFlag === true" class="alert alert-danger alert-dismissable"
+                             [(ngModel)]="addDurationFlag"> <strong>Error: </strong>Select Meeting Duration
+                            </div>
+                            <div style="margin-top: 20px;" *ngIf="addTimezoneFlag === true" class="alert alert-danger alert-dismissable"
+                            [(ngModel)]="addTimezoneFlag"> <strong>Error: </strong>Select Timezone
+                           </div>
                         <div class="row form-group">
 
                             <div class="col-sm-3">
@@ -45,8 +54,16 @@
                                 <label>Time</label>
                             </div>
                             <div class="col-md-9">
-                                <ngb-timepicker class="customTimePicker" [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
+                                <ngb-timepicker class="customTimePicker" id="meeting.meridianTime" [(ngModel)]="meeting.meridianTime"
+                                 [meridian]="meeting.meridian"></ngb-timepicker>
                             </div>
+                            <!-- <ngb-timepicker [(ngModel)]="meridianTime" [meridian]="meridian"></ngb-timepicker>
+                            <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
+                                Meridian - {{meridian ? "ON" : "OFF"}}
+                            </button>
+                            <div class="alert alert-info mt-3 mb-0">
+                                <b>Selected time: </b>{{meridianTime | json}}
+                            </div> -->
                             <!-- <div class="col-md-5" style="    padding-top: 1.2rem;">
                                 <div ngbDropdown class="d-inline-block dropdown">
                                     <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
@@ -90,8 +107,6 @@
                                 <label>Recurring</label>
                             </div>
                             <div class="col-sm-9">
-                                <!-- <a class="btn btndefault">Yes</a>
-                                <a class="btn btn-secondary">No</a> -->
                                 <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.isRecurring">
                                     <label ngbButtonLabel class="btn-outline-primary">
                                         <input ngbButton type="radio" [value]="1"> Yes
@@ -116,6 +131,7 @@
                                     </label>
                             </div>
                         </div>
+                        </div>
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label>MOM</label>
@@ -132,33 +148,28 @@
                             </div>
                             <div class="col-sm-9">
                                 <a class="btn btn-primary btn-border-radius" (click)="scheduleMeeting()" style="color: #fff;">Schedule Meeting & Send Invitation</a>
-                                <!-- href="webcal:calendar.example.com" -->
-                                <!-- href="mailto:?subject=Schedule meeting" -->
                             </div>
-                            <!-- <button class="btn btn-primary">Large modal</button> -->
-                            <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees">
+                            <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings">
                                     <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true"
                                     class="alert alert-success alert-dismissable" [(ngModel)]="showScheduleMeetingSuccess">
-                                    <button type="button" class="close" data-dismiss="alert"
-                                        aria-hidden="true">&times;</button>
-                                    <strong>Success: </strong>Meeting has been scheduled Successfully.
+                                    <strong>Success:&nbsp; </strong><span style="font-weight: bold;">{{this.meeting.callType}}</span>&nbsp;meeting has been scheduled Successfully.
                                 </div>
                                 <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true"
                                 class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
-                                <button type="button" class="close" data-dismiss="alert"
-                                    aria-hidden="true">&times;</button>
                                 <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
                             </div>
-                                    <div style="padding: 10px;"> <p  style=" color: #757575;"><h5>Meeting Subject</h5><p style="font-size:14px;">Date : Fri june 5 2018 from 
-                                        7pm to 8:30pm Indian Standard Time</p>
-                                        <h5 style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone</h5>
-                                        <a style="text-decoration :underline; color: blue; cursor: pointer;">https://184.171.162.250:9090/demos/demo_multiparty.html</a>
-                                        <h5 style="padding-top: 40px;">Access Code : MeetCore657400248</h5>
+                                    <div style="padding: 10px; font-size:14px;" class="span-font"> <span>{{subject}}</span><p style="font-weight:bold;">Date :
+                                         {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}} at 
+                                            {{meeting.meridianTime.hour}}&nbsp;:{{meeting.meridianTime.minute}} ( {{this.meeting.selectedTimeZone}} )
+                                            for <span style="font-weight: bold;">{{meeting.selectedDuration}} </span> </p>
+                                        <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone 
+                                             <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">https://184.171.162.250:9090/demos/demo_multiparty.html</span></p>
+                                        <h5 style="margin-top: 40px;">Access Code : <span>{{accessCode}}</span></h5>
                                     </div>
                                     <div class="modal-footer popFooter">
-                                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
+                                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event,subject)">Go to Outlook</button>
                                             <button type="button" class="btn btn-secondary btn-border-radius" (click)="copytoClipBoard($event)">Copy</button>
-                                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="close('InviteAttendees')">Close</button>
+                                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
                                     </div>  
                             </app-custom-modal>
                         </div>
