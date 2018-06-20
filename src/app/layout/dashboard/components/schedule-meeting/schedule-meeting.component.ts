@@ -10,15 +10,21 @@ import {MeetingServiceService } from '../../../../services/meeting-service.servi
 })
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
-    @ViewChild('inviteAttendeesModal') public inviteAttendeesModal: CustomModalComponent;
+    @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
     currentDate: any;
     meeting: any;
     subject: any;
+    meridian = true;
+    today: any;
+    accessCode: any;
     _meetingService: MeetingServiceService;
     showScheduleMeetingSuccess: boolean = true;
     showCopyDetailsSuccess: boolean = false;
+    addSubjectFlag: boolean;
+    addDurationFlag: boolean;
+    addTimezoneFlag: boolean;
     // public radioGroupForm: FormGroup;
-    InviteAttendees: CustomModalModel = {
+    scheduleMeetings: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
         title: 'Invite Attendees',
         smallHeading: 'Copy and paste to your calendar or share with your attendees',
@@ -108,14 +114,14 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     ngOnInit() {
-        const today = new Date();
+        this.today = new Date();
         this.meeting = {
-            meridianTime : {hour: today.getHours(), minute: today.getMinutes()},
+            meridianTime : {hour: this.today.getHours(), minute: this.today.getMinutes()},
             meridian : true,
             datePicker: {
-                day : today.getDate(),
-                month : today.getMonth() + 1,
-                year : today.getFullYear()
+                day : this.today.getDate(),
+                month : this.today.getMonth() + 1,
+                year : this.today.getFullYear()
             },
             isRecurring: 1,
             callType: 1,
@@ -123,7 +129,6 @@ export class ScheduleMeetingComponent implements OnInit {
             selectedDuration: 'Select Duration',
             subject: this.subject
         };
-alert(this.meeting.meridianTime);
           // current date and time
    this.currentDate = Date.now();
     }
@@ -131,44 +136,58 @@ alert(this.meeting.meridianTime);
         this.CurrentRoute.emit(0);
       }
       scheduleMeeting() {
-      //   debugger;
-    //   const today = new Date();
-    //   this.meeting = {
-    //       meridianTime : {hour: today.getHours(), minute: today.getMinutes()},
-    //       meridian : true,
-    //       datePicker: {
-    //           day : today.getDate(),
-    //           month : today.getMonth() + 1,
-    //           year : today.getFullYear()
-    //       },
-    //       isRecurring: 1,
-    //       callType: 1,
-    //       selectedTimeZone: new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1].split('(')[1].split(')')[0] ? 'Select Timezone' : '',
-    //     //   selectedDuration: 'Select Duration',
-    //       subject: this.subject
-    //   };
-debugger;
-        const payload = {
-            'meetingDate': this.meeting.datePicker,
-            'meetingStartDateTime': this.meeting.meridianTime,
-            'meetingEndDateTime': 1525067350000,
-            'subject': this.subject,
-            'duration': this.meeting.selectedDuration,
-            'recurringType': this.meeting.isRecurring,
-            'callType': this.meeting.callType,
-            'timeZone': this.meeting.selectedTimeZone,
-            'timeType': '12Hours'
-        };
+        if(this.subject === "" || this.subject === null || typeof this.subject === "undefined"){
+            this.addSubjectFlag = true;
+            setTimeout(function() {
+                this.addSubjectFlag = false;
+            }.bind(this), 5000);
+        }else if(this.meeting.selectedDuration === 'Select Duration'){
+            this.addDurationFlag = true;
+            setTimeout(function() {
+                this.addDurationFlag = false;
+            }.bind(this), 5000)
 
-        this._meetingService.scheduleMeeting(payload).subscribe(data => {
-           alert(data.json());
-        });
-       // this._meetingService.scheduleMeeting(payload);
-          this.inviteAttendeesModal.open();
+        }else if(this.meeting.selectedTimeZone === 'Select Timezone'){
+            this.addTimezoneFlag = true;
+            setTimeout(function() {
+                this.addTimezoneFlag = false;
+            }.bind(this), 5000)
+        } else{
+            this.meridian = !this.meridian;
+            this.accessCode = Math.floor(Math.random() * 9000000000) + 1000000000;
+            if(this.meeting.callType === 1){
+             this.meeting.callType = 'Audio';
+            } else{
+             this.meeting.callType = 'Video';
+            }
+                 const payload = {
+                     'meetingDate': this.meeting.datePicker,
+                     'meetingStartDateTime': this.meeting.meridianTime,
+                     'meetingEndDateTime': 1525067350000,
+                     'subject': this.subject,
+                     'duration': this.meeting.selectedDuration,
+                     'recurringType': this.meeting.isRecurring,
+                     'callType': this.meeting.callType,
+                     'timeZone': this.meeting.selectedTimeZone,
+                     'timeType': '12Hours',
+                     'meetingId': this.accessCode
+                 };
+         
+                 this._meetingService.scheduleMeeting(payload).subscribe(data => {
+                    alert(data.json());
+                 });
+                // this._meetingService.scheduleMeeting(payload);
+                   this.scheduleMeetingModal.open();
+        }
       }
-      copyToOutLook(event) {
+      copyToOutLook(event,subject) {
+        this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
-        a.href = 'mailto:?subject=Schedule meeting';
+        a.href = 'mailto:?subject='+subject + 
+        '&body=Date:   '+ this.meeting.datePicker.day +'/'+ this.meeting.datePicker.month +'/' +this.meeting.datePicker.year+  '  at' +
+        this.meeting.meridianTime.hour + '  '+ this.meeting.meridianTime.minute+ '  (' +this.meeting.selectedTimeZone +')   for  ' + this.meeting.selectedDuration+'\n'+
+        '\n Please join my meeting from your computer,tablet or smartphone \n'+ 'https://184.171.162.250:9090/demos/demo_multiparty.html\n'+
+        '\n Access Code :    '+ this.accessCode;
         document.body.appendChild(a);
         // start download
         a.click();
@@ -191,6 +210,13 @@ debugger;
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
       }
-
+ //close meeting modal popup
+ closeMeetingPopup(popupType) {
+    switch (popupType) {
+        case 'scheduleMeetings':
+            this.scheduleMeetingModal.close();
+            break;
+    }
+}
 }
 
