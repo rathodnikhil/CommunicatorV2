@@ -8,12 +8,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { Headers, Response } from '@angular/http';
 import { ApiRequestService } from './api-request.service';
+import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
+
 @Injectable()
 export class MeetingServiceService {
 _loginService: LoginService;
 jwtToken: string;
 
-    constructor(private http: Http , loginService: LoginService) {
+    constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
         this.jwtToken = this._loginService.getJwtToken();
      }
@@ -29,10 +31,20 @@ jwtToken: string;
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
  
-    scheduleMeeting(payload) {
+   
+    scheduleMeeting(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
-        return this.http.post(url, payload);
-    }
+        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+          this.apiRequest.post(url,payload).subscribe(data => {
+              resp.next(data);
+          },
+            err => {
+              alert("Error occured");
+              alert(err);
+            });
+    
+        return resp;
+      }
     getRecentMeetingByUser(payload) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
