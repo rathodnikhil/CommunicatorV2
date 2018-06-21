@@ -161,9 +161,9 @@ export class ScheduleMeetingComponent implements OnInit {
              this.meeting.callType = 'Video';
             }
                  const payload = {
-                     'meetingDate': this.meeting.datePicker,
-                     'meetingStartDateTime': this.meeting.meridianTime,
-                     'meetingEndDateTime': 1525067350000,
+                    //'meetingDate': this.meeting.datePicker,
+                     //'meetingStartDateTime': this.meeting.meridianTime,
+                     //'meetingEndDateTime': 1525067350000,
                      'subject': this.subject,
                      'duration': this.meeting.selectedDuration,
                      'recurringType': this.meeting.isRecurring,
@@ -181,23 +181,22 @@ export class ScheduleMeetingComponent implements OnInit {
         }
       }
       copyToOutLook(event,subject) {
+          var meetingDetails = this.getMeetingDetails();
         this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
         a.href = 'mailto:?subject='+subject + 
-        '&body=Date:   '+ this.meeting.datePicker.day +'/'+ this.meeting.datePicker.month +'/' +this.meeting.datePicker.year+  '  at' +
-        this.meeting.meridianTime.hour + '  '+ this.meeting.meridianTime.minute+ '  (' +this.meeting.selectedTimeZone +')   for  ' + this.meeting.selectedDuration+'\n'+
-        '\n Please join my meeting from your computer,tablet or smartphone \n'+ 'https://184.171.162.250:9090/demos/demo_multiparty.html\n'+
-        '\n Access Code :    '+ this.accessCode;
+        '&body=' + meetingDetails;
         document.body.appendChild(a);
         // start download
         a.click();
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
       }
-      copytoClipBoard(event) {
-        this.showScheduleMeetingSuccess = false;
-        document.execCommand('copy');
-        this.showCopyDetailsSuccess = true;
+//copy meeting content
+      copyToClipboard() {
+        var meetingDetails = this.getMeetingDetails();
+        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
+        document.execCommand('copy')
       }
       changeTimeZone(timezone) {
           this.meeting.selectedTimeZone = timezone;
@@ -218,5 +217,14 @@ export class ScheduleMeetingComponent implements OnInit {
             break;
     }
 }
+
+//get meeting details
+ getMeetingDetails(): string {
+   var meetingDetails =  'Date :  ' + this.meeting.datePicker.day +'/'+ this.meeting.datePicker.month +'/' +this.meeting.datePicker.year+  '  at  ' +
+    this.meeting.meridianTime.hour + ':'+ this.meeting.meridianTime.minute+ '  (' +this.meeting.selectedTimeZone +')   for  ' + this.meeting.selectedDuration+'\n'+
+    '\n Please join my meeting from your computer,tablet or smartphone \n'+ 'https://184.171.162.250:9090/demos/demo_multiparty.html\n'+
+    '\n Access Code :    '+ this.accessCode;
+    return meetingDetails; 
+ }
 }
 
