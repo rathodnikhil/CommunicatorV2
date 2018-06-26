@@ -5,53 +5,55 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 import { LoginService } from './login.service';
-import { Headers, RequestOptions,Response } from '@angular/http';
+import { Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/catch';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiRequestService } from './api-request.service';
 @Injectable()
-export class UserService  {
+export class UserService {
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
-    
-    caseDaSubject = new Subject<any>();    
-        constructor(private http: Http , loginService: LoginService,private apiRequest: ApiRequestService ) {
+    UserList$: Subject<any[]> = new BehaviorSubject<any>({});
+    //  caseDaSubject = new Subject<any>();    
+    constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
-     }
-     saveUserDetails(payload): Observable<any>{
+    }
+    saveUserDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveUserDetails';
-        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-          this.apiRequest.post(url,payload).subscribe(data => {
-              resp.next(data);
-          },
-            err => {
-              alert("Error occured");
-              alert(err);
-            });
-    
-        return resp;
-    }
- //to verify whether user is registered or not
-    verifyUser(payload) {
-        const url = urlConstants.baseUrl + 'verifyUser';
-        return this.http.post(url,payload);
-    }
-    getUserList(payload): Observable<any>{
-        const url = urlConstants.baseUrl + 'memberListByUser';
-      let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.apiRequest.post(url,payload).subscribe(data => {
+        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.http.post(url, payload).subscribe(data => {
             resp.next(data);
         },
-          err => {
-            alert("Error occured");
-            alert(err);
-          });
-  
-      return resp;
+            err => {
+                alert("Error occured");
+                alert(err);
+            });
+
+        return resp;
+    }
+    //to verify whether user is registered or not
+    verifyUser(payload) {
+        const url = urlConstants.baseUrl + 'verifyUser';
+        return this.http.post(url, payload);
+    }
+    setUserList(payload) {
+        const url = urlConstants.baseUrl + 'memberListByUser?email=' + payload.email;
+        // const resp = new BehaviorSubject<any>({});
+        this.apiRequest.post(url, payload).subscribe(data => {
+            this.UserList$.next(data);
+        },
+            err => {
+                alert("Error occured");
+                alert(err);
+            });
+        // return resp;
+    }
+    getUserList() {
+        return this.UserList$;
     }
     setLoggedInUserDetails(payload) {
-       const url = urlConstants.baseUrl + 'auth/login';
+        const url = urlConstants.baseUrl + 'auth/login';
         this.http.post(url, payload).subscribe(data => {
             this.loggedInUser$.next(data.json());
         });
@@ -70,7 +72,7 @@ export class UserService  {
     getSelectedUser() {
         return this.selectedUser$;
     }
- 
-    }
+
+}
 
 

@@ -36,7 +36,6 @@ export class SignupComponent implements OnInit {
     showAddMemberValidEmail: boolean = false;
     showAddMemberDuplicateUserName: boolean = false;
     showAddMemberDuplicateEmail: boolean = false;
-
     constructor(teamService: TeamService , userService: UserService , loginService: LoginService ,private router: Router) {
         this._teamService = teamService;
         this._userService = userService;
@@ -45,15 +44,9 @@ export class SignupComponent implements OnInit {
 
     ngOnInit() {
         this.selectedTeam = 'Select Team';
-        // this._teamService.getAllEnableTeams().subscribe(data => {
-        //     this.teamArray = data.json();
-        // });
-        // this._loginService.getAllMemUserNameList().subscribe(data => {
-        //     this.userNameArray = data.json();
-        // });
-        // this._loginService.getAllMemEmailList().subscribe(data => {
-        //     this.emailArray = data.json();
-        // });
+         this._teamService.getAllEnableTeams().subscribe(data => {
+             this.teamArray = data.json();
+         });
     }
     registerUser() {
         if(this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined"){
@@ -86,20 +79,7 @@ export class SignupComponent implements OnInit {
             const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
             const temporaryUserName = this.userNameArray.indexOf(this.userName);
             const temporaryEmail = this.emailArray.indexOf(this.email);
-            // if(temporaryUserName != -1){
-            //     this.showAddMemberDuplicateUserName = true;
-            //     setTimeout(function() {
-            //         this.showAddMemberDuplicateUserName = false;
-            //     }.bind(this), 5000);
-            //     this.userName = '';
-            // }
-            // else if(temporaryEmail != -1) {
-            //     this.showAddMemberDuplicateEmail = true;
-            //     setTimeout(function() {
-            //         this.showAddMemberDuplicateEmail = false;
-            //     }.bind(this), 5000);
-            //     this.email = '';
-            // }
+        
             if (!EMAIL_REGEXP.test(this.email)) {
                 this.showAddMemberValidEmail = true;
                 setTimeout(function() {
@@ -115,6 +95,8 @@ export class SignupComponent implements OnInit {
                 }.bind(this), 5000);               
             }
             else{
+                let duplicateUserNameFlag ;
+                let duplicateEmailFlag;
             const payload =  {
                 "email": this.email,
                 "password": this.password,
@@ -129,25 +111,31 @@ export class SignupComponent implements OnInit {
             this.showAddMemberEmail = false;
             this.showAddMemberpasswordMatch =false;
             this.showAddMemberValidEmail = false;
-            this.showAddMemberSuccess = true;
-            setTimeout(function() {
-                this.edited = false;
-                console.log(this.showAddMemberSuccess);
-            }.bind(this), 5000);
-   
+     
         this._userService.saveUserDetails(payload).subscribe(data => {
-          alert('data has been saved');
+            duplicateUserNameFlag = data.json().warningFl;
+            duplicateEmailFlag = data.json().errorFl;
+            if(duplicateUserNameFlag == true) {
+                this.showAddMemberDuplicateUserName = true;
+                this.userName = '';
+                setTimeout(function() {
+                    this.showAddMemberDuplicateUserName = false;
+                }.bind(this), 5000);
+            }else if(duplicateEmailFlag == true) {
+                this.showAddMemberDuplicateEmail = true;
+                this.email = '';
+                setTimeout(function() {
+                    this.showAddMemberDuplicateEmail = false;
+                }.bind(this), 5000);
+            }else{
+                this.router.navigate(['/dashboard']);
+            }
         });
-        this.showAddMemberSuccess = true;
-        setTimeout(function() {
-            this.showAddMemberSuccess = false;
-        }.bind(this), 5000);
-        this.router.navigate(['/dashboard']);
     }
     }
     }
-    // onChangeTeam(teamName) {
-    //     this.selectedTeam = teamName;
-    // }
-
+    onChangeTeam(team) {
+        this.selectedTeam = team;
+    }
+  
 }

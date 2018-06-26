@@ -1,10 +1,11 @@
 
 import { routerTransition } from '../../router.animations';
 import { AlertComponent } from 'app/layout/bs-component/components';
-import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from './components/custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { GroupService } from '../../services/group.service';
+import { UserService } from '../../services/user.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -13,14 +14,16 @@ import { GroupService } from '../../services/group.service';
     providers: [GroupService]
 })
 export class DashboardComponent implements OnInit {
-    createGroupsVal:string = '';
-    broadcastMessage:string = '';
+    _groupService: GroupService;
+    _userService: UserService;
+    createGroupsVal: string = '';
+    broadcastMessage: string = '';
     showtypeMessage: boolean = false;
     showNewGroup: boolean = false;
     showNewGroupSuccess: boolean = false;
     showBroadcastMessageSuccess: boolean = false;
-    _groupService: GroupService;
-    
+    userList = [];
+
     @ViewChild('braodcastMessageModal') public braodcastMessageModal: CustomModalComponent;
     broadcastMessagecontent: CustomModalModel = {
         titleIcon: '<i class="fa fa-bullhorn"></i>',
@@ -43,8 +46,9 @@ export class DashboardComponent implements OnInit {
     public sliders: Array<any> = [];
     currentRoute: number = 0;
 
-    constructor(private groupService: GroupService) {
+    constructor(private groupService: GroupService, userService: UserService) {
         this._groupService = groupService;
+        this._userService = userService;
         this.sliders.push(
             {
                 imagePath: 'assets/images/slider1.jpg',
@@ -86,7 +90,9 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-       
+        this._userService.getUserList().subscribe(data => {
+            this.userList = data;
+        });
     }
 
     public closeAlert(alert: any) {
@@ -98,75 +104,75 @@ export class DashboardComponent implements OnInit {
     }
     open() {
         //   debugger;
-          this.braodcastMessageModal.open();
-      }
-      openCreateGroupPopup() {
+        this.braodcastMessageModal.open();
+    }
+    openCreateGroupPopup() {
         this.createGroupModal.open();
     }
     //save broadcast message
     broadcastMessages(broadcastMessage) {
-        if(broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined"){
+        if (broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined") {
             this.showtypeMessage = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.showtypeMessage = false;
             }.bind(this), 5000);
-        } else{
+        } else {
             const payload = { "broadcastMessage": broadcastMessage };
-              this._groupService.saveBroadcastMessage(payload).subscribe(res => {
-                   this.showtypeMessage = false;
-                   this.showBroadcastMessageSuccess = true;
-                   setTimeout(function() {
-                       this.showBroadcastMessageSuccess = false;
-                   }.bind(this), 5000);
-                });
+            this._groupService.saveBroadcastMessage(payload).subscribe(res => {
+                this.showtypeMessage = false;
+                this.showBroadcastMessageSuccess = true;
+                setTimeout(function () {
+                    this.showBroadcastMessageSuccess = false;
+                }.bind(this), 5000);
+            });
         }
         this.broadcastMessage = ' ';
-      }
-      typeBroadcastMessageFocus() {
-            this.showtypeMessage = false;
-      }
+    }
+    typeBroadcastMessageFocus() {
+        this.showtypeMessage = false;
+    }
 
-      groupNameFocus() {
-         this.showNewGroup = false; 
-      }
-      resetMsg(event) {
+    groupNameFocus() {
+        this.showNewGroup = false;
+    }
+    resetMsg(event) {
         alert('text reset');
-      }
-      //create new group 
-      createGroup(createGroupsVal){
-        if(createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined"){
+    }
+    //create new group 
+    createGroup(createGroupsVal) {
+        if (createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined") {
             this.showNewGroup = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.showNewGroup = false;
             }.bind(this), 5000);
-        } else{
-            const payload = {"groupName": createGroupsVal }
-              this._groupService.saveGroupDetails(payload).subscribe(res => {
+        } else {
+            const payload = { "groupName": createGroupsVal }
+            this._groupService.saveGroupDetails(payload).subscribe(res => {
                 this.showNewGroup = false;
-                this.showNewGroupSuccess =true;
-                setTimeout(function() {
+                this.showNewGroupSuccess = true;
+                setTimeout(function () {
                     this.showNewGroupSuccess = false;
-                }.bind(this), 5000); 
-            });     
-            }
-        
-      this.createGroupsVal = ' ';
-      }
+                }.bind(this), 5000);
+            });
+        }
 
-         //close create group modal popup
-     closeGroupPopup(popupType) {
+        this.createGroupsVal = ' ';
+    }
+
+    //close create group modal popup
+    closeGroupPopup(popupType) {
         switch (popupType) {
             case 'addCreateGroup':
                 this.createGroupModal.close();
                 break;
         }
     }
-        //close create group modal popup
-        closeBroadcastPopup(popupType) {
-            switch (popupType) {
-                case 'addBroadcastMsg':
-                    this.braodcastMessageModal.close();
-                    break;
-            }
+    //close create group modal popup
+    closeBroadcastPopup(popupType) {
+        switch (popupType) {
+            case 'addBroadcastMsg':
+                this.braodcastMessageModal.close();
+                break;
         }
+    }
 }

@@ -1,5 +1,4 @@
 
-
 <div class="container-bg">
         <div class="col-md-12" style="top: 20%;">
             <div class="row h-100 d-flex justify-content-center fixed-header">
@@ -44,14 +43,12 @@
         </div>
         <div style="margin-top: 20px;" *ngIf="showAddMemberDuplicateUserName === true"
         class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberDuplicateUserName">
-        <strong>Error: </strong>UserName is already present
+        <strong>Error: </strong>Username is already exist.
         </div>
         <div style="margin-top: 20px;" *ngIf="showAddMemberDuplicateEmail === true"
         class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberDuplicateEmail">
-        <strong>Error: </strong>Email is already present
+        <strong>Error: </strong>Email is already exist.
         </div>
-        
-
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -100,6 +97,15 @@
                                 </div>
                                 <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required >
                             </div>
+                            <div >
+                                 <div class="input-group-prepend">
+                            <select class="col-md-12">
+                                <option >{{selectedTeam}}</option>
+                                <option   *ngFor="let team of teamArray" class="dropdown-item"
+                                on-click="onChangeTeam(team.teamName)" value="volvo">Saab</option>
+                              </select>
+                              </div> 
+                           
                             <!-- <div class=" col-md-12">
                                     <div ngbDropdown class="d-inline-block dropdown">
                                             <button class="btn btn-outline-primary" ngbDropdownToggle>{{selectedTeam}}</button>
@@ -108,7 +114,7 @@
                                                 on-click="onChangeTeam(team.teamName)">{{team.teamName}}</button>
                                             </div>
                                         </div>
-                                </div> -->
+                                </div>  -->
                         <fieldset id="actions">
                                 <input type="submit" id="submit" value="Sign up"  (click)="registerUser();">
                                 <a>already have an account?<a style="color:#3277d3;

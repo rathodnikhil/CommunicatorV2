@@ -40,6 +40,9 @@
                                     <input type="checkbox" id="momByMe"  (change)="momByLoggedInuser($event)">MOM By Me<br>
                                 </ul>
                                 </div>
+                                <div class="row">
+                                    {{userList[0].firstName}}
+                                </div>
                             </div>
                             <div class="modal-footer popFooter">
                                     <button type="button" class="btn-sec btn" (click)="createGroup(createGroupsVal)">Add Group</button>
