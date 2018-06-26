@@ -6,20 +6,16 @@
                     <i class="fa fa-home"></i>
                 </a>
                 <div class="row parent">
-                    <div class="child">
-                        <div class="wrapper">
-                            <div class="half">
-                                <div class="tab">
-                                    <input id="tab-one" type="checkbox" name="tabs">
-                                    <label for="tab-one">Minutes of meeting</label>
-                                    <div class="tab-content">
-                                        <textarea placeholder="Type Here ..." style="width: 95%;margin: 8px;" rows="30"></textarea>
-                                        <button>Save MOM</button>
-                                    </div>
+                    <div class="card-header mom-header" [@MomHeader]="isMOMvisible?'active':'inactive'"> Minutes of meeting
+                        <i class="fa fa-chevron-up pull-right" aria-hidden="true" (click)="isMOMvisible = !isMOMvisible"></i>
+                    </div>
+                    <div class="child" [@MomBody]="!isMOMvisible?'active':'inactive'">
+                            <div class="mom-box">
+                                <div class="mom-body" >
+                                    <textarea placeholder="add MOM" class="mom-textarea"></textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="row" style="height:22vh; padding: 5px;margin:2px;">
                     <div class="scrollmenu">

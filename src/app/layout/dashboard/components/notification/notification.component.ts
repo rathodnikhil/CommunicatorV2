@@ -17,7 +17,7 @@ export class NotificationComponent implements OnInit {
     _userService: UserService;
     _groupService: GroupService;
     _loginService: LoginService;
-    constructor(userService: UserService , groupService: GroupService , loginService: LoginService) {
+    constructor(userService: UserService, groupService: GroupService, loginService: LoginService) {
         this._userService = userService;
         this._groupService = groupService;
         this._loginService = loginService;
@@ -26,21 +26,12 @@ export class NotificationComponent implements OnInit {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
-
-        //const payload = {email: 'rohit@coreflexsolutions.com' };
-        const payload =  {
-           // "email": "gggg",
-            "password": "ghjhgjh",
-            "name": "kghghh",
-           "status":{
-            "status":   "Active",
-           "statusId":1 
-           }
-        }
-        //   this._userService.getUserList(payload).subscribe(data => {
-        //       this.userList = data.json();
-        //  });
-     }
+        const payload = { email: 'rohit@coreflexsolutions.com' };
+        this._userService.setUserList(payload);
+        this._userService.getUserList().subscribe(data => {            
+            this.userList = data;            
+        });
+    }
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
     }

@@ -1,12 +1,12 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild , ViewContainerRef} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
-import {MeetingServiceService } from '../../../../services/meeting-service.service';
+import { MeetingServiceService } from '../../../../services/meeting-service.service';
 @Component({
-  selector: 'app-schedule-meeting',
-  templateUrl: './schedule-meeting.component.html',
-  styleUrls: ['./schedule-meeting.component.scss']
+    selector: 'app-schedule-meeting',
+    templateUrl: './schedule-meeting.component.html',
+    styleUrls: ['./schedule-meeting.component.scss']
 })
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
@@ -32,8 +32,8 @@ export class ScheduleMeetingComponent implements OnInit {
         Button1Content: '<i class="fa fa-envelope"></i> Outlook',
         Button2Content: '<i class="fa fa-copy"></i> Copy'
     };
-    durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)' , '90 Min (1.5 Hour)' , '120 Min (2 Hour)', '150 Min (2.5 Hour)',
-    '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
+    durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)', '90 Min (1.5 Hour)', '120 Min (2 Hour)', '150 Min (2.5 Hour)',
+        '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
     timeZoneArray = [
         '(GMT+13:00) Nukualofa',
         '(GMT+12:00) Fiji, Kamchatka, Marshall Is/',
@@ -116,12 +116,12 @@ export class ScheduleMeetingComponent implements OnInit {
     ngOnInit() {
         this.today = new Date();
         this.meeting = {
-            meridianTime : {hour: this.today.getHours(), minute: this.today.getMinutes()},
-            meridian : true,
+            meridianTime: { hour: this.today.getHours(), minute: this.today.getMinutes() },
+            meridian: true,
             datePicker: {
-                day : this.today.getDate(),
-                month : this.today.getMonth() + 1,
-                year : this.today.getFullYear()
+                day: this.today.getDate(),
+                month: this.today.getMonth() + 1,
+                year: this.today.getFullYear()
             },
             isRecurring: 1,
             callType: 1,
@@ -129,102 +129,104 @@ export class ScheduleMeetingComponent implements OnInit {
             selectedDuration: 'Select Duration',
             subject: this.subject
         };
-          // current date and time
-   this.currentDate = Date.now();
+        // current date and time
+        this.currentDate = Date.now();
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
-      }
-      scheduleMeeting() {
-        if(this.subject === "" || this.subject === null || typeof this.subject === "undefined"){
+    }
+    scheduleMeeting() {
+        debugger;
+        if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
             this.addSubjectFlag = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.addSubjectFlag = false;
             }.bind(this), 5000);
-        }else if(this.meeting.selectedDuration === 'Select Duration'){
+        } else if (this.meeting.selectedDuration === 'Select Duration') {
             this.addDurationFlag = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.addDurationFlag = false;
             }.bind(this), 5000)
 
-        }else if(this.meeting.selectedTimeZone === 'Select Timezone'){
+        } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
             this.addTimezoneFlag = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.addTimezoneFlag = false;
             }.bind(this), 5000)
-        } else{
+        } else {
             this.meridian = !this.meridian;
             this.accessCode = Math.floor(Math.random() * 9000000000) + 1000000000;
-            if(this.meeting.callType === 1){
-             this.meeting.callType = 'Audio';
-            } else{
-             this.meeting.callType = 'Video';
+            if (this.meeting.callType === 1) {
+                this.meeting.callType = 'Audio';
+            } else {
+                this.meeting.callType = 'Video';
             }
-                 const payload = {
-                    //'meetingDate': this.meeting.datePicker,
-                     //'meetingStartDateTime': this.meeting.meridianTime,
-                     //'meetingEndDateTime': 1525067350000,
-                     'subject': this.subject,
-                     'duration': this.meeting.selectedDuration,
-                     'recurringType': this.meeting.isRecurring,
-                     'callType': this.meeting.callType,
-                     'timeZone': this.meeting.selectedTimeZone,
-                     'timeType': '12Hours',
-                     'meetingId': this.accessCode
-                 };
-         
-                 this._meetingService.scheduleMeeting(payload).subscribe(data => {
-                    alert(data.json());
-                 });
-                // this._meetingService.scheduleMeeting(payload);
-                   this.scheduleMeetingModal.open();
+            debugger;
+            const payload = {
+                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month, this.meeting.datePicker.day),
+                'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' + this.meeting.meridianTime.minute,
+                //'meetingEndDateTime': 1525067350000,
+                'subject': this.subject,
+                'duration': this.meeting.selectedDuration,
+                'recurringType': this.meeting.isRecurring,
+                'callType': this.meeting.callType,
+                'timeZone': this.meeting.selectedTimeZone,
+                'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
+                'meetingId': this.accessCode
+            };
+
+            this._meetingService.scheduleMeeting(payload).subscribe(data => {
+                alert(data.json());
+            });
+            // this._meetingService.scheduleMeeting(payload);
+            this.scheduleMeetingModal.open();
         }
-      }
-      copyToOutLook(event,subject) {
-          var meetingDetails = this.getMeetingDetails();
+    }
+    copyToOutLook(event, subject) {
+        var meetingDetails = this.getMeetingDetails();
         this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
-        a.href = 'mailto:?subject='+subject + 
-        '&body=' + meetingDetails;
+        a.href = 'mailto:?subject=' + subject +
+            '&body=' + meetingDetails;
         document.body.appendChild(a);
         // start download
         a.click();
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
-      }
-//copy meeting content
-      copyToClipboard() {
+    }
+    //copy meeting content
+    copyToClipboard() {
         var meetingDetails = this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
         document.execCommand('copy')
-      }
-      changeTimeZone(timezone) {
-          this.meeting.selectedTimeZone = timezone;
-      }
-      changeDuration(duration) {
-          debugger;
-          this.meeting.selectedDuration = duration;
-      }
-       getTimeZone() {
+    }
+    changeTimeZone(timezone) {
+        this.meeting.selectedTimeZone = timezone;
+    }
+    changeDuration(duration) {
+        debugger;
+        this.meeting.selectedDuration = duration;
+    }
+    getTimeZone() {
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
-      }
- //close meeting modal popup
- closeMeetingPopup(popupType) {
-    switch (popupType) {
-        case 'scheduleMeetings':
-            this.scheduleMeetingModal.close();
-            break;
     }
-}
+    //close meeting modal popup
+    closeMeetingPopup(popupType) {
+        switch (popupType) {
+            case 'scheduleMeetings':
+                this.scheduleMeetingModal.close();
+                break;
+        }
+    }
 
-//get meeting details
- getMeetingDetails(): string {
-   var meetingDetails =  'Date :  ' + this.meeting.datePicker.day +'/'+ this.meeting.datePicker.month +'/' +this.meeting.datePicker.year+  '  at  ' +
-    this.meeting.meridianTime.hour + ':'+ this.meeting.meridianTime.minute+ '  (' +this.meeting.selectedTimeZone +')   for  ' + this.meeting.selectedDuration+'\n'+
-    '\n Please join my meeting from your computer,tablet or smartphone \n'+ 'https://184.171.162.250:9090/demos/demo_multiparty.html\n'+
-    '\n Access Code :    '+ this.accessCode;
-    return meetingDetails; 
- }
+    //get meeting details
+    getMeetingDetails(): string {
+        var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
+            this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  ' + this.meeting.selectedDuration + '\n' +
+            '\n Please join my meeting from your computer,tablet or smartphone \n' + 'https://184.171.162.250:9090/demos/demo_multiparty.html\n' +
+            '\n Access Code :    ' + this.accessCode;
+        return meetingDetails;
+    }
 }
 

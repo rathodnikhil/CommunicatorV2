@@ -64,16 +64,16 @@ export class LoginComponent implements OnInit, OnDestroy {
             let payload1 = { "name": userName, "password": "password" };
             let loginWarningFlag;
              this._userService.verifyUser(payload1).subscribe(resp => {
-              loginWarningFlag = resp.json().warningFl;
+                loginWarningFlag = resp.json().warningFl ;
               if(loginWarningFlag == false){
                 this._loginService.getAuthenticationToken(payload).subscribe(resp => {
                     this.jwtToken = this._loginService.getJwtToken();
                     if(this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
+                        alert(this.jwtToken);
                         this.authFlag = true;
                         setTimeout(function() {
                             this.authFlag = false;
-                        }.bind(this), 5000);
-                        
+                        }.bind(this), 5000); 
                     }else{
                         this.router.navigate(['/dashboard/default']);
                     }
@@ -86,16 +86,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                 setTimeout(function() {
                     this.passwordMacthFlag = false;
                 }.bind(this), 5000);
-               // document.getElementById('userName').nodeValue = ' ';
-              
               }
             },
             err => {
                 alert("Error occured");
                 alert(err);  
             });
-          
-       
     }
     }
 }

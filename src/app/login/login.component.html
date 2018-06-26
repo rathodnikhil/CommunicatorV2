@@ -36,7 +36,7 @@
                     </div>
                     <fieldset id="actions">
                         <!-- <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']"> -->
-                        <input type="submit" id="submit" value="Log in" (click)="login(userName.value , password.value)" />
+                        <input type="submit" id="submit" value="Log in" (click)="login(userName.value , password.value)" (keyup)="login(userName.value , password.value)" />
                         <a href="">Forgot your password?</a>
                         <a [routerLink]="['/signup']">Register</a>
                     </fieldset>
