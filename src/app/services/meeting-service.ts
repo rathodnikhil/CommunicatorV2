@@ -11,23 +11,16 @@ import { ApiRequestService } from './api-request.service';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 
 @Injectable()
-export class MeetingServiceService {
+export class MeetingService {
 _loginService: LoginService;
-jwtToken: string;
 
     constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
-        this.jwtToken = this._loginService.getJwtToken();
      }
     getFutureMeetingByUser(payload) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('authentication', `${payload.token}`);
-        headers.append('app-Subject' , 'admin');
-        headers.append('Authorization' , this.jwtToken);
-        let options = new RequestOptions({ headers: headers });
+  
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser';
-        return this.http.post(url, payload,options);
+        return this.http.post(url, payload);
         // return this.http.get(urlConstants.baseUrl + 'allMemberList');
     }
  
@@ -46,14 +39,9 @@ jwtToken: string;
         return resp;
       }
     getRecentMeetingByUser(payload) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('authentication', `${payload.token}`);
-        headers.append('app-Subject' , 'admin');
-        headers.append('Authorization' , this.jwtToken);
-        let options = new RequestOptions({ headers: headers });
+   
         const url = urlConstants.baseUrl + 'getRecentMeetingByUser';
-        return this.http.post(url, payload,options);
+        return this.http.post(url, payload);
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId';
@@ -90,13 +78,21 @@ jwtToken: string;
         });
     }
     getAllMeetingsbyLoggedInUserId(payload) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('authentication', `${payload.token}`);
-        headers.append('app-Subject' , 'admin');
-        headers.append('Authorization' , this.jwtToken);
-        let options = new RequestOptions({ headers: headers });
+  
         const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?loggedInUserId=' + payload;
-        return this.http.post(url, payload,options);
+        return this.http.post(url, payload);
+    }
+    saveMomDetails(payload): Observable<any> {
+        const url = urlConstants.baseUrl + 'saveMomDetails';
+        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.apiRequest.post(url, payload).subscribe(data => {
+            resp.next(data);
+        },
+            err => {
+                console.log(err);
+                resp.next(err);
+            });
+
+        return resp;
     }
 }

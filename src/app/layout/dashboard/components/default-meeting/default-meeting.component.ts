@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
-import { MeetingServiceService } from '../../../../services/meeting-service.service';
+import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-default-meeting',
     templateUrl: './default-meeting.component.html',
     styleUrls: ['./default-meeting.component.scss'],
-    providers: [MeetingServiceService]
 })
 export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
@@ -18,14 +17,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     futureMeetingList = [];
     filteredFutureMeetingList = [];
     recentMeeting: any;
-    _meetingService: MeetingServiceService;
+    _meetingService: MeetingService;
     selectDateFlag: boolean;
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
-    constructor(userService: UserService, meetingService: MeetingServiceService, private router: Router) {
+    constructor(userService: UserService, meetingService: MeetingService, private router: Router) {
         this._userService = userService;
         this._meetingService = meetingService;
     }

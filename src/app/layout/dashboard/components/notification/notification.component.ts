@@ -31,6 +31,10 @@ export class NotificationComponent implements OnInit {
         this._userService.getUserList().subscribe(data => {            
             this.userList = data;            
         });
+        this._groupService.setGroupList(payload);
+        this._groupService.getGroupList().subscribe(data => {            
+            this.groupList = data;     
+        });
     }
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);

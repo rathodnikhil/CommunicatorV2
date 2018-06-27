@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef } 
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
-import { MeetingServiceService } from '../../../../services/meeting-service.service';
+import { MeetingService } from '../../../../services/meeting-service';
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
@@ -17,7 +17,7 @@ export class ScheduleMeetingComponent implements OnInit {
     meridian = true;
     today: any;
     accessCode: any;
-    _meetingService: MeetingServiceService;
+    _meetingService: MeetingService;
     showScheduleMeetingSuccess: boolean = true;
     showCopyDetailsSuccess: boolean = false;
     addSubjectFlag: boolean;
@@ -109,7 +109,7 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT-11:00) Midway Island, Samoa',
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
-    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingServiceService) {
+    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService) {
         this._meetingService = meetingService;
     }
 
@@ -164,8 +164,10 @@ export class ScheduleMeetingComponent implements OnInit {
             debugger;
             const payload = {
                 'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month, this.meeting.datePicker.day),
-                'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' + this.meeting.meridianTime.minute,
+                // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' 
+                // + this.meeting.meridianTime.minute,
                 //'meetingEndDateTime': 1525067350000,
+                'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month),
                 'subject': this.subject,
                 'duration': this.meeting.selectedDuration,
                 'recurringType': this.meeting.isRecurring,
@@ -174,7 +176,7 @@ export class ScheduleMeetingComponent implements OnInit {
                 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
                 'meetingId': this.accessCode
             };
-
+alert((this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':'  + this.meeting.meridianTime.minute);
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
                 alert(data.json());
             });
@@ -223,7 +225,8 @@ export class ScheduleMeetingComponent implements OnInit {
     //get meeting details
     getMeetingDetails(): string {
         var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
-            this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  ' + this.meeting.selectedDuration + '\n' +
+            this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
+             + this.meeting.selectedDuration + '\n' +
             '\n Please join my meeting from your computer,tablet or smartphone \n' + 'https://184.171.162.250:9090/demos/demo_multiparty.html\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;

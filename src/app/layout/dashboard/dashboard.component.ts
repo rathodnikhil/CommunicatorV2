@@ -22,9 +22,12 @@ export class DashboardComponent implements OnInit {
     showNewGroup: boolean = false;
     showNewGroupSuccess: boolean = false;
     showBroadcastMessageSuccess: boolean = false;
+    duplicateGroup: boolean = false;
     userList = [];
-
-    @ViewChild('braodcastMessageModal') public braodcastMessageModal: CustomModalComponent;
+    groupList = [];
+    groupArray = [];
+    i=0;
+    @ViewChild('braodcastMessageModal') public broadcastMessageModal: CustomModalComponent;
     broadcastMessagecontent: CustomModalModel = {
         titleIcon: '<i class="fa fa-bullhorn"></i>',
         title: 'Broadcast Message',
@@ -93,8 +96,13 @@ export class DashboardComponent implements OnInit {
         this._userService.getUserList().subscribe(data => {
             this.userList = data;
         });
+        this._groupService.getGroupList().subscribe(data => {            
+            this.groupList = data; 
+        });
+       
     }
-
+   
+    
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
@@ -104,7 +112,7 @@ export class DashboardComponent implements OnInit {
     }
     open() {
         //   debugger;
-        this.braodcastMessageModal.open();
+        this.broadcastMessageModal.open();
     }
     openCreateGroupPopup() {
         this.createGroupModal.open();
@@ -146,33 +154,41 @@ export class DashboardComponent implements OnInit {
                 this.showNewGroup = false;
             }.bind(this), 5000);
         } else {
-            const payload = { "groupName": createGroupsVal }
-            this._groupService.saveGroupDetails(payload).subscribe(res => {
-                this.showNewGroup = false;
-                this.showNewGroupSuccess = true;
+           
+            for (let i in this.groupList) {
+                this.groupArray.push(this.groupList[i].groupId.groupName);
+             }
+            var duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
+            if(duplicateGroupFlag != -1){
+                this.duplicateGroup = true;
                 setTimeout(function () {
-                    this.showNewGroupSuccess = false;
-                }.bind(this), 5000);
-            });
+                    this.duplicateGroup = false;
+                }.bind(this), 6000);
+            }else{
+                const payload = { "groupName": createGroupsVal }
+                this._groupService.saveGroupDetails(payload).subscribe(res => {
+                    this.showNewGroup = false;
+                    this.showNewGroupSuccess = true;
+                    setTimeout(function () {
+                        this.showNewGroupSuccess = false;
+                    }.bind(this), 5000);
+                    this.createGroupsVal = ' ';
+                });
+            }
         }
-
-        this.createGroupsVal = ' ';
+      
     }
 
     //close create group modal popup
-    closeGroupPopup(popupType) {
+    closePopup(popupType) {
         switch (popupType) {
             case 'addCreateGroup':
                 this.createGroupModal.close();
                 break;
-        }
-    }
-    //close create group modal popup
-    closeBroadcastPopup(popupType) {
-        switch (popupType) {
-            case 'addBroadcastMsg':
-                this.braodcastMessageModal.close();
+                case 'addBroadcastMsg':
+                this.createGroupModal.close();
                 break;
         }
     }
+    
 }

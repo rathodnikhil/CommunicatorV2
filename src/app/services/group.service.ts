@@ -9,40 +9,36 @@ import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class GroupService {
-    loggedInUser: any;
-   public jwtToken: string ;
-   token: any;
+   
     _loginService: LoginService;
+    loggedInUser: any;
+    GroupList$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) { 
       this._loginService = loginService;
-      this.token = this._loginService.caseDaSubject;
     }
    
     //get groups by loggedinuser
-    getGroupByLoggedInUserId(payload) {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('authentication', `${payload.token}`);
-      headers.append('app-Subject' , 'admin');
-      headers.append('Authorization' , this.jwtToken);
-      let options = new RequestOptions({ headers: headers });
-      const url = urlConstants.baseUrl + 'getGroupByLoggedInUserId';
-      return this.http.post(url, payload,options);
+    setGroupList(payload) {
+      const url = urlConstants.baseUrl + 'getGroupByLoggedInUserId?email=' + payload.email;
+      // const resp = new BehaviorSubject<any>({});
+      this.apiRequest.post(url, payload).subscribe(data => {
+          this.GroupList$.next(data);
+      },
+          err => {
+              alert(err);
+          });
+      // return resp;
     }
-
+    getGroupList() {
+      return this.GroupList$;
+  }
     getTotalGroupByLoggedInUserId(payload) {
       const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId';
       return this.http.post(url, payload);
     }
     getTeamsByLoggedInUserId(payload) {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('authentication', `${payload.token}`);
-      headers.append('app-Subject' , 'admin');
-      headers.append('Authorization' , this.jwtToken);
-      let options = new RequestOptions({ headers: headers });
         const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
-        return this.http.post(url, payload ,options);
+        return this.http.post(url, payload );
       }
       saveGroupDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveGroupDetails';
@@ -51,21 +47,18 @@ export class GroupService {
               resp.next(data);
           },
             err => {
-              alert("Error occured");
               alert(err);
             });
     
         return resp;
       }
       saveBroadcastMessage(payload) {
-  
         const url = urlConstants.baseUrl + 'saveBroadcastMessage';
         let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
           this.apiRequest.post(url,payload).subscribe(data => {
               resp.next(data);
           },
             err => {
-              alert("Error occured");
               alert(err);
             });
     

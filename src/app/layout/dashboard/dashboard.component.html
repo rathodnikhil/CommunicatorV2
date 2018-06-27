@@ -1,4 +1,3 @@
-
 <div [@routerTransition] style="overflow: hidden;">
     <div class="row" style="margin-right:0px;">
         <div class="col-lg-3" style="padding:0px;">
@@ -11,42 +10,43 @@
                         <i class="fa fa-user-plus fa-fw cursorPointer" [routerLink]="['/signup']"></i>
                     </div>
                     <div class="col-md-2 card-header userlist-header">
-                        <i class="fa fa-users fa-fw cursorPointer" (click) = "openCreateGroupPopup()"></i>
+                        <i class="fa fa-users fa-fw cursorPointer" (click)="openCreateGroupPopup()"></i>
                         <app-custom-modal #createGroupModal [model]="createGroups">
                             <div class="modal-body">
-                                    <div style="margin-top: 20px;" *ngIf="showNewGroup === true"
-						class="alert alert-danger alert-dismissable" [(ngModel)]="showNewGroup">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-hidden="true">&times;</button>
-						<strong>Error: </strong>Enter Group Name.
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="showNewGroupSuccess === true"
-                    class="alert alert-success alert-dismissable" [(ngModel)]="showNewGroupSuccess">
-                    <button type="button" class="close" data-dismiss="alert"
-                        aria-hidden="true">&times;</button>
-                    <strong>Success: </strong>Group has been Created Successfully.
-                </div>
+                                <div style="margin-top: 20px;" *ngIf="showNewGroup === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showNewGroup">
+                                    <strong>Error: </strong>Enter Group Name.
+                                </div>
+                                <div style="margin-top: 20px;" *ngIf="showNewGroupSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showNewGroupSuccess">
+                                    <strong>Success: </strong>Group has been Created Successfully.
+                                </div>
+                                <div style="margin-top: 20px;" *ngIf="duplicateGroup === true" class="alert alert-danger alert-dismissable" [(ngModel)]="duplicateGroup">
+                                        <strong>Error: </strong>group has been already added , please select member and click on Add Group Member button
+                                </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Group Name</label>
                                     </div>
                                     <div>
-                                        <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal" onfocus="groupNameFocus()"></textarea>
+                                        <!-- <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal" onfocus="groupNameFocus()"></textarea> -->
+                                        <input type="text" list="groupNameList"  [(ngModel)]="createGroupsVal">
                                     </div>
+                                    <datalist id="groupNameList">
+                                        <option *ngFor="let group of groupList" value="{{group.groupId.groupName}}">
+                                    </datalist>
                                 </div>
-                                <div class="row">
-                                    <ul>
-                                    <input type="checkbox" id="scheduledByMe" (change)="scheduleByLoggedInUserId($event)"> Schdule By Me<br>
-                                    <input type="checkbox" id="momByMe"  (change)="momByLoggedInuser($event)">MOM By Me<br>
-                                </ul>
-                                </div>
-                                <div class="row">
-                                    {{userList[0].firstName}}
+                                <hr>
+                                <div class="row" style="padding: 15px;">
+                                    <div *ngFor="let user of userList">
+                                        <label class="checkbox-inline check-label" >
+                                            <input type="checkbox"  [(ngModel)]="user.checked">{{user.firstName}} &nbsp; {{user.lastName}}
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer popFooter">
-                                    <button type="button" class="btn-sec btn" (click)="createGroup(createGroupsVal)">Add Group</button>
-                                <button type="button" class="btn-cancel btn" (click)="closeGroupPopup('addCreateGroup')">Close</button>
+                                <button type="button" class="btn-sec btn" (click)="createGroup(createGroupsVal)">Add Group</button>
+                                <button type="button" class="btn-sec btn" (click)="createGroup(createGroupsVal)">Add Group Memeber</button>
+                                <button type="button" class="btn-cancel btn" (click)="closePopup('addCreateGroup')">Close</button>
                             </div>
                         </app-custom-modal>
                     </div>
@@ -54,21 +54,16 @@
                         <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>
                         <!-- <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="broadcastMsg($event)"
                              (Button2Event)="resetMsg($event)"></app-custom-modal> -->
-                        <app-custom-modal #braodcastMessageModal [model]="broadcastMessagecontent">
+                        <app-custom-modal #broadcastMessageModal [model]="broadcastMessagecontent">
                             <div class="modal-body">
-                        <div style="margin-top: 20px;" *ngIf="showtypeMessage === true"
-						class="alert alert-danger alert-dismissable" [(ngModel)]="showtypeMessage">
-						<button type="button" class="close" data-dismiss="alert"
-							aria-hidden="true">&times;</button>
-                        <strong>Error: </strong>Enter Message.
-                    </div>
-                    
-                    <div style="margin-top: 20px;" *ngIf="showBroadcastMessageSuccess === true"
-                    class="alert alert-success alert-dismissable" [(ngModel)]="showBroadcastMessageSuccess">
-                    <button type="button" class="close" data-dismiss="alert"
-                        aria-hidden="true">&times;</button>
-                    <strong>Success: </strong>Message has been Broadcast Successfully.
-                </div>
+                                <div style="margin-top: 20px;" *ngIf="showtypeMessage === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showtypeMessage">
+                                    <strong>Error: </strong>Enter Message.
+                                </div>
+                                <div style="margin-top: 20px;" *ngIf="showBroadcastMessageSuccess === true" class="alert alert-success alert-dismissable"
+                                    [(ngModel)]="showBroadcastMessageSuccess">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <strong>Success: </strong>Message has been Broadcast Successfully.
+                                </div>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Messgage</label>
@@ -79,8 +74,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer popFooter">
-                                    <button type="button" class="btn-sec btn" (click)="broadcastMessages(broadcastMessage)">Broadcast Message</button>
-                                <button type="button" class="btn btn-cancel" (click)="closeBroadcastPopup('addBroadcastMsg')">Close</button>
+                                <button type="button" class="btn-sec btn" (click)="broadcastMessages(broadcastMessage)">Broadcast Message</button>
+                                <button type="button" class="btn btn-cancel" (click)="closePopup('addBroadcastMsg')">Close</button>
                             </div>
                         </app-custom-modal>
                     </div>
