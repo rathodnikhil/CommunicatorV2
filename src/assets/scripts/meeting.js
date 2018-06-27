@@ -332,7 +332,10 @@
             if (signaler.isbroadcaster) signaler.stopBroadcasting = true;
 
             // leave user media resources
-            if (root.stream) root.stream.stop();
+            if (root.stream) {
+                // root.stream.stop();
+                root.stream.getTracks().forEach(function (track) { track.stop(); })
+            }
 
             // if firebase; remove data from their servers
             if (window.Firebase) socket.remove();

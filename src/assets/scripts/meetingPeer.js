@@ -116,3 +116,7 @@ document.getElementById('sendText').onclick = function () {
     };
     meeting.customSend(JSON.stringify(customMessage));
 };
+
+document.getElementById('cancelCall').onclick = function () {
+    meeting.leave();
+};
