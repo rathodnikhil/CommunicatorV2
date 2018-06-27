@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
-import { MeetingServiceService } from '../../../../services/meeting-service.service';
+import { MeetingService } from '../../../../services/meeting-service';
 
 @Component({
   selector: 'app-meeting-video-call',
   templateUrl: './meeting-video-call.component.html',
   styleUrls: ['./meeting-video-call.component.scss'],
-  providers: [UserService , MeetingServiceService]
 })
 export class MeetingVideoCallComponent implements OnInit {
     userList = [];
     _userService: UserService;
-    _meetingService: MeetingServiceService;
+    _meetingService: MeetingService;
     messageSendTo: any;
     momTo: any;
-  constructor(userService: UserService , meetingService: MeetingServiceService) {
+  constructor(userService: UserService , meetingService: MeetingService) {
       this._userService = userService;
       this._meetingService = meetingService;
   }

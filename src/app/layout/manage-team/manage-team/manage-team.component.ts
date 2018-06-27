@@ -175,7 +175,7 @@ export class ManageTeamComponent implements OnInit {
         }
            this._userService.saveUserDetails(payload).subscribe(
             (res) => {
-             
+             alert('Member has been saved successfully');
                // saveAs(res, payload.firstName,payload.lastName); 
             });
             this.memObj = {user: {firstName: firstName , lastName : lastName }}

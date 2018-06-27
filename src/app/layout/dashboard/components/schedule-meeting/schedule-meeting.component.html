@@ -16,164 +16,151 @@
             <div class="card-body" style="height:74vh;">
                 <div class="container overall-padding">
                     <!-- <form> -->
-                            <div style="margin-top: 20px;" *ngIf="addSubjectFlag === true" class="alert alert-danger alert-dismissable"
-                             [(ngModel)]="addSubjectFlag"> <strong>Error: </strong>Enter Meeting Subject
-                            </div>
-                            <div style="margin-top: 20px;" *ngIf="addDurationFlag === true" class="alert alert-danger alert-dismissable"
-                             [(ngModel)]="addDurationFlag"> <strong>Error: </strong>Select Meeting Duration
-                            </div>
-                            <div style="margin-top: 20px;" *ngIf="addTimezoneFlag === true" class="alert alert-danger alert-dismissable"
-                            [(ngModel)]="addTimezoneFlag"> <strong>Error: </strong>Select Timezone
-                           </div>
-                        <div class="row form-group">
+                    <div style="margin-top: 20px;" *ngIf="addSubjectFlag === true" class="alert alert-danger alert-dismissable" [(ngModel)]="addSubjectFlag">
+                        <strong>Error: </strong>Enter Meeting Subject
+                    </div>
+                    <div style="margin-top: 20px;" *ngIf="addDurationFlag === true" class="alert alert-danger alert-dismissable" [(ngModel)]="addDurationFlag">
+                        <strong>Error: </strong>Select Meeting Duration
+                    </div>
+                    <div style="margin-top: 20px;" *ngIf="addTimezoneFlag === true" class="alert alert-danger alert-dismissable" [(ngModel)]="addTimezoneFlag">
+                        <strong>Error: </strong>Select Timezone
+                    </div>
+                    <div class="row form-group">
 
-                            <div class="col-sm-3">
-                                <label>Subject</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="descField" placeholder="Meeting Subject"  [(ngModel)]="subject"/>
+                        <div class="col-sm-3">
+                            <label>Subject</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="descField" placeholder="Meeting Subject" [(ngModel)]="subject" />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>Date</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="input-group datepicker-input">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
+                                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                                    <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                    <span class="fa fa-calendar"></span>
+                                </button>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>Date</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="input-group datepicker-input">
-                                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker"
-                                     ngbDatepicker #d="ngbDatepicker">
-                                    <button class="input-group-addon" (click)="d.toggle()" type="button">
-                                        <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                        <span class="fa fa-calendar"></span>
-                                    </button>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>Time</label>
+                        </div>
+                        <div class="col-md-9">
+                            <ngb-timepicker class="customTimePicker" id="meeting.meridianTime" [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label>Meeting duration</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div ngbDropdown class="d-inline-block dropdown">
+                                <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
+                                <div ngbDropdownMenu>
+                                    <button *ngFor="let duration of durationArray" class="dropdown-item" on-click="changeDuration(duration)">{{duration}}</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>Time</label>
-                            </div>
-                            <div class="col-md-9">
-                                <ngb-timepicker class="customTimePicker" id="meeting.meridianTime" [(ngModel)]="meeting.meridianTime"
-                                 [meridian]="meeting.meridian"></ngb-timepicker>
-                            </div>
-                            <!-- <ngb-timepicker [(ngModel)]="meridianTime" [meridian]="meridian"></ngb-timepicker>
-                            <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
-                                Meridian - {{meridian ? "ON" : "OFF"}}
-                            </button>
-                            <div class="alert alert-info mt-3 mb-0">
-                                <b>Selected time: </b>{{meridianTime | json}}
-                            </div> -->
-                            <!-- <div class="col-md-5" style="    padding-top: 1.2rem;">
-                                <div ngbDropdown class="d-inline-block dropdown">
-                                    <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
-                                    <div ngbDropdownMenu>
-                                        <button *ngFor="let duration of durationArray" class="dropdown-item"
-                                         on-click="changeDuration(duration)">{{duration}}</button>
-                                    </div>
-                                </div>
-                            </div> -->
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label style="padding-top:50%;">Timezone</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Meeting duration</label>
-                            </div>
-                            <div class="col-md-9">
-                                <div ngbDropdown class="d-inline-block dropdown">
-                                    <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
-                                    <div ngbDropdownMenu>
-                                        <button *ngFor="let duration of durationArray" class="dropdown-item"
-                                        on-click="changeDuration(duration)">{{duration}}</button>
-                                    </div>
+                        <div class="col-md-9">
+                            <div ngbDropdown class="d-inline-block dropdown">
+                                <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
+                                <div ngbDropdownMenu>
+                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" on-click="changeTimeZone(timezone)">{{timezone}}</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label style="padding-top:50%;">Timezone</label>
-                            </div>
-                            <div class="col-md-9">
-                                <div ngbDropdown class="d-inline-block dropdown">
-                                    <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
-                                    <div ngbDropdownMenu>
-                                        <button *ngFor="let timezone of timeZoneArray" class="dropdown-item"
-                                         on-click="changeTimeZone(timezone)">{{timezone}}</button>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>Recurring</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.isRecurring">
+                                <label ngbButtonLabel class="btn-outline-primary">
+                                    <input ngbButton type="radio" [value]="1"> Yes
+                                </label>
+                                <label ngbButtonLabel class="btn-outline-primary">
+                                    <input ngbButton type="radio" value="2"> No
+                                </label>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>Recurring</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.isRecurring">
-                                    <label ngbButtonLabel class="btn-outline-primary">
-                                        <input ngbButton type="radio" [value]="1"> Yes
-                                    </label>
-                                    <label ngbButtonLabel class="btn-outline-primary">
-                                        <input ngbButton type="radio" value="2"> No
-                                    </label>
-                                </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>Call Type</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.callType">
+                                <label ngbButtonLabel class="btn-outline-primary">
+                                    <input ngbButton type="radio" [value]="1"> Audio
+                                </label>
+                                <label ngbButtonLabel class="btn-outline-primary">
+                                    <input ngbButton type="radio" value="2"> Video
+                                </label>
                             </div>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>Call Type</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.callType">
-                                    <label ngbButtonLabel class="btn-outline-primary">
-                                        <input ngbButton type="radio" [value]="1"> Audio
-                                    </label>
-                                    <label ngbButtonLabel class="btn-outline-primary">
-                                        <input ngbButton type="radio" value="2"> Video
-                                    </label>
-                            </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>MOM</label>
                         </div>
+                        <div class="col-sm-9">
+                            <p class="mom-duty">By default mom duty is with you.
+                                <br> you can transfer MOM duty during the call
+                            </p>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label>MOM</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="mom-duty">By default mom duty is with you.
-                                    <br> you can transfer MOM duty during the call
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-sm-3">
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
 
+                        </div>
+                        <div class="col-sm-9">
+                            <a class="btn btn-primary btn-border-radius" (click)="scheduleMeeting()" style="color: #fff;">Schedule Meeting & Send Invitation</a>
+                        </div>
+                        <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings">
+                            <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true" class="alert alert-success alert-dismissable"
+                                [(ngModel)]="showScheduleMeetingSuccess">
+                                <strong>Success:&nbsp; </strong>
+                                <span style="font-weight: bold;">{{this.meeting.callType}}</span>&nbsp;meeting has been scheduled Successfully.
                             </div>
-                            <div class="col-sm-9">
-                                <a class="btn btn-primary btn-border-radius" (click)="scheduleMeeting()" style="color: #fff;">Schedule Meeting & Send Invitation</a>
-                            </div>
-                            <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings">
-                                    <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true"
-                                    class="alert alert-success alert-dismissable" [(ngModel)]="showScheduleMeetingSuccess">
-                                    <strong>Success:&nbsp; </strong><span style="font-weight: bold;">{{this.meeting.callType}}</span>&nbsp;meeting has been scheduled Successfully.
-                                </div>
-                                <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true"
-                                class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
+                            <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
                                 <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
                             </div>
-                                    <div style="padding: 10px; font-size:14px;" class="span-font"> <span>{{subject}}</span><p style="font-weight:bold;">Date :
-                                         {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}} at 
-                                            {{meeting.meridianTime.hour}}&nbsp;:{{meeting.meridianTime.minute}} ( {{this.meeting.selectedTimeZone}} )
-                                            for <span style="font-weight: bold;">{{meeting.selectedDuration}} </span> </p>
-                                        <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone 
-                                             <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">https://184.171.162.250:9090/demos/demo_multiparty.html</span></p>
-                                        <h5 style="margin-top: 40px;">Access Code : <span>{{accessCode}}</span></h5>
-                                    </div>
-                                    <div class="modal-footer popFooter">
-                                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event,subject)">Go to Outlook</button>
-                                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
-                                        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
-                                    </div>  
-                                 
-                            </app-custom-modal>
-                        </div>
+                            <div style="padding: 10px; font-size:14px;" class="span-font">
+                                <span>{{subject}}</span>
+                                <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}
+                                    at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
+                                    {{this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}
+                                    ) for
+                                    <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
+                                </p>
+                                <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone
+                                    <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">https://184.171.162.250:9090/demos/demo_multiparty.html</span>
+                                </p>
+                                <h5 style="margin-top: 40px;">Access Code :
+                                    <span>{{accessCode}}</span>
+                                </h5>
+                            </div>
+                            <div class="modal-footer popFooter">
+                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event,subject)">Go to Outlook</button>
+                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
+                                <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
+                            </div>
+
+                        </app-custom-modal>
+                    </div>
                     <!-- </form> -->
                 </div>
             </div>

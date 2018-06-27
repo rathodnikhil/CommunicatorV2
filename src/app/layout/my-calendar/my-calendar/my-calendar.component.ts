@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import { UserService } from '../../../services/user.service';
-import { MeetingServiceService } from '../../../services/meeting-service.service';
+import { MeetingService} from '../../../services/meeting-service';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-my-calendar',
@@ -73,10 +73,10 @@ export class MyCalendarComponent implements OnInit {
         }
     ];
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
-    _meetingService: MeetingServiceService;
+    _meetingService: MeetingService;
     _userService: UserService;
     loggedInUser: any;
-    constructor(meetingService: MeetingServiceService,userService:UserService, private router: Router) {
+    constructor(meetingService: MeetingService,userService:UserService, private router: Router) {
         this._meetingService = meetingService;
         this._userService=userService;
     }
