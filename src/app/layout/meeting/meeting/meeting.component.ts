@@ -1,7 +1,8 @@
-import { Component, OnInit, trigger, transition, style, animate, state } from '@angular/core';
+import { Component, OnInit, trigger, transition, style, animate, state, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
 import { MeetingService } from '../../../services/meeting-service';
+import { DOCUMENT } from '@angular/common';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -27,9 +28,19 @@ import { MeetingService } from '../../../services/meeting-service';
             transition('inactive => active', animate('0.2ms ease-in')),
             transition('active => inactive', animate('450ms ease-in'))
         ]),
+        trigger('arrow', [
+            state('up', style({
+            transform: 'rotate(180deg)'
+            })),
+            state('down', style({
+                transform: 'rotate(0deg)'
+            })),
+            transition('up => down', animate('0.2ms ease-in')),
+            transition('down => up', animate('450ms ease-in'))
+        ]),
     ],
 })
-export class MeetingComponent implements OnInit {
+export class MeetingComponent implements OnInit, AfterViewInit {
     _userService: UserService;
     _loginService: LoginService;
     _meetingService: MeetingService;
@@ -42,7 +53,8 @@ export class MeetingComponent implements OnInit {
     nullCheckFlag: boolean;
     momAddSuccess: boolean;
     momAddDesciption: boolean;
-    constructor(userService: UserService, loginService: LoginService, meetingService: MeetingService) {
+    constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
+    userService: UserService, loginService: LoginService, meetingService: MeetingService) {
         this._userService = userService;
         this._loginService = loginService;
         this._meetingService = meetingService;
@@ -52,7 +64,36 @@ export class MeetingComponent implements OnInit {
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
     }
+    ngAfterViewInit(): void {
+        // const s = document.createElement('script');
+        // s.type = 'text/javascript';
+        // s.innerHTML = 'console.log(\'done\');'; // inline script
+        // s.src = '../../../assets/scripts/meetingTest.js';
 
+        const s = this.document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '../../../assets/scripts/meetingTest.js';
+        const __this = this; // to store the current instance to call
+        // afterScriptAdded function on onload event of
+        // script.
+        s.onload = function () { __this.afterScriptAdded(); };
+        this.elementRef.nativeElement.appendChild(s);
+    }
+    afterScriptAdded() {
+        // debugger;
+        // const meetingName = this.document.getElementById('meeting-name');
+
+        // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
+        //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
+        this.document.getElementById('setup-meeting').click();
+        const params = {
+            width: '350px',
+            height: '420px',
+        };
+        if (typeof (window['functionFromExternalScript']) === 'function') {
+            window['functionFromExternalScript'](params);
+        }
+    }
     // to set selected send message to
     changeMessageTo(member) {
         this.messageSendTo = member.name + ' ' + member.lastName;
@@ -89,4 +130,4 @@ export class MeetingComponent implements OnInit {
     }
         }
     }
-    
+
