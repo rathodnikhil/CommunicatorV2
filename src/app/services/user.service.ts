@@ -14,8 +14,7 @@ export class UserService {
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
-    UserList$: Subject<any[]> = new BehaviorSubject<any>({});
-    //  caseDaSubject = new Subject<any>();    
+    UserList$: Subject<any[]> = new BehaviorSubject<any>({});  
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
@@ -26,7 +25,6 @@ export class UserService {
             resp.next(data);
         },
             err => {
-                alert("Error occured");
                 alert(err);
             });
 
@@ -44,7 +42,6 @@ export class UserService {
             this.UserList$.next(data);
         },
             err => {
-                alert("Error occured");
                 alert(err);
             });
         // return resp;

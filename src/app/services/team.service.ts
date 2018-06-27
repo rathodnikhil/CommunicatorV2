@@ -39,7 +39,6 @@ export class TeamService {
             resp.next(data);
         },
           err => {
-            alert("Error occured");
             alert(err);
           });
       return resp;
@@ -51,7 +50,6 @@ export class TeamService {
               resp.next(data);
           },
             err => {
-              alert("Error occured");
               alert(err);
             });
         return resp;
@@ -68,7 +66,6 @@ export class TeamService {
                 resp.next(data);
             },
               err => {
-                alert("Error occured");
                 alert(err);
               });
           return resp;

@@ -11,13 +11,23 @@
                     </div>
                     <div class="child" [@MomBody]="!isMOMvisible?'active':'inactive'">
                             <div class="mom-box">
-                                <div class="mom-body" >
-                                    <textarea placeholder="add MOM" class="mom-textarea"></textarea>
+                                    <div style="margin-top: 20px;" *ngIf="nullCheckFlag === true" class="alert alert-danger alert-dismissable" [(ngModel)]="nullCheckFlag">
+                                            <strong>Error: </strong>Failed to recieve response from server 
+                                        </div>
+                                        <div style="margin-top: 20px;" *ngIf="momAddDesciption === true" class="alert alert-danger alert-dismissable" [(ngModel)]="momDescription">
+                                                <strong>Error: </strong>Enter MOM Description
+                                            </div>
+                                        <div style="margin-top: 20px;" *ngIf="momAddSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="momAddSuccess">
+                                                <strong>Success: </strong>MOM Details has been Saved Successfully.
+                                            </div>
+                                <div class="mom-body" style="text-align: center;">
+                                    <textarea placeholder="add MOM" class="mom-textarea" [(ngModel)]="momDescription" ></textarea>
+                                    <button class="btn btn-sec" (click)="saveMom()" >Save MOM</button>
                                 </div>
                             </div>
                         </div>
                 </div>
-                <div class="row" style="height:22vh; padding: 5px;margin:2px;">
+                <div class="row attendee-row">
                     <div class="scrollmenu">
                         <div id="grid">
                             <div id="gridtop1">

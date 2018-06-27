@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MeetingServiceService } from '../../../services/meeting-service.service';
+import { MeetingService } from '../../../services/meeting-service';
 // import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-past-meetings',
   templateUrl: './past-meetings.component.html',
   styleUrls: ['./past-meetings.component.scss'],
-  providers: [MeetingServiceService]
 })
 export class PastMeetingsComponent implements OnInit {
     fileName: String;
     pastMeetingList = [];
-    _meetingService: MeetingServiceService;
+    _meetingService: MeetingService;
     payloadSearch = {loggedInUserId: 2};
-  constructor(meetingService: MeetingServiceService) {
+  constructor(meetingService: MeetingService) {
     this._meetingService = meetingService;
    }
 momByMe: boolean;

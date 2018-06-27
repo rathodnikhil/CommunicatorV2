@@ -1,4 +1,4 @@
-
+@import "styles/customStyle.css";
 //video calling
 #container {
     width:100%;
@@ -73,86 +73,13 @@ div.scrollmenu a:hover {
         height: 80%;
         .mom-textarea{
           width: 100%;
-          height: 50%;
+          height: 60%;
         }
       }
     }
   }
-
-  /* Acordeon styles */
-  .tab {
-    position: relative;
-    margin-bottom: 1px;
-    width: 100%;
-    overflow: hidden;
-  }
-  input {
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
-  }
-  label {
-    position: relative;
-    display: block;
-    padding: 0 0 0 1em;
-    background: #2980b9;
-    color: #ffffff;
-    font-weight: bold;
-    line-height: 3;
-    cursor: pointer;
-  }
-  .blue label {
-    background: #2980b9;
-  }
-  .tab-content {
-    max-height: 0;
-    overflow: hidden;
-    background-color:f1f1f1;
-    -webkit-transition: max-height .35s;
-    -o-transition: max-height .35s;
-    transition: max-height .35s;
-  }
-  .blue .tab-content {
-    background-color:f1f1f1;
-  }
-  .tab-content p {
-    margin: 1em;
-  }
-  /* :checked */
-  input:checked ~ .tab-content {
-    max-height: 10em;
-    height: 100%;
-  }
-  /* Icon */
-  label::after {
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: block;
-    width: 3em;
-    height: 3em;
-    line-height: 3;
-    text-align: center;
-    -webkit-transition: all .35s;
-    -o-transition: all .35s;
-    transition: all .35s;
-    font-weight: bold;
-  }
-  input[type=checkbox] + label::after {
-    content: "+";
-  }
-  input[type=radio] + label::after {
-    content: "\25BC";
-  }
-  input[type=checkbox]:checked + label::after {
-    transform: rotate(315deg);
-  }
-  input[type=radio]:checked + label::after {
-    transform: rotateX(180deg);
-  }
-
   .card-header{
-    background: #2980b9;
+    background: #3277d3;
     color: #ffffff;
     font-weight: bold;
   }
@@ -162,9 +89,7 @@ div.scrollmenu a:hover {
 .meeting-activity{
     border:1px solid #dedede;border-radius:8px;  padding: 5px;
 }
-.content-tab{
-    border:1px solid #dee2e6;border-radius: 8px;height:77vh; padding: 5px;margin:4px;
-}
+
 .container {
     border: 2px solid #dedede;
     background-color: #f1f1f1;
@@ -201,4 +126,7 @@ div.scrollmenu a:hover {
     top: 65%;
     margin-top: -50px;
     height: 50px;
+}
+.attendee-row{
+  height:22vh; padding: 5px;margin:2px;
 }
