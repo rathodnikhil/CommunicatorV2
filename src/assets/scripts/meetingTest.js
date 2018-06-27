@@ -103,8 +103,16 @@ var localMediaStream = document.getElementById('local-streams-container');
 
 // on getting media stream
 meeting.onaddstream = function (e) {
+    // debugger;
     if (e.type == 'local') localMediaStream.appendChild(e.video);
-    if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
+    if (e.type == 'remote') {
+        var elem = document.createElement("div");
+        e.video.height = '100';
+        e.video.width = '100';
+        elem.appendChild(e.video);
+        remoteMediaStreams.appendChild(elem);
+        // remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
+    }
 };
 
 // via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket-over-nodejs
@@ -133,7 +141,7 @@ meeting.openSignalingChannel = function (onmessage) {
     };
     websocket.onmessage = function (e) {
         var data = JSON.parse(e.data);
-        if (data.indexOf('Text')>0) {
+        if (data.indexOf('Text') > 0) {
             debugger;
             var tr = document.createElement('tr');
             tr.innerHTML = '<td> other user' + JSON.parse(data).Text + '</td>' +
@@ -173,7 +181,9 @@ document.getElementById('setup-meeting').onclick = function () {
 document.getElementById('sendText').onclick = function () {
 
     debugger;
-    var customMessage = { "userid": "", "Text": textInput.value };
+    var customMessage = {
+        "userid": "",
+        "Text": textInput.value
+    };
     meeting.customSend(JSON.stringify(customMessage));
 };
-
