@@ -163,11 +163,12 @@ export class ScheduleMeetingComponent implements OnInit {
             }
             debugger;
             const payload = {
-                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month, this.meeting.datePicker.day),
+                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1, this.meeting.datePicker.day),
                 // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' 
                 // + this.meeting.meridianTime.minute,
                 //'meetingEndDateTime': 1525067350000,
-                'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month),
+                'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,
+                    this.meeting.datePicker.day,this.meeting.meridianTime.hour , this.meeting.meridianTime.minute),
                 'subject': this.subject,
                 'duration': this.meeting.selectedDuration,
                 'recurringType': this.meeting.isRecurring,
@@ -176,12 +177,11 @@ export class ScheduleMeetingComponent implements OnInit {
                 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
                 'meetingId': this.accessCode
             };
-alert((this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':'  + this.meeting.meridianTime.minute);
+
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
-                alert(data.json());
+                this.scheduleMeetingModal.open();
             });
             // this._meetingService.scheduleMeeting(payload);
-            this.scheduleMeetingModal.open();
         }
     }
     copyToOutLook(event, subject) {
