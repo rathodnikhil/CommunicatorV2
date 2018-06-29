@@ -173,6 +173,8 @@ export class DashboardComponent implements OnInit {
                         this.showNewGroupSuccess = false;
                     }.bind(this), 5000);
                     this.createGroupsVal = ' ';
+                    const group = { group: { groupName: createGroupsVal } };
+                    this.groupList.push(group);
                 });
             }
         }

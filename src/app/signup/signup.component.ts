@@ -19,6 +19,7 @@ export class SignupComponent implements OnInit {
     _teamService: TeamService;
     _userService: UserService;
     _loginService: LoginService;
+    jwtToken: string;
     user: any;
     firstName: any;
     lastName: any;
@@ -35,7 +36,8 @@ export class SignupComponent implements OnInit {
     showAddMemberpasswordMatch: boolean = false;
     showAddMemberValidEmail: boolean = false;
     showAddMemberDuplicateUserName: boolean = false;
-    showAddMemberDuplicateEmail: boolean = false;
+    authFlag: boolean = false;
+    showException: boolean = false;
     constructor(teamService: TeamService , userService: UserService , loginService: LoginService ,private router: Router) {
         this._teamService = teamService;
         this._userService = userService;
@@ -96,7 +98,7 @@ export class SignupComponent implements OnInit {
             }
             else{
                 let duplicateUserNameFlag ;
-                let duplicateEmailFlag;
+                let exceptionFlag;
             const payload =  {
                 "email": this.email,
                 "password": this.password,
@@ -114,21 +116,36 @@ export class SignupComponent implements OnInit {
      
         this._userService.saveUserDetails(payload).subscribe(data => {
             duplicateUserNameFlag = data.json().warningFl;
-            duplicateEmailFlag = data.json().errorFl;
+            exceptionFlag = data.json().errorFl;
             if(duplicateUserNameFlag == true) {
                 this.showAddMemberDuplicateUserName = true;
                 this.userName = '';
                 setTimeout(function() {
                     this.showAddMemberDuplicateUserName = false;
                 }.bind(this), 5000);
-            }else if(duplicateEmailFlag == true) {
-                this.showAddMemberDuplicateEmail = true;
+            }else if(exceptionFlag == true) {
+                this.showException = true;
                 this.email = '';
                 setTimeout(function() {
-                    this.showAddMemberDuplicateEmail = false;
+                    this.showException = false;
                 }.bind(this), 5000);
             }else{
-                this.router.navigate(['/dashboard']);
+                let payload = { "name": 'admin', "password": "password" };
+                let loginWarningFlag;
+                    this._loginService.getAuthenticationToken(payload).subscribe(resp => {
+                        this.jwtToken = this._loginService.getJwtToken();
+                        if(this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
+                            this.authFlag = true;
+                            setTimeout(function() {
+                                this.authFlag = false;
+                            }.bind(this), 5000); 
+                        }else{
+                            this.router.navigate(['/dashboard/default']);
+                        }
+                    }, err => {
+                        alert(err);      
+                    });
+                //this.router.navigate(['/dashboard']);
             }
         });
     }

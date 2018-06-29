@@ -16,24 +16,29 @@ export class TeamService {
     email: any;
     teamId: any;
     _loginService: LoginService;
-    jwtToken: string;
+    teamList$: Subject<any[]> = new BehaviorSubject<any>({});  
+    memberList$: Subject<any[]> = new BehaviorSubject<any>({});  
     constructor(private http: Http ,loginService: LoginService , private apiRequest: ApiRequestService) {
       this._loginService = loginService;
-      this.jwtToken = this._loginService.getJwtToken();
      }
-    getTeamsByLoggedInUserId(payload) {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('authentication', `${payload.token}`);
-      headers.append('app-Subject' , 'admin');
-      headers.append('Authorization' , this.jwtToken);
-      let options = new RequestOptions({ headers: headers });
+    setTeamsByLoggedInUserId(payload) {
       const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?email=' + payload.email;
-      return this.http.post(url, payload,options);
-    // return this.http.get(urlConstants.baseUrl + 'allMemberList');
+      // const resp = new BehaviorSubject<any>({});
+      this.apiRequest.post(url, payload).subscribe(data => {
+        this.teamList$.next(data);
+      },
+          err => {
+              alert(err);
+          });
+      // return resp;
     }
+    getTeamListByLoggedInUserId() {
+      return this.teamList$;
+  }
+
+
     getMembersByTeam(payload) {
-      const url = urlConstants.baseUrl + 'getMembersByTeam';
+      const url = urlConstants.baseUrl + 'getMembersByTeam?teamCode='+ payload.teamCode;
       let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url,payload).subscribe(data => {
             resp.next(data);
@@ -43,8 +48,23 @@ export class TeamService {
           });
       return resp;
       }
+      setMembersByLoggedInUserId(payload) {
+        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?email=' + payload.email;
+        // const resp = new BehaviorSubject<any>({});
+        this.apiRequest.post(url, payload).subscribe(data => {
+          this.memberList$.next(data);
+        },
+            err => {
+                alert(err);
+            });
+        // return resp;
+      }
+      getMemberListByLoggedInUserId() {
+        return this.memberList$;
+    }
       getMembersByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId';
+        debugger;
+        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?email=' + payload.email;
         let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
           this.apiRequest.post(url,payload).subscribe(data => {
               resp.next(data);

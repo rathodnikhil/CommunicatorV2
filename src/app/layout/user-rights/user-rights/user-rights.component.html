@@ -32,9 +32,9 @@
       </tr>
       <tr *ngFor="let userPermission of userPermissionMemberList; let srNo = index">
             <td>{{srNo+1}}</td>
-            <td>{{userPermission.user.name}} {{userPermission.user.lastName}}</td>
+            <td>{{userPermission.user.firstName}} {{userPermission.user.lastName}}</td>
             <td>{{userPermission.team.teamName}}</td>
-            <td>{{userPermission.user.status.statusId.status}}</td>
+            <td>{{userPermission.user.status.status}}</td>
             <td><div class="switch-field">
                     <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
                     <label for="switch_left">Yes</label>

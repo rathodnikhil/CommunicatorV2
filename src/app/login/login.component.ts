@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 this._loginService.getAuthenticationToken(payload).subscribe(resp => {
                     this.jwtToken = this._loginService.getJwtToken();
                     if(this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
-                        alert(this.jwtToken);
                         this.authFlag = true;
                         setTimeout(function() {
                             this.authFlag = false;
@@ -78,7 +77,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.router.navigate(['/dashboard/default']);
                     }
                 }, err => {
-                    alert("Error occured");
                     alert(err);      
                 });
               }else{
