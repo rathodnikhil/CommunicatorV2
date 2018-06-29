@@ -21,11 +21,13 @@ export class ManageTeamComponent implements OnInit {
     showAddMemberEmail: boolean = false;
     memObj: any = {};
     i: number;
+    teamCode: string;
     _teamService: TeamService;
     _userService: UserService;
     userPermissionList = [];
-    userPermissionMemList = [];
+    userPermissionMemberList = [];
     filterMemberList = [];
+    teamList = [];
     selectedTeamName: any;
     user: any = {};
     firstName: any;
@@ -54,43 +56,36 @@ export class ManageTeamComponent implements OnInit {
         Button2Content: ''
     };
 
-   
 
-    constructor(teamService: TeamService , userService: UserService) {
+
+    constructor(teamService: TeamService, userService: UserService) {
         this._teamService = teamService;
         this._userService = userService;
     }
 
     ngOnInit() {
+
         //getTeamsByLoggedInUserId webservice call
-        this.userPermissionList = [];
         const payload = { email: 'rohit@coreflexsolutions.com' };
-        this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
-            this.userPermissionList = data.json();
-            this.selectedTeamName = this.userPermissionList[1].team.teamName;
+        this._teamService.setTeamsByLoggedInUserId(payload);
+        this._teamService.getTeamListByLoggedInUserId().subscribe(data => {
+            this.userPermissionList = data;
         });
 
-        //getMembersByTeamId webservice call
-        this.userPermissionMemList = [];
-        const teamPayload = { team: 1 };
-        this._teamService.getMembersByTeam(teamPayload).subscribe(data => {
-            this.userPermissionMemList = data.json();
+        this._teamService.setMembersByLoggedInUserId(payload);
+        this._teamService.getMemberListByLoggedInUserId().subscribe(data => {
+            this.userPermissionMemberList = data;
         });
+       
     }
-    displayTeamDetails(teamCode, teamName ,team) {
-        this.selectedTeamName = teamName;
-        this.userPermissionMemList = [];
-        const teamPayload = { teamCode: teamCode };
-        this._teamService.getMembersByTeam(teamPayload).subscribe(data => {
-            this.userPermissionMemList = data.json();
-        });
-        for(this.i=0; this.i<this.userPermissionList.length; this.i++) {
-            alert(team.id);
-            if(this.userPermissionList[1] == team) {
-                this.filterMemberList.push(this.userPermissionList[this.i]);
+    displayTeamDetails(team) {
+        this.selectedTeamName = team.teamName;
+        this.filterMemberList = [];
+        for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
+            if (this.userPermissionMemberList[this.i].team.id == team.id) {
+                this.filterMemberList.push(this.userPermissionMemberList[this.i]);
             }
         }
-        alert(this.filterMemberList.length);
     }
     //to open modal popup
     open() {
@@ -100,92 +95,91 @@ export class ManageTeamComponent implements OnInit {
         this.addNewMemberModal.open();
     }
     addTeam(newTeamName) {
-        if(newTeamName === "" || newTeamName === null || typeof newTeamName === "undefined"){
+        if (newTeamName === "" || newTeamName === null || typeof newTeamName === "undefined") {
             this.showAddTeam = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.showAddTeam = false;
             }.bind(this), 5000);
-        } else{
+        } else {
             this.showAddTeam = false;
-            const payload = { "teamName": newTeamName  };
-              //  const payload = {firstName,lastName};
-                this._teamService.saveTeamDetails(payload).subscribe(
-                  (res) => {
-                   
-                     // saveAs(res, payload.firstName,payload.lastName); 
-                  });
-                  const team = { team: { teamName: newTeamName } };
-                  this.userPermissionList.push(team);
-                  this.newTeamName = '';
-                  this.showAddTeamSuccess = true;
-                  setTimeout(function() {
-                      this.showAddTeamSuccess = false;
-                  }.bind(this), 5000);
-              }
-           
+            const payload = { "teamName": newTeamName };
+            const team = { team: { teamName: newTeamName } };
+            //  const payload = {firstName,lastName};
+            this._teamService.saveTeamDetails(payload).subscribe(
+                (res) => {
+                    this.userPermissionList.push(team);
+                    this.newTeamName = '';
+                    this.showAddTeamSuccess = true;
+                    setTimeout(function () {
+                        this.showAddTeamSuccess = false;
+                    }.bind(this), 5000);
+                });
         }
-       
+    }
+
     //focus on team name text field
-      typeTeamNameFocus() {
-       this.showAddTeam = false;
-        }
-     // add new member  
-    addMember(firstName ,lastName,userName,password,email) {
-        if(firstName === "" || firstName === null || typeof firstName === "undefined"){
-            this.showAddMemberFirstName = true;
-            setTimeout(function() {
-                this.showAddMemberFirstName = false;
-            }.bind(this), 5000);
-        } else  if(userName === "" || userName === null || typeof userName === "undefined"){
-            this.showAddMemberUserName = true;
-            setTimeout(function() {
-                this.showAddMemberUserName = false;
-            }.bind(this), 5000);
-        } else  if(password === "" || password === null || typeof password === "undefined"){
-            this.showAddMemberPassword = true;
-            setTimeout(function() {
-                this.showAddMemberPassword = false;
-            }.bind(this), 5000);
-        }else  if(email === "" || email === null || typeof email === "undefined"){
-            this.showAddMemberEmail = true;
-            setTimeout(function() {
-                this.showAddMemberEmail = false;
-            }.bind(this), 5000);
-        }
-        else{
+    typeTeamNameFocus() {
+        this.showAddTeam = false;
+    }
+    // add new member  
+    addMember() {
+        // if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
+        //     this.showAddMemberFirstName = true;
+        //     setTimeout(function () {
+        //         this.showAddMemberFirstName = false;
+        //     }.bind(this), 5000);
+        // } else if (this.userName === "" || this.userName === null || typeof this.userName === "undefined") {
+        //     this.showAddMemberUserName = true;
+        //     setTimeout(function () {
+        //         this.showAddMemberUserName = false;
+        //     }.bind(this), 5000);
+        // } else if (this.password === "" || this.password === null || typeof this.password === "undefined") {
+        //     this.showAddMemberPassword = true;
+        //     setTimeout(function () {
+        //         this.showAddMemberPassword = false;
+        //     }.bind(this), 5000);
+        // } else if (this.email === "" || this.email === null || typeof this.email === "undefined") {
+        //     this.showAddMemberEmail = true;
+        //     setTimeout(function () {
+        //         this.showAddMemberEmail = false;
+        //     }.bind(this), 5000);
+        // }
+      //  else {
+            alert('1');
             this.showAddMemberFirstName = false;
             this.showAddMemberUserName = false;
             this.showAddMemberPassword = false;
             this.showAddMemberEmail = false;
             this.showAddMemberSuccess = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 this.edited = false;
                 console.log(this.showAddMemberSuccess);
             }.bind(this), 5000);
-          
-        
-           const payload =  {
-            "email": this.email,
-            "password": this.password,
-            "name": this.userName,
-            "lastName": this.lastName,
-            "firstName": this.firstName,
-            "status.onlineStatus": false,
-            
-        }
-           this._userService.saveUserDetails(payload).subscribe(
-            (res) => {
-             alert('Member has been saved successfully');
-               // saveAs(res, payload.firstName,payload.lastName); 
-            });
-            this.memObj = {user: {firstName: firstName , lastName : lastName }}
-            this.userPermissionMemList.push(this.memObj);
-        }
-            this.firstName = ' ';
-            this.lastName = '';
-            this.userName = '';
-            this.email = '';
-            this.password = '';
+
+
+            const payload = {
+                "email": this.email,
+                "password": this.password,
+                "name": this.userName,
+                "lastName": this.lastName,
+                "firstName": this.firstName,
+                "status.onlineStatus": false,
+
+            }
+            this._userService.saveUserDetails(payload).subscribe(
+                (res) => {
+                    alert('Member has been saved successfully');
+                    // saveAs(res, payload.firstName,payload.lastName); 
+                    // this.firstName = ' ';
+                    // this.lastName = '';
+                    // this.userName = '';
+                    // this.email = '';
+                    // this.password = '';
+                });
+            this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
+            this.userPermissionMemberList.push(this.memObj);
+      //  }
+    
     }
 
     //focus on member name text field
@@ -194,7 +188,7 @@ export class ManageTeamComponent implements OnInit {
         this.showAddMemberUserName = false;
         this.showAddMemberPassword = false;
         this.showAddMemberEmail = false;
-  }
+    }
     //close team modal popup
     closeTeamPopup(popupType) {
         switch (popupType) {
@@ -204,8 +198,8 @@ export class ManageTeamComponent implements OnInit {
         }
     }
 
-     //close member modal popup
-     closeMemberPopup(popupType) {
+    //close member modal popup
+    closeMemberPopup(popupType) {
         switch (popupType) {
             case 'addNewMember':
                 this.addNewMemberModal.close();

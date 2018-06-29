@@ -19,12 +19,18 @@ payloadSearch: any;
   ngOnInit() {
     this.userPermissionList = [];
     const payload = {email: 'rohit@coreflexsolutions.com'};
-    this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
-         this.userPermissionList = data.json();
+    this._teamService.setTeamsByLoggedInUserId(payload);
+    this._teamService.getTeamListByLoggedInUserId().subscribe(data => {
+         this.userPermissionList = data;
      });
-     this._teamService.getMembersByLoggedInUserId(payload).subscribe(data => {
-        this.userPermissionMemberList = data.json();
-    });
+
+     this._teamService.setMembersByLoggedInUserId(payload);
+     this._teamService.getMemberListByLoggedInUserId().subscribe(data => {
+          this.userPermissionMemberList = data;
+      });
+    //  this._teamService.getMembersByLoggedInUserId(payload).subscribe(data => {
+    //     this.userPermissionMemberList = data.json();
+    // });
   }
   filterMemberByTeam(event , selectedTeamId) {
     this.payloadSearch = {teamId: selectedTeamId};

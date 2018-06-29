@@ -43,11 +43,11 @@
         </div>
         <div style="margin-top: 20px;" *ngIf="showAddMemberDuplicateUserName === true"
         class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberDuplicateUserName">
-        <strong>Error: </strong>Username is already exist.
+        <strong>Error: </strong>Username or Email is already exist.
         </div>
-        <div style="margin-top: 20px;" *ngIf="showAddMemberDuplicateEmail === true"
-        class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberDuplicateEmail">
-        <strong>Error: </strong>Email is already exist.
+        <div style="margin-top: 20px;" *ngIf="showException === true"
+        class="alert alert-danger alert-dismissable" [(ngModel)]="showException">
+        <strong>Error: </strong>Primary Exception Occur
         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
