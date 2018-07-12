@@ -30,11 +30,11 @@ export class ManageTeamComponent implements OnInit {
     teamList = [];
     selectedTeamName: any;
     user: any = {};
-    firstName: any;
-    lastName: any;
-    userName: any;
-    email: any;
-    password: any;
+    // firstName: any;
+    // lastName: any;
+    // userName: any;
+    // email: any;
+    // password: any;
 
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
@@ -123,6 +123,7 @@ export class ManageTeamComponent implements OnInit {
     }
     // add new member  
     addMember() {
+    
         // if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
         //     this.showAddMemberFirstName = true;
         //     setTimeout(function () {
@@ -145,7 +146,7 @@ export class ManageTeamComponent implements OnInit {
         //     }.bind(this), 5000);
         // }
       //  else {
-            alert('1');
+        //  alert(newTeamName);
             this.showAddMemberFirstName = false;
             this.showAddMemberUserName = false;
             this.showAddMemberPassword = false;
@@ -157,17 +158,17 @@ export class ManageTeamComponent implements OnInit {
             }.bind(this), 5000);
 
 
-            const payload = {
-                "email": this.email,
-                "password": this.password,
-                "name": this.userName,
-                "lastName": this.lastName,
-                "firstName": this.firstName,
-                "status.onlineStatus": false,
+            // const payload = {
+            //     "email": email,
+            //     "password": password,
+            //     "name": userName,
+            //     "lastName": lastName,
+            //     "firstName": firstName,
+            //     "status.onlineStatus": false,
 
-            }
-            this._userService.saveUserDetails(payload).subscribe(
-                (res) => {
+            // }
+            // this._userService.saveUserDetails(payload).subscribe(
+            //     (res) => {
                     alert('Member has been saved successfully');
                     // saveAs(res, payload.firstName,payload.lastName); 
                     // this.firstName = ' ';
@@ -175,9 +176,10 @@ export class ManageTeamComponent implements OnInit {
                     // this.userName = '';
                     // this.email = '';
                     // this.password = '';
-                });
-            this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
-            this.userPermissionMemberList.push(this.memObj);
+                  //  this.memObj = { userId: { firstName: firstName, lastName: lastName } }
+                    this.userPermissionMemberList.push(this.memObj);
+          //      });
+          
       //  }
     
     }

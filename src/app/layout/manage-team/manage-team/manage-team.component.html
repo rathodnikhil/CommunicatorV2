@@ -72,7 +72,7 @@
                 </div>
                 <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body row-label">
-                        <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
+                        <!-- <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
                             <strong>Error: </strong>Enter Member First Name.
                         </div>
 
@@ -88,48 +88,55 @@
 
                         <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
                             <strong>Success: </strong>Member has been added Successfully.
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>First Name</label>
+                        </div> -->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>First Name</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Name Here.." [(ngModel)]="firstName" onfocus="typeTeamNameFocus()" />
+                                </div>
                             </div>
-                            <div>
-                                <input placeholder="FirstName" [(ngModel)]="firstName" onfocus="typeMemberNameFocus()" />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Last Name</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Name Here.." [(ngModel)]="lastName" onfocus="typeTeamNameFocus()" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Last Name</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>UserName</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Name Here.." [(ngModel)]="userName" onfocus="typeTeamNameFocus()" />
+                                </div>
                             </div>
-                            <div>
-                                <input placeholder="LastName" [(ngModel)]="lastName" onfocus="typeMemberLastNameFocus()" />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Password</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Name Here.." [(ngModel)]="password" onfocus="typeTeamNameFocus()" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Email</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Team Name</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" onfocus="typeTeamNameFocus()" />
+                                </div>
                             </div>
-                            <div>
-                                <input placeholder="Email" [(ngModel)]="email" onfocus="typeMemberLastNameFocus()" />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Team Name</label>
+                                </div>
+                                <div>
+                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" onfocus="typeTeamNameFocus()" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>UserName</label>
-                            </div>
-                            <div>
-                                <input placeholder="UserName" [(ngModel)]="userName" onfocus="typeMemberLastNameFocus()" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Password</label>
-                            </div>
-                            <div>
-                                <input placeholder="Password" type="password" [(ngModel)]="password" onfocus="typeMemberLastNameFocus()" />
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-sec" (click)="addMember()">Add Team</button>

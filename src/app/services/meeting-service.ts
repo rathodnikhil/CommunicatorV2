@@ -13,19 +13,14 @@ import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 @Injectable()
 export class MeetingService {
 _loginService: LoginService;
-
+futureMeetingList$: Subject<any[]> = new BehaviorSubject<any>({});  
+recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
     constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
      }
-    getFutureMeetingByUser(payload) {
-  
-        const url = urlConstants.baseUrl + 'getFutureMeetingByUser';
-        return this.http.post(url, payload);
-        // return this.http.get(urlConstants.baseUrl + 'allMemberList');
-    }
- 
-   
-    scheduleMeeting(payload): Observable<any> {
+
+     //schedule meeting webserce details
+     scheduleMeeting(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
         let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
           this.apiRequest.post(url,payload).subscribe(data => {
@@ -38,10 +33,32 @@ _loginService: LoginService;
     
         return resp;
       }
-    getRecentMeetingByUser(payload) {
+  //future meeting list webservice details
+    setFutureMeetimgList(payload) {
+        const url = urlConstants.baseUrl + 'getFutureMeetingByUser?email=' + payload.email;
+        this.apiRequest.post(url, payload).subscribe(data => {
+            this.futureMeetingList$.next(data);
+        },
+            err => {
+                alert(err);
+            });
+    }
+    getFutureMeetingListByUser() {
+        return this.futureMeetingList$;
+    }
    
-        const url = urlConstants.baseUrl + 'getRecentMeetingByUser';
-        return this.http.post(url, payload);
+    //recent meeting webservice
+    setRecentMeetingByUser(payload) {
+        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?email=' + payload.email;
+        this.apiRequest.post(url, payload).subscribe(data => {
+            this.recentMeeting$.next(data);
+        },
+            err => {
+                alert(err);
+            });
+    }
+    getRecentMeetingByUser() {
+        return this.recentMeeting$;
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId';

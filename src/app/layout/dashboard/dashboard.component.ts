@@ -192,5 +192,7 @@ export class DashboardComponent implements OnInit {
                 break;
         }
     }
-    
+    addMember(){
+        alert('addGroupMember');
+    }
 }
