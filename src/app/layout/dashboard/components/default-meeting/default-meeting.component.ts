@@ -9,19 +9,19 @@ import { Router } from '@angular/router';
 })
 export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
-
+    _meetingService: MeetingService;
+    _userService: UserService;
     @Output() CurrentRoute = new EventEmitter();
     currentDate = new Date();
     loggedInUser: any;
-    _userService: UserService;
     futureMeetingList = [];
     filteredFutureMeetingList = [];
     recentMeeting: any;
-    _meetingService: MeetingService;
     selectDateFlag: boolean;
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
+  
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     constructor(userService: UserService, meetingService: MeetingService, private router: Router) {
@@ -52,35 +52,22 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             },
             'profileImgPath': null
         };
-         const payload = { id: 1 };
-        // this._userService.getLoggedInUSerDetails().subscribe(data => {
-        //     if (Object.keys(data).length === 0) {
-        //         this.router.navigate(['/login']);
-        //     } else {
-        //         this.loggedInUser = data;
-        //     }
-        // });
+        //getAllFutureMeetingList webservice call
+        this.getAllFutureMeetingList();
 
-       // this.getAllFutureMeetingList();
-
-        // recent meeting webservice call
-        this.recentMeeting = {};
-        // this._meetingService.getRecentMeetingByUser(payload).subscribe(data => {
-        //     const resp = data.json();
-        //     if (resp.errorFl || resp.warningFl) {
-        //         this.recentMeeting = {};
-        //     } else {
-        //         this.recentMeeting = resp;
-        //     }
-        //     // this.recentMeeting = data.json();
-        // });
-
+        // recent meeting webservice call    
+         const payload = { email: 'rohit@coreflexsolutions.com'};
+         this.recentMeeting = {};
+         this._meetingService.setRecentMeetingByUser(payload);
+         this._meetingService.getRecentMeetingByUser().subscribe(data => {     
+             this.recentMeeting = data;     
+         });
         // current date and time
         // this.currentDate = Date.now();
     }
 
     ngAfterViewInit(): void {
-        // debugger;
+
         this.chatBody.nativeElement.style.height = (this.chatPanel.nativeElement.offsetHeight
             - (this.chatBody.nativeElement.offsetTop + 30)) + 'px';
     }
@@ -89,7 +76,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
 
     serachMeetingByDate(fromDate, toDate) {
-        debugger;
         // this.selectedDate = new Date(
         //     fromDate.getFullYear(),
         //     fromDate.getMonth() + 2,
@@ -98,19 +84,21 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         //fromDate = fromDate.
         alert(fromDate);
     }
+      // future meeting list web service call
     getAllFutureMeetingList() {
-        // future meeting list web service call
-        const payload = { id: 1 };
+        const payload = { email: 'rohit@coreflexsolutions.com'};
         this.futureMeetingList = [];
-        this._meetingService.getFutureMeetingByUser(payload).subscribe(data => {
-            //  debugger;
-            const resp = data.json();
-            if (resp.errorFl || resp.warningFl) {
-                this.futureMeetingList = [];
-            } else {
-                this.futureMeetingList = resp;
-                this.filteredFutureMeetingList = this.futureMeetingList;
-            }
+        this._meetingService.setFutureMeetimgList(payload);
+        this._meetingService.getFutureMeetingListByUser().subscribe(data => {     
+            
+            // if (resp.errorFl || resp.warningFl) {
+            //     this.futureMeetingList = [];
+            // } else {
+            //     this.futureMeetingList = data;
+            //     this.filteredFutureMeetingList = this.futureMeetingList;
+            // }       
+            this.futureMeetingList = data;     
+            this.filteredFutureMeetingList = this.futureMeetingList;
         });
     }
     selectMeetingFilterDate() {
