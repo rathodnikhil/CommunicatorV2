@@ -3,6 +3,7 @@ import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { DOCUMENT } from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -30,7 +31,7 @@ import { DOCUMENT } from '@angular/common';
         ]),
         trigger('arrow', [
             state('up', style({
-            transform: 'rotate(180deg)'
+                transform: 'rotate(180deg)'
             })),
             state('down', style({
                 transform: 'rotate(0deg)'
@@ -54,7 +55,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     momAddSuccess: boolean;
     momAddDesciption: boolean;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-    userService: UserService, loginService: LoginService, meetingService: MeetingService) {
+        userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute) {
         this._userService = userService;
         this._loginService = loginService;
         this._meetingService = meetingService;
@@ -63,6 +64,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+            // debugger;
+            let meetingCode = params['meetingCode'];
+            console.log(meetingCode);
+        });
     }
     ngAfterViewInit(): void {
         // const s = document.createElement('script');
@@ -85,7 +91,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
         // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
         //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
-        this.document.getElementById('setup-meeting').click();
+        // this.document.getElementById('setup-meeting').click();
         const params = {
             width: '350px',
             height: '420px',
@@ -109,25 +115,25 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     //save mom details
     saveMom() {
-        if(this.momDescription === "" || this.momDescription === null || typeof this.momDescription === "undefined") {
+        if (this.momDescription === "" || this.momDescription === null || typeof this.momDescription === "undefined") {
             this.momAddDesciption = true;
             setTimeout(function () {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
-        }else {
-        const payload = { "momDescription": this.momDescription }
-        this._meetingService.saveMomDetails(payload).subscribe(resp => {
-            this.errorFl = resp.json().errorFl;
-            if(this.errorFl == true){
-                this.nullCheckFlag = true;
-                setTimeout(function () {
-                    this.nullCheckFlag = false;
-                }.bind(this), 5000)
-            }else{
+        } else {
+            const payload = { "momDescription": this.momDescription }
+            this._meetingService.saveMomDetails(payload).subscribe(resp => {
+                this.errorFl = resp.json().errorFl;
+                if (this.errorFl == true) {
+                    this.nullCheckFlag = true;
+                    setTimeout(function () {
+                        this.nullCheckFlag = false;
+                    }.bind(this), 5000)
+                } else {
 
-            }
-        });
-    }
+                }
+            });
         }
     }
+}
 

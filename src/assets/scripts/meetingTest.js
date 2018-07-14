@@ -1,189 +1,260 @@
-// if(!location.hash.replace('#', '').length) {
-//     location.href = location.href.split('#')[0] + '#' + (Math.random() * 100).toString().replace('.', '');
-//     location.reload();
-// }
-// debugger;
+window.enableAdapter = true; // enable adapter.js
 
-// var meeting = new Meeting();
-
-// var remoteMediaStreams = document.getElementById('remote-media-streams');
-// var localMediaStream = document.getElementById('local-media-stream');
-
-//         // via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket-over-nodejs
-//         meeting.openSignalingChannel = function(onmessage) {
-//             var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-//             var websocket = new WebSocket('wss://www.webrtcweb.com:9449');
-//             websocket.onopen = function () {
-//                 websocket.push(JSON.stringify({
-//                     open: true,
-//                     channel: channel
-//                 }));
-//             };
-//             websocket.push = websocket.send;
-//             websocket.send = function (data) {
-//                 if(websocket.readyState != 1) {
-//                     return setTimeout(function() {
-//                         websocket.send(data);
-//                     }, 300);
-//                 }
-
-//                 websocket.push(JSON.stringify({
-//                     data: data,
-//                     channel: channel
-//                 }));
-//             };
-//             websocket.onmessage = function(e) {
-//                 onmessage(JSON.parse(e.data));
-//             };
-//             return websocket;
-//         };
-
-// // on getting media stream
-// meeting.onaddstream = function(e) {
-// if (e.type == 'local') localMediaStream.appendChild(e.video);
-// if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
-// };
-
-// // using firebase for signaling
-// meeting.firebase = 'webrtc-experiment';
-
-// // if someone leaves; just remove his video
-// meeting.onuserleft = function(userid) {
-// var video = document.getElementById(userid);
-// if (video) video.parentNode.removeChild(video);
-// };
-
-// // check pre-created meeting rooms
-// meeting.check('meeting-name');
-
-// document.getElementById('setup-new-meeting').onclick = function() {
-// // setup new meeting room
-// debugger;
-// meeting.setup('meeting-name');
-// this.disabled = true;
-
-// this.parentNode.innerHTML = '<h2><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
-// };
-
-
-
-/** Complex**/
-document.createElement('article');
-document.createElement('footer');
-var meeting = new Meeting();
-// debugger;
-var meetingsList = document.getElementById('meetings-list');
-var meetingChat = document.getElementById('meetingChat');
-var inputText = document.getElementById('textInput');
-var meetingRooms = {};
-meeting.onmeeting = function (room) {
-    // debugger;
-    if (meetingRooms[room.roomid]) return;
-    meetingRooms[room.roomid] = room;
-
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + room.roomid + '</td>' +
-        '<td><button class="join">Join</button></td>';
-
-    meetingsList.insertBefore(tr, meetingsList.firstChild);
-
-    // when someone clicks table-row; joining the relevant meeting room
-    tr.onclick = function () {
-        room = meetingRooms[room.roomid];
-
-        // manually joining a meeting room
-        if (room) meeting.meet(room);
-
-        meetingsList.style.display = 'none';
-    };
+// ......................................................
+// .......................UI Code........................
+// ......................................................
+document.getElementById('open-room').onclick = function() {
+    disableInputButtons();
+    connection.open(document.getElementById('room-id').value, function() {
+        showRoomURL(connection.sessionid);
+    });
 };
 
-var remoteMediaStreams = document.getElementById('remote-streams-container');
-var localMediaStream = document.getElementById('local-streams-container');
+document.getElementById('join-room').onclick = function() {
+    disableInputButtons();
+    connection.join(document.getElementById('room-id').value);
+};
 
-// on getting media stream
-meeting.onaddstream = function (e) {
-    // debugger;
-    if (e.type == 'local') localMediaStream.appendChild(e.video);
-    if (e.type == 'remote') {
-        var elem = document.createElement("div");
-        e.video.height = '100';
-        e.video.width = '100';
-        elem.appendChild(e.video);
-        remoteMediaStreams.appendChild(elem);
-        // remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
+document.getElementById('open-or-join-room').onclick = function() {
+    disableInputButtons();
+    connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExists, roomid) {
+        if (!isRoomExists) {
+            showRoomURL(roomid);
+        }
+    });
+};
+
+document.getElementById('btn-leave-room').onclick = function() {
+    this.disabled = true;
+
+    if (connection.isInitiator) {
+        // use this method if you did NOT set "autoCloseEntireSession===true"
+        // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
+        connection.closeEntireSession(function() {
+            document.querySelector('h1').innerHTML = 'Entire session has been closed.';
+        });
+    } else {
+        connection.leave();
     }
 };
 
-// via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/websocket-over-nodejs
-meeting.openSignalingChannel = function (onmessage) {
-    var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-    var websocket = new WebSocket('wss://www.webrtcweb.com:9449');
-    websocket.onopen = function () {
-        websocket.push(JSON.stringify({
-            open: true,
-            channel: channel
-        }));
-    };
-    websocket.push = websocket.send;
+// ......................................................
+// ................FileSharing/TextChat Code.............
+// ......................................................
 
-    websocket.send = function (data) {
-        if (websocket.readyState != 1) {
-            return setTimeout(function () {
-                websocket.send(data);
-            }, 300);
-        }
-
-        websocket.push(JSON.stringify({
-            data: data,
-            channel: channel
-        }));
-    };
-    websocket.onmessage = function (e) {
-        var data = JSON.parse(e.data);
-        if (data.indexOf('Text') > 0) {
-            debugger;
-            var tr = document.createElement('tr');
-            tr.innerHTML = '<td> other user' + JSON.parse(data).Text + '</td>' +
-                '<td></td>';
-
-            meetingChat.insertBefore(tr, meetingChat.firstChild);
-        }
-        onmessage(data);
-
-
-    };
-    meeting.customSend = websocket.send;
-    return websocket;
+document.getElementById('share-file').onclick = function() {
+    var fileSelector = new FileSelector();
+    fileSelector.selectSingleFile(function(file) {
+        connection.send(file);
+    });
 };
 
-// using firebase for signaling
-// meeting.firebase = 'muazkh';
+document.getElementById('input-text-chat').onkeyup = function(e) {
+    if (e.keyCode != 13) return;
 
-// if someone leaves; just remove his video
-meeting.onuserleft = function (userid) {
-    var video = document.getElementById(userid);
-    if (video) video.parentNode.removeChild(video);
+    // removing trailing/leading whitespace
+    this.value = this.value.replace(/^\s+|\s+$/g, '');
+    if (!this.value.length) return;
+
+    connection.send(this.value);
+    appendDIV(this.value);
+    this.value = '';
 };
 
-// check pre-created meeting rooms
-meeting.check();
+var chatContainer = document.querySelector('.chat-output');
 
-document.getElementById('setup-meeting').onclick = function () {
-    // setup new meeting room
-    var meetingRoomName = document.getElementById('meeting-name').value || 'Simple Meeting';
-    meeting.setup(meetingRoomName);
+function appendDIV(event) {
+    var div = document.createElement('div');
+    div.innerHTML = event.data || event;
+    chatContainer.insertBefore(div, chatContainer.firstChild);
+    div.tabIndex = 0;
+    div.focus();
 
-    this.disabled = true;
-    this.parentNode.innerHTML = '<h2><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
+    document.getElementById('input-text-chat').focus();
+}
+
+// ......................................................
+// ..................RTCMultiConnection Code.............
+// ......................................................
+
+var connection = new RTCMultiConnection();
+
+// by default, socket.io server is assumed to be deployed on your own URL
+// connection.socketURL = '/';
+
+// comment-out below line if you do not have your own socket.io server
+ connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+connection.socketMessageEvent = 'audio-video-file-chat-demo';
+
+connection.enableFileSharing = true; // by default, it is "false".
+
+connection.session = {
+    audio: true,
+    video: true,
+    data: true
 };
 
-document.getElementById('sendText').onclick = function () {
-
-    debugger;
-    var customMessage = {
-        "userid": "",
-        "Text": textInput.value
-    };
-    meeting.customSend(JSON.stringify(customMessage));
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
 };
+
+connection.videosContainer = document.getElementById('videos-container');
+connection.onstream = function(event) {
+    event.mediaElement.removeAttribute('src');
+    event.mediaElement.removeAttribute('srcObject');
+
+    var video = document.createElement('video');
+    video.controls = true;
+    if(event.type === 'local') {
+        video.muted = true;
+    }
+    video.srcObject = event.stream;
+debugger;
+    var width = parseInt(connection.videosContainer.clientWidth / 2) - 20;
+    var mediaElement = getHTMLMediaElement(video, {
+        title: event.userid,
+        buttons: ['full-screen','volume-slider','mute-video','mute-audio'],
+        width: width,
+        showOnMouseEnter: false
+    });
+
+    connection.videosContainer.appendChild(mediaElement);
+
+    setTimeout(function() {
+        mediaElement.media.play();
+    }, 5000);
+
+    mediaElement.id = event.streamid;
+};
+
+connection.onstreamended = function(event) {
+    var mediaElement = document.getElementById(event.streamid);
+    if (mediaElement) {
+        mediaElement.parentNode.removeChild(mediaElement);
+    }
+};
+
+connection.onmessage = appendDIV;
+connection.filesContainer = document.getElementById('file-container');
+
+connection.onopen = function() {
+    document.getElementById('share-file').disabled = false;
+    document.getElementById('input-text-chat').disabled = false;
+    document.getElementById('btn-leave-room').disabled = false;
+
+    document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+};
+
+connection.onclose = function() {
+    if (connection.getAllParticipants().length) {
+        document.querySelector('h1').innerHTML = 'You are still connected with: ' + connection.getAllParticipants().join(', ');
+    } else {
+        document.querySelector('h1').innerHTML = 'Seems session has been closed or all participants left.';
+    }
+};
+
+connection.onEntireSessionClosed = function(event) {
+    document.getElementById('share-file').disabled = true;
+    document.getElementById('input-text-chat').disabled = true;
+    document.getElementById('btn-leave-room').disabled = true;
+
+    document.getElementById('open-or-join-room').disabled = false;
+    document.getElementById('open-room').disabled = false;
+    document.getElementById('join-room').disabled = false;
+    document.getElementById('room-id').disabled = false;
+
+    connection.attachStreams.forEach(function(stream) {
+        stream.stop();
+    });
+
+    // don't display alert for moderator
+    if (connection.userid === event.userid) return;
+    document.querySelector('h1').innerHTML = 'Entire session has been closed by the moderator: ' + event.userid;
+};
+
+connection.onUserIdAlreadyTaken = function(useridAlreadyTaken, yourNewUserId) {
+    // seems room is already opened
+    connection.join(useridAlreadyTaken);
+};
+
+function disableInputButtons() {
+    document.getElementById('open-or-join-room').disabled = true;
+    document.getElementById('open-room').disabled = true;
+    document.getElementById('join-room').disabled = true;
+    document.getElementById('room-id').disabled = true;
+}
+
+// ......................................................
+// ......................Handling Room-ID................
+// ......................................................
+
+function showRoomURL(roomid) {
+    var roomHashURL = '#' + roomid;
+    var roomQueryStringURL = '?roomid=' + roomid;
+
+    var html = '<h2>Unique URL for your room:</h2><br>';
+
+    html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
+    html += '<br>';
+    html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+
+    var roomURLsDiv = document.getElementById('room-urls');
+    roomURLsDiv.innerHTML = html;
+
+    roomURLsDiv.style.display = 'block';
+}
+
+(function() {
+    var params = {},
+        r = /([^&=]+)=?([^&]*)/g;
+
+    function d(s) {
+        return decodeURIComponent(s.replace(/\+/g, ' '));
+    }
+    var match, search = window.location.search;
+    while (match = r.exec(search.substring(1)))
+        params[d(match[1])] = d(match[2]);
+    window.params = params;
+})();
+
+var roomid = '';
+if (localStorage.getItem(connection.socketMessageEvent)) {
+    roomid = localStorage.getItem(connection.socketMessageEvent);
+} else {
+    roomid = connection.token();
+}
+document.getElementById('room-id').value = roomid;
+document.getElementById('room-id').onkeyup = function() {
+    localStorage.setItem(connection.socketMessageEvent, this.value);
+};
+
+var hashString = false;// location.hash.replace('#', '');
+if (hashString.length && hashString.indexOf('comment-') == 0) {
+    hashString = '';
+}
+
+var roomid = params.roomid;
+if (!roomid && hashString.length) {
+    roomid = hashString;
+}
+
+if (roomid && roomid.length) {
+    document.getElementById('room-id').value = roomid;
+    localStorage.setItem(connection.socketMessageEvent, roomid);
+
+    // auto-join-room
+    (function reCheckRoomPresence() {
+        connection.checkPresence(roomid, function(isRoomExists) {
+            if (isRoomExists) {
+                connection.join(roomid);
+                return;
+            }
+
+            setTimeout(reCheckRoomPresence, 5000);
+        });
+    })();
+
+    disableInputButtons();
+}
