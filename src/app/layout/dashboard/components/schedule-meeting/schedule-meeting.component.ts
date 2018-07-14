@@ -155,7 +155,7 @@ export class ScheduleMeetingComponent implements OnInit {
             }.bind(this), 5000)
         } else {
             this.meridian = !this.meridian;
-            this.accessCode = Math.floor(Math.random() * 9000000000) + 1000000000;
+            this.accessCode = new Date().getTime()+'_'+ Math.floor(Math.random() * 900) + 100;
             if (this.meeting.callType === 1) {
                 this.meeting.callType = 'Audio';
             } else {
