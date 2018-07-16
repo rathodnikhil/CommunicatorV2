@@ -54,6 +54,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     nullCheckFlag: boolean;
     momAddSuccess: boolean;
     momAddDesciption: boolean;
+    meetingCode = '';
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute) {
         this._userService = userService;
@@ -66,8 +67,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.momTo = 'set MOM Duty';
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             // debugger;
-            let meetingCode = params['meetingCode'];
-            console.log(meetingCode);
+            this.meetingCode = params['meetingCode'];
+
+            console.log(this.meetingCode);
         });
     }
     ngAfterViewInit(): void {
@@ -92,6 +94,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
         //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
         // this.document.getElementById('setup-meeting').click();
+        debugger;
+        this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
         const params = {
             width: '350px',
             height: '420px',
@@ -110,25 +114,25 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.momTo = member.name + ' ' + member.lastName;
     }
     toggleMOM() {
-        this.isMOMvisible != this.isMOMvisible;
+        this.isMOMvisible = !this.isMOMvisible;
     }
 
-    //save mom details
+    // save mom details
     saveMom() {
-        if (this.momDescription === "" || this.momDescription === null || typeof this.momDescription === "undefined") {
+        if (this.momDescription === '' || this.momDescription === null || typeof this.momDescription === "undefined") {
             this.momAddDesciption = true;
             setTimeout(function () {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
         } else {
-            const payload = { "momDescription": this.momDescription }
+            const payload = { 'momDescription': this.momDescription }
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;
-                if (this.errorFl == true) {
+                if (this.errorFl === true) {
                     this.nullCheckFlag = true;
                     setTimeout(function () {
                         this.nullCheckFlag = false;
-                    }.bind(this), 5000)
+                    }.bind(this), 5000);
                 } else {
 
                 }

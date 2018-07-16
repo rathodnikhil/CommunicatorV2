@@ -1,19 +1,18 @@
 @import "styles/customStyle.css";
 //video calling
 #container {
-    width:100%;
-    text-align:center;
+    width: 100%;
+    text-align: center;
 }
 
 #left {
-    float:left;
+    float: left;
 }
 
 #center {
     display: inline-block;
-    margin:0 auto;
+    margin: 0 auto;
 }
-
 
 div.scrollmenu {
     overflow: auto;
@@ -31,63 +30,69 @@ div.scrollmenu a:hover {
 }
 
 #remote-streams-container {
-   width: 100%;
-    float:left;
+    width: 100%;
+    float: left;
 }
+
 #remote-streams-container div {
     float: left;
     padding: 10px;
 }
 
-#remote-streams-container div video{
+#remote-streams-container div video {
     width: 95px;
-
 }
-.parent {
-    background-color:f1f1f1;
-    position:relative;
-    height: 70vh;
-    border:1px solid #dedede;
-    border-radius:8px;
-     background:rgb(238, 235, 235);
-    padding: 5px;
-    margin:2px;
-  }
 
-  .child {
-    width:47%;
-    height:35%;
-    background-color:#ddd;
-    position:absolute;
-    bottom:0px;
-    right:0px;
-    border-top:1px solid #ccc;
-    border-left:1px solid #ccc;
+.parent {
+    background-color: f1f1f1;
+    position: relative;
+    height: 70vh;
+    border: 1px solid #dedede;
     border-radius: 8px;
-    .mom-box{
-      height: 100%;
-      .card-header{
-        height: 20%;
-      }
-      .mom-body{
-        height: 80%;
-        .mom-textarea{
-          width: 100%;
-          height: 60%;
+    background: rgb(238, 235, 235);
+    padding: 5px;
+    margin: 2px;
+}
+
+.child {
+    width: 47%;
+    height: 35%;
+    background-color: #ddd;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-radius: 8px;
+    .mom-box {
+        height: 100%;
+        .card-header {
+            height: 20%;
         }
-      }
+        .mom-body {
+            height: 80%;
+            .mom-textarea {
+                width: 100%;
+                height: 60%;
+            }
+        }
     }
-  }
-  .card-header{
+}
+
+.card-header {
     background: #3277d3;
     color: #ffffff;
     font-weight: bold;
-  }
-  .dropdown{
+}
+
+.dropdown {
     margin-top: 15px;
-  }
-.meeting-activity{
-    border:1px solid #dedede;border-radius:8px;  padding: 5px;
+}
+
+.meeting-activity {
+    border: 1px solid #dedede;
+    border-radius: 8px;
+    padding: 5px;
 }
 
 .container {
@@ -111,7 +116,7 @@ div.scrollmenu a:hover {
 
 .time-right {
     float: right;
-    color:#2980b9;
+    color: #2980b9;
 }
 
 .time-left {
@@ -119,14 +124,48 @@ div.scrollmenu a:hover {
     color: #2980b9;
 }
 
-.mom-header{
-  position: absolute;
+.mom-header {
+    position: absolute;
     width: 47%;
     right: 0px;
     top: 65%;
     margin-top: -50px;
     height: 50px;
 }
-.attendee-row{
-  height:22vh; padding: 5px;margin:2px;
+
+.attendee-row {
+    height: 22vh;
+    padding: 5px;
+    margin: 2px;
+}
+
+.customIp {
+    background: transparent;
+    color: white;
+}
+
+.toast {
+    position: fixed;
+    display: block;
+    bottom: 2em;
+    height: 2em;
+    width: 10em;
+    left: calc(50% - 5em);
+    animation: toast-fade-in 1s 2 alternate;
+    background-color: black;
+    border-radius: 2em;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    line-height: 2em;
+    opacity: 0;
+}
+
+@keyframes toast-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
