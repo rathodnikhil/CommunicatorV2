@@ -5,6 +5,12 @@
                 <a [routerLink]="['/dashboard/chat']">
                     <i class="fa fa-home"></i>
                 </a>
+                <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
+                    <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off autocapitalize=off size=20>
+                    <button id="open-room" class="btn btn-sec">Start Meeting</button>
+                    <button id="join-room" class="btn btn-sec">Join Meeting</button>
+                    <button id="open-or-join-room">Auto Open Or Join Room</button>
+                </div>
                 <div class="row parent">
                     <div class="card-header mom-header" [@MomHeader]="isMOMvisible?'active':'inactive'"> Minutes of meeting
                         <i class="fa fa-chevron-up pull-right" [@arrow]="isMOMvisible?'up':'down'" aria-hidden="true" (click)="isMOMvisible = !isMOMvisible"></i>
@@ -57,7 +63,7 @@
                 <div class="row" style="background:rgb(238, 235, 235);  height:6vh;">
                     <div id="container">
                         <div id="left">
-                            <button id="btn-leave-room" disabled class="btn btn-danger btn-lg">End Meeting</button>
+                            <button id="btn-leave-room"  class="btn btn-danger btn-lg">End Meeting</button>
                         </div>
                         <!-- <div id="right"></div> -->
                         <div id="center">
@@ -166,15 +172,13 @@
 </div>
 <section class="make-center" style="padding:50px;">
     <h1></h1>
-    <input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
-    <button id="open-room">Open Room</button>
-    <button id="join-room">Join Room</button>
-    <button id="open-or-join-room">Auto Open Or Join Room</button>
 
-    <br><br>
+    <br>
+    <br>
     <!-- <input type="text" id="input-text-chat" placeholder="Enter Text Chat" disabled> -->
     <button id="share-file" disabled>Share File</button>
-    <br><br>
+    <br>
+    <br>
     <!-- <button id="btn-leave-room" disabled>Leave /or close the room</button> -->
 
     <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
@@ -184,4 +188,4 @@
         <div class="chat-output"></div>
     </div>
     <!-- <div id="videos-container"></div> -->
-  </section>
+</section>
