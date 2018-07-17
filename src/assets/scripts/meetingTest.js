@@ -209,7 +209,7 @@ function showRoomURL(roomid) {
     // var html = '<h4>Unique URL for your meeting:</h4><br>';
 
     // html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
-    html = 'Meeting URL: <a style="color:white;" href="' + window.location.href + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+    html = 'Meeting URL: <a style="color:white;" href="' + window.location.href + roomQueryStringURL + '" target="_blank">' + window.location.href + roomQueryStringURL + '</a>';
 
     var roomURLsDiv = document.getElementById('room-urls');
     roomURLsDiv.innerHTML = html;
