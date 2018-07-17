@@ -4,6 +4,10 @@ window.enableAdapter = true; // enable adapter.js
 // .......................UI Code........................
 // ......................................................
 document.getElementById('open-room').onclick = function () {
+    if (document.getElementById('room-id').value === 'Enter Meeting Id') {
+        alert('Enter valid meeting Id');
+        return false;
+    }
     disableInputButtons();
     connection.open(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
@@ -65,9 +69,17 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    div.innerHTML = event.data || event;
-    chatContainer.insertBefore(div, chatContainer.firstChild);
-    div.tabIndex = 0;
+    div.className='chat-background';
+    var message = event.data || event;
+    var user = event.userid || 'you';
+    // var html = '<div class="container">';
+    html = '<p>' + message + '</p>';
+    html += '<span class="time-right">';
+    html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
+    // html += '</div>';
+    div.innerHTML = html;
+    chatContainer.insertBefore(div, chatContainer.lastChild);
+    // div.tabIndex = 0;
     div.focus();
 
     document.getElementById('input-text-chat').focus();
@@ -85,7 +97,7 @@ var connection = new RTCMultiConnection();
 // comment-out below line if you do not have your own socket.io server
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
-connection.socketMessageEvent = 'audio-video-file-chat-demo';
+connection.socketMessageEvent = 'meeting';
 
 connection.enableFileSharing = true; // by default, it is "false".
 
@@ -140,7 +152,7 @@ connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
-    document.getElementById('share-file').disabled = false;
+    document.getElementById('share-file').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     document.getElementById('btn-leave-room').disabled = false;
 
@@ -156,7 +168,7 @@ connection.onclose = function () {
 };
 
 connection.onEntireSessionClosed = function (event) {
-    document.getElementById('share-file').disabled = true;
+    document.getElementById('share-file').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
 
@@ -191,14 +203,13 @@ function disableInputButtons() {
 // ......................................................
 
 function showRoomURL(roomid) {
-    var roomHashURL = '#' + roomid;
-    var roomQueryStringURL = '?roomid=' + roomid;
+    // var roomHashURL = '#' + roomid;
+    var roomQueryStringURL = '?meetingCode=' + roomid;
 
-    var html = '<h2>Unique URL for your room:</h2><br>';
+    // var html = '<h4>Unique URL for your meeting:</h4><br>';
 
-    html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
-    html += '<br>';
-    html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+    // html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
+    html = 'Meeting URL: <a style="color:white;" href="' + window.location.href + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
 
     var roomURLsDiv = document.getElementById('room-urls');
     roomURLsDiv.innerHTML = html;
@@ -259,4 +270,3 @@ if (roomid && roomid.length) {
 
     disableInputButtons();
 }
-

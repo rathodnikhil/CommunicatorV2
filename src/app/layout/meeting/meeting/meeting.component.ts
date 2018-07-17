@@ -94,7 +94,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
         //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
         // this.document.getElementById('setup-meeting').click();
-        debugger;
+        // debugger;
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
         const params = {
             width: '350px',
