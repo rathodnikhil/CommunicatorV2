@@ -177,3 +177,13 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 10px;
     margin: 10px 0;
 }
+
+.time-right {
+    float: right;
+    color: #2980b9;
+}
+
+.time-left {
+    float: left;
+    color: #2980b9;
+}

@@ -65,16 +65,32 @@ document.getElementById('input-text-chat').onkeyup = function (e) {
     this.value = '';
 };
 
+document.getElementById('alternate-send-chat').onclick = function (e) {
+    // this.value = document.getElementById('input-text-chat').value;
+    // removing trailing/leading whitespace
+    this.value = document.getElementById('input-text-chat').value.replace(/^\s+|\s+$/g, '');
+    if (!this.value.length) return;
+
+    connection.send(this.value);
+    appendDIV(this.value);
+    document.getElementById('input-text-chat').value = '';
+};
+
 var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    div.className='chat-background';
+    div.className = 'chat-background';
     var message = event.data || event;
     var user = event.userid || 'you';
     // var html = '<div class="container">';
     html = '<p>' + message + '</p>';
-    html += '<span class="time-right">';
+    if (user === 'you') {
+        html += '<span class="time-right">';
+    } else {
+        html += '<span class="time-left">';
+    }
+
     html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
     // html += '</div>';
     div.innerHTML = html;
@@ -258,12 +274,14 @@ if (roomid && roomid.length) {
 
     // auto-join-room
     (function reCheckRoomPresence() {
+        document.getElementById('meeting-error').innerText='';
         connection.checkPresence(roomid, function (isRoomExists) {
             if (isRoomExists) {
+                document.getElementById('meeting-error').innerText='';
                 connection.join(roomid);
                 return;
             }
-
+            document.getElementById('meeting-error').innerText='Meeting not started yet! we will try to reconnect after 5 seconds.';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
