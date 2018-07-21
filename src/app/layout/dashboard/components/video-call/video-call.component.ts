@@ -54,7 +54,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
             },
             'profileImgPath': null
         };
-        localStorage.setItem('loggedInuserName', this.loggedInUser.name + ' ' + this.loggedInUser.lastName);
+        // localStorage.setItem('loggedInuserName', this.loggedInUser.name + ' ' + this.loggedInUser.lastName);
         // this._userService.getLoggedInUSerDetails().subscribe(data => {
         //     debugger;
         //     if (Object.keys(data).length === 0) {

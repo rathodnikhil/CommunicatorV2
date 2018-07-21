@@ -3,7 +3,7 @@ import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { DOCUMENT } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -56,13 +56,19 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     momAddDesciption: boolean;
     meetingCode = '';
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute) {
+        userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute, public router: Router) {
         this._userService = userService;
         this._loginService = loginService;
         this._meetingService = meetingService;
     }
 
     ngOnInit() {
+// debugger;
+        if (!localStorage.getItem('loggedInuserName')) {        
+            this._loginService.setPreviousUrl(this.router.url);
+            this.router.navigate(['/login']);
+        }
+
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
         this.activatedRoute.queryParams.subscribe((params: Params) => {
