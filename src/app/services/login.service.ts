@@ -5,37 +5,44 @@ import { BehaviorSubject, Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class LoginService {
-    jwtToken:string;
+    jwtToken: string;
     caseDaSubject = new Subject<any>();
+    previousUrl: string;
 
-    constructor(private http: Http ) { }
+    constructor(private http: Http) { }
     authUser(payload) {
-      const url = urlConstants.baseUrl + 'getUser?userNameAndMeetingId=' + payload;
-      return this.http.get(url);
+        const url = urlConstants.baseUrl + 'getUser?userNameAndMeetingId=' + payload;
+        return this.http.get(url);
     }
     getAllMemUserNameList() {
         const url = urlConstants.baseUrl + 'getAllMemUserNameList';
-      return this.http.post(url , null);
+        return this.http.post(url, null);
     }
     getAllMemEmailList() {
         const url = urlConstants.baseUrl + 'getAllMemEmailList';
-        return this.http.post(url , null);
+        return this.http.post(url, null);
     }
     getAuthenticationToken(payload) {
-            const url = urlConstants.baseUrl + 'token/generate-token';
-            this.http.post(url ,payload).subscribe(data => {
-               this.jwtToken=data.json().token;
-               this.caseDaSubject.next(this.jwtToken);
-            },
+        const url = urlConstants.baseUrl + 'token/generate-token';
+        this.http.post(url, payload).subscribe(data => {
+            this.jwtToken = data.json().token;
+            this.caseDaSubject.next(this.jwtToken);
+        },
             err => {
                 console.log("Error occured");
                 alert(err);
-              });
-            return this.caseDaSubject;
+            });
+        return this.caseDaSubject;
     }
-    getJwtToken()
-    {
-        return "Bearer "+this.jwtToken;
+    getJwtToken() {
+        return "Bearer " + this.jwtToken;
     }
- 
+    setPreviousUrl(url) {
+        this.previousUrl = url;
+    }
+    getPreviousUrl() {
+        return this.previousUrl;
+    }
+
+
 }

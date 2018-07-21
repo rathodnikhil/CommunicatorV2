@@ -3,6 +3,40 @@ window.enableAdapter = true; // enable adapter.js
 // ......................................................
 // .......................UI Code........................
 // ......................................................
+
+document.getElementById('share-screen').onclick = function () {
+    this.disabled = true;
+            connection.addStream({
+                screen: true,
+                oneway: true
+            });
+    // const EXTENSION_ID = 'ajhifddimkapgcifgcodmmfdlknahffk';
+    // chrome.runtime.sendMessage(EXTENSION_ID, 'version', response => {
+    //     if (!response) {
+            
+    //         if (confirm('You do not have chrome extension required for screen sharing. Do you wish to install the extension?')) {
+    //             url = 'https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk';
+    //             var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");            
+    //             try {
+    //                 popup_window.focus();   
+    //             } catch (e) {
+    //                 alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+    //             }
+                
+    //             // window.open(url, '_blank');
+    //         }
+    //         return;
+    //     }
+    //     else {
+    //         this.disabled = true;
+    //         connection.addStream({
+    //             screen: true,
+    //             oneway: true
+    //         });
+    //     }
+    // });
+};
+
 document.getElementById('open-room').onclick = function () {
     if (document.getElementById('room-id').value === 'Enter Meeting Id') {
         alert('Enter valid meeting Id');
@@ -79,6 +113,7 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
+    debugger;
     var div = document.createElement('div');
     div.className = 'chat-background';
     var message = event.data || event;
@@ -106,6 +141,17 @@ function appendDIV(event) {
 // ......................................................
 
 var connection = new RTCMultiConnection();
+// Using getScreenId.js to capture screen from any domain
+connection.getScreenConstraints = function (callback) {
+    getScreenConstraints(function (error, screen_constraints) {
+        if (!error) {
+            screen_constraints = connection.modifyScreenConstraints(screen_constraints);
+            callback(error, screen_constraints);
+            return;
+        }
+        throw error;
+    });
+};
 
 // by default, socket.io server is assumed to be deployed on your own URL
 // connection.socketURL = '/';
@@ -114,7 +160,7 @@ var connection = new RTCMultiConnection();
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
-
+connection.extra = localStorage.getItem('loggedInuserName');
 connection.enableFileSharing = true; // by default, it is "false".
 
 connection.session = {
@@ -139,16 +185,19 @@ connection.onstream = function (event) {
         video.muted = true;
     }
     video.srcObject = event.stream;
-    debugger;
+    // debugger;
     var width = parseInt(connection.videosContainer.clientWidth / 2) - 20;
     var mediaElement = getHTMLMediaElement(video, {
         title: event.userid,
-        buttons: ['full-screen'],
+        buttons: [],
         width: width,
         showOnMouseEnter: false
     });
-
-    connection.videosContainer.appendChild(mediaElement);
+    if (event.stream.isScreen) {
+        connection.filesContainer.appendChild(mediaElement);
+    } else {
+        connection.videosContainer.appendChild(mediaElement);
+    }
 
     setTimeout(function () {
         mediaElement.media.play();
@@ -169,6 +218,7 @@ connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
+    document.getElementById('share-screen').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     document.getElementById('btn-leave-room').disabled = false;
 
@@ -185,6 +235,7 @@ connection.onclose = function () {
 
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
 
@@ -274,14 +325,14 @@ if (roomid && roomid.length) {
 
     // auto-join-room
     (function reCheckRoomPresence() {
-        document.getElementById('meeting-error').innerText='';
+        document.getElementById('meeting-error').innerText = '';
         connection.checkPresence(roomid, function (isRoomExists) {
             if (isRoomExists) {
-                document.getElementById('meeting-error').innerText='';
+                document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
                 return;
             }
-            document.getElementById('meeting-error').innerText='Meeting not started yet! we will try to reconnect after 5 seconds.';
+            document.getElementById('meeting-error').innerText = 'Meeting not started yet! we will try to reconnect after 5 seconds.';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
