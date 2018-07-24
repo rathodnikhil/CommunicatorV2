@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
+import { LoginService } from '../../../../services/login.service';
 @Component({
     selector: 'app-default-chat',
     templateUrl: './default-chat.component.html',
@@ -8,41 +9,18 @@ import { Router } from '@angular/router';
 })
 export class DefaultChatComponent implements OnInit {
 
-    loggedInUser: any;
+    _loginService: LoginService;
     _userService: UserService;
-    constructor(userService: UserService, private router: Router) {
+    loggedInUserObj: any;
+
+    constructor(userService: UserService, private router: Router,loginService: LoginService) {
         this._userService = userService;
+        this._loginService = loginService;
     }
     ngOnInit() {
-        this.loggedInUser = {
-            'id': 2,
-            'email': 'b@gmail.com',
-            'password': '1235',
-            'name': 'sunita',
-            'lastName': 'kolhapure',
-            'active': 1,
-            'teamId': {
-                'prime': null,
-                'errorFl': false,
-                'warningFl': false,
-                'message': null,
-                'teamId': 1,
-                'teamName': 'cfs_pune',
-                'status': {
-                    'statusId': 1,
-                    'status': 'Active'
-                }
-            },
-            'profileImgPath': null
-        };
-        // const payload = { id: 2 };
-        // this._userService.getLoggedInUSerDetails().subscribe(data => {
-        //     if (Object.keys(data).length === 0) {
-        //         this.router.navigate(['/login']);
-        //     } else {
-        //         this.loggedInUser = data;
-        //     }
-        // });
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUserObj = data;     
+        });
     }
 
 }

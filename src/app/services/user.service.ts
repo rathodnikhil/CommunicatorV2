@@ -11,6 +11,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class UserService {
+    
+    loggedInUserObj$: Subject<any[]> = new BehaviorSubject<any>({});
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
@@ -25,7 +27,7 @@ export class UserService {
             resp.next(data);
         },
             err => {
-                alert(err);
+                //alert(err);
             });
 
         return resp;
@@ -42,7 +44,7 @@ export class UserService {
             this.UserList$.next(data);
         },
             err => {
-                alert(err);
+               // alert(err);
             });
         // return resp;
     }
@@ -69,7 +71,18 @@ export class UserService {
     getSelectedUser() {
         return this.selectedUser$;
     }
-
+    getLoggedInUserObj() {
+        return this.loggedInUserObj$;
+    }
+    setLoggedInUserObj(payload) {
+        const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
+        // const resp = new BehaviorSubject<any>({});
+        this.apiRequest.post(url, payload).subscribe(data => {
+            this.loggedInUserObj$.next(data);
+        },
+            err => {
+                //alert(err);
+            });
+        // return resp;
+    }
 }
-
-

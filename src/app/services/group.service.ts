@@ -25,7 +25,7 @@ export class GroupService {
           this.GroupList$.next(data);
       },
           err => {
-              alert(err);
+            //  alert(err);
           });
       // return resp;
     }
@@ -47,7 +47,7 @@ export class GroupService {
               resp.next(data);
           },
             err => {
-              alert(err);
+           //   alert(err);
             });
     
         return resp;
@@ -59,7 +59,7 @@ export class GroupService {
               resp.next(data);
           },
             err => {
-              alert(err);
+          //    alert(err);
             });
     
         return resp;

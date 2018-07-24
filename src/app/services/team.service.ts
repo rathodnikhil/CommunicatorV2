@@ -55,7 +55,7 @@ export class TeamService {
           this.memberList$.next(data);
         },
             err => {
-                alert(err);
+               // alert(err);
             });
         // return resp;
       }
@@ -70,7 +70,7 @@ export class TeamService {
               resp.next(data);
           },
             err => {
-              alert(err);
+              //alert(err);
             });
         return resp;
        }
@@ -86,7 +86,7 @@ export class TeamService {
                 resp.next(data);
             },
               err => {
-                alert(err);
+                //alert(err);
               });
           return resp;
       }

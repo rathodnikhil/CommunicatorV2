@@ -27,43 +27,23 @@ export class TimelineComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loggedInUser = {
-            'id': 2,
-            'email': 'b@gmail.com',
-            'password': '1235',
-            'name': 'sunita',
-            'lastName': 'kolhapure',
-            'active': 1,
-            'teamId': {
-                'prime': null,
-                'errorFl': false,
-                'warningFl': false,
-                'message': null,
-                'teamId': 1,
-                'teamName': 'cfs_pune',
-                'status': {
-                    'statusId': 1,
-                    'status': 'Active'
-                }
-            },
-            'profileImgPath': null
-        };
-        const payload = { id: 2 };
-        // this._userService.getLoggedInUSerDetails().subscribe(data => {
-        //     debugger;
-        //     if (Object.keys(data).length === 0) {
-        //         this.router.navigate(['/login']);
-        //     } else {
-        //         this.loggedInUser = data;
-        //     }
-        // });
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUser = data;     
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
+    
         this._userService.getSelectedUser().subscribe(data => {
             if (data == null || data === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedUser = data;
             }
-        });
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
     }
     open() {
         // alert(loggedInUser.name + loggedInUser.lastName);
