@@ -29,8 +29,8 @@ export class LoginService {
             this.caseDaSubject.next(this.jwtToken);
         },
             err => {
-                console.log("Error occured");
-                alert(err);
+                // console.log("Error occured");
+                // alert(err);
             });
         return this.caseDaSubject;
     }

@@ -30,28 +30,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        // loggedInUser Details webservice call
-        this.loggedInUser = {
-            'id': 2,
-            'email': 'b@gmail.com',
-            'password': '1235',
-            'name': 'sunita',
-            'lastName': 'kolhapure',
-            'active': 1,
-            'teamId': {
-                'prime': null,
-                'errorFl': false,
-                'warningFl': false,
-                'message': null,
-                'teamId': 1,
-                'teamName': 'cfs_pune',
-                'status': {
-                    'statusId': 1,
-                    'status': 'Active'
-                }
-            },
-            'profileImgPath': null
-        };
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUser = data;     
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
+
         //getAllFutureMeetingList webservice call
         this.getAllFutureMeetingList();
 
@@ -61,6 +46,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
          this._meetingService.setRecentMeetingByUser(payload);
          this._meetingService.getRecentMeetingByUser().subscribe(data => {     
              this.recentMeeting = data;     
+         }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
          });
         // current date and time
         // this.currentDate = Date.now();
@@ -99,7 +87,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             // }       
             this.futureMeetingList = data;     
             this.filteredFutureMeetingList = this.futureMeetingList;
-        });
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
     }
     selectMeetingFilterDate() {
         this.selectDateFlag = !this.selectDateFlag;

@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     passwordMacthFlag: boolean;
     isGuest: boolean;
     Logintext = "Login";
+    loggedInUserObj: any;
     constructor(public router: Router, loginService: LoginService, userService: UserService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -94,14 +95,21 @@ export class LoginComponent implements OnInit, OnDestroy {
                                     this.authFlag = false;
                                 }.bind(this), 5000);
                             } else {
-                                if (this.previousUrl)
+                                if (!this.previousUrl){
+                                    let userNamePayload = {userName : this.userName};
+                                    this._userService.setLoggedInUserObj(userNamePayload);
+                                this._userService.getLoggedInUserObj().subscribe(data => {     
+                                    this.loggedInUserObj = data;     
+                                });
                                     this.router.navigate(['/dashboard/default']);
+                            }
                                 else {
                                     this.router.navigateByUrl(this.previousUrl);
                                 }
                             }
                         }, err => {
-                            alert(err);
+                           // alert(err);
+                           this.router.navigate(['/login']);
                         });
                     } else {
                         this.passwordMacthFlag = true;
@@ -111,8 +119,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     }
                 },
                     err => {
-                        alert("Error occured");
-                        alert(err);
+                        this.router.navigate(['/login']);
                     });
             }
         }

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
-                Good Morning {{loggedInUser.name}} {{loggedInUser.lastName}}
+                Good Morning {{loggedInUser.firstName}} {{loggedInUser.lastName}}
                 <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
             </div>
             <div class="col-md-4">
@@ -84,11 +84,11 @@
                         <div class="row">
                             <div class="col-md-9">
                                         <i class="fa fa-calendar"></i>
-                                        <span style="font-weight: bold; font-size: 14px;">{{recentMeeting.subject}}&nbsp;({{recentMeeting.meetingCode}})</span>
+                                        <span style="font-weight: bold; font-size: 14px;">{{recentMeeting.subject}}&nbsp;({{recentMeeting.meetingCode}})<br>
+                                            <i class="fa fa-clock-o"></i>&nbsp;{{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
                             <div class="col-md-3">
                                     <button class="btn btn-primary">Now</button>
-                                    {{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                 </div>
                         </div>
                         <div class="col-md-12">

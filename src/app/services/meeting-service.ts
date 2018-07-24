@@ -27,8 +27,8 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
               resp.next(data);
           },
             err => {
-              alert("Error occured");
-              alert(err);
+            //   alert("Error occured");
+            //   alert(err);
             });
     
         return resp;
@@ -40,7 +40,7 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
             this.futureMeetingList$.next(data);
         },
             err => {
-                alert(err);
+               // alert(err);
             });
     }
     getFutureMeetingListByUser() {
@@ -54,7 +54,7 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
             this.recentMeeting$.next(data);
         },
             err => {
-                alert(err);
+             //   alert(err);
             });
     }
     getRecentMeetingByUser() {
@@ -106,8 +106,8 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
             resp.next(data);
         },
             err => {
-                console.log(err);
-                resp.next(err);
+                //console.log(err);
+                //resp.next(err);
             });
 
         return resp;
