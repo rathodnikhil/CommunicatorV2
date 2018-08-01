@@ -136,7 +136,7 @@ export class ScheduleMeetingComponent implements OnInit {
         this.CurrentRoute.emit(0);
     }
     scheduleMeeting() {
-        debugger;
+        
         if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
             this.addSubjectFlag = true;
             setTimeout(function () {

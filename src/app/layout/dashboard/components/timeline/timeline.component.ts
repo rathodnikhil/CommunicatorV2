@@ -3,6 +3,7 @@ import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-m
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
+import { ChatService } from '../../../../services/chat.service';
 @Component({
     selector: 'app-timeline',
     templateUrl: './timeline.component.html',
@@ -21,9 +22,16 @@ export class TimelineComponent implements OnInit {
     selectedUser: any;
     loggedInUser: any;
     _userService: UserService;
+    _chatService: ChatService;
+    enterMsgFlag: boolean;
+    chattingHistoryList =[];
+    chattingHistoryObj: any;
+    emptyHistoryFlag: boolean;
     // router: Router;
-    constructor(userService: UserService, private router: Router) {
+    chatMsg: any;
+    constructor(userService: UserService, private router: Router,chatService: ChatService) {
         this._userService = userService;
+        this._chatService = chatService;
     }
 
     ngOnInit() {
@@ -39,6 +47,7 @@ export class TimelineComponent implements OnInit {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedUser = data;
+                this.getChattingHistoryBySelectedUser();
             }
         }, err => {
             // alert(err);
@@ -60,4 +69,40 @@ export class TimelineComponent implements OnInit {
                     break;
             }
         }
+        sendMessage() {
+            let payload = {userFrom: this.loggedInUser.userCode ,userTo: this.selectedUser.userCode ,chatMsg: this.chatMsg};
+            if ( this.chatMsg === "" || this.chatMsg === null || typeof this.chatMsg === "undefined") {
+                this.enterMsgFlag = true;
+                setTimeout(function () {
+                    this.enterMsgFlag = false;
+                }.bind(this), 5000);
+            }else{
+             this._chatService.saveChat(payload).subscribe(data => {
+                this.chatMsg = "";
+                // this.chattingHistoryObj = data;
+                // alert(this.chattingHistoryObj.chatmsg);
+                // this.chattingHistoryList.push(this.chattingHistoryObj);
+            });
+              
+            }
+         }
+         getChattingHistoryBySelectedUser() {
+            let payload = {userFrom: this.loggedInUser.userCode ,userTo: this.selectedUser.userCode};
+            this.chattingHistoryList = [];
+            this._chatService.setChattingHistoryList(payload);
+            this._chatService.getChattingHistoryList().subscribe(data => {     
+              
+                // if (resp.errorFl || resp.warningFl) {
+                //     this.futureMeetingList = [];
+                // } else {
+                //     this.futureMeetingList = data;
+                //     this.filteredFutureMeetingList = this.futureMeetingList;
+                // }       
+                this.chattingHistoryList = data;  
+              
+            }, err => {
+                // alert(err);
+                this.router.navigate(['/login']);
+             });
+         }
 }

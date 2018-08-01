@@ -1,17 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-
+import { UserService } from '../../../services/user.service';
+import { GroupService } from '../../../services/group.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss'],
+    providers: [ GroupService]
 })
 export class HeaderComponent implements OnInit {
+    _userService: UserService;
+    _groupService: GroupService;
     pushRightClass: string = 'push-right';
     isClosed = true;
-    constructor(private translate: TranslateService, public router: Router) {
+    loggedInUserObj: any;
+    sidebarMenuList = [];
+    constructor(private translate: TranslateService, public router: Router,userService: UserService, groupService: GroupService) {
 
+        this._userService = userService;
+        this._groupService= groupService;
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -28,7 +36,13 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+       
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUserObj = data;     
+        });
+       
+    }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -38,6 +52,7 @@ export class HeaderComponent implements OnInit {
     toggleSidebar() {
         const dom: any = document.querySelector('body');
         dom.classList.toggle(this.pushRightClass);
+        
     }
 
     rltAndLtr() {
@@ -55,5 +70,10 @@ export class HeaderComponent implements OnInit {
 
     hamburger_cross() {
         this.isClosed = !this.isClosed;
+        let payload= {userCode:  this.loggedInUserObj.userCode}
+        this._groupService.setSideBarMenuByLoggedInUSer(payload);
+        this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {            
+            this.sidebarMenuList = data; 
+        });
         }
 }

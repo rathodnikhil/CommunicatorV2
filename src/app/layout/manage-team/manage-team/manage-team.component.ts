@@ -4,6 +4,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
@@ -55,7 +56,6 @@ export class ManageTeamComponent implements OnInit {
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Member',
         Button2Content: ''
     };
-
 
 
     constructor(teamService: TeamService, userService: UserService) {
@@ -192,10 +192,13 @@ export class ManageTeamComponent implements OnInit {
         this.showAddMemberEmail = false;
     }
     //close team modal popup
-    closeTeamPopup(popupType) {
+    closePopup(popupType) {
         switch (popupType) {
             case 'addNewTeam':
                 this.addNewTeamModal.close();
+                break;
+            case 'addNewMember':
+                this.addNewMemberModal.close();
                 break;
         }
     }

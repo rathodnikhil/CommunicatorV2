@@ -98,23 +98,14 @@
                                 <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required >
                             </div>
                             <div >
-                                 <div class="input-group-prepend">
+                                 <!-- <div class="input-group-prepend">
                             <select class="col-md-12">
                                 <option >{{selectedTeam}}</option>
                                 <option   *ngFor="let team of teamArray" class="dropdown-item"
                                 on-click="onChangeTeam(team.teamName)" value="volvo">Saab</option>
                               </select>
-                              </div> 
-                           
-                            <!-- <div class=" col-md-12">
-                                    <div ngbDropdown class="d-inline-block dropdown">
-                                            <button class="btn btn-outline-primary" ngbDropdownToggle>{{selectedTeam}}</button>
-                                            <div ngbDropdownMenu>
-                                                <button *ngFor="let team of teamArray" class="dropdown-item"
-                                                on-click="onChangeTeam(team.teamName)">{{team.teamName}}</button>
-                                            </div>
-                                        </div>
-                                </div>  -->
+                              </div>  -->
+                        
                         <fieldset id="actions">
                                 <input type="submit" id="submit" value="Sign up"  (click)="registerUser();">
                                 <a>already have an account?<a style="color:#3277d3;

@@ -94,7 +94,7 @@
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="firstName" onfocus="typeTeamNameFocus()" />
+                                    <input placeholder="Type Name Here.." [(ngModel)]="firstName" />
                                 </div>
                             </div>
                             <div class="row">
@@ -102,7 +102,7 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="lastName" onfocus="typeTeamNameFocus()" />
+                                    <input placeholder="Type Name Here.." [(ngModel)]="lastName"  />
                                 </div>
                             </div>
                             <div class="row">
@@ -110,7 +110,7 @@
                                     <label>UserName</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="userName" onfocus="typeTeamNameFocus()" />
+                                    <input placeholder="Type Name Here.." [(ngModel)]="userName"  />
                                 </div>
                             </div>
                             <div class="row">
@@ -118,7 +118,7 @@
                                     <label>Password</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="password" onfocus="typeTeamNameFocus()" />
+                                    <input placeholder="Type Name Here.." [(ngModel)]="password" />
                                 </div>
                             </div>
                             <div class="row">
@@ -126,21 +126,14 @@
                                     <label>Team Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" onfocus="typeTeamNameFocus()" />
+                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName"  />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label>Team Name</label>
-                                </div>
-                                <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" onfocus="typeTeamNameFocus()" />
-                                </div>
-                            </div>
+                        
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-sec" (click)="addMember()">Add Team</button>
-                        <button type="button" class="btn btn-cancel" (click)="closeMemberPopup('addNewMember')">Close</button>
+                        <button type="button" class="btn btn-sec" (click)="addMember()">Add Member</button>
+                        <button type="button" class="btn btn-cancel" (click)="closePopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>
             </div>
