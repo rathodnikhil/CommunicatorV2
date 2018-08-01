@@ -18,8 +18,28 @@
         </div>
     </div>
     <div class="card-body">
-        <ul class="timeline">
-            <li>
+     
+        <ul class="timeline" >
+            <li *ngFor="let chatObj of chattingHistoryList">
+                <div class="timeline-badge">
+                    <i class="fa fa-check"></i>
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
+                        <p>
+                            <small class="text-muted">
+                                <i class="fa fa-calendar"></i> {{chatObj.msgDate |  date:'fullDate'}}&nbsp; 
+                                ({{chatObj.msgDate |  date:'hh:mm:ss'}})</small>
+                        </p>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{chatObj.chatmsg}}</p>
+                    </div>
+                </div>
+            </li>
+        
+            <!--   <li>
                 <div class="timeline-badge">
                     <i class="fa fa-check"></i>
                 </div>
@@ -38,7 +58,7 @@
                     </div>
                 </div>
             </li>
-            <li class="timeline-inverted">
+                 <li class="timeline-inverted">
                 <div class="timeline-badge warning">
                     <i class="fa fa-credit-card"></i>
                 </div>
@@ -149,16 +169,16 @@
                             incidunt quisquam maxime neque eaque.</p>
                     </div>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
 <div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here">
+    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg"   (keyup.enter)="sendMessage()" required >
     </textarea>
     <div class="input-group-append">
         <a class="btn">
-            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            <i class="fa fa-paper-plane" aria-hidden="true" (click)="sendMessage()"></i>
         </a>
         <a class="btn">
             <i class="fa fa-file" aria-hidden="true"></i>

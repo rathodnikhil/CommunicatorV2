@@ -145,7 +145,6 @@ export class SignupComponent implements OnInit {
                     }, err => {
                         alert(err);      
                     });
-                //this.router.navigate(['/dashboard']);
             }
         });
     }

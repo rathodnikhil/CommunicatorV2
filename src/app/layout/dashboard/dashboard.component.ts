@@ -6,6 +6,7 @@ import { CustomModalComponent, CustomModalModel } from './components/custom-moda
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -26,7 +27,11 @@ export class DashboardComponent implements OnInit {
     userList = [];
     groupList = [];
     groupArray = [];
+    array =[];
     i=0;
+    loggedInUserObj: any;
+    loggedInUserRole: any;
+
     @ViewChild('braodcastMessageModal') public broadcastMessageModal: CustomModalComponent;
     broadcastMessagecontent: CustomModalModel = {
         titleIcon: '<i class="fa fa-bullhorn"></i>',
@@ -49,7 +54,7 @@ export class DashboardComponent implements OnInit {
     public sliders: Array<any> = [];
     currentRoute: number = 0;
 
-    constructor(private groupService: GroupService, userService: UserService) {
+    constructor(private groupService: GroupService, userService: UserService,private router: Router) {
         this._groupService = groupService;
         this._userService = userService;
         this.sliders.push(
@@ -99,10 +104,13 @@ export class DashboardComponent implements OnInit {
         this._groupService.getGroupList().subscribe(data => {            
             this.groupList = data; 
         });
+
+        //get loggedin user
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUserObj = data;   
+        });
        
-    }
-   
-    
+    } 
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);

@@ -7,6 +7,7 @@ import { LoginService } from './login.service';
 import { ApiRequestService } from './api-request.service';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class GroupService {
    
@@ -64,4 +65,19 @@ export class GroupService {
     
         return resp;
       }
+
+      setSideBarMenuByLoggedInUSer(payload) {
+        const url = urlConstants.baseUrl + 'getSideBarMenuByLoggedInUSer?userCode=' + payload.userCode;
+        // const resp = new BehaviorSubject<any>({});
+        this.apiRequest.post(url, payload).subscribe(data => {
+            this.GroupList$.next(data);
+        },
+            err => {
+              //  alert(err);
+            });
+        // return resp;
+      }
+      getSideBarMenuByLoggedInUSer() {
+        return this.GroupList$;
+    }
 }

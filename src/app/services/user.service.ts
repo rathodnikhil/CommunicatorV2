@@ -17,6 +17,7 @@ export class UserService {
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
     UserList$: Subject<any[]> = new BehaviorSubject<any>({});  
+    loggedInUserRole$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
@@ -79,6 +80,20 @@ export class UserService {
         // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
             this.loggedInUserObj$.next(data);
+        },
+            err => {
+                //alert(err);
+            });
+        // return resp;
+    }
+    getUserRole() {
+        return this.loggedInUserRole$;
+    }
+    setUserRole(payload) {
+        const url = urlConstants.baseUrl + 'getUserRole?userCode=' + payload.usercode;
+        // const resp = new BehaviorSubject<any>({});
+        this.apiRequest.post(url, payload).subscribe(data => {
+            this.loggedInUserRole$.next(data);
         },
             err => {
                 //alert(err);
