@@ -21,7 +21,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
-  
+
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     constructor(userService: UserService, meetingService: MeetingService, private router: Router) {
@@ -30,26 +30,30 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUser = data;     
+        // debugger;
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            if (data.firstName === undefined) {
+                this.router.navigate(['/login']);
+            } else {
+                this.loggedInUser = data;
+            }
         }, err => {
-            // alert(err);
             this.router.navigate(['/login']);
-         });
+        });
 
         //getAllFutureMeetingList webservice call
         this.getAllFutureMeetingList();
 
         // recent meeting webservice call    
-         const payload = { email: 'rohit@coreflexsolutions.com'};
-         this.recentMeeting = {};
-         this._meetingService.setRecentMeetingByUser(payload);
-         this._meetingService.getRecentMeetingByUser().subscribe(data => {     
-             this.recentMeeting = data;     
-         }, err => {
+        const payload = { email: 'rohit@coreflexsolutions.com' };
+        this.recentMeeting = {};
+        this._meetingService.setRecentMeetingByUser(payload);
+        this._meetingService.getRecentMeetingByUser().subscribe(data => {
+            this.recentMeeting = data;
+        }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
+        });
         // current date and time
         // this.currentDate = Date.now();
     }
@@ -72,25 +76,25 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         //fromDate = fromDate.
         alert(fromDate);
     }
-      // future meeting list web service call
+    // future meeting list web service call
     getAllFutureMeetingList() {
-        const payload = { email: 'rohit@coreflexsolutions.com'};
+        const payload = { userCode: this.loggedInUser.userCode };
         this.futureMeetingList = [];
         this._meetingService.setFutureMeetimgList(payload);
-        this._meetingService.getFutureMeetingListByUser().subscribe(data => {     
-            
+        this._meetingService.getFutureMeetingListByUser().subscribe(data => {
+
             // if (resp.errorFl || resp.warningFl) {
             //     this.futureMeetingList = [];
             // } else {
             //     this.futureMeetingList = data;
             //     this.filteredFutureMeetingList = this.futureMeetingList;
             // }       
-            this.futureMeetingList = data;     
+            this.futureMeetingList = data;
             this.filteredFutureMeetingList = this.futureMeetingList;
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
+        });
     }
     selectMeetingFilterDate() {
         this.selectDateFlag = !this.selectDateFlag;

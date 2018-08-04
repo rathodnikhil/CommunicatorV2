@@ -12,7 +12,7 @@ import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class UserService {
     
-    loggedInUserObj$: Subject<any[]> = new BehaviorSubject<any>({});
+    loggedInUserObj$: Subject<any> = new BehaviorSubject<any>({});
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
