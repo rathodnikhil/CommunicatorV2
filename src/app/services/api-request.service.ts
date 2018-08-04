@@ -116,7 +116,7 @@ export class ApiRequestService {
     post(url:string, body:Object):Observable<any>{
         let me = this;
         let requestOptions = this.getRequestOptions(RequestMethod.Post, url, undefined, body);
-        debugger;
+        // debugger;
         return this.http.request(new Request(requestOptions))
             .map((resp: any) => {
                if (typeof resp._body == 'string' && resp._body.includes('<html')) {

@@ -55,6 +55,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     momAddSuccess: boolean;
     momAddDesciption: boolean;
     meetingCode = '';
+    momTxt: any;
+    loggedInUser: any;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute, public router: Router) {
         this._userService = userService;
@@ -77,6 +79,12 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
             console.log(this.meetingCode);
         });
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUser = data;     
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
     }
     ngAfterViewInit(): void {
         // const s = document.createElement('script');
@@ -125,13 +133,17 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        if (this.momDescription === '' || this.momDescription === null || typeof this.momDescription === "undefined") {
+        alert(this.momTxt);
+        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
             this.momAddDesciption = true;
             setTimeout(function () {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
         } else {
-            const payload = { 'momDescription': this.momDescription }
+           // const payload = { 'momDescription': this.momTxt ,loggedInUserOb}
+           alert('this.loggedInUser.userCode : '+this.loggedInUser.userCode);
+           alert('meetingCode'+this.meetingCode);
+            const payload = { meetingCode: this.meetingCode , momDescription: this.momTxt };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;
                 if (this.errorFl === true) {

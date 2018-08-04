@@ -3,6 +3,9 @@ import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-m
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 import { MeetingService } from '../../../../services/meeting-service';
+import { UserService } from '../../../../services/user.service';
+import { Router } from '@angular/router';
+
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
@@ -11,18 +14,21 @@ import { MeetingService } from '../../../../services/meeting-service';
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
+    _meetingService: MeetingService;
+    _userService: UserService;
     currentDate: any;
     meeting: any;
     subject: any;
     meridian = true;
     today: any;
     accessCode: any;
-    _meetingService: MeetingService;
+    loggedInUser: any;
     showScheduleMeetingSuccess: boolean = true;
     showCopyDetailsSuccess: boolean = false;
     addSubjectFlag: boolean;
     addDurationFlag: boolean;
     addTimezoneFlag: boolean;
+    
     // public radioGroupForm: FormGroup;
     scheduleMeetings: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
@@ -109,11 +115,18 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT-11:00) Midway Island, Samoa',
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
-    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService) {
+    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService ,userService: UserService, private router: Router) {
         this._meetingService = meetingService;
+        this._userService = userService;
     }
 
     ngOnInit() {
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUser = data;     
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
         this.today = new Date();
         this.meeting = {
             meridianTime: { hour: this.today.getHours(), minute: this.today.getMinutes() },
@@ -175,7 +188,8 @@ export class ScheduleMeetingComponent implements OnInit {
                 'callType': this.meeting.callType,
                 'timeZone': this.meeting.selectedTimeZone,
                 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
-                'meetingId': this.accessCode
+                'meetingId': this.accessCode,
+                'createdBy': this.loggedInUser
             };
 
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
@@ -227,6 +241,7 @@ export class ScheduleMeetingComponent implements OnInit {
         var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
              + this.meeting.selectedDuration + '\n' +
+            // '\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://192.168.3.76:9080/#/meeting?meetingCode='+this.accessCode+'\n' +
             '\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://localhost:4200/#/meeting?meetingCode='+this.accessCode+'\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;
