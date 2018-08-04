@@ -32,33 +32,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        //  this.onLoggedin();
         // debugger;
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
     }
 
-    // async onLoggedin() {
-    //     const userid = '123';
-    //     const abc = await this._loginService
-    //         .authUser(userid)
-    //         .subscribe(
-    //             data =>
-    //                 (this.user = {
-    //                     username: data['username']
-    //                 })
-    //         );
-
-    //     //localStorage.setItem('isLoggedin', 'true');
-    // }
     ngOnDestroy(): void {
         //  this._loginService.dest        
     }
     guestLogin() {
-        // debugger;
         this.Logintext = this.isGuest ? "Continue" : "Login";
     }
+    onKey(event) {
+        if (event.key == "Enter")
+            this.login();
+    }
     login() {
+        debugger;
         if (this.userName === "" || this.userName === null) {
             this.userNameFlag = true;
             setTimeout(function () {
@@ -95,21 +85,20 @@ export class LoginComponent implements OnInit, OnDestroy {
                                     this.authFlag = false;
                                 }.bind(this), 5000);
                             } else {
-                                if (!this.previousUrl){
-                                    let userNamePayload = {userName : this.userName};
-                                    this._userService.setLoggedInUserObj(userNamePayload);
-                                this._userService.getLoggedInUserObj().subscribe(data => {     
-                                    this.loggedInUserObj = data;     
+                                let userNamePayload = { userName: this.userName };
+                                this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
+                                    if (res.firstName !== undefined)
+                                        if (!this.previousUrl) {
+                                            this.router.navigate(['/dashboard/default']);
+                                        }
+                                        else {
+                                            this.router.navigateByUrl(this.previousUrl);
+                                        }
                                 });
-                                    this.router.navigate(['/dashboard/default']);
-                            }
-                                else {
-                                    this.router.navigateByUrl(this.previousUrl);
-                                }
+
                             }
                         }, err => {
-                           // alert(err);
-                           this.router.navigate(['/login']);
+
                         });
                     } else {
                         this.passwordMacthFlag = true;
@@ -119,7 +108,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                     }
                 },
                     err => {
-                        this.router.navigate(['/login']);
                     });
             }
         }

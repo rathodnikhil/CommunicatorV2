@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, transition, style, animate, state, AfterViewInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, trigger, transition, style, animate, state, AfterViewInit, ElementRef, Inject, ViewChild } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
 import { MeetingService } from '../../../services/meeting-service';
@@ -49,6 +49,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     momTo: any;
     isMOMvisible = true;
     momDescription: any;
+    meetingDetails: any;
     errorFl: boolean;
     userList = [];
     nullCheckFlag: boolean;
@@ -57,6 +58,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     meetingCode = '';
     momTxt: any;
     loggedInUser: any;
+    isHost = false;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute, public router: Router) {
         this._userService = userService;
@@ -65,8 +67,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-// debugger;
-        if (!localStorage.getItem('loggedInuserName')) {        
+        // debugger;
+        if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
         }
@@ -74,17 +76,32 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
         this.activatedRoute.queryParams.subscribe((params: Params) => {
-            // debugger;
+            debugger;
             this.meetingCode = params['meetingCode'];
 
             console.log(this.meetingCode);
         });
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUser = data;     
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
-         });
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            if (data.firstName !== undefined) {
+                this.loggedInUser = data;
+                if (this.meetingCode !== '') {
+                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+                    this._meetingService.verifyMeetingHost(payload).subscribe(data => {
+                        debugger;
+                        if (!data.warningFl && !data.errorFl && data.message !== null) {
+                            this.meetingDetails = data;
+                            this.isHost = true;
+                            this.document.getElementById('isHost').innerHTML = "true";
+                        }
+                        else {
+                            this.isHost = false;
+                            this.document.getElementById('isHost').innerHTML = "false";
+                        }
+
+                    });
+                }
+            }
+        });
     }
     ngAfterViewInit(): void {
         // const s = document.createElement('script');
@@ -133,6 +150,13 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
+        // debugger;
+        // this.downloadFile(this.momTxt);
+        if (!this.isHost) {
+            alert("Only host can save MOM to database");
+            return;
+        }
+
         alert(this.momTxt);
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
             this.momAddDesciption = true;
@@ -140,10 +164,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
         } else {
-           // const payload = { 'momDescription': this.momTxt ,loggedInUserOb}
-           alert('this.loggedInUser.userCode : '+this.loggedInUser.userCode);
-           alert('meetingCode'+this.meetingCode);
-            const payload = { meetingCode: this.meetingCode , momDescription: this.momTxt };
+            // const payload = { 'momDescription': this.momTxt ,loggedInUserOb}
+            alert('this.loggedInUser.userCode : ' + this.loggedInUser.userCode);
+            alert('meetingCode' + this.meetingCode);
+            const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;
                 if (this.errorFl === true) {
@@ -156,6 +180,19 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 }
             });
         }
+    }
+    downloadFile(data) {
+        debugger;
+        var uri = "data:text/csv;" + data;
+        var url = window.URL.createObjectURL(uri);
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = 'MOM.text';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove(); // remove the element
     }
 }
 

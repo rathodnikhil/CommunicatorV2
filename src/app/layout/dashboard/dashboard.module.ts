@@ -13,7 +13,6 @@ import { StatModule } from '../../shared';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
 import { DefaultMeetingComponent } from './components/default-meeting/default-meeting.component';
 import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule-meeting.component';
-import { ChartsModule } from '../charts/charts.module';
 import { BsComponentModule } from '../bs-component/bs-component.module';
 import { MeetingVideoCallComponent } from './components/meeting-video-call/meeting-video-call.component';
 import { FormsModule } from '@angular/forms';
