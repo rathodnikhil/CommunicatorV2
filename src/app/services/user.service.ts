@@ -11,12 +11,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class UserService {
-    
+
     loggedInUserObj$: Subject<any> = new BehaviorSubject<any>({});
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
-    UserList$: Subject<any[]> = new BehaviorSubject<any>({});  
+    UserList$: Subject<any[]> = new BehaviorSubject<any>({});
     loggedInUserRole$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
@@ -45,7 +45,7 @@ export class UserService {
             this.UserList$.next(data);
         },
             err => {
-               // alert(err);
+                // alert(err);
             });
         // return resp;
     }
@@ -72,19 +72,15 @@ export class UserService {
     getSelectedUser() {
         return this.selectedUser$;
     }
-    getLoggedInUserObj() {
+    getLoggedInUserObj() {        
         return this.loggedInUserObj$;
     }
-    setLoggedInUserObj(payload) {
+    setLoggedInUserObj(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
-        // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
-            this.loggedInUserObj$.next(data);
-        },
-            err => {
-                //alert(err);
-            });
-        // return resp;
+            this.loggedInUserObj$.next(data);            
+        });
+        return this.loggedInUserObj$;
     }
     getUserRole() {
         return this.loggedInUserRole$;

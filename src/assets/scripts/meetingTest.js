@@ -6,14 +6,14 @@ window.enableAdapter = true; // enable adapter.js
 
 document.getElementById('share-screen').onclick = function () {
     this.disabled = true;
-            connection.addStream({
-                screen: true,
-                oneway: true
-            });
+    connection.addStream({
+        screen: true,
+        oneway: true
+    });
     // const EXTENSION_ID = 'ajhifddimkapgcifgcodmmfdlknahffk';
     // chrome.runtime.sendMessage(EXTENSION_ID, 'version', response => {
     //     if (!response) {
-            
+
     //         if (confirm('You do not have chrome extension required for screen sharing. Do you wish to install the extension?')) {
     //             url = 'https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk';
     //             var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");            
@@ -22,7 +22,7 @@ document.getElementById('share-screen').onclick = function () {
     //             } catch (e) {
     //                 alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
     //             }
-                
+
     //             // window.open(url, '_blank');
     //         }
     //         return;
@@ -141,6 +141,7 @@ function appendDIV(event) {
 // ......................................................
 
 var connection = new RTCMultiConnection();
+var isHost = false;
 // Using getScreenId.js to capture screen from any domain
 connection.getScreenConstraints = function (callback) {
     getScreenConstraints(function (error, screen_constraints) {
@@ -220,7 +221,8 @@ connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
-    document.getElementById('btn-leave-room').disabled = false;
+    if (isHost)
+        document.getElementById('btn-leave-room').disabled = false;
 
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
 };
@@ -270,13 +272,14 @@ function disableInputButtons() {
 // ......................................................
 
 function showRoomURL(roomid) {
+    debugger;
     // var roomHashURL = '#' + roomid;
-    var roomQueryStringURL = '?meetingCode=' + roomid;
+    var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
 
     // var html = '<h4>Unique URL for your meeting:</h4><br>';
 
     // html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
-    html = 'Meeting URL: <a style="color:white;" href="' + window.location.href + roomQueryStringURL + '" target="_blank">' + window.location.href + roomQueryStringURL + '</a>';
+    html = 'Meeting URL: <a style="color:white;" href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
 
     var roomURLsDiv = document.getElementById('room-urls');
     roomURLsDiv.innerHTML = html;
@@ -326,6 +329,17 @@ if (roomid && roomid.length) {
     // auto-join-room
     (function reCheckRoomPresence() {
         document.getElementById('meeting-error').innerText = '';
+        // debugger;
+        isHost = document.getElementById('isHost').innerText === "true";
+        if (isHost) {
+            document.getElementById('open-room').disabled = false;
+            document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
+            document.getElementById('btn-leave-room').disabled = false;
+            return;
+        }
+        else if (!isHost) {
+            document.getElementById('btn-leave-room').disabled = true;
+        }
         connection.checkPresence(roomid, function (isRoomExists) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';

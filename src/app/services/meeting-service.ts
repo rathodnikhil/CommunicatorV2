@@ -12,41 +12,41 @@ import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 
 @Injectable()
 export class MeetingService {
-_loginService: LoginService;
-futureMeetingList$: Subject<any[]> = new BehaviorSubject<any>({});  
-recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
-    constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) {
+    _loginService: LoginService;
+    futureMeetingList$: Subject<any[]> = new BehaviorSubject<any>({});
+    recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
+    constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
-     }
+    }
 
-     //schedule meeting webserce details
-     scheduleMeeting(payload): Observable<any> {
+    //schedule meeting webserce details
+    scheduleMeeting(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
-        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-          this.apiRequest.post(url,payload).subscribe(data => {
-              resp.next(data);
-          },
+        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.apiRequest.post(url, payload).subscribe(data => {
+            resp.next(data);
+        },
             err => {
-            //   alert("Error occured");
-            //   alert(err);
+                //   alert("Error occured");
+                //   alert(err);
             });
-    
+
         return resp;
-      }
-  //future meeting list webservice details
+    }
+    //future meeting list webservice details
     setFutureMeetimgList(payload) {
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.futureMeetingList$.next(data);
         },
             err => {
-               // alert(err);
+                // alert(err);
             });
     }
     getFutureMeetingListByUser() {
         return this.futureMeetingList$;
     }
-   
+
     //recent meeting webservice
     setRecentMeetingByUser(payload) {
         const url = urlConstants.baseUrl + 'getRecentMeetingByUser?email=' + payload.email;
@@ -54,7 +54,7 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
             this.recentMeeting$.next(data);
         },
             err => {
-             //   alert(err);
+                //   alert(err);
             });
     }
     getRecentMeetingByUser() {
@@ -95,7 +95,7 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
         });
     }
     getAllMeetingsbyLoggedInUserId(payload) {
-  
+
         const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?loggedInUserId=' + payload;
         return this.http.post(url, payload);
     }
@@ -117,4 +117,9 @@ recentMeeting$: Subject<any> = new BehaviorSubject<any>({});
 
         return resp;
     }
+    verifyMeetingHost(payload) {
+        const url = urlConstants.baseUrl + 'startMeetingByHost';
+        return this.apiRequest.post(url, payload);
+    }
+
 }

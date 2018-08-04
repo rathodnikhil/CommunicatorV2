@@ -32,13 +32,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectDateFlag = true;
         // debugger;
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.firstName === undefined) {
-                this.router.navigate(['/login']);
-            } else {
-                this.loggedInUser = data;
-            }
-        }, err => {
-            this.router.navigate(['/login']);
+            this.loggedInUser = data;
         });
 
         //getAllFutureMeetingList webservice call
