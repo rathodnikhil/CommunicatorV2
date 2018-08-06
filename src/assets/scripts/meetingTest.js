@@ -16,9 +16,9 @@ document.getElementById('share-screen').onclick = function () {
 
     //         if (confirm('You do not have chrome extension required for screen sharing. Do you wish to install the extension?')) {
     //             url = 'https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk';
-    //             var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");            
+    //             var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
     //             try {
-    //                 popup_window.focus();   
+    //                 popup_window.focus();
     //             } catch (e) {
     //                 alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
     //             }
@@ -117,7 +117,7 @@ function appendDIV(event) {
     var div = document.createElement('div');
     div.className = 'chat-background';
     var message = event.data || event;
-    var user = event.userid || 'you';
+    var user = event.extra || 'you';
     // var html = '<div class="container">';
     html = '<p>' + message + '</p>';
     if (user === 'you') {
@@ -189,7 +189,7 @@ connection.onstream = function (event) {
     // debugger;
     var width = parseInt(connection.videosContainer.clientWidth / 2) - 20;
     var mediaElement = getHTMLMediaElement(video, {
-        title: event.userid,
+        title: event.type === 'local' ? 'you' : event.extra,
         buttons: [],
         width: width,
         showOnMouseEnter: false
@@ -336,8 +336,7 @@ if (roomid && roomid.length) {
             document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
             document.getElementById('btn-leave-room').disabled = false;
             return;
-        }
-        else if (!isHost) {
+        } else if (!isHost) {
             document.getElementById('btn-leave-room').disabled = true;
         }
         connection.checkPresence(roomid, function (isRoomExists) {

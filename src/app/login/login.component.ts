@@ -38,23 +38,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        //  this._loginService.dest        
+        //  this._loginService.dest
     }
     guestLogin() {
         this.Logintext = this.isGuest ? "Continue" : "Login";
     }
     onKey(event) {
-        if (event.key == "Enter")
-            this.login();
+        if (event.key == "Enter") { this.login(); }
     }
     login() {
-        debugger;
-        if (this.userName === "" || this.userName === null) {
+        // debugger;
+        if (this.userName === '' || this.userName === null) {
             this.userNameFlag = true;
             setTimeout(function () {
                 this.userNameFlag = false;
             }.bind(this), 5000);
-        } else if (!this.isGuest && (this.password === "" || this.password === null)) {
+        } else if (!this.isGuest && (this.password === '' || this.password === null)) {
             this.passwordFlag = true;
             setTimeout(function () {
                 this.passwordFlag = false;
@@ -62,24 +61,25 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
-                debugger;
-                if (this.previousUrl)
+                // debugger;
+                if (this.previousUrl) {
                     this.router.navigateByUrl(this.previousUrl);
-                else
+                } else {
                     this.router.navigate(['/meeting']);
+                }
             } else {
-                let payload = { "name": 'admin', "password": "password" };
-                let payload1 = { "name": this.userName, "password": this.password };
+                let payload = { 'name': 'admin', 'password': 'password' };
+                let payload1 = { 'name': this.userName, 'password': this.password };
                 let loginWarningFlag;
-                localStorage.setItem('loggedInuserName', payload.name);
+                // localStorage.setItem('loggedInuserName', payload.name);
 
                 // this.router.navigateByUrl(this.previousUrl);
                 this._userService.verifyUser(payload1).subscribe(resp => {
                     loginWarningFlag = resp.json().warningFl;
-                    if (loginWarningFlag == false) {
+                    if (loginWarningFlag === false) {
                         this._loginService.getAuthenticationToken(payload).subscribe(resp => {
                             this.jwtToken = this._loginService.getJwtToken();
-                            if (this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
+                            if (this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
                                 this.authFlag = true;
                                 setTimeout(function () {
                                     this.authFlag = false;
@@ -87,13 +87,13 @@ export class LoginComponent implements OnInit, OnDestroy {
                             } else {
                                 let userNamePayload = { userName: this.userName };
                                 this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
-                                    if (res.firstName !== undefined)
+                                    if (res.firstName !== undefined) {
                                         if (!this.previousUrl) {
                                             this.router.navigate(['/dashboard/default']);
-                                        }
-                                        else {
+                                        } else {
                                             this.router.navigateByUrl(this.previousUrl);
                                         }
+                                    }
                                 });
 
                             }

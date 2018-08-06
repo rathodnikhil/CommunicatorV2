@@ -72,13 +72,14 @@ export class UserService {
     getSelectedUser() {
         return this.selectedUser$;
     }
-    getLoggedInUserObj() {        
+    getLoggedInUserObj() {
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
         this.apiRequest.post(url, payload).subscribe(data => {
-            this.loggedInUserObj$.next(data);            
+            this.loggedInUserObj$.next(data);
+            localStorage.setItem('loggedInuserName', data.firstName + ' ' + data.lastName);
         });
         return this.loggedInUserObj$;
     }
