@@ -2,11 +2,11 @@
 .btn-sec {
     background-color: #ffb94b;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
-    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -webkit-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: linear-gradient(to bottom, #fddb6f, #ffb94b);
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
     -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
@@ -22,11 +22,11 @@
     color: rgb(248, 87, 87);
     background-color: rgb(248, 87, 87);
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(253, 78, 78)), to(rgb(248, 87, 87)));
-    background-image: -webkit-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-    background-image: -moz-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-    background-image: -ms-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-    background-image: -o-linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
-    background-image: linear-gradient(top, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -webkit-linear-gradient(to bottom, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -moz-linear-gradient(to bottom, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -ms-linear-gradient(to bottom, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: -o-linear-gradient(to bottom, rgb(253, 78, 78), rgb(248, 87, 87));
+    background-image: linear-gradient(to bottom, rgb(253, 78, 78), rgb(248, 87, 87));
       -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
       -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
       box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;

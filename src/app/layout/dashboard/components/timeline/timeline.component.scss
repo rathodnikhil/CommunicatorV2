@@ -191,11 +191,11 @@ a{
 .card-header{
     background-color: #ffb94b;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
-    background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
-    background-image: linear-gradient(top, #fddb6f, #ffb94b);
+    background-image: -webkit-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: -moz-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: -ms-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: -o-linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-image: linear-gradient(to bottom, #fddb6f, #ffb94b);
     color: #8f5a0a;
     font-weight: bold;
 }
