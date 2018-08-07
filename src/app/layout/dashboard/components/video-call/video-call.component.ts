@@ -33,27 +33,27 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
 
     ngOnInit() {
-        this.loggedInUser = {
-            'id': 2,
-            'email': 'b@gmail.com',
-            'password': '1235',
-            'name': 'sunita',
-            'lastName': 'kolhapure',
-            'active': 1,
-            'teamId': {
-                'prime': null,
-                'errorFl': false,
-                'warningFl': false,
-                'message': null,
-                'teamId': 1,
-                'teamName': 'cfs_pune',
-                'status': {
-                    'statusId': 1,
-                    'status': 'Active'
-                }
-            },
-            'profileImgPath': null
-        };
+        // this.loggedInUser = {
+        //     'id': 2,
+        //     'email': 'b@gmail.com',
+        //     'password': '1235',
+        //     'name': 'sunita',
+        //     'lastName': 'kolhapure',
+        //     'active': 1,
+        //     'teamId': {
+        //         'prime': null,
+        //         'errorFl': false,
+        //         'warningFl': false,
+        //         'message': null,
+        //         'teamId': 1,
+        //         'teamName': 'cfs_pune',
+        //         'status': {
+        //             'statusId': 1,
+        //             'status': 'Active'
+        //         }
+        //     },
+        //     'profileImgPath': null
+        // };
         // localStorage.setItem('loggedInuserName', this.loggedInUser.name + ' ' + this.loggedInUser.lastName);
         // this._userService.getLoggedInUSerDetails().subscribe(data => {
         //     debugger;
@@ -63,6 +63,9 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         //         this.loggedInUser = data;
         //     }
         // });
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUser = data;
+        });
         this._userService.getSelectedUser().subscribe(data => {
             if (data == null || data === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
@@ -75,8 +78,8 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         debugger;
         const meetingName = this.document.getElementById('meeting-name');
 
-        meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
-            + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
+        meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
+            + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
         this.document.getElementById('setup-meeting').click();
         const params = {
             width: '350px',

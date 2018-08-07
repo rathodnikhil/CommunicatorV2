@@ -1,12 +1,13 @@
 
 import { routerTransition } from '../../router.animations';
 import { AlertComponent } from 'app/layout/bs-component/components';
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from './components/custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '../../../../node_modules/@angular/common';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -14,21 +15,21 @@ import { Router } from '@angular/router';
     animations: [routerTransition()],
     providers: [GroupService]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
     _groupService: GroupService;
     _userService: UserService;
-    createGroupsVal: string = '';
-    broadcastMessage: string = '';
-    showtypeMessage: boolean = false;
-    showNewGroup: boolean = false;
-    showNewGroupSuccess: boolean = false;
-    showBroadcastMessageSuccess: boolean = false;
-    duplicateGroup: boolean = false;
+    createGroupsVal = '';
+    broadcastMessage = '';
+    showtypeMessage = false;
+    showNewGroup = false;
+    showNewGroupSuccess = false;
+    showBroadcastMessageSuccess = false;
+    duplicateGroup = false;
     userList = [];
     groupList = [];
     groupArray = [];
-    array =[];
-    i=0;
+    array = [];
+    i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
 
@@ -52,9 +53,10 @@ export class DashboardComponent implements OnInit {
     };
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
-    currentRoute: number = 0;
+    currentRoute = 0;
 
-    constructor(private groupService: GroupService, userService: UserService,private router: Router) {
+    constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
+        private groupService: GroupService, userService: UserService, private router: Router) {
         this._groupService = groupService;
         this._userService = userService;
         this.sliders.push(
@@ -101,16 +103,32 @@ export class DashboardComponent implements OnInit {
         this._userService.getUserList().subscribe(data => {
             this.userList = data;
         });
-        this._groupService.getGroupList().subscribe(data => {            
-            this.groupList = data; 
+        this._groupService.getGroupList().subscribe(data => {
+            this.groupList = data;
         });
 
-        //get loggedin user
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUserObj = data;   
+        // get loggedin user
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUserObj = data;
         });
-       
-    } 
+
+    }
+    ngAfterViewInit(): void {
+        // const s = document.createElement('script');
+        // s.type = 'text/javascript';
+        // s.innerHTML = 'console.log(\'done\');'; // inline script
+        // s.src = '../../../assets/scripts/meetingTest.js';
+
+        const s = this.document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '../../../assets/scripts/meetingTest.js';
+        const __this = this; // to store the current instance to call
+        // afterScriptAdded function on onload event of
+        // script.
+        s.onload = function () { __this.afterScriptAdded(); };
+        this.elementRef.nativeElement.appendChild(s);
+    }
+    afterScriptAdded() { }
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
@@ -154,7 +172,7 @@ export class DashboardComponent implements OnInit {
     resetMsg(event) {
         alert('text reset');
     }
-    //create new group 
+    //create new group
     createGroup(createGroupsVal) {
         if (createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined") {
             this.showNewGroup = true;
@@ -162,17 +180,17 @@ export class DashboardComponent implements OnInit {
                 this.showNewGroup = false;
             }.bind(this), 5000);
         } else {
-           
+
             for (let i in this.groupList) {
                 this.groupArray.push(this.groupList[i].groupId.groupName);
-             }
+            }
             var duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
-            if(duplicateGroupFlag != -1){
+            if (duplicateGroupFlag != -1) {
                 this.duplicateGroup = true;
                 setTimeout(function () {
                     this.duplicateGroup = false;
                 }.bind(this), 6000);
-            }else{
+            } else {
                 const payload = { "groupName": createGroupsVal }
                 this._groupService.saveGroupDetails(payload).subscribe(res => {
                     this.showNewGroup = false;
@@ -186,7 +204,7 @@ export class DashboardComponent implements OnInit {
                 });
             }
         }
-      
+
     }
 
     //close create group modal popup
@@ -195,12 +213,12 @@ export class DashboardComponent implements OnInit {
             case 'addCreateGroup':
                 this.createGroupModal.close();
                 break;
-                case 'addBroadcastMsg':
+            case 'addBroadcastMsg':
                 this.createGroupModal.close();
                 break;
         }
     }
-    addMember(){
+    addMember() {
         alert('addGroupMember');
     }
 }
