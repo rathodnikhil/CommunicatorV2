@@ -22,7 +22,7 @@ export class TeamService {
       this._loginService = loginService;
      }
     setTeamsByLoggedInUserId(payload) {
-      const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?email=' + payload.email;
+      const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?userCode=' + payload.userCode;
       // const resp = new BehaviorSubject<any>({});
       this.apiRequest.post(url, payload).subscribe(data => {
         this.teamList$.next(data);
@@ -49,7 +49,7 @@ export class TeamService {
       return resp;
       }
       setMembersByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?email=' + payload.email;
+        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
         // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
           this.memberList$.next(data);
@@ -62,18 +62,6 @@ export class TeamService {
       getMemberListByLoggedInUserId() {
         return this.memberList$;
     }
-      getMembersByLoggedInUserId(payload) {
-        debugger;
-        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?email=' + payload.email;
-        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-          this.apiRequest.post(url,payload).subscribe(data => {
-              resp.next(data);
-          },
-            err => {
-              //alert(err);
-            });
-        return resp;
-       }
        getAllEnableTeams() {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.http.get(url);
