@@ -174,7 +174,7 @@ export class ScheduleMeetingComponent implements OnInit {
             } else {
                 this.meeting.callType = 'Video';
             }
-            debugger;
+          
             const payload = {
                 'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1, this.meeting.datePicker.day),
                 // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' 

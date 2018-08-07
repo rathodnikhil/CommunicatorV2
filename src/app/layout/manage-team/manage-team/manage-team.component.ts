@@ -4,6 +4,8 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { FormGroup } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-manage-team',
@@ -31,11 +33,13 @@ export class ManageTeamComponent implements OnInit {
     teamList = [];
     selectedTeamName: any;
     user: any = {};
-    // firstName: any;
-    // lastName: any;
-    // userName: any;
-    // email: any;
-    // password: any;
+    firstName: any;
+    lastName: any;
+    userName: any;
+    email: any;
+    password: any;
+    loggedInUser: any;
+    selectedTeamObj: any;
 
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
@@ -64,9 +68,11 @@ export class ManageTeamComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this._userService.getLoggedInUserObj().subscribe(data => {     
+            this.loggedInUser = data;     
+         });
         //getTeamsByLoggedInUserId webservice call
-        const payload = { email: 'rohit@coreflexsolutions.com' };
+        const payload = { userCode: this.loggedInUser.userCode };
         this._teamService.setTeamsByLoggedInUserId(payload);
         this._teamService.getTeamListByLoggedInUserId().subscribe(data => {
             this.userPermissionList = data;
@@ -76,13 +82,18 @@ export class ManageTeamComponent implements OnInit {
         this._teamService.getMemberListByLoggedInUserId().subscribe(data => {
             this.userPermissionMemberList = data;
         });
-       
+        alert(this.userPermissionMemberList.length);
     }
     displayTeamDetails(team) {
         this.selectedTeamName = team.teamName;
+        this.selectedTeamObj = team;
         this.filterMemberList = [];
+      
         for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
+            alert('this.userPermissionMemberList[this.i].team.id'+this.userPermissionMemberList[this.i].team.id);
+            alert('team : '+team.id);
             if (this.userPermissionMemberList[this.i].team.id == team.id) {
+                alert('1');
                 this.filterMemberList.push(this.userPermissionMemberList[this.i]);
             }
         }
@@ -102,7 +113,7 @@ export class ManageTeamComponent implements OnInit {
             }.bind(this), 5000);
         } else {
             this.showAddTeam = false;
-            const payload = { "teamName": newTeamName };
+            const payload = { "teamName": newTeamName , "userCode": this.loggedInUser.userCode };
             const team = { team: { teamName: newTeamName } };
             //  const payload = {firstName,lastName};
             this._teamService.saveTeamDetails(payload).subscribe(
@@ -122,7 +133,7 @@ export class ManageTeamComponent implements OnInit {
         this.showAddTeam = false;
     }
     // add new member  
-    addMember() {
+    addMember(firstName,lastName,userName,password,email) {
     
         // if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
         //     this.showAddMemberFirstName = true;
@@ -156,33 +167,33 @@ export class ManageTeamComponent implements OnInit {
                 this.edited = false;
                 console.log(this.showAddMemberSuccess);
             }.bind(this), 5000);
+            alert(this.selectedTeamObj.teamCode);
 
+            const payload = {
+                "email": email,
+                "password": password,
+                "name": userName,
+                "lastName": lastName,
+                "firstName": firstName,
+                "status.onlineStatus": false,
+                "registeredBy": this.loggedInUser.userCode,
+                "team": this.selectedTeamObj
 
-            // const payload = {
-            //     "email": email,
-            //     "password": password,
-            //     "name": userName,
-            //     "lastName": lastName,
-            //     "firstName": firstName,
-            //     "status.onlineStatus": false,
-
-            // }
-            // this._userService.saveUserDetails(payload).subscribe(
-            //     (res) => {
-                    alert('Member has been saved successfully');
-                    // saveAs(res, payload.firstName,payload.lastName); 
-                    // this.firstName = ' ';
-                    // this.lastName = '';
-                    // this.userName = '';
-                    // this.email = '';
-                    // this.password = '';
-                  //  this.memObj = { userId: { firstName: firstName, lastName: lastName } }
+            }
+            this._userService.saveMemberDetails(payload).subscribe(
+                (res) => {
+                    this.firstName = ' ';
+                    this.lastName = '';
+                    this.userName = '';
+                    this.email = '';
+                    this.password = '';
+                   this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
                     this.userPermissionMemberList.push(this.memObj);
-          //      });
+               });
           
-      //  }
+        }
     
-    }
+//    }
 
     //focus on member name text field
     typeMemberNameFocus() {
@@ -197,15 +208,6 @@ export class ManageTeamComponent implements OnInit {
             case 'addNewTeam':
                 this.addNewTeamModal.close();
                 break;
-            case 'addNewMember':
-                this.addNewMemberModal.close();
-                break;
-        }
-    }
-
-    //close member modal popup
-    closeMemberPopup(popupType) {
-        switch (popupType) {
             case 'addNewMember':
                 this.addNewMemberModal.close();
                 break;
