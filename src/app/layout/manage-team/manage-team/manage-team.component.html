@@ -23,7 +23,8 @@
         <button class="btn btn-sec" style="align:align-center" (click)="open()">Add New Team</button>
         <app-custom-modal #addNewTeamModal [model]="newTeam">
             <div class="modal-body row-label">
-                <div style="margin-top: 20px;" *ngIf="showAddTeam === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddTeam">
+                <div style="margin-top: 20px;" *ngIf="showAddTeam === true" 
+                class="alert alert-danger alert-dismissable" [(ngModel)]="showAddTeam">
                     <strong>Error: </strong>Enter Team Name.
                 </div>
 
@@ -89,50 +90,61 @@
                         <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
                             <strong>Success: </strong>Member has been added Successfully.
                         </div> -->
-                            <div class="row">
+                        <form>
+                            <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="firstName" />
+                                    <input placeholder="Type Name Here.." #firstName/>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="lastName"  />
+                                    <input placeholder="Type Name Here.." #lastName/>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
+                                    <div class="col-md-3">
+                                        <label>Email</label>
+                                    </div>
+                                    <div>
+                                        <input placeholder="Type Email Here.." #email  />
+                                    </div>
+                                </div>
+
+                            <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>UserName</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="userName"  />
+                                    <input placeholder="Type Name Here.." #userName  />
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>Password</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="password" />
+                                    <input placeholder="Type Name Here.." #password   type="password"/>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-3">
                                     <label>Team Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName"  />
+                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" required />
                                 </div>
-                            </div>
-                        
+                            </div> -->
+                        </form>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-sec" (click)="addMember()">Add Member</button>
+                        <button type="button" class="btn btn-sec" (click)="addMember(firstName.value,lastName.value,userName.value,password.value,
+                        email.value)">Add Member</button>
                         <button type="button" class="btn btn-cancel" (click)="closePopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>

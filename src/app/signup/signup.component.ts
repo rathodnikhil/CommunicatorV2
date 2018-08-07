@@ -105,7 +105,7 @@ export class SignupComponent implements OnInit {
                 "name": this.userName,
                 "lastName": this.lastName,
                 "firstName": this.firstName,
-                "status.onlineStatus": true
+                "status.onlineStatus": true,
             }
             this.showAddMemberFirstName = false;
             this.showAddMemberUserName = false;

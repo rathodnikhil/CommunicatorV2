@@ -33,13 +33,26 @@ export class UserService {
 
         return resp;
     }
+
+    saveMemberDetails(payload): Observable<any> {
+        const url = urlConstants.baseUrl + 'saveMemberDetails';
+        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.apiRequest.post(url, payload).subscribe(data => {
+            resp.next(data);
+        },
+            err => {
+                //alert(err);
+            });
+
+        return resp;
+    }
     //to verify whether user is registered or not
     verifyUser(payload) {
         const url = urlConstants.baseUrl + 'verifyUser';
         return this.http.post(url, payload);
     }
     setUserList(payload) {
-        const url = urlConstants.baseUrl + 'memberListByUser?email=' + payload.email;
+        const url = urlConstants.baseUrl + 'memberListByUser?userCode=' + payload.userCode;
         // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
             this.UserList$.next(data);
