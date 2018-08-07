@@ -23,8 +23,8 @@ const routes: Routes = [
             { path: 'myProfile', loadChildren: './my-profile/my-profile.module#MyProfileModule' },
             { path: 'changeRights', loadChildren: './user-rights/user-rights.module#UserRightsModule' },
             { path: 'myCalendar', loadChildren: './my-calendar/my-calendar.module#MyCalendarModule' },
-          //  { path: 'manageAdmin', loadChildren: './manageAdmin/manage-admin.module#ManageAdminRoutingModule' },
-            { path: 'meeting', loadChildren: './meeting/meeting.module#MeetingModule'}
+            { path: 'meeting', loadChildren: './meeting/meeting.module#MeetingModule'},
+            { path: 'ManageAdmin', loadChildren: './manage-admin/manage-admin.module#ManageAdminModule'}
         ]
     }
 ];
