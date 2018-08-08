@@ -16,6 +16,7 @@ export class UserService {
     _loginService: LoginService;
     loggedInUser$: Subject<any[]> = new BehaviorSubject<any>({});
     selectedUser$: Subject<any[]> = new BehaviorSubject<any>({});
+    selectedGroup$: Subject<any[]> = new BehaviorSubject<any>({});
     UserList$: Subject<any[]> = new BehaviorSubject<any>({});
     loggedInUserRole$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
@@ -85,6 +86,12 @@ export class UserService {
     getSelectedUser() {
         return this.selectedUser$;
     }
+    setSelectedGroup(Group) {
+        this.selectedGroup$.next(Group);
+    }
+    getSelectedGroup() {
+        return this.selectedGroup$;
+    }
     getLoggedInUserObj() {
         return this.loggedInUserObj$;
     }
@@ -110,4 +117,10 @@ export class UserService {
             });
         // return resp;
     }
+
+    getAllAdminList() {
+        const url = urlConstants.baseUrl + 'getAllAdminList';
+        return this.apiRequest.get(url);
+    }
+
 }

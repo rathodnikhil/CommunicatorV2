@@ -39,7 +39,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.getAllFutureMeetingList();
 
         // recent meeting webservice call    
-        const payload = { email: 'rohit@coreflexsolutions.com' };
+        const payload = { userCode: this.loggedInUser.userCode };
         this.recentMeeting = {};
         this._meetingService.setRecentMeetingByUser(payload);
         this._meetingService.getRecentMeetingByUser().subscribe(data => {

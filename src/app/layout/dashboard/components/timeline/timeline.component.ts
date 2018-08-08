@@ -20,6 +20,7 @@ export class TimelineComponent implements OnInit {
         Button2Content: ''
     };
     selectedUser: any;
+    selectedGroup: any;
     loggedInUser: any;
     _userService: UserService;
     _chatService: ChatService;
@@ -41,14 +42,10 @@ export class TimelineComponent implements OnInit {
             // alert(err);
             this.router.navigate(['/login']);
          });
-    
-        this._userService.getSelectedUser().subscribe(data => {
-            if (data == null || data === undefined || data.length === 0) {
-                this.router.navigate(['/dashboard/default']);
-            } else {
-                this.selectedUser = data;
-                this.getChattingHistoryBySelectedUser();
-            }
+         this.chattingHistoryList = [];
+         this._chatService.getChattingHistoryList().subscribe(data => {    
+            this.chattingHistoryList = data;  
+          
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
@@ -70,6 +67,7 @@ export class TimelineComponent implements OnInit {
             }
         }
         sendMessage() {
+            alert(this.selectedUser.userCode);
             let payload = {userFrom: this.loggedInUser.userCode ,userTo: this.selectedUser.userCode ,chatMsg: this.chatMsg};
             if ( this.chatMsg === "" || this.chatMsg === null || typeof this.chatMsg === "undefined") {
                 this.enterMsgFlag = true;
@@ -86,23 +84,7 @@ export class TimelineComponent implements OnInit {
               
             }
          }
-         getChattingHistoryBySelectedUser() {
-            let payload = {userFrom: this.loggedInUser.userCode ,userTo: this.selectedUser.userCode};
-            this.chattingHistoryList = [];
-            this._chatService.setChattingHistoryList(payload);
-            this._chatService.getChattingHistoryList().subscribe(data => {     
-              
-                // if (resp.errorFl || resp.warningFl) {
-                //     this.futureMeetingList = [];
-                // } else {
-                //     this.futureMeetingList = data;
-                //     this.filteredFutureMeetingList = this.futureMeetingList;
-                // }       
-                this.chattingHistoryList = data;  
-              
-            }, err => {
-                // alert(err);
-                this.router.navigate(['/login']);
-             });
-         }
+         onKey(event) {
+            if (event.key == "Enter") { this.sendMessage(); }
+        }
 }

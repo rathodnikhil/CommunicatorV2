@@ -191,7 +191,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                     this.duplicateGroup = false;
                 }.bind(this), 6000);
             } else {
-                const payload = { "groupName": createGroupsVal }
+                const payload = { "groupName": createGroupsVal , "user": this.loggedInUserObj}
                 this._groupService.saveGroupDetails(payload).subscribe(res => {
                     this.showNewGroup = false;
                     this.showNewGroupSuccess = true;

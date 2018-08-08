@@ -41,6 +41,11 @@ export class HeaderComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
         });
+        let payload = { userCode: this.loggedInUserObj.userCode };
+        this._groupService.setSideBarMenuByLoggedInUSer(payload);
+        this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
+            this.sidebarMenuList = data;
+        });
 
     }
 
@@ -70,10 +75,5 @@ export class HeaderComponent implements OnInit {
 
     hamburger_cross() {
         this.isClosed = !this.isClosed;
-        let payload = { userCode: this.loggedInUserObj.userCode };
-        this._groupService.setSideBarMenuByLoggedInUSer(payload);
-        this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
-            this.sidebarMenuList = data;
-        });
     }
 }

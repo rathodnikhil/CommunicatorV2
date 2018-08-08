@@ -20,7 +20,7 @@ export class GroupService {
    
     //get groups by loggedinuser
     setGroupList(payload) {
-      const url = urlConstants.baseUrl + 'getGroupByLoggedInUserId?email=' + payload.email;
+      const url = urlConstants.baseUrl + 'getGroupByLoggedInUserId?userCode=' + payload.userCode;
       // const resp = new BehaviorSubject<any>({});
       this.apiRequest.post(url, payload).subscribe(data => {
           this.GroupList$.next(data);
