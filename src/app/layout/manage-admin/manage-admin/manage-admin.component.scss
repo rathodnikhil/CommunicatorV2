@@ -1,0 +1,65 @@
+@import '../../user-rights/user-rights/user-rights.component.scss';
+.top {
+    height: 92px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    background: #3277d3;
+    color: #ffffff;
+    background-image: url(/assets/images/logobg.png);
+    background-position-y: bottom;
+}
+.left {
+    width: 0%;
+    float:left;
+    padding: 15px;
+}
+.main {
+ // margin-left:15%;
+  padding: 15px;
+  border: 1px solid #ccd1d4;
+  margin:2%;
+  box-shadow: 5px 10px 5px 5px #ccd1d4;
+ }
+ table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    padding:30px;
+}
+
+td, th {
+   // border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+th{
+    //border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+
+}
+.main table tr td a {
+    cursor: pointer;
+    color: #3277d3;
+    text-decoration: underline;
+  }
+  .main table tr td div a span {
+    cursor: pointer;
+    color: #3277d3;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+  .setting-header{
+    background: #3277d3;color: #ffffff;padding: 8px;
+  }
+.button-block{
+    text-align:center; padding-top: 15px;
+}
+a{
+    color: #ffffff;
+    cursor: pointer;
+}
+input[type="file"]
+{
+   color: transparent;
+}

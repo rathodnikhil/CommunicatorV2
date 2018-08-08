@@ -1,3 +1,33 @@
-<p>
-  manage-admin works!
-</p>
+<div class="top">
+  <div class="col-md-12 header" style="text-align: center;">
+        <h3>Manage Admin</h3>
+  </div>
+</div>
+<div class="left">
+</div>
+<div class="main">
+  <h4>Admin Details</h4>
+  <hr>
+  <table>
+    <tr>
+      <th>Sr. No</th>
+      <th>Full Name</th>
+      <th>UserName</th>
+      <th>Password</th>
+      <th>Email</th>
+      <th>UserCode</th>
+      <th>Status</th>
+    </tr>
+     <tr *ngFor="let admin of allAdminList ;let srNo = index">
+          <td>{{srNo+1}}</td>
+          <td>{{admin.firstName}} {{admin.lastName}}</td>
+          <td>{{admin.name}}</td>
+          <td>{{admin.Password}}</td>
+          <td>{{admin.email}}</td>
+          <td>{{admin.userCode}}</td>
+          <td>{{admin.status.status}}</td>
+    </tr>
+  </table>
+  
+
+</div>

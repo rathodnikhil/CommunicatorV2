@@ -3,26 +3,31 @@ import { UserService } from '../../../../services/user.service';
 import { GroupService } from '../../../../services/group.service';
 import { LoginService } from '../../../../services/login.service';
 import { Router } from '@angular/router';
+import { ChatService } from '../../../../services/chat.service';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
+    _userService: UserService;
+    _groupService: GroupService;
+    _loginService: LoginService;
+    _chatService: ChatService;
     joinMeeting: boolean;
     activeStatus: boolean;
     meetingMember: boolean;
     jwtToken: string;
+    selectedUser: any;
+    selectedGroup: any;
     userList = [];
     groupList = [];
-    _userService: UserService;
-    _groupService: GroupService;
-    _loginService: LoginService;
     loggedInUser: any;
-    constructor(userService: UserService, groupService: GroupService, loginService: LoginService, private router: Router) {
+    constructor(userService: UserService, groupService: GroupService,chatService: ChatService, loginService: LoginService,  private router: Router) {
         this._userService = userService;
         this._groupService = groupService;
         this._loginService = loginService;
+        this._chatService = chatService;
     }
     ngOnInit() {
         this.activeStatus = true;
@@ -50,5 +55,43 @@ export class NotificationComponent implements OnInit {
     }
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
+        this.getChattingHistoryBySelectedUser();        
+    }
+
+    viewGroupDetails(group) {
+        this._userService.setSelectedGroup(group);
+        this.getChattingHistoryBySelectedGroup();
+    }
+    getChattingHistoryBySelectedUser() {
+        this._userService.getSelectedUser().subscribe(data => {
+            debugger;
+            if (data == null || data === undefined || data.length === 0) {
+                this.router.navigate(['/dashboard/default']);
+            } else {
+                this.selectedUser = data;
+            }
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+         });
+         const  payload = {userFrom: this.loggedInUser.userCode , userTo: this.selectedUser.userCode};
+       this._chatService.setChattingHistoryList(payload);
+    
+    }
+
+    getChattingHistoryBySelectedGroup() {
+    
+            this._userService.getSelectedGroup().subscribe(data => {
+                if (data == null || data === undefined || data.length === 0) {
+                    this.router.navigate(['/dashboard/default']);
+                } else {
+                    this.selectedGroup = data;
+                }
+            }, err => {
+                // alert(err);
+                this.router.navigate(['/login']);
+             });
+             const  payload = {userFrom: this.loggedInUser.userCode , groupCode: this.selectedGroup.groupId.groupId};
+       this._chatService.setChattingHistoryList(payload);
     }
 }

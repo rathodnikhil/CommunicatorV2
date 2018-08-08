@@ -49,7 +49,7 @@ export class MeetingService {
 
     //recent meeting webservice
     setRecentMeetingByUser(payload) {
-        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?email=' + payload.email;
+        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.recentMeeting$.next(data);
         },
