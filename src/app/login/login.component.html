@@ -4,7 +4,7 @@
             <!-- <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " /> -->
           
         </div>
-        <div class="row h-100 d-flex justify-content-center">
+        <div class="row h-100 d-flex justify-content-center"  *ngIf="loginUiFlag">
             <div id="login" class="col-md-4">
                 <div class="inner-border">
                     <h1>Log In</h1> 
@@ -46,13 +46,32 @@
                         <!-- <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']"> -->
                         <input type="submit" id="submit" [(ngModel)]="Logintext" (click)="login()" 
                         />
-                        <a href="">Forgot your password?</a>
-                        <a [routerLink]="['/signup']">Register</a>
+                        <a  (click)="forgetPassword()">Forgot your password?</a>
+                        <!-- <a [routerLink]="['/signup']">Register</a> -->
                     </fieldset>
+                  
                 </div>
             </div>
+          
         </div>
-
+        <div  *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
+                <div style="margin-top: 20px;" *ngIf="emailValidationFlag" class="alert alert-danger alert-dismissable">
+                        <strong>Error: </strong>Enter Registered Email.
+                    </div>
+                    <div style="margin-top: 20px;" *ngIf="emailSuccessFlag" class="alert alert-success alert-dismissable">
+                        Password reset link has been successfully sent to your email account ,check your email.
+                    </div>
+                <div class="input-group mb-3">
+             <div class="input-group-prepend">
+                 <span class="input-group-text">
+                     <i class="fa fa-envelope fa-fw"></i>
+                 </span>
+             </div>
+             <input class="form-control" type="text" placeholder="Enter Email" 
+             [(ngModel)]="forgetEmail" (keyup)="onKey($event)" required>
+             <button class="btn btn-sec" (click)="resetPassword()">Submit</button>
+         </div>
+     </div>
         <div class="row h-100 d-flex justify-content-center fixed-footer">
             <div>Copyright &copy; 2018 Coreflex Solutions</div>
         </div>

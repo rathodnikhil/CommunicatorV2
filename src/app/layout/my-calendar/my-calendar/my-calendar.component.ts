@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
     styleUrls: ['./my-calendar.component.scss']
 })
 export class MyCalendarComponent implements OnInit {
+    loggedInUserObj: any;
+    allMeetingByLoggedInUserList = [];
+
     calendarOptions: Options;
     displayEvent: any;
     dateObj = new Date();
@@ -82,16 +85,27 @@ export class MyCalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._userService.getLoggedInUSerDetails().subscribe(data => {
-            if (Object.keys(data).length === 0) {
-                this.router.navigate(['/login']);
-            } else {
-                debugger;
-                this.loggedInUser = data;
-                this._meetingService.getAllMeetingsbyLoggedInUserId(this.loggedInUser.id).subscribe(data => { 
-                    const cal= data.json();
+         // get loggedin user
+         this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUserObj = data;
+        });
+        // this._userService.getLoggedInUSerDetails().subscribe(data => {
+        //     if (Object.keys(data).length === 0) {
+        //         this.router.navigate(['/login']);
+        //     } else {
+        //         debugger;
+        //         this.loggedInUser = data;
+        //         this._meetingService.getAllMeetingsbyLoggedInUserId(this.loggedInUser.id).subscribe(data => { 
+        //             const cal= data.json();
                     
-                });
+        //         });
+        //     }
+        // });
+        const payload = { userCode: this.loggedInUser.userCode };
+        this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
+            debugger;
+            if (!data.warningFl && !data.errorFl ) {
+                this.allMeetingByLoggedInUserList = data;
             }
         });
         
