@@ -13,19 +13,24 @@ import { Injectable } from '@angular/core';
 })
 export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
-    user = {};
     _userService: UserService;
+    user = {};
+    forgetEmail: any;
     jwtToken: any;
     authFlag: boolean;
     userNameFlag: boolean;
     passwordFlag: boolean;
+    loginUiFlag: boolean;
     userName: any;
     password: any;
     previousUrl: string;
     passwordMacthFlag: boolean;
     isGuest: boolean;
+    forgetPasswordFlag: boolean;
     Logintext = "Login";
     loggedInUserObj: any;
+    emailSuccessFlag : boolean;
+    emailValidationFlag : boolean;
     constructor(public router: Router, loginService: LoginService, userService: UserService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -35,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         // debugger;
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
+        this.loginUiFlag = true;
     }
 
     ngOnDestroy(): void {
@@ -111,5 +117,22 @@ export class LoginComponent implements OnInit, OnDestroy {
                     });
             }
         }
+    }
+    forgetPassword() {
+       this.forgetPasswordFlag = true;
+       this.loginUiFlag = false;
+    }
+    resetPassword() {
+        if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
+            this.emailValidationFlag = true;
+            setTimeout(function () {
+                this.emailValidationFlag = false;
+            }.bind(this), 5000);
+         }else{
+            this.emailSuccessFlag = true;
+            setTimeout(function () {
+                this.emailSuccessFlag = false;
+            }.bind(this), 7000);
+         }
     }
 }

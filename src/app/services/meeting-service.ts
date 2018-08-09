@@ -96,8 +96,8 @@ export class MeetingService {
     }
     getAllMeetingsbyLoggedInUserId(payload) {
 
-        const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?loggedInUserId=' + payload;
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
+        return this.apiRequest.post(url, payload);
     }
 
     verifyUser(payload) {
