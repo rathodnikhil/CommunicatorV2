@@ -24,7 +24,9 @@ const routes: Routes = [
             { path: 'changeRights', loadChildren: './user-rights/user-rights.module#UserRightsModule' },
             { path: 'myCalendar', loadChildren: './my-calendar/my-calendar.module#MyCalendarModule' },
             { path: 'meeting', loadChildren: './meeting/meeting.module#MeetingModule'},
-            { path: 'ManageAdmin', loadChildren: './manage-admin/manage-admin.module#ManageAdminModule'}
+            { path: 'ManageAdmin', loadChildren: './manage-admin/manage-admin.module#ManageAdminModule'},
+            { path: 'ResetPassword', loadChildren: './reset-password/reset-password.module#ResetPasswordModule'}
+            
         ]
     }
 ];

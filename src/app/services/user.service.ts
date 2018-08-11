@@ -19,6 +19,7 @@ export class UserService {
     selectedGroup$: Subject<any[]> = new BehaviorSubject<any>({});
     UserList$: Subject<any[]> = new BehaviorSubject<any>({});
     loggedInUserRole$: Subject<any[]> = new BehaviorSubject<any>({});
+    forgotPasswordToken$: Subject<any> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
@@ -122,5 +123,32 @@ export class UserService {
         const url = urlConstants.baseUrl + 'getAllAdminList';
         return this.apiRequest.get(url);
     }
+    setUserForgotPasswordToken(payload) {
+        const url = urlConstants.baseUrl + 'forgotPassword?email=' + payload.email;
+        this.http.post(url, payload).subscribe(data => {
+            this.forgotPasswordToken$.next(data);
+        
+            });
+            return this.forgotPasswordToken$;
+    }
+    getUserForgotPasswordToken() {
+        alert(this.forgotPasswordToken$);
+        return this.forgotPasswordToken$;
+    }
+
+      //save individual chatting
+   resetPassword(payload): Observable<any> {
+    const url = urlConstants.baseUrl + 'resetPassword';
+    let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+      this.http.post(url,payload).subscribe(data => {
+          resp.next(data);
+      },
+        err => {
+        //   alert("Error occured");
+        //   alert(err);
+        });
+
+    return resp;
+  }
 
 }
