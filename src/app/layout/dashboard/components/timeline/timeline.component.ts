@@ -25,31 +25,38 @@ export class TimelineComponent implements OnInit {
     _userService: UserService;
     _chatService: ChatService;
     enterMsgFlag: boolean;
-    chattingHistoryList =[];
+    chattingHistoryList = [];
     chattingHistoryObj: any;
     emptyHistoryFlag: boolean;
     // router: Router;
     chatMsg: any;
-    constructor(userService: UserService, private router: Router,chatService: ChatService) {
+    constructor(userService: UserService, private router: Router, chatService: ChatService) {
         this._userService = userService;
         this._chatService = chatService;
     }
 
     ngOnInit() {
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUser = data;     
+        this.selectedUser={};
+        this._userService.getSelectedUser().subscribe(res => {
+            debugger;
+            if (res)
+                this.selectedUser = res;
+        });
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUser = data;
+            
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
-         this.chattingHistoryList = [];
-         this._chatService.getChattingHistoryList().subscribe(data => {    
-            this.chattingHistoryList = data;  
-          
+        });
+        this.chattingHistoryList = [];
+        this._chatService.getChattingHistoryList().subscribe(data => {
+            this.chattingHistoryList = data;
+
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
+        });
     }
     open() {
         // alert(loggedInUser.name + loggedInUser.lastName);
@@ -59,32 +66,32 @@ export class TimelineComponent implements OnInit {
         alert('copy text');
     }
 
-    closeviewProfilePopup(popupType){
-            switch (popupType) {
-                case 'viewProfile':
-                    this.viewProfileModal.close();
-                    break;
-            }
+    closeviewProfilePopup(popupType) {
+        switch (popupType) {
+            case 'viewProfile':
+                this.viewProfileModal.close();
+                break;
         }
-        sendMessage() {
-            alert(this.selectedUser.userCode);
-            let payload = {userFrom: this.loggedInUser.userCode ,userTo: this.selectedUser.userCode ,chatMsg: this.chatMsg};
-            if ( this.chatMsg === "" || this.chatMsg === null || typeof this.chatMsg === "undefined") {
-                this.enterMsgFlag = true;
-                setTimeout(function () {
-                    this.enterMsgFlag = false;
-                }.bind(this), 5000);
-            }else{
-             this._chatService.saveChat(payload).subscribe(data => {
+    }
+    sendMessage() {
+        alert(this.selectedUser.userCode);
+        let payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: this.chatMsg };
+        if (this.chatMsg === "" || this.chatMsg === null || typeof this.chatMsg === "undefined") {
+            this.enterMsgFlag = true;
+            setTimeout(function () {
+                this.enterMsgFlag = false;
+            }.bind(this), 5000);
+        } else {
+            this._chatService.saveChat(payload).subscribe(data => {
                 this.chatMsg = "";
                 // this.chattingHistoryObj = data;
                 // alert(this.chattingHistoryObj.chatmsg);
                 // this.chattingHistoryList.push(this.chattingHistoryObj);
             });
-              
-            }
-         }
-         onKey(event) {
-            if (event.key == "Enter") { this.sendMessage(); }
+
         }
+    }
+    onKey(event) {
+        if (event.key == "Enter") { this.sendMessage(); }
+    }
 }

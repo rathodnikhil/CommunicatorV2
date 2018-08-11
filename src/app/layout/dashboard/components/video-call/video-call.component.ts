@@ -21,14 +21,14 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         // s.innerHTML = 'console.log(\'done\');'; // inline script
         // s.src = '../../../assets/scripts/meetingTest.js';
 
-        const s = this.document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = '../../../assets/scripts/meetingPeer.js';
-        const __this = this; // to store the current instance to call
-        // afterScriptAdded function on onload event of
-        // script.
-        s.onload = function () { __this.afterScriptAdded(); };
-        this.elementRef.nativeElement.appendChild(s);
+        // const s = this.document.createElement('script');
+        // s.type = 'text/javascript';
+        // s.src = '../../../assets/scripts/meetingPeer.js';
+        // const __this = this; // to store the current instance to call
+        // // afterScriptAdded function on onload event of
+        // // script.
+        // s.onload = function () { __this.afterScriptAdded(); };
+        // this.elementRef.nativeElement.appendChild(s);
     }
 
 
@@ -76,18 +76,18 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         debugger;
-        const meetingName = this.document.getElementById('meeting-name');
+        // const meetingName = this.document.getElementById('meeting-name');
 
-        meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
-            + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
-        this.document.getElementById('setup-meeting').click();
-        const params = {
-            width: '350px',
-            height: '420px',
-        };
-        if (typeof (window['functionFromExternalScript']) === 'function') {
-            window['functionFromExternalScript'](params);
-        }
+        // meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
+        //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
+        // this.document.getElementById('setup-meeting').click();
+        // const params = {
+        //     width: '350px',
+        //     height: '420px',
+        // };
+        // if (typeof (window['functionFromExternalScript']) === 'function') {
+        //     window['functionFromExternalScript'](params);
+        // }
     }
 
 }
