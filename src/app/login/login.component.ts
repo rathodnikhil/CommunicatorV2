@@ -15,13 +15,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
     _userService: UserService;
     user = {};
-    forgetEmail: any;
     jwtToken: any;
     authFlag: boolean;
     userNameFlag: boolean;
     passwordFlag: boolean;
     loginUiFlag: boolean;
-    emailFailFlag: boolean;
     userName: any;
     password: any;
     previousUrl: string;
@@ -30,15 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     forgetPasswordFlag: boolean;
     Logintext = "Login";
     loggedInUserObj: any;
-    emailSuccessFlag : boolean;
-    emailValidationFlag : boolean;
-    forgotPasswordValidationFlag: boolean;
-    confirmPasswordValidationFlag: boolean;
-    confirmForgotPasswordMatchFlag: boolean;
-    resetSuccessFlag: boolean;
-    forgetPassordVal: any;
-    confirmForgotPasswordVal: any;
-    forgotPasswordToken: any;
+  
     constructor(public router: Router, loginService: LoginService, userService: UserService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -49,7 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
         this.loginUiFlag = true;
-        this.emailFailFlag = false;
     }
 
     ngOnDestroy(): void {
@@ -127,73 +116,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             }
         }
     }
-
-    //forgot password link clicked method
     forgetPassword() {
        this.forgetPasswordFlag = true;
        this.loginUiFlag = false;
     }
-    
-    //send email to verify user and email service
-    sendEmailForgotPassword() {
-        if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
-            this.emailValidationFlag = true;
-            setTimeout(function () {
-                this.emailValidationFlag = false;
-            }.bind(this), 5000);
-         }else{
-             const payload = {email: this.forgetEmail}
-             this._userService.setUserForgotPasswordToken(payload).subscribe(res => {
-                if ( res.warningFl === false) {
-                    this.emailFailFlag = true;
-                    setTimeout(function () {
-                        this.emailFailFlag = false;
-                    }.bind(this), 7000);
-                } else {
-                    this.emailSuccessFlag = true;
-                    setTimeout(function () {
-                        this.emailSuccessFlag = false;
-                    }.bind(this), 5000);
-                    this.forgetEmail = '';
-                }
-            },
-                err => {
-                });
-         }
-    }
-
-    //reset password webservice
-    resetPassword() {
-        if (this.forgetPassordVal === '' || this.forgetPassordVal === null || typeof this.forgetPassordVal === 'undefined') {
-            this.forgotPasswordValidationFlag = true;
-            setTimeout(function () {
-                this.forgotPasswordValidationFlag = false;
-            }.bind(this), 5000);
-         }else if(this.confirmForgotPasswordVal === '' || this.confirmForgotPasswordVal === null || typeof this.confirmForgotPasswordVal === 'undefined'){
-            this.confirmPasswordValidationFlag = true;
-            setTimeout(function () {
-                this.confirmPasswordValidationFlag = false;
-            }.bind(this), 5000);
-         }else if(this.forgetPassordVal != this.confirmForgotPasswordVal){
-            this.confirmForgotPasswordMatchFlag = true;
-            setTimeout(function () {
-                this.confirmForgotPasswordMatchFlag = false;
-            }.bind(this), 5000);
-         }else{
-            this._userService.getUserForgotPasswordToken().subscribe(data => {     
-                this.forgotPasswordToken = data;  
-                alert('token' + this.forgotPasswordToken);
-                const payload ={"forgotPasswordToken": this.forgotPasswordToken,"passwordString" : this.forgetPassordVal};
-                this._userService.resetPassword(payload).subscribe(data => {
-                    this.resetSuccessFlag = true;
-                    setTimeout(function () {
-                        this.resetSuccessFlag = false;
-                    }.bind(this), 5000);
-                    this.forgetPassordVal = '';
-                    this.confirmForgotPasswordVal = '';   
-                });
-             });
-           
-         }
-    }
+ backToLogin(){
+    this.forgetPasswordFlag = false;
+    this.loginUiFlag = true;
+ }
 }
