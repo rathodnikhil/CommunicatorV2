@@ -46,7 +46,7 @@
                         <!-- <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']"> -->
                         <input type="submit" id="submit" [(ngModel)]="Logintext" (click)="login()" 
                         />
-                        <a  (click)="forgetPassword()">Forgot your password?</a>
+                        <a [routerLink]="['/reset']">Forgot your password?</a>
                         <!-- <a [routerLink]="['/signup']">Register</a> -->
                     </fieldset>
                   
