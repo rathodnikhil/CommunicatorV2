@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
     _userService: UserService;
     user = {};
-    forgetEmail: any;
     jwtToken: any;
     authFlag: boolean;
     userNameFlag: boolean;
@@ -29,8 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     forgetPasswordFlag: boolean;
     Logintext = "Login";
     loggedInUserObj: any;
-    emailSuccessFlag : boolean;
-    emailValidationFlag : boolean;
+  
     constructor(public router: Router, loginService: LoginService, userService: UserService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -122,17 +120,8 @@ export class LoginComponent implements OnInit, OnDestroy {
        this.forgetPasswordFlag = true;
        this.loginUiFlag = false;
     }
-    resetPassword() {
-        if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
-            this.emailValidationFlag = true;
-            setTimeout(function () {
-                this.emailValidationFlag = false;
-            }.bind(this), 5000);
-         }else{
-            this.emailSuccessFlag = true;
-            setTimeout(function () {
-                this.emailSuccessFlag = false;
-            }.bind(this), 7000);
-         }
-    }
+ backToLogin(){
+    this.forgetPasswordFlag = false;
+    this.loginUiFlag = true;
+ }
 }

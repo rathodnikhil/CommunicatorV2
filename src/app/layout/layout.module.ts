@@ -7,6 +7,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ResetPasswordComponent } from './reset-password/reset-password/reset-password.component';
 
 @NgModule({
     imports: [
@@ -15,6 +16,6 @@ import { HeaderComponent } from './components/header/header.component';
         TranslateModule,
         NgbDropdownModule.forRoot()
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, ResetPasswordComponent]
 })
 export class LayoutModule {}

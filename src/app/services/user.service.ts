@@ -122,5 +122,12 @@ export class UserService {
         const url = urlConstants.baseUrl + 'getAllAdminList';
         return this.apiRequest.get(url);
     }
-
+    forgotPasswordSendMail(payload) {
+        const url = urlConstants.baseUrl + 'forgotPasswordSendMail?email='+payload.email;
+        return this.http.post(url, payload);
+    }
+    resetpassword(payload) {
+        const url = urlConstants.baseUrl + 'resetPassword';
+        return this.http.post(url, payload);
+    }
 }

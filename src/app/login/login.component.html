@@ -55,6 +55,9 @@
           
         </div>
         <div  *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
+                <div style="margin-top: 20px;" *ngIf="emailFailFlag" class="alert alert-danger alert-dismissable">
+                        <strong>Error: </strong>There is some error while sending email.
+                    </div>
                 <div style="margin-top: 20px;" *ngIf="emailValidationFlag" class="alert alert-danger alert-dismissable">
                         <strong>Error: </strong>Enter Registered Email.
                     </div>
@@ -68,9 +71,45 @@
                  </span>
              </div>
              <input class="form-control" type="text" placeholder="Enter Email" 
-             [(ngModel)]="forgetEmail" (keyup)="onKey($event)" required>
-             <button class="btn btn-sec" (click)="resetPassword()">Submit</button>
+             [(ngModel)]="forgetEmail" (keyup)="onKey($event)" required/>
          </div>
+         
+         <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
+
+         <!-- //////////////////////////////////////////////////////////////////////////////// -->
+         <div style="margin-top: 20px;" *ngIf="forgotPasswordValidationFlag" class="alert alert-danger alert-dismissable">
+                <strong>Error: </strong>Enter password.
+            </div>
+        <div style="margin-top: 20px;" *ngIf="confirmPasswordValidationFlag" class="alert alert-danger alert-dismissable">
+                <strong>Error: </strong>Enter confirm password.
+            </div>
+            <div style="margin-top: 20px;" *ngIf="confirmForgotPasswordMatchFlag" class="alert alert-danger alert-dismissable">
+                    <strong>Error: </strong>Password and confirm password dose not match.
+                </div>
+            <div style="margin-top: 20px;" *ngIf="resetSuccessFlag" class="alert alert-success alert-dismissable">
+                Password has been reset successfully ,please verify by login to your account.
+            </div>
+        <div class="input-group mb-3">
+     <div class="input-group-prepend">
+         <span class="input-group-text">
+             <i class="fa fa fa-lock fa-fw"></i>
+         </span>
+     </div>
+     <input class="form-control" type="password" placeholder="Enter Password" 
+     [(ngModel)]="forgetPassordVal" (keyup)="onKey($event)" required/>
+ </div>
+ <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fa fa fa-lock fa-fw"></i>
+            </span>
+        </div>
+        <input class="form-control" type="password" placeholder="Enter Confirm Password" 
+        [(ngModel)]="confirmForgotPasswordVal" (keyup)="onKey($event)" required/>
+    </div>
+ <button class="btn btn-sec" (click)="resetPassword()">Submit</button>
+ <!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+
      </div>
         <div class="row h-100 d-flex justify-content-center fixed-footer">
             <div>Copyright &copy; 2018 Coreflex Solutions</div>
