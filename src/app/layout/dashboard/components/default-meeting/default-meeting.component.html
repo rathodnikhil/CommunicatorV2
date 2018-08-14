@@ -93,7 +93,7 @@
                         </div>
                         <div class="col-md-12">
                                 <strong class="primary-font" style="color:#3277d3;">
-                                        <br> Meeting Host : {{recentMeeting.createdBy.name}}&nbsp;{{recentMeeting.createdBy.lastName}}
+                                        <br> Meeting Host : {{recentMeeting.createdBy.firstName}}&nbsp;{{recentMeeting.createdBy.lastName}}
                                         <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                         <br> Meeting Duration : {{recentMeeting.duration}} Hour</strong>
                         </div>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-md-12">
                             <strong style="color:#3277d3;">
-                                <br> Meeting Host : {{meeting.createdBy.name}}&nbsp;{{meeting.createdBy.lastName}}
+                                <br> Meeting Host : {{meeting.createdBy.firstName}}&nbsp;{{meeting.createdBy.lastName}}
                                 <br> Meeting Duration : {{meeting.duration}} Hour
                                 <br> Meeting End Date/Time : {{meeting.meetingEndDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
                             </strong>
