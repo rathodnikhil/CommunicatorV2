@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../services/user.service';
 import { GroupService } from '../../../services/group.service';
+import { LoginService} from '../../../services/login.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
     isClosed = true;
     loggedInUserObj: any;
     sidebarMenuList = [];
-    constructor(private translate: TranslateService, public router: Router, userService: UserService, groupService: GroupService) {
+    constructor(private translate: TranslateService, public router: Router,
+         userService: UserService, groupService: GroupService) {
 
         this._userService = userService;
         this._groupService = groupService;
@@ -75,5 +77,13 @@ export class HeaderComponent implements OnInit {
 
     hamburger_cross() {
         this.isClosed = !this.isClosed;
+    }
+    logout() {
+        alert('logout');
+        let payload = { userCode: this.loggedInUserObj.userCode };
+        this._userService.logoutApplication(payload).subscribe(data => {
+         alert('log out successfully');
+        });
+
     }
 }

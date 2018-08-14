@@ -22,10 +22,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginUiFlag: boolean;
     userName: any;
     password: any;
+    forgetEmail: any;
     previousUrl: string;
     passwordMacthFlag: boolean;
     isGuest: boolean;
     forgetPasswordFlag: boolean;
+    emailSuccessFlag: boolean;
+    emailValidationFlag: boolean;
+    emailFailFlag: boolean;
     Logintext = "Login";
     loggedInUserObj: any;
   
@@ -75,9 +79,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 let payload = { 'name': 'admin', 'password': 'password' };
                 let payload1 = { 'name': this.userName, 'password': this.password };
                 let loginWarningFlag;
-                // localStorage.setItem('loggedInuserName', payload.name);
-
-                // this.router.navigateByUrl(this.previousUrl);
                 this._userService.verifyUser(payload1).subscribe(resp => {
                     loginWarningFlag = resp.json().warningFl;
                     if (loginWarningFlag === false) {
@@ -117,11 +118,23 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
     forgetPassword() {
+        alert();
        this.forgetPasswordFlag = true;
        this.loginUiFlag = false;
     }
  backToLogin(){
     this.forgetPasswordFlag = false;
     this.loginUiFlag = true;
+ }
+
+ sendEmailForgotPassword() {
+     let payload = {email : this.forgetEmail}
+    this._userService.forgotPasswordSendMail(payload).subscribe(res => {
+        this.emailSuccessFlag = true;
+        setTimeout(function () {
+            this.emailSuccessFlag = false;
+        }.bind(this), 5000);
+    });
+    this.forgetEmail = '';
  }
 }

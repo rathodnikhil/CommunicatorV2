@@ -130,4 +130,9 @@ export class UserService {
         const url = urlConstants.baseUrl + 'resetPassword';
         return this.http.post(url, payload);
     }
+    logoutApplication(payload) {
+        const url = urlConstants.baseUrl + 'logoutApplication?userCode=' + payload.userCode;
+        return this.apiRequest.post(url , payload);  
+    }
+
 }
