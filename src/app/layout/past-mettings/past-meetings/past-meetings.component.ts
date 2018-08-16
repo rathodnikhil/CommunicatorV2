@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MeetingService } from '../../../services/meeting-service';
+import { UserService } from '../../../services/user.service';
 // import * as fileSaver from 'file-saver';
 @Component({
   selector: 'app-past-meetings',
@@ -7,23 +8,27 @@ import { MeetingService } from '../../../services/meeting-service';
   styleUrls: ['./past-meetings.component.scss'],
 })
 export class PastMeetingsComponent implements OnInit {
+    _userService: UserService
     fileName: String;
+    loggedInUser: any;
     pastMeetingList = [];
     _meetingService: MeetingService;
     payloadSearch = {loggedInUserId: 2};
-  constructor(meetingService: MeetingService) {
+  constructor(meetingService: MeetingService , userService: UserService) {
     this._meetingService = meetingService;
+    this._userService = userService;
    }
 momByMe: boolean;
 scheduledByMe: boolean;
   ngOnInit() {
       this.momByMe = false;
-//past meeting list web service call
-this.pastMeetingList = [];
-const payload = {id: 2};
-this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
-    this.pastMeetingList = data.json();
+
+//loggedInuser Object webservice call
+this._userService.getLoggedInUserObj().subscribe(data => {
+    this.loggedInUser = data;
+    this.getPastMeetingsByuser();
 });
+
   }
   //download chat and mom file
 downloadFile() {
@@ -67,9 +72,11 @@ this.momByMe = true;
     }
 }
 getPastMeetingsByuser() {
-    const payload = {loggedInUserId: 2};
+    alert('n');
+    const payload = {userCode: this.loggedInUser.userCode};
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
             this.pastMeetingList = data.json();
+            alert(this.pastMeetingList.length);
         });
 }
 getPastMeetingsScheduledByUser() {

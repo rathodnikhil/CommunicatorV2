@@ -69,8 +69,8 @@ export class MeetingService {
         return this.http.post(url, null);
     }
     getPastMeetingsByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingsByUser';
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
+        return this.apiRequest.post(url, payload);
     }
     getPastMeetingsScheduledByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsScheduledByUser?loggedInUserId=' + payload.loggedInUserId;

@@ -30,7 +30,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        // debugger;
+       //loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
         });
