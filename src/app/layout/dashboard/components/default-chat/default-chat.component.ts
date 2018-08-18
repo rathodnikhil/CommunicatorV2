@@ -19,7 +19,7 @@ export class DefaultChatComponent implements OnInit {
     }
     ngOnInit() {
         this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUserObj = data;     
+                this.loggedInUserObj = data;     
         });
     }
 

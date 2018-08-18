@@ -1,4 +1,3 @@
-
 <div class="top">
     <div class="col-md-12 header" style="text-align: center;">
         <h3>Past Meeting</h3>
@@ -9,38 +8,51 @@
             <a style="padding-right:10px; cursor: pointer;">Day</a>
             <a class="date-period-select">Month</a>
             <a class="date-period-select">Year</a>
-            <input type="text" placeholder="Search by name"  [(ngModel)]="searchText"/>
+            <input type="text" placeholder="Search by name" [(ngModel)]="searchText" />
         </div>
     </div>
 </div>
 <div class="left filter-list">
-<h4><i class="fa fa-filter"></i>&nbsp;FILTERS</h4>
-<hr>
-<h5>General</h5>
-<input type="checkbox" id="scheduledByMe" (change)="scheduleByLoggedInUserId($event)"> Schdule By Me<br>
-<input type="checkbox" id="momByMe"  (change)="momByLoggedInuser($event)">MOM By Me<br>
+    <h4>
+        <i class="fa fa-filter"></i>&nbsp;FILTERS</h4>
+    <hr>
+    <h5>General</h5>
+    <input type="checkbox" id="scheduledByMe" (change)="scheduleByLoggedInUserId($event)"> Schdule By Me
+    <br>
+    <input type="checkbox" id="momByMe" (change)="momByLoggedInuser($event)">MOM By Me
+    <br>
 </div>
 <div class="main">
     <h4>Past Meeting Details</h4>
     <hr>
     <table>
-      <tr>
-        <th>Sr. No</th>
-        <th>Date</th>
-        <th>Meeting Id</th>
-        <th>Subject</th>
-        <th>Attendees</th>
-        <th>MOM</th>
-        <th>Chat History</th>
-      </tr>
-      <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText ;let srNo = index">
+        <tr>
+            <th>Sr. No</th>
+            <th>Date</th>
+            <th>Meeting Id</th>
+            <th>Subject</th>
+            <th>Attendees</th>
+            <th>MOM</th>
+            <th>Chat History</th>
+        </tr>
+        <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
             <td>{{srNo+1}}</td>
             <td>{{meeting.meetingDate}}</td>
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
             <td>{{meeting.attendee}}</td>
-            <td><i (click)="download()"  class="fa fa-file-text-o download-file" ></i></td>
-            <td><i (click)="downloadFile()" class="fa fa-file-text-o download-file"></i></td>
-      </tr>
+            <td>
+                <i (click)="download()" class="fa fa-file-text-o download-file"></i>
+            </td>
+            <td>
+                <i (click)="downloadFile()" class="fa fa-file-text-o download-file"></i>
+            </td>
+        </tr>
     </table>
+    <div class="pageControl">
+        <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+            [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+            [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+            (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
 </div>

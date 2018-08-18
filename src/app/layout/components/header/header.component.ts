@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
     _groupService: GroupService;
     pushRightClass: string = 'push-right';
     isClosed = true;
+    errorFl: boolean;
+    nullCheckFlag: boolean;
     loggedInUserObj: any;
     sidebarMenuList = [];
     constructor(private translate: TranslateService, public router: Router,
@@ -48,7 +50,6 @@ export class HeaderComponent implements OnInit {
         this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
             this.sidebarMenuList = data;
         });
-
     }
 
     isToggled(): boolean {
@@ -59,7 +60,6 @@ export class HeaderComponent implements OnInit {
     toggleSidebar() {
         const dom: any = document.querySelector('body');
         dom.classList.toggle(this.pushRightClass);
-
     }
 
     rltAndLtr() {
@@ -79,10 +79,17 @@ export class HeaderComponent implements OnInit {
         this.isClosed = !this.isClosed;
     }
     logout() {
-        alert('logout');
         let payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
-         alert('log out successfully');
+            this.errorFl = data.json().errorFl;
+            if (this.errorFl === true) {
+                this.nullCheckFlag = true;
+                setTimeout(function () {
+                    this.nullCheckFlag = false;
+                }.bind(this), 5000);
+            } else {
+
+            }
         });
 
     }

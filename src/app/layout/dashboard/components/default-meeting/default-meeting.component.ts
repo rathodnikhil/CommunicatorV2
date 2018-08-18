@@ -86,7 +86,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             this.futureMeetingList = data;
             this.filteredFutureMeetingList = this.futureMeetingList;
         }, err => {
-            // alert(err);
             this.router.navigate(['/login']);
         });
     }

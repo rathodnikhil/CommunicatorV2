@@ -6,10 +6,11 @@
                     <div class="col-md-6 card-header userlist-header" style="text-align: center;">
                         <i class="fa fa-user-circle fa-fw cursorPointer"></i>
                     </div>
-                    <div class="col-md-2 card-header userlist-header">
-                        <i class="fa fa-user-plus fa-fw cursorPointer" [routerLink]="['/signup']"></i>
+                    <div  [ngClass]="{'userlist-header': signUpflag === true ,
+                    'card-header ': signUpflag === true ,'col-md-2': signUpflag === true}">
+                        <i class="fa fa-user-plus fa-fw cursorPointer"  *ngIf="signUpflag" [routerLink]="['/signup']"></i>
                     </div>
-                    <div class="col-md-2 card-header userlist-header">
+                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
                         <i class="fa fa-users fa-fw cursorPointer" (click)="openCreateGroupPopup()"></i>
                         <app-custom-modal #createGroupModal [model]="createGroups">
                             <div class="modal-body">
@@ -51,7 +52,7 @@
                             </div>
                         </app-custom-modal>
                     </div>
-                    <div class="col-md-2 card-header userlist-header">
+                    <div class=" card-header userlist-header"  [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
                         <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>
                         <!-- <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="broadcastMsg($event)"
                              (Button2Event)="resetMsg($event)"></app-custom-modal> -->

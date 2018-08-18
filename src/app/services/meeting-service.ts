@@ -61,8 +61,8 @@ export class MeetingService {
         return this.recentMeeting$;
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId';
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?userCode=' + payload.email;
+        return this.apiRequest.post(url, payload);
     }
     downloadPdfReportFile() {
         const url = urlConstants.baseUrl + 'downloadPdfReportFile';

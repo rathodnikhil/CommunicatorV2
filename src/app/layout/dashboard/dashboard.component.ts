@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
+    signUpflag: boolean;
 
     @ViewChild('braodcastMessageModal') public broadcastMessageModal: CustomModalComponent;
     broadcastMessagecontent: CustomModalModel = {
@@ -100,6 +101,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.signUpflag = false;
         this._userService.getUserList().subscribe(data => {
             this.userList = data;
         });
@@ -112,6 +114,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this.loggedInUserObj = data;
         });
 
+        let userRoleArray = [];
+        userRoleArray = this.loggedInUserObj.roles;
+        let roleArray = [];
+        for (let i = 0; i < userRoleArray.length; i++) {
+            roleArray.push(userRoleArray[i].role);
+       }
+        if(roleArray.indexOf('ADMINISTRATOR') === -1){
+            this.signUpflag = false;
+        }else{
+            this.signUpflag = true;
+        }
     }
     ngAfterViewInit(): void {
         // const s = document.createElement('script');

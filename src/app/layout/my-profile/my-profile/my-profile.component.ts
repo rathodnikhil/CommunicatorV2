@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
     providers: [UserService, MeetingService, GroupService]
 })
 export class MyProfileComponent implements OnInit {
-    loggedInUser: any;
+    loggedInUserObj: any;
     _userService: UserService;
     _meetingservice: MeetingService;
     _groupService: GroupService;
@@ -23,38 +23,14 @@ export class MyProfileComponent implements OnInit {
         this._groupService = groupService;
     }
     ngOnInit() {
-        // webservice to get profile details
-        this.loggedInUser = {
-            'id': 2,
-            'email': 'b@gmail.com',
-            'password': '1235',
-            'name': 'sunita',
-            'lastName': 'kolhapure',
-            'active': 1,
-            'teamId': {
-                'prime': null,
-                'errorFl': false,
-                'warningFl': false,
-                'message': null,
-                'teamId': 1,
-                'teamName': 'cfs_pune',
-                'status': {
-                    'statusId': 1,
-                    'status': 'Active'
-                }
-            },
-            'profileImgPath': null
-        };
-        const payload = { id: 2 };
-        this._userService.getLoggedInUSerDetails().subscribe(data => {
-            if (Object.keys(data).length === 0) {
-                this.router.navigate(['/login']);
-            } else {
-                this.loggedInUser = data;
-            }
+       
+        // get loggedin user
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUserObj = data;
         });
-        // webservice to get total meeting count
 
+        // webservice to get total meeting count
+        const payload = { userCode: this.loggedInUserObj.userCode };
         this.totalMeetingCount = {};
         this._meetingservice.getTotalMeetingCountByLoggedInUserId(payload).subscribe(data => {
             this.totalMeetingCount = data.json();
