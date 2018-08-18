@@ -61,16 +61,16 @@ export class MeetingService {
         return this.recentMeeting$;
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId';
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?userCode=' + payload.email;
+        return this.apiRequest.post(url, payload);
     }
     downloadPdfReportFile() {
         const url = urlConstants.baseUrl + 'downloadPdfReportFile';
         return this.http.post(url, null);
     }
     getPastMeetingsByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingsByUser';
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
+        return this.apiRequest.post(url, payload);
     }
     getPastMeetingsScheduledByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsScheduledByUser?loggedInUserId=' + payload.loggedInUserId;

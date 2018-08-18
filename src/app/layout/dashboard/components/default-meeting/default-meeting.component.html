@@ -21,25 +21,28 @@
     </div>
     <ul class="accordion btn-sec">
         <li class="accordion-item">
-          <input id="s1" class="hide" type="checkbox">
-          <label for="s1"class="accordion-label" (click) = "selectMeetingFilterDate()"><i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
-         <span style="float: right; font-size: 20px;"(click)="closeDropdown()"><i class="fa fa-angle-down" aria-hidden="true"></i></span> </label>
-          <ul class="accordion-child" >
-              <div class="row overall-padding">             
-                <div class="col-sm-6">
+            <input id="s1" class="hide" type="checkbox">
+            <label for="s1" class="accordion-label" (click)="selectMeetingFilterDate()">
+                <i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
+                <span style="float: right; font-size: 20px;" (click)="closeDropdown()">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+            </label>
+            <ul class="accordion-child">
+                <div class="row overall-padding">
+                    <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate"
-                             [(ngModel)]="selectedfromDate" value="{{currentDate | date:'fullDate'}}"
-                                ngbDatepicker #fromDate="ngbDatepicker">
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate" [(ngModel)]="selectedfromDate"
+                                value="{{currentDate | date:'fullDate'}}" ngbDatepicker #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar"></span>
                             </button>
                         </div>
                     </div>
-            
-                    <div class="col-sm-6" >
+
+                    <div class="col-sm-6">
                         <label>To Date</label>
                         <div class="input-group datepicker-input">
                             <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate" [(ngModel)]="selectedtoDate" value="{{currentDate | date:'fullDate'}}"
@@ -54,10 +57,10 @@
                         <button class="btn btn-primary" (click)="filterMeetingByDate('range')">Search</button>
                     </div>
                 </div>
-         </ul>
+            </ul>
         </li>
-     
-      </ul>
+
+    </ul>
     <div class="card-header">
         <div class="row">
             <div class="col-md-6">
@@ -81,43 +84,42 @@
                 <ul class="chat">
                     <li class="left clearfix">
                         <div *ngIf="recentMeeting.meetingCode!=undefined">
-                        <div class="row">
-                            <div class="col-md-9">
-                                        <i class="fa fa-calendar"></i>
-                                        <span style="font-weight: bold; font-size: 14px;">{{recentMeeting.subject}}&nbsp;({{recentMeeting.meetingCode}})<br>
-                                            <i class="fa fa-clock-o"></i>&nbsp;{{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                            </div>
-                            <div class="col-md-3">
-                                    <button class="btn btn-primary">Now</button>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <i class="fa fa-calendar"></i>
+                                    <span style="font-weight: bold; font-size: 14px;">{{recentMeeting.subject}}&nbsp;({{recentMeeting.meetingCode}})
+                                        <br>
+                                        <i class="fa fa-clock-o"></i>&nbsp;{{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                                 </div>
-                        </div>
-                        <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary" [routerLink]="['/meeting']">Now</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
                                 <strong class="primary-font" style="color:#3277d3;">
-                                        <br> Meeting Host : {{recentMeeting.createdBy.firstName}}&nbsp;{{recentMeeting.createdBy.lastName}}
-                                        <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
-                                        <br> Meeting Duration : {{recentMeeting.duration}} Hour</strong>
+                                    <br> Meeting Host : {{recentMeeting.createdBy.firstName}}&nbsp;{{recentMeeting.createdBy.lastName}}
+                                    <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                    <br> Meeting Duration : {{recentMeeting.duration}} Hour</strong>
+                            </div>
                         </div>
-                    </div>
-                    <p *ngIf="recentMeeting.meetingCode===undefined"><strong class="primary-font">No recent meetings</strong></p>
+                        <p *ngIf="recentMeeting.meetingCode===undefined">
+                            <strong class="primary-font">No recent meetings</strong>
+                        </p>
                     </li>
                     <!-- <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"> -->
                     <li *ngFor="let meeting of filteredFutureMeetingList | SearchFutureMeeting : searchText" class="left clearfix">
                         <div class="row">
-                            <div class="col-md-8">
-                                    <i class="fa fa-calendar"></i>
-                                    <span style="font-weight: bold; font-size: 14px;">{{recentMeeting.subject}}&nbsp;({{recentMeeting.meetingCode}})</span>
+                            <div class="col-md-9">
+                                <i class="fa fa-calendar"></i>
+                                <span style="font-weight: bold; font-size: 14px;">{{meeting.subject}}&nbsp;({{meeting.meetingCode}})
+                                    <br>
+                                    <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
-                            <div class="col-md-4">
-                                    <strong class="primary-font">
-                                    <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</strong>
+                            <div class="col-md-3">
+                                <a class="btn btn-sec" [routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}">
+                                    <i class="fa fa-play"></i>
+                                </a>
                             </div>
-                    
-                            <!-- <div class="col-md-2">
-                                <div class="icon-wrapper">
-                                    <i class="fa fa-comments fa-2x"></i>
-                                    <span class="badge">10</span>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="col-md-12">
                             <strong style="color:#3277d3;">
@@ -127,79 +129,8 @@
                             </strong>
                         </div>
                     </li>
-                    <!-- <li class="left clearfix">
-                        <div class="">
-                            <ul id="accordion">
-                                <li [ngClass]="{'active': isActive}">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <h6>10:00 am</h6>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <p>
-                                                <strong class="primary-font">Daily Review Meeting For Java Team</strong>
-                                                <br> Meeting Id : Mcore145298537
-                                                <br> Meeting Host : Chetan Patwardhan
-                                            </p>
-                                        </div>
-                                        <div class="col-md-2" (click)="isActive=!isActive">
-                                            <span class="p1 fa-stack fa-1x has-badge" data-count="4">
-                                                <i class="p3 fa fa-chevron-down fa-stack-1x xfa-inverse" data-count="4b"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        <div class="panel-body">
-                                            <ul class="chat">
-                                                <li class="left clearfix">
-                                                    <span class="chat-img pull-left">
-                                                        <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                                    </span>
-                                                    <div class="chat-body clearfix">
-                                                        <div class="header">
-                                                            <strong class="primary-font">Jack Sparrow</strong>
-                                                            <small class="pull-right text-muted">
-                                                                <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                                        </div>
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <li class="right clearfix">
-                                                    <span class="chat-img pull-right">
-                                                        <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                                                    </span>
-                                                    <div class="chat-body clearfix">
-                                                        <div class="header">
-                                                            <small class=" text-muted">
-                                                                <span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                                        </div>
-                                                        <p>
-                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <div class="input-group">
-                                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                                        Send</button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> -->
                 </ul>
             </div>
         </div>
     </div>
 </div>
-

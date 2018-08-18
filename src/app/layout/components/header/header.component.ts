@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../services/user.service';
 import { GroupService } from '../../../services/group.service';
-import { LoginService} from '../../../services/login.service';
+import { LoginService } from '../../../services/login.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -15,10 +15,12 @@ export class HeaderComponent implements OnInit {
     _groupService: GroupService;
     pushRightClass: string = 'push-right';
     isClosed = true;
+    errorFl: boolean;
+    nullCheckFlag: boolean;
     loggedInUserObj: any;
     sidebarMenuList = [];
     constructor(private translate: TranslateService, public router: Router,
-         userService: UserService, groupService: GroupService) {
+        userService: UserService, groupService: GroupService) {
 
         this._userService = userService;
         this._groupService = groupService;
@@ -39,16 +41,16 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.sidebarMenuList = [];
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
         });
         let payload = { userCode: this.loggedInUserObj.userCode };
         this._groupService.setSideBarMenuByLoggedInUSer(payload);
         this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
-            this.sidebarMenuList = data;
+            if (data.length > 0)
+                this.sidebarMenuList = data;
         });
-
     }
 
     isToggled(): boolean {
@@ -59,7 +61,6 @@ export class HeaderComponent implements OnInit {
     toggleSidebar() {
         const dom: any = document.querySelector('body');
         dom.classList.toggle(this.pushRightClass);
-
     }
 
     rltAndLtr() {
@@ -79,10 +80,17 @@ export class HeaderComponent implements OnInit {
         this.isClosed = !this.isClosed;
     }
     logout() {
-        alert('logout');
         let payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
-         alert('log out successfully');
+            this.errorFl = data.json().errorFl;
+            if (this.errorFl === true) {
+                this.nullCheckFlag = true;
+                setTimeout(function () {
+                    this.nullCheckFlag = false;
+                }.bind(this), 5000);
+            } else {
+
+            }
         });
 
     }
