@@ -1,0 +1,17 @@
+<div class="top">
+  <div class="col-md-12 header" style="text-align: center;">
+    <h3>Past Meeting</h3>
+  </div>
+  <div style="float:right">
+    <div class="align-center">
+    </div>
+  </div>
+</div>
+<div class="left filter-list">
+
+</div>
+<div class="main">
+  <ng-multiselect-dropdown name="city" [placeholder]="'Select Members'" [data]="cities" formControlName="city" [disabled]="disabled"
+    [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+  </ng-multiselect-dropdown>
+</div>

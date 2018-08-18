@@ -928,7 +928,7 @@ NOTE: use percentage font sizes or else old IE chokes
     color: #ffffff;
     position: fixed;
     width: 98%;
-    z-index: 10;
+    top: 70px;
 }
 
 .fc-toolbar.fc-header-toolbar {
