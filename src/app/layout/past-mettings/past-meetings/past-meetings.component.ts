@@ -109,12 +109,12 @@ export class PastMeetingsComponent implements OnInit {
         });
     }
 
-    download() {
+    downloadMom(meetingCode) {
 
-        this.fileName = ' ';
-        const payload = { fileName: 'test.docx' };
-
-        this._meetingService.filedownload(payload).subscribe(
+      //  const payload = { meetingCode: meetingCode };
+        const payload = { fileName: "java-tutorial.pdf" };
+        
+        this._meetingService.downloadMom(payload).subscribe(
             (res) => {
                 alert();
                 //  saveAs(res, payload.fileName);
