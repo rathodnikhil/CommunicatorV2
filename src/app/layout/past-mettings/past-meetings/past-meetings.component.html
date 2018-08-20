@@ -42,7 +42,7 @@
             <td>{{meeting.subject}}</td>
             <td>{{meeting.attendee}}</td>
             <td>
-                <i (click)="download()" class="fa fa-file-text-o download-file"></i>
+                <i (click)="downloadMom(meeting.meetingCode)" class="fa fa-file-text-o download-file"></i>
             </td>
             <td>
                 <i (click)="downloadFile()" class="fa fa-file-text-o download-file"></i>

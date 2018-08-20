@@ -88,11 +88,9 @@ export class MeetingService {
         const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingId=' + payload.meetingId;
         return this.http.post(url, payload);
     }
-    filedownload(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'filedownload?fileName=' + payload.fileName;
-        return this.http.post(url, { responseType: ResponseContentType.Blob }).map((res) => {
-            return new Blob([res.arrayBuffer()], { type: 'application/octet-stream' })
-        });
+    downloadMom(payload): Observable<any> {
+        const url = urlConstants.baseUrl + 'download1?fileName=' + payload.fileName;
+        return this.apiRequest.get(url);
     }
     getAllMeetingsbyLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
