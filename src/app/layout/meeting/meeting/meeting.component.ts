@@ -150,6 +150,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
+        
         if (!this.isHost) {
             alert("Only host can save MOM to database");
             return;
