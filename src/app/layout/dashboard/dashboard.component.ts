@@ -43,15 +43,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         Button1Content: '<i class="fa fa-comments"></i>&nbsp;Send Message',
         Button2Content: '<i class="fa fa-refresh"></i>&nbsp;Cancel'
     };
-    @ViewChild('createGroupModal') public createGroupModal: CustomModalComponent;
-    createGroups: CustomModalModel = {
-        titleIcon: '<i class="fa fa-bullhorn"></i>',
-        title: 'Create Group',
-        smallHeading: 'Create groups to have communication',
-        body: '',
-        Button1Content: '<i class="fa fa-comments"></i>&nbsp;Send Message',
-        Button2Content: '<i class="fa fa-refresh"></i>&nbsp;Cancel'
-    };
+  
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     currentRoute = 0;
@@ -153,9 +145,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         //   debugger;
         this.broadcastMessageModal.open();
     }
-    openCreateGroupPopup() {
-        this.createGroupModal.open();
-    }
+  
     //save broadcast message
     broadcastMessages(broadcastMessage) {
         if (broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined") {
@@ -179,55 +169,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.showtypeMessage = false;
     }
 
-    groupNameFocus() {
-        this.showNewGroup = false;
-    }
     resetMsg(event) {
         alert('text reset');
     }
-    //create new group
-    createGroup(createGroupsVal) {
-        if (createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined") {
-            this.showNewGroup = true;
-            setTimeout(function () {
-                this.showNewGroup = false;
-            }.bind(this), 5000);
-        } else {
-
-            for (let i in this.groupList) {
-                this.groupArray.push(this.groupList[i].groupId.groupName);
-            }
-            var duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
-            if (duplicateGroupFlag != -1) {
-                this.duplicateGroup = true;
-                setTimeout(function () {
-                    this.duplicateGroup = false;
-                }.bind(this), 6000);
-            } else {
-                const payload = { "groupName": createGroupsVal , "user": this.loggedInUserObj}
-                this._groupService.saveGroupDetails(payload).subscribe(res => {
-                    this.showNewGroup = false;
-                    this.showNewGroupSuccess = true;
-                    setTimeout(function () {
-                        this.showNewGroupSuccess = false;
-                    }.bind(this), 5000);
-                    this.createGroupsVal = ' ';
-                    const group = { group: { groupName: createGroupsVal } };
-                    this.groupList.push(group);
-                });
-            }
-        }
-
-    }
-
+  
     //close create group modal popup
     closePopup(popupType) {
         switch (popupType) {
-            case 'addCreateGroup':
-                this.createGroupModal.close();
-                break;
             case 'addBroadcastMsg':
-                this.createGroupModal.close();
+                this.broadcastMessageModal.close();
                 break;
         }
     }

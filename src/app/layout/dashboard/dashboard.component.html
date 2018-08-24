@@ -11,8 +11,8 @@
                         <i class="fa fa-user-plus fa-fw cursorPointer"  *ngIf="signUpflag" [routerLink]="['/signup']"></i>
                     </div>
                     <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
-                        <i class="fa fa-users fa-fw cursorPointer" (click)="openCreateGroupPopup()"></i>
-                        <app-custom-modal #createGroupModal [model]="createGroups">
+                        <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>
+                        <!-- <app-custom-modal #createGroupModal [model]="createGroups">
                             <div class="modal-body">
                                 <div style="margin-top: 20px;" *ngIf="showNewGroup === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showNewGroup">
                                     <strong>Error: </strong>Enter Group Name.
@@ -30,7 +30,7 @@
                                     </div>
                                     <div>
                                         <!-- <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal" onfocus="groupNameFocus()"></textarea> -->
-                                        <input type="text" list="groupNameList" [(ngModel)]="createGroupsVal">
+                                        <!-- <input type="text" list="groupNameList" [(ngModel)]="createGroupsVal">
                                     </div>
                                     <datalist id="groupNameList">
                                         <option *ngFor="let group of groupList" value="{{group.groupId.groupName}}">
@@ -50,7 +50,7 @@
                                 <button type="button" class="btn-sec btn" (click)="addMember(createGroupsVal)">Add Group Memeber</button>
                                 <button type="button" class="btn-cancel btn" (click)="closePopup('addCreateGroup')">Close</button>
                             </div>
-                        </app-custom-modal>
+                        </app-custom-modal> --> 
                     </div>
                     <div class=" card-header userlist-header"  [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
                         <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>
