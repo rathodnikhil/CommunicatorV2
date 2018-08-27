@@ -54,8 +54,8 @@
   <hr>
   <div class="row">
       <div class="member-block">
-          <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupName}}
-              <span>&nbsp;[{{groupMemberCount}}]</span>
+          <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupObj.groupName}}
+              <span *ngIf="countFlag">&nbsp;[{{groupMemberCount}}]</span>
           </h4>
           <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member" />
           <div class="member-details">
