@@ -26,10 +26,11 @@ export class ManageGroupComponent implements OnInit {
   groupList = [];
   groupArray = [];
   loggedInUserObj: any;
-  selectedGroupName: any;
+  selectedGroupObj: any;
   groupMemberCount: any;
   groupMemberObjList = [];
   showSelectedGroup: boolean;
+  countFlag: boolean;
   constructor(groupService: GroupService , userService: UserService) {
     this._groupService = groupService;
     this._userService = userService;
@@ -38,6 +39,7 @@ export class ManageGroupComponent implements OnInit {
   ngOnInit() {
   
     this.showGroupNameUiFlag = false;
+    this.countFlag = false;
     this._userService.getLoggedInUserObj().subscribe(data => {     
       this.loggedInUserObj = data;     
       const payload = { userCode:  this.loggedInUserObj.userCode};
@@ -117,16 +119,20 @@ export class ManageGroupComponent implements OnInit {
 
   }
   displayGroupDetails(groupId){
-    alert(groupId);
     this.showSelectedGroup = true;
-    this.selectedGroupName = groupId.groupName;
-    this._groupService.getTotalGroupByLoggedInUserId(this.selectedItems).subscribe(data => {
+    this.selectedGroupObj = groupId;
+   const payload = {userCode : this.loggedInUserObj.userCode};
+    this._groupService.getTotalGroupByLoggedInUserId(payload).subscribe(data => {
         this.groupMemberCount = data;
+      if(this.groupMemberCount != 0){
+        this.countFlag = true;
+      }
     });
   }
   addMember() {
-    
-    this._groupService.saveGroupMember(this.selectedItems).subscribe(res => {
+      const payload = {groupMemObjList: this.selectedItems , groupId: this.selectedGroupObj.groupId}
+    this._groupService.saveGroupMember(payload).subscribe(res => {
+        this.selectedItems = [];
     });
 }
 }

@@ -35,7 +35,7 @@ export class GroupService {
       return this.GroupList$;
   }
     getTotalGroupByLoggedInUserId(payload) {
-      const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId?userCode=' + payload.email;
+      const url = urlConstants.baseUrl + 'getTotalGroupByLoggedInUserId?userCode=' + payload.userCode;
       return this.apiRequest.post(url, payload);
     }
     getTeamsByLoggedInUserId(payload) {
