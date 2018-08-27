@@ -14,6 +14,7 @@ export class GroupService {
     _loginService: LoginService;
     loggedInUser: any;
     GroupList$: Subject<any[]> = new BehaviorSubject<any>({});
+    groupMemberList$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) { 
       this._loginService = loginService;
     }
@@ -80,4 +81,32 @@ export class GroupService {
       getSideBarMenuByLoggedInUSer() {
         return this.GroupList$;
     }
+    setGroupListObjByLoggedInUserId(payload) {
+      const url = urlConstants.baseUrl + 'getGroupListObjByLoggedInUserId?userCode=' + payload.userCode;
+      // const resp = new BehaviorSubject<any>({});
+      this.apiRequest.post(url, payload).subscribe(data => {
+          this.groupMemberList$.next(data);
+      },
+          err => {
+            //  alert(err);
+          });
+      // return resp;
+    }
+    getGroupListObjByLoggedInUserId() {
+      return this.groupMemberList$;
+  }
+    
+  
+  saveGroupMember(payload): Observable<any> {
+    const url = urlConstants.baseUrl + 'saveGroupMember';
+    let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
+      this.apiRequest.post(url,payload).subscribe(data => {
+          resp.next(data);
+      },
+        err => {
+       //   alert(err);
+        });
+
+    return resp;
+  }
 }
