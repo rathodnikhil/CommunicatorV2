@@ -155,8 +155,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             alert("Only host can save MOM to database");
             return;
         }
-
-        alert(this.momTxt);
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
             this.momAddDesciption = true;
             setTimeout(function () {
