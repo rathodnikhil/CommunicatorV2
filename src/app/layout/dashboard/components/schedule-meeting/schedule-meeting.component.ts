@@ -241,8 +241,8 @@ export class ScheduleMeetingComponent implements OnInit {
         var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
              + this.meeting.selectedDuration + '\n' +
-            // '\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://192.168.3.76:9080/#/meeting?meetingCode='+this.accessCode+'\n' +
-            '\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://localhost:4200/#/meeting?meetingCode='+this.accessCode+'\n' +
+            '\n Please join my meeting from your computer,tablet or smartphone \n' + 'https://192.168.3.76:9080/#/meeting?meetingCode='+this.accessCode+'\n' +
+            //'\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://localhost:4200/#/meeting?meetingCode='+this.accessCode+'\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }

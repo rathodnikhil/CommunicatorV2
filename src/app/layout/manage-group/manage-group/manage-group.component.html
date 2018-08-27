@@ -1,6 +1,6 @@
-<div class="top">
+<!-- <div class="top">
   <div class="col-md-12 header" style="text-align: center;">
-    <h3>Past Meeting</h3>
+    <h3>Manage Group</h3>
   </div>
   <div style="float:right">
     <div class="align-center">
@@ -8,10 +8,68 @@
   </div>
 </div>
 <div class="left filter-list">
-
+  <ng-multiselect-dropdown name="city" [placeholder]="'Select Members'" [data]="cities" formControlName="city" [disabled]="disabled"
+  [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+</ng-multiselect-dropdown>
 </div>
 <div class="main">
-  <ng-multiselect-dropdown name="city" [placeholder]="'Select Members'" [data]="cities" formControlName="city" [disabled]="disabled"
-    [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
-  </ng-multiselect-dropdown>
+  
+</div> -->
+<div class="top">
+  <div class="col-md-12 header" style="text-align: center;">
+      <h3>Manage Group</h3>
+  </div>
+  <div style="float:right" class="defaultMeetSelect">
+      <div class="align-center">
+          <input type="text" placeholder="Search by name" />
+      </div>
+  </div>
+</div>
+
+<div class="left filter-list">
+  <h4 (click)="showGroupName()" style="cursor: pointer;">
+      <i class="fa fa-chevron-down"></i>&nbsp;New Group</h4>
+      <div style="margin-top: 20px;" *ngIf="showNewGroup === true" class="alert alert-danger alert-dismissable" >
+        <strong>Error: </strong>Enter Group Name.
+    </div>
+    <div style="margin-top: 20px;" *ngIf="showNewGroupSuccess === true" class="alert alert-success alert-dismissable">
+        <strong>Success: </strong>Group has been Created Successfully.
+    </div>
+          <div class="row" *ngIf="showGroupNameUiFlag" >
+              <input type="text" placeholder="Type Name Here..." #createGroupsVal class="col-md-11 search-member" />
+              <button class="btn btn-sec"  (click)="addGroup(createGroupsVal.value)" >Add Group</button>
+          </div>
+         
+  <hr>
+ <ul *ngFor="let group of groupList; let groupCount = index">
+      <li>
+          <label (click)="displayGroupDetails(group.groupId)">{{groupCount+1}})&nbsp; {{group.groupId.groupName}}
+          </label>
+      </li>
+  </ul> 
+ 
+</div>
+<div class="main">
+  <h4>Group Details</h4>
+  <hr>
+  <div class="row">
+      <div class="member-block">
+          <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupName}}
+              <span>&nbsp;[{{groupMemberCount}}]</span>
+          </h4>
+          <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member" />
+          <div class="member-details">
+              <h5>
+                  <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
+              <hr>
+              <div class="row" style="padding: 15px;">
+                <ng-multiselect-dropdown name="city" class="col-md-12" [placeholder]="'Select Members'" 
+                [data]="groupMemberObjList" formControlName="city" [disabled]="disabled"
+                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+              </ng-multiselect-dropdown>
+              </div>
+            <button (click)="addMember()">Add Member</button>
+          </div>
+      </div>
+  </div>
 </div>
