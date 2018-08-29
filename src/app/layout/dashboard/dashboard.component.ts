@@ -181,7 +181,5 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
-    addMember() {
-        alert('addGroupMember');
-    }
+   
 }

@@ -95,7 +95,10 @@ export class GroupService {
     getGroupListObjByLoggedInUserId() {
       return this.groupMemberList$;
   }
-    
+  getGroupMembersByGroup(payload) {
+    const url = urlConstants.baseUrl + 'getGroupMembersByGroup?userCode=' +payload.userCode;
+    return this.apiRequest.post(url , payload);
+}
   
   saveGroupMember(payload): Observable<any> {
     const url = urlConstants.baseUrl + 'saveGroupMember';

@@ -31,6 +31,8 @@ export class ManageGroupComponent implements OnInit {
   groupMemberObjList = [];
   showSelectedGroup: boolean;
   countFlag: boolean;
+  selectedGroupUsers: any[];
+  userList: any[];
   constructor(groupService: GroupService , userService: UserService) {
     this._groupService = groupService;
     this._userService = userService;
@@ -118,17 +120,31 @@ export class ManageGroupComponent implements OnInit {
       }
 
   }
+  // get details for selected group
   displayGroupDetails(groupId){
+    this._userService.getUserList().subscribe(data => {            
+        this.userList = data;            
+    });
     this.showSelectedGroup = true;
     this.selectedGroupObj = groupId;
-   const payload = {userCode : this.loggedInUserObj.userCode};
-    this._groupService.getTotalGroupByLoggedInUserId(payload).subscribe(data => {
-        this.groupMemberCount = data;
-      if(this.groupMemberCount != 0){
+    const payload = {userCode: this.loggedInUserObj.userCode}
+    this._groupService.getGroupMembersByGroup(payload).subscribe(data => {            
+    this.groupMemberObjList = data;
+    this.selectedGroupUsers = [];
+    for (let i in this.groupMemberObjList) {
+        if(this.groupMemberObjList[i].groupId.groupId === groupId.groupId){
+        debugger;
+            this.selectedGroupUsers.push(this.groupMemberObjList[i].userId);
+        }
+    }
+    this.groupMemberCount = this.selectedGroupUsers.length;
+    if(this.groupMemberCount != 0){
         this.countFlag = true;
-      }
-    });
+      }  
+});
   }
+
+  // add new member in group
   addMember() {
       const payload = {groupMemObjList: this.selectedItems , groupId: this.selectedGroupObj.groupId}
     this._groupService.saveGroupMember(payload).subscribe(res => {
