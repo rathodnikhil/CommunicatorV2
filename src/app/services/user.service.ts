@@ -77,8 +77,8 @@ export class UserService {
         return this.loggedInUser$;
     }
     getUserSettingsByLoggedInUser(payload) {
-        const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser';
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser?userCode=' +payload.userCode;
+        return this.apiRequest.post(url, payload);
     }
     setSelectedUser(user) {
         this.selectedUser$.next(user);

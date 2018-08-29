@@ -31,64 +31,23 @@ export class PastMeetingsComponent implements OnInit {
     loggedInUser: any;
     pastMeetingList = [];
     _meetingService: MeetingService;
-    payloadSearch = { loggedInUserId: 2 };
     constructor(meetingService: MeetingService, userService: UserService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
-    momByMe: boolean;
-    scheduledByMe: boolean;
-    ngOnInit() {
-        this.momByMe = false;
 
+    ngOnInit() {
         //loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
             this.getPastMeetingsByuser();
         });
-
     }
     //download chat and mom file
     downloadFile() {
         this._meetingService.downloadPdfReportFile();
     }
 
-    //scheduledByMe is checked
-    scheduleByLoggedInUserId(event) {
-        this.scheduledByMe = true;
-        if (event.target.checked) {
-            if (this.momByMe === true) {
-                this.getPastMeetingsByuser();
-            } else {
-                this.getPastMeetingsScheduledByUser();
-            }
-        } else {
-            this.scheduledByMe = false;
-            if (this.momByMe === true) {
-                this.getMeetingsMomByUser();
-            } else {
-                this.getPastMeetingsByuser();
-            }
-        }
-    }
-    //momByMe is checked
-    momByLoggedInuser(event) {
-        this.momByMe = true;
-        if (event.target.checked) {
-            if (this.scheduledByMe === true) {
-                this.getPastMeetingsByuser();
-            } else {
-                this.getMeetingsMomByUser();
-            }
-        } else {
-            this.momByMe = false;
-            if (this.scheduledByMe === true) {
-                this.getPastMeetingsScheduledByUser();
-            } else {
-                this.getPastMeetingsByuser();
-            }
-        }
-    }
     getPastMeetingsByuser() {
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
@@ -98,17 +57,7 @@ export class PastMeetingsComponent implements OnInit {
             this.pastMeetingList = data;
         });
     }
-    getPastMeetingsScheduledByUser() {
-        this._meetingService.getPastMeetingsScheduledByUser(this.payloadSearch).subscribe(data => {
-            this.pastMeetingList = data.json();
-        });
-    }
-    getMeetingsMomByUser() {
-        this._meetingService.getMeetingsMomByUser(this.payloadSearch).subscribe(data => {
-            this.pastMeetingList = data.json();
-        });
-    }
-
+   
     downloadMom(meetingCode) {
 
       //  const payload = { meetingCode: meetingCode };
