@@ -3,6 +3,7 @@ import { GroupService } from '../../../services/group.service';
 import { UserService } from '../../../services/user.service';
 import { FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+// import { PaginationInstance } from 'ngx-pagination';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
   selector: 'app-manage-group',
@@ -10,6 +11,24 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
   styleUrls: ['./manage-group.component.scss']
 })
 export class ManageGroupComponent implements OnInit {
+
+    // public filter: string = '';
+    // public maxSize: number = 7;
+    // public directionLinks: boolean = true;
+    // public autoHide: boolean = false;
+    // public responsive: boolean = false;
+    // public config: PaginationInstance = {
+    //     id: 'userCode',
+    //     itemsPerPage: 2,
+    //     currentPage: 1
+    // };
+    // public labels: any = {
+    //     previousLabel: 'Previous',
+    //     nextLabel: 'Next',
+    //     screenReaderPaginationLabel: 'Pagination',
+    //     screenReaderPageLabel: 'page',
+    //     screenReaderCurrentLabel: `You're on page`
+    // };
   _groupService: GroupService;
   _userService: UserService;
   disabled = false;  
@@ -33,6 +52,8 @@ export class ManageGroupComponent implements OnInit {
   countFlag: boolean;
   selectedGroupUsers: any[];
   userList: any[];
+  showSelectGroupNameFlag: boolean;
+  showSelectmember: boolean;
   constructor(groupService: GroupService , userService: UserService) {
     this._groupService = groupService;
     this._userService = userService;
@@ -42,6 +63,9 @@ export class ManageGroupComponent implements OnInit {
   
     this.showGroupNameUiFlag = false;
     this.countFlag = false;
+    this.showSelectGroupNameFlag = false;
+    this.showSelectedGroup = false;
+    this.showSelectmember =  false;
     this._userService.getLoggedInUserObj().subscribe(data => {     
       this.loggedInUserObj = data;     
       const payload = { userCode:  this.loggedInUserObj.userCode};
@@ -122,9 +146,9 @@ export class ManageGroupComponent implements OnInit {
   }
   // get details for selected group
   displayGroupDetails(groupId){
-    this._userService.getUserList().subscribe(data => {            
-        this.userList = data;            
-    });
+    // this._userService.getUserList().subscribe(data => {            
+    //     this.userList = data;            
+    // });
     this.showSelectedGroup = true;
     this.selectedGroupObj = groupId;
     const payload = {userCode: this.loggedInUserObj.userCode}
@@ -133,7 +157,6 @@ export class ManageGroupComponent implements OnInit {
     this.selectedGroupUsers = [];
     for (let i in this.groupMemberObjList) {
         if(this.groupMemberObjList[i].groupId.groupId === groupId.groupId){
-        debugger;
             this.selectedGroupUsers.push(this.groupMemberObjList[i].userId);
         }
     }
@@ -146,9 +169,40 @@ export class ManageGroupComponent implements OnInit {
 
   // add new member in group
   addMember() {
+      if(this.showSelectedGroup === false){
+        this.showSelectGroupNameFlag = true;
+        setTimeout(function () {
+            this.showSelectGroupNameFlag = false;
+        }.bind(this), 5000);
+      }else{
+          if( this.selectedItems.length === 0){
+            this.showSelectmember = true;
+            setTimeout(function () {
+                this.showSelectmember = false;
+            }.bind(this), 5000);
+          }
+      }
       const payload = {groupMemObjList: this.selectedItems , groupId: this.selectedGroupObj.groupId}
     this._groupService.saveGroupMember(payload).subscribe(res => {
-        this.selectedItems = [];
+        this.userList = res;
+        for (let i in this.userList) {
+                this.selectedGroupUsers.push(this.userList[i]);
+        }
+        this.selectedGroupUsers = this.removeDuplicateUsingSet(this.selectedGroupUsers);
+        console.log(this.removeDuplicateUsingSet(this.selectedGroupUsers));
     });
+    this.selectedItems = [];
 }
+// onPageChange(number: number) {
+//     // console.log('change to page', number);
+//     this.config.currentPage = number;
+// }
+ 
+ removeDuplicateUsingSet(arr){
+    let unique_array = Array.from(new Set(arr))
+    return unique_array
+}
+
+
+
 }

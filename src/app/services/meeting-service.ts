@@ -61,7 +61,7 @@ export class MeetingService {
         return this.recentMeeting$;
     }
     getTotalMeetingCountByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?userCode=' + payload.email;
+        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     downloadPdfReportFile() {
@@ -71,14 +71,6 @@ export class MeetingService {
     getPastMeetingsByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
-    }
-    getPastMeetingsScheduledByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingsScheduledByUser?loggedInUserId=' + payload.loggedInUserId;
-        return this.http.post(url, payload);
-    }
-    getMeetingsMomByUser(payload) {
-        const url = urlConstants.baseUrl + 'getMeetingsMomByUser?loggedInUserId=' + payload.loggedInUserId;
-        return this.http.post(url, payload);
     }
     download() {
         const url = urlConstants.baseUrl + 'downloadFile';

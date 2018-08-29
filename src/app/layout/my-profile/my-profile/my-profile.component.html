@@ -4,11 +4,8 @@
           <h3>My Profile</h3>
       </div>
   </div>
-<div class="left">
-</div>
+
 <div class="main" >
-        <div class="setting-header"><h4>Profile Details</h4></div>
-        <br>
       <table style="width: 80%; ">
           <tr>  <h4>Profile Details</h4></tr>
           <tr >
@@ -17,16 +14,24 @@
                 <td><input type="file"/></td>
           </tr>
           <tr>
-                <td>Full Name</td>
-                <td><input value="{{loggedInUser.name}}  {{loggedInUser.lastName}}" type="text"/></td>
+                <td>First Name</td>
+                <td><input value="{{loggedInUserObj.firstName}}" type="text"/></td>
           </tr>
           <tr>
-                <td>Email / Username</td>
-                <td><input value="{{loggedInUser.email}}" type="text" readonly/></td>
+            <td>Last Name</td>
+            <td><input value="{{loggedInUserObj.lastName}}" type="text"/></td>
+      </tr>
+          <tr>
+                <td>Email</td>
+                <td><input value="{{loggedInUserObj.email}}" type="text" /></td>
           </tr>
+          <tr>
+            <td>Username</td>
+            <td><input value="{{loggedInUserObj.name}}" type="text" readonly/></td>
+      </tr>
           <tr>
                 <td>Team Name</td>
-                <td><input value="{{loggedInUser.teamId.teamName}}" type="text" readonly/></td>
+                <td><input value="{{loggedInUserObj.team.teamName}}" type="text" readonly/></td>
           </tr>
           <tr><h4>Other Details</h4></tr>
           <tr> <td>Total Meeting</td>
