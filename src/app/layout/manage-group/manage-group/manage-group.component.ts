@@ -26,10 +26,13 @@ export class ManageGroupComponent implements OnInit {
   groupList = [];
   groupArray = [];
   loggedInUserObj: any;
-  selectedGroupName: any;
+  selectedGroupObj: any;
   groupMemberCount: any;
   groupMemberObjList = [];
   showSelectedGroup: boolean;
+  countFlag: boolean;
+  selectedGroupUsers: any[];
+  userList: any[];
   constructor(groupService: GroupService , userService: UserService) {
     this._groupService = groupService;
     this._userService = userService;
@@ -38,6 +41,7 @@ export class ManageGroupComponent implements OnInit {
   ngOnInit() {
   
     this.showGroupNameUiFlag = false;
+    this.countFlag = false;
     this._userService.getLoggedInUserObj().subscribe(data => {     
       this.loggedInUserObj = data;     
       const payload = { userCode:  this.loggedInUserObj.userCode};
@@ -116,17 +120,35 @@ export class ManageGroupComponent implements OnInit {
       }
 
   }
+  // get details for selected group
   displayGroupDetails(groupId){
-    alert(groupId);
-    this.showSelectedGroup = true;
-    this.selectedGroupName = groupId.groupName;
-    this._groupService.getTotalGroupByLoggedInUserId(this.selectedItems).subscribe(data => {
-        this.groupMemberCount = data;
+    this._userService.getUserList().subscribe(data => {            
+        this.userList = data;            
     });
+    this.showSelectedGroup = true;
+    this.selectedGroupObj = groupId;
+    const payload = {userCode: this.loggedInUserObj.userCode}
+    this._groupService.getGroupMembersByGroup(payload).subscribe(data => {            
+    this.groupMemberObjList = data;
+    this.selectedGroupUsers = [];
+    for (let i in this.groupMemberObjList) {
+        if(this.groupMemberObjList[i].groupId.groupId === groupId.groupId){
+        debugger;
+            this.selectedGroupUsers.push(this.groupMemberObjList[i].userId);
+        }
+    }
+    this.groupMemberCount = this.selectedGroupUsers.length;
+    if(this.groupMemberCount != 0){
+        this.countFlag = true;
+      }  
+});
   }
+
+  // add new member in group
   addMember() {
-    
-    this._groupService.saveGroupMember(this.selectedItems).subscribe(res => {
+      const payload = {groupMemObjList: this.selectedItems , groupId: this.selectedGroupObj.groupId}
+    this._groupService.saveGroupMember(payload).subscribe(res => {
+        this.selectedItems = [];
     });
 }
 }

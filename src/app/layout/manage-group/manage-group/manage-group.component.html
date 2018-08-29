@@ -1,20 +1,4 @@
-<!-- <div class="top">
-  <div class="col-md-12 header" style="text-align: center;">
-    <h3>Manage Group</h3>
-  </div>
-  <div style="float:right">
-    <div class="align-center">
-    </div>
-  </div>
-</div>
-<div class="left filter-list">
-  <ng-multiselect-dropdown name="city" [placeholder]="'Select Members'" [data]="cities" formControlName="city" [disabled]="disabled"
-  [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
-</ng-multiselect-dropdown>
-</div>
-<div class="main">
-  
-</div> -->
+
 <div class="top">
   <div class="col-md-12 header" style="text-align: center;">
       <h3>Manage Group</h3>
@@ -53,9 +37,9 @@
   <h4>Group Details</h4>
   <hr>
   <div class="row">
-      <div class="member-block">
-          <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupName}}
-              <span>&nbsp;[{{groupMemberCount}}]</span>
+      <div class="col-md-5">
+          <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupObj.groupName}}
+              <span *ngIf="countFlag">&nbsp;[{{groupMemberCount}}]</span>
           </h4>
           <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member" />
           <div class="member-details">
@@ -71,5 +55,27 @@
             <button (click)="addMember()">Add Member</button>
           </div>
       </div>
+      <div class="col-md-7">
+        <table style="margin: 20px;">
+            <tr >
+                <th>Sr. No</th>
+                <th>Date</th>
+                <th>Meeting Id</th>
+                <th>Subject</th>
+                <th>Attendees</th>
+                <!-- <th>MOM</th>
+                <th>Chat History</th> -->
+            </tr>
+            <tr *ngFor="let user of selectedGroupUsers">
+                <td>1</td>
+                <td>{{user.name}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.userCode}}</td>
+                <!-- <td>jagdjh</td>
+                <td>jagdjh</td> -->
+            </tr>
+        </table>
+    </div>
   </div>
 </div>
