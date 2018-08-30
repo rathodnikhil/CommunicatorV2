@@ -60,10 +60,7 @@ export class MeetingService {
     getRecentMeetingByUser() {
         return this.recentMeeting$;
     }
-    getTotalMeetingCountByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getTotalMeetingCountByLoggedInUserId?userCode=' + payload.userCode;
-        return this.apiRequest.post(url, payload);
-    }
+  
     downloadPdfReportFile() {
         const url = urlConstants.baseUrl + 'downloadPdfReportFile';
         return this.http.post(url, null);

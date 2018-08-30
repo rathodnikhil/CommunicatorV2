@@ -28,25 +28,16 @@
         <th>Team</th>
         <th>Status</th>
         <th>Schedule Meeting</th>
-        <th>Broadcast Message</th>
       </tr>
       <tr *ngFor="let userPermission of userPermissionMemberList; let srNo = index">
             <td>{{srNo+1}}</td>
             <td>{{userPermission.user.firstName}} {{userPermission.user.lastName}}</td>
             <td>{{userPermission.team.teamName}}</td>
             <td>{{userPermission.user.status.status}}</td>
-            <td><div class="switch-field">
-                    <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
-                    <label for="switch_left">Yes</label>
-                    <input type="radio" id="switch_right" name="switch_2" value="no" />
-                    <label for="switch_right">No</label>
-                  </div></td>
-            <td><div class="switch-field">
-                    <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
-                    <label for="switch_left">Yes</label>
-                    <input type="radio" id="switch_right" name="switch_2" value="no" />
-                    <label for="switch_right">No</label>
-                  </div></td>
+            <td>
+                <input type="checkbox" id="meetChk" (click)="sceduleMeetingRight()">
+                             <p id="text" style="display:none">Checkbox is CHECKED!</p>
+            </td>
       </tr>
     </table>
 </div>

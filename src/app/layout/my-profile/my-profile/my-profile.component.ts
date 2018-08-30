@@ -14,7 +14,7 @@ export class MyProfileComponent implements OnInit {
     _meetingservice: MeetingService;
     _groupService: GroupService;
     totalMeetingCount: any;
-    totalGroupCount: any;
+    profileOtherDetails: any;
     loggedInUserObj: any;
     constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService) {
         this._userService = userService;
@@ -27,16 +27,21 @@ export class MyProfileComponent implements OnInit {
             this.loggedInUserObj = data;
              // webservice to get total meeting count
         const payload = { userCode: this.loggedInUserObj.userCode };
-        this.totalMeetingCount = {};
-        this._meetingservice.getTotalMeetingCountByLoggedInUserId(payload).subscribe(data => {
-            this.totalMeetingCount = data;
-        });
-
-        this.totalGroupCount = {};
-        this._groupService.getTotalGroupByLoggedInUserId(payload).subscribe(data => {
-            this.totalGroupCount = data;
+        this.profileOtherDetails = {};
+        this._groupService.profileOtherDetails(payload).subscribe(data => {
+            this.profileOtherDetails = data;
         });
         });
     }
-
+    updateProfile(firstName , lastName ,email){
+        const payload = {
+            firstName : firstName,
+            lastName : lastName,
+            email : email,
+            userCode : this.loggedInUserObj.userCode
+        }
+        this._userService.updateUserDetails(payload).subscribe(data => {
+            this.profileOtherDetails = data;
+        });
+    }
 }

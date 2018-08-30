@@ -73,16 +73,14 @@ export class ManageTeamComponent implements OnInit {
          });
         //getTeamsByLoggedInUserId webservice call
         const payload = { userCode: this.loggedInUser.userCode };
-        this._teamService.setTeamsByLoggedInUserId(payload);
-        this._teamService.getTeamListByLoggedInUserId().subscribe(data => {
+        this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
             this.userPermissionList = data;
         });
 
-        this._teamService.setMembersByLoggedInUserId(payload);
-        this._teamService.getMemberListByLoggedInUserId().subscribe(data => {
+        this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
             this.userPermissionMemberList = data;
+            alert(this.userPermissionMemberList.length);
         });
-        alert(this.userPermissionMemberList.length);
     }
     displayTeamDetails(team) {
         this.selectedTeamName = team.teamName;
@@ -90,10 +88,7 @@ export class ManageTeamComponent implements OnInit {
         this.filterMemberList = [];
       
         for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
-            alert('this.userPermissionMemberList[this.i].team.id'+this.userPermissionMemberList[this.i].team.id);
-            alert('team : '+team.id);
             if (this.userPermissionMemberList[this.i].team.id == team.id) {
-                alert('1');
                 this.filterMemberList.push(this.userPermissionMemberList[this.i]);
             }
         }
@@ -133,31 +128,31 @@ export class ManageTeamComponent implements OnInit {
         this.showAddTeam = false;
     }
     // add new member  
-    addMember(firstName,lastName,userName,password,email) {
-    
-        // if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
-        //     this.showAddMemberFirstName = true;
-        //     setTimeout(function () {
-        //         this.showAddMemberFirstName = false;
-        //     }.bind(this), 5000);
-        // } else if (this.userName === "" || this.userName === null || typeof this.userName === "undefined") {
-        //     this.showAddMemberUserName = true;
-        //     setTimeout(function () {
-        //         this.showAddMemberUserName = false;
-        //     }.bind(this), 5000);
-        // } else if (this.password === "" || this.password === null || typeof this.password === "undefined") {
-        //     this.showAddMemberPassword = true;
-        //     setTimeout(function () {
-        //         this.showAddMemberPassword = false;
-        //     }.bind(this), 5000);
-        // } else if (this.email === "" || this.email === null || typeof this.email === "undefined") {
-        //     this.showAddMemberEmail = true;
-        //     setTimeout(function () {
-        //         this.showAddMemberEmail = false;
-        //     }.bind(this), 5000);
-        // }
-      //  else {
-        //  alert(newTeamName);
+    addMember() {
+    alert(1);
+        if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
+            this.showAddMemberFirstName = true;
+            setTimeout(function () {
+                this.showAddMemberFirstName = false;
+            }.bind(this), 5000);
+        } else if (this.userName === "" || this.userName === null || typeof this.userName === "undefined") {
+            this.showAddMemberUserName = true;
+            setTimeout(function () {
+                this.showAddMemberUserName = false;
+            }.bind(this), 5000);
+        } else if (this.password === "" || this.password === null || typeof this.password === "undefined") {
+            this.showAddMemberPassword = true;
+            setTimeout(function () {
+                this.showAddMemberPassword = false;
+            }.bind(this), 5000);
+        } else if (this.email === "" || this.email === null || typeof this.email === "undefined") {
+            this.showAddMemberEmail = true;
+            setTimeout(function () {
+                this.showAddMemberEmail = false;
+            }.bind(this), 5000);
+        }
+       else {
+       //  alert(newTeamName);
             this.showAddMemberFirstName = false;
             this.showAddMemberUserName = false;
             this.showAddMemberPassword = false;
@@ -170,11 +165,11 @@ export class ManageTeamComponent implements OnInit {
             alert(this.selectedTeamObj.teamCode);
 
             const payload = {
-                "email": email,
-                "password": password,
-                "name": userName,
-                "lastName": lastName,
-                "firstName": firstName,
+                "email": this.email,
+                "password": this.password,
+                "name": this.userName,
+                "lastName": this.lastName,
+                "firstName": this.firstName,
                 "status.onlineStatus": false,
                 "registeredBy": this.loggedInUser.userCode,
                 "team": this.selectedTeamObj
@@ -193,15 +188,9 @@ export class ManageTeamComponent implements OnInit {
           
         }
     
-//    }
+   }
 
-    //focus on member name text field
-    typeMemberNameFocus() {
-        this.showAddMemberFirstName = false;
-        this.showAddMemberUserName = false;
-        this.showAddMemberPassword = false;
-        this.showAddMemberEmail = false;
-    }
+  
     //close team modal popup
     closePopup(popupType) {
         switch (popupType) {

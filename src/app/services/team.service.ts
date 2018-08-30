@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import * as urlConstants from './urlConstants';
@@ -21,22 +22,12 @@ export class TeamService {
     constructor(private http: Http ,loginService: LoginService , private apiRequest: ApiRequestService) {
       this._loginService = loginService;
      }
-    setTeamsByLoggedInUserId(payload) {
-      const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?userCode=' + payload.userCode;
-      // const resp = new BehaviorSubject<any>({});
-      this.apiRequest.post(url, payload).subscribe(data => {
-        this.teamList$.next(data);
-      },
-          err => {
-              alert(err);
-          });
-      // return resp;
+    getTeamsByLoggedInUserId(payload) {
+          const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?userCode=' + payload.userCode;
+          return this.apiRequest.post(url, payload);
+
     }
-    getTeamListByLoggedInUserId() {
-      return this.teamList$;
-  }
-
-
+   
     getMembersByTeam(payload) {
       const url = urlConstants.baseUrl + 'getMembersByTeam?teamCode='+ payload.teamCode;
       let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -48,20 +39,11 @@ export class TeamService {
           });
       return resp;
       }
-      setMembersByLoggedInUserId(payload) {
+      getMemberListByLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
-        // const resp = new BehaviorSubject<any>({});
-        this.apiRequest.post(url, payload).subscribe(data => {
-          this.memberList$.next(data);
-        },
-            err => {
-               // alert(err);
-            });
-        // return resp;
+        return this.apiRequest.post(url, payload);
       }
-      getMemberListByLoggedInUserId() {
-        return this.memberList$;
-    }
+    
        getAllEnableTeams() {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.http.get(url);
