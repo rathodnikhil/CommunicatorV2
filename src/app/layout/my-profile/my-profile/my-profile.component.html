@@ -15,15 +15,15 @@
           </tr>
           <tr>
                 <td>First Name</td>
-                <td><input value="{{loggedInUserObj.firstName}}" type="text"/></td>
+                <td><input value="{{loggedInUserObj.firstName}}" #firstName type="text"/></td>
           </tr>
           <tr>
             <td>Last Name</td>
-            <td><input value="{{loggedInUserObj.lastName}}" type="text"/></td>
+            <td><input value="{{loggedInUserObj.lastName}}"  #lastName type="text"/></td>
       </tr>
           <tr>
                 <td>Email</td>
-                <td><input value="{{loggedInUserObj.email}}" type="text" /></td>
+                <td><input value="{{loggedInUserObj.email}}" #email type="text" width="auto"/></td>
           </tr>
           <tr>
             <td>Username</td>
@@ -35,14 +35,14 @@
           </tr>
           <tr><h4>Other Details</h4></tr>
           <tr> <td>Total Meeting</td>
-            <td><input value="{{totalMeetingCount}}" type="text" readonly/></td>
+            <td><input value="{{profileOtherDetails.meetingCount}}" type="text" readonly/></td>
         </tr>
         <tr> <td>Total Groups</td>
-            <td><input value="{{totalGroupCount}}" type="text" readonly/></td>
+            <td><input value="{{profileOtherDetails.groupCount}}" type="text" readonly/></td>
         </tr>
         </table>
         <div style="text-align:center;">
-            <button class="btn btn-primary" style="align:align-center">Save Changes</button>
+            <button class="btn btn-primary" style="align:align-center" (click)="updateProfile(firstName.value,lastName.value,email.value)">Save Changes</button>
             <button class="btn btn-aecondary">Reset Changes</button>
         </div>
 

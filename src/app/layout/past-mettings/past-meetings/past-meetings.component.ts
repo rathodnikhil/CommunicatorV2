@@ -26,7 +26,7 @@ export class PastMeetingsComponent implements OnInit {
         screenReaderPageLabel: 'page',
         screenReaderCurrentLabel: `You're on page`
     };
-    _userService: UserService
+    _userService: UserService;
     fileName: String;
     loggedInUser: any;
     pastMeetingList = [];

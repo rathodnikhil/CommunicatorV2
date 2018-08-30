@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-user-rights',
@@ -9,28 +10,30 @@ import { TeamService } from '../../../services/team.service';
 })
 export class UserRightsComponent implements OnInit {
 _teamService: TeamService;
+_userService: UserService;
 userPermissionList = [];
 userPermissionMemberList = [];
 payloadSearch: any;
-  constructor(teamService: TeamService) {
+loggedInUser: any;
+  constructor(teamService: TeamService , userService: UserService) {
       this._teamService = teamService;
+      this._userService = userService;
    }
 
   ngOnInit() {
+    this._userService.getLoggedInUserObj().subscribe(data => {     
+      this.loggedInUser = data;     
+   });
     this.userPermissionList = [];
-    const payload = {email: 'rohit@coreflexsolutions.com'};
-    this._teamService.setTeamsByLoggedInUserId(payload);
-    this._teamService.getTeamListByLoggedInUserId().subscribe(data => {
+    const payload = {userCode: this.loggedInUser.userCode};
+    this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
          this.userPermissionList = data;
      });
 
-     this._teamService.setMembersByLoggedInUserId(payload);
-     this._teamService.getMemberListByLoggedInUserId().subscribe(data => {
+     this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
           this.userPermissionMemberList = data;
       });
-    //  this._teamService.getMembersByLoggedInUserId(payload).subscribe(data => {
-    //     this.userPermissionMemberList = data.json();
-    // });
+   
   }
   filterMemberByTeam(event , selectedTeamId) {
     this.payloadSearch = {teamId: selectedTeamId};
@@ -41,5 +44,8 @@ payloadSearch: any;
       } else {
         alert('checkbox is unchecked');
       }
+  }
+  sceduleMeetingRight(){
+    alert('this.sceduleMeetingRight clicked');
   }
 }

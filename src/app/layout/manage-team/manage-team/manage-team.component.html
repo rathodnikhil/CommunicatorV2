@@ -37,7 +37,7 @@
                         <label>Team Name</label>
                     </div>
                     <div>
-                        <textarea placeholder="Type Name Here.." [(ngModel)]="newTeamName" onfocus="typeTeamNameFocus()"></textarea>
+                        <textarea placeholder="Type Name Here.." [(ngModel)]="newTeamName" ></textarea>
 
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 </div>
                 <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body row-label">
-                        <!-- <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
+                         <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
                             <strong>Error: </strong>Enter Member First Name.
                         </div>
 
@@ -89,14 +89,14 @@
 
                         <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
                             <strong>Success: </strong>Member has been added Successfully.
-                        </div> -->
+                        </div> 
                         <form>
                             <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." #firstName/>
+                                    <input placeholder="Type Name Here.." [(ngModel)] = "firstName"/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -104,7 +104,7 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." #lastName/>
+                                    <input placeholder="Type Name Here.." [(ngModel)] = "lastName"/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -112,7 +112,7 @@
                                         <label>Email</label>
                                     </div>
                                     <div>
-                                        <input placeholder="Type Email Here.." #email  />
+                                        <input placeholder="Type Email Here.." [(ngModel)] = "email"/>
                                     </div>
                                 </div>
 
@@ -121,7 +121,7 @@
                                     <label>UserName</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." #userName  />
+                                    <input placeholder="Type Name Here.." [(ngModel)] = "userName" />
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -129,7 +129,7 @@
                                     <label>Password</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." #password   type="password"/>
+                                    <input placeholder="Type Name Here.." [(ngModel)] = "password"  type="password"/>
                                 </div>
                             </div>
                             <!-- <div class="row">
@@ -143,8 +143,7 @@
                         </form>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-sec" (click)="addMember(firstName.value,lastName.value,userName.value,password.value,
-                        email.value)">Add Member</button>
+                        <button type="button" class="btn btn-sec" (click)="addMember()">Add Member</button>
                         <button type="button" class="btn btn-cancel" (click)="closePopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>

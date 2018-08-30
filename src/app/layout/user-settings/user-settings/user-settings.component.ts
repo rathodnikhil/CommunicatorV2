@@ -11,6 +11,11 @@ _userService: UserService;
 loggedInUserId: any ;
 userSettings: any;
 displayName: any;
+meetingReminder: boolean;
+chatNotification: boolean;
+user : any;
+downloadLocation: any;
+profileImgPath: any;
   constructor(userService: UserService) {
       this._userService = userService;
    }
@@ -20,18 +25,30 @@ displayName: any;
       this.loggedInUserId = {};
       this._userService.getLoggedInUserObj().subscribe(data => {
         this.loggedInUserId = data;
-        const payload = {
-          fullName: this.loggedInUserId.firstName + this.loggedInUserId.lastName,
-          meetingCode:  this.displayName
-        };
+        const payload = { userCode : this.loggedInUserId.userCode};
+        this.userSettings = {};
   this._userService.getUserSettingsByLoggedInUser(payload).subscribe(data => {
       this.userSettings = data;
   });
     });
-
-    //webservice to get profile details
-  this.userSettings = {};
-  
-
+}
+saveUserSetting(){
+  const payload = {
+    displayName: this.loggedInUserId.firstName + this.loggedInUserId.lastName,
+    meetingCode:  this.displayName,
+    user: this.loggedInUserId,
+    profileImgPath: this.profileImgPath,
+    chatNotification: this.chatNotification,
+    meetingReminder: this.meetingReminder,
+    downloadLocation: this.downloadLocation
+  };
+  this._userService.  saveUserSettings(payload).subscribe(data => {  
+});
+}
+meetingReminderChk(){
+    this.meetingReminder = !this.meetingReminder;
+}
+chatNotifictaionChk(){
+  this.chatNotification = !this.chatNotification;
 }
 }
