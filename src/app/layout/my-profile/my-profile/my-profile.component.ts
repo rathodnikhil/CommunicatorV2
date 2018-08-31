@@ -16,6 +16,9 @@ export class MyProfileComponent implements OnInit {
     totalMeetingCount: any;
     profileOtherDetails: any;
     loggedInUserObj: any;
+    firstName: any;
+    lastName: any;
+    email: any;
     constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService) {
         this._userService = userService;
         this._meetingservice = meetingService;
@@ -33,11 +36,11 @@ export class MyProfileComponent implements OnInit {
         });
         });
     }
-    updateProfile(firstName , lastName ,email){
+    updateProfile(){
         const payload = {
-            firstName : firstName,
-            lastName : lastName,
-            email : email,
+            firstName : this.firstName,
+            lastName : this.lastName,
+            email : this.email,
             userCode : this.loggedInUserObj.userCode
         }
         this._userService.updateUserDetails(payload).subscribe(data => {

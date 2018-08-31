@@ -57,7 +57,7 @@
             <tr>
                   <td>Meeting Reminders</td>
                   <td>  
-                             <input type="checkbox" id="meetChk" (click)="meetingReminderChk()">
+                             <input type="checkbox" id="meetChk"  (change)="meetingReminderChk($event)">
                              <p id="text" style="display:none">Checkbox is CHECKED!</p>
                        </td>
             </tr>
