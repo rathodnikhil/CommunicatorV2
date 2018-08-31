@@ -45,8 +45,14 @@ saveUserSetting(){
   this._userService.  saveUserSettings(payload).subscribe(data => {  
 });
 }
-meetingReminderChk(){
+meetingReminderChk(event){
     this.meetingReminder = !this.meetingReminder;
+    if (event.target.checked) {
+    
+      
+    } else {
+      alert('checkbox is unchecked');
+    }
 }
 chatNotifictaionChk(){
   this.chatNotification = !this.chatNotification;

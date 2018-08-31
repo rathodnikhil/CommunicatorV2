@@ -32,6 +32,7 @@
             <th>Meeting Id</th>
             <th>Subject</th>
             <th>Attendees</th>
+            <th>Status</th>
             <th>MOM</th>
             <th>Recording</th>
         </tr>
@@ -41,6 +42,7 @@
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
             <td>{{meeting.attendee}}</td>
+            <td>{{meeting.status.status}}</td>
             <td>
                 <i (click)="downloadMom(meeting.meetingCode)" class="fa fa-file-text-o download-file"></i>
             </td>

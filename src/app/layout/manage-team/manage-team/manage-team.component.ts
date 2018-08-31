@@ -129,7 +129,8 @@ export class ManageTeamComponent implements OnInit {
     }
     // add new member  
     addMember() {
-    alert(1);
+        alert(this.firstName);
+        alert(this.userName);
         if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
             this.showAddMemberFirstName = true;
             setTimeout(function () {

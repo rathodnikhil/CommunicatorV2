@@ -96,7 +96,7 @@
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)] = "firstName"/>
+                                    <input placeholder="Type Name Here.."  type="text" [(ngModel)]="firstName" required/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -104,7 +104,7 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)] = "lastName"/>
+                                    <input placeholder="Type Name Here.." type="text"  [(ngModel)]="lastName" required/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -112,7 +112,7 @@
                                         <label>Email</label>
                                     </div>
                                     <div>
-                                        <input placeholder="Type Email Here.." [(ngModel)] = "email"/>
+                                        <input placeholder="Type Email Here.."  type="text" [(ngModel)]="email" required/>
                                     </div>
                                 </div>
 
@@ -121,7 +121,7 @@
                                     <label>UserName</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)] = "userName" />
+                                    <input type="text" placeholder="Type Name Here.." [(ngModel)]="userName" required/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -129,7 +129,7 @@
                                     <label>Password</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)] = "password"  type="password"/>
+                                    <input placeholder="Type Name Here.."  type="text" [(ngModel)]="password"  type="password" required/>
                                 </div>
                             </div>
                             <!-- <div class="row">
