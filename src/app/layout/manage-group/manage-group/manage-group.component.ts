@@ -3,7 +3,7 @@ import { GroupService } from '../../../services/group.service';
 import { UserService } from '../../../services/user.service';
 import { FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-// import { PaginationInstance } from 'ngx-pagination';
+import { PaginationInstance } from 'ngx-pagination';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-manage-group',
@@ -11,24 +11,24 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
     styleUrls: ['./manage-group.component.scss']
 })
 export class ManageGroupComponent implements OnInit {
-
-    // public filter: string = '';
-    // public maxSize: number = 7;
-    // public directionLinks: boolean = true;
-    // public autoHide: boolean = false;
-    // public responsive: boolean = false;
-    // public config: PaginationInstance = {
-    //     id: 'userCode',
-    //     itemsPerPage: 2,
-    //     currentPage: 1
-    // };
-    // public labels: any = {
-    //     previousLabel: 'Previous',
-    //     nextLabel: 'Next',
-    //     screenReaderPaginationLabel: 'Pagination',
-    //     screenReaderPageLabel: 'page',
-    //     screenReaderCurrentLabel: `You're on page`
-    // };
+    public searchText: string;
+    public filter: string = '';
+    public maxSize: number = 7;
+    public directionLinks: boolean = true;
+    public autoHide: boolean = false;
+    public responsive: boolean = false;
+    public config: PaginationInstance = {
+        id: 'userCode',
+        itemsPerPage: 10,
+        currentPage: 1
+    };
+    public labels: any = {
+        previousLabel: 'Previous',
+        nextLabel: 'Next',
+        screenReaderPaginationLabel: 'Pagination',
+        screenReaderPageLabel: 'page',
+        screenReaderCurrentLabel: `You're on page`
+    };
     _groupService: GroupService;
     _userService: UserService;
     disabled = false;
@@ -54,6 +54,7 @@ export class ManageGroupComponent implements OnInit {
     userList: any[];
     showSelectGroupNameFlag: boolean;
     showSelectmember: boolean;
+    memeberAlreadyExists = false;
     constructor(groupService: GroupService, userService: UserService) {
         this._groupService = groupService;
         this._userService = userService;
@@ -136,8 +137,8 @@ export class ManageGroupComponent implements OnInit {
                     setTimeout(function () {
                         this.showNewGroupSuccess = false;
                     }.bind(this), 5000);
-                    const group = { group: { groupName: createGroupsVal } };
-                    this.groupList.push(group);
+                    const newGroup = { groupId: res };
+                    this.groupList.push(newGroup);
                     this.createGroupsVal = ' ';
                 });
             }
@@ -153,11 +154,9 @@ export class ManageGroupComponent implements OnInit {
         this.selectedGroupObj = groupId;
         const payload = { userCode: this.loggedInUserObj.userCode }
         this._groupService.getGroupMembersByGroup(payload).subscribe(data => {
-            debugger;
             const groupMemberList = data;
             this.selectedGroupUsers = [];
             for (let i in groupMemberList) {
-                this.groupMemberObjList.splice(this.groupMemberObjList.indexOf(groupMemberList[i]), 1);
                 if (groupMemberList[i].groupId.groupId === groupId.groupId) {
                     this.selectedGroupUsers.push(groupMemberList[i].userId);
                 }
@@ -176,35 +175,40 @@ export class ManageGroupComponent implements OnInit {
             setTimeout(function () {
                 this.showSelectGroupNameFlag = false;
             }.bind(this), 5000);
-        } else {
-            if (this.selectedItems.length === 0) {
-                this.showSelectmember = true;
-                setTimeout(function () {
-                    this.showSelectmember = false;
-                }.bind(this), 5000);
+            return false;
+        } else if (this.selectedItems.length === 0) {
+            this.showSelectmember = true;
+            setTimeout(function () {
+                this.showSelectmember = false;
+            }.bind(this), 5000);
+            return false;
+        }
+        else if (this.selectedItems.length > 0 && this.selectedGroupUsers.length > 0) {
+            const selectedGroupUserCodes = this.selectedGroupUsers.map(x => x.userCode);
+            const selectedItemsItemId = this.selectedItems.map(x => x.item_id);
+            setTimeout(function () {
+                this.memeberAlreadyExists = false;
+            }.bind(this), 5000);
+            for (let i = 0; i < selectedGroupUserCodes.length; i++) {
+                if (selectedItemsItemId.indexOf(selectedGroupUserCodes[i])) {
+                    this.memeberAlreadyExists = true;
+                    this.selectedItems = [];
+                    return false;
+                }
             }
         }
         const payload = { groupMemObjList: this.selectedItems, groupId: this.selectedGroupObj.groupId }
         this._groupService.saveGroupMember(payload).subscribe(res => {
             this.userList = res;
             for (let i in this.userList) {
-                this.selectedGroupUsers.push(this.userList[i]);
+                if (this.selectedGroupUsers.indexOf(this.userList[i]) == -1)
+                    this.selectedGroupUsers.push(this.userList[i]);
             }
-            this.selectedGroupUsers = this.removeDuplicateUsingSet(this.selectedGroupUsers);
-            console.log(this.removeDuplicateUsingSet(this.selectedGroupUsers));
+            this.selectedItems = [];
         });
-        this.selectedItems = [];
+
     }
-    // onPageChange(number: number) {
-    //     // console.log('change to page', number);
-    //     this.config.currentPage = number;
-    // }
-
-    removeDuplicateUsingSet(arr) {
-        let unique_array = Array.from(new Set(arr))
-        return unique_array
+    onPageChange(number: number) {
+        this.config.currentPage = number;
     }
-
-
-
 }
