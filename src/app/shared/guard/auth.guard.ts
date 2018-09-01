@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
 export class AuthGuard implements CanActivate {
     constructor(private router: Router, private authService: UserService, private _loginService: LoginService) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        // debugger;
+        //  debugger;
         return this.authService.getLoggedInUserObj().map((auth) => {
             // debugger;
             this._loginService.setPreviousUrl(state.url);

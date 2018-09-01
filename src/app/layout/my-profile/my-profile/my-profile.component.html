@@ -15,19 +15,19 @@
           </tr>
           <tr>
                 <td>First Name</td>
-                <td><input value="{{loggedInUserObj.firstName}}" [(ngModel)]="firstName" type="text"/></td>
+                <td><input value="{{loggedInUserObj.firstName}}" [(ngModel)]="loggedInUserObj.firstName" type="text"/></td>
           </tr>
           <tr>
             <td>Last Name</td>
-            <td><input value="{{loggedInUserObj.lastName}}"  [(ngModel)]="lastName" type="text"/></td>
+            <td><input value="{{loggedInUserObj.lastName}}"  [(ngModel)]="loggedInUserObj.lastName" type="text"/></td>
       </tr>
           <tr>
                 <td>Email</td>
-                <td><input value="{{loggedInUserObj.email}}" [(ngModel)]="email" type="text" width="auto"/></td>
+                <td><input value="{{loggedInUserObj.email}}" [(ngModel)]="loggedInUserObj.email" type="text" width="auto"/></td>
           </tr>
           <tr>
             <td>Username</td>
-            <td><input value="{{loggedInUserObj.name}}" type="text" readonly/></td>
+            <td><input value="{{loggedInUserObj.name}}" [(ngModel)]="loggedInUserObj.name" type="text" readonly/></td>
       </tr>
           <tr>
                 <td>Team Name</td>
@@ -42,7 +42,7 @@
         </tr>
         </table>
         <div style="text-align:center;">
-            <button class="btn btn-primary" style="align:align-center" (click)="updateProfile(firstName.value,lastName.value,email.value)">Save Changes</button>
+            <button class="btn btn-primary" style="align:align-center" (click)="updateProfile()">Save Changes</button>
             <button class="btn btn-aecondary">Reset Changes</button>
         </div>
 

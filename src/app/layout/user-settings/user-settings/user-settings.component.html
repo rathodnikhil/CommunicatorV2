@@ -29,8 +29,7 @@
             <tr>
                   <td>Display Name</td>
                   <td>
-                        <input placeholder="Enter Name" type="text"  value="{{userSettings.displayName}}"
-                         [(ngModel)]="displayName" required/>
+                        <input placeholder="Enter Name" type="text" value="{{userSettings.displayName}}" [(ngModel)]="displayName" required/>
                   </td>
             </tr>
             <tr>
@@ -43,29 +42,29 @@
                   </td>
             </tr>
             <tr>
-                  <td><h4>General Settings</h4></td>
-                 
+                  <td>
+                        <h4>General Settings</h4>
+                  </td>
+
             </tr>
             <tr>
                   <td>Chat Notification</td>
                   <td>
-                              <input type="checkbox" id="chatChk" [checked]="userSettings.chatNotification == true ? '' : null"
-                               (click)="chatNotifictaionChk()" >
-                              <p id="text" style="display:none">Checkbox is CHECKED!</p>
+                        <input type="checkbox" id="chatChk" [(ngModel)]="userSettings.chatNotification">
+                        <p id="text" style="display:none">Checkbox is CHECKED!</p>
                   </td>
             </tr>
             <tr>
                   <td>Meeting Reminders</td>
-                  <td>  
-                             <input type="checkbox" id="meetChk"  (change)="meetingReminderChk($event)">
-                             <p id="text" style="display:none">Checkbox is CHECKED!</p>
-                       </td>
+                  <td>
+                        <input type="checkbox" id="meetChk" [(ngModel)]="userSettings.meetingReminder">
+                        <p id="text" style="display:none">Checkbox is CHECKED!</p>
+                  </td>
             </tr>
             <tr>
                   <td>File Download Location</td>
                   <td colspan="2">
-                        <input placeholder="Enter Name" type="text"  value="{{userSettings.downloadLocation}}"
-                        [(ngModel)]="downloadLocation" requiredclass="col-md-12"
+                        <input placeholder="Enter Name" type="text" value="{{userSettings.downloadLocation}}" [(ngModel)]="downloadLocation" requiredclass="col-md-12"
                         />
                   </td>
                   <td>

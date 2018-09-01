@@ -93,10 +93,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     selectMeetingFilterDate() {
         this.selectDateFlag = !this.selectDateFlag;
-    }
-    closeDropdown() {
-        this.selectDateFlag = false;
-    }
+    }    
     filterMeetingByDate(mode) {
         this.filteredFutureMeetingList = [];
         switch (mode) {

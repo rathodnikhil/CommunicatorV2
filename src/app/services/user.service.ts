@@ -119,6 +119,15 @@ export class UserService {
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
+        if(payload.isGuest){
+            // save guest user
+            // this.apiRequest.post(url, payload).subscribe(data => {
+            //      this.loggedInUserObj$.next(payload);
+            // return this.loggedInUserObj$;
+            // });
+            this.loggedInUserObj$.next(payload);
+            return this.loggedInUserObj$;
+        }
         const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.loggedInUserObj$.next(data);
