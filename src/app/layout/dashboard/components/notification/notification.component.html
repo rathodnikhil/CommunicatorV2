@@ -9,7 +9,7 @@
     </div>
     <hr class="hr-partition" />
     <div class="list-group">
-        <a *ngFor="let user of userList | searchMember : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
+        <a *ngFor="let user of userList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
          class="list-group-item clearfix d-block">
             <i class="fa fa-user-circle fa-2x"></i>
             <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1',
@@ -18,7 +18,7 @@
             <hr class="list-group-partition" />
                 </a>
                 <h6 style ="color: #ffffff;font-weight: bold;">Groups</h6>
-         <a *ngFor="let group of groupList | searchMember : searchText" href="#" [routerLink]="['chat']"
+         <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
            (click)="viewGroupDetails(group)"
         class="list-group-item clearfix d-block">
             <i class="fa fa-users"></i> 

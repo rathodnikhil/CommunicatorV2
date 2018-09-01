@@ -6,56 +6,15 @@
                     <div class="col-md-6 card-header userlist-header" style="text-align: center;">
                         <i class="fa fa-user-circle fa-fw cursorPointer"></i>
                     </div>
-                    <div  [ngClass]="{'userlist-header': signUpflag === true ,
+                    <div [ngClass]="{'userlist-header': signUpflag === true ,
                     'card-header ': signUpflag === true ,'col-md-2': signUpflag === true}">
-                        <i class="fa fa-user-plus fa-fw cursorPointer"  *ngIf="signUpflag" [routerLink]="['/signup']"></i>
+                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="signUpflag" [routerLink]="['/signup']"></i>
                     </div>
                     <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
-                        <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>
-                        <!-- <app-custom-modal #createGroupModal [model]="createGroups">
-                            <div class="modal-body">
-                                <div style="margin-top: 20px;" *ngIf="showNewGroup === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showNewGroup">
-                                    <strong>Error: </strong>Enter Group Name.
-                                </div>
-                                <div style="margin-top: 20px;" *ngIf="showNewGroupSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showNewGroupSuccess">
-                                    <strong>Success: </strong>Group has been Created Successfully.
-                                </div>
-                                <div style="margin-top: 20px;" *ngIf="duplicateGroup === true" class="alert alert-danger alert-dismissable" [(ngModel)]="duplicateGroup">
-                                    <strong>Error: </strong>group has been already added , please select member and click on Add
-                                    Group Member button
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label>Group Name</label>
-                                    </div>
-                                    <div>
-                                        <!-- <textarea placeholder="Type Name Here.." [(ngModel)]="createGroupsVal" onfocus="groupNameFocus()"></textarea> -->
-                                        <!-- <input type="text" list="groupNameList" [(ngModel)]="createGroupsVal">
-                                    </div>
-                                    <datalist id="groupNameList">
-                                        <option *ngFor="let group of groupList" value="{{group.groupId.groupName}}">
-                                    </datalist>
-                                </div>
-                                <hr>
-                                <div class="row" style="padding: 15px;">
-                                    <div *ngFor="let user of userList">
-                                        <label class="checkbox-inline check-label">
-                                            <input type="checkbox" [(ngModel)]="user.checked">{{user.firstName}} &nbsp; {{user.lastName}}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer popFooter">
-                                <button type="button" class="btn-sec btn" (click)="createGroup(createGroupsVal)">Add Group</button>
-                                <button type="button" class="btn-sec btn" (click)="addMember(createGroupsVal)">Add Group Memeber</button>
-                                <button type="button" class="btn-cancel btn" (click)="closePopup('addCreateGroup')">Close</button>
-                            </div>
-                        </app-custom-modal> --> 
+                        <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>                      
                     </div>
-                    <div class=" card-header userlist-header"  [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
-                        <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>
-                        <!-- <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees" (Button1Event)="broadcastMsg($event)"
-                             (Button2Event)="resetMsg($event)"></app-custom-modal> -->
+                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
+                        <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>                        
                         <app-custom-modal #broadcastMessageModal [model]="broadcastMessagecontent">
                             <div class="modal-body">
                                 <div style="margin-top: 20px;" *ngIf="showtypeMessage === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showtypeMessage">
@@ -92,7 +51,7 @@
             <router-outlet></router-outlet>
         </div>
 
-        <div class="col-lg-4" style="padding:1rem;">
+        <div class="col-lg-4" style="padding:1rem;height: 100vh">
             <div [ngSwitch]="currentRoute">
                 <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
                 <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
@@ -100,7 +59,7 @@
         </div>
     </div>
 </div>
-<section class="make-center" style="display: block;">
+<section class="make-center" style="display: none;">
     <h1></h1>
     <input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
     <button id="open-room">Open Room</button>

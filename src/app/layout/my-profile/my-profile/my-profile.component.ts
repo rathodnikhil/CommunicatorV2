@@ -25,26 +25,26 @@ export class MyProfileComponent implements OnInit {
         this._groupService = groupService;
     }
     ngOnInit() {
-       this.loggedInUserObj = {};
+        this.loggedInUserObj = {};
         this._userService.getLoggedInUserObj().subscribe(data => {
-            this.loggedInUserObj = data;
-             // webservice to get total meeting count
-        const payload = { userCode: this.loggedInUserObj.userCode };
-        this.profileOtherDetails = {};
-        this._groupService.profileOtherDetails(payload).subscribe(data => {
-            this.profileOtherDetails = data;
-        });
+            if (data.firstName !== undefined && !data.isGuest) {
+                this.loggedInUserObj = data;
+                // webservice to get total meeting count
+                const payload = { userCode: this.loggedInUserObj.userCode };
+                this.profileOtherDetails = {};
+                this._groupService.profileOtherDetails(payload).subscribe(data => {
+                    this.profileOtherDetails = data;
+                });
+            }
         });
     }
-    updateProfile(){
+    updateProfile() {
         const payload = {
-            firstName : this.firstName,
-            lastName : this.lastName,
-            email : this.email,
-            userCode : this.loggedInUserObj.userCode
+            firstName: this.loggedInUserObj.firstName,
+            lastName: this.loggedInUserObj.lastName,
+            email: this.loggedInUserObj.email,
+            userCode: this.loggedInUserObj.userCode
         }
-        this._userService.updateUserDetails(payload).subscribe(data => {
-            this.profileOtherDetails = data;
-        });
+        this._userService.updateUserDetails(payload);
     }
 }
