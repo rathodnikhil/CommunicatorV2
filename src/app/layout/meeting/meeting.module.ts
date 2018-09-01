@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbCarouselModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StatModule } from '../../shared';
 import { BsComponentModule } from '../bs-component/bs-component.module';
+import { AudioMeetingComponent } from './audio-meeting/audio-meeting.component';
 
 @NgModule({
     imports: [
@@ -18,6 +19,6 @@ import { BsComponentModule } from '../bs-component/bs-component.module';
         BsComponentModule,
         NgbModule.forRoot()
     ],
-    declarations: [MeetingComponent]
+    declarations: [MeetingComponent, AudioMeetingComponent]
 })
 export class MeetingModule { }
