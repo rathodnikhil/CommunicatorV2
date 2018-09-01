@@ -41,9 +41,14 @@
           <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupObj.groupName}}
               <span *ngIf="countFlag">&nbsp;[{{groupMemberCount}}]</span>
           </h4>
-          <input type="text" placeholder="Type Name Here..." class="col-md-11 search-member" />
+          <div style="margin-top: 20px;" *ngIf="showSelectGroupNameFlag === true" class="alert alert-danger alert-dismissable" >
+            <strong>Error: </strong>Select Group Name.
+        </div>
+        <div style="margin-top: 20px;" *ngIf="showSelectmember === true" class="alert alert-danger alert-dismissable" >
+            <strong>Error: </strong>Select Member Name.
+        </div>
           <div class="member-details">
-              <h5>
+              <h5>                  
                   <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
               <hr>
               <div class="row" style="padding: 15px;">
@@ -52,30 +57,32 @@
                 [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
               </ng-multiselect-dropdown>
               </div>
-            <button (click)="addMember()">Add Member</button>
+            <button (click)="addMember()"  class="btn btn-sec ">Add Member</button>
           </div>
       </div>
       <div class="col-md-7">
         <table style="margin: 20px;">
             <tr >
                 <th>Sr. No</th>
-                <th>Date</th>
-                <th>Meeting Id</th>
-                <th>Subject</th>
-                <th>Attendees</th>
-                <!-- <th>MOM</th>
-                <th>Chat History</th> -->
+                <th>Name</th>
+                <th>Email</th>
+                <th>Team Name</th>
+                <th>Status</th>
             </tr>
-            <tr *ngFor="let user of selectedGroupUsers">
-                <td>1</td>
-                <td>{{user.name}}</td>
-                <td>{{user.firstName}}</td>
-                <td>{{user.lastName}}</td>
-                <td>{{user.userCode}}</td>
-                <!-- <td>jagdjh</td>
-                <td>jagdjh</td> -->
+            <tr *ngFor="let user of selectedGroupUsers  ; let srNo = index">
+                <td>{{srNo+1}}</td>
+                <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.team.teamName}}</td>
+                <td> <span [ngClass]=" {'activeDot': user.status.statusId == 1 , 'inctiveDot': user.status.statusId == 2}"></span></td>
             </tr>
         </table>
+        <!-- <div class="pageControl">
+            <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+                [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                (pageChange)="onPageChange($event)"></pagination-controls>
+        </div> -->
     </div>
   </div>
 </div>

@@ -21,6 +21,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
+    showActionIcon: boolean;
+    showCancelMeeting: boolean;
 
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
@@ -30,6 +32,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
+        this.showActionIcon  = true;
+        this.showCancelMeeting = false;
        //loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
@@ -85,16 +89,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             // }       
             this.futureMeetingList = data;
             this.filteredFutureMeetingList = this.futureMeetingList;
-        }, err => {
-            this.router.navigate(['/login']);
         });
     }
     selectMeetingFilterDate() {
         this.selectDateFlag = !this.selectDateFlag;
-    }
-    closeDropdown() {
-        this.selectDateFlag = false;
-    }
+    }    
     filterMeetingByDate(mode) {
         this.filteredFutureMeetingList = [];
         switch (mode) {
@@ -131,5 +130,19 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 break;
         }
 
+    }
+    deleteMeeting(meeting){
+        const payload = {userCode: this.loggedInUser.userCode , meetingCode: meeting.meetingCode };
+        this._meetingService.endMeeting(payload).subscribe(data => {
+            this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+        });
+    }
+    cancelMeeting(meeting) {
+        const payload = {userCode: this.loggedInUser.userCode , meetingCode: meeting.meetingCode };
+        this._meetingService.cancelMeeting(payload).subscribe(data => {
+           // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+           this.showActionIcon = false;
+            this.showCancelMeeting = true;
+        }); 
     }
 }

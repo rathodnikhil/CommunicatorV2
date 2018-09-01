@@ -9,7 +9,7 @@ import {
     NotificationComponent,
     ChatComponent
 } from './components';
-import { StatModule } from '../../shared';
+import { StatModule, SharedPipesModule } from '../../shared';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
 import { DefaultMeetingComponent } from './components/default-meeting/default-meeting.component';
 import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule-meeting.component';
@@ -33,7 +33,8 @@ import { VideoCallComponent } from './components/video-call/video-call.component
         DashboardRoutingModule,
         StatModule,
         BsComponentModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        SharedPipesModule
     ],
     declarations: [
         DashboardComponent,

@@ -37,3 +37,22 @@
      .row-label input{
          margin: 8px;
      }  
+    
+.pageControl{
+    text-align: center;
+    padding-top:10px;
+}
+.activeDot{
+    height: 15px;
+    width: 15px;
+    background-color: rgb(29, 189, 29);
+    border-radius: 50%;
+    display: inline-block;
+}
+.inActive{
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}

@@ -34,9 +34,32 @@ export class UserService {
 
         return resp;
     }
+    updateUserDetails(payload): Observable<any> {
+        const url = urlConstants.baseUrl + 'updateUserDetails';
+        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.apiRequest.post(url, payload).subscribe(data => {
+            resp.next(data);
+        },
+            err => {
+                //alert(err);
+            });
 
+        return resp;
+    }
     saveMemberDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveMemberDetails';
+        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.apiRequest.post(url, payload).subscribe(data => {
+            resp.next(data);
+        },
+            err => {
+                //alert(err);
+            });
+
+        return resp;
+    }
+    saveUserSettings(payload): Observable<any> {
+        const url = urlConstants.baseUrl + 'saveUserSettings';
         let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
@@ -77,8 +100,8 @@ export class UserService {
         return this.loggedInUser$;
     }
     getUserSettingsByLoggedInUser(payload) {
-        const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser';
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser?userCode=' +payload.userCode;
+        return this.apiRequest.post(url, payload);
     }
     setSelectedUser(user) {
         this.selectedUser$.next(user);
@@ -96,6 +119,15 @@ export class UserService {
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
+        if(payload.isGuest){
+            // save guest user
+            // this.apiRequest.post(url, payload).subscribe(data => {
+            //      this.loggedInUserObj$.next(payload);
+            // return this.loggedInUserObj$;
+            // });
+            this.loggedInUserObj$.next(payload);
+            return this.loggedInUserObj$;
+        }
         const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.loggedInUserObj$.next(data);

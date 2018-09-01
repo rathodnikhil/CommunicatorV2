@@ -43,14 +43,17 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.sidebarMenuList = [];
         this._userService.getLoggedInUserObj().subscribe(data => {
-            this.loggedInUserObj = data;
+            if (data.firstName !== undefined && !data.isGuest) {                
+                this.loggedInUserObj = data;
+                let payload = { userCode: this.loggedInUserObj.userCode };
+                this._groupService.setSideBarMenuByLoggedInUSer(payload);
+                this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
+                    if (data.length > 0)
+                        this.sidebarMenuList = data;
+                });
+            }
         });
-        let payload = { userCode: this.loggedInUserObj.userCode };
-        this._groupService.setSideBarMenuByLoggedInUSer(payload);
-        this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
-            if (data.length > 0)
-                this.sidebarMenuList = data;
-        });
+
     }
 
     isToggled(): boolean {

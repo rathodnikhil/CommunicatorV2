@@ -1,25 +1,10 @@
-.top {
-    height: 105px;
-    padding: 15px; // border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background: #3277d3;
-    color: #ffffff;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-image: url(/assets/images/logobg.gif);
-    background-position-y: bottom;
-}
+@import "styles/customStyle.css";
 
-// .left {
-//     width: 0%;
-//     float: left;
-//     padding: 0px 15px 15px 15px;
-//     background: #e5efff;
-//     .filler{
-//         height:40px;
-//         background: #3277d3;
-//         margin: 0px -17px -15px -15px;
-//     border-right: none;
-//     }
-// }
+
+.main{
+    padding: 15px;
+    border: 1px solid #ccd1d4;
+    margin:2%;
+    box-shadow: 5px 10px 5px 5px #ccd1d4;
+}
 

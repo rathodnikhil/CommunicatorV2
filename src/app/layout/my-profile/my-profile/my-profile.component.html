@@ -4,11 +4,8 @@
           <h3>My Profile</h3>
       </div>
   </div>
-<div class="left">
-</div>
+
 <div class="main" >
-        <div class="setting-header"><h4>Profile Details</h4></div>
-        <br>
       <table style="width: 80%; ">
           <tr>  <h4>Profile Details</h4></tr>
           <tr >
@@ -17,27 +14,35 @@
                 <td><input type="file"/></td>
           </tr>
           <tr>
-                <td>Full Name</td>
-                <td><input value="{{loggedInUser.name}}  {{loggedInUser.lastName}}" type="text"/></td>
+                <td>First Name</td>
+                <td><input value="{{loggedInUserObj.firstName}}" [(ngModel)]="loggedInUserObj.firstName" type="text"/></td>
           </tr>
           <tr>
-                <td>Email / Username</td>
-                <td><input value="{{loggedInUser.email}}" type="text" readonly/></td>
+            <td>Last Name</td>
+            <td><input value="{{loggedInUserObj.lastName}}"  [(ngModel)]="loggedInUserObj.lastName" type="text"/></td>
+      </tr>
+          <tr>
+                <td>Email</td>
+                <td><input value="{{loggedInUserObj.email}}" [(ngModel)]="loggedInUserObj.email" type="text" width="auto"/></td>
           </tr>
+          <tr>
+            <td>Username</td>
+            <td><input value="{{loggedInUserObj.name}}" [(ngModel)]="loggedInUserObj.name" type="text" readonly/></td>
+      </tr>
           <tr>
                 <td>Team Name</td>
-                <td><input value="{{loggedInUser.teamId.teamName}}" type="text" readonly/></td>
+                <td><input value="{{loggedInUserObj.team.teamName}}" type="text" readonly/></td>
           </tr>
           <tr><h4>Other Details</h4></tr>
           <tr> <td>Total Meeting</td>
-            <td><input value="{{totalMeetingCount}}" type="text" readonly/></td>
+            <td><input value="{{profileOtherDetails.meetingCount}}" type="text" readonly/></td>
         </tr>
         <tr> <td>Total Groups</td>
-            <td><input value="{{totalGroupCount}}" type="text" readonly/></td>
+            <td><input value="{{profileOtherDetails.groupCount}}" type="text" readonly/></td>
         </tr>
         </table>
         <div style="text-align:center;">
-            <button class="btn btn-primary" style="align:align-center">Save Changes</button>
+            <button class="btn btn-primary" style="align:align-center" (click)="updateProfile()">Save Changes</button>
             <button class="btn btn-aecondary">Reset Changes</button>
         </div>
 

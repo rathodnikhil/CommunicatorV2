@@ -194,6 +194,7 @@ export class ScheduleMeetingComponent implements OnInit {
 
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
                 this.scheduleMeetingModal.open();
+                this.subject = '';
             });
             // this._meetingService.scheduleMeeting(payload);
         }
@@ -220,7 +221,6 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.selectedTimeZone = timezone;
     }
     changeDuration(duration) {
-        debugger;
         this.meeting.selectedDuration = duration;
     }
     getTimeZone() {

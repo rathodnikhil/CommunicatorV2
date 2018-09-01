@@ -3,8 +3,8 @@
             <h3>Settings</h3>
       </div>
 </div>
-<div class="left">
-</div>
+<!-- <div class="left">
+</div> -->
 <div class="main">
       <div class="setting-header">
             <h4>Setting Details</h4>
@@ -29,7 +29,7 @@
             <tr>
                   <td>Display Name</td>
                   <td>
-                        <input placeholder="Enter Name" type="text" value="{{userSettings.fullName}}" />
+                        <input placeholder="Enter Name" type="text" value="{{userSettings.displayName}}" [(ngModel)]="displayName" required/>
                   </td>
             </tr>
             <tr>
@@ -38,38 +38,33 @@
             <tr>
                   <td>Meeting Code</td>
                   <td>
-                        <input placeholder="Enter Meeting Code" value="userSettings.meetingCode.meetingCode" />
+                        <input placeholder="Enter Meeting Code" value="{{userSettings.meetingCode}}" [(ngModel)]="meetingCode" required />
                   </td>
             </tr>
             <tr>
-                  <h4>General Settings</h4>
+                  <td>
+                        <h4>General Settings</h4>
+                  </td>
+
             </tr>
             <tr>
                   <td>Chat Notification</td>
                   <td>
-                        <div class="switch-field">
-                              <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
-                              <label for="switch_left">On</label>
-                              <input type="radio" id="switch_right" name="switch_2" value="no" />
-                              <label for="switch_right">Off</label>
-                        </div>
+                        <input type="checkbox" id="chatChk" [(ngModel)]="userSettings.chatNotification">
+                        <p id="text" style="display:none">Checkbox is CHECKED!</p>
                   </td>
             </tr>
             <tr>
                   <td>Meeting Reminders</td>
                   <td>
-                        <div class="switch-field">
-                              <input type="radio" id="switch_left" name="switch_2" value="yes" checked/>
-                              <label for="switch_left">On</label>
-                              <input type="radio" id="switch_right" name="switch_2" value="no" />
-                              <label for="switch_right">Off</label>
-                        </div>
+                        <input type="checkbox" id="meetChk" [(ngModel)]="userSettings.meetingReminder">
+                        <p id="text" style="display:none">Checkbox is CHECKED!</p>
                   </td>
             </tr>
             <tr>
                   <td>File Download Location</td>
                   <td colspan="2">
-                        <input placeholder="Enter Name" type="text" readonly value="{{userSettings.downloadLocation}}" class="col-md-12"
+                        <input placeholder="Enter Name" type="text" value="{{userSettings.downloadLocation}}" [(ngModel)]="downloadLocation" requiredclass="col-md-12"
                         />
                   </td>
                   <td>
@@ -85,7 +80,7 @@
             </tr>
       </table>
       <div class="button-block">
-            <button class="btn btn-primary" style="align:align-center">Save Changes</button>
+            <button class="btn btn-primary" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>
             <button class="btn btn-aecondary">Reset Changes</button>
       </div>
 

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginUiFlag: boolean;
     userName: any;
     password: any;
+    email: any;
     forgetEmail: any;
     previousUrl: string;
     passwordMacthFlag: boolean;
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     emailFailFlag: boolean;
     Logintext = "Login";
     loggedInUserObj: any;
-  
+
     constructor(public router: Router, loginService: LoginService, userService: UserService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -69,12 +70,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
-                // debugger;
-                if (this.previousUrl) {
-                    this.router.navigateByUrl(this.previousUrl);
-                } else {
-                    this.router.navigate(['/meeting']);
-                }
+                const payload = { firstName: this.userName, isGuest: this.isGuest,email:this.email }
+                this._userService.setLoggedInUserObj(payload).subscribe(res => {
+                    if (res.firstName !== undefined) {
+                        if (!this.previousUrl) {
+                            this.router.navigate(['/meeting']);
+                        } else {
+                            this.router.navigateByUrl(this.previousUrl);
+                        }
+                    }
+                });
             } else {
                 let payload = { 'name': 'admin', 'password': 'password' };
                 let payload1 = { 'name': this.userName, 'password': this.password };
@@ -118,23 +123,23 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
     forgetPassword() {
-        alert();
-       this.forgetPasswordFlag = true;
-       this.loginUiFlag = false;
+        // alert();
+        this.forgetPasswordFlag = true;
+        this.loginUiFlag = false;
     }
- backToLogin(){
-    this.forgetPasswordFlag = false;
-    this.loginUiFlag = true;
- }
+    backToLogin() {
+        this.forgetPasswordFlag = false;
+        this.loginUiFlag = true;
+    }
 
- sendEmailForgotPassword() {
-     let payload = {email : this.forgetEmail}
-    this._userService.forgotPasswordSendMail(payload).subscribe(res => {
-        this.emailSuccessFlag = true;
-        setTimeout(function () {
-            this.emailSuccessFlag = false;
-        }.bind(this), 5000);
-    });
-    this.forgetEmail = '';
- }
+    sendEmailForgotPassword() {
+        let payload = { email: this.forgetEmail }
+        this._userService.forgotPasswordSendMail(payload).subscribe(res => {
+            this.emailSuccessFlag = true;
+            setTimeout(function () {
+                this.emailSuccessFlag = false;
+            }.bind(this), 5000);
+        });
+        this.forgetEmail = '';
+    }
 }

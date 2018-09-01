@@ -82,12 +82,12 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             console.log(this.meetingCode);
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.firstName !== undefined) {
+            if (data.firstName !== undefined && !data.isGuest) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '') {
                     const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
                     this._meetingService.verifyMeetingHost(payload).subscribe(data => {
-                        debugger;
+                        // debugger;
                         if (!data.warningFl && !data.errorFl && data.message !== null) {
                             this.meetingDetails = data;
                             this.isHost = true;
@@ -150,7 +150,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        
+
         if (!this.isHost) {
             alert("Only host can save MOM to database");
             return;
@@ -161,7 +161,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
         } else {
-            const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt , userCode : this.loggedInUser.userCode};
+            const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;
                 if (this.errorFl === true) {

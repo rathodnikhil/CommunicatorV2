@@ -30,6 +30,14 @@
                         </div>
                         <input class="form-control" type="text" placeholder="UserName" [(ngModel)]="userName" (keyup)="onKey($event)" required>
                     </div>
+                    <div class="input-group mb-3" *ngIf="isGuest">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-envelope-o fa-fw"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="email" placeholder="email" [(ngModel)]="email" (keyup)="onKey($event)" required>
+                    </div>
                     <div class="input-group mb-3" *ngIf="!isGuest">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -75,7 +83,7 @@
          </div>
          
          <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
-
+         <a  (click)="backToLogin()">back to login</a>
         
 
      </div>
