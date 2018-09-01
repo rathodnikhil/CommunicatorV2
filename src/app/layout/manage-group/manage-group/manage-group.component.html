@@ -1,88 +1,104 @@
-
 <div class="top">
-  <div class="col-md-12 header" style="text-align: center;">
-      <h3>Manage Group</h3>
-  </div>
-  <div style="float:right" class="defaultMeetSelect">
-      <div class="align-center">
-          <input type="text" placeholder="Search by name" />
-      </div>
-  </div>
+    <div class="col-md-12 header" style="text-align: center;">
+        <h3>Manage Group</h3>
+    </div>
+    <div style="float:right" class="defaultMeetSelect">
+        <div class="align-center">
+            <input type="text" placeholder="Search by name" [(ngModel)]="searchText" />
+        </div>
+    </div>
 </div>
 
 <div class="left filter-list">
-  <h4 (click)="showGroupName()" style="cursor: pointer;">
-      <i class="fa fa-chevron-down"></i>&nbsp;New Group</h4>
-      <div style="margin-top: 20px;" *ngIf="showNewGroup === true" class="alert alert-danger alert-dismissable" >
+    <h4 (click)="showGroupName()" style="cursor: pointer;">
+        New Group
+        <i class="fa fa-times-circle-o pull-right" *ngIf="showNewGroup === true"></i>
+        <i class="fa fa-plus-square-o pull-right" *ngIf="showNewGroup === false"></i>
+    </h4>
+    <div style="margin-top: 20px;" *ngIf="showNewGroup === true" class="alert alert-danger alert-dismissable">
         <strong>Error: </strong>Enter Group Name.
     </div>
     <div style="margin-top: 20px;" *ngIf="showNewGroupSuccess === true" class="alert alert-success alert-dismissable">
         <strong>Success: </strong>Group has been Created Successfully.
     </div>
-          <div class="row" *ngIf="showGroupNameUiFlag" >
-              <input type="text" placeholder="Type Name Here..." #createGroupsVal class="col-md-11 search-member" />
-              <button class="btn btn-sec"  (click)="addGroup(createGroupsVal.value)" >Add Group</button>
-          </div>
-         
-  <hr>
- <ul *ngFor="let group of groupList; let groupCount = index">
-      <li>
-          <label (click)="displayGroupDetails(group.groupId)">{{groupCount+1}})&nbsp; {{group.groupId.groupName}}
-          </label>
-      </li>
-  </ul> 
- 
+
+    <div class="row" *ngIf="showGroupNameUiFlag">
+        <div class="align-center text-center">
+            <input type="text" placeholder="Type Name Here..." #createGroupsVal class="col-md-11 search-member" />
+            <button class="btn btn-sec" (click)="addGroup(createGroupsVal.value)">Add Group</button>
+        </div>
+    </div>
+
+    <hr>
+    <ul *ngFor="let group of groupList; let groupCount = index">
+        <li>
+            <label (click)="displayGroupDetails(group.groupId)">{{groupCount+1}})&nbsp; {{group.groupId.groupName}}
+            </label>
+        </li>
+    </ul>
 </div>
 <div class="main">
-  <h4>Group Details</h4>
-  <hr>
-  <div class="row">
-      <div class="col-md-5">
-          <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupObj.groupName}}
-              <span *ngIf="countFlag">&nbsp;[{{groupMemberCount}}]</span>
-          </h4>
-          <div style="margin-top: 20px;" *ngIf="showSelectGroupNameFlag === true" class="alert alert-danger alert-dismissable" >
-            <strong>Error: </strong>Select Group Name.
+    <h4>Group Details</h4>
+    <hr>
+    <div class="row">
+        <div class="col-md-5">
+            <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupObj.groupName}}
+                <span *ngIf="countFlag">&nbsp;[{{groupMemberCount}}]</span>
+            </h4>
+            <div style="margin-top: 20px;" *ngIf="showSelectGroupNameFlag" class="alert alert-danger alert-dismissable">
+                <strong>Error: </strong>Select Group Name.
+            </div>
+            <div style="margin-top: 20px;" *ngIf="showSelectmember" class="alert alert-danger alert-dismissable">
+                <strong>Error: </strong>Select Member Name.
+            </div>
+            <div style="margin-top: 20px;" *ngIf="memeberAlreadyExists" class="alert alert-danger alert-dismissable">
+                <strong>Error: </strong>Member already exists in the group.
+            </div>
+            <div class="member-details">
+                <h5>
+                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
+                <hr>
+                <div class="row" style="padding: 15px;">
+                    <!-- <ng-multiselect-dropdown name="city" class="col-md-12" [placeholder]="'Select Members'" [data]="groupMemberObjList" formControlName="city"
+                        [disabled]="disabled" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+                    </ng-multiselect-dropdown> -->
+                    <ng-multiselect-dropdown [placeholder]="'Select Members'" class="col-md-12" [data]="groupMemberObjList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="row">
+                    <div class="align-center text-center">
+                        <button (click)="addMember()" class="btn btn-sec ">Add Member</button>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-        <div style="margin-top: 20px;" *ngIf="showSelectmember === true" class="alert alert-danger alert-dismissable" >
-            <strong>Error: </strong>Select Member Name.
+        <div class="col-md-7">
+            <table style="margin: 20px;">
+                <tr>
+                    <th>Sr. No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Team Name</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let user of selectedGroupUsers | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
+                    <td>{{srNo+1}}</td>
+                    <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.team.teamName}}</td>
+                    <td>
+                        <span [ngClass]=" {'activeDot': user.status.statusId == 1 , 'inctiveDot': user.status.statusId == 2}"></span>
+                    </td>
+                </tr>
+            </table>
+            <div class="pageControl">
+                <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+                    [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                    [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                    (pageChange)="onPageChange($event)"></pagination-controls>
+            </div>
         </div>
-          <div class="member-details">
-              <h5>                  
-                  <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
-              <hr>
-              <div class="row" style="padding: 15px;">
-                <ng-multiselect-dropdown name="city" class="col-md-12" [placeholder]="'Select Members'" 
-                [data]="groupMemberObjList" formControlName="city" [disabled]="disabled"
-                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
-              </ng-multiselect-dropdown>
-              </div>
-            <button (click)="addMember()"  class="btn btn-sec ">Add Member</button>
-          </div>
-      </div>
-      <div class="col-md-7">
-        <table style="margin: 20px;">
-            <tr >
-                <th>Sr. No</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Team Name</th>
-                <th>Status</th>
-            </tr>
-            <tr *ngFor="let user of selectedGroupUsers  ; let srNo = index">
-                <td>{{srNo+1}}</td>
-                <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.team.teamName}}</td>
-                <td> <span [ngClass]=" {'activeDot': user.status.statusId == 1 , 'inctiveDot': user.status.statusId == 2}"></span></td>
-            </tr>
-        </table>
-        <!-- <div class="pageControl">
-            <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
-                [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                (pageChange)="onPageChange($event)"></pagination-controls>
-        </div> -->
     </div>
-  </div>
 </div>
