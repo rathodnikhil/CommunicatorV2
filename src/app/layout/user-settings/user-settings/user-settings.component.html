@@ -13,7 +13,12 @@
       <table style="width: 80%; ">
             <tr>
                   <h4>Personal Settings</h4>
+                  <div style="margin-top: 20px;" *ngIf="showUpdateSettingsSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showAddTeamSuccess">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                              <strong>Success: </strong>Settings has been updated Successfully.
+                          </div>
             </tr>
+            
             <tr>
                   <td>Display Picture</td>
                   <td>
@@ -29,7 +34,7 @@
             <tr>
                   <td>Display Name</td>
                   <td>
-                        <input placeholder="Enter Name" type="text" value="{{userSettings.displayName}}" [(ngModel)]="displayName" required/>
+                        <input placeholder="Enter Name" type="text" value="{{userSettings.displayName}}" [(ngModel)]="userSettings.displayName" required/>
                   </td>
             </tr>
             <tr>
@@ -38,7 +43,7 @@
             <tr>
                   <td>Meeting Code</td>
                   <td>
-                        <input placeholder="Enter Meeting Code" value="{{userSettings.meetingCode}}" [(ngModel)]="meetingCode" required />
+                        <input placeholder="Enter Meeting Code" value="{{userSettings.meetingCode}}" [(ngModel)]="userSettings.meetingCode" required />
                   </td>
             </tr>
             <tr>
@@ -61,7 +66,7 @@
                         <p id="text" style="display:none">Checkbox is CHECKED!</p>
                   </td>
             </tr>
-            <tr>
+            <!-- <tr>
                   <td>File Download Location</td>
                   <td colspan="2">
                         <input placeholder="Enter Name" type="text" value="{{userSettings.downloadLocation}}" [(ngModel)]="downloadLocation" requiredclass="col-md-12"
@@ -77,7 +82,7 @@
                               </label>
                         </div>
                   </td>
-            </tr>
+            </tr> -->
       </table>
       <div class="button-block">
             <button class="btn btn-primary" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>

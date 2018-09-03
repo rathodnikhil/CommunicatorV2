@@ -19,12 +19,14 @@ export class MyProfileComponent implements OnInit {
     firstName: any;
     lastName: any;
     email: any;
+    showUpdateProfileSuccess: boolean;
     constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService) {
         this._userService = userService;
         this._meetingservice = meetingService;
         this._groupService = groupService;
     }
     ngOnInit() {
+        this.showUpdateProfileSuccess = false;
         this.loggedInUserObj = {};
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && !data.isGuest) {
@@ -45,6 +47,11 @@ export class MyProfileComponent implements OnInit {
             email: this.loggedInUserObj.email,
             userCode: this.loggedInUserObj.userCode
         }
-        this._userService.updateUserDetails(payload);
-    }
+        this._userService.updateUserDetails(payload).subscribe(data => {
+                this.showUpdateProfileSuccess = true;
+                setTimeout(function () {
+                    this.showUpdateProfileSuccess = false;
+                  }.bind(this), 5000);
+                });
+            }
 }

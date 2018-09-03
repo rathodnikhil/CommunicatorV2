@@ -39,7 +39,7 @@ export class ManageGroupComponent implements OnInit {
     createGroupsVal = '';
     showtypeMessage = false;
     showNewGroup = false;
-    showAddGroupSuccess = false;
+    showNewGroupSuccess = false;
     duplicateGroup = false;
     showGroupNameUiFlag: boolean;
     groupList = [];
@@ -133,7 +133,7 @@ export class ManageGroupComponent implements OnInit {
                 const payload = { "groupName": createGroupsVal, "user": this.loggedInUserObj }
                 this._groupService.saveGroupDetails(payload).subscribe(res => {
                     this.showNewGroup = false;
-                    this.showAddGroupSuccess = true;
+                    this.showNewGroupSuccess = true;
                     setTimeout(function () {
                         this.showNewGroupSuccess = false;
                     }.bind(this), 5000);

@@ -21,8 +21,10 @@ export class NotificationComponent implements OnInit {
     selectedUser: any;
     selectedGroup: any;
     userList = [];
+    searchWholeMemberList = [];
     groupList = [];
     loggedInUser: any;
+    searchText: string;
     constructor(userService: UserService, groupService: GroupService,chatService: ChatService, loginService: LoginService,  private router: Router) {
         this._userService = userService;
         this._groupService = groupService;
@@ -93,5 +95,16 @@ export class NotificationComponent implements OnInit {
              });
              const  payload = {userFrom: this.loggedInUser.userCode , groupCode: this.selectedGroup.groupId.groupId};
        this._chatService.setChattingHistoryList(payload);
+    }
+    searchInWholeMemberList(){
+        if (this.searchText === "" || this.searchText === null || typeof this.searchText === "undefined") {
+         
+        } else {
+            const payload = {searchText : this.searchText};
+            this._userService.searchWholememberList(payload).subscribe(data => {
+                 this.searchWholeMemberList = data;
+               });
+          
+        }
     }
 }

@@ -166,5 +166,8 @@ export class UserService {
         const url = urlConstants.baseUrl + 'logoutApplication?userCode=' + payload.userCode;
         return this.apiRequest.post(url , payload);  
     }
-
+    searchWholememberList(payload){
+        const url = urlConstants.baseUrl + 'searchWholememberList?searchText=' + payload.searchText;
+        return this.apiRequest.post(url , payload); 
+    }
 }

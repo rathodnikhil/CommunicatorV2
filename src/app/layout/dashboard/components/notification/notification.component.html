@@ -28,6 +28,15 @@
            <hr class="list-group-partition" />
        </a> 
     </div>
+    <button class="btn btn-sec" (click)="searchInWholeMemberList()">Try to search in whole memberlist</button>
+    <a *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
+         class="list-group-item clearfix d-block">
+            <i class="fa fa-user-circle fa-2x"></i>
+            <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1',
+            'circleOffline':user.onlineStatus!=null &&  user.onlineStatus === '0' }"></div>
+            <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}<i class="fas fa-plus"></i></span>
+            <hr class="list-group-partition" />
+                </a>
     <!-- /.list-group -->
 </div>
 <!-- <div  [ngClass]=" {'circleOnline': user.onlineStatus.statusId == 1 && joinMeeting == false &&  meetingMember == false,
