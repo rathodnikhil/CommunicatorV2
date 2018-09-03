@@ -66,7 +66,6 @@ export class NotificationComponent implements OnInit {
     }
     getChattingHistoryBySelectedUser() {
         this._userService.getSelectedUser().subscribe(data => {
-            debugger;
             if (data == null || data === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
             } else {
@@ -106,5 +105,11 @@ export class NotificationComponent implements OnInit {
                });
           
         }
+    }
+    addNewMembersInList(user){
+        this.viewMemeberDetails(user);
+        this.userList.push(user);
+        alert(this.searchWholeMemberList.indexOf(user));
+        this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
     }
 }
