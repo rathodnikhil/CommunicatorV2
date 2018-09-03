@@ -79,7 +79,6 @@ export class ManageTeamComponent implements OnInit {
 
         this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
             this.userPermissionMemberList = data;
-            alert(this.userPermissionMemberList.length);
         });
     }
     displayTeamDetails(team) {
@@ -129,8 +128,8 @@ export class ManageTeamComponent implements OnInit {
     }
     // add new member  
     addMember() {
+       
         alert(this.firstName);
-        alert(this.userName);
         if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
             this.showAddMemberFirstName = true;
             setTimeout(function () {

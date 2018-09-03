@@ -23,7 +23,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedtoDate: any;
     showActionIcon: boolean;
     showCancelMeeting: boolean;
-
+    searchText: String;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     constructor(userService: UserService, meetingService: MeetingService, private router: Router) {

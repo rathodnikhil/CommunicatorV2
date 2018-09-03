@@ -9,6 +9,8 @@ import { PaginationInstance } from 'ngx-pagination';
     styleUrls: ['./past-meetings.component.scss'],
 })
 export class PastMeetingsComponent implements OnInit {
+    _meetingService: MeetingService;
+    _userService: UserService;
     public filter: string = '';
     public maxSize: number = 7;
     public directionLinks: boolean = true;
@@ -26,11 +28,10 @@ export class PastMeetingsComponent implements OnInit {
         screenReaderPageLabel: 'page',
         screenReaderCurrentLabel: `You're on page`
     };
-    _userService: UserService;
     fileName: String;
     loggedInUser: any;
     pastMeetingList = [];
-    _meetingService: MeetingService;
+    searchText: string;
     constructor(meetingService: MeetingService, userService: UserService) {
         this._meetingService = meetingService;
         this._userService = userService;

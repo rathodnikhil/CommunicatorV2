@@ -2,7 +2,7 @@
     <div class="row" style="margin:0px;">
         <div class="col-md-8 card-header" id="timeline-icon">
             {{selectedUser.firstName}} {{selectedUser.lastName}}&nbsp;
-            <a id="view-profile" (click)="open(loggedInUser)">(View Full Profile)</a>
+            <a id="view-profile" (click)="open()">(View Full Profile)</a>
         </div>
         <div class="col-md-1 card-header" id="timeline-icon">
             <i class="fa fa-video-camera" [routerLink]="['/videoCall']"></i>

@@ -11,11 +11,13 @@ export class UserSettingsComponent implements OnInit {
   loggedInUserId: any;
   userSettings: any;
   user: any;
+  showUpdateSettingsSuccess: boolean;
   constructor(userService: UserService) {
     this._userService = userService;
   }
 
   ngOnInit() {
+    this.showUpdateSettingsSuccess = false;
     //loggedInuser Object webservice call
     this.loggedInUserId = {};
     this._userService.getLoggedInUserObj().subscribe(data => {
@@ -35,9 +37,13 @@ export class UserSettingsComponent implements OnInit {
       profileImgPath: this.userSettings.profileImgPath,
       chatNotification: this.userSettings.chatNotification,
       meetingReminder: this.userSettings.meetingReminder,
-      downloadLocation: this.userSettings.downloadLocation
+     // downloadLocation: this.userSettings.downloadLocation
     };
     this._userService.saveUserSettings(payload).subscribe(data => {
+      this.showUpdateSettingsSuccess = true;
+      setTimeout(function () {
+        this.showUpdateSettingsSuccess = false;
+      }.bind(this), 5000);
     });
   }
 }
