@@ -88,9 +88,7 @@
                     <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.team.teamName}}</td>
-                    <td>
-                        <span [ngClass]=" {'activeDot': user.status.statusId == 1 , 'inctiveDot': user.status.statusId == 2}"></span>
-                    </td>
+                    <td>{{user.status.status}} </td>
                 </tr>
             </table>
             <div class="pageControl">
