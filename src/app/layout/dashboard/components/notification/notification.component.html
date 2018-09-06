@@ -23,25 +23,18 @@
            (click)="viewGroupDetails(group)"
         class="list-group-item clearfix d-block">
             <i class="fa fa-users"></i> 
-            <!-- <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1',
-            'circleOffline':user.onlineStatus!=null &&  user.onlineStatus === '0' }"></div>  -->
            <span style="padding-left: 1rem;">{{group.groupId.groupName}}&nbsp;</span>
            <hr class="list-group-partition" />
        </a> 
     </div>
-    <button class="btn btn-sec" (click)="searchInWholeMemberList()">Try to search in whole memberlist</button>
+   <div style="text-align: center;"> <button class="btn btn-sec"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div>
     <div class="row" >
-    <a *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"  (click)="addNewMembersInList(user)"
+    <a *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']" 
+     (click)="addNewMembersInList(user)"
          class="list-group-item clearfix d-block">
-            <i class="fa fa-user-circle fa-2x"></i>
-            <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1',
-            'circleOffline':user.onlineStatus!=null &&  user.onlineStatus === '0' }"></div>
-            <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
-                </span>
-                <i class="fa fa-plus"></i>
-               
-            <hr class="list-group-partition" />
-                </a>
+            <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
+                <i style="color: #ffffff; padding-left: 10px;" class="fa fa-plus"></i>
+     </a>
             </div>
        <!-- /.list-group -->
 </div>

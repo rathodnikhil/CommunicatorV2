@@ -28,7 +28,8 @@ export class ScheduleMeetingComponent implements OnInit {
     addSubjectFlag: boolean;
     addDurationFlag: boolean;
     addTimezoneFlag: boolean;
-    
+    audioMeeting: boolean;
+    vedioMeeting: boolean;
     // public radioGroupForm: FormGroup;
     scheduleMeetings: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
@@ -193,8 +194,21 @@ export class ScheduleMeetingComponent implements OnInit {
             };
 
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
+               
+                if(this.meeting.callType === 'Vedio'){
+                    this.vedioMeeting = true;
+                    this.audioMeeting =false;
+                }else{
+                    this.audioMeeting = true;
+                    this.vedioMeeting = false;
+                }
                 this.scheduleMeetingModal.open();
                 this.subject = '';
+                this.meeting.selectedDuration = 'Select Duration';
+                this.meeting.selectedTimeZone = 'Select Timezone';
+                this.meeting.callType = 1;
+                this.meeting.isRecurring = 1;
+                this.meeting.datePicker = Date.now();
             });
             // this._meetingService.scheduleMeeting(payload);
         }
@@ -238,10 +252,17 @@ export class ScheduleMeetingComponent implements OnInit {
 
     //get meeting details
     getMeetingDetails(): string {
+        let meetingUrl = '';
+        if(this.meeting.callType === 'Video'){
+             meetingUrl = 'https://192.168.3.76:9080/#/meeting?meetingCode=';
+        }else{
+             meetingUrl = 'https://192.168.3.76:9080/#/meeting/audio?meetingCode=';
+        }
+      
         var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
              + this.meeting.selectedDuration + '\n' +
-            '\n Please join my meeting from your computer,tablet or smartphone \n' + 'https://192.168.3.76:9080/#/meeting?meetingCode='+this.accessCode+'\n' +
+            '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl +this.accessCode+'\n' +
             //'\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://localhost:4200/#/meeting?meetingCode='+this.accessCode+'\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;
