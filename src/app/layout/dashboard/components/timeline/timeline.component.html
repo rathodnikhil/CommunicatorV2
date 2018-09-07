@@ -38,8 +38,27 @@
                     </div>
                 </div>
             </li>
-        
-            <!--   <li>
+            <li   *ngFor="let broadcastMsg of broadcastMsgList" class="timeline-inverted">
+                <div class="timeline-badge warning">
+                    <i class="fa fa-bullhorn fa-fw"></i>
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h6 class="timeline-title">{{broadcastMsg.generatedBy.firstName}}&nbsp;{{broadcastMsg.generatedBy.lastName}}</h6>
+                        <p>
+                            <small class="text-muted">
+                                <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |  date:'fullDate'}}&nbsp; 
+                                ({{broadcastMsg.broadcastMsgDate |  date:'hh:mm:ss'}})</small>
+                        </p>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{broadcastMsg.broadcastMessage}}</p>
+                    </div>
+                </div>
+            </li>
+
+
+              <!-- <li>
                 <div class="timeline-badge">
                     <i class="fa fa-check"></i>
                 </div>
@@ -169,16 +188,16 @@
                             incidunt quisquam maxime neque eaque.</p>
                     </div>
                 </div>
-            </li> -->
+            </li>  -->
         </ul>
     </div>
 </div>
 <div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg"   (keyup.enter)="sendMessage()" required >
+    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" #chatMessag  (keyup.enter)="sendMessage(chatMessag.value)" required >
     </textarea>
     <div class="input-group-append">
         <a class="btn">
-            <i class="fa fa-paper-plane" aria-hidden="true" (click)="sendMessage()"></i>
+            <i class="fa fa-paper-plane" aria-hidden="true" (click)="sendMessage(chatMessag.value)"></i>
         </a>
         <a class="btn">
             <i class="fa fa-file" aria-hidden="true"></i>
@@ -222,7 +241,6 @@
         </div>
     </div>
     <div class="modal-footer popFooter">
-        <!-- <button type="button" class="btn btn-secondary btn-border-radius" (click)="addTeam(newTeamName)">Add Team</button>
-            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('addNewTeam')">Close</button> -->
+            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('profileDetails')">Close</button> 
     </div>
 </app-custom-modal>

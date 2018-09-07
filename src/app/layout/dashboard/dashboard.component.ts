@@ -33,20 +33,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     loggedInUserObj: any;
     loggedInUserRole: any;
     signUpflag: boolean;
-
-    @ViewChild('braodcastMessageModal') public broadcastMessageModal: CustomModalComponent;
-    broadcastMessagecontent: CustomModalModel = {
-        titleIcon: '<i class="fa fa-bullhorn"></i>',
-        title: 'Broadcast Message',
-        smallHeading: 'Send Message to everyone',
-        body: '',
-        Button1Content: '<i class="fa fa-comments"></i>&nbsp;Send Message',
-        Button2Content: '<i class="fa fa-refresh"></i>&nbsp;Cancel'
-    };
-  
+ 
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     currentRoute = 0;
+
+    @ViewChild('broadcastMsgModal') public broadcastMsgModal: CustomModalComponent;
+    broadcastMsgContent: CustomModalModel = {
+        titleIcon: '<i class="fa fa-user"></i>',
+        title: 'New Member',
+        smallHeading: 'You can add new member details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Member',
+        Button2Content: ''
+    };
+
 
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         private groupService: GroupService, userService: UserService, private router: Router) {
@@ -141,20 +142,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     switchRoute(newRoute) {
         this.currentRoute = newRoute;
     }
-    open() {
-        //   debugger;
-        this.broadcastMessageModal.open();
+   
+    openMemberPopup() {
+        this.broadcastMsgModal.open();
     }
-  
     //save broadcast message
-    broadcastMessages(broadcastMessage) {
-        if (broadcastMessage === "" || broadcastMessage === null || typeof broadcastMessage === "undefined") {
+    broadcastMessages() {
+        if (this.broadcastMessage === "" || this.broadcastMessage === null || typeof this.broadcastMessage === "undefined") {
             this.showtypeMessage = true;
             setTimeout(function () {
                 this.showtypeMessage = false;
             }.bind(this), 5000);
         } else {
-            const payload = { "broadcastMessage": broadcastMessage };
+            const payload = { "broadcastMessage": this.broadcastMessage ,generatedBy: this.loggedInUserObj };
             this._groupService.saveBroadcastMessage(payload).subscribe(res => {
                 this.showtypeMessage = false;
                 this.showBroadcastMessageSuccess = true;
@@ -176,8 +176,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //close create group modal popup
     closePopup(popupType) {
         switch (popupType) {
-            case 'addBroadcastMsg':
-                this.broadcastMessageModal.close();
+            case 'broadcastMessageModal':
+                this.broadcastMsgModal.close();
                 break;
         }
     }

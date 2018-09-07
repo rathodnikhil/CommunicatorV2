@@ -25,6 +25,7 @@ export class NotificationComponent implements OnInit {
     groupList = [];
     loggedInUser: any;
     searchText: string;
+    broadcastMsgList= [];
     constructor(userService: UserService, groupService: GroupService,chatService: ChatService, loginService: LoginService,  private router: Router) {
         this._userService = userService;
         this._groupService = groupService;
@@ -77,11 +78,12 @@ export class NotificationComponent implements OnInit {
          });
          const  payload = {userFrom: this.loggedInUser.userCode , userTo: this.selectedUser.userCode};
        this._chatService.setChattingHistoryList(payload);
-    
+       const broadcastMsgPayload = {userCode: this.selectedUser.userCode};
+       this._chatService.setBroadcastMsgByLoggedInuserId(broadcastMsgPayload);
+
     }
 
     getChattingHistoryBySelectedGroup() {
-    
             this._userService.getSelectedGroup().subscribe(data => {
                 if (data == null || data === undefined || data.length === 0) {
                     this.router.navigate(['/dashboard/default']);
@@ -103,7 +105,6 @@ export class NotificationComponent implements OnInit {
             this._userService.searchWholememberList(payload).subscribe(data => {
                  this.searchWholeMemberList = data;
                });
-          
         }
     }
     addNewMembersInList(user){

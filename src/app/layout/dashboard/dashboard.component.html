@@ -4,7 +4,7 @@
             <div class="card card-default">
                 <div class="row" style="margin:0px;">
                     <div class="col-md-6 card-header userlist-header" style="text-align: center;">
-                        <i class="fa fa-user-circle fa-fw cursorPointer"></i>
+                        <i class="fa fa-user-circle fa-fw cursorPointer" [routerLink]="['/myProfile']"></i>
                     </div>
                     <div [ngClass]="{'userlist-header': signUpflag === true ,
                     'card-header ': signUpflag === true ,'col-md-2': signUpflag === true}">
@@ -14,29 +14,33 @@
                         <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>                      
                     </div>
                     <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
-                        <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="open()"></i>                        
-                        <app-custom-modal #broadcastMessageModal [model]="broadcastMessagecontent">
-                            <div class="modal-body">
-                                <div style="margin-top: 20px;" *ngIf="showtypeMessage === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showtypeMessage">
-                                    <strong>Error: </strong>Enter Message.
-                                </div>
-                                <div style="margin-top: 20px;" *ngIf="showBroadcastMessageSuccess === true" class="alert alert-success alert-dismissable"
-                                    [(ngModel)]="showBroadcastMessageSuccess">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <strong>Success: </strong>Message has been Broadcast Successfully.
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label>Messgage</label>
+                        <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="openMemberPopup()"></i>                        
+                        <app-custom-modal #broadcastMsgModal [model]="broadcastMsgContent">
+                            <div class="modal-body row-label">
+                                <div class="modal-body">
+                                    <div style="margin-top: 20px;" *ngIf="showtypeMessage === true" class="alert alert-danger alert-dismissable"
+                                     [(ngModel)]="showtypeMessage">
+                                        <strong>Error: </strong>Enter Message.
                                     </div>
-                                    <div>
-                                        <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage" (click)="typeBroadcastMessageFocus()"></textarea>
+                                    <div style="margin-top: 20px;" *ngIf="showBroadcastMessageSuccess === true" class="alert alert-success alert-dismissable"
+                                        [(ngModel)]="showBroadcastMessageSuccess">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <strong>Success: </strong>Message has been Broadcast Successfully.
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Messgage</label>
+                                        </div>
+                                        <div>
+                                            <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage" (click)="typeBroadcastMessageFocus()"></textarea>
+                                        </div>
                                     </div>
                                 </div>
+                             
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn-sec btn" (click)="broadcastMessages(broadcastMessage)">Broadcast Message</button>
-                                <button type="button" class="btn btn-cancel" (click)="closePopup('addBroadcastMsg')">Close</button>
+                                <button type="button" class="btn btn-sec" (click)="broadcastMessages()">Add Member</button>
+                                <button type="button" class="btn btn-cancel" (click)="closePopup('broadcastMessageModal')">Close</button>
                             </div>
                         </app-custom-modal>
                     </div>

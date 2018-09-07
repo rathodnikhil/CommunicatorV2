@@ -1,46 +1,3 @@
-// $topnav-background-color: #222;
-// :host {
-//     .navbar {
-//         background-color: $topnav-background-color;
-//         .navbar-brand {
-//             color: #fff;
-//         }
-//         .nav-item > a {
-//             color: #999;
-//             &:hover {
-//                 color: #fff;
-//             }
-//         }
-//     }
-//     .messages {
-//         width: 300px;
-//         .media {
-//             border-bottom: 1px solid #ddd;
-//             padding: 5px 10px;
-//             &:last-child {
-//                 border-bottom: none;
-//             }
-//         }
-//         .media-body {
-//             h5 {
-//                 font-size: 13px;
-//                 font-weight: 600;
-//             }
-//             .small {
-//                 margin: 0;
-//             }
-//             .last {
-//                 font-size: 12px;
-//                 margin: 0;
-//             }
-//         }
-//     }
-// }
-/*-------------------------------*/
-
-/*           Wrappers            */
-
-/*-------------------------------*/
 
 #sidebar-wrapper {
     z-index: 1000;
@@ -93,7 +50,7 @@
             &:hover,
             &:active,
             &:focus {
-                color:   #8f5a0a;
+                color:   #3277d3;
                 text-decoration: none;
                 background-color: transparent;
                 font-weight: bold;
@@ -110,17 +67,10 @@
         &:hover,
         &:active,
         &:focus {
-            color: #3277d3;
             text-decoration: none;
-            //background-color: #3277d3;
-            background-color: #ffb94b;
-            background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
-            background-image: -webkit-linear-gradient(to bottom, #fddb6f, #ffb94b);
-            background-image: -moz-linear-gradient(to bottom, #fddb6f, #ffb94b);
-            background-image: -ms-linear-gradient(to bottom, #fddb6f, #ffb94b);
-            background-image: -o-linear-gradient(to bottom, #fddb6f, #ffb94b);
-            background-image: linear-gradient(to bottom, #fddb6f, #ffb94b);
-            color: #8f5a0a;
+            background-color: #e8f0fc  !important;
+            border : 1px solid #3277d3;
+        
         }
     }
     .sidebar-brand {

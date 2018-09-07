@@ -28,7 +28,7 @@ export class TimelineComponent implements OnInit {
     chattingHistoryList = [];
     chattingHistoryObj: any;
     emptyHistoryFlag: boolean;
-    // router: Router;
+    broadcastMsgList = [];
     chatMsg: any;
     constructor(userService: UserService, private router: Router, chatService: ChatService) {
         this._userService = userService;
@@ -45,43 +45,35 @@ export class TimelineComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
             
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
         });
         this.chattingHistoryList = [];
         this._chatService.getChattingHistoryList().subscribe(data => {
             this.chattingHistoryList = data;
-
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
         });
+        this.broadcastMsgList = [];
+        this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
+            this.broadcastMsgList = data;
+          }); 
     }
     open() {
-        // alert(loggedInUser.name + loggedInUser.lastName);
         this.viewProfileModal.open();
     }
-    updateProfile(event) {
-        alert('copy text');
-    }
-
     closeviewProfilePopup(popupType) {
         switch (popupType) {
-            case 'viewProfile':
+            case 'profileDetails':
                 this.viewProfileModal.close();
                 break;
         }
     }
-    sendMessage() {
-        alert(this.selectedUser.userCode);
-        let payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: this.chatMsg };
-        if (this.chatMsg === "" || this.chatMsg === null || typeof this.chatMsg === "undefined") {
+    sendMessage(chatMessag) {
+        let payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: chatMessag };
+        if (chatMessag === "" || chatMessag === null || typeof chatMessag === "undefined") {
             this.enterMsgFlag = true;
             setTimeout(function () {
                 this.enterMsgFlag = false;
             }.bind(this), 5000);
         } else {
+            alert('elase');
             this._chatService.saveChat(payload).subscribe(data => {
                 this.chatMsg = "";
                 // this.chattingHistoryObj = data;
@@ -91,7 +83,7 @@ export class TimelineComponent implements OnInit {
 
         }
     }
-    onKey(event) {
-        if (event.key == "Enter") { this.sendMessage(); }
+    onKey(event,chatMessag) {
+        if (event.key == "Enter") { this.sendMessage(chatMessag); }
     }
 }

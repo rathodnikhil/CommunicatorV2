@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (event.key == "Enter") { this.login(); }
     }
     login() {
-        // debugger;
+      
         if (this.userName === '' || this.userName === null) {
             this.userNameFlag = true;
             setTimeout(function () {
@@ -123,7 +123,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
     forgetPassword() {
-        // alert();
+      
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
     }
