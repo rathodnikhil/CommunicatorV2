@@ -25,7 +25,8 @@ const routes: Routes = [
             { path: 'myCalendar', loadChildren: './my-calendar/my-calendar.module#MyCalendarModule' },
             { path: 'meeting', loadChildren: './meeting/meeting.module#MeetingModule'},
             { path: 'ManageAdmin', loadChildren: './manage-admin/manage-admin.module#ManageAdminModule'},
-            { path: 'ManageGroup', loadChildren: './manage-group/manage-group.module#ManageGroupModule'}
+            { path: 'ManageGroup', loadChildren: './manage-group/manage-group.module#ManageGroupModule'},
+          //  { path: 'GuestUser', loadChildren: './guest-user/guest-user.module#GuestUserModule'}
             
         ]
     }

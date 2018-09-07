@@ -121,18 +121,20 @@ export class UserService {
     setLoggedInUserObj(payload): Observable<any> {
         if(payload.isGuest){
             // save guest user
-            // this.apiRequest.post(url, payload).subscribe(data => {
-            //      this.loggedInUserObj$.next(payload);
-            // return this.loggedInUserObj$;
-            // });
+            const url = urlConstants.baseUrl + 'saveGuestUserDetails';
+             this.http.post(url, payload).subscribe(data => {
+                  this.loggedInUserObj$.next(payload);
+             return this.loggedInUserObj$;
+             });
             this.loggedInUserObj$.next(payload);
             return this.loggedInUserObj$;
-        }
+        }else{
         const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.loggedInUserObj$.next(data);
             localStorage.setItem('loggedInuserName', data.firstName + ' ' + data.lastName);
         });
+    }
         return this.loggedInUserObj$;
     }
     getUserRole() {
