@@ -11,6 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class ChatService {
   chattingHistoryList$: Subject<any[]> = new BehaviorSubject<any>({});  
+  broadcastMsgHistoryList$: Subject<any[]> = new BehaviorSubject<any>({});  
   constructor( private apiRequest: ApiRequestService) { }
 
    //save individual chatting
@@ -19,27 +20,27 @@ export class ChatService {
     let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
       this.apiRequest.post(url,payload).subscribe(data => {
           resp.next(data);
-      },
-        err => {
-        //   alert("Error occured");
-        //   alert(err);
-        });
-
+      });
     return resp;
   }
 
   setChattingHistoryList(payload) {
     const url = urlConstants.baseUrl + 'getChatHistoryBySelecteduser';
-    // const resp = new BehaviorSubject<any>({});
     this.apiRequest.post(url, payload).subscribe(data => {
         this.chattingHistoryList$.next(data);
-    },
-        err => {
-           // alert(err);
-        });
-    // return resp;
+    });
 }
 getChattingHistoryList() {
     return this.chattingHistoryList$;
+}
+
+setBroadcastMsgByLoggedInuserId(payload) {
+    const url = urlConstants.baseUrl + 'getBroadcastMsgByLoggedInuserId?userCode=' + payload.userCode;
+    this.apiRequest.post(url, payload).subscribe(data => {
+        this.broadcastMsgHistoryList$.next(data);
+    });
+}
+getBroadcastMsgByLoggedInuserId() {
+    return this.broadcastMsgHistoryList$;
 }
 }

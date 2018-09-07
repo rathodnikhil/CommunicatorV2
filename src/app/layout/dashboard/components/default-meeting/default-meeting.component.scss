@@ -325,21 +325,21 @@ $border-color: #e0e0e0;
 }
 
 .accordion{
- // background: #e8f0fc;
-  background-color: #ffb94b;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
-    background-image: -webkit-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: -moz-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: -ms-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: -o-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: linear-gradient(to bottom, #fddb6f, #ffb94b);
+    background-color: #e8f0fc  !important;
+    border : 1px solid #3277d3;
+
+    cursor: pointer;
+    text-align: center;
+    font: Arial, Helvetica;
+    font-weight: bold;
+    color: #3277d3;
   list-style-type: none;
   border: 1px solid $border-color;
   width: 100%;
   text-align: center;
   padding-right: 35px;
   font-weight: bold;
-  color:#8f5a0a;
+  
 }
 
 .accordion-item{
