@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, 
 import { UserService } from '../../../../services/user.service';
 import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-default-meeting',
     templateUrl: './default-meeting.component.html',
@@ -26,11 +27,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     searchText: String;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
-    constructor(userService: UserService, meetingService: MeetingService, private router: Router) {
+    constructor(userService: UserService, meetingService: MeetingService, private router: Router, private toastr: ToastrService) {
         this._userService = userService;
         this._meetingService = meetingService;
     }
     ngOnInit() {
+        
         this.selectDateFlag = true;
         this.showActionIcon = true;
         this.showCancelMeeting = false;
@@ -61,12 +63,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.chatBody.nativeElement.style.height = (this.chatPanel.nativeElement.offsetHeight
             - (this.chatBody.nativeElement.offsetTop + 30)) + 'px';
     }
-    switchRoute() {
+    switchRoute() {        
         this.CurrentRoute.emit(1);
     }
 
     // future meeting list web service call
     getAllFutureMeetingList() {
+        
         const payload = { userCode: this.loggedInUser.userCode };
         this.futureMeetingList = [];
         this._meetingService.setFutureMeetimgList(payload);

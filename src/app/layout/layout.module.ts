@@ -8,14 +8,15 @@ import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 // import { ResetPasswordComponent } from './reset-password/reset-password/reset-password.component';
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
     imports: [
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,
-        NgbDropdownModule.forRoot()
+        NgbDropdownModule.forRoot(),
+        ToastrModule.forRoot()
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })
-export class LayoutModule {}
+export class LayoutModule { }

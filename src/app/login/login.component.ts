@@ -4,12 +4,14 @@ import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
 import { Injectable } from '@angular/core';
+import { AlertService } from '../services/alert.service';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    animations: [routerTransition()]
+    animations: [routerTransition()],
+    providers: [AlertService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     Logintext = "Login";
     loggedInUserObj: any;
 
-    constructor(public router: Router, loginService: LoginService, userService: UserService) {
+    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService) {
         this._loginService = loginService;
         this._userService = userService;
     }
@@ -55,22 +57,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     onKey(event) {
         if (event.key == "Enter") { this.login(); }
     }
-    login() {
-      
-        if (this.userName === '' || this.userName === null) {
-            this.userNameFlag = true;
-            setTimeout(function () {
-                this.userNameFlag = false;
-            }.bind(this), 5000);
-        } else if (!this.isGuest && (this.password === '' || this.password === null)) {
-            this.passwordFlag = true;
-            setTimeout(function () {
-                this.passwordFlag = false;
-            }.bind(this), 5000);
+    login() {        
+        if (this.userName == undefined || this.userName === '' || this.userName === null) {            
+            return this.alertService.error("Enter Username", "Error");            
+        } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {            
+            return  this.alertService.error("Enter Password", "Error");
+            
         } else {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
-                const payload = { firstName: this.userName, isGuest: this.isGuest,email:this.email }
+                const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email }
                 this._userService.setLoggedInUserObj(payload).subscribe(res => {
                     if (res.firstName !== undefined) {
                         if (!this.previousUrl) {
@@ -89,11 +85,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                     if (loginWarningFlag === false) {
                         this._loginService.getAuthenticationToken(payload).subscribe(resp => {
                             this.jwtToken = this._loginService.getJwtToken();
-                            if (this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
-                                this.authFlag = true;
-                                setTimeout(function () {
-                                    this.authFlag = false;
-                                }.bind(this), 5000);
+                            if (this.jwtToken === undefined || this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
+                                return this.alertService.error("Authentication Token failed", "Error");                                
                             } else {
                                 let userNamePayload = { userName: this.userName };
                                 this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
@@ -111,10 +104,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
                         });
                     } else {
-                        this.passwordMacthFlag = true;
-                        setTimeout(function () {
-                            this.passwordMacthFlag = false;
-                        }.bind(this), 5000);
+                        return this.alertService.warning("UserName and Password dose not match", "Error");                        
                     }
                 },
                     err => {
@@ -123,7 +113,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
     forgetPassword() {
-      
+
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
     }
