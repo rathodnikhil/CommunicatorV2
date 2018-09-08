@@ -86,4 +86,11 @@ export class TimelineComponent implements OnInit {
     onKey(event,chatMessag) {
         if (event.key == "Enter") { this.sendMessage(chatMessag); }
     }
+    closeTeamPopup (popupType) {
+        switch (popupType) {
+            case 'profileDetails':
+                this.viewProfileModal.close();
+                break;
+        }
+    }
 }

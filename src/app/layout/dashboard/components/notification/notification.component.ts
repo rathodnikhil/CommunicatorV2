@@ -25,8 +25,8 @@ export class NotificationComponent implements OnInit {
     groupList = [];
     loggedInUser: any;
     searchText: string;
-    broadcastMsgList= [];
-    constructor(userService: UserService, groupService: GroupService,chatService: ChatService, loginService: LoginService,  private router: Router) {
+    broadcastMsgList = [];
+    constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService, private router: Router) {
         this._userService = userService;
         this._groupService = groupService;
         this._loginService = loginService;
@@ -36,29 +36,31 @@ export class NotificationComponent implements OnInit {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUser = data;     
-         });
-        const payload = { userCode:  this.loggedInUser.userCode};
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUser = data;
+        });
+        const payload = { userCode: this.loggedInUser.userCode };
         this._userService.setUserList(payload);
-        this._userService.getUserList().subscribe(data => {            
-            this.userList = data;            
+        this._userService.getUserList().subscribe(data => {
+            if (data && data.length > 0)
+                this.userList = data;
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
-         
+        });
+
         this._groupService.setGroupList(payload);
-        this._groupService.getGroupList().subscribe(data => {            
-            this.groupList = data;     
+        this._groupService.getGroupList().subscribe(data => {
+            if (data && data.length > 0)
+                this.groupList = data;
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
+        });
     }
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
-        this.getChattingHistoryBySelectedUser();        
+        this.getChattingHistoryBySelectedUser();
     }
 
     viewGroupDetails(group) {
@@ -75,39 +77,39 @@ export class NotificationComponent implements OnInit {
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
-         });
-         const  payload = {userFrom: this.loggedInUser.userCode , userTo: this.selectedUser.userCode};
-       this._chatService.setChattingHistoryList(payload);
-       const broadcastMsgPayload = {userCode: this.selectedUser.userCode};
-       this._chatService.setBroadcastMsgByLoggedInuserId(broadcastMsgPayload);
+        });
+        const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode };
+        this._chatService.setChattingHistoryList(payload);
+        const broadcastMsgPayload = { userCode: this.selectedUser.userCode };
+        this._chatService.setBroadcastMsgByLoggedInuserId(broadcastMsgPayload);
 
     }
 
     getChattingHistoryBySelectedGroup() {
-            this._userService.getSelectedGroup().subscribe(data => {
-                if (data == null || data === undefined || data.length === 0) {
-                    this.router.navigate(['/dashboard/default']);
-                } else {
-                    this.selectedGroup = data;
-                }
-            }, err => {
-                // alert(err);
-                this.router.navigate(['/login']);
-             });
-             const  payload = {userFrom: this.loggedInUser.userCode , groupCode: this.selectedGroup.groupId.groupId};
-       this._chatService.setChattingHistoryList(payload);
+        this._userService.getSelectedGroup().subscribe(data => {
+            if (data == null || data === undefined || data.length === 0) {
+                this.router.navigate(['/dashboard/default']);
+            } else {
+                this.selectedGroup = data;
+            }
+        }, err => {
+            // alert(err);
+            this.router.navigate(['/login']);
+        });
+        const payload = { userFrom: this.loggedInUser.userCode, groupCode: this.selectedGroup.groupId.groupId };
+        this._chatService.setChattingHistoryList(payload);
     }
-    searchInWholeMemberList(){
+    searchInWholeMemberList() {
         if (this.searchText === "" || this.searchText === null || typeof this.searchText === "undefined") {
-         
+
         } else {
-            const payload = {searchText : this.searchText};
+            const payload = { searchText: this.searchText };
             this._userService.searchWholememberList(payload).subscribe(data => {
-                 this.searchWholeMemberList = data;
-               });
+                this.searchWholeMemberList = data;
+            });
         }
     }
-    addNewMembersInList(user){
+    addNewMembersInList(user) {
         this.viewMemeberDetails(user);
         this.userList.push(user);
         alert(this.searchWholeMemberList.indexOf(user));

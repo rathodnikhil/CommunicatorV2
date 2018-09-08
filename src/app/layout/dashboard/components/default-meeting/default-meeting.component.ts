@@ -32,9 +32,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        this.showActionIcon  = true;
+        this.showActionIcon = true;
         this.showCancelMeeting = false;
-       //loggedInUser web service call
+        //loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
         });
@@ -65,35 +65,23 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.CurrentRoute.emit(1);
     }
 
-    serachMeetingByDate(fromDate, toDate) {
-        // this.selectedDate = new Date(
-        //     fromDate.getFullYear(),
-        //     fromDate.getMonth() + 2,
-        //     fromDate.getDate()
-        //   );
-        //fromDate = fromDate.
-        alert(fromDate);
-    }
     // future meeting list web service call
     getAllFutureMeetingList() {
         const payload = { userCode: this.loggedInUser.userCode };
         this.futureMeetingList = [];
         this._meetingService.setFutureMeetimgList(payload);
         this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-
-            // if (resp.errorFl || resp.warningFl) {
-            //     this.futureMeetingList = [];
-            // } else {
-            //     this.futureMeetingList = data;
-            //     this.filteredFutureMeetingList = this.futureMeetingList;
-            // }       
-            this.futureMeetingList = data;
+            if (data.length == undefined || data.length == 0) {
+                this.futureMeetingList = [];
+            } else {
+                this.futureMeetingList = data;
+            }
             this.filteredFutureMeetingList = this.futureMeetingList;
         });
     }
     selectMeetingFilterDate() {
         this.selectDateFlag = !this.selectDateFlag;
-    }    
+    }
     filterMeetingByDate(mode) {
         this.filteredFutureMeetingList = [];
         switch (mode) {
@@ -131,18 +119,18 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
 
     }
-    deleteMeeting(meeting){
-        const payload = {userCode: this.loggedInUser.userCode , meetingCode: meeting.meetingCode };
+    deleteMeeting(meeting) {
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(data => {
             this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
         });
     }
     cancelMeeting(meeting) {
-        const payload = {userCode: this.loggedInUser.userCode , meetingCode: meeting.meetingCode };
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.cancelMeeting(payload).subscribe(data => {
-           // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
-           this.showActionIcon = false;
+            // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+            this.showActionIcon = false;
             this.showCancelMeeting = true;
-        }); 
+        });
     }
 }

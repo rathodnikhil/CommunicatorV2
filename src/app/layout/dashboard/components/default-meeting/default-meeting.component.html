@@ -7,8 +7,7 @@
                 <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
             </div>
             <div class="col-md-4">
-                <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-sec pull-right"
-                 type="button">Schedule</a>
+                <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-sec pull-right" type="button">Schedule</a>
             </div>
         </div>
     </div>
@@ -56,6 +55,7 @@
                     </div>
                     <div style="text-align: center;margin:0 auto;padding: 10px;">
                         <button class="btn btn-primary" (click)="filterMeetingByDate('range')">Search</button>
+                        <button class="btn btn-primary" (click)="filterMeetingByDate('clear')">Clear</button>
                     </div>
                 </div>
             </ul>
@@ -103,12 +103,12 @@
                                     <br> Meeting Duration : {{recentMeeting.duration}} Hour</strong>
                             </div>
                         </div>
-                        <p *ngIf="recentMeeting.meetingCode===undefined">
+                        <p *ngIf="recentMeeting!=undefined&&recentMeeting.meetingCode===undefined">
                             <strong class="primary-font">No recent meetings</strong>
                         </p>
                     </li>
                     <!-- <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"> -->
-                    <li *ngFor="let meeting of filteredFutureMeetingList | SearchFutureMeeting : searchText" class="left clearfix">
+                    <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div class="col-md-9">
                                 <i class="fa fa-calendar"></i>
