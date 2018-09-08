@@ -15,9 +15,10 @@ import { UserService } from './services/user.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MeetingService } from './services/meeting-service';
 import { FormsModule } from '@angular/forms';
-import { ApiRequestService } from  './services/api-request.service';
+import { ApiRequestService } from './services/api-request.service';
 import { GroupService } from './services/group.service';
 import { ChatService } from './services/chat.service';
+import { AlertService } from './services/alert.service';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -43,9 +44,9 @@ export function createTranslateLoader(http: HttpClient) {
         AppRoutingModule
     ],
     declarations: [AppComponent], // , SeachMemberPipe
-    providers: [AuthGuard, LoginService, UserService, MeetingService,ApiRequestService, GroupService,ChatService],
+    providers: [AuthGuard, LoginService, UserService, MeetingService, ApiRequestService, GroupService, ChatService],
     bootstrap: [AppComponent], schemas: [
         CUSTOM_ELEMENTS_SCHEMA
     ]
 })
-export class AppModule {}
+export class AppModule { }
