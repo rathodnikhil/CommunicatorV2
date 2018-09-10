@@ -80,8 +80,7 @@ export class NotificationComponent implements OnInit {
         });
         const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode };
         this._chatService.setChattingHistoryList(payload);
-        const broadcastMsgPayload = { userCode: this.selectedUser.userCode };
-        this._chatService.setBroadcastMsgByLoggedInuserId(broadcastMsgPayload);
+        this._chatService.setBroadcastMsgByLoggedInuserId(payload);
 
     }
 
@@ -110,9 +109,15 @@ export class NotificationComponent implements OnInit {
         }
     }
     addNewMembersInList(user) {
+        const payload = {teamCode: this.loggedInUser.team.teamCode ,
+             team : this.loggedInUser.team ,
+             userId: user,
+            createdBy: this.loggedInUser.userCode }
         this.viewMemeberDetails(user);
         this.userList.push(user);
-        alert(this.searchWholeMemberList.indexOf(user));
         this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
+        this._userService.SaveUserPermission(payload).subscribe(data => {
+          
+        });
     }
 }

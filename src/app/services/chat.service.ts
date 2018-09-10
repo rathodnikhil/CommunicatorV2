@@ -35,7 +35,7 @@ getChattingHistoryList() {
 }
 
 setBroadcastMsgByLoggedInuserId(payload) {
-    const url = urlConstants.baseUrl + 'getBroadcastMsgByLoggedInuserId?userCode=' + payload.userCode;
+    const url = urlConstants.baseUrl + 'getBroadcastMsgByLoggedInuserId?userFrom=' + payload.userFrom +'&userTo=' +payload.userTo;
     this.apiRequest.post(url, payload).subscribe(data => {
         this.broadcastMsgHistoryList$.next(data);
     });
