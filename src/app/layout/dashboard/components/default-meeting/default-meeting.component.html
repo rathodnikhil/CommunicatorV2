@@ -117,7 +117,7 @@
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
                             <div class="col-md-3" *ngIf="showActionIcon">
-                                <a [routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}">
+                                <a [routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank">
                                     <i class="fa fa-play-circle actionIcon" aria-hidden="true"></i>
                                 </a>
                                 <a>

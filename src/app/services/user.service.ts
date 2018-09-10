@@ -172,4 +172,8 @@ export class UserService {
         const url = urlConstants.baseUrl + 'searchWholememberList?searchText=' + payload.searchText;
         return this.apiRequest.post(url , payload); 
     }
+    SaveUserPermission(payload){
+        const url = urlConstants.baseUrl + 'SaveUserPermission';
+        return this.apiRequest.post(url , payload); 
+    }
 }

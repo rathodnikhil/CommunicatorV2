@@ -122,6 +122,8 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.audioMeeting = false;
+        this.vedioMeeting = false;
         this._userService.getLoggedInUserObj().subscribe(data => {     
             this.loggedInUser = data;     
         }, err => {
@@ -194,42 +196,45 @@ export class ScheduleMeetingComponent implements OnInit {
             };
 
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
-               
-                if(this.meeting.callType === 'Vedio'){
+                if(this.meeting.callType === 'Video'){
                     this.vedioMeeting = true;
                     this.audioMeeting =false;
                 }else{
                     this.audioMeeting = true;
                     this.vedioMeeting = false;
                 }
-                this.scheduleMeetingModal.open();
-                this.subject = '';
-                this.meeting.selectedDuration = 'Select Duration';
-                this.meeting.selectedTimeZone = 'Select Timezone';
-                this.meeting.callType = 1;
-                this.meeting.isRecurring = 1;
-                this.meeting.datePicker = Date.now();
             });
-            // this._meetingService.scheduleMeeting(payload);
+            
         }
+    }
+    clearAllMeetingField() {
+        this.scheduleMeetingModal.open();
+        this.subject = '';
+        this.meeting.selectedDuration = 'Select Duration';
+        this.meeting.selectedTimeZone = 'Select Timezone';
+        this.meeting.callType = 1;
+        this.meeting.isRecurring = 1;
+        this.meeting.datePicker = Date.now();
     }
     copyToOutLook(event, subject) {
         var meetingDetails = this.getMeetingDetails();
+        alert(subject);
         this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + subject +
-            '&body=' + meetingDetails;
+        a.href = 'mailto:?subject=' + this.meeting.subject+'&body=' + meetingDetails;
         document.body.appendChild(a);
         // start download
         a.click();
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
+        this.clearAllMeetingField();
     }
     //copy meeting content
     copyToClipboard() {
         var meetingDetails = this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
-        document.execCommand('copy')
+        document.execCommand('copy');
+        this.clearAllMeetingField();
     }
     changeTimeZone(timezone) {
         this.meeting.selectedTimeZone = timezone;
@@ -254,9 +259,11 @@ export class ScheduleMeetingComponent implements OnInit {
     getMeetingDetails(): string {
         let meetingUrl = '';
         if(this.meeting.callType === 'Video'){
-             meetingUrl = 'https://192.168.3.76:9080/#/meeting?meetingCode=';
+            this.vedioMeeting = true;
+             meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
         }else{
-             meetingUrl = 'https://192.168.3.76:9080/#/meeting/audio?meetingCode=';
+            this.audioMeeting = true;
+             meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
         }
       
         var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
