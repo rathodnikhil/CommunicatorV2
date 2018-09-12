@@ -95,16 +95,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.signUpflag = false;
-        this._userService.getUserList().subscribe(data => {
-            this.userList = data;
-        });
-        this._groupService.getGroupList().subscribe(data => {
-            this.groupList = data;
-        });
-
+       
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
+            const payload = { userCode: this.loggedInUserObj.userCode };
+            this._groupService.setGroupList(payload);
+            this._userService.setUserList(payload);
+            this._groupService.setGroupListObjByLoggedInUserId(payload);
         });
 
         let userRoleArray = [];

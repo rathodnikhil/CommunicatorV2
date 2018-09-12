@@ -4,10 +4,12 @@ import { Options } from 'fullcalendar';
 import { UserService } from '../../../services/user.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../services/alert.service';
 @Component({
     selector: 'app-my-calendar',
     templateUrl: './my-calendar.component.html',
-    styleUrls: ['./my-calendar.component.scss']
+    styleUrls: ['./my-calendar.component.scss'],
+    providers: [AlertService]
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
@@ -80,7 +82,7 @@ export class MyCalendarComponent implements OnInit {
     _meetingService: MeetingService;
     _userService: UserService;
     loggedInUser: any;
-    constructor(meetingService: MeetingService, userService: UserService, private router: Router) {
+    constructor(meetingService: MeetingService, userService: UserService, private router: Router,public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -94,10 +96,10 @@ export class MyCalendarComponent implements OnInit {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
             // debugger;
-            if (!data.warningFl && !data.errorFl) {
-                // this.allMeetingByLoggedInUserList = data;
+            if(data[0].errorFl || data[0].warningFl){
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
                 data.forEach(element => {
-                    // debugger;
                     let endTime = new Date(new Date(element.meetingStartDateTime).getTime() + parseInt(element.duration.split(' Min')[0]) * 60000);
                     var meeting = {
                         title: element.subject + '(' + element.meetingCode + ')',

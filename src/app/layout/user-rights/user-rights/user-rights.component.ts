@@ -1,21 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { UserService } from '../../../services/user.service';
-
+import { PaginationInstance } from 'ngx-pagination';
+import { AlertService } from '../../../services/alert.service';
 @Component({
   selector: 'app-user-rights',
   templateUrl: './user-rights.component.html',
   styleUrls: ['./user-rights.component.scss'],
-  providers: [TeamService]
+  providers: [TeamService , AlertService]
 })
 export class UserRightsComponent implements OnInit {
 _teamService: TeamService;
 _userService: UserService;
+
+public filter: string = '';
+public maxSize: number = 7;
+public directionLinks: boolean = true;
+public autoHide: boolean = false;
+public responsive: boolean = false;
+public config: PaginationInstance = {
+    id: 'userCode',
+    itemsPerPage: 3,
+    currentPage: 1
+};
+public labels: any = {
+    previousLabel: 'Previous',
+    nextLabel: 'Next',
+    screenReaderPaginationLabel: 'Pagination',
+    screenReaderPageLabel: 'page',
+    screenReaderCurrentLabel: `You're on page`
+};
+loggedInUser: any;
+searchText: string;
+
 userPermissionList = [];
 userPermissionMemberList = [];
 payloadSearch: any;
-loggedInUser: any;
-  constructor(teamService: TeamService , userService: UserService) {
+
+  constructor(teamService: TeamService , userService: UserService ,public alertService: AlertService) {
       this._teamService = teamService;
       this._userService = userService;
    }
@@ -27,25 +49,26 @@ loggedInUser: any;
     this.userPermissionList = [];
     const payload = {userCode: this.loggedInUser.userCode};
     this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
-         this.userPermissionList = data;
+         if(data[0].errorFl || data[0].warningFl){
+          this.userPermissionList = [];
+          return this.alertService.warning(data[0].message, "Warning"); 
+      } else{
+        this.userPermissionList = data;
+      }
      });
 
      this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
+          if(data[0].errorFl || data[0].warningFl){
+            this.userPermissionMemberList = [];
+            return this.alertService.warning(data[0].message, "Warning"); 
+        } else{
           this.userPermissionMemberList = data;
+        }
       });
    
   }
-  filterMemberByTeam(event , selectedTeamId) {
-    this.payloadSearch = {teamId: selectedTeamId};
-      if (event.target.checked) {
-        this._teamService.getMembersByTeam(this.payloadSearch).subscribe(data => {
-            this.userPermissionMemberList = data.json();
-        });
-      } else {
-        alert('checkbox is unchecked');
-      }
-  }
-  sceduleMeetingRight(){
-    alert('this.sceduleMeetingRight clicked');
+
+  scheduleMeetingRight(userCode){
+    alert('userCode' +userCode);
   }
 }

@@ -39,23 +39,16 @@ export class NotificationComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
         });
-        const payload = { userCode: this.loggedInUser.userCode };
-        this._userService.setUserList(payload);
+ 
+     
         this._userService.getUserList().subscribe(data => {
             if (data && data.length > 0)
                 this.userList = data;
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
         });
 
-        this._groupService.setGroupList(payload);
         this._groupService.getGroupList().subscribe(data => {
             if (data && data.length > 0)
                 this.groupList = data;
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
         });
     }
     viewMemeberDetails(user) {

@@ -3,30 +3,30 @@ import { UserService } from '../../../services/user.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { GroupService } from '../../../services/group.service';
 import { Router } from '@angular/router';
+import { AlertPromise } from 'selenium-webdriver';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
-    styleUrls: ['./my-profile.component.scss']
+    styleUrls: ['./my-profile.component.scss'],
+    providers: [AlertService]
 })
 export class MyProfileComponent implements OnInit {
     _userService: UserService;
     _meetingservice: MeetingService;
     _groupService: GroupService;
-    totalMeetingCount: any;
     profileOtherDetails: any;
     loggedInUserObj: any;
     firstName: any;
     lastName: any;
     email: any;
-    showUpdateProfileSuccess: boolean;
-    constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService) {
+    constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService,public alertService: AlertService) {
         this._userService = userService;
         this._meetingservice = meetingService;
         this._groupService = groupService;
     }
     ngOnInit() {
-        this.showUpdateProfileSuccess = false;
         this.loggedInUserObj = {};
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && !data.isGuest) {
@@ -35,7 +35,12 @@ export class MyProfileComponent implements OnInit {
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this.profileOtherDetails = {};
                 this._groupService.profileOtherDetails(payload).subscribe(data => {
+                    if(data.errorFl === true || data.warningFl === true){
+                        this.profileOtherDetails = {};
+                        return this.alertService.warning(data.message, "Warning"); 
+                    }else{
                     this.profileOtherDetails = data;
+                    }
                 });
             }
         });
@@ -48,10 +53,11 @@ export class MyProfileComponent implements OnInit {
             userCode: this.loggedInUserObj.userCode
         }
         this._userService.updateUserDetails(payload).subscribe(data => {
-                this.showUpdateProfileSuccess = true;
-                setTimeout(function () {
-                    this.showUpdateProfileSuccess = false;
-                  }.bind(this), 5000);
-                });
+            if(data.errorFl === true || data.warningFl === true){
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{
+            return this.alertService.success("User profile has been updated successfully", "Success"); 
             }
+        });
+    }
 }
