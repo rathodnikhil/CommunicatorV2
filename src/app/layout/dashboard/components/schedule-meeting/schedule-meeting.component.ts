@@ -203,12 +203,13 @@ export class ScheduleMeetingComponent implements OnInit {
                     this.audioMeeting = true;
                     this.vedioMeeting = false;
                 }
+                this.scheduleMeetingModal.open();
             });
             
         }
     }
     clearAllMeetingField() {
-        this.scheduleMeetingModal.open();
+    
         this.subject = '';
         this.meeting.selectedDuration = 'Select Duration';
         this.meeting.selectedTimeZone = 'Select Timezone';

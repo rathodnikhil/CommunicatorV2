@@ -1,32 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.scss'],
+  providers: [AlertService]
 })
 export class UserSettingsComponent implements OnInit {
   _userService: UserService;
   loggedInUserId: any;
   userSettings: any;
   user: any;
-  showUpdateSettingsSuccess: boolean;
-  constructor(userService: UserService) {
+
+  constructor(userService: UserService , public alertService: AlertService) {
     this._userService = userService;
   }
 
   ngOnInit() {
-    this.showUpdateSettingsSuccess = false;
     //loggedInuser Object webservice call
     this.loggedInUserId = {};
     this._userService.getLoggedInUserObj().subscribe(data => {
+      if(data.errorFl === true || data.warningFl === true){
+        this.loggedInUserId = {};
+        return this.alertService.warning(data.message, "Warning"); 
+    }else{
       this.loggedInUserId = data;
       const payload = { userCode: this.loggedInUserId.userCode };
       this.userSettings = {};
       this._userService.getUserSettingsByLoggedInUser(payload).subscribe(data => {
+        if(data.errorFl === true || data.warningFl === true){
+          this.userSettings = {};
+          return this.alertService.warning(data.message, "Warning"); 
+      }else{
         this.userSettings = data;
+       }
       });
+    }
     });
   }
   saveUserSetting() {
@@ -40,10 +51,7 @@ export class UserSettingsComponent implements OnInit {
      // downloadLocation: this.userSettings.downloadLocation
     };
     this._userService.saveUserSettings(payload).subscribe(data => {
-      this.showUpdateSettingsSuccess = true;
-      setTimeout(function () {
-        this.showUpdateSettingsSuccess = false;
-      }.bind(this), 5000);
+      return this.alertService.success('User settings has been updated successfully', "Success"); 
     });
   }
 }

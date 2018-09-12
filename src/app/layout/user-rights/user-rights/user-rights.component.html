@@ -5,20 +5,11 @@
   </div>
   <div style="float:right" class="defaultMeetSelect">
       <div class="align-center">
-          <input type="text" placeholder="Search by name" />
+          <input type="text" placeholder="Search by name" [(ngModel)]="searchText"  />
       </div>
   </div>
 </div>
-<div class="left filter-list">
-<h4><i class="fa fa-filter"></i>&nbsp;Filter by Team</h4>
-<hr>
-  <ul>
-        <li *ngFor="let userPermission of userPermissionList"><input type="checkbox" 
-            (change)="filterMemberByTeam($event , userPermission.team.teamId)">
-           {{userPermission.team.teamName}}</li>
-        <li><input type="checkbox" id="userPermission.team.teamId"> All</li>
-      </ul>
-</div>
+
 <div class="main">
     <h4>Team/user Rights Details</h4>
     <hr>
@@ -30,15 +21,21 @@
         <th>Status</th>
         <th>Schedule Meeting</th>
       </tr>
-      <tr *ngFor="let userPermission of userPermissionMemberList; let srNo = index">
+      <tr *ngFor="let userPermission of userPermissionMemberList| genericSearchAllProp:searchText | paginate: config ; let srNo = index">
             <td>{{srNo+1}}</td>
             <td>{{userPermission.user.firstName}} {{userPermission.user.lastName}}</td>
             <td>{{userPermission.team.teamName}}</td>
             <td>{{userPermission.user.status.status}}</td>
             <td>
-                <input type="checkbox" id="meetChk" (click)="sceduleMeetingRight()">
+                <input type="checkbox" id="meetChk" (click)="scheduleMeetingRight(userPermission.user.userCode)">
                              <p id="text" style="display:none">Checkbox is CHECKED!</p>
             </td>
       </tr>
     </table>
+    <div class="pageControl">
+        <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+            [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+            [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+            (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
 </div>

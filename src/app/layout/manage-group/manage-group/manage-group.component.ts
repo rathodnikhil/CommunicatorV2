@@ -5,10 +5,12 @@ import { FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { PaginationInstance } from 'ngx-pagination';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { AlertService } from '../../../services/alert.service';
 @Component({
     selector: 'app-manage-group',
     templateUrl: './manage-group.component.html',
-    styleUrls: ['./manage-group.component.scss']
+    styleUrls: ['./manage-group.component.scss'],
+    providers: [AlertService]
 })
 export class ManageGroupComponent implements OnInit {
     public searchText: string;
@@ -55,7 +57,7 @@ export class ManageGroupComponent implements OnInit {
     showSelectGroupNameFlag: boolean;
     showSelectmember: boolean;
     memeberAlreadyExists = false;
-    constructor(groupService: GroupService, userService: UserService) {
+    constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
     }
@@ -69,15 +71,17 @@ export class ManageGroupComponent implements OnInit {
         this.showSelectmember = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
+            if(data.errorFl === true || data.warningFl === true){
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{
             const payload = { userCode: this.loggedInUserObj.userCode };
-            this._groupService.setGroupList(payload);
             this._groupService.getGroupList().subscribe(data => {
                 this.groupList = data;
             });
-            this._groupService.setGroupListObjByLoggedInUserId(payload);
             this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
                 this.groupMemberObjList = data;
             });
+        }
         });
 
         // this.selectedItems = [{ item_id: 4, item_text: 'Pune' }, { item_id: 6, item_text: 'Navsari' }];

@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MeetingService } from '../../../services/meeting-service';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
+import { AlertService } from '../../../services/alert.service';
 // import * as fileSaver from 'file-saver';
 @Component({
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
     styleUrls: ['./past-meetings.component.scss'],
+    providers : [AlertService]
 })
 export class PastMeetingsComponent implements OnInit {
     _meetingService: MeetingService;
@@ -18,7 +20,7 @@ export class PastMeetingsComponent implements OnInit {
     public responsive: boolean = false;
     public config: PaginationInstance = {
         id: 'meetingCode',
-        itemsPerPage: 2,
+        itemsPerPage: 10,
         currentPage: 1
     };
     public labels: any = {
@@ -32,7 +34,7 @@ export class PastMeetingsComponent implements OnInit {
     loggedInUser: any;
     pastMeetingList = [];
     searchText: string;
-    constructor(meetingService: MeetingService, userService: UserService) {
+    constructor(meetingService: MeetingService, userService: UserService , public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -40,8 +42,12 @@ export class PastMeetingsComponent implements OnInit {
     ngOnInit() {
         //loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
-            this.loggedInUser = data;
-            this.getPastMeetingsByuser();
+            if(data.errorFl === true || data.warningFl === true){
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{
+                this.loggedInUser = data;
+                this.getPastMeetingsByuser();
+            }
         });
     }
     //download chat and mom file
@@ -52,10 +58,12 @@ export class PastMeetingsComponent implements OnInit {
     getPastMeetingsByuser() {
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
-            // if (data[0].errorFl || data[0].warningFl)
-            //     this.pastMeetingList = [];
-            // else
+        if(data[0].errorFl || data[0].warningFl){
+             this.pastMeetingList = [];
+             return this.alertService.warning(data[0].message, "Warning"); 
+         } else{
             this.pastMeetingList = data;
+         }
         });
     }
    
@@ -72,7 +80,6 @@ export class PastMeetingsComponent implements OnInit {
 
     }
     onPageChange(number: number) {
-        // console.log('change to page', number);
         this.config.currentPage = number;
     }
 }

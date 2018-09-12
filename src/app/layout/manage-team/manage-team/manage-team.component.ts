@@ -6,22 +6,16 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
     styleUrls: ['./manage-team.component.scss'],
-    providers: [TeamService],
+    providers: [TeamService ,AlertService],
 })
 export class ManageTeamComponent implements OnInit {
-    newTeamName: any = ' ';
-    showAddTeam: boolean = false;
-    showAddTeamSuccess: boolean = false;
-    showAddMemberFirstName: boolean = false;
-    showAddMemberUserName: boolean = false;
-    showAddMemberSuccess: boolean = false;
-    showAddMemberPassword: boolean = false;
-    showAddMemberEmail: boolean = false;
+    newTeamName: any;
     memObj: any = {};
     i: number;
     teamCode: string;
@@ -40,7 +34,7 @@ export class ManageTeamComponent implements OnInit {
     password: any;
     loggedInUser: any;
     selectedTeamObj: any;
-
+    
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -62,12 +56,13 @@ export class ManageTeamComponent implements OnInit {
     };
 
 
-    constructor(teamService: TeamService, userService: UserService) {
+    constructor(teamService: TeamService, userService: UserService , public alertService: AlertService) {
         this._teamService = teamService;
         this._userService = userService;
     }
 
     ngOnInit() {
+        this.selectedTeamObj = null;
         this._userService.getLoggedInUserObj().subscribe(data => {     
             this.loggedInUser = data;     
          });
@@ -97,73 +92,45 @@ export class ManageTeamComponent implements OnInit {
         this.addNewTeamModal.open();
     }
     openMemberPopup() {
-        this.addNewMemberModal.open();
+        if(this.selectedTeamObj === "" || this.selectedTeamObj === null || typeof this.selectedTeamObj === "undefined"){
+            return this.alertService.warning("Please Select Team ", "Warning"); 
+        }else{
+            this.addNewMemberModal.open();
+        }
     }
-    addTeam(newTeamName) {
-        if (newTeamName === "" || newTeamName === null || typeof newTeamName === "undefined") {
-            this.showAddTeam = true;
-            setTimeout(function () {
-                this.showAddTeam = false;
-            }.bind(this), 5000);
+    addTeam() {
+        if (this.newTeamName === "" || this.newTeamName === null || typeof this.newTeamName === "undefined") {
+            return this.alertService.warning("Please Enter Team Name", "Warning");   
         } else {
-            this.showAddTeam = false;
-            const payload = { "teamName": newTeamName , "userCode": this.loggedInUser.userCode };
-            const team = { team: { teamName: newTeamName } };
-            //  const payload = {firstName,lastName};
+            const payload = { "teamName": this.newTeamName , "userCode": this.loggedInUser.userCode };
+            const team = { team: { teamName: this.newTeamName } };
             this._teamService.saveTeamDetails(payload).subscribe(
                 (res) => {
+                    if(res.errorFl === true || res.warningFl === true){
+                        return this.alertService.warning(res.message, "Warning"); 
+                    }else{
                     this.userPermissionList.push(team);
                     this.newTeamName = '';
-                    this.showAddTeamSuccess = true;
-                    setTimeout(function () {
-                        this.showAddTeamSuccess = false;
-                    }.bind(this), 5000);
+                   return this.alertService.success("Team has been saved successfully ", "Success");   
+                    }
                 });
         }
     }
 
-    //focus on team name text field
-    typeTeamNameFocus() {
-        this.showAddTeam = false;
-    }
     // add new member  
     addMember() {
-       
-        alert(this.firstName);
         if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
-            this.showAddMemberFirstName = true;
-            setTimeout(function () {
-                this.showAddMemberFirstName = false;
-            }.bind(this), 5000);
-        } else if (this.userName === "" || this.userName === null || typeof this.userName === "undefined") {
-            this.showAddMemberUserName = true;
-            setTimeout(function () {
-                this.showAddMemberUserName = false;
-            }.bind(this), 5000);
+            return this.alertService.warning("Please Enter First Name ", "Warning");   
+        }else if (this.lastName === "" || this.lastName === null || typeof this.lastName === "undefined") {
+            return this.alertService.warning("Please Enter Last Name ", "Warning");   
+        }  else if (this.email === "" || this.email === null || typeof this.email === "undefined") {
+            return this.alertService.warning("Please Enter Email", "Warning");   
+        }else if (this.userName === "" || this.userName === null || typeof this.userName === "undefined") {
+            return this.alertService.warning("Please Enter UserName ", "Warning");   
         } else if (this.password === "" || this.password === null || typeof this.password === "undefined") {
-            this.showAddMemberPassword = true;
-            setTimeout(function () {
-                this.showAddMemberPassword = false;
-            }.bind(this), 5000);
-        } else if (this.email === "" || this.email === null || typeof this.email === "undefined") {
-            this.showAddMemberEmail = true;
-            setTimeout(function () {
-                this.showAddMemberEmail = false;
-            }.bind(this), 5000);
+            return this.alertService.warning("Please Enter Password ", "Warning");   
         }
        else {
-       //  alert(newTeamName);
-            this.showAddMemberFirstName = false;
-            this.showAddMemberUserName = false;
-            this.showAddMemberPassword = false;
-            this.showAddMemberEmail = false;
-            this.showAddMemberSuccess = true;
-            setTimeout(function () {
-                this.edited = false;
-                console.log(this.showAddMemberSuccess);
-            }.bind(this), 5000);
-            alert(this.selectedTeamObj.teamCode);
-
             const payload = {
                 "email": this.email,
                 "password": this.password,
@@ -177,20 +144,23 @@ export class ManageTeamComponent implements OnInit {
             }
             this._userService.saveMemberDetails(payload).subscribe(
                 (res) => {
-                    this.firstName = ' ';
-                    this.lastName = '';
-                    this.userName = '';
-                    this.email = '';
-                    this.password = '';
-                   this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
-                    this.userPermissionMemberList.push(this.memObj);
+                    if(res.errorFl === true || res.warningFl     === true){
+                        return this.alertService.warning(res.message, "Warning"); 
+                    }else{
+                        this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
+                        this.userPermissionMemberList.push(this.memObj);
+                        this.firstName = ' ';
+                        this.lastName = '';
+                        this.userName = '';
+                        this.email = '';
+                        this.password = '';
+                        return this.alertService.success("Member has been saved successfull ", "Success");   
+                    }
                });
-          
-        }
-    
-   }
+            
+        } 
+ }
 
-  
     //close team modal popup
     closePopup(popupType) {
         switch (popupType) {

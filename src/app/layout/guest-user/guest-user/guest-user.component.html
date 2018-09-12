@@ -1,3 +1,38 @@
-<p>
-  guest-user works!
-</p>
+<div class="top">
+  <div class="col-md-12 header" style="text-align: center;">
+      <h3>Guest User</h3>
+  </div>
+  
+  <div style="float:right">
+      <div class="align-center">
+          <span style="font-size:14px;font-weight: bold;">Filter By:&nbsp;</span>
+          <a style="padding-right:10px; cursor: pointer;">Day</a>
+          <a class="date-period-select">Month</a>
+          <a class="date-period-select">Year</a>
+          <input type="text" placeholder="Search by name" [(ngModel)]="searchText" />
+      </div>
+  </div>
+</div>
+
+<div class="main">
+  <h4>Guest User Details</h4>
+  <hr>
+  <table>
+      <tr>
+          <th>Sr. No</th>
+          <th>Name</th>
+          <th>Email</th>
+      </tr>
+       <tr *ngFor="let guest of guestUserList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
+          <td>{{srNo+1}}</td>
+          <td>{{guest.firstName}}</td>
+          <td>{{guest.email}}</td>
+      </tr> 
+  </table>
+  <div class="pageControl">
+      <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+          [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+          [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+          (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+</div>

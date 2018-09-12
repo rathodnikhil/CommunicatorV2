@@ -23,27 +23,18 @@
         <button class="btn btn-sec" style="align:align-center" (click)="open()">Add New Team</button>
         <app-custom-modal #addNewTeamModal [model]="newTeam">
             <div class="modal-body row-label">
-                <div style="margin-top: 20px;" *ngIf="showAddTeam === true" 
-                class="alert alert-danger alert-dismissable" [(ngModel)]="showAddTeam">
-                    <strong>Error: </strong>Enter Team Name.
-                </div>
-
-                <div style="margin-top: 20px;" *ngIf="showAddTeamSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showAddTeamSuccess">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <strong>Success: </strong>Team has been added Successfully.
-                </div>
                 <div class="row">
                     <div class="col-md-3">
                         <label>Team Name</label>
                     </div>
                     <div>
-                        <textarea placeholder="Type Name Here.." [(ngModel)]="newTeamName" ></textarea>
+                        <textarea placeholder="Type Name Here.."  [(ngModel)]="newTeamName" ></textarea>
 
                     </div>
                 </div>
             </div>
             <div class="modal-footer popFooter">
-                <button type="button" class="btn btn-sec" (click)="addTeam(newTeamName)">Add Team</button>
+                <button type="button" class="btn btn-sec" (click)="addTeam()">Add Team</button>
                 <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button>
             </div>
         </app-custom-modal>
@@ -73,24 +64,6 @@
                 </div>
                 <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body row-label">
-                         <div style="margin-top: 20px;" *ngIf="showAddMemberFirstName === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberFirstName">
-                            <strong>Error: </strong>Enter Member First Name.
-                        </div>
-
-                        <div style="margin-top: 20px;" *ngIf="showAddMemberUserName === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberUserName">
-                            <strong>Error: </strong>Enter UserName.
-                        </div>
-                        <div style="margin-top: 20px;" *ngIf="showAddMemberPassword === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberPassword">
-                            <strong>Error: </strong>Enter Password.
-                        </div>
-                        <div style="margin-top: 20px;" *ngIf="showAddMemberEmail === true" class="alert alert-danger alert-dismissable" [(ngModel)]="showAddMemberEmail">
-                            <strong>Error: </strong>Enter Email
-                        </div>
-
-                        <div style="margin-top: 20px;" *ngIf="showAddMemberSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showAddMemberSuccess">
-                            <strong>Success: </strong>Member has been added Successfully.
-                        </div> 
-                        <form>
                             <div class="row form-group">
                                 <div class="col-md-3">
                                     <label>First Name</label>
@@ -129,7 +102,8 @@
                                     <label>Password</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.."  type="text" [(ngModel)]="password"  type="password" required/>
+                                    <input placeholder="Type Name Here.."  type="text" [(ngModel)]="password" 
+                                     type="password" required/>
                                 </div>
                             </div>
                             <!-- <div class="row">
@@ -140,7 +114,6 @@
                                     <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" required />
                                 </div>
                             </div> -->
-                        </form>
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-sec" (click)="addMember()">Add Member</button>
