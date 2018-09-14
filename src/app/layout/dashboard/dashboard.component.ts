@@ -8,23 +8,19 @@ import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '../../../../node_modules/@angular/common';
+import { AlertService } from '../../services/alert.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
     animations: [routerTransition()],
-    providers: [GroupService]
+    providers: [GroupService,AlertService]
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
     _groupService: GroupService;
     _userService: UserService;
     createGroupsVal = '';
     broadcastMessage = '';
-    showtypeMessage = false;
-    showNewGroup = false;
-    showNewGroupSuccess = false;
-    showBroadcastMessageSuccess = false;
-    duplicateGroup = false;
     userList = [];
     groupList = [];
     groupArray = [];
@@ -50,7 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        private groupService: GroupService, userService: UserService, private router: Router) {
+        private groupService: GroupService, userService: UserService, private router: Router,public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
         this.sliders.push(
@@ -98,11 +94,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
        
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
+            if(data.errorFl === true || data.warningFl === true){
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{  
             this.loggedInUserObj = data;
             const payload = { userCode: this.loggedInUserObj.userCode };
             this._groupService.setGroupList(payload);
             this._userService.setUserList(payload);
             this._groupService.setGroupListObjByLoggedInUserId(payload);
+            }
         });
 
         let userRoleArray = [];
@@ -147,26 +147,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //save broadcast message
     broadcastMessages() {
         if (this.broadcastMessage === "" || this.broadcastMessage === null || typeof this.broadcastMessage === "undefined") {
-            this.showtypeMessage = true;
-            setTimeout(function () {
-                this.showtypeMessage = false;
-            }.bind(this), 5000);
+            return this.alertService.warning("Please enter message" , "Warning");
         } else {
             const payload = { "broadcastMessage": this.broadcastMessage ,generatedBy: this.loggedInUserObj };
-            this._groupService.saveBroadcastMessage(payload).subscribe(res => {
-                this.showtypeMessage = false;
-                this.showBroadcastMessageSuccess = true;
-                setTimeout(function () {
-                    this.showBroadcastMessageSuccess = false;
-                }.bind(this), 5000);
+            this._groupService.saveBroadcastMessage(payload).subscribe(data => {
+                if(data.errorFl === true || data.warningFl === true){
+                    return this.alertService.warning(data.message, "Warning"); 
+                }else{  
+                    return this.alertService.success("Message has been broadcast successfully", "Success");
+                }
             });
         }
         this.broadcastMessage = ' ';
     }
-    typeBroadcastMessageFocus() {
-        this.showtypeMessage = false;
-    }
-
+   
     resetMsg(event) {
         alert('text reset');
     }

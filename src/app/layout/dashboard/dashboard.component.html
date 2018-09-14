@@ -18,21 +18,12 @@
                         <app-custom-modal #broadcastMsgModal [model]="broadcastMsgContent">
                             <div class="modal-body row-label">
                                 <div class="modal-body">
-                                    <div style="margin-top: 20px;" *ngIf="showtypeMessage === true" class="alert alert-danger alert-dismissable"
-                                     [(ngModel)]="showtypeMessage">
-                                        <strong>Error: </strong>Enter Message.
-                                    </div>
-                                    <div style="margin-top: 20px;" *ngIf="showBroadcastMessageSuccess === true" class="alert alert-success alert-dismissable"
-                                        [(ngModel)]="showBroadcastMessageSuccess">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        <strong>Success: </strong>Message has been Broadcast Successfully.
-                                    </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label>Messgage</label>
                                         </div>
                                         <div>
-                                            <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage" (click)="typeBroadcastMessageFocus()"></textarea>
+                                            <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage"></textarea>
                                         </div>
                                     </div>
                                 </div>

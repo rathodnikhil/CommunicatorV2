@@ -34,7 +34,8 @@ export class ManageTeamComponent implements OnInit {
     password: any;
     loggedInUser: any;
     selectedTeamObj: any;
-    
+    searchText: string;
+
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -63,17 +64,31 @@ export class ManageTeamComponent implements OnInit {
 
     ngOnInit() {
         this.selectedTeamObj = null;
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUser = data;     
+        this._userService.getLoggedInUserObj().subscribe(data => {   
+            if(data.errorFl === true || data.warningFl === true){
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{  
+            this.loggedInUser = data;  
+            }   
          });
         //getTeamsByLoggedInUserId webservice call
         const payload = { userCode: this.loggedInUser.userCode };
         this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
-            this.userPermissionList = data;
+            if(data[0].errorFl || data[0].warningFl){
+                this.userPermissionList = [];
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
+               this.userPermissionList = data;
+            }
         });
 
         this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
-            this.userPermissionMemberList = data;
+            if(data[0].errorFl || data[0].warningFl){
+                this.userPermissionMemberList = [];
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
+               this.userPermissionMemberList = data;
+            }
         });
     }
     displayTeamDetails(team) {
@@ -149,7 +164,8 @@ export class ManageTeamComponent implements OnInit {
                     }else{
                         this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
                         this.userPermissionMemberList.push(this.memObj);
-                        this.firstName = ' ';
+                        this.filterMemberList.push(this.memObj);
+                        this.firstName = '';
                         this.lastName = '';
                         this.userName = '';
                         this.email = '';
