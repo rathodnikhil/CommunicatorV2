@@ -5,11 +5,13 @@ import { FormGroup } from '@angular/forms';
 import { MeetingService } from '../../../../services/meeting-service';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
-    styleUrls: ['./schedule-meeting.component.scss']
+    styleUrls: ['./schedule-meeting.component.scss'],
+    providers: [AlertService]
 })
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
@@ -23,13 +25,10 @@ export class ScheduleMeetingComponent implements OnInit {
     today: any;
     accessCode: any;
     loggedInUser: any;
-    showScheduleMeetingSuccess: boolean = true;
-    showCopyDetailsSuccess: boolean = false;
-    addSubjectFlag: boolean;
-    addDurationFlag: boolean;
-    addTimezoneFlag: boolean;
     audioMeeting: boolean;
     vedioMeeting: boolean;
+    showScheduleMeetingSuccess: boolean;
+    showCopyDetailsSuccess: boolean;
     // public radioGroupForm: FormGroup;
     scheduleMeetings: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
@@ -116,7 +115,8 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT-11:00) Midway Island, Samoa',
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
-    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService ,userService: UserService, private router: Router) {
+    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService ,userService: UserService, 
+        private router: Router,public  alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -126,9 +126,6 @@ export class ScheduleMeetingComponent implements OnInit {
         this.vedioMeeting = false;
         this._userService.getLoggedInUserObj().subscribe(data => {     
             this.loggedInUser = data;     
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
          });
         this.today = new Date();
         this.meeting = {
@@ -154,21 +151,11 @@ export class ScheduleMeetingComponent implements OnInit {
     scheduleMeeting() {
         
         if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
-            this.addSubjectFlag = true;
-            setTimeout(function () {
-                this.addSubjectFlag = false;
-            }.bind(this), 5000);
+            return this.alertService.warning('Please enter meeting subject' , "Warning");
         } else if (this.meeting.selectedDuration === 'Select Duration') {
-            this.addDurationFlag = true;
-            setTimeout(function () {
-                this.addDurationFlag = false;
-            }.bind(this), 5000)
-
+            return this.alertService.warning('Please select meeting duration' , "Warning");
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
-            this.addTimezoneFlag = true;
-            setTimeout(function () {
-                this.addTimezoneFlag = false;
-            }.bind(this), 5000)
+            return this.alertService.warning('Please select timezone' , "Warning");
         } else {
             this.meridian = !this.meridian;
             this.accessCode = new Date().getTime()+'_'+ Math.floor(Math.random() * 900) + 100;
@@ -196,6 +183,10 @@ export class ScheduleMeetingComponent implements OnInit {
             };
 
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
+                if(data.errorFl === true || data.warningFl === true){
+                    this.meeting = {};
+                    return this.alertService.warning(data.message, "Warning"); 
+                }else{ 
                 if(this.meeting.callType === 'Video'){
                     this.vedioMeeting = true;
                     this.audioMeeting =false;
@@ -204,6 +195,7 @@ export class ScheduleMeetingComponent implements OnInit {
                     this.vedioMeeting = false;
                 }
                 this.scheduleMeetingModal.open();
+            }
             });
             
         }

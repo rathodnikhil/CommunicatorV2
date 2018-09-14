@@ -4,10 +4,12 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
+import { AlertService } from '../../../../services/alert.service';
 @Component({
     selector: 'app-timeline',
     templateUrl: './timeline.component.html',
-    styleUrls: ['./timeline.component.scss']
+    styleUrls: ['./timeline.component.scss'],
+    providers: [AlertService]
 })
 export class TimelineComponent implements OnInit {
     @ViewChild('viewProfileModal') public viewProfileModal: CustomModalComponent;
@@ -30,7 +32,7 @@ export class TimelineComponent implements OnInit {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
-    constructor(userService: UserService, private router: Router, chatService: ChatService) {
+    constructor(userService: UserService, private router: Router, chatService: ChatService ,public alertService: AlertService) {
         this._userService = userService;
         this._chatService = chatService;
     }
@@ -38,21 +40,34 @@ export class TimelineComponent implements OnInit {
     ngOnInit() {
         this.selectedUser={};
         this._userService.getSelectedUser().subscribe(res => {
-            debugger;
             if (res)
                 this.selectedUser = res;
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
+            if(data.errorFl === true || data.warningFl === true){
+                this.loggedInUser = {};
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{  
             this.loggedInUser = data;
-            
+            }   
         });
         this.chattingHistoryList = [];
         this._chatService.getChattingHistoryList().subscribe(data => {
+            if(data[0].errorFl || data[0].warningFl){
+                this.chattingHistoryList = [];
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
             this.chattingHistoryList = data;
+            }
         });
         this.broadcastMsgList = [];
         this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
-            this.broadcastMsgList = data;
+            if(data[0].errorFl || data[0].warningFl){
+                this.chattingHistoryList = [];
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
+            this.chattingHistoryList = data;
+            }
           }); 
     }
     open() {
@@ -68,17 +83,18 @@ export class TimelineComponent implements OnInit {
     sendMessage(chatMessag) {
         let payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: chatMessag };
         if (chatMessag === "" || chatMessag === null || typeof chatMessag === "undefined") {
-            this.enterMsgFlag = true;
-            setTimeout(function () {
-                this.enterMsgFlag = false;
-            }.bind(this), 5000);
+         this.alertService.warning('Enter Message' , 'Warning');
         } else {
             alert('elase');
             this._chatService.saveChat(payload).subscribe(data => {
+                if(data.errorFl === true || data.warningFl === true){
+                    return this.alertService.warning(data.message, "Warning"); 
+                }else{ 
                 this.chatMsg = "";
                 // this.chattingHistoryObj = data;
                 // alert(this.chattingHistoryObj.chatmsg);
                 // this.chattingHistoryList.push(this.chattingHistoryObj);
+                }
             });
 
         }

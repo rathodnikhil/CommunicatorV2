@@ -3,10 +3,12 @@ import { UserService } from '../../../../services/user.service';
 import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AlertService } from '../../../../services/alert.service';
 @Component({
     selector: 'app-default-meeting',
     templateUrl: './default-meeting.component.html',
     styleUrls: ['./default-meeting.component.scss'],
+    providers: [AlertService]
 })
 export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
@@ -27,7 +29,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     searchText: String;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
-    constructor(userService: UserService, meetingService: MeetingService, private router: Router, private toastr: ToastrService) {
+    constructor(userService: UserService, meetingService: MeetingService, private router: Router, private toastr: ToastrService,public alertService: AlertService) {
         this._userService = userService;
         this._meetingService = meetingService;
     }
@@ -38,7 +40,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.showCancelMeeting = false;
         //loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
+            if(data.errorFl === true || data.warningFl === true){
+                this.loggedInUser = {};
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{ 
             this.loggedInUser = data;
+            }
         });
 
         //getAllFutureMeetingList webservice call
@@ -49,13 +56,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.recentMeeting = {};
         this._meetingService.setRecentMeetingByUser(payload);
         this._meetingService.getRecentMeetingByUser().subscribe(data => {
+            if(data.errorFl === true || data.warningFl === true){
+                this.recentMeeting = {};
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{ 
             this.recentMeeting = data;
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
+            }
         });
-        // current date and time
-        // this.currentDate = Date.now();
     }
 
     ngAfterViewInit(): void {
@@ -74,9 +81,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.futureMeetingList = [];
         this._meetingService.setFutureMeetimgList(payload);
         this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-            if (data.length == undefined || data.length == 0) {
+            if(data[0].errorFl || data[0].warningFl){
                 this.futureMeetingList = [];
-            } else {
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
                 this.futureMeetingList = data;
             }
             this.filteredFutureMeetingList = this.futureMeetingList;
@@ -125,15 +133,25 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     deleteMeeting(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(data => {
+            if(data.errorFl === true || data.warningFl === true){
+                this.recentMeeting = {};
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{ 
             this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+            }
         });
     }
     cancelMeeting(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.cancelMeeting(payload).subscribe(data => {
+            if(data.errorFl === true || data.warningFl === true){
+                this.recentMeeting = {};
+                return this.alertService.warning(data.message, "Warning"); 
+            }else{ 
             // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
             this.showActionIcon = false;
             this.showCancelMeeting = true;
+            }
         });
     }
 }

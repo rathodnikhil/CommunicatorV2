@@ -27,18 +27,6 @@ export class TeamService {
           return this.apiRequest.post(url, payload);
 
     }
-   
-    getMembersByTeam(payload) {
-      const url = urlConstants.baseUrl + 'getMembersByTeam?teamCode='+ payload.teamCode;
-      let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.apiRequest.post(url,payload).subscribe(data => {
-            resp.next(data);
-        },
-          err => {
-         //   alert(err);
-          });
-      return resp;
-      }
       getMemberListByLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);

@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
     logout() {
         let payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
-            this.errorFl = data.json().errorFl;
+            this.errorFl = data.errorFl;
             if (this.errorFl === true) {
                 this.nullCheckFlag = true;
                 setTimeout(function () {
