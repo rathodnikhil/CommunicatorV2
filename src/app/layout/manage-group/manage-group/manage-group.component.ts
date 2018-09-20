@@ -40,9 +40,6 @@ export class ManageGroupComponent implements OnInit {
     dropdownSettings: any = {};
     createGroupsVal = '';
     showtypeMessage = false;
-    showNewGroup = false;
-    showNewGroupSuccess = false;
-    duplicateGroup = false;
     showGroupNameUiFlag: boolean;
     groupList = [];
     groupArray = [];
@@ -54,9 +51,7 @@ export class ManageGroupComponent implements OnInit {
     countFlag: boolean;
     selectedGroupUsers: any[];
     userList: any[];
-    showSelectGroupNameFlag: boolean;
-    showSelectmember: boolean;
-    memeberAlreadyExists = false;
+    showNewGroup: boolean;
     constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
@@ -66,9 +61,7 @@ export class ManageGroupComponent implements OnInit {
 
         this.showGroupNameUiFlag = false;
         this.countFlag = false;
-        this.showSelectGroupNameFlag = false;
         this.showSelectedGroup = false;
-        this.showSelectmember = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
             if(data.errorFl === true || data.warningFl === true){
@@ -114,14 +107,12 @@ export class ManageGroupComponent implements OnInit {
 
     showGroupName() {
         this.showGroupNameUiFlag = !this.showGroupNameUiFlag;
+        this.showNewGroup = !this.showNewGroup;
     }
     //create new group
     addGroup(createGroupsVal) {
         if (createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined") {
-            this.showNewGroup = true;
-            setTimeout(function () {
-                this.showNewGroup = false;
-            }.bind(this), 5000);
+            return this.alertService.warning("Please enter group name", "Warning"); 
         } else {
 
             for (let i in this.groupList) {
@@ -129,21 +120,14 @@ export class ManageGroupComponent implements OnInit {
             }
             var duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
             if (duplicateGroupFlag != -1) {
-                this.duplicateGroup = true;
-                setTimeout(function () {
-                    this.duplicateGroup = false;
-                }.bind(this), 6000);
+                return this.alertService.warning("Group name already exist", "Warning"); 
             } else {
                 const payload = { "groupName": createGroupsVal, "user": this.loggedInUserObj }
                 this._groupService.saveGroupDetails(payload).subscribe(res => {
-                    this.showNewGroup = false;
-                    this.showNewGroupSuccess = true;
-                    setTimeout(function () {
-                        this.showNewGroupSuccess = false;
-                    }.bind(this), 5000);
                     const newGroup = { groupId: res };
                     this.groupList.push(newGroup);
-                    this.createGroupsVal = ' ';
+                    this.createGroupsVal = '';
+                    return this.alertService.success("Group has been added successfully", "Success"); 
                 });
             }
         }
@@ -175,31 +159,20 @@ export class ManageGroupComponent implements OnInit {
     // add new member in group
     addMember() {
         if (this.showSelectedGroup === false) {
-            this.showSelectGroupNameFlag = true;
-            setTimeout(function () {
-                this.showSelectGroupNameFlag = false;
-            }.bind(this), 5000);
-            return false;
+            return this.alertService.warning("Please select group", "Warning"); 
         } else if (this.selectedItems.length === 0) {
-            this.showSelectmember = true;
-            setTimeout(function () {
-                this.showSelectmember = false;
-            }.bind(this), 5000);
-            return false;
+            return this.alertService.warning("Please select member", "Warning"); 
         }
         else if (this.selectedItems.length > 0 && this.selectedGroupUsers.length > 0) {
             const selectedGroupUserCodes = this.selectedGroupUsers.map(x => x.userCode);
             const selectedItemsItemId = this.selectedItems.map(x => x.item_id);
-            setTimeout(function () {
-                this.memeberAlreadyExists = false;
-            }.bind(this), 5000);
             for (let i = 0; i < selectedGroupUserCodes.length; i++) {
                 if (selectedItemsItemId.indexOf(selectedGroupUserCodes[i])) {
-                    this.memeberAlreadyExists = true;
                     this.selectedItems = [];
                     return false;
                 }
             }
+            return this.alertService.warning("Member already exist", "Warning"); 
         }
         const payload = { groupMemObjList: this.selectedItems, groupId: this.selectedGroupObj.groupId }
         this._groupService.saveGroupMember(payload).subscribe(res => {
