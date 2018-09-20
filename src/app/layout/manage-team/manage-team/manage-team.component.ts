@@ -35,6 +35,7 @@ export class ManageTeamComponent implements OnInit {
     loggedInUser: any;
     selectedTeamObj: any;
     searchText: string;
+    showSelectedTeam: boolean;
 
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
@@ -63,6 +64,7 @@ export class ManageTeamComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.showSelectedTeam =  false;
         this.selectedTeamObj = null;
         this._userService.getLoggedInUserObj().subscribe(data => {   
             if(data.errorFl === true || data.warningFl === true){
@@ -92,6 +94,7 @@ export class ManageTeamComponent implements OnInit {
         });
     }
     displayTeamDetails(team) {
+        this.showSelectedTeam = true;
         this.selectedTeamName = team.teamName;
         this.selectedTeamObj = team;
         this.filterMemberList = [];

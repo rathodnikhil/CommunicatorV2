@@ -102,6 +102,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this._groupService.setGroupList(payload);
             this._userService.setUserList(payload);
             this._groupService.setGroupListObjByLoggedInUserId(payload);
+            this._userService.setUserList(payload);
             }
         });
 

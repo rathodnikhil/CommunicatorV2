@@ -53,21 +53,21 @@ export class TimelineComponent implements OnInit {
         });
         this.chattingHistoryList = [];
         this._chatService.getChattingHistoryList().subscribe(data => {
-            if(data[0].errorFl || data[0].warningFl){
-                this.chattingHistoryList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
-            } else{
+            // if(data[0].errorFl || data[0].warningFl){
+            //     this.chattingHistoryList = [];
+            //     return this.alertService.warning(data[0].message, "Warning"); 
+            // } else{
             this.chattingHistoryList = data;
-            }
+           // }
         });
         this.broadcastMsgList = [];
         this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
-            if(data[0].errorFl || data[0].warningFl){
-                this.chattingHistoryList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
-            } else{
-            this.chattingHistoryList = data;
-            }
+            // if(data[0].errorFl || data[0].warningFl){
+            //     this.chattingHistoryList = [];
+            //     return this.alertService.warning(data[0].message, "Warning"); 
+            // } else{
+            this.broadcastMsgList = data;
+          //  }
           }); 
     }
     open() {
@@ -85,7 +85,7 @@ export class TimelineComponent implements OnInit {
         if (chatMessag === "" || chatMessag === null || typeof chatMessag === "undefined") {
          this.alertService.warning('Enter Message' , 'Warning');
         } else {
-            alert('elase');
+            alert('else');
             this._chatService.saveChat(payload).subscribe(data => {
                 if(data.errorFl === true || data.warningFl === true){
                     return this.alertService.warning(data.message, "Warning"); 

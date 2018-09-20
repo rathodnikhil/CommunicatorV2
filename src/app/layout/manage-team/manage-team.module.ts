@@ -5,10 +5,10 @@ import { ManageTeamRoutingModule } from './manage-team-routing.module';
  import { CustomModalComponent } from '../dashboard/components/custom-modal/custom-modal.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { FormsModule } from '@angular/forms';
-
+import { SharedPipesModule } from '../../shared';
 @NgModule({
   imports: [
-    CommonModule, ManageTeamRoutingModule, DashboardModule, FormsModule
+    CommonModule, ManageTeamRoutingModule, DashboardModule, FormsModule , SharedPipesModule
   ],
   declarations: [ManageTeamComponent]
 })

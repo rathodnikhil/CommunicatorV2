@@ -2,21 +2,27 @@
   <div class="col-md-12 header" style="text-align: center;">
       <h3>Guest User</h3>
   </div>
-  
-  <div style="float:right">
-      <div class="align-center">
-          <span style="font-size:14px;font-weight: bold;">Filter By:&nbsp;</span>
-          <a style="padding-right:10px; cursor: pointer;">Day</a>
-          <a class="date-period-select">Month</a>
-          <a class="date-period-select">Year</a>
-          <input type="text" placeholder="Search by name" [(ngModel)]="searchText" />
-      </div>
-  </div>
+
 </div>
 
 <div class="main">
-  <h4>Guest User Details</h4>
-  <hr>
+        <div class="row">
+                <div class="col-md-9"><h4 class="under">Guest User Details</h4> </div>
+                   <div class="align-center" class="col-md-3" >
+                       <div class="btn btn-sec remove-border"><span class="span-dec">Filter By:&nbsp;</span>
+                       <a style="padding-right:10px; cursor: pointer;">Name</a>
+                       <a class="date-period-select">Email</a>
+                       </div>
+                       <div class="form-group input-group"style="padding-top:5px;">
+                         <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+                         <div class="input-group-append">
+                             <button class="btn btn-secondary" type="button">
+                                 <i class="fa fa-search"></i>
+                             </button>
+                         </div>
+                     </div>
+                   </div>
+               </div>
   <table>
       <tr>
           <th>Sr. No</th>

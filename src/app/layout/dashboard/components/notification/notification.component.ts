@@ -47,24 +47,22 @@ export class NotificationComponent implements OnInit {
             this.loggedInUser = data;
             }
         });
- 
-     
         this._userService.getUserList().subscribe(data => {
-            if(data[0].errorFl || data[0].warningFl){
-                this.userList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
-            } else{
+            // if(data[0].errorFl === true || data[0].warningFl === true){
+            //     this.userList = [];
+            //     return this.alertService.warning(data[0].message, "Warning"); 
+            // } else{
                 this.userList = data;
-            }
+         //   }
         });
 
         this._groupService.getGroupList().subscribe(data => {
-            if(data[0].errorFl || data[0].warningFl){
-                this.groupList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
-            } else{
+            // if(data[0].errorFl || data[0].warningFl){
+            //     this.groupList = [];
+            //     return this.alertService.warning(data[0].message, "Warning"); 
+            // } else{
                 this.groupList = data;
-            }
+           // }
         });
     }
     viewMemeberDetails(user) {
