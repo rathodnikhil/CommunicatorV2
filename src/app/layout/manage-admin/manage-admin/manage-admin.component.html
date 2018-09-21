@@ -3,31 +3,48 @@
         <h3>Manage Admin</h3>
   </div>
 </div>
-<div class="left">
-</div>
 <div class="main">
-  <h4>Admin Details</h4>
-  <hr>
+  <div class="row">
+    <div class="col-md-9"><h4 class="under">Admin Details</h4> </div>
+       <div class="align-center" class="col-md-3" >
+           <div class="btn btn-sec remove-border"><span class="span-dec">Filter By:&nbsp;</span>
+           <a style="padding-right:10px; cursor: pointer;">Name</a>
+           <a class="date-period-select">Email</a>
+           <a class="date-period-select">UserName</a>
+           <a class="date-period-select">Status</a>
+           </div>
+           <div class="form-group input-group"style="padding-top:5px;">
+             <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+             <div class="input-group-append">
+                 <button class="btn btn-secondary" type="button">
+                     <i class="fa fa-search"></i>
+                 </button>
+             </div>
+         </div>
+       </div>
+   </div>
   <table>
     <tr>
       <th>Sr. No</th>
       <th>Full Name</th>
       <th>UserName</th>
-      <th>Password</th>
       <th>Email</th>
       <th>UserCode</th>
       <th>Status</th>
     </tr>
-     <tr *ngFor="let admin of allAdminList ;let srNo = index">
+     <tr *ngFor="let admin of allAdminList | genericSearchAllProp:searchText |  paginate: config ;let srNo = index">
           <td>{{srNo+1}}</td>
           <td>{{admin.firstName}} {{admin.lastName}}</td>
           <td>{{admin.name}}</td>
-          <td>{{admin.Password}}</td>
           <td>{{admin.email}}</td>
           <td>{{admin.userCode}}</td>
           <td>{{admin.status.status}}</td>
     </tr>
   </table>
-  
-
+  <div class="pageControl">
+    <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+        [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+        [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+        (pageChange)="onPageChange($event)"></pagination-controls>
+</div>
 </div>
