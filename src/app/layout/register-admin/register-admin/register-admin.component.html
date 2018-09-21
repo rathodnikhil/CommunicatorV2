@@ -1,0 +1,80 @@
+<div class="top">
+  <div class="col-md-12 header" style="text-align: center;">
+      <h3>Admin Register</h3>
+  </div>
+</div>
+
+<div class="main"style="text-align: center;">
+          <div id="login" class="col-md-4 center" >
+              <h4 class="btn btn-sec remove-border">Register Admin</h4>
+                      <div class="form-style-9">
+                       
+                        <ul>
+                        <li>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="First name"
+                             [(ngModel)]="firstName" required >
+                        </div>
+                        
+                        </li>
+                        <li>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required >
+                        </div>
+                        </li>
+                        <li>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Userame" [(ngModel)]="userName" required >
+                        </div>
+                        </li>
+                        <li>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Email" [(ngModel)]="email" required >
+                        </div>
+                        </li>
+                        <li>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" required >
+                        </div>
+                        </li>
+                        <li>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user-o fa-fw"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required >
+                        </div>
+                        </li>
+                        </ul>
+                        <input class="btn btn-sec" type="submit" id="submit" value="Register"  (click)="registerUser();">
+                      </div>
+          </div>
+          </div>
+
