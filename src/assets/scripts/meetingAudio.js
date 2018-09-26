@@ -350,7 +350,7 @@ if (roomid && roomid.length) {
                 connection.join(roomid);
                 return;
             }
-            document.getElementById('meeting-error').innerText = 'Meeting not started yet! we will try to reconnect after 5 seconds.';
+            document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
