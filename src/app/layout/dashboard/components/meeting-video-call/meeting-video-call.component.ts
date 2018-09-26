@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { MeetingService } from '../../../../services/meeting-service';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-meeting-video-call',
   templateUrl: './meeting-video-call.component.html',
   styleUrls: ['./meeting-video-call.component.scss'],
+  providers: [AlertService]
 })
 export class MeetingVideoCallComponent implements OnInit {
     userList = [];
@@ -13,7 +15,8 @@ export class MeetingVideoCallComponent implements OnInit {
     _meetingService: MeetingService;
     messageSendTo: any;
     momTo: any;
-  constructor(userService: UserService , meetingService: MeetingService) {
+    loggedInUser: any;
+  constructor(userService: UserService , meetingService: MeetingService ,public alertService: AlertService) {
       this._userService = userService;
       this._meetingService = meetingService;
   }
@@ -22,7 +25,14 @@ export class MeetingVideoCallComponent implements OnInit {
       this.messageSendTo = 'Send Message to';
       this.momTo = 'set MOM Duty';
     const payload = {meetingId: 'MGDJG43223423'};
-
+    this._userService.getLoggedInUserObj().subscribe(data => {
+        if(data.errorFl === true || data.warningFl === true){
+            this.loggedInUser = {};
+            return this.alertService.warning(data.message, "Warning"); 
+        }else{ 
+        this.loggedInUser = data;
+        }
+    });
     //to get list of member
     this._meetingService.getMeetingAttendee(payload).subscribe(data => {
         this.userList = data.json();
@@ -37,5 +47,8 @@ export class MeetingVideoCallComponent implements OnInit {
 //to set selected mom to
 changeMomTo(member) {
     this.momTo = member.name + ' ' + member.lastName;
+}
+saveMom(){
+   
 }
 }

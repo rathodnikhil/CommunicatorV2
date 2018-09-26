@@ -150,7 +150,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-
+        const payload = { fileName : "ticket.pdf" };
+        this._meetingService.downloadPdfReportFile(payload).subscribe(data => {
+         
+        });
+    
         if (!this.isHost) {
             alert("Only host can save MOM to database");
             return;
