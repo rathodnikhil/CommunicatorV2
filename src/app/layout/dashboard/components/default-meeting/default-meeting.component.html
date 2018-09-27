@@ -117,7 +117,8 @@
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
                             <div class="col-md-3" *ngIf="showActionIcon">
-                                <a [routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank">
+                                <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
+                                    <a (click)="startMeeting()">
                                     <i class="fa fa-play-circle actionIcon" aria-hidden="true"></i>
                                 </a>
                                 <a>
@@ -127,7 +128,7 @@
                                     <i class="fa fa-minus-circle actionIcon" style="color: red;" (click)="deleteMeeting(meeting)" aria-hidden="true"></i>
                                 </a>
                             </div>
-                            <div *ngIf="showCancelMeeting" class="col-md-3">
+                            <div *ngIf="meeting.status.status === 'CANCEL'" class="col-md-3">
                                 <label style="color: red">
                                     <i class="fa fa-ban" aria-hidden="true"></i>Cancelled
                                 </label>

@@ -130,6 +130,16 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
 
     }
+    startMeeting(meeting){
+        alert(meeting.meetingStartDateTime);
+        // if(meeting.meetingStartDateTime === Date.now()) {
+        //     alert('true');
+        //     //[routerLink]="['/meeting']"
+        // }else{
+        //     alert('false');
+        // }
+
+    }
     deleteMeeting(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(data => {
@@ -149,8 +159,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, "Warning"); 
             }else{ 
             // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
-            this.showActionIcon = false;
-            this.showCancelMeeting = true;
+            if(meeting.status.status === "CANCEL"){
+                alert('if');
+                this.showActionIcon = false;
+            }
+            //this.showCancelMeeting = true;
             }
         });
     }

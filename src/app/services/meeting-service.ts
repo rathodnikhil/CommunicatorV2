@@ -63,7 +63,7 @@ export class MeetingService {
   
     downloadPdfReportFile(payload) {
         const url = urlConstants.baseUrl + 'downloadPdfReportFile?fileName=' + payload.fileName;
-        return this.http.post(url, payload);
+        return this.apiRequest.post(url, payload);
     }
     getPastMeetingsByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;

@@ -201,7 +201,6 @@ export class ScheduleMeetingComponent implements OnInit {
         }
     }
     clearAllMeetingField() {
-    
         this.subject = '';
         this.meeting.selectedDuration = 'Select Duration';
         this.meeting.selectedTimeZone = 'Select Timezone';
@@ -211,12 +210,10 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     copyToOutLook(event, subject) {
         var meetingDetails = this.getMeetingDetails();
-        alert(subject);
         this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + this.meeting.subject+'&body=' + meetingDetails;
+        a.href = 'mailto:?subject=' + this.subject+'&body=' + meetingDetails;
         document.body.appendChild(a);
-        // start download
         a.click();
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
@@ -263,7 +260,6 @@ export class ScheduleMeetingComponent implements OnInit {
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
              + this.meeting.selectedDuration + '\n' +
             '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl +this.accessCode+'\n' +
-            //'\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://localhost:4200/#/meeting?meetingCode='+this.accessCode+'\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }
