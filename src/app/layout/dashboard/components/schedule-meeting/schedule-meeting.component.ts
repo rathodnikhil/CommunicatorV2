@@ -156,7 +156,11 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please select meeting duration' , "Warning");
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
             return this.alertService.warning('Please select timezone' , "Warning");
-        } else {
+        }else if(new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,this.meeting.datePicker.day)< new Date()){
+            return this.alertService.warning('Please select future Date' , "Warning");
+        } else if(this.meeting.meridianTime.hour < new Date().getHours() && this.meeting.meridianTime.minute< new Date().getMinutes()){
+            return this.alertService.warning('Please select future time' , "Warning");
+        }else {
             this.meridian = !this.meridian;
             this.accessCode = new Date().getTime()+'_'+ Math.floor(Math.random() * 900) + 100;
             if (this.meeting.callType === 1) {

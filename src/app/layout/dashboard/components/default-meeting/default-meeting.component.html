@@ -92,8 +92,10 @@
                                         <br>
                                         <i class="fa fa-clock-o"></i>&nbsp;{{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 row">
                                     <a class="btn btn-primary" [routerLink]="['/meeting']">Now</a>
+                                    <a class="btn btn-warning" [routerLink]="['/meeting']">Cancel</a>
+                                    <a class="btn btn-danger" [routerLink]="['/meeting']">Delete</a>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -107,7 +109,6 @@
                             <strong class="primary-font">No recent meetings</strong>
                         </p>
                     </li>
-                    <!-- <li *ngFor="let meeting of futureMeetingList | SearchFutureMeeting : searchText" class="left clearfix"> -->
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div class="col-md-9">
@@ -118,7 +119,7 @@
                             </div>
                             <div class="col-md-3" *ngIf="showActionIcon">
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
-                                    <a (click)="startMeeting()">
+                                    <a (click)="startMeeting(meeting)">
                                     <i class="fa fa-play-circle actionIcon" aria-hidden="true"></i>
                                 </a>
                                 <a>
