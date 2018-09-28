@@ -67,16 +67,22 @@ export class ManageGroupComponent implements OnInit {
             if(data.errorFl === true || data.warningFl === true){
                 return this.alertService.warning(data.message, "Warning"); 
             }else{
-            const payload = { userCode: this.loggedInUserObj.userCode };
-            this._groupService.getGroupList().subscribe(data => {
-                this.groupList = data;
-            });
-            this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
-                this.groupMemberObjList = data;
-            });
+          
+       
         }
         });
+        this._groupService.getGroupList().subscribe(data => {
+            // if(data[0].errorFl || data[0].warningFl){
+            //     this.groupList = [];
+            //     return this.alertService.warning(data[0].message, "Warning"); 
+            // } else{
+                this.groupList = data;
+           // }
+        });
 
+        this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
+            this.groupMemberObjList = data;
+        });
         // this.selectedItems = [{ item_id: 4, item_text: 'Pune' }, { item_id: 6, item_text: 'Navsari' }];
         this.selectedItems = [];
         this.dropdownSettings = {

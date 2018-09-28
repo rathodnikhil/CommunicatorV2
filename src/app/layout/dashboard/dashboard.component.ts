@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '../../../../node_modules/@angular/common';
 import { AlertService } from '../../services/alert.service';
+import { MeetingService } from '../../services/meeting-service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -19,6 +20,7 @@ import { AlertService } from '../../services/alert.service';
 export class DashboardComponent implements OnInit, AfterViewInit {
     _groupService: GroupService;
     _userService: UserService;
+    _meetingService: MeetingService;
     createGroupsVal = '';
     broadcastMessage = '';
     userList = [];
@@ -46,9 +48,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        private groupService: GroupService, userService: UserService, private router: Router,public alertService: AlertService) {
+        private groupService: GroupService, userService: UserService,meetingService: MeetingService, private router: Router,public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
+        this._meetingService = meetingService;
         this.sliders.push(
             {
                 imagePath: 'assets/images/slider1.jpg',
@@ -103,6 +106,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this._userService.setUserList(payload);
             this._groupService.setGroupListObjByLoggedInUserId(payload);
             this._userService.setUserList(payload);
+            this._meetingService.setFutureMeetimgList(payload);
+            this._meetingService.setRecentMeetingByUser(payload);
             }
         });
 

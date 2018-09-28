@@ -54,7 +54,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         // recent meeting webservice call    
         const payload = { userCode: this.loggedInUser.userCode };
         this.recentMeeting = {};
-        this._meetingService.setRecentMeetingByUser(payload);
         this._meetingService.getRecentMeetingByUser().subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){
                 this.recentMeeting = {};
@@ -79,15 +78,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         
         const payload = { userCode: this.loggedInUser.userCode };
         this.futureMeetingList = [];
-        this._meetingService.setFutureMeetimgList(payload);
         this._meetingService.getFutureMeetingListByUser().subscribe(data => {
             if(data[0].errorFl || data[0].warningFl){
                 this.futureMeetingList = [];
                 return this.alertService.warning(data[0].message, "Warning"); 
             } else{
                 this.futureMeetingList = data;
+                this.filteredFutureMeetingList = data;
             }
-            this.filteredFutureMeetingList = this.futureMeetingList;
         });
     }
     selectMeetingFilterDate() {
@@ -131,14 +129,19 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
     }
     startMeeting(meeting){
-        alert(meeting.meetingStartDateTime);
-        // if(meeting.meetingStartDateTime === Date.now()) {
-        //     alert('true');
-        //     //[routerLink]="['/meeting']"
-        // }else{
-        //     alert('false');
-        // }
-
+        var selectedMeetingStartDate = new Date(meeting.meetingStartDateTime);
+        var currentDate = new Date();
+        var curr_day = currentDate.getDate();
+        if(selectedMeetingStartDate.getDate() === currentDate.getDate() && selectedMeetingStartDate.getDate()=== currentDate.getDate() && 
+        selectedMeetingStartDate.getDate() === currentDate.getDate()){
+            if(meeting.meetingStartDateTime <= Date.now() ) {
+              this.router.navigate(['/meeting']);
+            }else{
+                return this.alertService.warning("Wait to reach meeting start time", "Warning"); 
+            }
+        }else{
+            return this.alertService.warning("This meeting you can not start today , please check meeting date", "Warning"); 
+        }
     }
     deleteMeeting(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
