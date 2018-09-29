@@ -76,7 +76,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
         this.activatedRoute.queryParams.subscribe((params: Params) => {
-            debugger;
             this.meetingCode = params['meetingCode'];
 
             console.log(this.meetingCode);
