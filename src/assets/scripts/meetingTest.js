@@ -187,12 +187,14 @@ connection.onstream = function (event) {
     }
     video.srcObject = event.stream;
     // debugger;
-    var width = parseInt(connection.videosContainer.clientWidth / 2) - 20;
+    var width = parseInt(connection.videosContainer.parentElement.clientHeight)-20;
+    var height= parseInt(connection.videosContainer.parentElement.clientHeight)-20;
     var mediaElement = getHTMLMediaElement(video, {
         title: event.type === 'local' ? 'you' : event.extra,
         buttons: [],
         width: width,
-        showOnMouseEnter: false
+        showOnMouseEnter: false,
+        height: height
     });
     if (event.stream.isScreen) {
         connection.filesContainer.appendChild(mediaElement);
@@ -272,7 +274,7 @@ function disableInputButtons() {
 // ......................................................
 
 function showRoomURL(roomid) {
-    debugger;
+    // debugger;
     // var roomHashURL = '#' + roomid;
     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
 
