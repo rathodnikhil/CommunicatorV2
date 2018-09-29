@@ -3,18 +3,11 @@
             <h3>Settings</h3>
       </div>
 </div>
-<!-- <div class="left">
-</div> -->
-<div class="main">
-      <div class="setting-header">
-            <h4>Setting Details</h4>
-      </div>
-      <br>
-      <table style="width: 80%; ">
-            <tr>
-                  <h4>Personal Settings</h4>
-            </tr>
-            
+<div class="center">
+<div class="main ">
+            <h4 class="btn btn-sec remove-border">Setting Details</h4>
+      <table >
+          
             <tr>
                   <td>Display Picture</td>
                   <td>
@@ -81,8 +74,9 @@
             </tr> -->
       </table>
       <div class="button-block">
-            <button class="btn btn-primary" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>
-            <button class="btn btn-aecondary">Reset Changes</button>
+            <button class="btn btn-sec" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>
+            <a class="btn btn-secondary"  [routerLink]="['/dashboard/default']">Reset Changes</a>
       </div>
 
+</div>
 </div>

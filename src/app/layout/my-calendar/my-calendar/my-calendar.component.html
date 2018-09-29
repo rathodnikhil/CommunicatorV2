@@ -3,9 +3,6 @@
         <h3> Meeting Calendar </h3>
     </div>
 </div>
-<!-- <div class="left filter-list">
-    <div class="filler"></div>
-</div> -->
 <div class="main">
     <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
         (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>

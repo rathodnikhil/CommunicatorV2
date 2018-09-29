@@ -149,7 +149,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-
+        const payload = { fileName : "test.pdf" };
+        this.downloadSampleCSV(payload);
         if (!this.isHost) {
             alert("Only host can save MOM to database");
             return;
@@ -175,6 +176,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     downloadFile(data) {
+        alert('1');
         debugger;
         var uri = "data:text/csv;" + data;
         var url = window.URL.createObjectURL(uri);
@@ -186,6 +188,26 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
+    }
+   
+ 
+    downloadSampleCSV(payload) {
+       
+        this._meetingService.downloadPdfReportFile(payload).subscribe(data => {
+        
+                var blob = new Blob([data], { type: 'text/pdf' });
+ 
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(blob, payload.fileName);
+                } else {
+                    var a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "mom.txt";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+        });
     }
 }
 

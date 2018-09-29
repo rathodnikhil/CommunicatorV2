@@ -27,7 +27,6 @@ export class SignupComponent implements OnInit {
     email: any;
     password: any;
     confirmPassword: any;
-    showAddMemberSuccess: boolean = false;
     showAddMemberFirstName: boolean = false;
     showAddMemberUserName: boolean = false;
     showAddMemberPassword: boolean = false;

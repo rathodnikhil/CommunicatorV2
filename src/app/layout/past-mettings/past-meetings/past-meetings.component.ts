@@ -52,7 +52,7 @@ export class PastMeetingsComponent implements OnInit {
     }
     //download chat and mom file
     downloadFile() {
-        this._meetingService.downloadPdfReportFile();
+    //    / this._meetingService.downloadPdfReportFile();
     }
 
     getPastMeetingsByuser() {

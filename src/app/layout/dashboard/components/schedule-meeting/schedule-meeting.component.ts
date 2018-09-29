@@ -156,7 +156,11 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please select meeting duration' , "Warning");
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
             return this.alertService.warning('Please select timezone' , "Warning");
-        } else {
+        }else if(new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,this.meeting.datePicker.day)< new Date()){
+            return this.alertService.warning('Please select future Date' , "Warning");
+        } else if(this.meeting.meridianTime.hour < new Date().getHours() && this.meeting.meridianTime.minute< new Date().getMinutes()){
+            return this.alertService.warning('Please select future time' , "Warning");
+        }else {
             this.meridian = !this.meridian;
             this.accessCode = new Date().getTime()+'_'+ Math.floor(Math.random() * 900) + 100;
             if (this.meeting.callType === 1) {
@@ -201,7 +205,6 @@ export class ScheduleMeetingComponent implements OnInit {
         }
     }
     clearAllMeetingField() {
-    
         this.subject = '';
         this.meeting.selectedDuration = 'Select Duration';
         this.meeting.selectedTimeZone = 'Select Timezone';
@@ -211,12 +214,10 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     copyToOutLook(event, subject) {
         var meetingDetails = this.getMeetingDetails();
-        alert(subject);
         this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + this.meeting.subject+'&body=' + meetingDetails;
+        a.href = 'mailto:?subject=' + this.subject+'&body=' + meetingDetails;
         document.body.appendChild(a);
-        // start download
         a.click();
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
@@ -263,7 +264,6 @@ export class ScheduleMeetingComponent implements OnInit {
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
              + this.meeting.selectedDuration + '\n' +
             '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl +this.accessCode+'\n' +
-            //'\n Please join my meeting from your computer,tablet or smartphone \n' + 'http://localhost:4200/#/meeting?meetingCode='+this.accessCode+'\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }

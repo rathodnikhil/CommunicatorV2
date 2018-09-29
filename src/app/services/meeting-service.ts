@@ -61,9 +61,9 @@ export class MeetingService {
         return this.recentMeeting$;
     }
   
-    downloadPdfReportFile() {
-        const url = urlConstants.baseUrl + 'downloadPdfReportFile';
-        return this.http.post(url, null);
+    downloadPdfReportFile(payload) {
+        const url = urlConstants.baseUrl + 'downloadPdfReportFile?fileName=' + payload.fileName;
+        return this.apiRequest.post(url, payload);
     }
     getPastMeetingsByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
