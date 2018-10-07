@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../../../services/group.service';
 import { UserService } from '../../../services/user.service';
-import { FormGroup } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 import { PaginationInstance } from 'ngx-pagination';
-import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { AlertService } from '../../../services/alert.service';
 @Component({
     selector: 'app-manage-group',
@@ -14,11 +11,11 @@ import { AlertService } from '../../../services/alert.service';
 })
 export class ManageGroupComponent implements OnInit {
     public searchText: string;
-    public filter: string = '';
-    public maxSize: number = 7;
-    public directionLinks: boolean = true;
-    public autoHide: boolean = false;
-    public responsive: boolean = false;
+    public filter = '';
+    public maxSize = 7;
+    public directionLinks = true;
+    public autoHide = false;
+    public responsive = false;
     public config: PaginationInstance = {
         id: 'userCode',
         itemsPerPage: 10,
@@ -58,26 +55,23 @@ export class ManageGroupComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.showGroupNameUiFlag = false;
         this.countFlag = false;
         this.showSelectedGroup = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
-            if(data.errorFl === true || data.warningFl === true){
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{
-          
-       
-        }
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+            }
         });
         this._groupService.getGroupList().subscribe(data => {
             // if(data[0].errorFl || data[0].warningFl){
             //     this.groupList = [];
-            //     return this.alertService.warning(data[0].message, "Warning"); 
+            //     return this.alertService.warning(data[0].message, 'Warning');
             // } else{
-                this.groupList = data;
-           // }
+            this.groupList = data;
+            // }
         });
 
         this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
@@ -101,8 +95,6 @@ export class ManageGroupComponent implements OnInit {
     onSelectAll(items: any) {
         this.selectedItems.push(items);
     }
-
-
     handleLimitSelection() {
         if (this.limitSelection) {
             this.dropdownSettings = Object.assign({}, this.dropdownSettings, { limitSelection: 2 });
@@ -115,25 +107,24 @@ export class ManageGroupComponent implements OnInit {
         this.showGroupNameUiFlag = !this.showGroupNameUiFlag;
         this.showNewGroup = !this.showNewGroup;
     }
-    //create new group
+    // create new group
     addGroup(createGroupsVal) {
-        if (createGroupsVal === "" || createGroupsVal === null || typeof createGroupsVal === "undefined") {
-            return this.alertService.warning("Please enter group name", "Warning"); 
+        if (createGroupsVal === '' || createGroupsVal === null || typeof createGroupsVal === 'undefined') {
+            return this.alertService.warning('Please enter group name', 'Warning');
         } else {
-
-            for (let i in this.groupList) {
+            for (const i in this.groupList) {
                 this.groupArray.push(this.groupList[i].groupId.groupName);
             }
-            var duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
-            if (duplicateGroupFlag != -1) {
-                return this.alertService.warning("Group name already exist", "Warning"); 
+            const duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
+            if (duplicateGroupFlag !== -1) {
+                return this.alertService.warning('Group name already exist', 'Warning');
             } else {
-                const payload = { "groupName": createGroupsVal, "user": this.loggedInUserObj }
+                const payload = { 'groupName': createGroupsVal, 'user': this.loggedInUserObj }
                 this._groupService.saveGroupDetails(payload).subscribe(res => {
                     const newGroup = { groupId: res };
                     this.groupList.push(newGroup);
                     this.createGroupsVal = '';
-                    return this.alertService.success("Group has been added successfully", "Success"); 
+                    return this.alertService.success('Group has been added successfully', 'Success');
                 });
             }
         }
@@ -141,22 +132,22 @@ export class ManageGroupComponent implements OnInit {
     }
     // get details for selected group
     displayGroupDetails(groupId) {
-        // this._userService.getUserList().subscribe(data => {            
-        //     this.userList = data;            
+        // this._userService.getUserList().subscribe(data => {
+        //     this.userList = data;
         // });
         this.showSelectedGroup = true;
         this.selectedGroupObj = groupId;
-        const payload = { userCode: this.loggedInUserObj.userCode }
+        const payload = { userCode: this.loggedInUserObj.userCode };
         this._groupService.getGroupMembersByGroup(payload).subscribe(data => {
             const groupMemberList = data;
             this.selectedGroupUsers = [];
-            for (let i in groupMemberList) {
+            for (const i in groupMemberList) {
                 if (groupMemberList[i].groupId.groupId === groupId.groupId) {
                     this.selectedGroupUsers.push(groupMemberList[i].userId);
                 }
             }
             this.groupMemberCount = this.selectedGroupUsers.length;
-            if (this.groupMemberCount != 0) {
+            if (this.groupMemberCount !== 0) {
                 this.countFlag = true;
             }
         });
@@ -165,11 +156,10 @@ export class ManageGroupComponent implements OnInit {
     // add new member in group
     addMember() {
         if (this.showSelectedGroup === false) {
-            return this.alertService.warning("Please select group", "Warning"); 
+            return this.alertService.warning('Please select group', 'Warning');
         } else if (this.selectedItems.length === 0) {
-            return this.alertService.warning("Please select member", "Warning"); 
-        }
-        else if (this.selectedItems.length > 0 && this.selectedGroupUsers.length > 0) {
+            return this.alertService.warning('Please select member', 'Warning');
+        } else if (this.selectedItems.length > 0 && this.selectedGroupUsers.length > 0) {
             const selectedGroupUserCodes = this.selectedGroupUsers.map(x => x.userCode);
             const selectedItemsItemId = this.selectedItems.map(x => x.item_id);
             for (let i = 0; i < selectedGroupUserCodes.length; i++) {
@@ -178,18 +168,18 @@ export class ManageGroupComponent implements OnInit {
                     return false;
                 }
             }
-            return this.alertService.warning("Member already exist", "Warning"); 
+            return this.alertService.warning('Member already exist', 'Warning');
         }
         const payload = { groupMemObjList: this.selectedItems, groupId: this.selectedGroupObj.groupId }
         this._groupService.saveGroupMember(payload).subscribe(res => {
             this.userList = res;
-            for (let i in this.userList) {
-                if (this.selectedGroupUsers.indexOf(this.userList[i]) == -1)
+            for (const i in this.userList) {
+                if (this.selectedGroupUsers.indexOf(this.userList[i]) === -1) {
                     this.selectedGroupUsers.push(this.userList[i]);
+                }
             }
             this.selectedItems = [];
         });
-
     }
     onPageChange(number: number) {
         this.config.currentPage = number;

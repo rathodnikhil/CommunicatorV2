@@ -113,7 +113,7 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
-    debugger;
+    // debugger;
     var div = document.createElement('div');
     div.className = 'chat-background';
     var message = event.data || event;
@@ -191,7 +191,7 @@ connection.onstream = function (event) {
     //     video.muted = true;
     // }
     // video.srcObject = event.stream;
-    debugger;
+    // debugger;
     var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
     var mediaElement = getHTMLMediaElement(event.mediaElement, {
         title: event.type === 'local' ? 'you' : event.extra,
@@ -277,7 +277,7 @@ function disableInputButtons() {
 // ......................................................
 
 function showRoomURL(roomid) {
-    debugger;
+    // debugger;
     // var roomHashURL = '#' + roomid;
     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
 
@@ -293,7 +293,7 @@ function showRoomURL(roomid) {
 }
 
 (function () {
-    // debugger;
+    // // debugger;
     var params = {},
         r = /([^&=]+)=?([^&]*)/g;
 
@@ -334,7 +334,7 @@ if (roomid && roomid.length) {
     // auto-join-room
     (function reCheckRoomPresence() {
         document.getElementById('meeting-error').innerText = '';
-        // debugger;
+        // // debugger;
         isHost = document.getElementById('isHost').innerText === "true";
         if (isHost) {
             document.getElementById('open-room').disabled = false;

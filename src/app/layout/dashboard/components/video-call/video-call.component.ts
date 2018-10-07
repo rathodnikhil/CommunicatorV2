@@ -21,14 +21,14 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         // s.innerHTML = 'console.log(\'done\');'; // inline script
         // s.src = '../../../assets/scripts/meetingTest.js';
 
-        // const s = this.document.createElement('script');
-        // s.type = 'text/javascript';
-        // s.src = '../../../assets/scripts/meetingPeer.js';
-        // const __this = this; // to store the current instance to call
-        // // afterScriptAdded function on onload event of
-        // // script.
-        // s.onload = function () { __this.afterScriptAdded(); };
-        // this.elementRef.nativeElement.appendChild(s);
+        const s = this.document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '../../../assets/scripts/meetingPeer.js';
+        const __this = this; // to store the current instance to call
+        // afterScriptAdded function on onload event of
+        // script.
+        s.onload = function () { __this.afterScriptAdded(); };
+        this.elementRef.nativeElement.appendChild(s);
     }
 
 
@@ -55,19 +55,16 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         //     'profileImgPath': null
         // };
         // localStorage.setItem('loggedInuserName', this.loggedInUser.name + ' ' + this.loggedInUser.lastName);
-        // this._userService.getLoggedInUSerDetails().subscribe(data => {
-        //     debugger;
-        //     if (Object.keys(data).length === 0) {
-        //         this.router.navigate(['/login']);
-        //     } else {
-        //         this.loggedInUser = data;
-        //     }
-        // });
         this._userService.getLoggedInUserObj().subscribe(data => {
-            this.loggedInUser = data;
+            // debugger;
+            if (Object.keys(data).length === 0) {
+                this.router.navigate(['/login']);
+            } else {
+                this.loggedInUser = data;
+            }
         });
         this._userService.getSelectedUser().subscribe(data => {
-            if (data == null || data === undefined || data.length === 0) {
+            if (data == null || data === undefined || data.firstName === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedUser = data;
@@ -75,12 +72,12 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         });
     }
     afterScriptAdded() {
-        debugger;
-        // const meetingName = this.document.getElementById('meeting-name');
+        // debugger;
+        const meetingName = this.document.getElementById('room-id');
 
-        // meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
-        //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
-        // this.document.getElementById('setup-meeting').click();
+        meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
+            + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
+        this.document.getElementById('open-room').click();
         // const params = {
         //     width: '350px',
         //     height: '420px',

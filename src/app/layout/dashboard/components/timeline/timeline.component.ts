@@ -32,43 +32,54 @@ export class TimelineComponent implements OnInit {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
-    constructor(userService: UserService, private router: Router, chatService: ChatService ,public alertService: AlertService) {
+    constructor(userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
         this._chatService = chatService;
     }
 
     ngOnInit() {
-        this.selectedUser={};
+        this.selectedUser = {};
         this._userService.getSelectedUser().subscribe(res => {
-            if (res)
+            debugger
+            if (res) {
                 this.selectedUser = res;
+            }
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if(data.errorFl === true || data.warningFl === true){
+            if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{  
-            this.loggedInUser = data;
-            }   
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.loggedInUser = data;
+            }
         });
         this.chattingHistoryList = [];
         this._chatService.getChattingHistoryList().subscribe(data => {
-            // if(data[0].errorFl || data[0].warningFl){
-            //     this.chattingHistoryList = [];
-            //     return this.alertService.warning(data[0].message, "Warning"); 
-            // } else{
-            this.chattingHistoryList = data;
-           // }
+            // debugger;
+            if (data.length > 0) {
+                if (data[0].errorFl || data[0].warningFl) {
+                    this.chattingHistoryList = [];
+                    return this.alertService.warning(data[0].message, 'Warning');
+                } else {
+                    this.chattingHistoryList = data;
+                }
+            } else {
+                this.chattingHistoryList = [];
+            }
         });
         this.broadcastMsgList = [];
         this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
-            // if(data[0].errorFl || data[0].warningFl){
-            //     this.chattingHistoryList = [];
-            //     return this.alertService.warning(data[0].message, "Warning"); 
-            // } else{
-            this.broadcastMsgList = data;
-          //  }
-          }); 
+            if (data.length > 0) {
+                if (data[0].errorFl || data[0].warningFl) {
+                    this.broadcastMsgList = [];
+                    return this.alertService.warning(data[0].message, 'Warning');
+                } else {
+                    this.broadcastMsgList = data;
+                }
+            } else {
+                this.broadcastMsgList = [];
+            }
+        });
     }
     open() {
         this.viewProfileModal.open();
@@ -82,27 +93,27 @@ export class TimelineComponent implements OnInit {
     }
     sendMessage(chatMessag) {
         let payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: chatMessag };
-        if (chatMessag === "" || chatMessag === null || typeof chatMessag === "undefined") {
-         this.alertService.warning('Enter Message' , 'Warning');
+        if (chatMessag === '' || chatMessag === null || typeof chatMessag === 'undefined') {
+            this.alertService.warning('Enter Message', 'Warning');
         } else {
             alert('else');
             this._chatService.saveChat(payload).subscribe(data => {
-                if(data.errorFl === true || data.warningFl === true){
-                    return this.alertService.warning(data.message, "Warning"); 
-                }else{ 
-                this.chatMsg = "";
-                // this.chattingHistoryObj = data;
-                // alert(this.chattingHistoryObj.chatmsg);
-                // this.chattingHistoryList.push(this.chattingHistoryObj);
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                    this.chatMsg = '';
+                    // this.chattingHistoryObj = data;
+                    // alert(this.chattingHistoryObj.chatmsg);
+                    // this.chattingHistoryList.push(this.chattingHistoryObj);
                 }
             });
 
         }
     }
-    onKey(event,chatMessag) {
-        if (event.key == "Enter") { this.sendMessage(chatMessag); }
+    onKey(event, chatMessag) {
+        if (event.key == 'Enter') { this.sendMessage(chatMessag); }
     }
-    closeTeamPopup (popupType) {
+    closeTeamPopup(popupType) {
         switch (popupType) {
             case 'profileDetails':
                 this.viewProfileModal.close();
