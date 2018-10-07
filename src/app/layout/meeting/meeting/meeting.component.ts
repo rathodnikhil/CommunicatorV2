@@ -67,7 +67,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        // debugger;
+        // // debugger;
         if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
@@ -86,7 +86,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 if (this.meetingCode !== '') {
                     const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
                     this._meetingService.verifyMeetingHost(payload).subscribe(data => {
-                        // debugger;
+                        // // debugger;
                         if (!data.warningFl && !data.errorFl && data.message !== null) {
                             this.meetingDetails = data;
                             this.isHost = true;
@@ -118,13 +118,13 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.elementRef.nativeElement.appendChild(s);
     }
     afterScriptAdded() {
-        // debugger;
+        // // debugger;
         // const meetingName = this.document.getElementById('meeting-name');
 
         // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
         //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
         // this.document.getElementById('setup-meeting').click();
-        // debugger;
+        // // debugger;
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
         const params = {
             width: '350px',
@@ -177,7 +177,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     downloadFile(data) {
         alert('1');
-        debugger;
+        // debugger;
         var uri = "data:text/csv;" + data;
         var url = window.URL.createObjectURL(uri);
         var a = document.createElement('a');

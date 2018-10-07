@@ -15,7 +15,7 @@ import { MeetingService } from '../../services/meeting-service';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
     animations: [routerTransition()],
-    providers: [GroupService,AlertService]
+    providers: [GroupService, AlertService]
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
     _groupService: GroupService;
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     loggedInUserObj: any;
     loggedInUserRole: any;
     signUpflag: boolean;
- 
+
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     currentRoute = 0;
@@ -48,7 +48,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        private groupService: GroupService, userService: UserService,meetingService: MeetingService, private router: Router,public alertService: AlertService) {
+        private groupService: GroupService, userService: UserService,
+        meetingService: MeetingService, private router: Router, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
         this._meetingService = meetingService;
@@ -94,20 +95,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.signUpflag = false;
-       
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if(data.errorFl === true || data.warningFl === true){
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{  
-            this.loggedInUserObj = data;
-            const payload = { userCode: this.loggedInUserObj.userCode };
-            this._groupService.setGroupList(payload);
-            this._userService.setUserList(payload);
-            this._groupService.setGroupListObjByLoggedInUserId(payload);
-            this._userService.setUserList(payload);
-            this._meetingService.setFutureMeetimgList(payload);
-            this._meetingService.setRecentMeetingByUser(payload);
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.loggedInUserObj = data;
+                const payload = { userCode: this.loggedInUserObj.userCode };
+                this._groupService.setGroupList(payload);
+                this._userService.setUserList(payload);
+                this._groupService.setGroupListObjByLoggedInUserId(payload);
+                this._userService.setUserList(payload);
+                this._meetingService.setFutureMeetimgList(payload);
+                this._meetingService.setRecentMeetingByUser(payload);
             }
         });
 
@@ -116,29 +116,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         let roleArray = [];
         for (let i = 0; i < userRoleArray.length; i++) {
             roleArray.push(userRoleArray[i].role);
-       }
-        if(roleArray.indexOf('ADMINISTRATOR') === -1){
+        }
+        if (roleArray.indexOf('ADMINISTRATOR') === -1) {
             this.signUpflag = false;
-        }else{
+        } else {
             this.signUpflag = true;
         }
     }
     ngAfterViewInit(): void {
-        // const s = document.createElement('script');
+        // const s = this.document.createElement('script');
         // s.type = 'text/javascript';
-        // s.innerHTML = 'console.log(\'done\');'; // inline script
-        // s.src = '../../../assets/scripts/meetingTest.js';
-
-        const s = this.document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = '../../../assets/scripts/meetingTest.js';
-        const __this = this; // to store the current instance to call
-        // afterScriptAdded function on onload event of
-        // script.
-        s.onload = function () { __this.afterScriptAdded(); };
-        this.elementRef.nativeElement.appendChild(s);
+        // s.src = '../../../assets/scripts/meetingPeer.js';
+        // const __this = this; // to store the current instance to call
+        // // afterScriptAdded function on onload event of
+        // // script.
+        // s.onload = function () { __this.afterScriptAdded(); };
+        // this.elementRef.nativeElement.appendChild(s);
     }
-    afterScriptAdded() { }
+    afterScriptAdded() {
+        // this.document.getElementById('setup-meeting').click();
+    }
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
@@ -146,32 +143,32 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     switchRoute(newRoute) {
         this.currentRoute = newRoute;
     }
-   
+
     openMemberPopup() {
         this.broadcastMsgModal.open();
     }
-    //save broadcast message
+    // save broadcast message
     broadcastMessages() {
-        if (this.broadcastMessage === "" || this.broadcastMessage === null || typeof this.broadcastMessage === "undefined") {
-            return this.alertService.warning("Please enter message" , "Warning");
+        if (this.broadcastMessage === '' || this.broadcastMessage === null || typeof this.broadcastMessage === 'undefined') {
+            return this.alertService.warning('Please enter message', 'Warning');
         } else {
-            const payload = { "broadcastMessage": this.broadcastMessage ,generatedBy: this.loggedInUserObj };
+            const payload = { 'broadcastMessage': this.broadcastMessage, generatedBy: this.loggedInUserObj };
             this._groupService.saveBroadcastMessage(payload).subscribe(data => {
-                if(data.errorFl === true || data.warningFl === true){
-                    return this.alertService.warning(data.message, "Warning"); 
-                }else{  
-                    return this.alertService.success("Message has been broadcast successfully", "Success");
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                    return this.alertService.success('Message has been broadcast successfully', 'Success');
                 }
             });
         }
         this.broadcastMessage = ' ';
     }
-   
+
     resetMsg(event) {
         alert('text reset');
     }
-  
-    //close create group modal popup
+
+    // close create group modal popup
     closePopup(popupType) {
         switch (popupType) {
             case 'broadcastMessageModal':
@@ -179,5 +176,5 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
-   
+
 }

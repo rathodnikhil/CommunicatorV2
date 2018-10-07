@@ -17,7 +17,7 @@ export class CustomModalComponent {
     constructor(private modalService: NgbModal, @Inject(DOCUMENT) private document) { }
 
     open() {
-        // debugger;
+        // // debugger;
         this.modalService.open(this.content2).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {

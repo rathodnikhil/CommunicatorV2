@@ -28,7 +28,7 @@ export class NotificationComponent implements OnInit {
     loggedInUser: any;
     searchText: string;
     broadcastMsgList = [];
-    constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService, 
+    constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
         private router: Router,public alertService: AlertService) {
         this._userService = userService;
         this._groupService = groupService;
@@ -42,15 +42,15 @@ export class NotificationComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){
                 this.loggedInUser = {};
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{ 
+                return this.alertService.warning(data.message, "Warning");
+            }else{
             this.loggedInUser = data;
             }
         });
         this._userService.getUserList().subscribe(data => {
             // if(data[0].errorFl === true || data[0].warningFl === true){
             //     this.userList = [];
-            //     return this.alertService.warning(data[0].message, "Warning"); 
+            //     return this.alertService.warning(data[0].message, "Warning");
             // } else{
                 this.userList = data;
          //   }
@@ -59,7 +59,7 @@ export class NotificationComponent implements OnInit {
         this._groupService.getGroupList().subscribe(data => {
             // if(data[0].errorFl || data[0].warningFl){
             //     this.groupList = [];
-            //     return this.alertService.warning(data[0].message, "Warning"); 
+            //     return this.alertService.warning(data[0].message, "Warning");
             // } else{
                 this.groupList = data;
            // }
@@ -110,7 +110,7 @@ export class NotificationComponent implements OnInit {
             this._userService.searchWholememberList(payload).subscribe(data => {
                 if(data[0].errorFl || data[0].warningFl){
                     this.searchWholeMemberList = [];
-                    return this.alertService.warning(data[0].message, "Warning"); 
+                    return this.alertService.warning(data[0].message, "Warning");
                 } else{
                 this.searchWholeMemberList = data;
                 }
@@ -125,10 +125,10 @@ export class NotificationComponent implements OnInit {
         this.viewMemeberDetails(user);
         this.userList.push(user);
         this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
-        this._userService.SaveUserPermission(payload).subscribe(data => {  
+        this._userService.SaveUserPermission(payload).subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){
-            return this.alertService.warning(data.message, "Warning"); 
-        }else{ 
+            return this.alertService.warning(data.message, "Warning");
+        }else{
           return this.alertService.success('User has been added successfully',"Success");
         }
         });

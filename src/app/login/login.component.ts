@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     emailSuccessFlag: boolean;
     emailValidationFlag: boolean;
     emailFailFlag: boolean;
-    Logintext = "Login";
+    Logintext = 'Login';
     loggedInUserObj: any;
 
     constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService) {
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // debugger;
+        // // debugger;
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
         this.loginUiFlag = true;
@@ -52,21 +52,21 @@ export class LoginComponent implements OnInit, OnDestroy {
         //  this._loginService.dest
     }
     guestLogin() {
-        this.Logintext = this.isGuest ? "Continue" : "Login";
+        this.Logintext = this.isGuest ? 'Continue' : 'Login';
     }
     onKey(event) {
-        if (event.key == "Enter") { this.login(); }
+        if (event.key === 'Enter') { this.login(); }
     }
-    login() {        
-        if (this.userName == undefined || this.userName === '' || this.userName === null) {            
-            return this.alertService.error("Enter Username", "Error");            
-        } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {            
-            return  this.alertService.error("Enter Password", "Error");
-            
+    login() {
+        if (this.userName === undefined || this.userName === '' || this.userName === null) {
+            return this.alertService.error('Enter Username', 'Error');
+        } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
+            return this.alertService.error('Enter Password', 'Error');
+
         } else {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
-                const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email }
+                const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
                 this._userService.setLoggedInUserObj(payload).subscribe(res => {
                     if (res.firstName !== undefined) {
                         if (!this.previousUrl) {
@@ -77,20 +77,21 @@ export class LoginComponent implements OnInit, OnDestroy {
                     }
                 });
             } else {
-                let payload = { 'name': 'admin', 'password': 'password' };
-                let payload1 = { 'name': this.userName, 'password': this.password };
+                const payload = { 'name': this.userName, 'password': this.password };
                 let loginWarningFlag;
-                this._userService.verifyUser(payload1).subscribe(resp => {
-                    loginWarningFlag = resp.json().warningFl;
+                this._userService.verifyUser(payload).subscribe(resp => {
+                    const loggedinUser = resp.json();
+                    loginWarningFlag = loggedinUser.warningFl;
                     if (loginWarningFlag === false) {
                         this._loginService.getAuthenticationToken(payload).subscribe(resp => {
                             this.jwtToken = this._loginService.getJwtToken();
-                            if (this.jwtToken === undefined || this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
-                                return this.alertService.error("Authentication Token failed", "Error");                                
+                            if (this.jwtToken === undefined ||
+                                this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
+                                return this.alertService.error('Authentication Token failed', 'Error');
                             } else {
-                                let userNamePayload = { userName: this.userName };
+                                const userNamePayload = { userName: loggedinUser.name };
                                 this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
-                                    if (res.firstName !== undefined) {
+                                    if (res.firstName !== undefined && res.firstName != null) {
                                         if (!this.previousUrl) {
                                             this.router.navigate(['/dashboard/default']);
                                         } else {
@@ -98,13 +99,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                                         }
                                     }
                                 });
-
                             }
                         }, err => {
 
                         });
                     } else {
-                        return this.alertService.warning("UserName and Password dose not match", "Error");                        
+                        return this.alertService.warning('UserName and Password dose not match', 'Error');
                     }
                 },
                     err => {
@@ -113,7 +113,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
     forgetPassword() {
-
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
     }
@@ -123,7 +122,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     sendEmailForgotPassword() {
-        let payload = { email: this.forgetEmail }
+        let payload = { email: this.forgetEmail };
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
             this.emailSuccessFlag = true;
             setTimeout(function () {
