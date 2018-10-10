@@ -53,15 +53,15 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
         // recent meeting webservice call    
         const payload = { userCode: this.loggedInUser.userCode };
-        this.recentMeeting = {};
-        this._meetingService.getRecentMeetingByUser().subscribe(data => {
-            if(data.errorFl === true || data.warningFl === true){
-                this.recentMeeting = {};
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{ 
-            this.recentMeeting = data;
-            }
-        });
+        // this.recentMeeting = {};
+        // this._meetingService.getRecentMeetingByUser().subscribe(data => {
+        //     if(data.errorFl === true || data.warningFl === true){
+        //         this.recentMeeting = {};
+        //         return this.alertService.warning(data.message, "Warning"); 
+        //     }else{ 
+        //     this.recentMeeting = data;
+        //     }
+        // });
     }
 
     ngAfterViewInit(): void {
