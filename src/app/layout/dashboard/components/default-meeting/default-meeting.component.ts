@@ -132,16 +132,17 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         var selectedMeetingStartDate = new Date(meeting.meetingStartDateTime);
         var currentDate = new Date();
         var curr_day = currentDate.getDate();
-        if(selectedMeetingStartDate.getDate() === currentDate.getDate() && selectedMeetingStartDate.getDate()=== currentDate.getDate() && 
-        selectedMeetingStartDate.getDate() === currentDate.getDate()){
-            if(meeting.meetingStartDateTime <= Date.now() ) {
-              this.router.navigate(['/meeting']);
-            }else{
-                return this.alertService.warning("Wait to reach meeting start time", "Warning"); 
-            }
-        }else{
-            return this.alertService.warning("This meeting you can not start today , please check meeting date", "Warning"); 
-        }
+        // if(selectedMeetingStartDate.getDate() === currentDate.getDate() && selectedMeetingStartDate.getDate()=== currentDate.getDate() && 
+        // selectedMeetingStartDate.getDate() === currentDate.getDate()){
+        //     if(meeting.meetingStartDateTime <= Date.now() ) {
+        //       this.router.navigate(['/meeting']);
+        //     }else{
+        //         return this.alertService.warning("Wait to reach meeting start time", "Warning"); 
+        //     }
+        // }else{
+        //     return this.alertService.warning("This meeting you can not start today , please check meeting date", "Warning"); 
+        // }
+        this.router.navigate(['/meeting']);
     }
     deleteMeeting(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };

@@ -52,6 +52,7 @@ export class ManageGroupComponent implements OnInit {
     selectedGroupUsers: any[];
     userList: any[];
     showNewGroup: boolean;
+    searchGroupName: any;
     constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
