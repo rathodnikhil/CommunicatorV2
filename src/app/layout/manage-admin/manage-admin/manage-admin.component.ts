@@ -8,6 +8,7 @@ import { PaginationInstance } from 'ngx-pagination';
 })
 export class ManageAdminComponent implements OnInit {
 _userService: UserService;
+searchText: any;
 public filter: string = '';
 public maxSize: number = 7;
 public directionLinks: boolean = true;
@@ -39,5 +40,8 @@ allAdminList = [];
 });
 
   }
-
+  onPageChange(number: number) {
+    // console.log('change to page', number);
+    this.config.currentPage = number;
+}
 }

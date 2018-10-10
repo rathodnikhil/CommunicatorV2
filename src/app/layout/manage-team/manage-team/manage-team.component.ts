@@ -35,6 +35,7 @@ export class ManageTeamComponent implements OnInit {
     loggedInUser: any;
     selectedTeamObj: any;
     searchText: string;
+    searchTeam: any;
     showSelectedTeam: boolean;
 
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;

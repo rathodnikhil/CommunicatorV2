@@ -71,4 +71,8 @@ payloadSearch: any;
   scheduleMeetingRight(userCode){
     alert('userCode' +userCode);
   }
+  onPageChange(number: number) {
+    // console.log('change to page', number);
+    this.config.currentPage = number;
+}
 }
