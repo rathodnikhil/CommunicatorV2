@@ -25,7 +25,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-user-o fa-fw"></i>
+                                <i class="fa fa-user"></i>
                             </span>
                         </div>
                         <input class="form-control" type="text" placeholder="UserName" [(ngModel)]="userName" (keyup)="onKey($event)" required>
@@ -33,7 +33,7 @@
                     <div class="input-group mb-3" *ngIf="isGuest">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-envelope-o fa-fw"></i>
+                                <i class="fa fa-envelope"></i>
                             </span>
                         </div>
                         <input class="form-control" type="email" placeholder="email" [(ngModel)]="email" (keyup)="onKey($event)" required>
@@ -41,7 +41,7 @@
                     <div class="input-group mb-3" *ngIf="!isGuest">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-key fa-fw"></i>
+                                <i class="fa fa-unlock"></i>
                             </span>
                         </div>
                         <input class="form-control" type="password" placeholder="password" [(ngModel)]="password" (keyup)="onKey($event)" required>
@@ -83,9 +83,7 @@
          </div>
          
          <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
-         <a  (click)="backToLogin()">back to login</a>
-        
-
+         <div class="alink">  <a  (click)="backToLogin()">back to login</a></div>
      </div>
         <div class="row h-100 d-flex justify-content-center fixed-footer">
             <div>Copyright &copy; 2018 Coreflex Solutions</div>

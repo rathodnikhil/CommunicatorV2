@@ -184,11 +184,14 @@ fieldset {
 }
 
 #actions a {
-    color: #3151A2;
+    color: #3277d3;
     float: right;
     line-height: 35px;
     margin-left: 10px;
+    font-weight: bold;
+    text-decoration: underline;
 }
+
 
 .communication-logo{
     text-align: center;padding-bottom:15px;
@@ -200,4 +203,12 @@ fieldset {
     background: rgb(245, 245, 248); 
   border: 1px solid rgb(199, 200, 201);
   text-align: center;
+}
+.alink {
+    color: #3277d3;
+    float: right;
+    line-height: 35px;
+    margin-left: 10px;
+    font-weight: bold;
+    text-decoration: underline;
 }
