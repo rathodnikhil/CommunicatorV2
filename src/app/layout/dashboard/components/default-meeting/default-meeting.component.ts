@@ -34,7 +34,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._meetingService = meetingService;
     }
     ngOnInit() {
-        
         this.selectDateFlag = true;
         this.showActionIcon = true;
         this.showCancelMeeting = false;
@@ -170,5 +169,36 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             //this.showCancelMeeting = true;
             }
         });
+    }
+ 
+    copyToOutLook(event) {
+        var meetingDetails = this.getMeetingDetails();
+        const a = document.createElement('a');
+        a.href = 'mailto:?subject=' + "meeting Subject"+'&body=' + meetingDetails;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+       
+    }
+    //copy meeting content
+    copyToClipboard() {
+        var meetingDetails = this.getMeetingDetails();
+        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
+        document.execCommand('copy');
+      
+    }
+   joinMeetingNow(){
+       alert('join now');
+   }
+    getTimeZone() {
+        const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+        return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
+    }
+  
+
+    //get meeting details
+    getMeetingDetails(): string {
+      var meetingDetails= "meeting detaisl"
+        return meetingDetails;
     }
 }

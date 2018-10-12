@@ -1,12 +1,22 @@
 <div #chatPanel class="chat-panel card card-default">
     <div class="card-header meetingHeader">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <i class="fa fa-calendar-check-o"></i>
                 Good Morning {{loggedInUser.firstName}} {{loggedInUser.lastName}}
                 <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div ngbDropdown class="d-inline-block dropdown">
+                    <button class=" btn btn-meetnow" ngbDropdownToggle>Meet Now</button>
+                    <div ngbDropdownMenu>
+                        <button  class="dropdown-item " on-click="joinMeetingNow($event)">Join Now</button>
+                        <button  class="dropdown-item " on-click="copyToClipboard()">Copy to Clipbord</button>
+                        <button  class="dropdown-item " on-click="copyToOutLook()">Send Email Invitation</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-sec pull-right" type="button">Schedule</a>
             </div>
         </div>
@@ -120,10 +130,10 @@
                             <div class="col-md-3" *ngIf="showActionIcon">
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
                                     <a (click)="startMeeting(meeting)">
-                                    <i class="fa fa-play-circle actionIcon" aria-hidden="true"></i>
+                                    <i class="fa fa-play-circle actionIcon" style="color: #3277d3;" aria-hidden="true"></i>
                                 </a>
                                 <a>
-                                    <i class="fa fa-times-circle actionIcon" (click)="cancelMeeting(meeting)" aria-hidden="true"></i>
+                                    <i class="fa fa-times-circle actionIcon" style="color: rgb(255, 60, 0);" (click)="cancelMeeting(meeting)" aria-hidden="true"></i>
                                 </a>
                                 <a>
                                     <i class="fa fa-minus-circle actionIcon" style="color: red;" (click)="deleteMeeting(meeting)" aria-hidden="true"></i>
