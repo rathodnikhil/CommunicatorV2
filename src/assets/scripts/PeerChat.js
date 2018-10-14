@@ -1,172 +1,228 @@
- // ......................................................
-            // .......................UI Code........................
-            // ......................................................
+debugger;
+connection.socket.emit(connection.socketCustomEvent, {
+    sender: document.getElementById('room-id').value,
+    customMessage: connection.extra+' is trying to connect customMessageCfsCommunicator'
+});
+document.getElementById('input-text-chat').onkeyup = function (e) {
+    if (e.keyCode != 13) return;
 
-            document.getElementById('open-room').onclick = function() {
-                disableInputButtons();
-                connection.open(document.getElementById('room-id').value, function() {
-                    showRoomURL(connection.sessionid);
-                });
-            };
+    // removing trailing/leading whitespace
+    this.value = this.value.replace(/^\s+|\s+$/g, '');
+    if (!this.value.length) return;
 
-            document.getElementById('join-room').onclick = function() {
-                disableInputButtons();
-                connection.join(document.getElementById('room-id').value);
-            };
+    connection.send(this.value);
+    appendDIV(this.value);
+    this.value = '';
+};
 
-            document.getElementById('open-or-join-room').onclick = function() {
-                disableInputButtons();
-                connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExists, roomid) {
-                    if(!isRoomExists) {
-                        showRoomURL(roomid);
-                    }
-                });
-            };
+document.getElementById('alternate-send-chat').onclick = function (e) {
+    // this.value = document.getElementById('input-text-chat').value;
+    // removing trailing/leading whitespace
+    this.value = document.getElementById('input-text-chat').value.replace(/^\s+|\s+$/g, '');
+    if (!this.value.length) return;
 
-            // ......................................................
-            // ................FileSharing/TextChat Code.............
-            // ......................................................
+    connection.send(this.value);
+    appendDIV(this.value);
+    document.getElementById('input-text-chat').value = '';
+};
 
-            document.getElementById('share-file').onclick = function() {
-                var fileSelector = new FileSelector();
-                fileSelector.selectSingleFile(function(file) {
-                    connection.send(file);
-                });
-            };
+var chatContainer = document.querySelector('.chat-output');
 
-            document.getElementById('input-text-chat').onkeyup = function(e) {
-                if (e.keyCode != 13) return;
+function appendDIV(event) {
+    // debugger;
+    var div = document.createElement('div');
+    div.className = 'chat-background';
+    var message = event.data || event;
+    var user = event.extra || 'you';
+    // var html = '<div class="container">';
+    html = '<p>' + message + '</p>';
+    if (user === 'you') {
+        html += '<span class="time-right">';
+    } else {
+        html += '<span class="time-left">';
+    }
 
-                // removing trailing/leading whitespace
-                this.value = this.value.replace(/^\s+|\s+$/g, '');
-                if (!this.value.length) return;
+    html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
+    // html += '</div>';
+    div.innerHTML = html;
+    chatContainer.insertBefore(div, chatContainer.lastChild);
+    // div.tabIndex = 0;
+    div.focus();
 
-                connection.send(this.value);
-                appendDIV(this.value);
-                this.value = '';
-            };
+    document.getElementById('input-text-chat').focus();
+}
 
-            var chatContainer = document.querySelector('.chat-output');
 
-            function appendDIV(event) {
-                var div = document.createElement('div');
-                div.innerHTML = event.data || event;
-                chatContainer.insertBefore(div, chatContainer.firstChild);
-                div.tabIndex = 0;
-                div.focus();
 
-                document.getElementById('input-text-chat').focus();
-            }
+//  // ......................................................
+//             // .......................UI Code........................
+//             // ......................................................
 
-            // ......................................................
-            // ..................RTCMultiConnection Code.............
-            // ......................................................
+//             document.getElementById('open-room').onclick = function() {
+//                 disableInputButtons();
+//                 connection.open(document.getElementById('room-id').value, function() {
+//                     showRoomURL(connection.sessionid);
+//                 });
+//             };
 
-            var connection = new RTCMultiConnection();
+//             document.getElementById('join-room').onclick = function() {
+//                 disableInputButtons();
+//                 connection.join(document.getElementById('room-id').value);
+//             };
 
-            // by default, socket.io server is assumed to be deployed on your own URL
-            // connection.socketURL = '/';
+//             document.getElementById('open-or-join-room').onclick = function() {
+//                 disableInputButtons();
+//                 connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExists, roomid) {
+//                     if(!isRoomExists) {
+//                         showRoomURL(roomid);
+//                     }
+//                 });
+//             };
 
-            // comment-out below line if you do not have your own socket.io server
-            connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+//             // ......................................................
+//             // ................FileSharing/TextChat Code.............
+//             // ......................................................
 
-            connection.socketMessageEvent = 'textchat-plus-fileshare-demo';
+//             document.getElementById('share-file').onclick = function() {
+//                 var fileSelector = new FileSelector();
+//                 fileSelector.selectSingleFile(function(file) {
+//                     connection.send(file);
+//                 });
+//             };
 
-            connection.enableFileSharing = true; // by default, it is "false".
+//             document.getElementById('input-text-chat').onkeyup = function(e) {
+//                 if (e.keyCode != 13) return;
 
-            connection.session = {
-                data: true
-            };
+//                 // removing trailing/leading whitespace
+//                 this.value = this.value.replace(/^\s+|\s+$/g, '');
+//                 if (!this.value.length) return;
 
-            connection.sdpConstraints.mandatory = {
-                OfferToReceiveAudio: false,
-                OfferToReceiveVideo: false
-            };
+//                 connection.send(this.value);
+//                 appendDIV(this.value);
+//                 this.value = '';
+//             };
 
-            connection.onmessage = appendDIV;
-            connection.filesContainer = document.getElementById('file-container');
+//             var chatContainer = document.querySelector('.chat-output');
 
-            connection.onopen = function() {
-                document.getElementById('share-file').disabled = false;
-                document.getElementById('input-text-chat').disabled = false;
-            };
+//             function appendDIV(event) {
+//                 var div = document.createElement('div');
+//                 div.innerHTML = event.data || event;
+//                 chatContainer.insertBefore(div, chatContainer.firstChild);
+//                 div.tabIndex = 0;
+//                 div.focus();
 
-            function disableInputButtons() {
-                document.getElementById('open-or-join-room').disabled = true;
-                document.getElementById('open-room').disabled = true;
-                document.getElementById('join-room').disabled = true;
-                document.getElementById('room-id').disabled = true;
-            }
+//                 document.getElementById('input-text-chat').focus();
+//             }
 
-            // ......................................................
-            // ......................Handling Room-ID................
-            // ......................................................
+//             // ......................................................
+//             // ..................RTCMultiConnection Code.............
+//             // ......................................................
 
-            function showRoomURL(roomid) {
-                var roomHashURL = '#' + roomid;
-                var roomQueryStringURL = '?roomid=' + roomid;
+//             var connection = new RTCMultiConnection();
 
-                var html = '<h2>Unique URL for your room:</h2><br>';
+//             // by default, socket.io server is assumed to be deployed on your own URL
+//             // connection.socketURL = '/';
 
-                html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
-                html += '<br>';
-                html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+//             // comment-out below line if you do not have your own socket.io server
+//             connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
-                var roomURLsDiv = document.getElementById('room-urls');
-                roomURLsDiv.innerHTML = html;
+//             connection.socketMessageEvent = 'textchat-plus-fileshare-demo';
 
-                roomURLsDiv.style.display = 'block';
-            }
+//             connection.enableFileSharing = true; // by default, it is "false".
 
-            (function() {
-                var params = {},
-                    r = /([^&=]+)=?([^&]*)/g;
+//             connection.session = {
+//                 data: true
+//             };
 
-                function d(s) {
-                    return decodeURIComponent(s.replace(/\+/g, ' '));
-                }
-                var match, search = window.location.search;
-                while (match = r.exec(search.substring(1)))
-                    params[d(match[1])] = d(match[2]);
-                window.params = params;
-            })();
+//             connection.sdpConstraints.mandatory = {
+//                 OfferToReceiveAudio: false,
+//                 OfferToReceiveVideo: false
+//             };
 
-            var roomid = '';
-            if (localStorage.getItem(connection.socketMessageEvent)) {
-                roomid = localStorage.getItem(connection.socketMessageEvent);
-            } else {
-                roomid = connection.token();
-            }
-            document.getElementById('room-id').value = roomid;
-            document.getElementById('room-id').onkeyup = function() {
-                localStorage.setItem(connection.socketMessageEvent, this.value);
-            };
+//             connection.onmessage = appendDIV;
+//             connection.filesContainer = document.getElementById('file-container');
 
-            var hashString = location.hash.replace('#', '');
-            if(hashString.length && hashString.indexOf('comment-') == 0) {
-              hashString = '';
-            }
+//             connection.onopen = function() {
+//                 document.getElementById('share-file').disabled = false;
+//                 document.getElementById('input-text-chat').disabled = false;
+//             };
 
-            var roomid = params.roomid;
-            if(!roomid && hashString.length) {
-                roomid = hashString;
-            }
+//             function disableInputButtons() {
+//                 document.getElementById('open-or-join-room').disabled = true;
+//                 document.getElementById('open-room').disabled = true;
+//                 document.getElementById('join-room').disabled = true;
+//                 document.getElementById('room-id').disabled = true;
+//             }
 
-            if(roomid && roomid.length) {
-                document.getElementById('room-id').value = roomid;
-                localStorage.setItem(connection.socketMessageEvent, roomid);
+//             // ......................................................
+//             // ......................Handling Room-ID................
+//             // ......................................................
 
-                // auto-join-room
-                (function reCheckRoomPresence() {
-                    connection.checkPresence(roomid, function(isRoomExists) {
-                        if(isRoomExists) {
-                            connection.join(roomid);
-                            return;
-                        }
+//             function showRoomURL(roomid) {
+//                 var roomHashURL = '#' + roomid;
+//                 var roomQueryStringURL = '?roomid=' + roomid;
 
-                        setTimeout(reCheckRoomPresence, 5000);
-                    });
-                })();
+//                 var html = '<h2>Unique URL for your room:</h2><br>';
 
-                disableInputButtons();
-            }
+//                 html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
+//                 html += '<br>';
+//                 html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+
+//                 var roomURLsDiv = document.getElementById('room-urls');
+//                 roomURLsDiv.innerHTML = html;
+
+//                 roomURLsDiv.style.display = 'block';
+//             }
+
+//             (function() {
+//                 var params = {},
+//                     r = /([^&=]+)=?([^&]*)/g;
+
+//                 function d(s) {
+//                     return decodeURIComponent(s.replace(/\+/g, ' '));
+//                 }
+//                 var match, search = window.location.search;
+//                 while (match = r.exec(search.substring(1)))
+//                     params[d(match[1])] = d(match[2]);
+//                 window.params = params;
+//             })();
+
+//             var roomid = '';
+//             if (localStorage.getItem(connection.socketMessageEvent)) {
+//                 roomid = localStorage.getItem(connection.socketMessageEvent);
+//             } else {
+//                 roomid = connection.token();
+//             }
+//             document.getElementById('room-id').value = roomid;
+//             document.getElementById('room-id').onkeyup = function() {
+//                 localStorage.setItem(connection.socketMessageEvent, this.value);
+//             };
+
+//             var hashString = location.hash.replace('#', '');
+//             if(hashString.length && hashString.indexOf('comment-') == 0) {
+//               hashString = '';
+//             }
+
+//             var roomid = params.roomid;
+//             if(!roomid && hashString.length) {
+//                 roomid = hashString;
+//             }
+
+//             if(roomid && roomid.length) {
+//                 document.getElementById('room-id').value = roomid;
+//                 localStorage.setItem(connection.socketMessageEvent, roomid);
+
+//                 // auto-join-room
+//                 (function reCheckRoomPresence() {
+//                     connection.checkPresence(roomid, function(isRoomExists) {
+//                         if(isRoomExists) {
+//                             connection.join(roomid);
+//                             return;
+//                         }
+
+//                         setTimeout(reCheckRoomPresence, 5000);
+//                     });
+//                 })();
+
+//                 disableInputButtons();
+//             }

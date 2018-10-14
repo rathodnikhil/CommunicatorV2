@@ -85,19 +85,21 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '') {
                     const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-                    this._meetingService.verifyMeetingHost(payload).subscribe(data => {
-                        // // debugger;
-                        if (!data.warningFl && !data.errorFl && data.message !== null) {
-                            this.meetingDetails = data;
-                            this.isHost = true;
-                            this.document.getElementById('isHost').innerHTML = "true";
-                        }
-                        else {
-                            this.isHost = false;
-                            this.document.getElementById('isHost').innerHTML = "false";
-                        }
+                    this.document.getElementById('isHost').innerHTML = 'true';
+                    this.isHost = true;
+                    // this._meetingService.verifyMeetingHost(payload).subscribe(data => {
+                    //     // // debugger;
+                    //     if (!data.warningFl && !data.errorFl && data.message !== null) {
+                    //         this.meetingDetails = data;
+                    //         this.isHost = true;
+                    //         this.document.getElementById('isHost').innerHTML = "true";
+                    //     }
+                    //     else {
+                    //         this.isHost = false;
+                    //         this.document.getElementById('isHost').innerHTML = "false";
+                    //     }
 
-                    });
+                    // });
                 }
             }
         });
@@ -189,14 +191,14 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
     }
-   
- 
+
+
     downloadSampleCSV(payload) {
-       
+
         this._meetingService.downloadPdfReportFile(payload).subscribe(data => {
-        
+
                 var blob = new Blob([data], { type: 'text/pdf' });
- 
+
                 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
                     window.navigator.msSaveOrOpenBlob(blob, payload.fileName);
                 } else {
