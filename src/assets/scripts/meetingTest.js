@@ -142,6 +142,7 @@ function appendDIV(event) {
 // ......................................................
 
 var connection = new RTCMultiConnection();
+connection.socketCustomEvent="cfsCommunicator_internal_message";
 var isHost = false;
 // Using getScreenId.js to capture screen from any domain
 connection.getScreenConstraints = function (callback) {
@@ -221,13 +222,14 @@ connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
+
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost)
         document.getElementById('btn-leave-room').disabled = false;
-
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+
 };
 
 connection.onclose = function () {
@@ -263,6 +265,15 @@ connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
 
+connection.connectSocket(function(socket) {
+    // listen custom messages from server
+    debugger;
+    connection.socket.on(connection.socketCustomEvent, function(message) {
+        debugger;
+        alert(message.sender + ' shared custom message:\n\n' + message.customMessage);
+    });
+});
+
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
     document.getElementById('open-room').disabled = true;
@@ -288,6 +299,10 @@ function showRoomURL(roomid) {
     roomURLsDiv.innerHTML = html;
 
     roomURLsDiv.style.display = 'block';
+    connection.socket.emit(connection.socketCustomEvent, {
+        sender: connection.userid,
+        customMessage: 'customMessageCfsCommunicator'
+    });
 }
 
 (function () {
@@ -333,7 +348,7 @@ if (roomid && roomid.length) {
     (function reCheckRoomPresence() {
         document.getElementById('meeting-error').innerText = '';
         // // debugger;
-        isHost = document.getElementById('isHost').innerText === "true";
+        isHost = document.getElementById('isHost').innerText === "false";
         if (isHost) {
             document.getElementById('open-room').disabled = false;
             document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';

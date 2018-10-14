@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     loggedInUserObj: any;
     loggedInUserRole: any;
     signUpflag: boolean;
+    selectedUser: any;
 
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
@@ -108,6 +109,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this._userService.setUserList(payload);
                 this._meetingService.setFutureMeetimgList(payload);
                 this._meetingService.setRecentMeetingByUser(payload);
+                this._userService.getSelectedUser().subscribe(res => {
+                    // debugger
+                    if (res) {
+                        this.selectedUser = res;
+                    }
+                });
             }
         });
 
@@ -124,14 +131,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }
     }
     ngAfterViewInit(): void {
-        // const s = this.document.createElement('script');
-        // s.type = 'text/javascript';
-        // s.src = '../../../assets/scripts/meetingPeer.js';
-        // const __this = this; // to store the current instance to call
-        // // afterScriptAdded function on onload event of
-        // // script.
-        // s.onload = function () { __this.afterScriptAdded(); };
-        // this.elementRef.nativeElement.appendChild(s);
+        const s = this.document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '../../../assets/scripts/meetingPeer.js';
+        const __this = this; // to store the current instance to call
+        // afterScriptAdded function on onload event of
+        // script.
+        s.onload = function () { __this.afterScriptAdded(); };
+        this.elementRef.nativeElement.appendChild(s);
     }
     afterScriptAdded() {
         // this.document.getElementById('setup-meeting').click();

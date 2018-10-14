@@ -1,17 +1,18 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, Inject, ElementRef } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
+import { DOCUMENT } from '@angular/common';
 @Component({
     selector: 'app-timeline',
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.scss'],
     providers: [AlertService]
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit, AfterViewInit {
     @ViewChild('viewProfileModal') public viewProfileModal: CustomModalComponent;
     viewProfile: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -32,7 +33,8 @@ export class TimelineComponent implements OnInit {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
-    constructor(userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
+    constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
+    userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
         this._chatService = chatService;
     }
@@ -40,7 +42,7 @@ export class TimelineComponent implements OnInit {
     ngOnInit() {
         this.selectedUser = {};
         this._userService.getSelectedUser().subscribe(res => {
-            debugger
+            // debugger
             if (res) {
                 this.selectedUser = res;
             }
@@ -80,6 +82,19 @@ export class TimelineComponent implements OnInit {
                 this.broadcastMsgList = [];
             }
         });
+    }
+    ngAfterViewInit(): void {
+        const s = this.document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '../../../assets/scripts/PeerChat.js';
+        const __this = this; // to store the current instance to call
+        // afterScriptAdded function on onload event of
+        // script.
+        s.onload = function () { __this.afterScriptAdded(); };
+        this.elementRef.nativeElement.appendChild(s);
+    }
+    afterScriptAdded() {
+        // this.document.getElementById('setup-meeting').click();
     }
     open() {
         this.viewProfileModal.open();

@@ -247,7 +247,7 @@ function getHTMLMediaElement(mediaElement, config) {
     if (config.title) {
         var h2 = document.createElement('h2');
         h2.innerHTML = config.title;
-        h2.setAttribute('style', 'position: relative;color:white;font-size:17px;text-shadow: 1px 1px black;padding:0;margin:0;text-align: left; margin-top: 10px; margin-left: 10px; display: block; border: 0;line-height:1.5;z-index:1;');
+        h2.setAttribute('style', 'position: relative;color:white;font-size:1rem;padding:0;margin:0;text-align: left; margin-top: 1px; margin-left: 1px; display: block; border: 0;line-height:1;z-index:5;');
         mediaBox.appendChild(h2);
     }
 
@@ -262,7 +262,9 @@ function getHTMLMediaElement(mediaElement, config) {
         mediaBox.querySelector('video').style.maxHeight = (config.height - 10) + 'px';
     } else
         mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
-
+        mediaBox.querySelector('video').style.position='relative';
+        mediaBox.querySelector('video').style.zIndex='1';
+        mediaBox.querySelector('video').style.marginTop='-15px'
     var times = 0;
 
     function adjustControls() {

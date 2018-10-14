@@ -394,30 +394,30 @@ document.getElementById('share-file').onclick = function () {
     });
 };
 
-document.getElementById('input-text-chat').onkeyup = function (e) {
-    if (e.keyCode != 13) return;
+// document.getElementById('input-text-chat').onkeyup = function (e) {
+//     if (e.keyCode != 13) return;
 
-    // removing trailing/leading whitespace
-    this.value = this.value.replace(/^\s+|\s+$/g, '');
-    if (!this.value.length) return;
+//     // removing trailing/leading whitespace
+//     this.value = this.value.replace(/^\s+|\s+$/g, '');
+//     if (!this.value.length) return;
 
-    connection.send(this.value);
-    appendDIV(this.value);
-    this.value = '';
-};
+//     connection.send(this.value);
+//     appendDIV(this.value);
+//     this.value = '';
+// };
 
-document.getElementById('alternate-send-chat').onclick = function (e) {
-    // this.value = document.getElementById('input-text-chat').value;
-    // removing trailing/leading whitespace
-    this.value = document.getElementById('input-text-chat').value.replace(/^\s+|\s+$/g, '');
-    if (!this.value.length) return;
+// document.getElementById('alternate-send-chat').onclick = function (e) {
+//     // this.value = document.getElementById('input-text-chat').value;
+//     // removing trailing/leading whitespace
+//     this.value = document.getElementById('input-text-chat').value.replace(/^\s+|\s+$/g, '');
+//     if (!this.value.length) return;
 
-    connection.send(this.value);
-    appendDIV(this.value);
-    document.getElementById('input-text-chat').value = '';
-};
+//     connection.send(this.value);
+//     appendDIV(this.value);
+//     document.getElementById('input-text-chat').value = '';
+// };
 
-var chatContainer = document.querySelector('.chat-output');
+// var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     // debugger;
@@ -568,7 +568,15 @@ connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     // seems room is already opened
     connection.join(useridAlreadyTaken);
 };
-
+connection.connectSocket(function(socket) {
+    // listen custom messages from server
+    // debugger;
+    connection.socket.on(connection.socketCustomEvent, function(message) {
+        // debugger;
+     if(message.sender==localStorage.getItem("loggedInuserName"))
+        alert(message.sender + ' shared custom message:\n\n' + message.customMessage);
+    });
+});
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
     document.getElementById('open-room').disabled = true;

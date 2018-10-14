@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="card-body">
-     
+
         <ul class="timeline" >
             <li *ngFor="let chatObj of chattingHistoryList">
                 <div class="timeline-badge">
@@ -29,7 +29,7 @@
                         <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
                         <p>
                             <small class="text-muted">
-                                <i class="fa fa-calendar"></i> {{chatObj.msgDate |  date:'fullDate'}}&nbsp; 
+                                <i class="fa fa-calendar"></i> {{chatObj.msgDate |  date:'fullDate'}}&nbsp;
                                 ({{chatObj.msgDate |  date:'hh:mm:ss'}})</small>
                         </p>
                     </div>
@@ -47,7 +47,7 @@
                         <h6 class="timeline-title">{{broadcastMsg.generatedBy.firstName}}&nbsp;{{broadcastMsg.generatedBy.lastName}}</h6>
                         <p>
                             <small class="text-muted">
-                                <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |  date:'fullDate'}}&nbsp; 
+                                <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |  date:'fullDate'}}&nbsp;
                                 ({{broadcastMsg.broadcastMsgDate |  date:'hh:mm:ss'}})</small>
                         </p>
                     </div>
@@ -55,7 +55,7 @@
                         <p>{{broadcastMsg.broadcastMessage}}</p>
                     </div>
                 </div>
-            </li> 
+            </li>
 
 
              <!-- <li>
@@ -193,11 +193,11 @@
     </div>
 </div>
 <div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" #chatMessag  (keyup.enter)="sendMessage(chatMessag.value)" required >
+    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"  (keyup.enter)="sendMessage(chatMessag.value)" required >
     </textarea>
     <div class="input-group-append">
         <a class="btn">
-            <i class="fa fa-paper-plane" aria-hidden="true" (click)="sendMessage(chatMessag.value)"></i>
+            <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage(chatMessag.value)"></i>
         </a>
         <a class="btn">
             <i class="fa fa-file" aria-hidden="true"></i>
@@ -231,7 +231,7 @@
                         </div>
                         <div class="col-md-8"><label>{{selectedUser.team.teamName}}</label></div>
                     </div>
-    
+
         <div class="row">
             <div class="col-md-4">
                 <label>Display Picture</label></div>
@@ -241,6 +241,6 @@
         </div>
     </div>
     <div class="modal-footer popFooter">
-            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('profileDetails')">Close</button> 
+            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeTeamPopup('profileDetails')">Close</button>
     </div>
 </app-custom-modal>
