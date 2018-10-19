@@ -29,6 +29,8 @@ export class ScheduleMeetingComponent implements OnInit {
     vedioMeeting: boolean;
     showScheduleMeetingSuccess: boolean;
     showCopyDetailsSuccess: boolean;
+    futureMeetingList: any[];
+    filteredFutureMeetingList: any[];
     // public radioGroupForm: FormGroup;
     scheduleMeetings: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
@@ -147,6 +149,16 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
+        this.futureMeetingList = [];
+        this._meetingService.getFutureMeetingListByUser().subscribe(data => {
+            if(data[0].errorFl || data[0].warningFl){
+                this.futureMeetingList = [];
+                return this.alertService.warning(data[0].message, "Warning"); 
+            } else{
+                this.futureMeetingList = data;
+                this.filteredFutureMeetingList = data;
+            }
+        });
     }
     scheduleMeeting() {
         
@@ -200,6 +212,8 @@ export class ScheduleMeetingComponent implements OnInit {
                 }
                 this.clearAllMeetingField();
                 this.scheduleMeetingModal.open();
+                this.futureMeetingList.push(data);
+                this.filteredFutureMeetingList.push(data);
             }
             });
             

@@ -27,6 +27,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     showActionIcon: boolean;
     showCancelMeeting: boolean;
     searchText: String;
+    accessCode: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     constructor(userService: UserService, meetingService: MeetingService, private router: Router, private toastr: ToastrService,public alertService: AlertService) {
@@ -50,7 +51,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         //getAllFutureMeetingList webservice call
         this.getAllFutureMeetingList();
 
-        // recent meeting webservice call    
+   
         const payload = { userCode: this.loggedInUser.userCode };
         // this.recentMeeting = {};
         // this._meetingService.getRecentMeetingByUser().subscribe(data => {
@@ -189,6 +190,33 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
    joinMeetingNow(){
        alert('join now');
+       this.accessCode = new Date().getTime()+'_'+ Math.floor(Math.random() * 900) + 100;  
+       const payload = {
+        'meetingDate': new Date(),
+        // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' 
+        // + this.meeting.meridianTime.minute,
+        //'meetingEndDateTime': 1525067350000,
+        //'meetingStartDateTime': now,
+        'subject': 'Meeting on '+ new Date(),
+        'duration': '45 Min',
+        'recurringType': 'No',
+        'callType': 'Audio',
+        //'timeZone': this.meeting.selectedTimeZone,
+      //  'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
+        'meetingId': this.accessCode,
+        'createdBy': this.loggedInUser
+    };
+
+    this._meetingService.meetNow(payload).subscribe(res => {
+        const data = res.json();
+        if (data.warningFl || data.errorFl) {
+            return this.alertService.warning(data.message, "Warning"); 
+        }
+        else {
+           
+        }
+    
+    });
    }
     getTimeZone() {
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);

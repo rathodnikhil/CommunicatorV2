@@ -42,9 +42,6 @@ export class TeamService {
           let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
             this.apiRequest.post(url,payload).subscribe(data => {
                 resp.next(data);
-            },
-              err => {
-                //alert(err);
               });
           return resp;
       }

@@ -33,6 +33,17 @@ export class MeetingService {
 
         return resp;
     }
+        //meetNow webservice details
+        meetNow(payload): Observable<any> {
+            const url = urlConstants.baseUrl + 'meetNow';
+            let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+            this.apiRequest.post(url, payload).subscribe(data => {
+                resp.next(data);
+             });
+    
+            return resp;
+        }
+    
     //future meeting list webservice details
     setFutureMeetimgList(payload) {
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
