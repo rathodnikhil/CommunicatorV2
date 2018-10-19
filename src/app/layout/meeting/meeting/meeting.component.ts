@@ -4,6 +4,7 @@ import { LoginService } from '../../../services/login.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AlertService } from '../../../services/alert.service';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -60,7 +61,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     loggedInUser: any;
     isHost = false;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        userService: UserService, loginService: LoginService, meetingService: MeetingService, private activatedRoute: ActivatedRoute, public router: Router) {
+        userService: UserService, loginService: LoginService, meetingService: MeetingService,private alertService: AlertService,
+         private activatedRoute: ActivatedRoute, public router: Router) {
         this._userService = userService;
         this._loginService = loginService;
         this._meetingService = meetingService;
@@ -154,8 +156,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const payload = { fileName : "test.pdf" };
         this.downloadSampleCSV(payload);
         if (!this.isHost) {
-            alert("Only host can save MOM to database");
-            return;
+           // alert("Only host can save MOM to database");
+            return this.alertService.warning("Only host can save MOM to database", "Warning"); 
         }
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
             this.momAddDesciption = true;
@@ -163,6 +165,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
         } else {
+            alert(this.loggedInUser.userCode);
             const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;

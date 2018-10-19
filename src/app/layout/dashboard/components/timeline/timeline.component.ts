@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, Inject, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, Inject, ElementRef, AfterViewInit } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../../../../services/user.service';

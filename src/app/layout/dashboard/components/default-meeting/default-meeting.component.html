@@ -4,7 +4,7 @@
             <div class="col-md-7">
                 <i class="fa fa-calendar-check-o"></i>
                 Good Morning {{loggedInUser.firstName}} {{loggedInUser.lastName}}
-                <h6 class="style-links">Your Schedule of upcoming Meetings</h6>
+                <h6 class="style-links">Schedule upcoming Meetings</h6>
             </div>
             <div class="col-md-3">
                 <div ngbDropdown class="d-inline-block dropdown">
@@ -121,13 +121,13 @@
                     </li> -->
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
-                            <div class="col-md-9">
-                                <i class="fa fa-calendar"></i>
-                                <span style="font-weight: bold; font-size: 14px;">{{meeting.subject}}&nbsp;({{meeting.meetingCode}})
-                                    <br>
+                            <div class="col-md-8">
+                               
+                                <span style="font-weight: bold; font-size: 14px;">
+                                        <i class="fa fa-calendar"></i>&nbsp;({{meeting.meetingCode}})<br>
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
-                            <div class="col-md-3" *ngIf="showActionIcon">
+                            <div style="float: right" *ngIf="showActionIcon">
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
                                     <a (click)="startMeeting(meeting)">
                                     <i class="fa fa-play-circle actionIcon" style="color: #3277d3;" aria-hidden="true"></i>
@@ -147,9 +147,10 @@
                         </div>
                         <div class="col-md-12">
                             <strong style="color:#3277d3;">
-                                <br> Meeting Host : {{meeting.createdBy.firstName}}&nbsp;{{meeting.createdBy.lastName}}
-                                <br> Meeting Duration : {{meeting.duration}}
-                                <br> Meeting End Date/Time : {{meeting.meetingEndDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                <br> Subject : {{meeting.subject}}
+                                <br>Host : {{meeting.createdBy.firstName}}&nbsp;{{meeting.createdBy.lastName}}
+                                <br>Duration : {{meeting.duration}}
+                                <br>End Date/Time : {{meeting.meetingEndDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
                             </strong>
                         </div>
                     </li>

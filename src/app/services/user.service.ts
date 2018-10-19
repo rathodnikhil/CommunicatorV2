@@ -26,9 +26,6 @@ export class UserService {
         let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.http.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                // alert(err);
             });
 
         return resp;
