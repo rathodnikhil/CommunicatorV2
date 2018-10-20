@@ -3,7 +3,7 @@
         <div class="col-lg-3" style="padding:0px;">
             <div class="card card-default">
                 <div class="row" style="margin:0px;">
-                    <div class="card-header userlist-header"  [ngClass]="{'col-md-5': signUpflag === true , 'col-md-4': signUpflag === false}" style="text-align: center;">
+                    <div class="card-header userlist-header col-md-4" style="text-align: center;">
                         <i class="fa fa-user-circle fa-fw cursorPointer" [routerLink]="['/myProfile']"></i>
                     </div>
                     <div [ngClass]="{'userlist-header': signUpflag === true ,
@@ -35,7 +35,7 @@
                             </div>
                         </app-custom-modal>
                     </div>
-                    <div   style="background-color : red;" class=" card-header userlist-header" [ngClass]="{'col-md-1': signUpflag === true , 'col-md-2': signUpflag === false}">
+                    <div   style="background-color : red;" class=" card-header userlist-header col-md-2">
                         <i class="fa fa-sign-out fa-fw cursorPointer" [routerLink]="['/login']"></i>
                     </div>
                 </div>

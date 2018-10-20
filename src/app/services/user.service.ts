@@ -67,7 +67,7 @@ export class UserService {
         return resp;
     }
     // to verify whether user is registered or not
-    verifyUser(payload) {
+    verifyUser(payload) {        
         const url = urlConstants.baseUrl + 'verifyUser';
         return this.http.post(url, payload);
     }

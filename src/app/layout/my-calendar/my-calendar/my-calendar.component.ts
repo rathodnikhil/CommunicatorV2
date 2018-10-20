@@ -94,8 +94,7 @@ export class MyCalendarComponent implements OnInit {
         });
 
         const payload = { userCode: this.loggedInUserObj.userCode };
-        this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
-            // // debugger;
+        this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {            
             if(data[0].errorFl || data[0].warningFl){
                 return this.alertService.warning(data[0].message, "Warning"); 
             } else{

@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._userService = userService;
     }
 
-    ngOnInit() {
-        // // debugger;
+    ngOnInit() {        
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
         this.loginUiFlag = true;
