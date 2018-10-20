@@ -264,7 +264,7 @@ function getHTMLMediaElement(mediaElement, config) {
         mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
         mediaBox.querySelector('video').style.position='relative';
         mediaBox.querySelector('video').style.zIndex='1';
-        mediaBox.querySelector('video').style.marginTop='-15px'
+        // mediaBox.querySelector('video').style.marginTop='-15px'
     var times = 0;
 
     function adjustControls() {

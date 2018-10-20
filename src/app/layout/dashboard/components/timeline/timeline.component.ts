@@ -41,8 +41,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.selectedUser = {};
-        this._userService.getSelectedUser().subscribe(res => {
-            // debugger
+        this._userService.getSelectedUser().subscribe(res => {            
             if (res) {
                 this.selectedUser = res;
             }
@@ -57,7 +56,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         });
         this.chattingHistoryList = [];
         this._chatService.getChattingHistoryList().subscribe(data => {
-            // debugger;
             if (data.length > 0) {
                 if (data[0].errorFl || data[0].warningFl) {
                     this.chattingHistoryList = [];

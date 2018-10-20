@@ -12,8 +12,7 @@ export class SearchFutureMeetingPipe implements PipeTransform {
             return items;
         }
         searchText = searchText.toLowerCase();
-        return items.filter(it => {
-            // debugger;
+        return items.filter(it => {            
             Object.values(it).forEach(element => {
                 if (element !== undefined && element != null) {
                     if (typeof element === 'string') {

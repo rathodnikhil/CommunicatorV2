@@ -16,8 +16,7 @@ export class CustomModalComponent {
     @Output() CancelEvent = new EventEmitter();
     constructor(private modalService: NgbModal, @Inject(DOCUMENT) private document) { }
 
-    open() {
-        // // debugger;
+    open() {        
         this.modalService.open(this.content2).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {

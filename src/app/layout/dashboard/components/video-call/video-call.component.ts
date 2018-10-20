@@ -32,31 +32,8 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     }
 
 
-    ngOnInit() {
-        // this.loggedInUser = {
-        //     'id': 2,
-        //     'email': 'b@gmail.com',
-        //     'password': '1235',
-        //     'name': 'sunita',
-        //     'lastName': 'kolhapure',
-        //     'active': 1,
-        //     'teamId': {
-        //         'prime': null,
-        //         'errorFl': false,
-        //         'warningFl': false,
-        //         'message': null,
-        //         'teamId': 1,
-        //         'teamName': 'cfs_pune',
-        //         'status': {
-        //             'statusId': 1,
-        //             'status': 'Active'
-        //         }
-        //     },
-        //     'profileImgPath': null
-        // };
-        // localStorage.setItem('loggedInuserName', this.loggedInUser.name + ' ' + this.loggedInUser.lastName);
-        this._userService.getLoggedInUserObj().subscribe(data => {
-            // debugger;
+    ngOnInit() {        
+        this._userService.getLoggedInUserObj().subscribe(data => {            
             if (Object.keys(data).length === 0) {
                 this.router.navigate(['/login']);
             } else {
@@ -71,20 +48,12 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
             }
         });
     }
-    afterScriptAdded() {
-        // debugger;
+    afterScriptAdded() {        
         const meetingName = this.document.getElementById('room-id');
 
         meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
             + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
-        this.document.getElementById('open-room').click();
-        // const params = {
-        //     width: '350px',
-        //     height: '420px',
-        // };
-        // if (typeof (window['functionFromExternalScript']) === 'function') {
-        //     window['functionFromExternalScript'](params);
-        // }
+        this.document.getElementById('open-room').click();       
     }
 
 }

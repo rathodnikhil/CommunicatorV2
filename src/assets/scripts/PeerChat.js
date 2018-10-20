@@ -1,4 +1,4 @@
-debugger;
+
 connection.socket.emit(connection.socketCustomEvent, {
     sender: document.getElementById('room-id').value,
     customMessage: connection.extra+' is trying to connect customMessageCfsCommunicator'

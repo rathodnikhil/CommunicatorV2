@@ -107,10 +107,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this._userService.setUserList(payload);
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
-                this._meetingService.setFutureMeetimgList(payload);
-                this._meetingService.setRecentMeetingByUser(payload);
+                
+                // this._meetingService.setRecentMeetingByUser(payload);
                 this._userService.getSelectedUser().subscribe(res => {
-                    // debugger
                     if (res) {
                         this.selectedUser = res;
                     }

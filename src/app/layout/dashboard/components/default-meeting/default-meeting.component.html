@@ -7,14 +7,39 @@
                 <h6 class="style-links">Schedule upcoming Meetings</h6>
             </div>
             <div class="col-md-3">
-                <div ngbDropdown class="d-inline-block dropdown">
-                    <button class=" btn btn-meetnow" ngbDropdownToggle>Meet Now</button>
-                    <div ngbDropdownMenu>
-                        <button  class="dropdown-item " on-click="joinMeetingNow($event)">Join Now</button>
-                        <button  class="dropdown-item " on-click="copyToClipboard()">Copy to Clipbord</button>
-                        <button  class="dropdown-item " on-click="copyToOutLook()">Send Email Invitation</button>
+                <a href="javascript:void(0)" class="btn btn-sec"(click)="joinMeetingNow()">Meet Now</a>
+
+                <app-custom-modal #MeetNowModal [model]="meetNowModel">
+                    <!-- <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true" class="alert alert-success alert-dismissable"
+                        [(ngModel)]="showScheduleMeetingSuccess">
+                        <strong>Success:&nbsp; </strong>
+                        <span style="font-weight: bold;">meeting has been scheduled Successfully.</span>
                     </div>
-                </div>
+                    <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
+                        <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
+                    </div> -->
+                    <div style="padding: 10px; font-size:14px;" class="span-font">
+                        <span>{{meetNowMeeting.subject}}</span>
+                        <p style="font-weight:bold;">Date :  {{meetNowMeeting.meetingStartDateTime| date: 'dd-MM-yyyy'}} for
+                            <span style="font-weight: bold;">{{meetNowMeeting.selectedDuration}} </span>
+                        </p>
+                        <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone                            
+                                <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                        <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
+                                        https://cfscommunicator.com/#/meeting/audio?meetingCode={{meetNowMeeting.meetingCode}}</span>
+                   
+                        </p>
+                        <h5 style="margin-top: 40px;">Access Code :
+                            <span>{{meetNowMeeting.meetingCode}}</span>
+                        </h5>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
+                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
+                        <button type="button" class="btn btn-secondary  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start Meeting</button>
+                    </div>
+
+                </app-custom-modal>
             </div>
             <div class="col-md-2">
                 <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-sec pull-right" type="button">Schedule</a>
@@ -129,7 +154,7 @@
                             </div>
                             <div style="float: right" *ngIf="showActionIcon">
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
-                                    <a (click)="startMeeting(meeting)">
+                                    <a (click)="startMeeting(meeting,false)">
                                     <i class="fa fa-play-circle actionIcon" style="color: #3277d3;" aria-hidden="true"></i>
                                 </a>
                                 <a>

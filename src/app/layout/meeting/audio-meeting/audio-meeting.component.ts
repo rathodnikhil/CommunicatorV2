@@ -36,8 +36,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     this._meetingService = meetingService;
   }
 
-  ngOnInit() {
-    // // debugger;
+  ngOnInit() {    
     if (!localStorage.getItem('loggedInuserName')) {
       this._loginService.setPreviousUrl(this.router.url);
       this.router.navigate(['/login']);
@@ -45,8 +44,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
 
     this.messageSendTo = 'Send Message to';
     this.momTo = 'set MOM Duty';
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
-      // debugger;
+    this.activatedRoute.queryParams.subscribe((params: Params) => {      
       this.meetingCode = params['meetingCode'];
 
       console.log(this.meetingCode);
@@ -56,8 +54,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
         this.loggedInUser = data;
         if (this.meetingCode !== '') {
           const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-          this._meetingService.verifyMeetingHost(payload).subscribe(data => {
-            // // debugger;
+          this._meetingService.verifyMeetingHost(payload).subscribe(data => {            
             if (!data.warningFl && !data.errorFl && data.message !== null) {
               this.meetingDetails = data;
               this.isHost = true;
@@ -88,14 +85,12 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     s.onload = function () { __this.afterScriptAdded(); };
     this.elementRef.nativeElement.appendChild(s);
   }
-  afterScriptAdded() {
-    // // debugger;
+  afterScriptAdded() {    
     // const meetingName = this.document.getElementById('meeting-name');
 
     // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
     //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
-    // this.document.getElementById('setup-meeting').click();
-    // // debugger;
+    // this.document.getElementById('setup-meeting').click();    
     this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
     const params = {
       width: '350px',
@@ -145,8 +140,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  downloadFile(data) {
-    // debugger;
+  downloadFile(data) {    
     var uri = "data:text/csv;" + data;
     var url = window.URL.createObjectURL(uri);
     var a = document.createElement('a');

@@ -193,11 +193,11 @@
     </div>
 </div>
 <div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"  (keyup.enter)="sendMessage(chatMessag.value)" required >
+    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"  (keyup.enter)="sendMessage(chatMsg.value)" required >
     </textarea>
     <div class="input-group-append">
         <a class="btn">
-            <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage(chatMessag.value)"></i>
+            <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage(chatMsg.value)"></i>
         </a>
         <a class="btn">
             <i class="fa fa-file" aria-hidden="true"></i>

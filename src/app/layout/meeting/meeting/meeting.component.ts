@@ -9,6 +9,7 @@ import { AlertService } from '../../../services/alert.service';
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
     styleUrls: ['./meeting.component.scss'],
+    providers: [AlertService],
     animations: [
         trigger('MomBody', [
             state('inactive', style({
@@ -60,16 +61,16 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     momTxt: any;
     loggedInUser: any;
     isHost = false;
+    previousHtml: any;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        userService: UserService, loginService: LoginService, meetingService: MeetingService,private alertService: AlertService,
-         private activatedRoute: ActivatedRoute, public router: Router) {
+        userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
+        private activatedRoute: ActivatedRoute, public router: Router) {
         this._userService = userService;
         this._loginService = loginService;
         this._meetingService = meetingService;
     }
 
-    ngOnInit() {
-        // // debugger;
+    ngOnInit() {        
         if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
@@ -87,31 +88,25 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '') {
                     const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-                    this.document.getElementById('isHost').innerHTML = 'true';
-                    this.isHost = true;
-                    // this._meetingService.verifyMeetingHost(payload).subscribe(data => {
-                    //     // // debugger;
-                    //     if (!data.warningFl && !data.errorFl && data.message !== null) {
-                    //         this.meetingDetails = data;
-                    //         this.isHost = true;
-                    //         this.document.getElementById('isHost').innerHTML = "true";
-                    //     }
-                    //     else {
-                    //         this.isHost = false;
-                    //         this.document.getElementById('isHost').innerHTML = "false";
-                    //     }
+                    // this.document.getElementById('isHost').innerHTML = 'true';
+                    // this.isHost = true;
+                    this._meetingService.verifyMeetingHost(payload).subscribe(data => {                        
+                        if (!data.warningFl && !data.errorFl && data.message !== null) {
+                            this.meetingDetails = data;
+                            this.isHost = true;
+                            this.document.getElementById('isHost').innerHTML = "true";
+                        }
+                        else {
+                            this.isHost = false;
+                            this.document.getElementById('isHost').innerHTML = "false";
+                        }
 
-                    // });
+                    });
                 }
             }
         });
     }
     ngAfterViewInit(): void {
-        // const s = document.createElement('script');
-        // s.type = 'text/javascript';
-        // s.innerHTML = 'console.log(\'done\');'; // inline script
-        // s.src = '../../../assets/scripts/meetingTest.js';
-
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingTest.js';
@@ -121,14 +116,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         s.onload = function () { __this.afterScriptAdded(); };
         this.elementRef.nativeElement.appendChild(s);
     }
-    afterScriptAdded() {
-        // // debugger;
-        // const meetingName = this.document.getElementById('meeting-name');
-
-        // meetingName.value = this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
-        //     + this.selectedUser.firstName + ' ' + this.selectedUser.lastName + '_videoCall';
-        // this.document.getElementById('setup-meeting').click();
-        // // debugger;
+    afterScriptAdded() {      
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
         const params = {
             width: '350px',
@@ -153,11 +141,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        const payload = { fileName : "test.pdf" };
-        this.downloadSampleCSV(payload);
+        this.downloadFile(this.momTxt);                
         if (!this.isHost) {
-           // alert("Only host can save MOM to database");
-            return this.alertService.warning("Only host can save MOM to database", "Warning"); 
+            // alert("Only host can save MOM to database");
+            return this.alertService.warning("Only host can save MOM to database", "Warning");
         }
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
             this.momAddDesciption = true;
@@ -180,39 +167,35 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             });
         }
     }
-    downloadFile(data) {
-        alert('1');
-        // debugger;
-        var uri = "data:text/csv;" + data;
-        var url = window.URL.createObjectURL(uri);
+    downloadFile(data) {        
+        data= data.split('\n');
+        data = data.join('\r\n ');
+        const fileType = 'text/json';
+        
         var a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.download = 'MOM.text';
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data)}`);
+        // a.href = url;
+        a.download = this.meetingCode+'.txt';
         a.click();
-        window.URL.revokeObjectURL(url);
+        // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
+        this.alertService.success("File has been downloaded.","MOM Download");
     }
 
+    saveCurrent(obj) {
+        if (this.previousHtml != undefined && this.previousHtml.id == obj.nextId) {
+            setTimeout(() => { this.document.getElementById(obj.nextId + '-panel').innerHTML = this.previousHtml.content; this.previousHtml = undefined; }, 1000)
 
-    downloadSampleCSV(payload) {
 
-        this._meetingService.downloadPdfReportFile(payload).subscribe(data => {
-
-                var blob = new Blob([data], { type: 'text/pdf' });
-
-                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                    window.navigator.msSaveOrOpenBlob(blob, payload.fileName);
-                } else {
-                    var a = document.createElement('a');
-                    a.href = URL.createObjectURL(blob);
-                    a.download = "mom.txt";
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                }
-        });
+        }
+        else {
+            this.previousHtml = {
+                id: obj.activeId,
+                content: this.document.getElementById(obj.activeId + '-panel').innerHTML
+            };
+        }        
     }
 }
 
