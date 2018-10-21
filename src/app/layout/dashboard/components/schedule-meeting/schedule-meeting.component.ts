@@ -117,8 +117,8 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT-11:00) Midway Island, Samoa',
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
-    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService ,userService: UserService, 
-        private router: Router,public  alertService: AlertService) {
+    constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService, userService: UserService,
+        private router: Router, public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -126,9 +126,9 @@ export class ScheduleMeetingComponent implements OnInit {
     ngOnInit() {
         this.audioMeeting = false;
         this.vedioMeeting = false;
-        this._userService.getLoggedInUserObj().subscribe(data => {     
-            this.loggedInUser = data;     
-         });
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUser = data;
+        });
         this.today = new Date();
         this.meeting = {
             meridianTime: { hour: this.today.getHours(), minute: this.today.getMinutes() },
@@ -151,43 +151,43 @@ export class ScheduleMeetingComponent implements OnInit {
         this.CurrentRoute.emit(0);
         this.futureMeetingList = [];
         this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-            if(data[0].errorFl || data[0].warningFl){
+            if (data[0].errorFl || data[0].warningFl) {
                 this.futureMeetingList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
-            } else{
+                return this.alertService.warning(data[0].message, "Warning");
+            } else {
                 this.futureMeetingList = data;
                 this.filteredFutureMeetingList = data;
             }
         });
     }
     scheduleMeeting() {
-        
+
         if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
-            return this.alertService.warning('Please enter meeting subject' , "Warning");
+            return this.alertService.warning('Please enter meeting subject', "Warning");
         } else if (this.meeting.selectedDuration === 'Select Duration') {
-            return this.alertService.warning('Please select meeting duration' , "Warning");
+            return this.alertService.warning('Please select meeting duration', "Warning");
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
-            return this.alertService.warning('Please select timezone' , "Warning");
-        //  } else if(this.meeting.meridianTime.hour < new Date().getHours() && this.meeting.meridianTime.minute< new Date().getMinutes()){
-        //     return this.alertService.warning('Please select future time' , "Warning");
-        //  }else if(new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,this.meeting.datePicker.day)< new Date()){
-        //     return this.alertService.warning('Please select future Date' , "Warning");
-         }else {
+            return this.alertService.warning('Please select timezone', "Warning");
+            //  } else if(this.meeting.meridianTime.hour < new Date().getHours() && this.meeting.meridianTime.minute< new Date().getMinutes()){
+            //     return this.alertService.warning('Please select future time' , "Warning");
+            //  }else if(new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,this.meeting.datePicker.day)< new Date()){
+            //     return this.alertService.warning('Please select future Date' , "Warning");
+        } else {
             this.meridian = !this.meridian;
-            this.accessCode = new Date().getTime()+'_'+ Math.floor(Math.random() * 900) + 100;
+            this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
             if (this.meeting.callType === 1) {
                 this.meeting.callType = 'Audio';
             } else {
                 this.meeting.callType = 'Video';
             }
-          
+
             const payload = {
-                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1, this.meeting.datePicker.day),
-                // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':' 
+                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1, this.meeting.datePicker.day),
+                // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':'
                 // + this.meeting.meridianTime.minute,
                 //'meetingEndDateTime': 1525067350000,
-                'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,
-                    this.meeting.datePicker.day,this.meeting.meridianTime.hour , this.meeting.meridianTime.minute),
+                'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
+                    this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
                 'subject': this.subject,
                 'duration': this.meeting.selectedDuration,
                 'recurringType': this.meeting.isRecurring,
@@ -199,24 +199,30 @@ export class ScheduleMeetingComponent implements OnInit {
             };
 
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
-                if(data.errorFl === true || data.warningFl === true){
+                if (data.errorFl === true || data.warningFl === true) {
                     this.meeting = {};
-                    return this.alertService.warning(data.message, "Warning"); 
-                }else{ 
-                if(this.meeting.callType === 'Video'){
-                    this.vedioMeeting = true;
-                    this.audioMeeting =false;
-                }else{
-                    this.audioMeeting = true;
-                    this.vedioMeeting = false;
+                    return this.alertService.warning(data.message, "Warning");
+                } else {
+                    if (this.meeting.callType === 'Video') {
+                        this.vedioMeeting = true;
+                        this.audioMeeting = false;
+                    } else {
+                        this.audioMeeting = true;
+                        this.vedioMeeting = false;
+                    }
+                    this.clearAllMeetingField();
+                    this.scheduleMeetingModal.open();
+                    if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
+                        this.futureMeetingList = [];
+                    }
+                    this.futureMeetingList.push(data);
+                    if (this.filteredFutureMeetingList === undefined || this.filteredFutureMeetingList.length <= 0) {
+                        this.filteredFutureMeetingList = [];
+                    }
+                    this.filteredFutureMeetingList.push(data);
                 }
-                this.clearAllMeetingField();
-                this.scheduleMeetingModal.open();
-                this.futureMeetingList.push(data);
-                this.filteredFutureMeetingList.push(data);
-            }
             });
-            
+
         }
     }
     clearAllMeetingField() {
@@ -231,7 +237,7 @@ export class ScheduleMeetingComponent implements OnInit {
         var meetingDetails = this.getMeetingDetails();
         this.closeMeetingPopup('scheduleMeetings');
         const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + this.subject+'&body=' + meetingDetails;
+        a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -260,6 +266,7 @@ export class ScheduleMeetingComponent implements OnInit {
         switch (popupType) {
             case 'scheduleMeetings':
                 this.scheduleMeetingModal.close();
+                this.switchRoute();
                 break;
         }
     }
@@ -267,18 +274,19 @@ export class ScheduleMeetingComponent implements OnInit {
     //get meeting details
     getMeetingDetails(): string {
         let meetingUrl = '';
-        if(this.meeting.callType === 'Video'){
+        if (this.meeting.callType === 'Video') {
             this.vedioMeeting = true;
-             meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-        }else{
+            meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+        } else {
             this.audioMeeting = true;
-             meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
+            meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
         }
-      
-        var meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/' + this.meeting.datePicker.year + '  at  ' +
+
+        const meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/'
+            + this.meeting.datePicker.year + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
-             + this.meeting.selectedDuration + '\n' +
-            '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl +this.accessCode+'\n' +
+            + this.meeting.selectedDuration + '\n' +
+            '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl + this.accessCode + '\n' +
             '\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }

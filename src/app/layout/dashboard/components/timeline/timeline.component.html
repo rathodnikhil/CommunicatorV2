@@ -19,7 +19,7 @@
     </div>
     <div class="card-body">
 
-        <ul class="timeline" >
+        <ul class="timeline chat-output">
             <li *ngFor="let chatObj of chattingHistoryList">
                 <div class="timeline-badge">
                     <i class="fa fa-check"></i>
@@ -193,11 +193,11 @@
     </div>
 </div>
 <div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"  (keyup.enter)="sendMessage(chatMsg.value)" required >
+    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"  (keyup.enter)="sendMessage(chatMsg)" required >
     </textarea>
     <div class="input-group-append">
         <a class="btn">
-            <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage(chatMsg.value)"></i>
+            <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage(chatMsg)"></i>
         </a>
         <a class="btn">
             <i class="fa fa-file" aria-hidden="true"></i>

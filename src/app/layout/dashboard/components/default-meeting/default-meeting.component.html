@@ -1,14 +1,15 @@
 <div #chatPanel class="chat-panel card card-default">
     <div class="card-header meetingHeader">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
                 Good Morning {{loggedInUser.firstName}} {{loggedInUser.lastName}}
                 <h6 class="style-links">Schedule upcoming Meetings</h6>
             </div>
-            <div class="col-md-3">
-                <a href="javascript:void(0)" class="btn btn-sec"(click)="joinMeetingNow()">Meet Now</a>
-
+            <div class="col-md-2">
+                <!-- <a href="javascript:void(0)" class="btn btn-sec">Meet Now</a> -->
+                <i class="fa fa-play cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()" placement="bottom"
+                    ngbTooltip="Meet Now"></i>
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
                     <!-- <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true" class="alert alert-success alert-dismissable"
                         [(ngModel)]="showScheduleMeetingSuccess">
@@ -20,29 +21,34 @@
                     </div> -->
                     <div style="padding: 10px; font-size:14px;" class="span-font">
                         <span>{{meetNowMeeting.subject}}</span>
-                        <p style="font-weight:bold;">Date :  {{meetNowMeeting.meetingStartDateTime| date: 'dd-MM-yyyy'}} for
+                        <p style="font-weight:bold;">Date : {{meetNowMeeting.meetingStartDateTime| date: 'dd-MM-yyyy'}}
+                            for
                             <span style="font-weight: bold;">{{meetNowMeeting.selectedDuration}} </span>
                         </p>
-                        <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone                            
-                                <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
-                                        <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
-                                        https://cfscommunicator.com/#/meeting/audio?meetingCode={{meetNowMeeting.meetingCode}}</span>
-                   
+                        <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone
+                            <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
+                                https://cfscommunicator.com/#/meeting/audio?meetingCode={{meetNowMeeting.meetingCode}}</span>
+
                         </p>
                         <h5 style="margin-top: 40px;">Access Code :
                             <span>{{meetNowMeeting.meetingCode}}</span>
                         </h5>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
+                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go
+                            to Outlook</button>
                         <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
-                        <button type="button" class="btn btn-secondary  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start Meeting</button>
+                        <button type="button" class="btn btn-secondary  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start
+                            Meeting</button>
                     </div>
 
                 </app-custom-modal>
             </div>
             <div class="col-md-2">
-                <a href="javascript:void(0)" (click)="switchRoute()" class="btn btn-sec pull-right" type="button">Schedule</a>
+                <i class="fa fa-calendar-o cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
+                    ngbTooltip="schedule meeting"></i>
+                <!-- <a href="javascript:void(0)"  class="btn btn-sec pull-right" type="button" title="schedule meeting"></a> -->
             </div>
         </div>
     </div>
@@ -68,8 +74,9 @@
                     <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate" [(ngModel)]="selectedfromDate"
-                                value="{{currentDate | date:'fullDate'}}" ngbDatepicker #fromDate="ngbDatepicker">
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate"
+                                [(ngModel)]="selectedfromDate" value="{{currentDate | date:'fullDate'}}" ngbDatepicker
+                                #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar"></span>
@@ -80,8 +87,9 @@
                     <div class="col-sm-6">
                         <label>To Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate" [(ngModel)]="selectedtoDate" value="{{currentDate | date:'fullDate'}}"
-                                ngbDatepicker #toDate="ngbDatepicker">
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate"
+                                [(ngModel)]="selectedtoDate" value="{{currentDate | date:'fullDate'}}" ngbDatepicker
+                                #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar"></span>
@@ -105,7 +113,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group input-group">
-                    <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+                    <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search"
+                        [(ngModel)]="searchText">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
                             <i class="fa fa-search"></i>
@@ -138,7 +147,7 @@
                                     <br> Meeting Host : {{recentMeeting.createdBy.firstName}}&nbsp;{{recentMeeting.createdBy.lastName}}
                                     <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
                                     <br> Meeting Duration : {{recentMeeting.duration}} Hour</strong>
-                            </div> 
+                            </div>
                         </div>
                         <p *ngIf="recentMeeting!=undefined&&recentMeeting.meetingCode===undefined">
                             <strong class="primary-font">No recent meetings</strong>
@@ -147,21 +156,25 @@
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div class="col-md-8">
-                               
+
                                 <span style="font-weight: bold; font-size: 14px;">
-                                        <i class="fa fa-calendar"></i>&nbsp;({{meeting.meetingCode}})<br>
-                                    <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                                    <i class="fa fa-calendar"></i>&nbsp;({{meeting.meetingCode}})<br>
+                                    <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
+                                    date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
                             <div style="float: right" *ngIf="showActionIcon">
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
-                                    <a (click)="startMeeting(meeting,false)">
-                                    <i class="fa fa-play-circle actionIcon" style="color: #3277d3;" aria-hidden="true"></i>
+                                <a (click)="startMeeting(meeting,false)">
+                                    <i class="fa fa-play-circle actionIcon" style="color: #3277d3;" aria-hidden="true"
+                                        placement="bottom" ngbTooltip="start meeting"></i>
                                 </a>
                                 <a>
-                                    <i class="fa fa-times-circle actionIcon" style="color: rgb(255, 60, 0);" (click)="cancelMeeting(meeting)" aria-hidden="true"></i>
+                                    <i class="fa fa-times-circle actionIcon" style="color: rgb(255, 60, 0);" (click)="cancelMeeting(meeting)"
+                                        placement="bottom" ngbTooltip="cancel meeting" aria-hidden="true"></i>
                                 </a>
                                 <a>
-                                    <i class="fa fa-minus-circle actionIcon" style="color: red;" (click)="deleteMeeting(meeting)" aria-hidden="true"></i>
+                                    <i class="fa fa-minus-circle actionIcon" style="color: red;" (click)="deleteMeeting(meeting)"
+                                        placement="bottom" ngbTooltip="delete meeting" aria-hidden="true"></i>
                                 </a>
                             </div>
                             <div *ngIf="meeting.status.status === 'CANCEL'" class="col-md-3">

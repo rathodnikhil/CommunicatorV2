@@ -34,14 +34,14 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     broadcastMsgList = [];
     chatMsg: any;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-    userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
+        userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
         this._chatService = chatService;
     }
 
     ngOnInit() {
         this.selectedUser = {};
-        this._userService.getSelectedUser().subscribe(res => {            
+        this._userService.getSelectedUser().subscribe(res => {
             if (res) {
                 this.selectedUser = res;
             }
@@ -104,9 +104,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
-    sendMessage(chatMessag) {
-        let payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: chatMessag };
-        if (chatMessag === '' || chatMessag === null || typeof chatMessag === 'undefined') {
+    sendMessage(chatMessage) {
+        const payload = {
+            userFrom: this.loggedInUser.userCode,
+            userTo: this.selectedUser.userCode,
+            chatMsg: chatMessage
+        };
+        if (chatMessage === '' || chatMessage === null || typeof chatMessage === 'undefined') {
             this.alertService.warning('Enter Message', 'Warning');
         } else {
             alert('else');
@@ -123,8 +127,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
         }
     }
-    onKey(event, chatMessag) {
-        if (event.key == 'Enter') { this.sendMessage(chatMessag); }
+    onKey(chatMessage) {
+        this.sendMessage(chatMessage);
     }
     closeTeamPopup(popupType) {
         switch (popupType) {

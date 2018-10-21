@@ -1,9 +1,10 @@
 
 connection.socket.emit(connection.socketCustomEvent, {
     sender: document.getElementById('room-id').value,
-    customMessage: connection.extra+' is trying to connect customMessageCfsCommunicator'
+    customMessage: connection.extra+':chat'
 });
 document.getElementById('input-text-chat').onkeyup = function (e) {
+    debugger;
     if (e.keyCode != 13) return;
 
     // removing trailing/leading whitespace
@@ -18,6 +19,7 @@ document.getElementById('input-text-chat').onkeyup = function (e) {
 document.getElementById('alternate-send-chat').onclick = function (e) {
     // this.value = document.getElementById('input-text-chat').value;
     // removing trailing/leading whitespace
+    debugger;
     this.value = document.getElementById('input-text-chat').value.replace(/^\s+|\s+$/g, '');
     if (!this.value.length) return;
 
