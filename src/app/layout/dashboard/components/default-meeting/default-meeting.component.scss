@@ -272,7 +272,7 @@
     background:#3277d3;
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
-    height: 6vh;
+    height: 7vh;
 }
 .btn-sec {
 
@@ -339,14 +339,14 @@ $border-color: #e0e0e0;
   text-align: center;
   padding-right: 35px;
   font-weight: bold;
-  
+
 }
 
 .accordion-item{
 	position: relative;
 	width: 100%;
   border-bottom: 1px solid $border-color;
-  
+
 	&:last-child{
 		border-bottom: none;
 	}
@@ -359,13 +359,13 @@ $border-color: #e0e0e0;
 	width: 100%;
     display: block;
    // color: #999;
- 
+
 }
 
 .accordion-child{
-  transition: all 0.8s ; 
+  transition: all 0.8s ;
   opacity: 0;
-  height: 0;  
+  height: 0;
   transform: scale(1,0);
   transform-origin: center top;
 	input[type=checkbox]:checked ~ &{
@@ -377,7 +377,7 @@ $border-color: #e0e0e0;
     height: auto;
     opacity: 1;
     transform: scale(1,1);
-    text-align: center;     
+    text-align: center;
     margin-bottom: 20px;
     z-index: 10;
     position: relative;
@@ -388,11 +388,14 @@ $border-color: #e0e0e0;
     padding: 8px;
     cursor: pointer;
 }
-btn-meetnow{
+.btn-meetnow{
     background-color: #fff;
     border: #3277d3;
     cursor: pointer;
     text-align: center;
     font: Arial, Helvetica;
     font-weight: bold;
+}
+.cursorPointer{
+    cursor: pointer;
 }

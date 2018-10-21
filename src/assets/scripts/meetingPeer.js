@@ -261,15 +261,18 @@ connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     // seems room is already opened
     connection.join(useridAlreadyTaken);
 };
-connection.connectSocket(function(socket) {
+connection.connectSocket(function (socket) {
     // listen custom messages from server
     // debugger;
-    connection.socket.on(connection.socketCustomEvent, function(message) {
+    connection.socket.on(connection.socketCustomEvent, function (message) {
         // debugger;
-     if(message.sender==localStorage.getItem("loggedInuserName"))
-        alert(message.sender + ' shared custom message:\n\n' + message.customMessage);
+        if (message.sender == localStorage.getItem("loggedInuserName")) {
+            alert(message.sender + ' shared custom message:\n\n' + message.customMessage);
+            document.getElementById(message.customMessage.split(':')[0]).click();
+        }
     });
 });
+
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
     document.getElementById('open-room').disabled = true;
