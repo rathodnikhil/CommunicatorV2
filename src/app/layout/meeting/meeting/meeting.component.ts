@@ -5,6 +5,7 @@ import { MeetingService } from '../../../services/meeting-service';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
+import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -62,6 +63,16 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     loggedInUser: any;
     isHost = false;
     previousHtml: any;
+
+    @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
+    endMeetConfirm: CustomModalModel = {
+        titleIcon: '<i class="fa fa-user"></i>',
+        title: 'New Team',
+        smallHeading: 'You can add new team details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Team',
+        Button2Content: ''
+    };
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -196,6 +207,21 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 content: this.document.getElementById(obj.activeId + '-panel').innerHTML
             };
         }        
+    }
+    exitMeeting(){
+        this.confirmEndMeetingModal.open();
+
+    }
+    endMeeting(){
+        
+        window.close();
+    }
+  
+        //close team modal popup
+    closePopup() {
+    
+                this.confirmEndMeetingModal.close();
+
     }
 }
 

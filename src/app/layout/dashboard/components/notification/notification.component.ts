@@ -28,6 +28,7 @@ export class NotificationComponent implements OnInit {
     loggedInUser: any;
     searchText: string;
     broadcastMsgList = [];
+    chattingHistoryList = [];
     constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
         private router: Router,public alertService: AlertService) {
         this._userService = userService;
@@ -39,31 +40,33 @@ export class NotificationComponent implements OnInit {
         this.activeStatus = true;
         this.joinMeeting = true;
         this.meetingMember = true;
+        this.chattingHistoryList = [];
         this._userService.getLoggedInUserObj().subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){
                 this.loggedInUser = {};
                 return this.alertService.warning(data.message, "Warning");
             }else{
             this.loggedInUser = data;
+            this._userService.getUserList().subscribe(data => {
+                // if(data[0].errorFl === true || data[0].warningFl === true){
+                //     this.userList = [];
+                //     return this.alertService.warning(data[0].message, "Warning");
+                // } else{
+                    this.userList = data;
+             //   }
+            });
+    
+            this._groupService.getGroupList().subscribe(data => {
+                // if(data[0].errorFl || data[0].warningFl){
+                //     this.groupList = [];
+                //     return this.alertService.warning(data[0].message, "Warning");
+                // } else{
+                    this.groupList = data;
+               // }
+            });
             }
         });
-        this._userService.getUserList().subscribe(data => {
-            // if(data[0].errorFl === true || data[0].warningFl === true){
-            //     this.userList = [];
-            //     return this.alertService.warning(data[0].message, "Warning");
-            // } else{
-                this.userList = data;
-         //   }
-        });
-
-        this._groupService.getGroupList().subscribe(data => {
-            // if(data[0].errorFl || data[0].warningFl){
-            //     this.groupList = [];
-            //     return this.alertService.warning(data[0].message, "Warning");
-            // } else{
-                this.groupList = data;
-           // }
-        });
+    
     }
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
@@ -71,6 +74,7 @@ export class NotificationComponent implements OnInit {
     }
 
     viewGroupDetails(group) {
+        this.chattingHistoryList = [];
         this._userService.setSelectedGroup(group);
         this.getChattingHistoryBySelectedGroup();
     }
@@ -80,14 +84,15 @@ export class NotificationComponent implements OnInit {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedUser = data;
+                const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode };
+                this._chatService.setChattingHistoryList(payload);
+                this._chatService.setBroadcastMsgByLoggedInuserId(payload);
             }
         }, err => {
             // alert(err);
             this.router.navigate(['/login']);
         });
-        const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode };
-        this._chatService.setChattingHistoryList(payload);
-        this._chatService.setBroadcastMsgByLoggedInuserId(payload);
+      
 
     }
 
@@ -97,10 +102,11 @@ export class NotificationComponent implements OnInit {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedGroup = data;
+                const payload = { userFrom: this.loggedInUser.userCode, groupCode: this.selectedGroup.groupId.groupId };
+                this._chatService.setChattingHistoryList(payload);
             }
         });
-        const payload = { userFrom: this.loggedInUser.userCode, groupCode: this.selectedGroup.groupId.groupId };
-        this._chatService.setChattingHistoryList(payload);
+     
     }
     searchInWholeMemberList() {
         if (this.searchText === "" || this.searchText === null || typeof this.searchText === "undefined") {

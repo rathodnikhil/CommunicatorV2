@@ -62,10 +62,11 @@
                 <div class="row meeting-bottom">
                     <div id="container">
                         <div id="right">
-                            <button id="btn-leave-room" class="btn btn-danger btn-lg">
+                            <button id="btn-leave-room" class="btn btn-danger btn-lg" (click)="exitMeeting();">
                                 <i class="fa fa-power-off"></i>
                             </button>
                         </div>
+                   
                         <!-- <div id="right"></div> -->
                         <!-- <div id="center">
                             <button class="btn btn-primary">
@@ -85,6 +86,7 @@
                 </div>
 
             </div>
+           
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
                     <div class="card-header">Meeting Activity</div>
@@ -171,3 +173,16 @@
     </div>
     <!-- <div id="videos-container"></div> -->
 </section>
+<app-custom-modal #confirmEndMeetingModal [model]="endMeetConfirm">
+    <div>
+            <div style="margin-top: 20px;" class="alert alert-warning alert-dismissable">
+            <strong>Warning:&nbsp; </strong>
+            <span style="font-weight: bold;">Exit meeting will close your tab.</span>
+        </div>
+    <h4 style="padding: 10px;">Kindly save your MOM and other meeting details before click exit meeting</h4>
+    </div>
+    <div class="modal-footer popFooter">
+        <button type="button" class="btn btn-sec" (click)="endMeeting()">Exit</button>
+        <button type="button" class="btn btn-cancel" (click)="closePopup()">Close</button>
+    </div>
+</app-custom-modal>

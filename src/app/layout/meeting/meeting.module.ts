@@ -7,7 +7,8 @@ import { NgbCarouselModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-b
 import { StatModule } from '../../shared';
 import { BsComponentModule } from '../bs-component/bs-component.module';
 import { AudioMeetingComponent } from './audio-meeting/audio-meeting.component';
-
+import { CustomModalComponent } from '../dashboard/components/custom-modal/custom-modal.component';
+import { DashboardModule } from '../dashboard/dashboard.module';
 @NgModule({
     imports: [
         CommonModule, MeetingRoutingModule,
@@ -17,8 +18,11 @@ import { AudioMeetingComponent } from './audio-meeting/audio-meeting.component';
         NgbAlertModule.forRoot(),
         StatModule,
         BsComponentModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+         DashboardModule, 
+         FormsModule 
     ],
+    
     declarations: [MeetingComponent, AudioMeetingComponent]
 })
 export class MeetingModule { }
