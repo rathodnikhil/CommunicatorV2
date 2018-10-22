@@ -216,16 +216,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             'meetingId': this.accessCode,
             'createdBy': this.loggedInUser
         };
-        // this._meetingService.meetNow(payload).subscribe(res => {
-        //     const data = res.json();
-        //     if (data.warningFl || data.errorFl) {
-        //         return this.alertService.warning(data.message, "Warning");
-        //     }
-        //     else {
-
-        //     }
-
-        // });
+        
         this._meetingService.scheduleMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.meetNowMeeting = {};

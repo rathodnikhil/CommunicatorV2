@@ -52,34 +52,35 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-            }
-        });
-        this.chattingHistoryList = [];
-        this._chatService.getChattingHistoryList().subscribe(data => {
-            if (data.length > 0) {
-                if (data[0].errorFl || data[0].warningFl) {
-                    this.chattingHistoryList = [];
-                    return this.alertService.warning(data[0].message, 'Warning');
-                } else {
-                    this.chattingHistoryList = data;
-                }
-            } else {
                 this.chattingHistoryList = [];
-            }
-        });
-        this.broadcastMsgList = [];
-        this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
-            if (data.length > 0) {
-                if (data[0].errorFl || data[0].warningFl) {
-                    this.broadcastMsgList = [];
-                    return this.alertService.warning(data[0].message, 'Warning');
-                } else {
-                    this.broadcastMsgList = data;
-                }
-            } else {
+                this._chatService.getChattingHistoryList().subscribe(data => {
+                    if (data.length > 0) {
+                        if (data[0].errorFl || data[0].warningFl) {
+                            this.chattingHistoryList = [];
+                            return this.alertService.warning(data[0].message, 'Warning');
+                        } else {
+                            this.chattingHistoryList = data;
+                        }
+                    } else {
+                        this.chattingHistoryList = [];
+                    }
+                });
                 this.broadcastMsgList = [];
+                this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
+                    if (data.length > 0) {
+                        if (data[0].errorFl || data[0].warningFl) {
+                            this.broadcastMsgList = [];
+                            return this.alertService.warning(data[0].message, 'Warning');
+                        } else {
+                            this.broadcastMsgList = data;
+                        }
+                    } else {
+                        this.broadcastMsgList = [];
+                    }
+                });
             }
         });
+     
     }
     ngAfterViewInit(): void {
         const s = this.document.createElement('script');
@@ -104,33 +105,32 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
-    sendMessage(chatMessage) {
+    sendMessage() {
         const payload = {
             userFrom: this.loggedInUser.userCode,
             userTo: this.selectedUser.userCode,
-            chatMsg: chatMessage
+            chatMsg: this.chatMsg
         };
-        if (chatMessage === '' || chatMessage === null || typeof chatMessage === 'undefined') {
+        if (this.chatMsg === '' || this.chatMsg === null || typeof this.chatMsg === 'undefined') {
             this.alertService.warning('Enter Message', 'Warning');
         } else {
-            alert('else');
             this._chatService.saveChat(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
                     this.chatMsg = '';
-                    // this.chattingHistoryObj = data;
-                    // alert(this.chattingHistoryObj.chatmsg);
-                    // this.chattingHistoryList.push(this.chattingHistoryObj);
+                     this.chattingHistoryObj = data;
+                     alert(this.chattingHistoryObj.chatmsg);
+                     this.chattingHistoryList.push(this.chattingHistoryObj);
                 }
             });
 
         }
     }
     onKey(chatMessage) {
-        this.sendMessage(chatMessage);
+        this.sendMessage();
     }
-    closeTeamPopup(popupType) {
+    closePopup(popupType) {
         switch (popupType) {
             case 'profileDetails':
                 this.viewProfileModal.close();

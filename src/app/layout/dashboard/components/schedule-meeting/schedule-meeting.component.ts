@@ -210,8 +210,6 @@ export class ScheduleMeetingComponent implements OnInit {
                         this.audioMeeting = true;
                         this.vedioMeeting = false;
                     }
-                    this.clearAllMeetingField();
-                    this.scheduleMeetingModal.open();
                     if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
                         this.futureMeetingList = [];
                     }
@@ -220,6 +218,8 @@ export class ScheduleMeetingComponent implements OnInit {
                         this.filteredFutureMeetingList = [];
                     }
                     this.filteredFutureMeetingList.push(data);
+                      this.scheduleMeetingModal.open();
+                    this.clearAllMeetingField();
                 }
             });
 
