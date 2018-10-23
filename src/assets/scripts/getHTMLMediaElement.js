@@ -450,16 +450,17 @@ function getAudioElement(mediaElement, config) {
 
     var h2 = document.createElement('h2');
     h2.innerHTML = config.title || 'Audio Element';
-    h2.setAttribute('style', 'position: absolute;color: rgb(160, 160, 160);font-size: 20px;text-shadow: 1px 1px rgb(255, 255, 255);padding:0;margin:0;');
+    h2.setAttribute('style', 'position: relative;color:white;font-size:1rem;padding:0;margin:0;text-align: left; margin-top: 1px; margin-left: 1px; display: block; border: 0;line-height:1;z-index:5;');
     mediaBox.appendChild(h2);
 
     mediaBox.appendChild(mediaElement);
 
     mediaElementContainer.style.width = '329px';
     mediaBox.style.height = '90px';
-
+    mediaBox.querySelector('audio').style.position='relative';
+    mediaBox.querySelector('audio').style.zIndex='1';
     h2.style.width = mediaElementContainer.style.width;
-    h2.style.height = '50px';
+    // h2.style.height = '50px';
     h2.style.overflow = 'hidden';
 
     var times = 0;
