@@ -1,3 +1,4 @@
+// https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
 window.enableAdapter = true; // enable adapter.js
 
 // ......................................................
@@ -5,11 +6,16 @@ window.enableAdapter = true; // enable adapter.js
 // ......................................................
 
 document.getElementById('share-screen').onclick = function () {
-    this.disabled = true;
-    connection.addStream({
-        screen: true,
-        oneway: true
-    });
+    try {
+        this.disabled = true;
+        connection.addStream({
+            screen: true,
+            oneway: true
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
     // const EXTENSION_ID = 'ajhifddimkapgcifgcodmmfdlknahffk';
     // chrome.runtime.sendMessage(EXTENSION_ID, 'version', response => {
     //     if (!response) {
@@ -45,6 +51,7 @@ document.getElementById('open-room').onclick = function () {
     disableInputButtons();
     connection.open(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
+        document.getElementById('meeting-error').innerText = 'Meeting has started.';
     });
 };
 
@@ -64,15 +71,15 @@ document.getElementById('open-or-join-room').onclick = function () {
 
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
-
     if (connection.isInitiator) {
         // use this method if you did NOT set "autoCloseEntireSession===true"
         // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
         connection.closeEntireSession(function () {
-            document.querySelector('h1').innerHTML = 'Entire session has been closed.';
+            document.getElementById('meeting-error').innerText = 'Meeting has ended.';
         });
     } else {
         connection.leave();
+        document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     }
 };
 
@@ -100,8 +107,6 @@ document.getElementById('input-text-chat').onkeyup = function (e) {
 };
 
 document.getElementById('alternate-send-chat').onclick = function (e) {
-    // this.value = document.getElementById('input-text-chat').value;
-    // removing trailing/leading whitespace
     this.value = document.getElementById('input-text-chat').value.replace(/^\s+|\s+$/g, '');
     if (!this.value.length) return;
 
@@ -113,12 +118,10 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
-    // debugger;
     var div = document.createElement('div');
     div.className = 'chat-background';
     var message = event.data || event;
     var user = event.extra || 'you';
-    // var html = '<div class="container">';
     html = '<p>' + message + '</p>';
     if (user === 'you') {
         html += '<span class="time-right">';
@@ -127,10 +130,8 @@ function appendDIV(event) {
     }
 
     html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
-    // html += '</div>';
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
-    // div.tabIndex = 0;
     div.focus();
 
     document.getElementById('input-text-chat').focus();
@@ -141,18 +142,24 @@ function appendDIV(event) {
 // ......................................................
 
 var connection = new RTCMultiConnection();
+connection.socketCustomEvent = "cfsCommunicator_internal_message";
 var isHost = false;
 // Using getScreenId.js to capture screen from any domain
-// connection.getScreenConstraints = function (callback) {
-//     getScreenConstraints(function (error, screen_constraints) {
-//         if (!error) {
-//             screen_constraints = connection.modifyScreenConstraints(screen_constraints);
-//             callback(error, screen_constraints);
-//             return;
-//         }
-//         throw error;
-//     });
-// };
+connection.getScreenConstraints = function (callback) {
+    getScreenConstraints(function (error, screen_constraints) {
+        debugger;
+        if (!error) {
+            screen_constraints = connection.modifyScreenConstraints(screen_constraints);
+            callback(error, screen_constraints);
+            return;
+        } else if (screen_constraints.mandatory) {
+            console.log("extension not installed");
+            document.getElementById('share-file').disabled = false;
+        } else
+            throw error;
+    });
+};
+
 
 // by default, socket.io server is assumed to be deployed on your own URL
 // connection.socketURL = '/';
@@ -179,28 +186,23 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: false
 };
-
+var screenshareCheck = {};
 connection.audiosContainer = document.getElementById('audios-container');
 connection.onstream = function (event) {
-    // event.mediaElement.removeAttribute('src');
-    // event.mediaElement.removeAttribute('srcObject');
-
-    // var video = document.createElement('video');
-    // video.controls = true;
-    // if (event.type === 'local') {
-    //     video.muted = true;
-    // }
-    // video.srcObject = event.stream;
-    // debugger;
     var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
+    var height = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
     var mediaElement = getHTMLMediaElement(event.mediaElement, {
         title: event.type === 'local' ? 'you' : event.extra,
         buttons: [],
         width: width,
-        showOnMouseEnter: false
+        showOnMouseEnter: false,
+        height: height
     });
     if (event.stream.isScreen) {
-        connection.filesContainer.appendChild(mediaElement);
+        if (screenshareCheck != event.stream.id) {
+            screenshareCheck = event.stream.id
+            connection.filesContainer.appendChild(mediaElement);
+        }
     } else {
         connection.audiosContainer.appendChild(mediaElement);
     }
@@ -228,8 +230,8 @@ connection.onopen = function () {
     document.getElementById('input-text-chat').disabled = false;
     if (isHost)
         document.getElementById('btn-leave-room').disabled = false;
-
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+
 };
 
 connection.onclose = function () {
@@ -245,7 +247,6 @@ connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
-
     document.getElementById('open-or-join-room').disabled = false;
     document.getElementById('open-room').disabled = false;
     document.getElementById('join-room').disabled = false;
@@ -261,7 +262,6 @@ connection.onEntireSessionClosed = function (event) {
 };
 
 connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
-    // seems room is already opened
     connection.join(useridAlreadyTaken);
 };
 
@@ -277,23 +277,14 @@ function disableInputButtons() {
 // ......................................................
 
 function showRoomURL(roomid) {
-    // debugger;
-    // var roomHashURL = '#' + roomid;
     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
-
-    // var html = '<h4>Unique URL for your meeting:</h4><br>';
-
-    // html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
     html = 'Meeting URL: <a style="color:white;" href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
-
     var roomURLsDiv = document.getElementById('room-urls');
     roomURLsDiv.innerHTML = html;
-
     roomURLsDiv.style.display = 'block';
 }
 
 (function () {
-    // // debugger;
     var params = {},
         r = /([^&=]+)=?([^&]*)/g;
 
@@ -321,8 +312,7 @@ var hashString = false; // location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
-
-var roomid = params.meetingCode;
+var roomid = params["audio?meetingCode"];
 if (!roomid && hashString.length) {
     roomid = hashString;
 }
@@ -330,11 +320,9 @@ if (!roomid && hashString.length) {
 if (roomid && roomid.length) {
     document.getElementById('room-id').value = roomid;
     localStorage.setItem(connection.socketMessageEvent, roomid);
-
-    // auto-join-room
     (function reCheckRoomPresence() {
         document.getElementById('meeting-error').innerText = '';
-        // // debugger;
+        disableInputButtons();
         isHost = document.getElementById('isHost').innerText === "true";
         if (isHost) {
             document.getElementById('open-room').disabled = false;
@@ -342,7 +330,7 @@ if (roomid && roomid.length) {
             document.getElementById('btn-leave-room').disabled = false;
             return;
         } else if (!isHost) {
-            document.getElementById('btn-leave-room').disabled = true;
+            // document.getElementById('btn-leave-room').disabled = true;
         }
         connection.checkPresence(roomid, function (isRoomExists) {
             if (isRoomExists) {
@@ -354,6 +342,4 @@ if (roomid && roomid.length) {
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
-
-    disableInputButtons();
 }

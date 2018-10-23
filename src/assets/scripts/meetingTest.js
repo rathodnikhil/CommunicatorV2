@@ -116,6 +116,7 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 };
 
 var chatContainer = document.querySelector('.chat-output');
+
 function appendDIV(event) {
     var div = document.createElement('div');
     div.className = 'chat-background';
@@ -179,7 +180,7 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
 };
-
+var screenshareCheck = {};
 connection.videosContainer = document.getElementById('videos-container');
 connection.onstream = function (event) {
     event.mediaElement.removeAttribute('src');
@@ -201,7 +202,10 @@ connection.onstream = function (event) {
         height: height
     });
     if (event.stream.isScreen) {
-        connection.filesContainer.appendChild(mediaElement);
+        if (screenshareCheck != event.stream.id) {
+            screenshareCheck = event.stream.id
+            connection.filesContainer.appendChild(mediaElement);
+        }
     } else {
         connection.videosContainer.appendChild(mediaElement);
     }

@@ -12,16 +12,26 @@
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
                     <div class="row" style="justify-content: center;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off autocapitalize=off size=20>
-                        <button id="open-room" class="btn btn-sec" style="margin:0px 10px 0px 10px" alt="ttt"><i class="fa fa-play" aria-hidden="true"></i></button>
-                        <button id="join-room" class="btn btn-sec" style="margin:0px 10px 0px 10px"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
-                        <button id="share-file" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">Share File</button>
-                        <button id="share-screen" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">Share Screen</button>
+                        <button id="open-room" class="btn btn-sec" style="margin:0px 10px 0px 10px" alt="ttt">
+                            <i class="fa fa-play" aria-hidden="true"></i>
+                        </button>
+                        <button id="join-room" class="btn btn-sec" style="margin:0px 10px 0px 10px">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        </button>
+                        <button id="share-file" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">Share File
+                        </button>
+                        <button id="share-screen" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">Share Screen
+                        </button>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <div style="display: none;" id="isHost"></div>
                         <!-- <button id="btn-leave-room" style="float:right;" class="btn btn-danger btn-lg">End Meeting</button> -->
                     </div>
                     <div class="row" style="justify-content: center;">
                         <div id="room-urls" style="text-align: center;display: none;"></div>
+                    </div>
+                </div>
+                <div class="attendee-row">
+                    <div id="audios-container" style="width: 100%; overflow-y: -webkit-paged-x; height:250px;">
                     </div>
                 </div>
                 <div class="row parent">
@@ -47,18 +57,16 @@
                         </div>
                     </div> -->
                 </div>
-                <div class="row attendee-row">
-                    <div class="scrollmenu">
-                        <div id="audios-container">                           
-                        </div>
-                    </div>
-                </div>
+
 
                 <div class="row meeting-bottom">
                     <div id="container">
                         <div id="right">
-                            <button id="btn-leave-room" class="btn btn-danger btn-lg"><i class="fa fa-power-off"></i></button>
-                        </div> 
+                            <button id="btn-leave-room" class="btn btn-danger btn-lg" (click)="exitMeeting();">
+                                <i class="fa fa-power-off"></i>
+                            </button>
+                        </div>
+
                         <!-- <div id="right"></div> -->
                         <!-- <div id="center">
                             <button class="btn btn-primary">
@@ -78,18 +86,19 @@
                 </div>
 
             </div>
+
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
                     <div class="card-header">Meeting Activity</div>
                     <div class="card-body">
-                        <ngb-tabset style="padding:20px;">
+                        <ngb-tabset style="padding:20px;" id="switchTab" (tabChange)="saveCurrent($event)">
                             <ngb-tab title="Chat">
                                 <ng-template ngbTabContent>
                                     <!-- <div ngbDropdown class="d-inline-block dropdown">
                                         <button class="btn btn-outline-primary" ngbDropdownToggle>{{messageSendTo}}</button>
                                         <div ngbDropdownMenu>
                                             <button *ngFor="let member of userList" class="dropdown-item" on-click="changeMessageTo(member)">
-                                                {{member.name+ ' '+member.lastName}}</button>                                            
+                                                {{member.name+ ' '+member.lastName}}</button>
                                         </div>
                                     </div> -->
                                     <div style="height: 60vh; overflow-y: scroll" id="chat-container" class="chat-output">
@@ -112,11 +121,11 @@
                                 <ng-template ngbTabContent>
                                     <div class="row content-tab" style="text-align:center">
                                         <textarea placeholder="Type MOM Here..." style="width: 100%; height: 60vh; margin: 10px;" [(ngModel)]="momTxt" required></textarea>
-                                        <button class="btn btn-sec momBtn" (click)="saveMom()" >Save MOM</button>
+                                        <button class="btn btn-sec momBtn" (click)="saveMom()">Save MOM</button>
                                     </div>
                                 </ng-template>
                             </ngb-tab>
-                            <ngb-tab title="Settings">
+                            <!-- <ngb-tab title="Settings">
                                 <ng-template ngbTabContent>
                                     <div class="row content-tab">
                                         <div ngbDropdown class="d-inline-block dropdown">
@@ -136,7 +145,7 @@
                                         </div>
                                     </div>
                                 </ng-template>
-                            </ngb-tab>
+                            </ngb-tab> -->
                         </ngb-tabset>
                     </div>
                 </div>
@@ -164,3 +173,16 @@
     </div>
     <!-- <div id="videos-container"></div> -->
 </section>
+<app-custom-modal #confirmEndMeetingModal [model]="endMeetConfirm">
+    <div>
+            <div style="margin-top: 20px;" class="alert alert-warning alert-dismissable">
+            <strong>Warning:&nbsp; </strong>
+            <span style="font-weight: bold;">Exit meeting will close your tab.</span>
+        </div>
+    <h4 style="padding: 10px;">Kindly save your MOM and other meeting details before click exit meeting</h4>
+    </div>
+    <div class="modal-footer popFooter">
+        <button type="button" class="btn btn-sec" (click)="endMeeting()">Exit</button>
+        <button type="button" class="btn btn-cancel" (click)="closePopup()">Close</button>
+    </div>
+</app-custom-modal>

@@ -81,7 +81,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._meetingService = meetingService;
     }
 
-    ngOnInit() {        
+    ngOnInit() {
         if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
@@ -101,7 +101,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
                     // this.document.getElementById('isHost').innerHTML = 'true';
                     // this.isHost = true;
-                    this._meetingService.verifyMeetingHost(payload).subscribe(data => {                        
+                    this._meetingService.verifyMeetingHost(payload).subscribe(data => {
                         if (!data.warningFl && !data.errorFl && data.message !== null) {
                             this.meetingDetails = data;
                             this.isHost = true;
@@ -127,7 +127,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         s.onload = function () { __this.afterScriptAdded(); };
         this.elementRef.nativeElement.appendChild(s);
     }
-    afterScriptAdded() {      
+    afterScriptAdded() {
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
         const params = {
             width: '350px',
@@ -152,7 +152,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        this.downloadFile(this.momTxt);                
+        this.downloadFile(this.momTxt);
         if (!this.isHost) {
             // alert("Only host can save MOM to database");
             return this.alertService.warning("Only host can save MOM to database", "Warning");
@@ -177,21 +177,21 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             });
         }
     }
-    downloadFile(data) {        
-        data= data.split('\n');
+    downloadFile(data) {
+        data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
-        
+
         var a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data)}`);
         // a.href = url;
-        a.download = this.meetingCode+'.txt';
+        a.download = this.meetingCode + '.txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        this.alertService.success("File has been downloaded.","MOM Download");
+        this.alertService.success("File has been downloaded.", "MOM Download");
     }
 
     saveCurrent(obj) {
@@ -205,16 +205,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 id: obj.activeId,
                 content: this.document.getElementById(obj.activeId + '-panel').innerHTML
             };
-        }        
+        }
     }
-    exitMeeting(){
+    exitMeeting() {
         this.confirmEndMeetingModal.open();
 
     }
-    endMeeting(){
-        
+    endMeeting() {
         window.close();
-        let payload = {userCode: this.loggedInUser.userCode , meetingCode: this.meetingCode}
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode }
         this._meetingService.endMeeting(payload).subscribe(resp => {
             this.errorFl = resp.json().errorFl;
             if (this.errorFl === true) {
@@ -224,15 +223,14 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 }.bind(this), 5000);
             } else {
                 this.confirmEndMeetingModal.open();
-                this.alertService.success("Meeting has ended.","End Meeting");
+                this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });
     }
-  
-        //close team modal popup
+
+    //close team modal popup
     closePopup() {
-    
-                this.confirmEndMeetingModal.close();
+        this.confirmEndMeetingModal.close();
 
     }
 }
