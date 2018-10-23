@@ -30,6 +30,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     searchText: String;
     accessCode: any;
     meetNowMeeting: any;
+    showScheduleMeetingSuccess: boolean;
+    showCopyDetailsSuccess: boolean;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -41,6 +43,24 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button1Content: '<i class="fa fa-envelope"></i> Outlook',
         Button2Content: '<i class="fa fa-copy"></i> Copy'
     };
+    @ViewChild('confirmCancelMeetingModal') public confirmCancelMeetingModal: CustomModalComponent;
+    cancelMeetConfirm: CustomModalModel = {
+        titleIcon: '<i class="fa fa-ban"></i>',
+        title: 'Cancel',
+        smallHeading: 'You can cancel selected meeting',
+        body: '',
+        Button1Content: '<i class="fa fa-ban"></i>&nbsp;Add Team',
+        Button2Content: ''
+    };
+    @ViewChild('confirmDeleteMeetingModal') public confirmDeleteMeetingModal: CustomModalComponent;
+    deleteMeetConfirm: CustomModalModel = {
+        titleIcon: '<i class="fa fa-trash"></i>',
+        title: 'Cancel',
+        smallHeading: 'You can delete selected meeting',
+        body: '',
+        Button1Content: '<i class="fa fa-trash"></i>&nbsp;Add Team',
+        Button2Content: ''
+    };
     constructor(userService: UserService, meetingService: MeetingService, private router: Router, private toastr: ToastrService, public alertService: AlertService) {
         this._userService = userService;
         this._meetingService = meetingService;
@@ -50,6 +70,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.showActionIcon = true;
         this.showCancelMeeting = false;
         this.meetNowMeeting = {};
+        this.showScheduleMeetingSuccess = false;
+        this.showCopyDetailsSuccess = false;
+
         //loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
@@ -156,7 +179,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
         // this.router.navigate(['/meeting']);
     }
-    deleteMeeting(meeting) {
+    deleteMeetingNow(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
@@ -164,41 +187,46 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, "Warning");
             } else {
                 this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+                this.closePopup('delete');
             }
         });
     }
-    cancelMeeting(meeting) {
+    deleteMeeting(){
+        this.confirmDeleteMeetingModal.open();
+    }
+    cancelMeeting() {
+        this.confirmCancelMeetingModal.open();
+    }
+    cancelMeetingNow(meeting){
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.cancelMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.recentMeeting = {};
                 return this.alertService.warning(data.message, "Warning");
             } else {
+                this.closePopup('cancel');
                 // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
-                if (meeting.status.status === "CANCEL") {
-                    alert('if');
-                    this.showActionIcon = false;
-                }
-                //this.showCancelMeeting = true;
+                return this.alertService.success("Meeting has cancelled", "Cancel Meeting");
             }
         });
     }
-
     copyToOutLook(event) {
-        var meetingDetails = this.getMeetingDetails();
+        var meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + "meeting Subject" + '&body=' + meetingDetails;
+        a.href = 'mailto:?subject=' +'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-
+        this.showScheduleMeetingSuccess = false;
+        this.closePopup('meetNow');
     }
     //copy meeting content
     copyToClipboard() {
         var meetingDetails = this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
         document.execCommand('copy');
-
+        this.showScheduleMeetingSuccess = false;
+        this.showCopyDetailsSuccess = true;
     }
     joinMeetingNow() {        
         this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;        
@@ -207,7 +235,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
-            'subject': 'Meet now: ' + new Date().toDateString(),
+            'subject': 'Meet now: ' + new Date().toDateString()+'meetNowFlag',
             'duration': '45 Min',
             'recurringType': 2,
             'callType': 'Audio',
@@ -223,6 +251,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, "Warning");
             } else {
                 this.meetNowMeeting = data;
+                this.showScheduleMeetingSuccess = true;
                 this.meetNowModal.open();
             }
         });
@@ -238,9 +267,29 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         let meetingUrl = '';        
              meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';        
       
-        var meetingDetails = 'Date :  ' +this.meetNowMeeting.meetingStartDateTime.toDateString('yyyy-mm-dd')+ '\n' +
-            '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl +this.meetNowMeeting.meetingCode+'\n' +
-            '\n Access Code :    ' + this.meetNowMeeting.meetingCode;
+        var meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' +this.GetFormattedDate()+ '\r\n\r\n' +
+            '\r\n\r\n Please join my meeting from your computer,tablet or smartphone \r\n\r\n' + meetingUrl +this.meetNowMeeting.meetingCode+
+            '\r\n\r\n' +'\r\n\r\n Access Code :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
+    }
+    GetFormattedDate(): String {
+        var todayTime = new Date();
+        var month = todayTime .getMonth() + 1;
+        var day = todayTime .getDate();
+        var year = todayTime .getFullYear();
+        return month + "/" + day + "/" + year;
+    }
+    closePopup(popType){
+        switch (popType) {
+            case 'meetNow':
+            this.meetNowModal.close();
+                break;
+             case 'cancel':
+                this.confirmCancelMeetingModal.close();
+                    break;
+             case 'delete':
+                    this.confirmDeleteMeetingModal.close();
+                        break;
+        }
     }
 }

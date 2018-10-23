@@ -57,7 +57,7 @@
                             <div ngbDropdown class="d-inline-block dropdown">
                                 <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedDuration}}</button>
                                 <div ngbDropdownMenu>
-                                    <button *ngFor="let duration of durationArray" class="dropdown-item" on-click="changeDuration(duration)">{{duration}}</button>
+                                    <button *ngFor="let duration of durationArray" class="dropdown-item" (click)="changeDuration(duration)">{{duration}}</button>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <div ngbDropdown class="d-inline-block dropdown">
                                 <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
                                 <div ngbDropdownMenu>
-                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" on-click="changeTimeZone(timezone)">{{timezone}}</button>
+                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" (click)="changeTimeZone(timezone)">{{timezone}}</button>
                                 </div>
                             </div>
                         </div>

@@ -69,15 +69,6 @@ export class PastMeetingsComponent implements OnInit {
    
     downloadMom(meetingCode) {
 
-        const payload = { fileName: "java-tutorial.pdf" };
-        
-        this._meetingService.downloadMom(payload).subscribe(
-            (res) => {
-                alert();
-                //  saveAs(res, payload.fileName);
-            }
-        );
-
     }
     onPageChange(number: number) {
         this.config.currentPage = number;

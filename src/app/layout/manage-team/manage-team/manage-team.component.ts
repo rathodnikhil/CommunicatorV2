@@ -37,7 +37,7 @@ export class ManageTeamComponent implements OnInit {
     searchText: string;
     searchTeam: any;
     showSelectedTeam: boolean;
-
+    updateTeamName: any;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -47,7 +47,15 @@ export class ManageTeamComponent implements OnInit {
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Team',
         Button2Content: ''
     };
-
+    @ViewChild('addUpdateTeamModal') public addUpdateTeamModal: CustomModalComponent;
+    updateTeam: CustomModalModel = {
+        titleIcon: '<i class="fa fa-pencil-square-o"></i>',
+        title: 'Update Team',
+        smallHeading: 'You can update team details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Team',
+        Button2Content: ''
+    };
     @ViewChild('addNewMemberModal') public addNewMemberModal: CustomModalComponent;
     newMember: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -190,6 +198,33 @@ export class ManageTeamComponent implements OnInit {
             case 'addNewMember':
                 this.addNewMemberModal.close();
                 break;
+            case 'updateTeam':
+                this.addUpdateTeamModal.close();
+                break;
+        }
+    }
+    editTeam(){
+        this.addUpdateTeamModal.open();
+        this.updateTeamName = this.selectedTeamObj.teamName;
+    }
+    updateTeamDetails(){
+        alert(this.updateTeamName);
+        if (this.updateTeamName === "" || this.updateTeamName === null || typeof this.updateTeamName === "undefined") {
+            return this.alertService.warning("Please Enter Team Name", "Warning");   
+        } else {
+            const payload = { "teamName": this.updateTeamName , "userCode": this.loggedInUser.userCode ,"teamCode": this.selectedTeamObj.teamCode};
+            const team = { team: { teamName: this.updateTeamName } };
+            this._teamService.saveTeamDetails(payload).subscribe(
+                (res) => {
+                    if(res.errorFl === true || res.warningFl === true){
+                        return this.alertService.warning(res.message, "Warning"); 
+                    }else{
+                  this.selectedTeamObj.teamName = this.updateTeamName;
+                  this.selectedTeamName = this.updateTeamName;
+                   this.closePopup('updateTeam');
+                   return this.alertService.success("Team has been updated successfully ", "Success");   
+                    }
+                });
         }
     }
 }
