@@ -33,7 +33,7 @@
                         <label>Team Name</label>
                     </div>
                     <div>
-                        <textarea placeholder="Type Name Here.."  [(ngModel)]="newTeamName" ></textarea>
+                        <textarea placeholder="Type Name Here.."  [(ngModel)]="newTeamName"  value="{{newTeamName}}"></textarea>
 
                     </div>
                 </div>
@@ -51,8 +51,26 @@
     <div class="row">
         <div class="member-block">
             <h4 class="selected-team" *ngIf="showSelectedTeam">{{selectedTeamName}}
-                <span>&nbsp;[{{filterMemberList.length}} Members]</span>
+                <span>&nbsp;[{{filterMemberList.length}} Members]</span><button (click)="editTeam()" class="btn btn-sucess"><i class="fa fa-pencil-square-o"></i></button>
+                <button (click)="editTeam()" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
             </h4>
+            <app-custom-modal #addUpdateTeamModal [model]="updateTeam">
+                    <div class="modal-body row-label">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Team Name</label>
+                            </div>
+                            <div>
+                                <textarea placeholder="Type Name Here.."  [(ngModel)]="updateTeamName"  value="{{newTeamName}}"></textarea>
+        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-sec" (click)="updateTeamDetails()">Add Team</button>
+                        <button type="button" class="btn btn-cancel" (click)="closePopup('updateTeam')">Close</button>
+                    </div>
+                </app-custom-modal>
             <div class="form-group input-group"style="padding-top:5px;">
                     <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchTeam">
                     <div class="input-group-append">

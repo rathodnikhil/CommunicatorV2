@@ -72,26 +72,16 @@ export class MeetingService {
         return this.recentMeeting$;
     }
   
-    downloadPdfReportFile(payload) {
-        const url = urlConstants.baseUrl + 'downloadPdfReportFile?fileName=' + payload.fileName;
-        return this.apiRequest.post(url, payload);
-    }
     getPastMeetingsByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
-    download() {
-        const url = urlConstants.baseUrl + 'downloadFile';
-        return this.http.get(url);
-    }
+ 
     getMeetingAttendee(payload) {
         const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingId=' + payload.meetingId;
         return this.http.post(url, payload);
     }
-    downloadMom(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'download1?fileName=' + payload.fileName;
-        return this.apiRequest.get(url);
-    }
+  
     getAllMeetingsbyLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);

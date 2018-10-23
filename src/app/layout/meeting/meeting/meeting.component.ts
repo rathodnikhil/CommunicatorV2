@@ -163,7 +163,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.momAddDesciption = false;
             }.bind(this), 5000);
         } else {
-            alert(this.loggedInUser.userCode);
             const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;
@@ -215,6 +214,19 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     endMeeting(){
         
         window.close();
+        let payload = {userCode: this.loggedInUser.userCode , meetingCode: this.meetingCode}
+        this._meetingService.endMeeting(payload).subscribe(resp => {
+            this.errorFl = resp.json().errorFl;
+            if (this.errorFl === true) {
+                this.nullCheckFlag = true;
+                setTimeout(function () {
+                    this.nullCheckFlag = false;
+                }.bind(this), 5000);
+            } else {
+                this.confirmEndMeetingModal.open();
+                this.alertService.success("Meeting has ended.","End Meeting");
+            }
+        });
     }
   
         //close team modal popup

@@ -168,10 +168,6 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please select meeting duration', "Warning");
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
             return this.alertService.warning('Please select timezone', "Warning");
-            //  } else if(this.meeting.meridianTime.hour < new Date().getHours() && this.meeting.meridianTime.minute< new Date().getMinutes()){
-            //     return this.alertService.warning('Please select future time' , "Warning");
-            //  }else if(new Date(this.meeting.datePicker.year, this.meeting.datePicker.month-1,this.meeting.datePicker.day)< new Date()){
-            //     return this.alertService.warning('Please select future Date' , "Warning");
         } else {
             this.meridian = !this.meridian;
             this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
@@ -214,10 +210,12 @@ export class ScheduleMeetingComponent implements OnInit {
                         this.futureMeetingList = [];
                     }
                     this.futureMeetingList.push(data);
+                
                     if (this.filteredFutureMeetingList === undefined || this.filteredFutureMeetingList.length <= 0) {
                         this.filteredFutureMeetingList = [];
                     }
                     this.filteredFutureMeetingList.push(data);
+                    this.showScheduleMeetingSuccess = true;
                       this.scheduleMeetingModal.open();
                     this.clearAllMeetingField();
                 }
@@ -234,22 +232,22 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.datePicker = Date.now();
     }
     copyToOutLook(event, subject) {
-        var meetingDetails = this.getMeetingDetails();
-        this.closeMeetingPopup('scheduleMeetings');
+        var meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
         a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
-        this.clearAllMeetingField();
+        this.closeMeetingPopup('scheduleMeetings');
     }
     //copy meeting content
     copyToClipboard() {
         var meetingDetails = this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
         document.execCommand('copy');
-        this.clearAllMeetingField();
+        this.showScheduleMeetingSuccess = false;
+        this.showCopyDetailsSuccess = true;
     }
     changeTimeZone(timezone) {
         this.meeting.selectedTimeZone = timezone;
@@ -266,7 +264,7 @@ export class ScheduleMeetingComponent implements OnInit {
         switch (popupType) {
             case 'scheduleMeetings':
                 this.scheduleMeetingModal.close();
-                this.switchRoute();
+               // this.switchRoute();
                 break;
         }
     }
@@ -282,12 +280,12 @@ export class ScheduleMeetingComponent implements OnInit {
             meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
         }
 
-        const meetingDetails = 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/'
+        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.year + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
-            + this.meeting.selectedDuration + '\n' +
-            '\n Please join my meeting from your computer,tablet or smartphone \n' + meetingUrl + this.accessCode + '\n' +
-            '\n Access Code :    ' + this.accessCode;
+            + this.meeting.selectedDuration + '\r\n\r\n' +
+            '\r\n\r\n Please join my meeting from your computer,tablet or smartphone\r\n\r\n' + meetingUrl + this.accessCode + '\r\n\r\n' +
+            '\r\n\r\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }
 }
