@@ -87,14 +87,10 @@ export class MeetingService {
         return this.apiRequest.post(url, payload);
     }
 
-    verifyUser(payload) {
-        const url = urlConstants.baseUrl + 'saveMomDetails';
-        return this.http.post(url, payload);
-    }
     saveMomDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveMomDetails';
         let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.http.post(url, payload).subscribe(data => {
+        this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
         },
             err => {

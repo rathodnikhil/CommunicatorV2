@@ -24,9 +24,11 @@
     border-style: solid;
     border-color: #8f5a0a;
     cursor: pointer;
-    
     color: #8f5a0a;
   
     height:6vh;
     text-align: center;
+    &:first-child{
+        opacity: 1;
+    }
     }
