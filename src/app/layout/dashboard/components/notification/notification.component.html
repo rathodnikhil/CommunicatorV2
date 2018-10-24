@@ -20,7 +20,7 @@
                 </a>
                 <h6 style ="color: #ffffff;font-weight: bold;">Groups</h6>
          <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
-           (click)="viewGroupDetails(group)"
+           (click)="viewGroupDetails(group.groupId)"
         class="list-group-item clearfix d-block">
             <i class="fa fa-users"></i>
            <span style="padding-left: 1rem;">{{group.groupId.groupName}}&nbsp;</span>

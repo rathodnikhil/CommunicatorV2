@@ -152,30 +152,25 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        this.downloadFile(this.momTxt);
-        if (!this.isHost) {
-            // alert("Only host can save MOM to database");
-            return this.alertService.warning("Only host can save MOM to database", "Warning");
-        }
+      
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
-            this.momAddDesciption = true;
-            setTimeout(function () {
-                this.momAddDesciption = false;
-            }.bind(this), 5000);
+            return this.alertService.warning("Please neter minutes of meeting(MOM)", "Warning");
         } else {
+            if (!this.isHost) {
+                this.downloadFile(this.momTxt);
+            }else{
+                alert('else');
             const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
                 this.errorFl = resp.json().errorFl;
                 if (this.errorFl === true) {
-                    this.nullCheckFlag = true;
-                    setTimeout(function () {
-                        this.nullCheckFlag = false;
-                    }.bind(this), 5000);
+                    return this.alertService.warning(resp.json().message, "Warning");
                 } else {
-
+                    this.downloadFile(this.momTxt);
                 }
             });
         }
+    }
     }
     downloadFile(data) {
         data = data.split('\n');

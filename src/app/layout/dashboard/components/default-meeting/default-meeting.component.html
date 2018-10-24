@@ -158,7 +158,8 @@
                             <div class="col-md-8">
 
                                 <span style="font-weight: bold; font-size: 14px;">
-                                    <i class="fa fa-calendar"></i>&nbsp;({{meeting.meetingCode}})<br>
+                                    <i style="color:#3277d3;" [ngClass]="{'fa fa-microphone ': meeting.callType === 'Audio' ,
+                                    'fa fa-video-camera ': meeting.callType === 'Video'}" ></i>&nbsp;({{meeting.meetingCode}})<br>
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
                                     date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
@@ -183,7 +184,7 @@
                                         </div>
                                     </app-custom-modal>
                                 <a>
-                                    <i class="fa fa-minus-circle actionIcon" style="color: red;" (click)="deleteMeeting()"
+                                    <i class="fa fa-minus-circle actionIcon"  (click)="deleteMeeting()"
                                         placement="bottom" ngbTooltip="delete meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmDeleteMeetingModal [model]="deleteMeetConfirm">
