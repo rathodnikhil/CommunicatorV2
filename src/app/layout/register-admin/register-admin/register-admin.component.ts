@@ -41,7 +41,6 @@ export class RegisterAdminComponent implements OnInit {
       //  });
   }
   registerUser() {
-    alert(this.firstName);
       if(this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined"){
          return this.alertService.warning("Please enter firstname","Warning");
       }else  if(this.lastName === "" || this.lastName === null || typeof this.lastName === "undefined"){
@@ -64,7 +63,7 @@ export class RegisterAdminComponent implements OnInit {
             return this.alertService.warning("Please enter valid email","Warning");
           }
           else if(this.password != this.confirmPassword){
-            return this.alertService.warning("password and confirmpassword dose not matched","Warning");        
+            return this.alertService.warning("Password and Confirm Password does not match.","Warning");        
           }
           else{
               let duplicateUserNameFlag ;
@@ -83,13 +82,21 @@ export class RegisterAdminComponent implements OnInit {
           if(duplicateUserNameFlag == true) {
             return this.alertService.warning("Username already exist","Warning");
           }else if(exceptionFlag == true) {
-            return this.alertService.warning("Primary exception occurs","Warning");
+            return this.alertService.warning(data.json().message,"Warning");
           }else{
+            this.clearAllField();
             return this.alertService.success("Admin has been registered successfully","Success");
           }
       });
   }
   }
   }
- 
+ clearAllField(){
+   this.userName = "";
+   this.firstName = "";
+   this.password = "";
+   this.confirmPassword = "";
+   this.lastName = "";
+   this.email = "";
+ }
 }

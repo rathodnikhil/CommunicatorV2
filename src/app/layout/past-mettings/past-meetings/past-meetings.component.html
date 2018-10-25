@@ -6,9 +6,9 @@
 
 <div class="main">
         <div class="row">
-                <div class="col-md-9"><h4 class="under">Past Meetings Details</h4>     </div>       
+                <div class="col-md-9"><h4 class="btn btn-sec remove-border" style="cursor: default;">Past Meetings Details</h4></div>       
                    <div class="align-center" class="col-md-3">
-                       <div class="btn btn-sec remove-border"><span class="span-dec">Filter By:&nbsp;</span>
+                       <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
                        <a style="padding-right:10px; cursor: pointer;">Day</a>
                        <a class="date-period-select">Month</a>
                        <a class="date-period-select">Year</a>
@@ -42,7 +42,7 @@
             <td>{{meeting.attendee}}</td>
             <td>{{meeting.status.status}}</td>
             <td>
-                <i (click)="downloadMom(meeting.meetingCode)" class="fa fa-file-text-o download-file"></i>
+                <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i>
             </td>
             <td>
                 <i (click)="downloadFile()" class="fa fa-file-audio-o download-file" aria-hidden="true"></i>

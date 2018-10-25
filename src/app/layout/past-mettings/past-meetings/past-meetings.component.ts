@@ -30,6 +30,7 @@ export class PastMeetingsComponent implements OnInit {
         screenReaderPageLabel: 'page',
         screenReaderCurrentLabel: `You're on page`
     };
+    
     fileName: String;
     loggedInUser: any;
     pastMeetingList = [];
@@ -67,10 +68,31 @@ export class PastMeetingsComponent implements OnInit {
         });
     }
    
-    downloadMom(meetingCode) {
+    downloadMom(data) {
+     
+        if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
+            return this.alertService.warning('No MOM for this meeting has been added', "Warning");
+        } else{
+        data.mom.momDescription = data.mom.momDescription.split('\n');
+        data.mom.momDescription = data.mom.momDescription.join('\r\n ');
+        const fileType = 'text/json';
 
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data.mom.momDescription)}`);
+        // a.href = url;
+        a.download = data.meetingCode + '.txt';
+        a.click();
+        // window.URL.revokeObjectURL(url);
+        a.remove(); // remove the element
+        this.alertService.success("File has been downloaded.", "MOM Download");
+    }
     }
     onPageChange(number: number) {
         this.config.currentPage = number;
     }
+    replaceLineBreak(s:string) {
+        return s && s.replace('meetNowFlag','');
+      }
 }

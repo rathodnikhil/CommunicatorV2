@@ -176,4 +176,8 @@ export class UserService {
         const url = urlConstants.baseUrl + 'getGuestUsersByLoggedInUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
+    deleteUser(payload) {
+        const url = urlConstants.baseUrl + 'deleteUser';
+        return this.apiRequest.post(url,payload);
+    }
 }

@@ -247,13 +247,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
-            'subject': 'Meet now: ' + new Date().toDateString() + 'meetNowFlag',
+            'subject': 'Meet now: ' + new Date().toDateString(),
             'duration': '45 Min',
             'recurringType': 2,
             'callType': 'Audio',
             'timeZone': timeZone,
             // 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
-            'meetingId': this.accessCode,
+            'meetingId': this.accessCode+"(MeetNowFl)",
             'createdBy': this.loggedInUser
         };
 

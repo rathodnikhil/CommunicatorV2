@@ -4,11 +4,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../services/user.service';
 import { GroupService } from '../../../services/group.service';
 import { LoginService } from '../../../services/login.service';
+import { AlertService } from '../../../services/alert.service';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [GroupService]
+    providers: [GroupService,AlertService]
 })
 export class HeaderComponent implements OnInit {
     _userService: UserService;
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
     loggedInUserObj: any;
     sidebarMenuList = [];
     constructor(private translate: TranslateService, public router: Router,
-        userService: UserService, groupService: GroupService) {
+        userService: UserService, groupService: GroupService, public alertService: AlertService) {
 
         this._userService = userService;
         this._groupService = groupService;
@@ -87,12 +88,9 @@ export class HeaderComponent implements OnInit {
         this._userService.logoutApplication(payload).subscribe(data => {
             this.errorFl = data.errorFl;
             if (this.errorFl === true) {
-                this.nullCheckFlag = true;
-                setTimeout(function () {
-                    this.nullCheckFlag = false;
-                }.bind(this), 5000);
+                return this.alertService.warning(data.message, 'Warning');
             } else {
-
+                this.router.navigate(['/login']);
             }
         });
 

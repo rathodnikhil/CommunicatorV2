@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
+import { AlertService } from '../../../services/alert.service';
 @Component({
   selector: 'app-manage-admin',
   templateUrl: './manage-admin.component.html',
-  styleUrls: ['./manage-admin.component.scss']
+  styleUrls: ['./manage-admin.component.scss'],
+  providers: [AlertService]
 })
 export class ManageAdminComponent implements OnInit {
 _userService: UserService;
@@ -27,7 +29,7 @@ public labels: any = {
     screenReaderCurrentLabel: `You're on page`
 };
 allAdminList = [];
-  constructor(userService: UserService) { 
+  constructor(userService: UserService,public alertService: AlertService) { 
     this._userService = userService;
   }
 
@@ -43,5 +45,22 @@ allAdminList = [];
   onPageChange(number: number) {
     // console.log('change to page', number);
     this.config.currentPage = number;
+}
+deleteAdmin(user){
+  this._userService.deleteUser(user).subscribe(data => {
+    if (data.errorFl === true || data.warningFl === true) {
+        return this.alertService.warning(data.message, 'Warning');
+    } else {
+    }
+});
+}
+editAdmin(user){
+  this._userService.getLoggedInUserObj().subscribe(data => {
+
+    if (data.errorFl === true || data.warningFl === true) {
+        return this.alertService.warning(data.message, 'Warning');
+    } else {
+    }
+});
 }
 }

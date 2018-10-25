@@ -161,15 +161,20 @@ export class ScheduleMeetingComponent implements OnInit {
         });
     }
     scheduleMeeting() {
-
+         let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
+            this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
+            let today =  new Date();
         if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
             return this.alertService.warning('Please enter meeting subject', "Warning");
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', "Warning");
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
             return this.alertService.warning('Please select timezone', "Warning");
-        } else {
+        }else if(date <= today){
+            return this.alertService.warning('Please select future meeting date', "Warning");
+        }else {
             this.meridian = !this.meridian;
+
             this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
             if (this.meeting.callType === 1) {
                 this.meeting.callType = 'Audio';
