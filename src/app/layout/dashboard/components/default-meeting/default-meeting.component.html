@@ -158,8 +158,8 @@
                             <div class="col-md-8">
 
                                 <span style="font-weight: bold; font-size: 14px;">
-                                    <i style="color:#3277d3;" [ngClass]="{'fa fa-microphone ': meeting.callType === 'Audio' ,
-                                    'fa fa-video-camera ': meeting.callType === 'Video'}" ></i>&nbsp;({{meeting.meetingCode}})<br>
+                                    <i style="color:#3277d3;" class="fa" [ngClass]="{'fa-microphone': meeting.callType === 'Audio' ,
+                                    'fa-video-camera': meeting.callType === 'Video'}" ></i>&nbsp;({{meeting.meetingCode}})<br>
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
                                     date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
@@ -175,7 +175,7 @@
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
                                         <div>
-                                              
+
                                         <label style="padding: 10px; ">Are you sure you want to cancel this meeting?</label>
                                         </div>
                                         <div class="modal-footer popFooter">
@@ -189,7 +189,7 @@
                                 </a>
                                 <app-custom-modal #confirmDeleteMeetingModal [model]="deleteMeetConfirm">
                                         <div>
-                                              
+
                                         <label style="padding: 10px; ">Are you sure you want to delete this meeting?</label>
                                         </div>
                                         <div class="modal-footer popFooter">

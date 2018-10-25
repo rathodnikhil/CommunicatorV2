@@ -201,12 +201,34 @@ connection.onstream = function (event) {
         showOnMouseEnter: false,
         height: height
     });
+    // var button = document.createElement('button');
+    // button.innerHTML = 'Mute';
+    // button.id = e.streamid;
+    // button.onclick = function () {
+    //     button = this;
+    //     button.disabled = true;
+    //     var streamid = button.id;
+
+    //     if (button.innerHTML == 'Mute') {
+    //         connection.streams[streamid].mute();
+    //         button.innerHTML = 'UnMute';
+    //     } else {
+    //         connection.streams[streamid].unmute();
+    //         button.innerHTML = 'Mute';
+    //     }
+
+    //     setTimeout(function () {
+    //         button.disabled = false;
+    //     }, 200);
+    // };
+
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id) {
             screenshareCheck = event.stream.id
             connection.filesContainer.appendChild(mediaElement);
         }
     } else {
+        // connection.videosContainer.appendChild(button);
         connection.videosContainer.appendChild(mediaElement);
     }
     setTimeout(function () {
@@ -215,6 +237,9 @@ connection.onstream = function (event) {
     mediaElement.id = event.streamid;
 };
 
+connection.onmute = function(event){
+debugger;
+};
 connection.onstreamended = function (event) {
     var mediaElement = document.getElementById(event.streamid);
     if (mediaElement) {
@@ -345,3 +370,6 @@ if (roomid && roomid.length) {
         });
     })();
 }
+// document.getElementById('parentContianer').onhashchange=function(){
+//     debugger;
+// }

@@ -1,4 +1,5 @@
 @import "styles/customStyle.css";
+
 //video calling
 #container {
     width: 100%;
@@ -64,13 +65,17 @@ div.scrollmenu a:hover {
     border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
     border-radius: 8px;
+
     .mom-box {
         height: 100%;
+
         .card-header {
             height: 20%;
         }
+
         .mom-body {
             height: 80%;
+
             .mom-textarea {
                 width: 100%;
                 height: 60%;
@@ -94,8 +99,9 @@ div.scrollmenu a:hover {
     border-radius: 8px;
     padding: 5px;
 }
-.card-body{
-    height:80vh;
+
+.card-body {
+    height: 80vh;
     overflow-y: hidden;
 }
 
@@ -133,16 +139,16 @@ div.scrollmenu a:hover {
 }
 
 .attendee-row {
-    height: 23vh;
+    left: 100px;
     padding: 5px;
     margin: 2px;
-    width:100%;
+    width: 100%;
 }
 
 .customIp {
     background: transparent;
     color: white;
-    margin:0px 10px 0px 10px;
+    margin: 0px 10px 0px 10px;
 }
 
 .toast {
@@ -166,13 +172,22 @@ div.scrollmenu a:hover {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
 }
-.meeting-bottom{
-    background:rgb(238, 235, 235);  height:6vh; position: absolute;bottom: 0px;width: 100%;
+
+.meeting-bottom {
+    background: rgb(238, 235, 235);
+    height: 6vh;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }
-.momBtn{
-    display: inline-block; margin: 0 auto; margin-top: 15px;
+
+.momBtn {
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: 15px;
 }
