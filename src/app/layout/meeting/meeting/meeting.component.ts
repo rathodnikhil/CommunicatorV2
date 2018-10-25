@@ -105,11 +105,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         if (!data.warningFl && !data.errorFl && data.message !== null) {
                             this.meetingDetails = data;
                             this.isHost = true;
-                            this.document.getElementById('isHost').innerHTML = "true";
-                        }
-                        else {
+                            this.document.getElementById('isHost').innerHTML = 'true';
+                        } else {
                             this.isHost = false;
-                            this.document.getElementById('isHost').innerHTML = "false";
+                            this.document.getElementById('isHost').innerHTML = 'false';
                         }
 
                     });
@@ -152,32 +151,32 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-      
-        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
-            return this.alertService.warning("Please neter minutes of meeting(MOM)", "Warning");
+
+        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === 'undefined') {
+            return this.alertService.warning('Please neter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
                 this.downloadFile(this.momTxt);
-            }else{
+            } else {
                 alert('else');
-            const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
-            this._meetingService.saveMomDetails(payload).subscribe(resp => {
-                this.errorFl = resp.json().errorFl;
-                if (this.errorFl === true) {
-                    return this.alertService.warning(resp.json().message, "Warning");
-                } else {
-                    this.downloadFile(this.momTxt);
-                }
-            });
+                const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
+                this._meetingService.saveMomDetails(payload).subscribe(resp => {
+                    this.errorFl = resp.json().errorFl;
+                    if (this.errorFl === true) {
+                        return this.alertService.warning(resp.json().message, 'Warning');
+                    } else {
+                        this.downloadFile(this.momTxt);
+                    }
+                });
+            }
         }
-    }
     }
     downloadFile(data) {
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
 
-        var a = document.createElement('a');
+        const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data)}`);
@@ -186,16 +185,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        this.alertService.success("File has been downloaded.", "MOM Download");
+        this.alertService.success('File has been downloaded.', 'MOM Download');
     }
 
     saveCurrent(obj) {
-        if (this.previousHtml != undefined && this.previousHtml.id == obj.nextId) {
-            setTimeout(() => { this.document.getElementById(obj.nextId + '-panel').innerHTML = this.previousHtml.content; this.previousHtml = undefined; }, 1000)
+        if (this.previousHtml !== undefined && this.previousHtml.id === obj.nextId) {
+            setTimeout(() => { this.document.getElementById(obj.nextId + '-panel').innerHTML = this.previousHtml.content; this.previousHtml = undefined; }, 1000);
 
 
-        }
-        else {
+        } else {
             this.previousHtml = {
                 id: obj.activeId,
                 content: this.document.getElementById(obj.activeId + '-panel').innerHTML
@@ -207,23 +205,23 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     }
     endMeeting() {
-        window.close();
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode }
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
-            this.errorFl = resp.json().errorFl;
-            if (this.errorFl === true) {
+            this.errorFl = resp.errorFl;
+            if (this.errorFl) {
                 this.nullCheckFlag = true;
                 setTimeout(function () {
                     this.nullCheckFlag = false;
                 }.bind(this), 5000);
             } else {
-                this.confirmEndMeetingModal.open();
+                this.confirmEndMeetingModal.close();
+                this.document.getElementById('btn-leave-room').click();
                 this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });
     }
 
-    //close team modal popup
+    // close team modal popup
     closePopup() {
         this.confirmEndMeetingModal.close();
 

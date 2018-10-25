@@ -9,6 +9,7 @@ import { BsComponentModule } from '../bs-component/bs-component.module';
 import { AudioMeetingComponent } from './audio-meeting/audio-meeting.component';
 import { CustomModalComponent } from '../dashboard/components/custom-modal/custom-modal.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { HorizontalScrollingComponent } from './horizontal-scrolling/horizontal-scrolling.component';
 @NgModule({
     imports: [
         CommonModule, MeetingRoutingModule,
@@ -23,6 +24,6 @@ import { DashboardModule } from '../dashboard/dashboard.module';
          FormsModule 
     ],
     
-    declarations: [MeetingComponent, AudioMeetingComponent]
+    declarations: [MeetingComponent, AudioMeetingComponent, HorizontalScrollingComponent]
 })
 export class MeetingModule { }
