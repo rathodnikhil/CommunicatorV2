@@ -5,10 +5,10 @@
 </div>
 <div class="main">
   <div class="row">
-    <div class="col-md-8"><h4 class=" btn btn-sec remove-border">Admin Details</h4> <br>
+    <div class="col-md-8"><h4 class=" btn btn-sec remove-border" style="cursor: default;">Admin Details</h4> <br>
         <a  [routerLink]="['/RegisterAdmin']" class="btn btn-primary"><i class="fa fa-user-plus"></i></a></div>
        <div class="align-center" class="col-md-4" >
-           <div class="btn btn-sec remove-border"><span class="span-dec">Filter By:&nbsp;</span>
+           <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
            <a style="padding-right:10px; cursor: pointer;">Name</a>
            <a class="date-period-select">Email</a>
            <a class="date-period-select">UserName</a>
@@ -32,6 +32,8 @@
       <th>Email</th>
       <th>UserCode</th>
       <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
      <tr *ngFor="let admin of allAdminList | genericSearchAllProp:searchText |  paginate: config ;let srNo = index">
           <td>{{srNo+1}}</td>
@@ -40,6 +42,8 @@
           <td>{{admin.email}}</td>
           <td>{{admin.userCode}}</td>
           <td>{{admin.status.status}}</td>
+          <td><i class="fa fa-pencil-square-o" (click)="editAdmin(admin);" style="color: green;"></i></td>
+          <td><i class="fa fa-trash-o" (click)="deleteAdmin(admin);" style="color: red;"></i></td>
     </tr>
   </table>
   <div class="pageControl">
