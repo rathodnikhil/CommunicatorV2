@@ -27,9 +27,10 @@
                         </button>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <div style="display: none;" id="isHost"></div>
-                        <!-- <button id="btn-leave-room" style="float:right;" class="btn btn-danger btn-lg">End Meeting</button> -->
+                        <button id="btn-leave-room" style="display:none;" class="btn btn-danger btn-lg">End Meeting</button>
                     </div>
                     <div class="row" style="justify-content: center;">
+                        <div>Attendee List: {{meetingDetails.attendee}}</div>
                         <div id="room-urls" style="text-align: center;display: none;"></div>
                     </div>
                 </div>
@@ -67,7 +68,7 @@
                 <div class="row meeting-bottom">
                     <div id="container">
                         <div id="right">
-                            <button id="btn-leave-room" class="btn btn-danger btn-lg" (click)="exitMeeting();">
+                            <button class="btn btn-danger btn-lg" (click)="exitMeeting();">
                                 <i class="fa fa-power-off"></i>
                             </button>
                         </div>
@@ -99,13 +100,6 @@
                         <ngb-tabset style="padding:20px;" id="switchTab" (tabChange)="saveCurrent($event)">
                             <ngb-tab title="Chat">
                                 <ng-template ngbTabContent>
-                                    <!-- <div ngbDropdown class="d-inline-block dropdown">
-                                        <button class="btn btn-outline-primary" ngbDropdownToggle>{{messageSendTo}}</button>
-                                        <div ngbDropdownMenu>
-                                            <button *ngFor="let member of userList" class="dropdown-item" on-click="changeMessageTo(member)">
-                                                {{member.name+ ' '+member.lastName}}</button>
-                                        </div>
-                                    </div> -->
                                     <div style="height: 60vh; overflow-y: scroll" id="chat-container" class="chat-output">
                                     </div>
                                     <div class="col-md-12" style="padding-top: 20px;">
