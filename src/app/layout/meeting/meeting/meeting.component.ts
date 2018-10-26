@@ -67,10 +67,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
     endMeetConfirm: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
-        title: 'New Team',
-        smallHeading: 'You can add new team details here',
+        title: 'Exit Meeting',
+        smallHeading: 'You can exit meeting',
         body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Team',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Exit',
         Button2Content: ''
     };
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
