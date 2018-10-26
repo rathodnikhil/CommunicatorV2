@@ -49,7 +49,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         title: 'Cancel',
         smallHeading: 'You can cancel selected meeting',
         body: '',
-        Button1Content: '<i class="fa fa - ban"></i>&nbsp;Add Team',
+        Button1Content: '<i class="fa fa - ban"></i>&nbsp;Cancel Meeting',
         Button2Content: ''
     };
     @ViewChild('confirmDeleteMeetingModal') public confirmDeleteMeetingModal: CustomModalComponent;
@@ -58,7 +58,16 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         title: 'Cancel',
         smallHeading: 'You can delete selected meeting',
         body: '',
-        Button1Content: '<i class="fa fa - trash"></i>&nbsp;Add Team',
+        Button1Content: '<i class="fa fa - trash"></i>&nbsp;Delete Meeting',
+        Button2Content: ''
+    };
+    @ViewChild('startMeetNowModal') public startMeetNowModal: CustomModalComponent;
+    startMeetNow: CustomModalModel = {
+        titleIcon: '<i class="fa fa - trash"></i>',
+        title: 'Meet Now',
+        smallHeading: 'You can start meeting',
+        body: '',
+        Button1Content: '<i class="fa fa - trash"></i>&nbsp;Meet Now',
         Button2Content: ''
     };
     constructor(userService: UserService, meetingService: MeetingService,
@@ -168,9 +177,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
 
     }
-    startMeeting(meeting, isfromPopup) {
+    startMeeting(meeting, isfromPopup,startMeetNowPopup) {
         if (isfromPopup) {
             this.meetNowModal.close();
+        }if(startMeetNowPopup){
+            this.startMeetNowModal.close();
         }
         if (meeting.meetingStartDateTime <= Date.now()) {
             if (meeting.callType === 'Video') {
@@ -231,6 +242,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         document.body.removeChild(a);
         this.showScheduleMeetingSuccess = false;
         this.closePopup('meetNow');
+        this.startMeetNowModal.open();
     }
     // copy meeting content
     copyToClipboard() {
