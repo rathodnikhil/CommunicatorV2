@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../services/user.service';
 import { GroupService } from '../../../services/group.service';
@@ -14,7 +14,7 @@ import { AlertService } from '../../../services/alert.service';
 export class HeaderComponent implements OnInit {
     _userService: UserService;
     _groupService: GroupService;
-    pushRightClass: string = 'push-right';
+    pushRightClass = 'push-right';
     isClosed = true;
     errorFl: boolean;
     nullCheckFlag: boolean;
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.sidebarMenuList = [];
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.firstName !== undefined && !data.isGuest) {                
+            if (data.firstName !== undefined && !data.isGuest) {
                 this.loggedInUserObj = data;
                 let payload = { userCode: this.loggedInUserObj.userCode };
                 this._groupService.setSideBarMenuByLoggedInUSer(payload);

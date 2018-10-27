@@ -30,7 +30,7 @@
                         <button id="btn-leave-room" style="display:none;" class="btn btn-danger btn-lg">End Meeting</button>
                     </div>
                     <div class="row" style="justify-content: center;">
-                        <div>Attendee List: {{meetingDetails.attendee}}</div>
+                        <div *ngIf="!isGuest">Attendee List: {{meetingDetails.attendee}}</div>
                         <div id="room-urls" style="text-align: center;display: none;"></div>
                     </div>
                 </div>

@@ -147,14 +147,19 @@ var isHost = false;
 // Using getScreenId.js to capture screen from any domain
 connection.getScreenConstraints = function (callback) {
     getScreenConstraints(function (error, screen_constraints) {
-        debugger;
         if (!error) {
             screen_constraints = connection.modifyScreenConstraints(screen_constraints);
             callback(error, screen_constraints);
             return;
         } else if (screen_constraints.mandatory) {
-            console.log("extension not installed");
-            document.getElementById('share-file').disabled = false;
+            document.getElementById('share-screen').disabled = false;
+            var url='/#/error/sharescreen';
+            var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+                try {
+                    popup_window.focus();
+                } catch (e) {
+                    alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+                }
         } else
             throw error;
     });

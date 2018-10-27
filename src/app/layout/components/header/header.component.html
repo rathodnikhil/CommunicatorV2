@@ -14,20 +14,26 @@
             </a>
         </li>
         <li>
-            <a [routerLink]="['/dashboard/default']" (click)="hamburger_cross()">
+            <!-- <a *ngIf="this.router.url.toString().indexOf('meeting')>0">asdapidja</a> -->
+            <a *ngIf="this.router.url.toString().indexOf('meeting')>0" target="_blank" [routerLink]="['/dashboard/default']"
+                (click)="hamburger_cross()">
+                <i class="fa fa-home" aria-hidden="true"></i> Dashboard</a>
+
+            <a *ngIf="this.router.url.toString().indexOf('meeting')<0" [routerLink]="['/dashboard/default']" (click)="hamburger_cross()">
                 <i class="fa fa-home" aria-hidden="true"></i> Dashboard</a>
         </li>
         <li *ngFor="let menu of sidebarMenuList">
-            <a  routerLink= "{{menu.menuLink}}"  (click)="hamburger_cross()">
+            <a *ngIf="this.router.url.toString().indexOf('meeting')>0" target="_blank" routerLink="{{menu.menuLink}}"
+                (click)="hamburger_cross()">
+                <i class="{{menu.menuIconClass}}" aria-hidden="true"></i>&nbsp;{{menu.menuName}}</a>
+            <a *ngIf="this.router.url.toString().indexOf('meeting')<0" routerLink="{{menu.menuLink}}" (click)="hamburger_cross()">
                 <i class="{{menu.menuIconClass}}" aria-hidden="true"></i>&nbsp;{{menu.menuName}}</a>
         </li>
         <li>
-                <a   (click)="logout()">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
+            <a (click)="logout()">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
             <!-- <a  (click)="hamburger_cross()">
                 <i class="fa fa-sign-out" aria-hidden="true"></i>logout</a> -->
         </li>
     </ul>
 </nav>
-
-
