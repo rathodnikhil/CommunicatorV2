@@ -63,7 +63,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     loggedInUser: any;
     isHost = false;
     previousHtml: any;
-
+    isGuest = false;
     @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
     endMeetConfirm: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -86,9 +86,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
         }
-
+        this.meetingDetails = {};
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
+        debugger;
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
 
@@ -113,6 +114,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
                     });
                 }
+            } else if (data.firstName !== undefined && data.isGuest) {
+                this.isGuest = true;
             }
         });
     }
