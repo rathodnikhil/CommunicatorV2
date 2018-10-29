@@ -64,15 +64,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isHost = false;
     previousHtml: any;
     isGuest = false;
-    @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
-    endMeetConfirm: CustomModalModel = {
-        titleIcon: '<i class="fa fa-user"></i>',
-        title: 'Exit Meeting',
-        smallHeading: 'You can exit meeting',
-        body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Exit',
-        Button2Content: ''
-    };
+    // @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
+    // endMeetConfirm: CustomModalModel = {
+    //     titleIcon: '<i class="fa fa-user"></i>',
+    //     title: 'Exit Meeting',
+    //     smallHeading: 'You can exit meeting',
+    //     body: '',
+    //     Button1Content: '<i class="fa fa-user"></i>&nbsp;Exit',
+    //     Button2Content: ''
+    // };
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -203,31 +203,21 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             };
         }
     }
-    exitMeeting() {
-        this.confirmEndMeetingModal.open();
+    // exitMeeting() {
+    //     this.confirmEndMeetingModal.open();
 
-    }
+    // }
     endMeeting() {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
             this.errorFl = resp.errorFl;
             if (this.errorFl) {
-                this.nullCheckFlag = true;
-                setTimeout(function () {
-                    this.nullCheckFlag = false;
-                }.bind(this), 5000);
+                this.alertService.warning(resp.message, 'Warning');
             } else {
-                this.confirmEndMeetingModal.close();
                 this.document.getElementById('btn-leave-room').click();
                 this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });
-    }
-
-    // close team modal popup
-    closePopup() {
-        this.confirmEndMeetingModal.close();
-
     }
 }
 

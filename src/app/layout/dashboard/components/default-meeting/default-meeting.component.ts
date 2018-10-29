@@ -32,6 +32,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     meetNowMeeting: any;
     showScheduleMeetingSuccess: boolean;
     showCopyDetailsSuccess: boolean;
+    selectedCriteria:any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -82,7 +83,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowMeeting = {};
         this.showScheduleMeetingSuccess = false;
         this.showCopyDetailsSuccess = false;
-
+        this.selectedCriteria = 'All';
         // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
@@ -110,7 +111,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
 
 
-        const payload = { userCode: this.loggedInUser.userCode };
+       // const payload = { userCode: this.loggedInUser.userCode };
         // this.recentMeeting = {};
         // this._meetingService.getRecentMeetingByUser().subscribe(data => {
         //     if(data.errorFl === true || data.warningFl === true){
@@ -136,6 +137,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
+            this.selectedCriteria = 'Today';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     if (meetingDate.getDate() === this.currentDate.getDate()
@@ -146,6 +148,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'tomorrow':
+            this.selectedCriteria = 'tomorrow';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     const tomorrow = new Date();
@@ -158,6 +161,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
+            this.selectedCriteria = '';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
 
@@ -172,6 +176,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             default:
+            this.selectedCriteria = 'All';
                 this.filteredFutureMeetingList = this.futureMeetingList;
                 break;
         }
