@@ -171,7 +171,7 @@ export class ScheduleMeetingComponent implements OnInit {
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
             return this.alertService.warning('Please select timezone', "Warning");
         }else if(date <= today){
-            return this.alertService.warning('Please select future meeting date', "Warning");
+            return this.alertService.warning('Please select future meeting date or time', "Warning");
         }else {
             this.meridian = !this.meridian;
 
