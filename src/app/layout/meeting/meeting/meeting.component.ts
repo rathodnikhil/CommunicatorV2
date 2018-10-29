@@ -6,6 +6,7 @@ import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -120,6 +121,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         });
     }
     ngAfterViewInit(): void {
+        (<any>window).customAlertService = this.alertService;
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingTest.js';
