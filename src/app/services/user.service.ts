@@ -21,10 +21,10 @@ export class UserService {
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
-    saveUserDetails(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'saveUserDetails';
+    saveUserDetails(payload,teamName): Observable<any> {
+        const url = urlConstants.baseUrl + 'saveUserDetails?teamName=' + teamName;
         let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.http.post(url, payload).subscribe(data => {
+        this.http.post(url, payload,teamName).subscribe(data => {
             resp.next(data);
             });
 

@@ -14,7 +14,7 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-o fa-fw"></i>
+                                    <i class="fa fa-user fa-fw"></i>
                                 </span>
                             </div>
                             <input class="form-control" type="text" placeholder="First name"
@@ -26,7 +26,7 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-o fa-fw"></i>
+                                    <i class="fa fa-user fa-fw"></i>
                                 </span>
                             </div>
                             <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required >
@@ -36,7 +36,7 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-o fa-fw"></i>
+                                    <i class="fa fa-check fa-fw"></i>
                                 </span>
                             </div>
                             <input class="form-control" type="text" placeholder="Userame" [(ngModel)]="userName" required >
@@ -46,7 +46,7 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-o fa-fw"></i>
+                                    <i class="fa fa-envelope fa-fw"></i>
                                 </span>
                             </div>
                             <input class="form-control" type="text" placeholder="Email" [(ngModel)]="email" required >
@@ -56,7 +56,7 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-o fa-fw"></i>
+                                    <i class="fa fa-key fa-fw"></i>
                                 </span>
                             </div>
                             <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" required >
@@ -66,13 +66,38 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-o fa-fw"></i>
+                                    <i class="fa fa-lock fa-fw"></i>
                                 </span>
                             </div>
                             <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required >
                         </div>
                         </li>
+                        <li>
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                      <i class="fa fa-group fa-fw"></i>
+                                  </span>
+                              </div>
+                              <input type="text" list="languages"class="form-control" placeholder="Team" [(ngModel)]="newTeamName" required >
+                              <datalist id="languages">
+                                  <option *ngFor="let team of teamArray" value="{{team.teamName}}">
+                                  <!-- <option value="CSS">
+                                  <option value="JavaScript">
+                                  <option value="Java">
+                                  <option value="Ruby">
+                                  <option value="PHP">
+                                  <option value="Go">
+                                  <option value="Erlang">
+                                  <option value="Python">
+                                  <option value="C">
+                                  <option value="C#">
+                                  <option value="C++"> -->
+                                </datalist>
+                          </div>
+                          </li>
                         </ul>
+                     
                         <input class="btn btn-sec" type="submit" id="submit" value="Register"  (click)="registerUser();">
                       </div>
                       <a  [routerLink]="['/ManageAdmin']" class="btn btn-primary">View Admin Details</a>
