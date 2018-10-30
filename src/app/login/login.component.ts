@@ -65,6 +65,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
+                if (this.email === undefined || this.email === '' || this.email === null) {
+                    return this.alertService.error('Enter Email', 'Error');
+                }else{
                 const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
                 this._userService.setLoggedInUserObj(payload).subscribe(res => {
                     if (res.firstName !== undefined) {
@@ -75,6 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }
                     }
                 });
+            }
             } else {
                 const payload = { 'name': this.userName, 'password': this.password };
                 let loginWarningFlag;

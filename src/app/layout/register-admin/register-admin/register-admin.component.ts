@@ -27,7 +27,7 @@ export class RegisterAdminComponent implements OnInit {
   password: any;
   confirmPassword: any;
   authFlag: boolean = false;
- 
+  newTeamName: any;
   constructor(teamService: TeamService , userService: UserService , loginService: LoginService ,public alertService: AlertService ) {
       this._teamService = teamService;
       this._userService = userService;
@@ -36,9 +36,13 @@ export class RegisterAdminComponent implements OnInit {
 
   ngOnInit() {
       // this.selectedTeam = 'Select Team';
-      //  this._teamService.getAllEnableTeams().subscribe(data => {
-      //      this.teamArray = data.json();
-      //  });
+       this._teamService.getAllEnableTeams().subscribe(data => {
+         if(data.warningFl){
+          return this.alertService.warning(data.json().message,"Warning");   
+         }else{
+           this.teamArray = data;
+          }
+       });
   }
   registerUser() {
       if(this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined"){
@@ -53,6 +57,8 @@ export class RegisterAdminComponent implements OnInit {
         return this.alertService.warning("Please enter password","Warning");
       }else  if(this.confirmPassword === "" || this.confirmPassword === null || typeof this.confirmPassword === "undefined"){
         return this.alertService.warning("Please enter confirmpassword","Warning");
+      }else  if(this.newTeamName === "" || this.newTeamName === null || typeof this.newTeamName === "undefined"){
+        return this.alertService.warning("Please enter team","Warning");
       }
       else{
           const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
@@ -75,8 +81,9 @@ export class RegisterAdminComponent implements OnInit {
               "lastName": this.lastName,
               "firstName": this.firstName,
               "status.onlineStatus": true,
+              //"team.teamName": this.newTeamName
           }
-      this._userService.saveUserDetails(payload).subscribe(data => {
+      this._userService.saveUserDetails(payload,this.newTeamName).subscribe(data => {
           duplicateUserNameFlag = data.json().warningFl;
           exceptionFlag = data.json().errorFl;
           if(duplicateUserNameFlag == true) {
@@ -91,6 +98,9 @@ export class RegisterAdminComponent implements OnInit {
   }
   }
   }
+  selectTeam(team){
+    alert(team.teamName);
+  }
  clearAllField(){
    this.userName = "";
    this.firstName = "";
@@ -98,5 +108,6 @@ export class RegisterAdminComponent implements OnInit {
    this.confirmPassword = "";
    this.lastName = "";
    this.email = "";
+   this.newTeamName = "";
  }
 }

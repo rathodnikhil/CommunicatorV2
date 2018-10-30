@@ -34,7 +34,7 @@ export class TeamService {
     
        getAllEnableTeams() {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
-        return this.http.get(url);
+        return this.apiRequest.get(url);
        }
        //add new team
         saveTeamDetails(payload): Observable<any>{

@@ -113,39 +113,39 @@ export class SignupComponent implements OnInit {
             this.showAddMemberpasswordMatch =false;
             this.showAddMemberValidEmail = false;
      
-        this._userService.saveUserDetails(payload).subscribe(data => {
-            duplicateUserNameFlag = data.json().warningFl;
-            exceptionFlag = data.json().errorFl;
-            if(duplicateUserNameFlag == true) {
-                this.showAddMemberDuplicateUserName = true;
-                this.userName = '';
-                setTimeout(function() {
-                    this.showAddMemberDuplicateUserName = false;
-                }.bind(this), 5000);
-            }else if(exceptionFlag == true) {
-                this.showException = true;
-                this.email = '';
-                setTimeout(function() {
-                    this.showException = false;
-                }.bind(this), 5000);
-            }else{
-                let payload = { "name": 'admin', "password": "password" };
-                let loginWarningFlag;
-                    this._loginService.getAuthenticationToken(payload).subscribe(resp => {
-                        this.jwtToken = this._loginService.getJwtToken();
-                        if(this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
-                            this.authFlag = true;
-                            setTimeout(function() {
-                                this.authFlag = false;
-                            }.bind(this), 5000); 
-                        }else{
-                            this.router.navigate(['/dashboard/default']);
-                        }
-                    }, err => {
-                        alert(err);      
-                    });
-            }
-        });
+        // this._userService.saveUserDetails(payload).subscribe(data => {
+        //     duplicateUserNameFlag = data.json().warningFl;
+        //     exceptionFlag = data.json().errorFl;
+        //     if(duplicateUserNameFlag == true) {
+        //         this.showAddMemberDuplicateUserName = true;
+        //         this.userName = '';
+        //         setTimeout(function() {
+        //             this.showAddMemberDuplicateUserName = false;
+        //         }.bind(this), 5000);
+        //     }else if(exceptionFlag == true) {
+        //         this.showException = true;
+        //         this.email = '';
+        //         setTimeout(function() {
+        //             this.showException = false;
+        //         }.bind(this), 5000);
+        //     }else{
+        //         let payload = { "name": 'admin', "password": "password" };
+        //         let loginWarningFlag;
+        //             this._loginService.getAuthenticationToken(payload).subscribe(resp => {
+        //                 this.jwtToken = this._loginService.getJwtToken();
+        //                 if(this.jwtToken === "" || this.jwtToken === null || typeof this.jwtToken === "undefined") {
+        //                     this.authFlag = true;
+        //                     setTimeout(function() {
+        //                         this.authFlag = false;
+        //                     }.bind(this), 5000); 
+        //                 }else{
+        //                     this.router.navigate(['/dashboard/default']);
+        //                 }
+        //             }, err => {
+        //                 alert(err);      
+        //             });
+        //     }
+        // });
     }
     }
     }
