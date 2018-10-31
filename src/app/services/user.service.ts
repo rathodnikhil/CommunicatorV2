@@ -165,7 +165,7 @@ export class UserService {
         return this.apiRequest.post(url, payload);
     }
     searchWholememberList(payload) {
-        const url = urlConstants.baseUrl + 'searchWholememberList?searchText=' + payload.searchText;
+        const url = urlConstants.baseUrl + 'searchWholememberList?searchText=' + payload.searchText + '&userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     SaveUserPermission(payload) {

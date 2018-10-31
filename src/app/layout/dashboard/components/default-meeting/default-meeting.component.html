@@ -171,7 +171,7 @@
                                         placement="bottom" ngbTooltip="start meeting"></i>
                                 </a>
                                 <a>
-                                    <i class="fa fa-times-circle actionIcon" style="color: rgb(255, 60, 0);" (click)="cancelMeeting()"
+                                    <i class="fa fa-times-circle actionIcon" style="color: rgb(255, 60, 0);" (click)="cancelMeeting(meeting)"
                                         placement="bottom" ngbTooltip="cancel meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">

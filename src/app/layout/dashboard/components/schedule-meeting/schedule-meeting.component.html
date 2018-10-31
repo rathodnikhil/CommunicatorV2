@@ -64,7 +64,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">
-                            <label style="padding-top:50%;">Timezone</label>
+                            <label >Timezone</label>
                         </div>
                         <div class="col-md-9">
                             <div ngbDropdown class="d-inline-block dropdown">
@@ -132,7 +132,7 @@
                                 <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
                             </div>
                             <div style="padding: 10px; font-size:14px;" class="span-font">
-                                <span>{{subject}}</span>
+                                <span>{{this.subject}}</span>
                                 <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}
                                     at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
                                     {{this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}

@@ -32,7 +32,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     loggedInUser: any;
     isHost = false;
     previousHtml: any;
-
+    currentMeeting: any;
     @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
     endMeetConfirm: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -51,13 +51,15 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+         var currentMeetingString = localStorage.getItem("currentMeeting");
+         this.currentMeeting = JSON.parse(currentMeetingString);
         if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
         }
 
-        this.messageSendTo = 'Send Message to';
-        this.momTo = 'set MOM Duty';
+        // this.messageSendTo = 'Send Message to';
+        // this.momTo = 'set MOM Duty';
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
 
@@ -122,16 +124,16 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     // save mom details
     saveMom() {
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === "undefined") {
-            return this.alertService.warning('Please neter minutes of meeting(MOM)', 'Warning');
+            return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
                 this.downloadFile(this.momTxt);
             }else{
             const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
             this._meetingService.saveMomDetails(payload).subscribe(resp => {
-                this.errorFl = resp.json().errorFl;
+                this.errorFl = resp.errorFl;
                 if (this.errorFl === true) {
-                    return this.alertService.warning(resp.json().message, 'Warning');
+                    return this.alertService.warning(resp.message, 'Warning');
                 } else {
                     this.downloadFile(this.momTxt);
                 }

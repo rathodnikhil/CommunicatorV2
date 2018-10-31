@@ -18,7 +18,6 @@
             </span>
             <hr class="list-group-partition" />
                 </a>
-                <h6 style ="color: #ffffff;font-weight: bold;">Groups</h6>
          <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
            (click)="viewGroupDetails(group.groupId)"
         class="list-group-item clearfix d-block">
