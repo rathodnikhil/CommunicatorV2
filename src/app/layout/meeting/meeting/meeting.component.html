@@ -28,6 +28,7 @@
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <div style="display: none;" id="isHost"></div>
                         <button id="btn-leave-room" style="display:none;" class="btn btn-danger btn-lg">End Meeting</button>
+                        <h4>Host : [{{currentMeeting.createdBy.firstName}}&nbsp;[{{currentMeeting.createdBy.lastName}}]</h4>
                     </div>
                     <div class="row" style="justify-content: center;">
                         <div *ngIf="!isGuest">Attendee List: {{meetingDetails.attendee}}</div>
@@ -75,7 +76,7 @@
 
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
-                    <div class="card-header">Meeting Activity</div>
+                    <div class="card-header"><h4>[{{currentMeeting.subject}}]</h4><label><i class="fa fa-clock-o"></i>&nbsp;{{currentMeeting.duration}}</label></div>
                     <div class="card-body">
                         <ngb-tabset style="padding:20px;" id="switchTab" (tabChange)="saveCurrent($event)">
                             <ngb-tab title="Chat">

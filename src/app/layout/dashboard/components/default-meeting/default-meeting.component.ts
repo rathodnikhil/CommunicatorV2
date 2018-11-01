@@ -33,6 +33,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     showScheduleMeetingSuccess: boolean;
     showCopyDetailsSuccess: boolean;
     selectedCriteria:any;
+    selectedMeeting: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -56,7 +57,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     @ViewChild('confirmDeleteMeetingModal') public confirmDeleteMeetingModal: CustomModalComponent;
     deleteMeetConfirm: CustomModalModel = {
         titleIcon: '<i class="fa fa - trash"></i>',
-        title: 'Cancel',
+        title: 'Delete',
         smallHeading: 'You can delete selected meeting',
         body: '',
         Button1Content: '<i class="fa fa - trash"></i>&nbsp;Delete Meeting',
@@ -205,35 +206,38 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
             }
         }
-        // this.router.navigate(['/meeting']);
+
+        localStorage.setItem("currentMeeting", JSON.stringify(meeting));
     }
-    deleteMeetingNow(meeting) {
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
+    deleteMeetingNow() {
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.selectedMeeting.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.recentMeeting = {};
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
                 this.closePopup('delete');
             }
         });
     }
-    deleteMeeting() {
+    deleteMeeting(meeting) {
+        this.selectedMeeting = meeting;
         this.confirmDeleteMeetingModal.open();
     }
-    cancelMeeting() {
+    cancelMeeting(meeting) {
+        this.selectedMeeting = meeting;
         this.confirmCancelMeetingModal.open();
     }
-    cancelMeetingNow(meeting) {
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
+    cancelMeetingNow() {
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.selectedMeeting.meetingCode };
         this._meetingService.cancelMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.recentMeeting = {};
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.closePopup('cancel');
-                // this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(meeting), 1);
+                 this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });
