@@ -183,12 +183,18 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
 
     }
-    startMeeting(meeting, isfromPopup,startMeetNowPopup) {
+    startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
+            alert('123');
             this.meetNowModal.close();
-        }if(startMeetNowPopup){
-            this.startMeetNowModal.close();
-        }
+            if (meeting.callType === 'Video') {
+                this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
+            } else {
+                this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
+            }
+        // }if(startMeetNowPopup){
+        //     this.startMeetNowModal.close();
+         }else{
         if (meeting.meetingStartDateTime <= Date.now()) {
             if (meeting.callType === 'Video') {
                 this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
@@ -196,7 +202,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
             }
         } else {
-            const currentDate = new Date();
+            alert('in else');
+           // const currentDate = new Date();
             if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
                 return this.alertService.warning('Meeting is set in future.', 'Warning');
             } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
@@ -206,7 +213,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
             }
         }
-
+    }
         localStorage.setItem("currentMeeting", JSON.stringify(meeting));
     }
     deleteMeetingNow() {
