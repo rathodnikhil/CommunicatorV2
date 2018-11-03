@@ -7,7 +7,7 @@ window.enableAdapter = true; // enable adapter.js
 var alertService = window.customAlertService ;
 document.getElementById('share-screen').onclick = function () {
     try {
-        this.disabled = true;
+        // this.disabled = true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -27,6 +27,7 @@ document.getElementById('open-room').onclick = function () {
     connection.open(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
+        document.getElementById('resume-count').click();
     });
 };
 
@@ -174,7 +175,7 @@ connection.onstream = function (event) {
         video.muted = true;
     }
     video.srcObject = event.stream;
-    var width = parseInt(connection.videosContainer.parentElement.clientHeight) - 20;
+    var width = parseInt(connection.videosContainer.parentElement.clientHeight);
     var height = parseInt(connection.videosContainer.parentElement.clientHeight) - 20;
     var mediaElement = getHTMLMediaElement(video, {
         title: event.type === 'local' ? 'you' : event.extra,
@@ -345,6 +346,8 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
+                debugger;
+                document.getElementById('resume-count').click();
                 return;
             }
             document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';

@@ -166,7 +166,7 @@
                             </div>
                             <div style="float: right" *ngIf="showActionIcon">
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
-                                <a (click)="startMeeting(meeting,false,false)">
+                                <a (click)="startMeeting(meeting,false)">
                                     <i class="fa fa-play-circle actionIcon" style="color: #3277d3;" aria-hidden="true"
                                         placement="bottom" ngbTooltip="start meeting"></i>
                                 </a>
@@ -204,7 +204,7 @@
                                         <label style="padding: 10px; ">Press Start to meet now</label>
                                         </div>
                                         <div class="modal-footer popFooter">
-                                            <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,false,true)">Start</button>
+                                            <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,true)">Start</button>
                                         </div>
                                     </app-custom-modal>
                             </div>

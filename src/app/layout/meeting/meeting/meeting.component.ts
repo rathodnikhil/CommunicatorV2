@@ -1,11 +1,14 @@
-import { Component, OnInit, trigger, transition, style, animate, state, AfterViewInit, ElementRef, Inject, ViewChild } from '@angular/core';
+import {
+    Component, OnInit, trigger, transition, style, animate, state,
+    AfterViewInit, ElementRef, Inject, ViewChild
+} from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
-import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { CountdownComponent } from 'ngx-countdown';
 
 @Component({
     selector: 'app-meeting',
@@ -65,16 +68,17 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isHost = false;
     previousHtml: any;
     isGuest = false;
-    currentMeeting: any;
-    // @ViewChild('confirmEndMeetingModal') public confirmEndMeetingModal: CustomModalComponent;
-    // endMeetConfirm: CustomModalModel = {
-    //     titleIcon: '<i class="fa fa-user"></i>',
-    //     title: 'Exit Meeting',
-    //     smallHeading: 'You can exit meeting',
-    //     body: '',
-    //     Button1Content: '<i class="fa fa-user"></i>&nbsp;Exit',
-    //     Button2Content: ''
-    // };
+    currentTab = 'chat';
+    notify: string;
+    config: any = { leftTime: 10, notify: [300] };
+    counter: CountdownComponent;
+    @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
+        if (tiles !== undefined) {
+            this.counter = tiles;
+            this.counter.pause();
+        }
+    }
+    // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -84,8 +88,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        var currentMeetingString = localStorage.getItem("currentMeeting");
-        this.currentMeeting = JSON.parse(currentMeetingString);
         if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
@@ -93,29 +95,34 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.meetingDetails = {};
         this.messageSendTo = 'Send Message to';
         this.momTo = 'set MOM Duty';
-        debugger;
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
-
-            console.log(this.meetingCode);
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.firstName !== undefined && !data.isGuest) {
+            if (data.firstName !== undefined) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '') {
-                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-                    // this.document.getElementById('isHost').innerHTML = 'true';
-                    // this.isHost = true;
-                    this._meetingService.verifyMeetingHost(payload).subscribe(data => {
-                        if (!data.warningFl && !data.errorFl && data.message !== null) {
-                            this.meetingDetails = data;
+                    const payload = { userCode: '', meetingCode: this.meetingCode };
+                    if (!data.isGuest) {
+                        payload.userCode = this.loggedInUser.userCode;
+                    } else if (data.isGuest) {
+                        payload.userCode = this.loggedInUser.firstName;
+                    }
+                    this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
+                        if (!data2.warningFl && !data2.errorFl && data2.message !== null) {
+                            this.meetingDetails = data2;
+                            this.config.leftTime = parseInt(this.meetingDetails.duration.split(' ')[0]) * 60;
                             this.isHost = true;
                             this.document.getElementById('isHost').innerHTML = 'true';
+                        } else if (data2.warningFl && data2.message !== null) {
+                            this.meetingDetails = data2;
+                            this.config.leftTime = parseInt(this.meetingDetails.duration.split(' ')[0]) * 60;
+                            this.isHost = false;
+                            this.document.getElementById('isHost').innerHTML = 'false';
                         } else {
                             this.isHost = false;
                             this.document.getElementById('isHost').innerHTML = 'false';
                         }
-
                     });
                 }
             } else if (data.firstName !== undefined && data.isGuest) {
@@ -195,22 +202,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.alertService.success('File has been downloaded.', 'MOM Download');
     }
 
-    saveCurrent(obj) {
-        if (this.previousHtml !== undefined && this.previousHtml.id === obj.nextId) {
-            setTimeout(() => { this.document.getElementById(obj.nextId + '-panel').innerHTML = this.previousHtml.content; this.previousHtml = undefined; }, 1000);
-
-
-        } else {
-            this.previousHtml = {
-                id: obj.activeId,
-                content: this.document.getElementById(obj.activeId + '-panel').innerHTML
-            };
-        }
+    switchTab(tab) {
+        this.currentTab = tab;
     }
-    // exitMeeting() {
-    //     this.confirmEndMeetingModal.open();
 
-    // }
     exitMeeting() {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
@@ -222,6 +217,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });
+    }
+    startTimer() {
+        this.counter.resume();
+    }
+    onFinished() {
+        this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
+    }
+    onNotify(time: number) {
+        this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
     }
 }
 

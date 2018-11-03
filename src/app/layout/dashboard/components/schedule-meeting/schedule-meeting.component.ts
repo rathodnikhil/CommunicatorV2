@@ -126,6 +126,8 @@ export class ScheduleMeetingComponent implements OnInit {
     ngOnInit() {
         this.audioMeeting = false;
         this.vedioMeeting = false;
+       // this.showCopyDetailsSuccess = false;
+      //  this.showScheduleMeetingSuccess = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
         });
@@ -220,9 +222,10 @@ export class ScheduleMeetingComponent implements OnInit {
                         this.filteredFutureMeetingList = [];
                     }
                     this.filteredFutureMeetingList.push(data);
-                    this.showScheduleMeetingSuccess = true;
-                      this.scheduleMeetingModal.open();
-                    this.clearAllMeetingField();
+                   // this.showScheduleMeetingSuccess = true;
+                   this.scheduleMeetingModal.open();
+                   return this.alertService.success("Meeting has scheduled successfully", "Schedule Meeting");
+                   
                 }
             });
 
@@ -243,7 +246,7 @@ export class ScheduleMeetingComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        this.showScheduleMeetingSuccess = false;
+       // this.showScheduleMeetingSuccess = false;
         this.closeMeetingPopup('scheduleMeetings');
     }
     //copy meeting content
@@ -251,8 +254,9 @@ export class ScheduleMeetingComponent implements OnInit {
         var meetingDetails = this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
         document.execCommand('copy');
-        this.showScheduleMeetingSuccess = false;
-        this.showCopyDetailsSuccess = true;
+       // this.showScheduleMeetingSuccess = false;
+      //  this.showCopyDetailsSuccess = true;
+      return this.alertService.success("Meeting Details has been Copied. Kindly share via your preferred Mail Id.", "Copy Meeting Details");
     }
     changeTimeZone(timezone) {
         this.meeting.selectedTimeZone = timezone;
@@ -268,7 +272,9 @@ export class ScheduleMeetingComponent implements OnInit {
     closeMeetingPopup(popupType) {
         switch (popupType) {
             case 'scheduleMeetings':
+            this.showScheduleMeetingSuccess = false;
                 this.scheduleMeetingModal.close();
+                this.clearAllMeetingField();
                // this.switchRoute();
                 break;
         }

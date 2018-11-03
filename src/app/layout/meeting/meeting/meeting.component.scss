@@ -47,7 +47,7 @@ div.scrollmenu a:hover {
 .parent {
     background-color: f1f1f1;
     position: relative;
-    height: 50vh;
+    height: 32vh;
     border: 1px solid #dedede;
     border-radius: 8px;
     background: rgb(238, 235, 235);
@@ -190,4 +190,7 @@ div.scrollmenu a:hover {
     display: inline-block;
     margin: 0 auto;
     margin-top: 15px;
+}
+[hidden] {
+    display: none;
 }
