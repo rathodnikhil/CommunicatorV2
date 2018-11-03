@@ -10,6 +10,7 @@ import { AudioMeetingComponent } from './audio-meeting/audio-meeting.component';
 import { CustomModalComponent } from '../dashboard/components/custom-modal/custom-modal.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { HorizontalScrollingComponent } from './horizontal-scrolling/horizontal-scrolling.component';
+import { CountdownModule } from 'ngx-countdown';
 @NgModule({
     imports: [
         CommonModule, MeetingRoutingModule,
@@ -20,10 +21,11 @@ import { HorizontalScrollingComponent } from './horizontal-scrolling/horizontal-
         StatModule,
         BsComponentModule,
         NgbModule.forRoot(),
-         DashboardModule, 
-         FormsModule 
+        DashboardModule,
+        FormsModule,
+        CountdownModule
     ],
-    
+
     declarations: [MeetingComponent, AudioMeetingComponent, HorizontalScrollingComponent]
 })
 export class MeetingModule { }
