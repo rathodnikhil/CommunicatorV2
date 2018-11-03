@@ -32,7 +32,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     meetNowMeeting: any;
     showScheduleMeetingSuccess: boolean;
     showCopyDetailsSuccess: boolean;
-    selectedCriteria:any;
+    selectedCriteria: any;
     selectedMeeting: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
@@ -112,7 +112,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
 
 
-       // const payload = { userCode: this.loggedInUser.userCode };
+        // const payload = { userCode: this.loggedInUser.userCode };
         // this.recentMeeting = {};
         // this._meetingService.getRecentMeetingByUser().subscribe(data => {
         //     if(data.errorFl === true || data.warningFl === true){
@@ -138,7 +138,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
-            this.selectedCriteria = 'Today';
+                this.selectedCriteria = 'Today';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     if (meetingDate.getDate() === this.currentDate.getDate()
@@ -149,7 +149,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'tomorrow':
-            this.selectedCriteria = 'tomorrow';
+                this.selectedCriteria = 'tomorrow';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     const tomorrow = new Date();
@@ -162,7 +162,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
-            this.selectedCriteria = '';
+                this.selectedCriteria = '';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
 
@@ -177,7 +177,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             default:
-            this.selectedCriteria = 'All';
+                this.selectedCriteria = 'All';
                 this.filteredFutureMeetingList = this.futureMeetingList;
                 break;
         }
@@ -192,29 +192,27 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
             }
-        // }if(startMeetNowPopup){
-        //     this.startMeetNowModal.close();
-         }else{
-        if (meeting.meetingStartDateTime <= Date.now()) {
-            if (meeting.callType === 'Video') {
-                this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            } else {
-                this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-            }
+            // }if(startMeetNowPopup){
+            //     this.startMeetNowModal.close();
         } else {
-            alert('in else');
-           // const currentDate = new Date();
-            if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
-                return this.alertService.warning('Meeting is set in future.', 'Warning');
-            } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
-                const hours = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (3600000));
-                const min = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (60000));
-                return this.alertService
-                    .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
+            if (meeting.meetingStartDateTime <= Date.now()) {
+                if (meeting.callType === 'Video') {
+                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
+                } else {
+                    this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
+                }
+            } else {
+                // const currentDate = new Date();
+                if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
+                    return this.alertService.warning('Meeting is set in future.', 'Warning');
+                } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
+                    const hours = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (3600000));
+                    const min = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (60000));
+                    return this.alertService
+                        .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
+                }
             }
         }
-    }
-        localStorage.setItem("currentMeeting", JSON.stringify(meeting));
     }
     deleteMeetingNow() {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.selectedMeeting.meetingCode };
@@ -244,7 +242,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.closePopup('cancel');
-                 this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
+                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });
@@ -281,7 +279,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             'callType': 'Audio',
             'timeZone': timeZone,
             // 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
-            'meetingId': this.accessCode+"(MeetNowFl)",
+            'meetingId': this.accessCode + "(MeetNowFl)",
             'createdBy': this.loggedInUser
         };
 

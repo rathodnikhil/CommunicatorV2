@@ -102,7 +102,9 @@ export class MeetingService {
     }
     verifyMeetingHost(payload) {
         const url = urlConstants.baseUrl + 'startMeetingByHost';
-        return this.apiRequest.post(url, payload);
+        return this.http.post(url, payload).map((resp: any) => {               
+            return resp.json()
+        });
     }
     endMeeting(payload) {
         const url = urlConstants.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' +payload.meetingCode;
