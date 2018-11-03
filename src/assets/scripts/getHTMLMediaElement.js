@@ -262,9 +262,9 @@ function getHTMLMediaElement(mediaElement, config) {
         mediaBox.querySelector('video').style.maxHeight = (config.height - 10) + 'px';
     } else
         mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
-        mediaBox.querySelector('video').style.position='relative';
-        mediaBox.querySelector('video').style.zIndex='1';
-        // mediaBox.querySelector('video').style.marginTop='-15px'
+    mediaBox.querySelector('video').style.position = 'relative';
+    mediaBox.querySelector('video').style.zIndex = '1';
+    // mediaBox.querySelector('video').style.marginTop='-15px'
     var times = 0;
 
     function adjustControls() {
@@ -457,8 +457,8 @@ function getAudioElement(mediaElement, config) {
 
     mediaElementContainer.style.width = '329px';
     mediaBox.style.height = '90px';
-    mediaBox.querySelector('audio').style.position='relative';
-    mediaBox.querySelector('audio').style.zIndex='1';
+    mediaBox.querySelector('audio').style.position = 'relative';
+    mediaBox.querySelector('audio').style.zIndex = '1';
     h2.style.width = mediaElementContainer.style.width;
     // h2.style.height = '50px';
     h2.style.overflow = 'hidden';
