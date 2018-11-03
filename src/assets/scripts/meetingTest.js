@@ -7,7 +7,7 @@ window.enableAdapter = true; // enable adapter.js
 var alertService = window.customAlertService ;
 document.getElementById('share-screen').onclick = function () {
     try {
-        this.disabled = true;
+        // this.disabled = true;
         connection.addStream({
             screen: true,
             oneway: true
