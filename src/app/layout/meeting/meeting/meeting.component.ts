@@ -93,8 +93,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.router.navigate(['/login']);
         }
         this.meetingDetails = {};
-        this.messageSendTo = 'Send Message to';
-        this.momTo = 'set MOM Duty';
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
         });
@@ -201,6 +199,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.remove(); // remove the element
         this.alertService.success('File has been downloaded.', 'MOM Download');
     }
+
 
     switchTab(tab) {
         this.currentTab = tab;

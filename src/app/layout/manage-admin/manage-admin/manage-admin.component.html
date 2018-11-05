@@ -9,10 +9,10 @@
         <a  [routerLink]="['/RegisterAdmin']" class="btn btn-primary"><i class="fa fa-user-plus"></i></a></div>
        <div class="align-center" class="col-md-4" >
            <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
-           <a style="padding-right:10px; cursor: pointer;">Name</a>
-           <a class="date-period-select">Email</a>
-           <a class="date-period-select">UserName</a>
-           <a class="date-period-select">Status</a>
+           <a style="padding-right:10px; cursor: default;">Name</a>
+           <a class="date-period-select" style="cursor: default;">Email</a>
+           <a class="date-period-select" style="cursor: default;">UserName</a>
+           <a class="date-period-select" style="cursor: default;">Status</a>
            </div>
            <div class="form-group input-group"style="padding-top:5px;">
              <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
@@ -46,6 +46,15 @@
           <td><i class="fa fa-trash-o" (click)="deleteAdmin(admin);" style="color: red;"></i></td>
     </tr>
   </table>
+  <app-custom-modal #deleteMemberModal [model]="deleteAdminPop">
+    <div class="modal-body row-label">
+       <label>Are Sure you want to delete this admin?</label>
+    </div>
+    <div class="modal-footer popFooter">
+        <button type="button" class="btn btn-sec" (click)="deleteAdminNow()">Delete</button>
+        <button type="button" class="btn btn-cancel" (click)="closePopup('deleteAdmin')">Close</button>
+    </div>
+</app-custom-modal>
   <div class="pageControl">
     <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
         [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
