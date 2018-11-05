@@ -177,7 +177,7 @@ export class UserService {
         return this.apiRequest.post(url, payload);
     }
     deleteUser(payload) {
-        const url = urlConstants.baseUrl + 'deleteUser';
+        const url = urlConstants.baseUrl + 'deleteUser?userCode=' + payload.usercode;
         return this.apiRequest.post(url,payload);
     }
 }

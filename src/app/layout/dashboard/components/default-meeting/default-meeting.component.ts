@@ -214,8 +214,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             }
         }
     }
-    deleteMeetingNow() {
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.selectedMeeting.meetingCode };
+    deleteMeetingNow(meeting) {
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.recentMeeting = {};
