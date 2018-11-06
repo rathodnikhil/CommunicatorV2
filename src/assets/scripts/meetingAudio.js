@@ -4,10 +4,10 @@ window.enableAdapter = true; // enable adapter.js
 // ......................................................
 // .......................UI Code........................
 // ......................................................
-
+var alertService = window.customAlertService ;
 document.getElementById('share-screen').onclick = function () {
     try {
-        this.disabled = true;
+        // this.disabled = true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -16,31 +16,6 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
 
-    // const EXTENSION_ID = 'ajhifddimkapgcifgcodmmfdlknahffk';
-    // chrome.runtime.sendMessage(EXTENSION_ID, 'version', response => {
-    //     if (!response) {
-
-    //         if (confirm('You do not have chrome extension required for screen sharing. Do you wish to install the extension?')) {
-    //             url = 'https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk';
-    //             var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
-    //             try {
-    //                 popup_window.focus();
-    //             } catch (e) {
-    //                 alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
-    //             }
-
-    //             // window.open(url, '_blank');
-    //         }
-    //         return;
-    //     }
-    //     else {
-    //         this.disabled = true;
-    //         connection.addStream({
-    //             screen: true,
-    //             oneway: true
-    //         });
-    //     }
-    // });
 };
 
 document.getElementById('open-room').onclick = function () {
@@ -52,6 +27,7 @@ document.getElementById('open-room').onclick = function () {
     connection.open(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
+        document.getElementById('resume-count').click();
     });
 };
 
@@ -143,23 +119,29 @@ function appendDIV(event) {
 
 var connection = new RTCMultiConnection();
 connection.socketCustomEvent = "cfsCommunicator_internal_message";
+// to make sure file-saver dialog is not invoked.
+connection.autoSaveToDisk = false;
 var isHost = false;
 // Using getScreenId.js to capture screen from any domain
 connection.getScreenConstraints = function (callback) {
     getScreenConstraints(function (error, screen_constraints) {
-        debugger;
         if (!error) {
             screen_constraints = connection.modifyScreenConstraints(screen_constraints);
             callback(error, screen_constraints);
             return;
         } else if (screen_constraints.mandatory) {
-            console.log("extension not installed");
-            document.getElementById('share-file').disabled = false;
+            document.getElementById('share-screen').disabled = false;
+            var url='/#/error/sharescreen';
+            var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+                try {
+                    popup_window.focus();
+                } catch (e) {
+                    alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+                }
         } else
             throw error;
     });
 };
-
 
 // by default, socket.io server is assumed to be deployed on your own URL
 // connection.socketURL = '/';
@@ -336,6 +318,7 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
+                document.getElementById('resume-count').click();
                 return;
             }
             document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';
@@ -343,3 +326,6 @@ if (roomid && roomid.length) {
         });
     })();
 }
+// document.getElementById('parentContianer').onhashchange=function(){
+//     debugger;
+// }

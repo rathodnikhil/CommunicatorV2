@@ -279,7 +279,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             'callType': 'Audio',
             'timeZone': timeZone,
             // 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
-            'meetingId': this.accessCode + "(MeetNowFl)",
+            'meetingId': this.accessCode,
             'createdBy': this.loggedInUser
         };
 

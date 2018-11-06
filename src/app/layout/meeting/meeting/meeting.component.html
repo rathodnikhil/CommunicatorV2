@@ -29,7 +29,7 @@
                         <button id="resume-count" (click)="startTimer()" style="display: none;" class="btn btn-link btn-sm">resume</button>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <div style="display: none;" id="isHost"></div>
-                        <button id="btn-leave-room" style="display:none;" class="btn btn-danger btn-lg">End Meeting</button>
+                        <button  style="display:none;" class="btn btn-danger btn-lg">End Meeting</button>
 
                         <h4 *ngIf="meetingDetails.createdBy!=undefined">Host :
                             [{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}]</h4>
@@ -53,7 +53,7 @@
                 <div class="row meeting-bottom">
                     <div id="container">
                         <div id="right">
-                            <button class="btn btn-danger btn-lg" (click)="exitMeeting();">
+                            <button  id="btn-leave-room" class="btn btn-danger btn-lg" (click)="exitMeeting()">
                                 <i class="fa fa-power-off"></i>
                             </button>
                         </div>
