@@ -11,6 +11,7 @@ import { CustomModalComponent } from '../dashboard/components/custom-modal/custo
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { HorizontalScrollingComponent } from './horizontal-scrolling/horizontal-scrolling.component';
 import { CountdownModule } from 'ngx-countdown';
+import { DragScrollModule } from 'ngx-drag-scroll';
 @NgModule({
     imports: [
         CommonModule, MeetingRoutingModule,
@@ -23,7 +24,8 @@ import { CountdownModule } from 'ngx-countdown';
         NgbModule.forRoot(),
         DashboardModule,
         FormsModule,
-        CountdownModule
+        CountdownModule,
+        DragScrollModule
     ],
 
     declarations: [MeetingComponent, AudioMeetingComponent, HorizontalScrollingComponent]

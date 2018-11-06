@@ -8,20 +8,20 @@
             </div>
             <div class="col-md-2" style="border-left: 1px solid #dadadc; text-align: center;">
                 <!-- <a href="javascript:void(0)" class="btn btn-sec">Meet Now</a> -->
-                <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()" placement="bottom"
-                    ngbTooltip="Meet Now"></i>
+                <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
+                    placement="bottom" ngbTooltip="Meet Now"></i>
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
-                        <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true" class="alert alert-success alert-dismissable"
-                        [(ngModel)]="showScheduleMeetingSuccess">
+                    <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess" class="alert alert-success alert-dismissable">
                         <strong>Success:&nbsp; </strong>
                         <span style="font-weight: bold;">meeting has been scheduled Successfully.</span>
                     </div>
-                    <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
-                        <strong>Success: </strong> <span style="font-weight: bold;">Meeting Details has been Copied. Kindly share via your preferred Mail Id.</span>
+                    <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess" class="alert alert-success alert-dismissable">
+                        <strong>Success: </strong> <span style="font-weight: bold;">Meeting Details has been Copied.
+                            Kindly share via your preferred Mail Id.</span>
                     </div>
                     <div style="padding: 10px; font-size:14px;" class="span-font">
-                        <span>Meet now:  &nbsp;{{meetNowMeeting.meetingStartDateTime | date:'yyyy-MM-dd'}}</span>
-                        <p style="font-weight:bold;">Date : {{meetNowMeeting.meetingStartDateTime|  date:'fullDate'}}
+                        <span>Meet now: &nbsp;{{meetNowMeeting.meetingStartDateTime | date:'yyyy-MM-dd'}}</span>
+                        <p style="font-weight:bold;">Date : {{meetNowMeeting.meetingStartDateTime| date:'fullDate'}}
                             for
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
@@ -45,7 +45,7 @@
 
                 </app-custom-modal>
             </div>
-            <div class="col-md-2"   style="border-left: 1px solid #dadadc;text-align: center;">
+            <div class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
                 <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
                     ngbTooltip="schedule meeting"></i>
                 <!-- <a href="javascript:void(0)"  class="btn btn-sec pull-right" type="button" title="schedule meeting"></a> -->
@@ -160,7 +160,7 @@
 
                                 <span style="font-weight: bold; font-size: 14px;">
                                     <i style="color:#3277d3;" class="fa" [ngClass]="{'fa-microphone': meeting.callType === 'Audio' ,
-                                    'fa-video-camera': meeting.callType === 'Video'}" ></i>&nbsp;({{meeting.meetingCode}})<br>
+                                    'fa-video-camera': meeting.callType === 'Video'}"></i>&nbsp;({{meeting.meetingCode}})<br>
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
                                     date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
@@ -175,38 +175,38 @@
                                         placement="bottom" ngbTooltip="cancel meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
-                                        <div>
+                                    <div>
 
                                         <label style="padding: 10px; ">Are you sure you want to cancel this meeting?</label>
-                                        </div>
-                                        <div class="modal-footer popFooter">
-                                            <button type="button" class="btn btn-sec" (click)="cancelMeetingNow(meeting)">Yes</button>
-                                            <button type="button" class="btn btn-cancel" (click)="closePopup('cancel')">No</button>
-                                        </div>
-                                    </app-custom-modal>
+                                    </div>
+                                    <div class="modal-footer popFooter">
+                                        <button type="button" class="btn btn-sec" (click)="cancelMeetingNow(meeting)">Yes</button>
+                                        <button type="button" class="btn btn-cancel" (click)="closePopup('cancel')">No</button>
+                                    </div>
+                                </app-custom-modal>
                                 <a>
-                                    <i class="fa fa-minus-circle actionIcon"  (click)="deleteMeeting()"
-                                        placement="bottom" ngbTooltip="delete meeting" aria-hidden="true"></i>
+                                    <i class="fa fa-minus-circle actionIcon" (click)="deleteMeeting()" placement="bottom"
+                                        ngbTooltip="delete meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmDeleteMeetingModal [model]="deleteMeetConfirm">
-                                        <div>
+                                    <div>
 
                                         <label style="padding: 10px; ">Are you sure you want to delete this meeting?</label>
-                                        </div>
-                                        <div class="modal-footer popFooter">
-                                            <button type="button" class="btn btn-sec" (click)="deleteMeetingNow(meeting)">Yes</button>
-                                            <button type="button" class="btn btn-cancel" (click)="closePopup('delete')">No</button>
-                                        </div>
-                                    </app-custom-modal>
-                                    <app-custom-modal #startMeetNowModal [model]="startMeetNow">
-                                        <div>
-                                              
+                                    </div>
+                                    <div class="modal-footer popFooter">
+                                        <button type="button" class="btn btn-sec" (click)="deleteMeetingNow(meeting)">Yes</button>
+                                        <button type="button" class="btn btn-cancel" (click)="closePopup('delete')">No</button>
+                                    </div>
+                                </app-custom-modal>
+                                <app-custom-modal #startMeetNowModal [model]="startMeetNow">
+                                    <div>
+
                                         <label style="padding: 10px; ">Press Start to meet now</label>
-                                        </div>
-                                        <div class="modal-footer popFooter">
-                                            <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,true)">Start</button>
-                                        </div>
-                                    </app-custom-modal>
+                                    </div>
+                                    <div class="modal-footer popFooter">
+                                        <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,true)">Start</button>
+                                    </div>
+                                </app-custom-modal>
                             </div>
                         </div>
                         <div class="col-md-12">

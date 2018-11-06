@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CountdownComponent } from 'ngx-countdown';
+import { DragScrollComponent } from 'ngx-drag-scroll/lib';
 
 @Component({
     selector: 'app-meeting',
@@ -70,6 +71,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isGuest = false;
     currentTab = 'chat';
     notify: string;
+    @ViewChild('nav', { read: DragScrollComponent }) ds: DragScrollComponent;
     config: any = { leftTime: 10, notify: [300] };
     counter: CountdownComponent;
     @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
@@ -225,6 +227,13 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     onNotify(time: number) {
         this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
+    }
+    moveLeft() {
+        this.ds.moveLeft();
+    }
+
+    moveRight() {
+        this.ds.moveRight();
     }
 }
 
