@@ -98,9 +98,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(data => {
                     if (data !== undefined && data.length > 0 && (data[0].errorFl || data[0].warningFl)) {
+                        alert('1');
                         this.futureMeetingList = [];
                         return this.alertService.warning(data[0].message, 'Warning');
                     } else {
+                        alert('2');
                         this.futureMeetingList = data;
                         this.filteredFutureMeetingList = data;
                     }
@@ -149,7 +151,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'tomorrow':
-                this.selectedCriteria = 'tomorrow';
+                this.selectedCriteria = 'Tomorrow';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     const tomorrow = new Date();
@@ -185,7 +187,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
-            alert('123');
             this.meetNowModal.close();
             if (meeting.callType === 'Video') {
                 this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });

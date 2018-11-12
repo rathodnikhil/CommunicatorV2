@@ -62,9 +62,7 @@ export class RegisterAdminComponent implements OnInit {
       }
       else{
           const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-          const temporaryUserName = this.userNameArray.indexOf(this.userName);
-          const temporaryEmail = this.emailArray.indexOf(this.email);
-      
+    
           if (!EMAIL_REGEXP.test(this.email)) {
             return this.alertService.warning("Please enter valid email","Warning");
           }

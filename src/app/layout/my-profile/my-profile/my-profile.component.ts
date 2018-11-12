@@ -18,9 +18,6 @@ export class MyProfileComponent implements OnInit {
     _groupService: GroupService;
     profileOtherDetails: any;
     loggedInUserObj: any;
-    firstName: any;
-    lastName: any;
-    email: any;
     constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService,public alertService: AlertService) {
         this._userService = userService;
         this._meetingservice = meetingService;
@@ -46,6 +43,17 @@ export class MyProfileComponent implements OnInit {
         });
     }
     updateProfile() {
+        if (this.loggedInUserObj.firstName === "" || this.loggedInUserObj.firstName === null || typeof this.loggedInUserObj.firstName === "undefined") {
+            return this.alertService.warning('Please enter first name', "Warning");
+        } else if (this.loggedInUserObj.lastName === "" || this.loggedInUserObj.lastName === null || typeof this.loggedInUserObj.lastName === "undefined") {
+            return this.alertService.warning('Please enter last name', "Warning");
+        }else if (this.loggedInUserObj.email === "" || this.loggedInUserObj.email === null || typeof this.loggedInUserObj.email === "undefined") {
+            return this.alertService.warning('Please enter email', "Warning");
+        }else{
+            const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+            if (!EMAIL_REGEXP.test(this.loggedInUserObj.email)) {
+              return this.alertService.warning("Please enter valid email","Warning");
+            }
         const payload = {
             firstName: this.loggedInUserObj.firstName,
             lastName: this.loggedInUserObj.lastName,
@@ -59,5 +67,6 @@ export class MyProfileComponent implements OnInit {
             return this.alertService.success("User profile has been updated successfully", "Success"); 
             }
         });
+    }
     }
 }
