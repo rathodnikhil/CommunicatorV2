@@ -158,7 +158,7 @@ connection.getScreenConstraints = function (callback) {
 // connection.socketURL = '/';
 
 // comment-out below line if you do not have your own socket.io server
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.socketURL = 'https://cfscommunicatorsocket.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
 connection.extra = localStorage.getItem('loggedInuserName');

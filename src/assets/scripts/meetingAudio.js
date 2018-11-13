@@ -147,7 +147,7 @@ connection.getScreenConstraints = function (callback) {
 // connection.socketURL = '/';
 
 // comment-out below line if you do not have your own socket.io server
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.socketURL = 'https://cfscommunicatorsocket.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
 connection.extra = localStorage.getItem('loggedInuserName');
@@ -169,24 +169,43 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveVideo: false
 };
 var screenshareCheck = {};
-connection.audiosContainer = document.getElementById('audios-container');
+connection.audiosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
-    var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
-    var height = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
-    var mediaElement = getHTMLMediaElement(event.mediaElement, {
-        title: event.type === 'local' ? 'you' : event.extra,
-        buttons: [],
-        width: width,
-        showOnMouseEnter: false,
-        height: height
-    });
+    // var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
+    // var height = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
+    // var mediaElement = getHTMLMediaElement(event.mediaElement, {
+    //     title: event.type === 'local' ? 'you' : event.extra,
+    //     buttons: [],
+    //     width: width,
+    //     showOnMouseEnter: false,
+    //     height: height
+    // });
+    var mediaElement = event.mediaElement;
+    mediaElement.height = '260';
+    mediaElement.width = '260';
+    mediaElement.style.padding = '5';
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id) {
             screenshareCheck = event.stream.id
             connection.filesContainer.appendChild(mediaElement);
         }
     } else {
-        connection.audiosContainer.appendChild(mediaElement);
+        if (connection.audiosContainer.children.length > 0) {
+            var dummyPresent = false;
+            for (let index = 0; index < connection.audiosContainer.children.length; index++) {
+                var vid_element = connection.audiosContainer.children[0];
+                if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
+                    connection.audiosContainer.replaceChild(mediaElement, vid_element);
+                    dummyPresent = true;
+                    break;
+                }
+            }
+            if (!dummyPresent)
+                connection.audiosContainer.appendChild(mediaElement);
+        } else {
+            connection.audiosContainer.appendChild(mediaElement);
+        }
+        // connection.audiosContainer.appendChild(mediaElement);
     }
 
     setTimeout(function () {

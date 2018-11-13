@@ -71,7 +71,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isGuest = false;
     currentTab = 'chat';
     notify: string;
-    @ViewChild('nav', { read: DragScrollComponent }) ds: DragScrollComponent;
+    @ViewChild('videos_container', { read: DragScrollComponent }) ds: DragScrollComponent;
     config: any = { leftTime: 10, notify: [300] };
     counter: CountdownComponent;
     @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
@@ -80,6 +80,22 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.counter.pause();
         }
     }
+    imagelist = [
+        'luke.png',
+        'chubaka.png',
+        'boba.png',
+        'c3po.png',
+        'leia.png',
+        'obi.png',
+        'r2d2.png',
+        'storm.png',
+        'varder.png',
+        'yoda.png',
+        'yolo.png'
+    ];
+    leftNavDisabled = false;
+    rightNavDisabled = false;
+    index = 0;
     // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
@@ -234,6 +250,22 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     moveRight() {
         this.ds.moveRight();
+    }
+    leftBoundStat(reachesLeftBound: boolean) {
+        this.leftNavDisabled = reachesLeftBound;
+    }
+
+    rightBoundStat(reachesRightBound: boolean) {
+        this.rightNavDisabled = reachesRightBound;
+    }
+
+    onSnapAnimationFinished() {
+        console.log('snap animation finished');
+    }
+
+    onIndexChanged(idx) {
+        this.index = idx;
+        console.log('current index: ' + idx);
     }
 }
 
