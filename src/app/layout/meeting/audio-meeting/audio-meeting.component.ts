@@ -7,6 +7,7 @@ import { Params, Router, ActivatedRoute } from '@angular/router';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 import { AlertService } from 'app/services/alert.service';
 import { CountdownComponent } from 'ngx-countdown';
+import { DragScrollComponent } from 'ngx-drag-scroll/lib';
 
 @Component({
     selector: 'app-audio-meeting',
@@ -38,12 +39,29 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     notify: string;
     config: any = { leftTime: 10, notify: [300] };
     counter: CountdownComponent;
+    @ViewChild('videos_container', { read: DragScrollComponent }) ds: DragScrollComponent;
     @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
         if (tiles !== undefined) {
             this.counter = tiles;
             this.counter.pause();
         }
     }
+    imagelist = [
+        'luke.png',
+        'chubaka.png',
+        'boba.png',
+        'c3po.png',
+        'leia.png',
+        'obi.png',
+        'r2d2.png',
+        'storm.png',
+        'varder.png',
+        'yoda.png',
+        'yolo.png'
+    ];
+    leftNavDisabled = false;
+    rightNavDisabled = false;
+    index = 0;
     // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
@@ -191,5 +209,28 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     }
     onNotify(time: number) {
         this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
+    }
+    moveLeft() {
+        this.ds.moveLeft();
+    }
+
+    moveRight() {
+        this.ds.moveRight();
+    }
+    leftBoundStat(reachesLeftBound: boolean) {
+        this.leftNavDisabled = reachesLeftBound;
+    }
+
+    rightBoundStat(reachesRightBound: boolean) {
+        this.rightNavDisabled = reachesRightBound;
+    }
+
+    onSnapAnimationFinished() {
+        console.log('snap animation finished');
+    }
+
+    onIndexChanged(idx) {
+        this.index = idx;
+        console.log('current index: ' + idx);
     }
 }
