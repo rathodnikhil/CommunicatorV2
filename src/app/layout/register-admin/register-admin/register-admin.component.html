@@ -14,10 +14,10 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user fa-fw"></i>
+                                    <i class="fa fa-user fa-fw"> <span class="asterik-mark">&nbsp;*</span></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" placeholder="First name"
+                            <input class="form-control" type="text" placeholder="First name" #firstNameField
                              [(ngModel)]="firstName" required >
                         </div>
                         
@@ -26,73 +26,62 @@
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user fa-fw"></i>
+                                    <i class="fa fa-user fa-fw"><span class="asterik-mark">&nbsp;*</span></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required >
+                            <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required #lastNameField>
                         </div>
                         </li>
                         <li>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-check fa-fw"></i>
+                                    <i class="fa fa-check fa-fw"><span class="asterik-mark">&nbsp;*</span></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" placeholder="Userame" [(ngModel)]="userName" required >
+                            <input class="form-control" type="text" placeholder="Userame" [(ngModel)]="userName" required #usernameField>
                         </div>
                         </li>
                         <li>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-envelope fa-fw"></i>
+                                    <i class="fa fa-envelope fa-fw"><span class="asterik-mark">&nbsp;*</span></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" placeholder="Email" [(ngModel)]="email" required >
+                            <input class="form-control" type="text" placeholder="Email" [(ngModel)]="email" required #emailField>
                         </div>
                         </li>
                         <li>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-key fa-fw"></i>
+                                    <i class="fa fa-key fa-fw"><span class="asterik-mark">&nbsp;*</span></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" required >
+                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" required #passwordField>
                         </div>
                         </li>
                         <li>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fa fa-lock fa-fw"></i>
+                                    <i class="fa fa-lock fa-fw"><span class="asterik-mark">&nbsp;*</span></i>
                                 </span>
                             </div>
-                            <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required >
+                            <input class="form-control" type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" required #confirmPasswordField>
                         </div>
                         </li>
                         <li>
                             <div class="input-group mb-3">
                               <div class="input-group-prepend">
                                   <span class="input-group-text">
-                                      <i class="fa fa-group fa-fw"></i>
+                                      <i class="fa fa-group fa-fw"><span class="asterik-mark">&nbsp;*</span></i>
                                   </span>
                               </div>
-                              <input type="text" list="languages"class="form-control" placeholder="Team" [(ngModel)]="newTeamName" required >
-                              <datalist id="languages">
+                              <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="newTeamName" required #teamField>
+                              <datalist id="teamObjList">
                                   <option *ngFor="let team of teamArray" value="{{team.teamName}}">
-                                  <!-- <option value="CSS">
-                                  <option value="JavaScript">
-                                  <option value="Java">
-                                  <option value="Ruby">
-                                  <option value="PHP">
-                                  <option value="Go">
-                                  <option value="Erlang">
-                                  <option value="Python">
-                                  <option value="C">
-                                  <option value="C#">
-                                  <option value="C++"> -->
                                 </datalist>
                           </div>
                           </li>

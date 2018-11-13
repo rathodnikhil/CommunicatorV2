@@ -27,14 +27,12 @@
        </a>
     </div>
    <div style="text-align: center;"> <button class="btn btn-sec"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div>
-    <div class="row" >
-    <a *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
-     (click)="addNewMembersInList(user)"
-         class="list-group-item clearfix d-block">
+    <div class="row" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText" >
+    <a  class="list-group-item clearfix d-block">
             <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
-                <i style="color: #ffffff; padding-left: 10px;" class="fa fa-plus"></i>
+               
      </a>
-            </div>
+     <i style="color: #ffffff; padding-left: 10px; padding-top: 12px; cursor: pointer;" class="fa fa-plus"  (click)="addNewMembersInList(user)"></i>  </div>
        <!-- /.list-group -->
 </div>
 
