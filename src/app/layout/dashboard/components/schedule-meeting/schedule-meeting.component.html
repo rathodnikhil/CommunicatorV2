@@ -21,7 +21,7 @@
                     <div class="row form-group">
 
                         <div class="col-sm-3">
-                            <label>Subject</label>
+                            <label>Subject<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="descField" placeholder="Meeting Subject" [(ngModel)]="subject" />
@@ -29,7 +29,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-3">
-                            <label>Date</label>
+                            <label>Date<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-sm-9">
                             <div class="input-group datepicker-input">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-3">
-                            <label>Time</label>
+                            <label>Time<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
                             <ngb-timepicker class="customTimePicker" id="meeting.meridianTime" [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">
-                            <label>Meeting duration</label>
+                            <label>Meeting duration<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
                             <div ngbDropdown class="d-inline-block dropdown">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">
-                            <label >Timezone</label>
+                            <label >Timezone<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
                             <div ngbDropdown class="d-inline-block dropdown">

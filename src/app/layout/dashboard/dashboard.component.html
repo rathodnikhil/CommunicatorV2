@@ -8,7 +8,7 @@
                     </div>
                     <div [ngClass]="{'userlist-header': signUpflag === true ,
                     'card-header ': signUpflag === true ,'col-md-2': signUpflag === true}">
-                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="signUpflag" [routerLink]="['/signup']"></i>
+                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="signUpflag" [routerLink]="['/RegisterAdmin']"></i>
                     </div>
                     <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
                         <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>
@@ -20,7 +20,7 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label>Messgage</label>
+                                            <label>Message</label>
                                         </div>
                                         <div>
                                             <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage"></textarea>
