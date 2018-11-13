@@ -1,6 +1,7 @@
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
 window.enableAdapter = true; // enable adapter.js
-
+document.getElementById('btn-save-mom').disabled = true;
+document.getElementById('input-text-chat').disabled = true;
 // ......................................................
 // .......................UI Code........................
 // ......................................................
@@ -28,6 +29,8 @@ document.getElementById('open-room').onclick = function () {
         showRoomURL(connection.sessionid);
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
         document.getElementById('resume-count').click();
+        document.getElementById('btn-save-mom').disabled = false;
+        document.getElementById('input-text-chat').disabled = false;
     });
 };
 
@@ -338,6 +341,8 @@ if (roomid && roomid.length) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
                 document.getElementById('resume-count').click();
+                document.getElementById('btn-save-mom').disabled = false;
+                document.getElementById('input-text-chat').disabled = false;
                 return;
             }
             document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';

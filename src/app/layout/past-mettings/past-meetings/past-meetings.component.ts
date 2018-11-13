@@ -84,6 +84,7 @@ export class PastMeetingsComponent implements OnInit {
         a.remove(); // remove the element
         this.alertService.success("File has been downloaded.", "MOM Download");
     }
+    
     }
     onPageChange(number: number) {
         this.config.currentPage = number;
@@ -91,4 +92,7 @@ export class PastMeetingsComponent implements OnInit {
     replaceLineBreak(s:string) {
         return s && s.replace('meetNowFlag','');
       }
+      downloadRecording(data) {
+        this.alertService.success("No recording for this meeting has been added", "Recording Download");
+    }
 }

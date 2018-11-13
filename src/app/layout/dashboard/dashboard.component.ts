@@ -39,9 +39,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     @ViewChild('broadcastMsgModal') public broadcastMsgModal: CustomModalComponent;
     broadcastMsgContent: CustomModalModel = {
-        titleIcon: '<i class="fa fa-user"></i>',
-        title: 'New Member',
-        smallHeading: 'You can add new member details here',
+        titleIcon: '<i class="fa fa-bullhorn"></i>',
+        title: 'Broadcast Message',
+        smallHeading: 'You can send broadcast message from here.',
         body: '',
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Member',
         Button2Content: ''
