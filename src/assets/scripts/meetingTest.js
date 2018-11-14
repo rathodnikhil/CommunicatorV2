@@ -4,7 +4,7 @@ document.getElementById('btn-save-mom').disabled = true;
 // ......................................................
 // .......................UI Code........................
 // ......................................................
-var alertService = window.customAlertService ;
+var alertService = window.customAlertService;
 document.getElementById('share-screen').onclick = function () {
     try {
         // this.disabled = true;
@@ -132,13 +132,13 @@ connection.getScreenConstraints = function (callback) {
             return;
         } else if (screen_constraints.mandatory) {
             document.getElementById('share-screen').disabled = false;
-            var url='/#/error/sharescreen';
-            var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
-                try {
-                    popup_window.focus();
-                } catch (e) {
-                    alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
-                }
+            var url = '/#/error/sharescreen';
+            var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+            try {
+                popup_window.focus();
+            } catch (e) {
+                alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+            }
         } else
             throw error;
     });
@@ -148,7 +148,7 @@ connection.getScreenConstraints = function (callback) {
 // connection.socketURL = '/';
 
 // comment-out below line if you do not have your own socket.io server
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.socketURL = 'https://cfscommunicatorsocket.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
 connection.extra = localStorage.getItem('loggedInuserName');
@@ -165,26 +165,31 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveVideo: true
 };
 var screenshareCheck = {};
-connection.videosContainer = document.getElementById('videos-container');
+connection.videosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
+    debugger;
     event.mediaElement.removeAttribute('src');
     event.mediaElement.removeAttribute('srcObject');
 
     var video = document.createElement('video');
+    video.setAttribute("drag-scroll-item", '');
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
     }
     video.srcObject = event.stream;
-    var width = parseInt(connection.videosContainer.parentElement.clientHeight);
-    var height = parseInt(connection.videosContainer.parentElement.clientHeight) - 20;
-    var mediaElement = getHTMLMediaElement(video, {
-        title: event.type === 'local' ? 'you' : event.extra,
-        buttons: [],
-        width: width,
-        showOnMouseEnter: false,
-        height: height
-    });
+    video.height = '260';
+    video.width = '260';
+    video.style.padding = '5';
+    // var width = parseInt(connection.videosContainer.parentElement.clientHeight);
+    // var height = parseInt(connection.videosContainer.parentElement.clientHeight) - 20;
+    // var mediaElement = getHTMLMediaElement(video, {
+    //     title: event.type === 'local' ? 'you' : event.extra,
+    //     buttons: [],
+    //     width: width,
+    //     showOnMouseEnter: false,
+    //     height: height
+    // });
     // var button = document.createElement('button');
     // button.innerHTML = 'Mute';
     // button.id = e.streamid;
@@ -201,28 +206,42 @@ connection.onstream = function (event) {
     //         button.innerHTML = 'Mute';
     //     }
 
-    //     setTimeout(function () {
-    //         button.disabled = false;
-    //     }, 200);
-    // };
+    //         setTimeout(function () {
+    //             button.disabled = false;
+    //         }, 200);
+    //     };
 
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id) {
             screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(mediaElement);
+            connection.filesContainer.appendChild(video);
         }
     } else {
         // connection.videosContainer.appendChild(button);
-        connection.videosContainer.appendChild(mediaElement);
+        if (connection.videosContainer.children.length > 0) {
+            var dummyPresent = false;
+            for (let index = 0; index < connection.videosContainer.children.length; index++) {
+                var vid_element = connection.videosContainer.children[0];
+                if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
+                    connection.videosContainer.replaceChild(video, vid_element);
+                    dummyPresent = true;
+                    break;
+                }
+            }
+            if (!dummyPresent)
+                connection.videosContainer.appendChild(video);
+        } else {
+            connection.videosContainer.appendChild(video);
+        }
     }
     setTimeout(function () {
-        mediaElement.media.play();
+        video.play();
     }, 5000);
-    mediaElement.id = event.streamid;
+    video.id = event.streamid;
 };
 
-connection.onmute = function(event){
-debugger;
+connection.onmute = function (event) {
+    debugger;
 };
 connection.onstreamended = function (event) {
     var mediaElement = document.getElementById(event.streamid);
@@ -357,6 +376,3 @@ if (roomid && roomid.length) {
         });
     })();
 }
-// document.getElementById('parentContianer').onhashchange=function(){
-//     debugger;
-// }

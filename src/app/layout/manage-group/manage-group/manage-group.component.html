@@ -12,14 +12,14 @@
     </h4>
     <div class="row" *ngIf="showGroupNameUiFlag">
         <div class="align-center text-center">
-            <input type="text" placeholder="Type Name Here..." #createGroupsVal class="col-md-11 search-member" />
-            <button class="btn btn-sec" (click)="addGroup(createGroupsVal.value)">Add Group</button>
+            <input type="text" placeholder="Type Name Here..."  class="col-md-11 search-member"  #groupNameTxt/>
+            <button class="btn btn-sec" (click)="addGroup(groupNameTxt.value)">Add Group</button>
         </div>
     </div>
 
     <hr>
     <div class="form-group input-group">
-        <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+        <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchGroupName">
         <div class="input-group-append">
             <button class="btn btn-secondary" type="button">
                 <i class="fa fa-search"></i>
@@ -45,7 +45,7 @@
                     <a class="date-period-select"  style="cursor: default;">Status</a>
                     </div>
                     <div class="form-group input-group"style="padding-top:5px;">
-                      <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+                      <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchTextTable">
                       <div class="input-group-append">
                           <button class="btn btn-secondary" type="button">
                               <i class="fa fa-search"></i>
@@ -89,7 +89,7 @@
                     <th>Team Name</th>
                     <th>Status</th>
                 </tr>
-                <tr *ngFor="let user of selectedGroupUsers | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
+                <tr *ngFor="let user of selectedGroupUsers | genericSearchAllProp:searchTextTable | paginate: config ;let srNo = index">
                     <td>{{srNo+1}}</td>
                     <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
                     <td>{{user.email}}</td>

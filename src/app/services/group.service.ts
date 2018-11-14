@@ -26,11 +26,7 @@ export class GroupService {
       // const resp = new BehaviorSubject<any>({});
       this.apiRequest.post(url, payload).subscribe(data => {
           this.GroupList$.next(data);
-      },
-          err => {
-            //  alert(err);
           });
-      // return resp;
     }
     getGroupList() {
       return this.GroupList$;

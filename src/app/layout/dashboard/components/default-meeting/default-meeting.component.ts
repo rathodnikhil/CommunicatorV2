@@ -25,7 +25,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
-    showActionIcon: boolean;
     showCancelMeeting: boolean;
     searchText: String;
     accessCode: any;
@@ -54,15 +53,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button1Content: '<i class="fa fa - ban"></i>&nbsp;Cancel Meeting',
         Button2Content: ''
     };
-    @ViewChild('confirmDeleteMeetingModal') public confirmDeleteMeetingModal: CustomModalComponent;
-    deleteMeetConfirm: CustomModalModel = {
-        titleIcon: '<i class="fa fa - trash"></i>',
-        title: 'Delete',
-        smallHeading: 'You can delete selected meeting',
-        body: '',
-        Button1Content: '<i class="fa fa - trash"></i>&nbsp;Delete Meeting',
-        Button2Content: ''
-    };
+  
     @ViewChild('startMeetNowModal') public startMeetNowModal: CustomModalComponent;
     startMeetNow: CustomModalModel = {
         titleIcon: '<i class="fa fa - trash"></i>',
@@ -79,7 +70,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        this.showActionIcon = true;
         this.showCancelMeeting = false;
         this.meetNowMeeting = {};
         this.showScheduleMeetingSuccess = false;
@@ -210,10 +200,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             }
         });
     }
-    deleteMeeting(meeting) {
-        this.selectedMeeting = meeting;
-        this.confirmDeleteMeetingModal.open();
-    }
+ 
     cancelMeeting(meeting) {
         this.selectedMeeting = meeting;
         this.confirmCancelMeetingModal.open();
@@ -309,9 +296,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 break;
             case 'cancel':
                 this.confirmCancelMeetingModal.close();
-                break;
-            case 'delete':
-                this.confirmDeleteMeetingModal.close();
                 break;
         }
     }

@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     loggedInUserRole: any;
     signUpflag: boolean;
     selectedUser: any;
+    manageGroupFlag: boolean;
 
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
