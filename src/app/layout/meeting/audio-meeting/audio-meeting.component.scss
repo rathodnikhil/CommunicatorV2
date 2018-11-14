@@ -47,7 +47,7 @@ div.scrollmenu a:hover {
 .parent {
     background-color: f1f1f1;
     position: relative;
-    height: 32vh;
+    height: 48vh;
     border: 1px solid #dedede;
     border-radius: 8px;
     background: rgb(238, 235, 235);
@@ -241,4 +241,10 @@ div.scrollmenu a:hover {
 }
 .sc_left{
     border-radius:8px 0px 0px 8px;
+}
+.momTxt{
+    width: 100%; height: 60vh; margin: 10px;  resize: none;
+}
+.chatTxt{
+    width:100%;height:70px;  resize: none;
 }

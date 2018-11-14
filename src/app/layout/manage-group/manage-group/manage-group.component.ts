@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GroupService } from '../../../services/group.service';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
@@ -50,6 +50,8 @@ export class ManageGroupComponent implements OnInit {
     userList: any[];
     showNewGroup: boolean;
     searchGroupName: any;
+    searchTextTable: any;
+    @ViewChild("groupNameTxt") groupNameTxt: ElementRef;
     constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
@@ -64,16 +66,22 @@ export class ManageGroupComponent implements OnInit {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
+                const payload = { userCode: this.loggedInUserObj.userCode };
+                this._groupService.setGroupList(payload);
+                this._userService.setUserList(payload);
+                this._groupService.setGroupListObjByLoggedInUserId(payload);
+                this._userService.setUserList(payload);
+                this._groupService.getGroupList().subscribe(data => {
+                    if(data[0].errorFl || data[0].warningFl){
+                        this.groupList = [];
+                        return this.alertService.warning(data[0].message, 'Warning');
+                    } else{
+                    this.groupList = data;
+                    }
+                });
             }
         });
-        this._groupService.getGroupList().subscribe(data => {
-            // if(data[0].errorFl || data[0].warningFl){
-            //     this.groupList = [];
-            //     return this.alertService.warning(data[0].message, 'Warning');
-            // } else{
-            this.groupList = data;
-            // }
-        });
+       
 
         this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
             this.groupMemberObjList = data;
@@ -124,7 +132,7 @@ export class ManageGroupComponent implements OnInit {
                 this._groupService.saveGroupDetails(payload).subscribe(res => {
                     const newGroup = { groupId: res };
                     this.groupList.push(newGroup);
-                    this.createGroupsVal = '';
+                    this.groupNameTxt.nativeElement.value = '';
                     return this.alertService.success('Group has been added successfully', 'Success');
                 });
             }

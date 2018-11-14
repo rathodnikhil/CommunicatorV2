@@ -118,9 +118,7 @@ export class RegisterAdminComponent implements OnInit {
   }
   }
   }
-  selectTeam(team){
-    alert(team.teamName);
-  }
+
  clearAllField(){
    this.userName = "";
    this.firstName = "";

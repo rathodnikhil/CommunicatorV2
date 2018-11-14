@@ -43,7 +43,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-3">
-                            <label>Time<span class="asterik-mark">&nbsp;*</span></label>
+                            <label><br><br>Time<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
                             <ngb-timepicker class="customTimePicker" id="meeting.meridianTime" [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
@@ -67,10 +67,10 @@
                             <label >Timezone<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
-                            <div ngbDropdown class="d-inline-block dropdown">
-                                <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
+                            <div ngbDropdown class="d-inline-block dropdown" >
+                                <button class="btn btn-outline-primary" style="white-space: pre-wrap;" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
                                 <div ngbDropdownMenu>
-                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" (click)="changeTimeZone(timezone)">{{timezone}}</button>
+                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" style="white-space: pre-wrap;" (click)="changeTimeZone(timezone)">{{timezone}}</button>
                                 </div>
                             </div>
                         </div>

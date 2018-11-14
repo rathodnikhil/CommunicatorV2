@@ -30,9 +30,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     passwordMacthFlag: boolean;
     isGuest: boolean;
     forgetPasswordFlag: boolean;
-    emailSuccessFlag: boolean;
-    emailValidationFlag: boolean;
-    emailFailFlag: boolean;
     Logintext = 'Login';
     loggedInUserObj: any;
 
@@ -107,7 +104,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
                         });
                     } else {
-                        return this.alertService.warning('UserName and Password dose not match', 'Error');
+                        return this.alertService.warning('Username and Password does not match', 'Incorrect Username');
                     }}
                 );
             }
@@ -121,15 +118,22 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.forgetPasswordFlag = false;
         this.loginUiFlag = true;
     }
-
+    onKeyUp(event) {
+        if (event.key === 'Enter') { this.sendEmailForgotPassword(); }
+    }
     sendEmailForgotPassword() {
+        if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
+            return this.alertService.error('Please enter email', 'Error');
+        } else {
         let payload = { email: this.forgetEmail };
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
-            this.emailSuccessFlag = true;
-            setTimeout(function () {
-                this.emailSuccessFlag = false;
-            }.bind(this), 5000);
+            if(res.json().errorFl === true || res.json().warningFl === true){
+                return this.alertService.error('Email id is not register , enter register email', 'Error');
+            }else{
+                return this.alertService.success('Password reset link has been successfully sent to your email account ,check your email.', 'Error');
+            }
         });
         this.forgetEmail = '';
     }
+}
 }

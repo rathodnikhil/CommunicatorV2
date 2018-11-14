@@ -59,6 +59,10 @@
         overflow-x: hidden
     }
 }
+.dropdown-item{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
 .popFooter{
     background-color: #eaf3f8; border-top:1px solid  #19191a;
     }

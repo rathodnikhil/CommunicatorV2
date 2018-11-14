@@ -130,7 +130,6 @@ export class NotificationComponent implements OnInit {
             createdBy: this.loggedInUser.userCode }
        // this.viewMemeberDetails(user);
        var flag = false;
-       alert(this.loggedInUser.team.teamCode);
         this.userList.forEach(element => {
             if(user.userCode === element.userCode){
                 flag = false;

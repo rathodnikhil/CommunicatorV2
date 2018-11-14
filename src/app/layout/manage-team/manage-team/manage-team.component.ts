@@ -208,7 +208,6 @@ export class ManageTeamComponent implements OnInit {
         this.updateTeamName = this.selectedTeamObj.teamName;
     }
     updateTeamDetails(){
-        alert(this.updateTeamName);
         if (this.updateTeamName === "" || this.updateTeamName === null || typeof this.updateTeamName === "undefined") {
             return this.alertService.warning("Please Enter Team Name", "Warning");   
         } else {

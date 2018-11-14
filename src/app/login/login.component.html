@@ -47,15 +47,12 @@
                         <input class="form-control" type="password" placeholder="password" [(ngModel)]="password" (keyup)="onKey($event)" required>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="checkbox" [(ngModel)]="isGuest" (change)="guestLogin()" />
-                        <label>continue as guest?</label>
+                        <input style="margin-top: 3px;" type="checkbox" [(ngModel)]="isGuest" (change)="guestLogin()" />
+                        <a (click)="guestLogin()" style="font-weight: bold">continue as guest?</a>
                     </div>
                     <fieldset id="actions">
-                        <!-- <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']"> -->
-                        <input type="submit" id="submit" [(ngModel)]="Logintext" (click)="login()" 
-                        />
+                        <input type="submit" id="submit" [(ngModel)]="Logintext" (click)="login()" />
                         <a  (click)="forgetPassword()">Forgot your password?</a>
-                        <!-- <a [routerLink]="['/signup']">Register</a> -->
                     </fieldset>
                   
                 </div>
@@ -63,15 +60,6 @@
           
         </div>
         <div  *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
-                <div style="margin-top: 20px;" *ngIf="emailFailFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>There is some error while sending email.
-                    </div>
-                <div style="margin-top: 20px;" *ngIf="emailValidationFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Enter Registered Email.
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="emailSuccessFlag" class="alert alert-success alert-dismissable">
-                        Password reset link has been successfully sent to your email account ,check your email.
-                    </div>
                 <div class="input-group mb-3">
              <div class="input-group-prepend">
                  <span class="input-group-text">
@@ -82,7 +70,7 @@
              [(ngModel)]="forgetEmail" (keyup)="onKey($event)" required/>
          </div>
          
-         <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
+         <button class="btn btn-sec" (click)="sendEmailForgotPassword()" (keyup)="onKeyUp($event)">Submit</button>
          <div class="alink">  <a  (click)="backToLogin()">back to login</a></div>
      </div>
         <div class="row h-100 d-flex justify-content-center fixed-footer">
