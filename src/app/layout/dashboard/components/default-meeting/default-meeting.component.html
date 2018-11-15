@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
-                Good Morning {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+                Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
                 <h6 class="style-links">Schedule upcoming Meetings</h6>
             </div>
             <div class="col-md-2" style="border-left: 1px solid #dadadc; text-align: center;">
@@ -13,7 +13,7 @@
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
                     <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess" class="alert alert-success alert-dismissable">
                         <strong>Success:&nbsp; </strong>
-                        <span style="font-weight: bold;">meeting has been scheduled Successfully.</span>
+                        <span style="font-weight: bold;">Meeting has scheduled Successfully.</span>
                     </div>
                     <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess" class="alert alert-success alert-dismissable">
                         <strong>Success: </strong> <span style="font-weight: bold;">Meeting Details has been Copied.
@@ -25,7 +25,7 @@
                             for
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
-                        <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone
+                        <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
                             <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                 <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting/audio?meetingCode={{meetNowMeeting.meetingCode}}</span>
@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
                 <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
-                    ngbTooltip="schedule meeting"></i>
+                    ngbTooltip="schedule Meeting"></i>
                 <!-- <a href="javascript:void(0)"  class="btn btn-sec pull-right" type="button" title="schedule meeting"></a> -->
             </div>
         </div>

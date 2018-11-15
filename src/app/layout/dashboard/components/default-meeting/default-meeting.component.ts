@@ -137,7 +137,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
-                this.selectedCriteria = '';
+                this.selectedCriteria = 'Range';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
 
@@ -219,6 +219,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         });
     }
     copyToOutLook(event) {
+        debugger;
         const meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
         a.href = 'mailto:?subject=' + 'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
@@ -231,7 +232,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     // copy meeting content
     copyToClipboard() {
-        const meetingDetails = this.getMeetingDetails();
+        const meetingDetails ='Meet now: ' + new Date().toDateString()+ '  '+ this.getMeetingDetails();
         const tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
         document.execCommand('copy');
         this.showScheduleMeetingSuccess = false;

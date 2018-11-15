@@ -239,7 +239,7 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.isRecurring = 1;
         this.meeting.datePicker = Date.now();
     }
-    copyToOutLook(event, subject) {
+    copyToOutLook(event) {
         var meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
         a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
@@ -251,7 +251,7 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     //copy meeting content
     copyToClipboard() {
-        var meetingDetails = this.getMeetingDetails();
+        var meetingDetails = this.subject + '  '+ this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
         document.execCommand('copy');
        // this.showScheduleMeetingSuccess = false;
