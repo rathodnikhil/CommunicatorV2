@@ -47,7 +47,7 @@ div.scrollmenu a:hover {
 .parent {
     background-color: f1f1f1;
     position: relative;
-    height: 32vh;
+    height: 30vh;
     border: 1px solid #dedede;
     border-radius: 8px;
     background: rgb(238, 235, 235);
@@ -101,7 +101,7 @@ div.scrollmenu a:hover {
 }
 
 .card-body {
-    height: 80vh;
+    height: 73vh;
     overflow-y: hidden;
 }
 
@@ -183,11 +183,25 @@ div.scrollmenu a:hover {
 }
 
 .meeting-bottom {
-    background: rgb(238, 235, 235);
-    height: 6vh;
     position: absolute;
     bottom: 0px;
-    width: 100%;
+    text-align: center;
+
+    button {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 20px;
+        margin-right: 10px;
+        opacity: 0.8;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 .momBtn {
@@ -237,8 +251,9 @@ div.scrollmenu a:hover {
 
 .sc_right {
     right: 10px;
-    border-radius:0px 8px 8px 0px;
+    border-radius: 0px 8px 8px 0px;
 }
-.sc_left{
-    border-radius:8px 0px 0px 8px;
+
+.sc_left {
+    border-radius: 8px 0px 0px 8px;
 }
