@@ -93,6 +93,6 @@ export class PastMeetingsComponent implements OnInit {
         return s && s.replace('meetNowFlag','');
       }
       downloadRecording(data) {
-        this.alertService.success("No recording for this meeting has been added", "Recording Download");
+        this.alertService.warning("No recording for this meeting has been added", "Recording Download");
     }
 }

@@ -139,7 +139,7 @@
                                     ) for
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>
-                                <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone
+                                <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
                                     <span *ngIf="vedioMeeting" style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                         <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                         https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span>
@@ -153,7 +153,7 @@
                                 </h5>
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event,subject)">Go to Outlook</button>
+                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
                                 <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
                                 <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
                             </div>
