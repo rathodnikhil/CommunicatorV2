@@ -1,13 +1,13 @@
 @import "styles/customStyle.css";
 .card-body {
-    background: #3277d3;
-    background: -moz-linear-gradient(to right,#3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, #3277d3), color-stop(74%, #6aa8fc), color-stop(100%, #6aa8fc));
-    background: -webkit-linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: -o-linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: -ms-linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #3277d3', endColorstr=' #3277d3', GradientType=1);
+    background: #353535;
+    background: -moz-linear-gradient(to right,#353535 0%, #868e96 74%, #868e96 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, #353535), color-stop(74%, #868e96), color-stop(100%, #868e96));
+    background: -webkit-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    background: -o-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    background: -ms-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    background: linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1);
     height: 93vh;
 }
 
@@ -66,9 +66,9 @@
     top: -5px;
 }
 .btn.btn-secondary {
-    background:  #3277d3;
-    /* color:  #3277d3; */
-    border-color:  #3277d3;
+    background:  #353535;
+    /* color:  #353535; */
+    border-color:  #353535;
     border-radius: 0px 5px 5px 0px;
 }
 

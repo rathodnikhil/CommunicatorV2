@@ -96,6 +96,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
+    isMute=false;
+    isMeetingStarted=false;
+    isScreenSharingStarted=false;
     // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
