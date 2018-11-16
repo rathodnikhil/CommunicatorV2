@@ -1,4 +1,6 @@
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
+
+document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 // ......................................................
@@ -18,6 +20,18 @@ document.getElementById('share-screen').onclick = function () {
 
 };
 
+document.getElementById('btn-mute').onclick = function () {
+    try {
+        var streamid = connection.streamEvents.selectFirst().streamid;
+        if(document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash')>=0)
+        connection.streamEvents.selectFirst({local: true}).stream.mute();
+        else
+        connection.streamEvents.selectFirst({local: true}).stream.unmute();
+    } catch (error) {
+        console.log(error);
+    }
+
+};
 document.getElementById('open-room').onclick = function () {
     if (document.getElementById('room-id').value === 'Enter Meeting Id') {
         alert('Enter valid meeting Id');
@@ -172,15 +186,28 @@ connection.onstream = function (event) {
     event.mediaElement.removeAttribute('srcObject');
 
     var video = document.createElement('video');
-    video.setAttribute("drag-scroll-item", '');
+
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
     }
     video.srcObject = event.stream;
-    video.height = '260';
-    video.width = '260';
-    video.style.padding = '5';
+    video.height = '250';
+    video.width = '250';
+    video.setAttribute("style", 'float:left;');
+    // video.style.padding = '5';
+    var customDiv = document.createElement('div');
+    customDiv.style.height = '260';
+    customDiv.style.width = '260';
+    customDiv.style.padding = '5';
+    customDiv.setAttribute("style", 'width:260px;height:260px;padding:5px;text-align: center; float:left;');
+    var heading = document.createElement('div');
+    heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
+    customDiv.appendChild(heading);
+    customDiv.appendChild(video);
+    customDiv.setAttribute("drag-scroll-item", '');
+    customDiv.setAttribute("id",event.streamid+'parent');
     // var width = parseInt(connection.videosContainer.parentElement.clientHeight);
     // var height = parseInt(connection.videosContainer.parentElement.clientHeight) - 20;
     // var mediaElement = getHTMLMediaElement(video, {
@@ -221,17 +248,17 @@ connection.onstream = function (event) {
         if (connection.videosContainer.children.length > 0) {
             var dummyPresent = false;
             for (let index = 0; index < connection.videosContainer.children.length; index++) {
-                var vid_element = connection.videosContainer.children[0];
+                var vid_element = connection.videosContainer.children[index];
                 if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
-                    connection.videosContainer.replaceChild(video, vid_element);
+                    connection.videosContainer.replaceChild(customDiv, vid_element);
                     dummyPresent = true;
                     break;
                 }
             }
             if (!dummyPresent)
-                connection.videosContainer.appendChild(video);
+                connection.videosContainer.appendChild(customDiv);
         } else {
-            connection.videosContainer.appendChild(video);
+            connection.videosContainer.appendChild(customDiv);
         }
     }
     setTimeout(function () {
@@ -243,8 +270,8 @@ connection.onstream = function (event) {
 connection.onmute = function (event) {
     debugger;
 };
-connection.onstreamended = function (event) {
-    var mediaElement = document.getElementById(event.streamid);
+connection.onstreamended = function (event) {    
+    var mediaElement = document.getElementById(event.streamid+'parent');
     if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
@@ -270,7 +297,9 @@ connection.onclose = function () {
         document.querySelector('h1').innerHTML = 'Seems session has been closed or all participants left.';
     }
 };
-
+// connection.onleave=function(event){
+//     debugger;
+// };
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';

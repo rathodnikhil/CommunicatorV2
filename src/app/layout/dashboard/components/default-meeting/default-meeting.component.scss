@@ -1,4 +1,4 @@
-//border-left: 2px solid #3277d3;
+//border-left: 2px solid #353535;
 .chat-panel {
     border-radius: 5px;
     border: 1px solid #d3d3d3;
@@ -241,7 +241,7 @@
 }
 
 .badge {
-    background: #3277d3;
+    background: #353535;
     width: auto;
     height: auto;
     margin: 0;
@@ -254,22 +254,11 @@
 }
 
 .card-body {
-    /* IE10+ */
-    background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
-    /* Mozilla Firefox */
-    background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
-    /* Opera */
-    background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(radial, center center, 0, center center, 286, color-stop(0, #FFFFFF), color-stop(100, #e8f0fc));
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #e8f0fc 100%);
-    /* W3C Markup */
-    background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #e8f0fc 100%);
+    background-color:#eaeaea;
 }
 
 .meetingHeader{
-    background:#3277d3;
+    background:#353535;
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
     height: 7vh;
@@ -326,13 +315,13 @@ $border-color: #e0e0e0;
 
 .accordion{
     background-color: #e8f0fc  !important;
-    border : 1px solid #3277d3;
+    border : 1px solid #353535;
 
     cursor: pointer;
     text-align: center;
     font: Arial, Helvetica;
     font-weight: bold;
-    color: #3277d3;
+    color: #353535;
   list-style-type: none;
   border: 1px solid $border-color;
   width: 100%;
@@ -391,7 +380,7 @@ $border-color: #e0e0e0;
 }
 .btn-meetnow{
     background-color: #fff;
-    border: #3277d3;
+    border: #353535;
     cursor: pointer;
     text-align: center;
     font: Arial, Helvetica;

@@ -1,3 +1,4 @@
+document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id","videos_container");
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
@@ -196,7 +197,7 @@ connection.onstream = function (event) {
         if (connection.audiosContainer.children.length > 0) {
             var dummyPresent = false;
             for (let index = 0; index < connection.audiosContainer.children.length; index++) {
-                var vid_element = connection.audiosContainer.children[0];
+                var vid_element = connection.audiosContainer.children[index];
                 if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
                     connection.audiosContainer.replaceChild(mediaElement, vid_element);
                     dummyPresent = true;
