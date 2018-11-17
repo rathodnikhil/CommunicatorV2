@@ -166,10 +166,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             width: '350px',
             height: '420px',
         };
-        if (typeof (window['functionFromExternalScript']) === 'function') {
+        if (typeof (window['functionFromExternalScript']) === 'function') {    
             window['functionFromExternalScript'](params);
         }
-    }
+    }    
     // to set selected send message to
     changeMessageTo(member) {
         this.messageSendTo = member.name + ' ' + member.lastName;
@@ -263,12 +263,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     onSnapAnimationFinished() {
-        console.log('snap animation finished');
+        //tbd
     }
 
     onIndexChanged(idx) {
-        this.index = idx;
-        console.log('current index: ' + idx);
+        this.index = idx;        
     }
 }
 

@@ -35,6 +35,9 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     isHost = false;
     previousHtml: any;
     isGuest = false;
+    isScreenSharingStarted=false;
+    isMute=false;
+    isMeetingStarted=false;
     currentTab = 'chat';
     notify: string;
     config: any = { leftTime: 10, notify: [300] };

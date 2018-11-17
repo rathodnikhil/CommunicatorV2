@@ -3,13 +3,13 @@
 document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
+document.getElementById('input-text-chat').disabled = true;
 // ......................................................
 // .......................UI Code........................
 // ......................................................
 var alertService = window.customAlertService;
 document.getElementById('share-screen').onclick = function () {
     try {
-        // this.disabled = true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -23,10 +23,10 @@ document.getElementById('share-screen').onclick = function () {
 document.getElementById('btn-mute').onclick = function () {
     try {
         var streamid = connection.streamEvents.selectFirst().streamid;
-        if(document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash')>=0)
-        connection.streamEvents.selectFirst({local: true}).stream.mute();
+        if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0)
+            connection.streamEvents.selectFirst({ local: true }).stream.mute();
         else
-        connection.streamEvents.selectFirst({local: true}).stream.unmute();
+            connection.streamEvents.selectFirst({ local: true }).stream.unmute();
     } catch (error) {
         console.log(error);
     }
@@ -43,6 +43,7 @@ document.getElementById('open-room').onclick = function () {
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
         document.getElementById('resume-count').click();
         document.getElementById('btn-save-mom').disabled = false;
+        document.getElementById('input-text-chat').disabled = false;
     });
 };
 
@@ -62,16 +63,10 @@ document.getElementById('open-or-join-room').onclick = function () {
 
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
-    if (connection.isInitiator) {
-        // use this method if you did NOT set "autoCloseEntireSession===true"
-        // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
-        connection.closeEntireSession(function () {
-            document.getElementById('meeting-error').innerText = 'Meeting has ended.';
-        });
-    } else {
-        connection.leave();
-        document.getElementById('meeting-error').innerText = 'You have left the meeting.';
-    }
+    connection.leave();
+    document.getElementById('meeting-error').innerText = 'You have left the meeting.';
+    document.getElementById('share-file').style.display = 'none';
+    document.getElementById('share-screen').style.display = 'none';
 };
 
 // ......................................................
@@ -181,7 +176,6 @@ connection.sdpConstraints.mandatory = {
 var screenshareCheck = {};
 connection.videosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
-    debugger;
     event.mediaElement.removeAttribute('src');
     event.mediaElement.removeAttribute('srcObject');
 
@@ -207,41 +201,11 @@ connection.onstream = function (event) {
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');
-    customDiv.setAttribute("id",event.streamid+'parent');
-    // var width = parseInt(connection.videosContainer.parentElement.clientHeight);
-    // var height = parseInt(connection.videosContainer.parentElement.clientHeight) - 20;
-    // var mediaElement = getHTMLMediaElement(video, {
-    //     title: event.type === 'local' ? 'you' : event.extra,
-    //     buttons: [],
-    //     width: width,
-    //     showOnMouseEnter: false,
-    //     height: height
-    // });
-    // var button = document.createElement('button');
-    // button.innerHTML = 'Mute';
-    // button.id = e.streamid;
-    // button.onclick = function () {
-    //     button = this;
-    //     button.disabled = true;
-    //     var streamid = button.id;
-
-    //     if (button.innerHTML == 'Mute') {
-    //         connection.streams[streamid].mute();
-    //         button.innerHTML = 'UnMute';
-    //     } else {
-    //         connection.streams[streamid].unmute();
-    //         button.innerHTML = 'Mute';
-    //     }
-
-    //         setTimeout(function () {
-    //             button.disabled = false;
-    //         }, 200);
-    //     };
-
+    customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isScreen) {
-        if (screenshareCheck != event.stream.id) {
+        if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(video);
+            connection.filesContainer.appendChild(customDiv);
         }
     } else {
         // connection.videosContainer.appendChild(button);
@@ -268,10 +232,10 @@ connection.onstream = function (event) {
 };
 
 connection.onmute = function (event) {
-    debugger;
+    connection.streamEvents[event.streamid].stream.mute();
 };
-connection.onstreamended = function (event) {    
-    var mediaElement = document.getElementById(event.streamid+'parent');
+connection.onstreamended = function (event) {
+    var mediaElement = document.getElementById(event.streamid + 'parent');
     if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
@@ -395,9 +359,9 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
-                debugger;
                 document.getElementById('resume-count').click();
                 document.getElementById('btn-save-mom').disabled = false;
+                document.getElementById('input-text-chat').disabled = false;
                 return;
             }
             document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';
