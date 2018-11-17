@@ -69,7 +69,7 @@
                             </li>
                         </ul>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
-                            <div style="height: 47vh; overflow-y: scroll" id="chat-container" class="chat-output">
+                            <div style="height: 55vh; overflow-y: scroll" id="chat-container" class="chat-output">
                             </div>
                             <div class="col-md-12" style="padding-top: 20px;">
                                 <div class="row">
@@ -102,16 +102,17 @@
     <button id="btn-mute" class="btn pull-left" [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>
         <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
     </button>
-    <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'btn-success':'default'" (click)='isMeetingStarted=!isMeetingStarted'>
+    <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'" (click)='isMeetingStarted=!isMeetingStarted'>
         <i class="fa fa-2x fa-play" aria-hidden="true"></i>
     </button>
     <button id="join-room" class="btn default pull-left" style="display: none;">
         <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
-    </button> 
+    </button>
     <button id="share-file" class="btn default pull-left" style="display:none;" placement="top" ngbTooltip="Share File">
         <i class="fa fa-2x fa-clipboard"></i>
     </button>
-    <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" ngbTooltip="Share Screen" [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='isScreenSharingStarted=!isScreenSharingStarted'>
+    <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" ngbTooltip="Share Screen" [ngClass]="isScreenSharingStarted?'btn-sec':'default'"
+        (click)='isScreenSharingStarted=!isScreenSharingStarted'>
         <i class="fa fa-2x fa-desktop"></i>
     </button>
     <button id="resume-count" (click)="startTimer()" style="display: none;" class="btn btn-link btn-sm">resume</button>

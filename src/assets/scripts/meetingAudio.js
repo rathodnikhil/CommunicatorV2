@@ -1,15 +1,15 @@
-document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id","videos_container");
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
+
+document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
 // ......................................................
 // .......................UI Code........................
 // ......................................................
-var alertService = window.customAlertService ;
+var alertService = window.customAlertService;
 document.getElementById('share-screen').onclick = function () {
     try {
-        // this.disabled = true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -20,6 +20,18 @@ document.getElementById('share-screen').onclick = function () {
 
 };
 
+document.getElementById('btn-mute').onclick = function () {
+    try {
+        var streamid = connection.streamEvents.selectFirst().streamid;
+        if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0)
+            connection.streamEvents.selectFirst({ local: true }).stream.mute();
+        else
+            connection.streamEvents.selectFirst({ local: true }).stream.unmute();
+    } catch (error) {
+        console.log(error);
+    }
+
+};
 document.getElementById('open-room').onclick = function () {
     if (document.getElementById('room-id').value === 'Enter Meeting Id') {
         alert('Enter valid meeting Id');
@@ -31,7 +43,6 @@ document.getElementById('open-room').onclick = function () {
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
         document.getElementById('resume-count').click();
         document.getElementById('btn-save-mom').disabled = false;
-        document.getElementById('input-text-chat').disabled = false;
     });
 };
 
@@ -51,16 +62,10 @@ document.getElementById('open-or-join-room').onclick = function () {
 
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
-    if (connection.isInitiator) {
-        // use this method if you did NOT set "autoCloseEntireSession===true"
-        // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
-        connection.closeEntireSession(function () {
-            document.getElementById('meeting-error').innerText = 'Meeting has ended.';
-        });
-    } else {
-        connection.leave();
-        document.getElementById('meeting-error').innerText = 'You have left the meeting.';
-    }
+    connection.leave();
+    document.getElementById('meeting-error').innerText = 'You have left the meeting.';
+    document.getElementById('share-file').style.display = 'none';
+    document.getElementById('share-screen').style.display = 'none';
 };
 
 // ......................................................
@@ -135,13 +140,13 @@ connection.getScreenConstraints = function (callback) {
             return;
         } else if (screen_constraints.mandatory) {
             document.getElementById('share-screen').disabled = false;
-            var url='/#/error/sharescreen';
-            var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
-                try {
-                    popup_window.focus();
-                } catch (e) {
-                    alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
-                }
+            var url = '/#/error/sharescreen';
+            var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+            try {
+                popup_window.focus();
+            } catch (e) {
+                alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+            }
         } else
             throw error;
     });
@@ -167,7 +172,6 @@ connection.mediaConstraints = {
     audio: true,
     video: false
 };
-
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: false
@@ -175,52 +179,52 @@ connection.sdpConstraints.mandatory = {
 var screenshareCheck = {};
 connection.audiosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
-    // var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
-    // var height = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
-    // var mediaElement = getHTMLMediaElement(event.mediaElement, {
-    //     title: event.type === 'local' ? 'you' : event.extra,
-    //     buttons: [],
-    //     width: width,
-    //     showOnMouseEnter: false,
-    //     height: height
-    // });
     var mediaElement = event.mediaElement;
-    mediaElement.height = '260';
-    mediaElement.width = '260';
-    mediaElement.style.padding = '5';
+    mediaElement.setAttribute("style", 'float:left;margin-top:200px;');
+    
+    var customDiv = document.createElement('div');    
+    customDiv.setAttribute("style", 'width:320px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/user_audio.jpg"); background-repeat: no-repeat;');
+    var heading = document.createElement('div');
+    heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');    
+    heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
+    customDiv.appendChild(heading);    
+    customDiv.appendChild(mediaElement);
+    customDiv.setAttribute("drag-scroll-item", '');
+    customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isScreen) {
-        if (screenshareCheck != event.stream.id) {
+        if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(mediaElement);
+            connection.filesContainer.appendChild(customDiv);
         }
     } else {
+        // connection.audiosContainer.appendChild(button);
         if (connection.audiosContainer.children.length > 0) {
             var dummyPresent = false;
             for (let index = 0; index < connection.audiosContainer.children.length; index++) {
                 var vid_element = connection.audiosContainer.children[index];
                 if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
-                    connection.audiosContainer.replaceChild(mediaElement, vid_element);
+                    connection.audiosContainer.replaceChild(customDiv, vid_element);
                     dummyPresent = true;
                     break;
                 }
             }
             if (!dummyPresent)
-                connection.audiosContainer.appendChild(mediaElement);
+                connection.audiosContainer.appendChild(customDiv);
         } else {
-            connection.audiosContainer.appendChild(mediaElement);
+            connection.audiosContainer.appendChild(customDiv);
         }
-        // connection.audiosContainer.appendChild(mediaElement);
     }
-
     setTimeout(function () {
         mediaElement.media.play();
     }, 5000);
-
     mediaElement.id = event.streamid;
 };
 
+connection.onmute = function (event) {
+    connection.streamEvents[event.streamid].stream.mute();
+};
 connection.onstreamended = function (event) {
-    var mediaElement = document.getElementById(event.streamid);
+    var mediaElement = document.getElementById(event.streamid + 'parent');
     if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
@@ -351,6 +355,3 @@ if (roomid && roomid.length) {
         });
     })();
 }
-// document.getElementById('parentContianer').onhashchange=function(){
-//     debugger;
-// }
