@@ -96,6 +96,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
+    isMute=false;
+    isMeetingStarted=false;
+    isScreenSharingStarted=false;
     // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
@@ -163,10 +166,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             width: '350px',
             height: '420px',
         };
-        if (typeof (window['functionFromExternalScript']) === 'function') {
+        if (typeof (window['functionFromExternalScript']) === 'function') {    
             window['functionFromExternalScript'](params);
         }
-    }
+    }    
     // to set selected send message to
     changeMessageTo(member) {
         this.messageSendTo = member.name + ' ' + member.lastName;
@@ -260,12 +263,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     onSnapAnimationFinished() {
-        console.log('snap animation finished');
+        //tbd
     }
 
     onIndexChanged(idx) {
-        this.index = idx;
-        console.log('current index: ' + idx);
+        this.index = idx;        
     }
 }
 

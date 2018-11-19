@@ -47,7 +47,7 @@ div.scrollmenu a:hover {
 .parent {
     background-color: f1f1f1;
     position: relative;
-    height: 32vh;
+    height: 30vh;
     border: 1px solid #dedede;
     border-radius: 8px;
     background: rgb(238, 235, 235);
@@ -85,7 +85,7 @@ div.scrollmenu a:hover {
 }
 
 .card-header {
-    background: #3277d3;
+    background: #353535;
     color: #ffffff;
     font-weight: bold;
 }
@@ -101,7 +101,7 @@ div.scrollmenu a:hover {
 }
 
 .card-body {
-    height: 80vh;
+    height: 73vh;
     overflow-y: hidden;
 }
 
@@ -183,13 +183,42 @@ div.scrollmenu a:hover {
 }
 
 .meeting-bottom {
-    background: rgb(238, 235, 235);
-    height: 6vh;
     position: absolute;
-    bottom: 0px;
-    width: 100%;
-}
+    bottom: 15px;
+    text-align: center;
 
+    button {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 25px;
+        margin-right: 10px;
+        &:hover {            
+            -webkit-animation: neon5 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon5 1.5s ease-in-out infinite alternate;
+  animation: neon5 1.5s ease-in-out infinite alternate;
+        }
+        &:disabled{
+            background-color:#d3d3d3 !important;
+        }
+    }
+    .default{
+        background-color: #353535;
+        border-color: #97A0AC;
+        color:#fff;
+    }
+}
+@-webkit-keyframes neon5 {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF9900, 0 0 70px #FF9900, 0 0 80px #FF9900, 0 0 100px #FF9900, 0 0 150px #FF9900;
+    }
+    to {
+      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900;
+    }
+  }
 .momBtn {
     display: inline-block;
     margin: 0 auto;
@@ -237,8 +266,9 @@ div.scrollmenu a:hover {
 
 .sc_right {
     right: 10px;
-    border-radius:0px 8px 8px 0px;
+    border-radius: 0px 8px 8px 0px;
 }
-.sc_left{
-    border-radius:8px 0px 0px 8px;
+
+.sc_left {
+    border-radius: 8px 0px 0px 8px;
 }

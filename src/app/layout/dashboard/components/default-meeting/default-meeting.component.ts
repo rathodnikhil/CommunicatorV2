@@ -226,9 +226,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        this.showScheduleMeetingSuccess = false;
-        this.closePopup('meetNow');
-        this.startMeetNowModal.open();
+        this.showScheduleMeetingSuccess = false;        
     }
     // copy meeting content
     copyToClipboard() {

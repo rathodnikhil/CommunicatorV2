@@ -46,7 +46,7 @@
         height: 92px;
         padding: 15px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-        background: #3277d3;
+        background: #353535;
         color: #ffffff;
         background-image: url(/assets/images/logobg.png);
         background-position-y: bottom;
@@ -72,19 +72,19 @@
     }
     
     td, th {
-        border: 1px solid #dddddd;
+        border: 1px solid #bdb9b9;
         text-align: left;
         padding: 8px;
     }
     th{
-        border: 1px solid #dddddd;
+        border: 1px solid #bdb9b9;
         text-align: left;
         padding: 8px;
-        background: #3277d3;
+        background: #353535;
         color: #ffffff;
     }
     tr:nth-child(even) {
-        background-color: #e5efff;
+        background-color: #d3d3d3;
     }
     .filter-list{
      border-right: 1px solid rgba(0, 0, 0, 0.125);
@@ -108,23 +108,23 @@
     cursor: pointer;
     }
     .btn.btn-secondary {
-        background:  #3277d3;
-        /* color:  #3277d3; */
-        border-color:  #3277d3;
+        background:  #353535;
+        /* color:  #353535; */
+        border-color:  #353535;
         border-radius: 0px 5px 5px 0px;
     }
     .form-control {
         border-radius: 5px 0px 0px 5px;
     }
     .under {
-        -webkit-text-decoration: #3277d3 solid underline;
-        text-decoration: #3277d3 solid underline;
+        -webkit-text-decoration: #353535 solid underline;
+        text-decoration: #353535 solid underline;
         -webkit-text-underline-position: under;
         text-underline-position: under;
         text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 
         font: bold 17px Arial, Helvetica;
-        color: #8b8b8a;
+        color: #353535;
       }
  .remove-border{
      border: none;
@@ -148,7 +148,7 @@
     margin: 50px auto;
     box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
     border-radius: 10px;
-    border: 3px solid #3277d3;
+    border: 3px solid #353535;
 }
 .form-style-9 ul{
     padding:0;
