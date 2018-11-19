@@ -5,17 +5,18 @@ import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
 import { Injectable } from '@angular/core';
 import { AlertService } from '../services/alert.service';
-
+import { PasswordService } from '../services/password.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     animations: [routerTransition()],
-    providers: [AlertService]
+    providers: [AlertService,PasswordService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
     _userService: UserService;
+    _passwordService: PasswordService;
     user = {};
     jwtToken: any;
     authFlag: boolean;
@@ -33,9 +34,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     Logintext = 'Login';
     loggedInUserObj: any;
 
-    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService) {
+    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService , passwordServic: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
+        this._passwordService = passwordServic;
     }
 
     ngOnInit() {        
@@ -77,8 +79,10 @@ export class LoginComponent implements OnInit, OnDestroy {
                 });
             }
             } else {
-                const payload = { 'name': this.userName, 'password': this.password };
+                
+                const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;
+
                 this._userService.verifyUser(payload).subscribe(resp => {
                     const loggedinUser = resp.json();
                     loginWarningFlag = loggedinUser.warningFl;
