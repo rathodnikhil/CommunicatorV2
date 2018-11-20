@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         let payload = { email: this.forgetEmail };
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
             if(res.json().errorFl === true || res.json().warningFl === true){
-                return this.alertService.error('Email id is not register , enter register email', 'Error');
+                return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
             }else{
                 return this.alertService.success('Password reset link has been successfully sent to your email account ,check your email.', 'Error');
             }

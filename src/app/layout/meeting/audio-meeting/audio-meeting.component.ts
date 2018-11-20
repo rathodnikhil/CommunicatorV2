@@ -200,6 +200,8 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
                 this.document.getElementById('btn-leave-room').click();
+                this.document.getElementById('btn-leave-room').disable = true;
+                this.document.getElementById('input-text-chat').disable = true;
                 this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });
