@@ -104,9 +104,10 @@ export class RegisterAdminComponent implements OnInit {
           duplicateUserNameFlag = data.json().warningFl;
           exceptionFlag = data.json().errorFl;
           if(duplicateUserNameFlag == true) {
-            this.firstNameField.nativeElement.focus();
+            this.usernameField.nativeElement.focus();
             return this.alertService.warning("Username already exist","Warning");
           }else if(exceptionFlag == true) {
+            this.emailField.nativeElement.focus();
             return this.alertService.warning(data.json().message,"Warning");
           }else{
             this.clearAllField();

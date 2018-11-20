@@ -96,7 +96,7 @@
     </div>
 </div>
 <div class="col-md-12 meeting-bottom">
-    <button id="btn-leave-room" class="btn btn-danger pull-left" (click)="exitMeeting()">
+    <button id="btn-leave-room" class="btn pull-left" (click)="exitMeeting()" [ngClass]="isScreenSharingStarted?'btn-danger':'default'">
         <i class="fa fa-2x fa-power-off"></i>
     </button>
     <button id="btn-mute" class="btn pull-left" [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>

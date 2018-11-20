@@ -18,7 +18,10 @@ export class MyProfileComponent implements OnInit {
     _groupService: GroupService;
     profileOtherDetails: any;
     loggedInUserObj: any;
-    constructor(userService: UserService, meetingService: MeetingService, groupService: GroupService,public alertService: AlertService) {
+    currentFirstName : any;
+    currentLastName : any;
+    currentEmail : any;
+    constructor( private router: Router,userService: UserService, meetingService: MeetingService, groupService: GroupService,public alertService: AlertService) {
         this._userService = userService;
         this._meetingservice = meetingService;
         this._groupService = groupService;
@@ -28,6 +31,9 @@ export class MyProfileComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && !data.isGuest) {
                 this.loggedInUserObj = data;
+                this.currentFirstName = data.firstName;
+                this.currentLastName = data.lastName;
+                this.currentEmail = data.email;
                 // webservice to get total meeting count
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this.profileOtherDetails = {};
@@ -68,5 +74,11 @@ export class MyProfileComponent implements OnInit {
             }
         });
     }
+    }
+    cancelUpdate(){
+        this.loggedInUserObj.firstName = this.currentFirstName;
+        this.loggedInUserObj.lastName =  this.currentLastName
+        this.loggedInUserObj.email = this.currentEmail;
+        this.router.navigate(['/dashboard']);
     }
 }

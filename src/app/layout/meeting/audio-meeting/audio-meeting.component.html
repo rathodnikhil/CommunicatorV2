@@ -96,8 +96,8 @@
     </div>
 </div>
 <div class="col-md-12 meeting-bottom">
-    <button id="btn-leave-room" class="btn btn-danger pull-left" (click)="exitMeeting()">
-        <i class="fa fa-2x fa-power-off"></i>
+    <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()"   >
+        <i class="fa fa-2x fa-power-off" aria-hidden="true"></i>
     </button>
     <button id="btn-mute" class="btn pull-left" [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>
         <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
