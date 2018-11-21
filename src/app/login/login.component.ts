@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,OnDestroy } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
@@ -34,11 +34,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     Logintext = 'Login';
     loggedInUserObj: any;
 
-    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService , passwordServic: PasswordService) {
+    @ViewChild("emailField") emailField: ElementRef;
+    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService , passwordService: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
-        this._passwordService = passwordServic;
-    }
+        this._passwordService = passwordService;
+
 
     ngOnInit() {        
         this.previousUrl = this._loginService.getPreviousUrl();
@@ -56,7 +57,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (event.key === 'Enter') { this.login(); }
     }
     login() {
-        if (this.userName === undefined || this.userName === '' || this.userName === null) {
+        if (this.userName === undefined || this.userName
+             === '' || this.userName === null) {
             return this.alertService.error('Enter Username', 'Error');
         } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
             return this.alertService.error('Enter Password', 'Error');
@@ -65,8 +67,14 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
                 if (this.email === undefined || this.email === '' || this.email === null) {
-                    return this.alertService.error('Enter Email', 'Error');
+                    return this.alertService.error('Enter email id', 'Error');
                 }else{
+                    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    
+                    if (!EMAIL_REGEXP.test(this.email)) {
+                      this.emailField.nativeElement.focus();
+                      return this.alertService.warning("Please enter valid email","Warning");
+                    }{
                 const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
                 this._userService.setLoggedInUserObj(payload).subscribe(res => {
                     if (res.firstName !== undefined) {
@@ -77,6 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }
                     }
                 });
+                }
             }
             } else {
                 

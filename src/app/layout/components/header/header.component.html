@@ -1,4 +1,4 @@
-<button type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}"
+<button *ngIf="!guestFlag" type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}"
     (click)="hamburger_cross()">
     <span class="hamb-top"></span>
     <span class="hamb-middle"></span>
@@ -29,9 +29,9 @@
             <a *ngIf="this.router.url.toString().indexOf('meeting')<0" routerLink="{{menu.menuLink}}" (click)="hamburger_cross()">
                 <i class="{{menu.menuIconClass}}" aria-hidden="true"></i>&nbsp;{{menu.menuName}}</a>
         </li>
-        <li>
-            <a (click)="logout()">
-                <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</a>
+        <li style="cursor: pointer;">
+            <a (click)="logout()" >
+                <i class="fa fa-sign-out"  aria-hidden="true"></i>&nbsp;Logout</a>
             <!-- <a  (click)="hamburger_cross()">
                 <i class="fa fa-sign-out" aria-hidden="true"></i>logout</a> -->
         </li>
