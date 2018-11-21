@@ -166,7 +166,7 @@ export class ScheduleMeetingComponent implements OnInit {
          let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
             this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
             let today =  new Date();
-        if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
+        if (this.subject.trim() === "" || this.subject === null || typeof this.subject === "undefined") {
             return this.alertService.warning('Please enter meeting subject', "Warning");
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', "Warning");

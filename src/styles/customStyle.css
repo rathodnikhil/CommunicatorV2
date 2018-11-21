@@ -56,7 +56,14 @@
         float:left;
         padding: 15px;
         background: #e5efff;
-        background-image: url(/assets/images/menuBg.png);
+        background: #353535;
+        background: -moz-linear-gradient(to right,#353535 0%, #868e96 74%, #868e96 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, #353535), color-stop(74%, #868e96), color-stop(100%, #868e96));
+        background: -webkit-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+        background: -o-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+        background: -ms-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+        background: linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1);
         color: #ffffff;
         font-weight: bold;
     }
@@ -81,10 +88,11 @@
         text-align: left;
         padding: 8px;
         background: #353535;
+        opacity: 0.85;
         color: #ffffff;
     }
     tr:nth-child(even) {
-        background-color: #d3d3d3;
+        background-color: #e0e0e0;
     }
     .filter-list{
      border-right: 1px solid rgba(0, 0, 0, 0.125);
@@ -163,3 +171,7 @@
 .asterik-mark{
 color: red;
 }
+.cursorPointer{
+    cursor: pointer;
+}
+
