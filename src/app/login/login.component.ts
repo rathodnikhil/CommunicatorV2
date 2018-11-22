@@ -38,7 +38,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._loginService = loginService;
         this._userService = userService;
         this._passwordService = passwordService;
+
     }
+
 
     ngOnInit() {        
         this.previousUrl = this._loginService.getPreviousUrl();
