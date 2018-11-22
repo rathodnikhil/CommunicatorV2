@@ -24,7 +24,6 @@ export class CustomModalComponent {
             this.CancelEvent.emit(reason);
         });
     }
-
     private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
             return 'by pressing ESC';
@@ -45,6 +44,7 @@ export class CustomModalComponent {
         closeBtn.click();
     }
 }
+
 export class CustomModalModel {
     title: string;
     titleIcon: string;
