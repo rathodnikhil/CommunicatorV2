@@ -33,12 +33,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     forgetPasswordFlag: boolean;
     Logintext = 'Login';
     loggedInUserObj: any;
-
     @ViewChild("emailField") emailField: ElementRef;
     constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService , passwordService: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
         this._passwordService = passwordService;
+
+    }
 
 
     ngOnInit() {        

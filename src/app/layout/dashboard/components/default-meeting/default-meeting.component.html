@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
                 <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
-                    ngbTooltip="schedule Meeting"></i>
+                    ngbTooltip="Schedule Meeting"></i>
                 <!-- <a href="javascript:void(0)"  class="btn btn-sec pull-right" type="button" title="schedule meeting"></a> -->
             </div>
         </div>
@@ -69,8 +69,8 @@
                     <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate"
-                                [(ngModel)]="selectedfromDate" value="{{currentDate |  date:'yyy/MM/dd'}}" ngbDatepicker
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy-MM-dd'}}" name="fromDate"
+                                [(ngModel)]="selectedfromDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
                                 #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -82,8 +82,8 @@
                     <div class="col-sm-6">
                         <label>To Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate"
-                                [(ngModel)]="selectedtoDate" value="{{currentDate |  date:'yyy/MM/dd'}}" ngbDatepicker
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy-MM-dd'}}" name="toDate"
+                                [(ngModel)]="selectedtoDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
                                 #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -163,11 +163,11 @@
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
                                 <a (click)="startMeeting(meeting,false)">
                                     <i class="fa fa-play-circle actionIcon" style="color: #353535;" aria-hidden="true"
-                                        placement="bottom" ngbTooltip="start meeting"></i>
+                                        placement="bottom" ngbTooltip="Start Meeting"></i>
                                 </a>
                                 <a>
                                     <i class="fa fa-times-circle actionIcon" style="color: red" (click)="cancelMeeting(meeting)"
-                                        placement="bottom" ngbTooltip="cancel meeting" aria-hidden="true"></i>
+                                        placement="bottom" ngbTooltip="Cancel Meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
                                     <div>

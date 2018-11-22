@@ -42,6 +42,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     notify: string;
     config: any = { leftTime: 10, notify: [300] };
     counter: CountdownComponent;
+    endBtnFlag: boolean;
     @ViewChild('videos_container', { read: DragScrollComponent }) ds: DragScrollComponent;
     @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
         if (tiles !== undefined) {
@@ -136,15 +137,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
             window['functionFromExternalScript'](params);
         }
     }
-    // to set selected send message to
-    changeMessageTo(member) {
-        this.messageSendTo = member.name + ' ' + member.lastName;
-    }
-
-    // to set selected mom to
-    changeMomTo(member) {
-        this.momTo = member.name + ' ' + member.lastName;
-    }
+  
     toggleMOM() {
         this.isMOMvisible = !this.isMOMvisible;
     }

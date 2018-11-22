@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     signUpflag: boolean;
     selectedUser: any;
     manageGroupFlag: boolean;
-
+    errorFl: boolean;
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     currentRoute = 0;
@@ -183,5 +183,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
+    logout() {
+        let payload = { userCode: this.loggedInUserObj.userCode };
+        this._userService.logoutApplication(payload).subscribe(data => {
+            this.errorFl = data.errorFl;
+            if (this.errorFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.router.navigate(['/login']);
+            }
+        });
 
+    }
 }

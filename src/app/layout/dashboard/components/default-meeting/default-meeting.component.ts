@@ -268,7 +268,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
 
         const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer,tablet or smartphone \r\n\r\n'
+            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n'
             + meetingUrl + this.meetNowMeeting.meetingCode +
             '\r\n\r\n' + '\r\n\r\n Access Code :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
@@ -278,7 +278,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const month = todayTime.getMonth() + 1;
         const day = todayTime.getDate();
         const year = todayTime.getFullYear();
-        return month + '/' + day + '/' + year;
+        return year + '/' + month + '/' + day;
     }
     closePopup(popType) {
         switch (popType) {
