@@ -150,16 +150,6 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
-        // this.futureMeetingList = [];
-        // this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-        //     if (data[0].errorFl || data[0].warningFl) {
-        //         this.futureMeetingList = [];
-        //         return this.alertService.warning(data[0].message, "Warning");
-        //     } else {
-        //         this.futureMeetingList = data;
-        //         this.filteredFutureMeetingList = data;
-        //     }
-        // });
     }
     scheduleMeeting() {
          let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
