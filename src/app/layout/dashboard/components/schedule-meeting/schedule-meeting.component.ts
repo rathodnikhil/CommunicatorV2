@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef,ElementRef ,Input ,Inject} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef,ElementRef } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
@@ -117,7 +117,7 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
     constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService, userService: UserService,
-        private router: Router, public alertService: AlertService ,@Inject(DOCUMENT) private document) {
+        private router: Router, public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -150,16 +150,6 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     switchRoute() {
         this.CurrentRoute.emit(0);
-        // this.futureMeetingList = [];
-        // this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-        //     if (data[0].errorFl || data[0].warningFl) {
-        //         this.futureMeetingList = [];
-        //         return this.alertService.warning(data[0].message, "Warning");
-        //     } else {
-        //         this.futureMeetingList = data;
-        //         this.filteredFutureMeetingList = data;
-        //     }
-        // });
     }
     scheduleMeeting() {
          let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
@@ -223,13 +213,13 @@ export class ScheduleMeetingComponent implements OnInit {
                     this.filteredFutureMeetingList.push(data);
                    // this.showScheduleMeetingSuccess = true;
                    this.scheduleMeetingModal.open();
-                   alert(this.scheduleMeetingModal.closeBtn.nativeElement.click());
                    return this.alertService.success("Meeting has scheduled successfully", "Schedule Meeting");
                    
                 }
             });
         }
     }
+   
     clearAllMeetingField() {
         this.subject = '';
         this.meeting.selectedDuration = 'Select Duration';

@@ -40,8 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._passwordService = passwordService;
 
     }
-
-
     ngOnInit() {        
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;

@@ -219,14 +219,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     // copy meeting content
     copyToClipboard() {
         const meetingDetails ='Meet now: ' + new Date().toDateString()+ '  '+ this.getMeetingDetails();
         const tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
         document.execCommand('copy');
-        return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
+        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     joinMeetingNow() {
         this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
