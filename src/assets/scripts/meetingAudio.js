@@ -4,6 +4,7 @@ document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "vi
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
+document.getElementById('btn-leave-room').disabled = true;
 // ......................................................
 // .......................UI Code........................
 // ......................................................
@@ -43,6 +44,8 @@ document.getElementById('open-room').onclick = function () {
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
         document.getElementById('resume-count').click();
         document.getElementById('btn-save-mom').disabled = false;
+        document.getElementById('input-text-chat').disabled = false;
+        document.getElementById('btn-leave-room').disabled = false;
     });
 };
 
@@ -66,6 +69,7 @@ document.getElementById('btn-leave-room').onclick = function () {
     document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
+    document.getElementById('input-text-chat').disabled = true;
 };
 
 // ......................................................
@@ -336,7 +340,7 @@ if (roomid && roomid.length) {
         if (isHost) {
             document.getElementById('open-room').disabled = false;
             document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
-            document.getElementById('btn-leave-room').disabled = false;
+           
             return;
         } else if (!isHost) {
             // document.getElementById('btn-leave-room').disabled = true;

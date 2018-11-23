@@ -11,7 +11,7 @@
           <tr>  <h4 class="btn btn-sec remove-border" style="cursor: default;">Profile Details</h4></tr>
           <tr >
                 <td>Profile Picture</td>
-                <td>  <img src="assets/images/default.png"  alt="Responsive image" class="img-fluid" /></td>
+                <td>  <img src="assets/images/default.png"  alt="Responsive image" class="img-fluid" />&nbsp;&nbsp;<span><i class="fa fa-remove fa-2x" style="color: red;"></i></span></td>
                 <td><input type="file"/></td>
           </tr>
           <tr>
@@ -44,7 +44,7 @@
         </table>
         <div style="text-align:center;">
             <button class="btn btn-sec" style="align:align-center" (click)="updateProfile()">Save Changes</button>
-            <a class="btn btn-danger" [routerLink]="['/dashboard']">Cancel</a>
+            <a class="btn btn-danger" (click)="cancelUpdate()">Cancel</a>
         </div>
       </div>
 </div>

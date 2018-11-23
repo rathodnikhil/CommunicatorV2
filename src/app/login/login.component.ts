@@ -1,21 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,OnDestroy } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
 import { Injectable } from '@angular/core';
 import { AlertService } from '../services/alert.service';
-
+import { PasswordService } from '../services/password.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     animations: [routerTransition()],
-    providers: [AlertService]
+    providers: [AlertService,PasswordService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
     _userService: UserService;
+    _passwordService: PasswordService;
     user = {};
     jwtToken: any;
     authFlag: boolean;
@@ -32,11 +33,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     forgetPasswordFlag: boolean;
     Logintext = 'Login';
     loggedInUserObj: any;
-
-    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService) {
+    @ViewChild("emailField") emailField: ElementRef;
+    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService , passwordService: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
+        this._passwordService = passwordService;
+
     }
+
 
     ngOnInit() {        
         this.previousUrl = this._loginService.getPreviousUrl();
@@ -54,7 +58,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (event.key === 'Enter') { this.login(); }
     }
     login() {
-        if (this.userName === undefined || this.userName === '' || this.userName === null) {
+        if (this.userName === undefined || this.userName
+             === '' || this.userName === null) {
             return this.alertService.error('Enter Username', 'Error');
         } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
             return this.alertService.error('Enter Password', 'Error');
@@ -63,8 +68,14 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (this.isGuest) {
                 localStorage.setItem('loggedInuserName', this.userName);
                 if (this.email === undefined || this.email === '' || this.email === null) {
-                    return this.alertService.error('Enter Email', 'Error');
+                    return this.alertService.error('Enter email id', 'Error');
                 }else{
+                    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    
+                    if (!EMAIL_REGEXP.test(this.email)) {
+                      this.emailField.nativeElement.focus();
+                      return this.alertService.warning("Please enter valid email","Warning");
+                    }{
                 const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
                 this._userService.setLoggedInUserObj(payload).subscribe(res => {
                     if (res.firstName !== undefined) {
@@ -75,10 +86,13 @@ export class LoginComponent implements OnInit, OnDestroy {
                         }
                     }
                 });
+                }
             }
             } else {
-                const payload = { 'name': this.userName, 'password': this.password };
+                
+                const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;
+
                 this._userService.verifyUser(payload).subscribe(resp => {
                     const loggedinUser = resp.json();
                     loginWarningFlag = loggedinUser.warningFl;
@@ -128,7 +142,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         let payload = { email: this.forgetEmail };
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
             if(res.json().errorFl === true || res.json().warningFl === true){
-                return this.alertService.error('Email id is not register , enter register email', 'Error');
+                return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
             }else{
                 return this.alertService.success('Password reset link has been successfully sent to your email account ,check your email.', 'Error');
             }

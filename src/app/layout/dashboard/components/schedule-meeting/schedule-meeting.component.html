@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row form-group">
+                    <!-- <div class="row form-group">
                         <div class="col-sm-3">
                             <label>Call Type</label>
                         </div>
@@ -104,7 +104,7 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="row form-group">
                         <div class="col-sm-3">
                             <label>MOM</label>
@@ -140,12 +140,12 @@
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>
                                 <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
-                                    <span *ngIf="vedioMeeting" style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                    <label>For Video Meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                         <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
-                                        https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span>
-                                        <span *ngIf="audioMeeting" style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                        https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span></label>
+                                    <label>For Audio Meeting use this URL :<span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                                 <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
-                                                https://cfscommunicator.com/#/meeting/audio?meetingCode={{accessCode}}</span>
+                                                https://cfscommunicator.com/#/meeting/audio?meetingCode={{accessCode}}</span></label>
                            
                                 </p>
                                 <h5 style="margin-top: 40px;">Access Code :

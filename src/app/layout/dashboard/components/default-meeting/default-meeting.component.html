@@ -11,14 +11,6 @@
                 <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
                     placement="bottom" ngbTooltip="Meet Now"></i>
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
-                    <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess" class="alert alert-success alert-dismissable">
-                        <strong>Success:&nbsp; </strong>
-                        <span style="font-weight: bold;">Meeting has scheduled Successfully.</span>
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess" class="alert alert-success alert-dismissable">
-                        <strong>Success: </strong> <span style="font-weight: bold;">Meeting Details has been Copied.
-                            Kindly share via your preferred Mail Id.</span>
-                    </div>
                     <div style="padding: 10px; font-size:14px;" class="span-font">
                         <span>Meet now: &nbsp;{{meetNowMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                         <p style="font-weight:bold;">Date : {{meetNowMeeting.meetingStartDateTime| date:'fullDate'}}
@@ -26,10 +18,13 @@
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
                         <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
-                            <span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
-                                <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
-                                https://cfscommunicator.com/#/meeting/audio?meetingCode={{meetNowMeeting.meetingCode}}</span>
-
+                            <label>For Video Meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
+                                https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                            <label>For Audio Meeting use this URL :<span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                        <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
+                                        https://cfscommunicator.com/#/meeting/audio?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                   
                         </p>
                         <h5 style="margin-top: 40px;">Access Code :
                             <span>{{meetNowMeeting.meetingCode}}</span>
@@ -47,7 +42,7 @@
             </div>
             <div class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
                 <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
-                    ngbTooltip="schedule Meeting"></i>
+                    ngbTooltip="Schedule Meeting"></i>
                 <!-- <a href="javascript:void(0)"  class="btn btn-sec pull-right" type="button" title="schedule meeting"></a> -->
             </div>
         </div>
@@ -74,8 +69,8 @@
                     <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="fromDate"
-                                [(ngModel)]="selectedfromDate" value="{{currentDate |  date:'yyy/MM/dd'}}" ngbDatepicker
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy-MM-dd'}}" name="fromDate"
+                                [(ngModel)]="selectedfromDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
                                 #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -87,8 +82,8 @@
                     <div class="col-sm-6">
                         <label>To Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy/MM/dd'}}" name="toDate"
-                                [(ngModel)]="selectedtoDate" value="{{currentDate |  date:'yyy/MM/dd'}}" ngbDatepicker
+                            <input class="form-control" placeholder="{{currentDate | date:'yyy-MM-dd'}}" name="toDate"
+                                [(ngModel)]="selectedtoDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
                                 #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -168,11 +163,11 @@
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
                                 <a (click)="startMeeting(meeting,false)">
                                     <i class="fa fa-play-circle actionIcon" style="color: #353535;" aria-hidden="true"
-                                        placement="bottom" ngbTooltip="start meeting"></i>
+                                        placement="bottom" ngbTooltip="Start Meeting"></i>
                                 </a>
                                 <a>
                                     <i class="fa fa-times-circle actionIcon" style="color: red" (click)="cancelMeeting(meeting)"
-                                        placement="bottom" ngbTooltip="cancel meeting" aria-hidden="true"></i>
+                                        placement="bottom" ngbTooltip="Cancel Meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
                                     <div>

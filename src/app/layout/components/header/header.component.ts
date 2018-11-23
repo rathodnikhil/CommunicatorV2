@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
     nullCheckFlag: boolean;
     loggedInUserObj: any;
     sidebarMenuList = [];
+    guestFlag: boolean;
     constructor(private translate: TranslateService, public router: Router,
         userService: UserService, groupService: GroupService, public alertService: AlertService) {
 
@@ -43,7 +44,9 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.sidebarMenuList = [];
+        this.guestFlag = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
+            console.log(data.isGuest);
             if (data.firstName !== undefined && !data.isGuest) {
                 this.loggedInUserObj = data;
                 let payload = { userCode: this.loggedInUserObj.userCode };
@@ -52,6 +55,9 @@ export class HeaderComponent implements OnInit {
                     if (data.length > 0)
                         this.sidebarMenuList = data;
                 });
+            }else{
+                this.sidebarMenuList = [];
+                this.guestFlag = true;
             }
         });
 

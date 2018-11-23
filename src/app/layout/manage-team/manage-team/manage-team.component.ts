@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewContainerRef ,ElementRef} from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -7,12 +7,13 @@ import { UserService } from '../../../services/user.service';
 import { FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
+import { PasswordService } from '../../../services/password.service';
 
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
     styleUrls: ['./manage-team.component.scss'],
-    providers: [TeamService ,AlertService],
+    providers: [TeamService ,AlertService,PasswordService],
 })
 export class ManageTeamComponent implements OnInit {
     newTeamName: any;
@@ -21,6 +22,7 @@ export class ManageTeamComponent implements OnInit {
     teamCode: string;
     _teamService: TeamService;
     _userService: UserService;
+    _passwordService: PasswordService;
     userPermissionList = [];
     userPermissionMemberList = [];
     filterMemberList = [];
@@ -39,6 +41,7 @@ export class ManageTeamComponent implements OnInit {
     showSelectedTeam: boolean;
     updateTeamName: any;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
+    @ViewChild("emailField") emailField: ElementRef;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
         title: 'New Team',
@@ -67,9 +70,10 @@ export class ManageTeamComponent implements OnInit {
     };
 
 
-    constructor(teamService: TeamService, userService: UserService , public alertService: AlertService) {
+    constructor(teamService: TeamService, userService: UserService , public alertService: AlertService , passwordService: PasswordService) {
         this._teamService = teamService;
         this._userService = userService;
+        this._passwordService = passwordService;
     }
 
     ngOnInit() {
@@ -146,22 +150,28 @@ export class ManageTeamComponent implements OnInit {
 
     // add new member  
     addMember() {
-        if (this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined") {
+        if (this.firstName.trim() === "" || this.firstName === null || typeof this.firstName === "undefined") {
             return this.alertService.warning("Please Enter First Name ", "Warning");   
-        }else if (this.lastName === "" || this.lastName === null || typeof this.lastName === "undefined") {
+        }else if (this.lastName.trim() === "" || this.lastName === null || typeof this.lastName === "undefined") {
             return this.alertService.warning("Please Enter Last Name ", "Warning");   
-        }  else if (this.email === "" || this.email === null || typeof this.email === "undefined") {
+        }  else if (this.email.trim() === "" || this.email === null || typeof this.email === "undefined") {
             return this.alertService.warning("Please Enter Email", "Warning");   
-        }else if (this.userName === "" || this.userName === null || typeof this.userName === "undefined") {
+        }else if (this.userName.trim() === "" || this.userName === null || typeof this.userName === "undefined") {
             return this.alertService.warning("Please Enter UserName ", "Warning");   
-        } else if (this.password === "" || this.password === null || typeof this.password === "undefined") {
+        } else if (this.password.trim() === "" || this.password === null || typeof this.password === "undefined") {
             return this.alertService.warning("Please Enter Password ", "Warning");   
         }
        else {
+        const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    
+        if (!EMAIL_REGEXP.test(this.email)) {
+          this.emailField.nativeElement.focus();
+          return this.alertService.warning("Please enter valid email","Warning");
+        }else{
             const payload = {
                 "email": this.email,
-                "password": this.password,
                 "name": this.userName,
+                "password": this._passwordService.encrypted(this.password),
                 "lastName": this.lastName,
                 "firstName": this.firstName,
                 "status.onlineStatus": false,
@@ -185,7 +195,7 @@ export class ManageTeamComponent implements OnInit {
                         return this.alertService.success("Member has been saved successfull ", "Success");   
                     }
                });
-            
+            }
         } 
  }
 

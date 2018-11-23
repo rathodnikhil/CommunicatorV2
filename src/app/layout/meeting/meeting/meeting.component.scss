@@ -78,7 +78,7 @@ div.scrollmenu a:hover {
 
             .mom-textarea {
                 width: 100%;
-                height: 60%;
+                height: 50%;
             }
         }
     }
@@ -86,13 +86,20 @@ div.scrollmenu a:hover {
 
 .card-header {
     background: #353535;
+    background: -moz-linear-gradient(to right,#353535 0%, #868e96 74%, #868e96 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, #353535), color-stop(74%, #868e96), color-stop(100%, #868e96));
+    background: -webkit-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    background: -o-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    background: -ms-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    background: linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1);
     color: #ffffff;
     font-weight: bold;
+    opacity: 0.85;
+    border-radius: 3px;
 }
 
-.dropdown {
-    margin-top: 15px;
-}
+
 
 .meeting-activity {
     border: 1px solid #dedede;
@@ -105,21 +112,6 @@ div.scrollmenu a:hover {
     overflow-y: hidden;
 }
 
-// .chat-background:nth-child(even) {
-//     border: 2px solid #dedede;
-//     background-color: #f1f1f1;
-//     border-radius: 5px;
-//     padding: 10px;
-//     margin: 10px 0;
-// }
-
-// .chat-background:nth-child(odd) {
-//     border: 2px solid #ccc;
-//     background-color: #ddd;
-//     border-radius: 5px;
-//     padding: 10px;
-//     margin: 10px 0;
-// }
 
 .container::after {
     content: "";
@@ -155,32 +147,7 @@ div.scrollmenu a:hover {
     margin: 0px 10px 0px 10px;
 }
 
-.toast {
-    position: fixed;
-    display: block;
-    bottom: 2em;
-    height: 2em;
-    width: 10em;
-    left: calc(50% - 5em);
-    animation: toast-fade-in 1s 2 alternate;
-    background-color: black;
-    border-radius: 2em;
-    color: white;
-    text-align: center;
-    padding: 1em;
-    line-height: 2em;
-    opacity: 0;
-}
 
-@keyframes toast-fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
 
 .meeting-bottom {
     position: absolute;
@@ -209,6 +176,8 @@ div.scrollmenu a:hover {
         background-color: #353535;
         border-color: #97A0AC;
         color:#fff;
+        opacity: 0.85;
+
     }
 }
 @-webkit-keyframes neon5 {

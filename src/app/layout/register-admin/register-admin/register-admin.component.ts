@@ -3,23 +3,26 @@ import { TeamService } from '../../../services/team.service';
 import { UserService } from '../../../services/user.service';
 import { LoginService } from '../../../services/login.service'
 import { AlertService } from '../../../services/alert.service';
+import { PasswordService } from '../../../services/password.service';
 
 @Component({
   selector: 'app-register-admin',
   templateUrl: './register-admin.component.html',
   styleUrls: ['./register-admin.component.scss'],
-  providers: [AlertService,TeamService]
+  providers: [AlertService,TeamService,PasswordService]
 })
 export class RegisterAdminComponent implements OnInit {
 
+
+  _teamService: TeamService;
+  _userService: UserService;
+  _loginService: LoginService;
+  _passwordService : PasswordService;
+  jwtToken: string;
   selectedTeam: any;
   teamArray = [];
   userNameArray = [];
   emailArray = [];
-  _teamService: TeamService;
-  _userService: UserService;
-  _loginService: LoginService;
-  jwtToken: string;
   user: any;
   firstName: any;
   lastName: any;
@@ -37,10 +40,11 @@ export class RegisterAdminComponent implements OnInit {
   @ViewChild("emailField") emailField: ElementRef;
   @ViewChild("teamField") teamField: ElementRef;
   
-  constructor(teamService: TeamService , userService: UserService , loginService: LoginService ,public alertService: AlertService ) {
+  constructor(teamService: TeamService , userService: UserService , loginService: LoginService ,public alertService: AlertService , passwordService : PasswordService) {
       this._teamService = teamService;
       this._userService = userService;
       this._loginService = loginService;
+      this._passwordService = passwordService;
   }
 
   ngOnInit() {
@@ -54,25 +58,25 @@ export class RegisterAdminComponent implements OnInit {
        });
   }
   registerUser() {
-      if(this.firstName === "" || this.firstName === null || typeof this.firstName === "undefined"){
+      if(this.firstName.trim() === "" || this.firstName === null || typeof this.firstName === "undefined"){
         this.firstNameField.nativeElement.focus();
          return this.alertService.warning("Please enter first name","Warning");
-      }else  if(this.lastName === "" || this.lastName === null || typeof this.lastName === "undefined"){
+      }else  if(this.lastName.trim() === "" || this.lastName === null || typeof this.lastName === "undefined"){
         this.lastNameField.nativeElement.focus();
         return this.alertService.warning("Please enter last name","Warning");
-      }else  if(this.userName === "" || this.userName === null || typeof this.userName === "undefined"){
+      }else  if(this.userName.trim() === "" || this.userName === null || typeof this.userName === "undefined"){
         this.usernameField.nativeElement.focus();
         return this.alertService.warning("Please enter username","Warning");
-      }else  if(this.email === "" || this.email === null || typeof this.email === "undefined"){
+      }else  if(this.email.trim() === "" || this.email === null || typeof this.email === "undefined"){
         this.emailField.nativeElement.focus();
         return this.alertService.warning("Please enter email","Warning");
-      } else  if(this.password === "" || this.password === null || typeof this.password === "undefined"){
+      } else  if(this.password.trim() === "" || this.password === null || typeof this.password === "undefined"){
         this.passwordField.nativeElement.focus();
         return this.alertService.warning("Please enter password","Warning");
-      }else  if(this.confirmPassword === "" || this.confirmPassword === null || typeof this.confirmPassword === "undefined"){
+      }else  if(this.confirmPassword.trim() === "" || this.confirmPassword === null || typeof this.confirmPassword === "undefined"){
         this.confirmPasswordField.nativeElement.focus();
         return this.alertService.warning("Please enter confirm password","Warning");
-      }else  if(this.newTeamName === "" || this.newTeamName === null || typeof this.newTeamName === "undefined"){
+      }else  if(this.newTeamName.trim() === "" || this.newTeamName === null || typeof this.newTeamName === "undefined"){
         this.teamField.nativeElement.focus();
         return this.alertService.warning("Please enter team","Warning");
       }
@@ -93,7 +97,7 @@ export class RegisterAdminComponent implements OnInit {
               let exceptionFlag;
           const payload =  {
               "email": this.email,
-              "password": this.password,
+              "password": this._passwordService.encrypted(this.password),
               "name": this.userName,
               "lastName": this.lastName,
               "firstName": this.firstName,
@@ -104,9 +108,10 @@ export class RegisterAdminComponent implements OnInit {
           duplicateUserNameFlag = data.json().warningFl;
           exceptionFlag = data.json().errorFl;
           if(duplicateUserNameFlag == true) {
-            this.firstNameField.nativeElement.focus();
+            this.usernameField.nativeElement.focus();
             return this.alertService.warning("Username already exist","Warning");
           }else if(exceptionFlag == true) {
+            this.emailField.nativeElement.focus();
             return this.alertService.warning(data.json().message,"Warning");
           }else{
             this.clearAllField();

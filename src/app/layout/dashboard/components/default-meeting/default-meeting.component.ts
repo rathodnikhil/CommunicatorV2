@@ -29,8 +29,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     searchText: String;
     accessCode: any;
     meetNowMeeting: any;
-    showScheduleMeetingSuccess: boolean;
-    showCopyDetailsSuccess: boolean;
     selectedCriteria: any;
     selectedMeeting: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
@@ -72,8 +70,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectDateFlag = true;
         this.showCancelMeeting = false;
         this.meetNowMeeting = {};
-        this.showScheduleMeetingSuccess = false;
-        this.showCopyDetailsSuccess = false;
         this.selectedCriteria = 'All';
         // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
@@ -166,8 +162,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
             }
-            // }if(startMeetNowPopup){
-            //     this.startMeetNowModal.close();
         } else {
             if (meeting.meetingStartDateTime <= Date.now()) {
                 if (meeting.callType === 'Video') {
@@ -176,7 +170,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
                 }
             } else {
-                // const currentDate = new Date();
                 if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
                     return this.alertService.warning('Meeting is set in future.', 'Warning');
                 } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
@@ -226,15 +219,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        this.showScheduleMeetingSuccess = false;        
+        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     // copy meeting content
     copyToClipboard() {
         const meetingDetails ='Meet now: ' + new Date().toDateString()+ '  '+ this.getMeetingDetails();
         const tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
         document.execCommand('copy');
-        this.showScheduleMeetingSuccess = false;
-        this.showCopyDetailsSuccess = true;
+        return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
     }
     joinMeetingNow() {
         this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
@@ -259,8 +251,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.meetNowMeeting = data;
-                this.showScheduleMeetingSuccess = true;
                 this.meetNowModal.open();
+                return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });
     }
@@ -276,7 +268,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
 
         const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer,tablet or smartphone \r\n\r\n'
+            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n'
             + meetingUrl + this.meetNowMeeting.meetingCode +
             '\r\n\r\n' + '\r\n\r\n Access Code :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
@@ -286,7 +278,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const month = todayTime.getMonth() + 1;
         const day = todayTime.getDate();
         const year = todayTime.getFullYear();
-        return month + '/' + day + '/' + year;
+        return year + '/' + month + '/' + day;
     }
     closePopup(popType) {
         switch (popType) {

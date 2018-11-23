@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef,ElementRef ,Input ,Inject} from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
@@ -6,7 +6,7 @@ import { MeetingService } from '../../../../services/meeting-service';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
-
+import { DOCUMENT } from '@angular/common';
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
@@ -15,6 +15,7 @@ import { AlertService } from '../../../../services/alert.service';
 })
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
+    @ViewChild("closeBtn") closeBtn: ElementRef;
     @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
     _meetingService: MeetingService;
     _userService: UserService;
@@ -27,8 +28,6 @@ export class ScheduleMeetingComponent implements OnInit {
     loggedInUser: any;
     audioMeeting: boolean;
     vedioMeeting: boolean;
-    showScheduleMeetingSuccess: boolean;
-    showCopyDetailsSuccess: boolean;
     futureMeetingList: any[];
     filteredFutureMeetingList: any[];
     // public radioGroupForm: FormGroup;
@@ -118,7 +117,7 @@ export class ScheduleMeetingComponent implements OnInit {
         '(GMT) Dublin, Edinburgh, Lisbon, London'];
 
     constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService, userService: UserService,
-        private router: Router, public alertService: AlertService) {
+        private router: Router, public alertService: AlertService ,@Inject(DOCUMENT) private document) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -166,7 +165,7 @@ export class ScheduleMeetingComponent implements OnInit {
          let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
             this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
             let today =  new Date();
-        if (this.subject === "" || this.subject === null || typeof this.subject === "undefined") {
+        if (this.subject.trim() === "" || this.subject === null || typeof this.subject === "undefined") {
             return this.alertService.warning('Please enter meeting subject', "Warning");
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', "Warning");
@@ -183,9 +182,9 @@ export class ScheduleMeetingComponent implements OnInit {
             } else {
                 this.meeting.callType = 'Video';
             }
-
             const payload = {
-                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1, this.meeting.datePicker.day),
+                'meetingDate':   new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
+                    this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
                 // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':'
                 // + this.meeting.meridianTime.minute,
                 //'meetingEndDateTime': 1525067350000,
@@ -224,11 +223,11 @@ export class ScheduleMeetingComponent implements OnInit {
                     this.filteredFutureMeetingList.push(data);
                    // this.showScheduleMeetingSuccess = true;
                    this.scheduleMeetingModal.open();
+                   alert(this.scheduleMeetingModal.closeBtn.nativeElement.click());
                    return this.alertService.success("Meeting has scheduled successfully", "Schedule Meeting");
                    
                 }
             });
-
         }
     }
     clearAllMeetingField() {
@@ -237,8 +236,15 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.selectedTimeZone = 'Select Timezone';
         this.meeting.callType = 1;
         this.meeting.isRecurring = 1;
-        this.meeting.datePicker = Date.now();
+        this.meeting.datePicker = {
+            day: this.today.getDate(),
+            month: this.today.getMonth() + 1,
+            year: this.today.getFullYear()
+        };
+        this.meeting.meridianTime =  { hour: this.today.getHours(), minute: this.today.getMinutes() };
+        this.meeting.meridian =  true;
     }
+   
     copyToOutLook(event) {
         var meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
@@ -254,8 +260,6 @@ export class ScheduleMeetingComponent implements OnInit {
         var meetingDetails = this.subject + '  '+ this.getMeetingDetails();
         var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
         document.execCommand('copy');
-       // this.showScheduleMeetingSuccess = false;
-      //  this.showCopyDetailsSuccess = true;
       return this.alertService.success("Meeting Details has been Copied. Kindly share via your preferred Mail Id.", "Copy Meeting Details");
     }
     changeTimeZone(timezone) {
@@ -272,14 +276,13 @@ export class ScheduleMeetingComponent implements OnInit {
     closeMeetingPopup(popupType) {
         switch (popupType) {
             case 'scheduleMeetings':
-            this.showScheduleMeetingSuccess = false;
-                this.scheduleMeetingModal.close();
+                 this.scheduleMeetingModal.close();
                 this.clearAllMeetingField();
                // this.switchRoute();
                 break;
         }
     }
-
+   
     //get meeting details
     getMeetingDetails(): string {
         let meetingUrl = '';
@@ -291,11 +294,11 @@ export class ScheduleMeetingComponent implements OnInit {
             meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
         }
 
-        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.day + '/' + this.meeting.datePicker.month + '/'
-            + this.meeting.datePicker.year + '  at  ' +
+        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.year + '/' + this.meeting.datePicker.month + '/'
+            + this.meeting.datePicker.day + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer,tablet or smartphone\r\n\r\n' + meetingUrl + this.accessCode + '\r\n\r\n' +
+            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' + meetingUrl + this.accessCode + '\r\n\r\n' +
             '\r\n\r\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }
