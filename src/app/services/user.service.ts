@@ -172,6 +172,10 @@ export class UserService {
         const url = urlConstants.baseUrl + 'SaveUserPermission';
         return this.apiRequest.post(url, payload);
     }
+    addNewMemberFromWholeList(payload) {
+        const url = urlConstants.baseUrl + 'addNewMemberFromWholeList';
+        return this.apiRequest.post(url, payload);
+    }
     getGuestUsersByLoggedInUser(payload) {
         const url = urlConstants.baseUrl + 'getGuestUsersByLoggedInUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);

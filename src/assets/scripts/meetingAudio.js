@@ -108,7 +108,11 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    div.className = 'chat-background';
+    if (user === 'you') {
+        div.className = 'chat-background';
+    } else {
+        div.className = 'chat-background-invitee';
+    }
     var message = event.data || event;
     var user = event.extra || 'you';
     html = '<p>' + message + '</p>';
@@ -187,7 +191,7 @@ connection.onstream = function (event) {
     mediaElement.setAttribute("style", 'float:left;margin-top:200px;');
     
     var customDiv = document.createElement('div');    
-    customDiv.setAttribute("style", 'width:320px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/user_audio.jpg"); background-repeat: no-repeat;');
+    customDiv.setAttribute("style", 'width:320px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/person.jpg"); background-repeat: no-repeat;');
     var heading = document.createElement('div');
     heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');    
     heading.innerHTML = event.type === 'local' ? 'you' : event.extra;

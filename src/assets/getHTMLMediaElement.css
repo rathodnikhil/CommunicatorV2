@@ -172,18 +172,20 @@ input[type="range"]::-webkit-slider-thumb {
     height: 26px;
 }
 
-.chat-background:nth-child(even) {
-    border: 2px solid #dedede;
-    background-color: #f1f1f1;
+.chat-background {
+    border: 1px solid #b62323;
+    background-color: #f8c0c0;
+    opacity: 0.75;
     border-radius: 5px;
     padding: 15px;    
     margin: 10px 10px;
     line-height: 1;
 }
 
-.chat-background:nth-child(odd) {
-    border: 2px solid #ccc;
-    background-color: #ddd;
+.chat-background-invitee {
+    border: 1px solid rgb(61, 141, 41);
+    background-color: rgb(222, 250, 221);
+    opacity: 0.75;
     border-radius: 5px;
     line-height: 1;
     padding: 15px;
@@ -192,10 +194,10 @@ input[type="range"]::-webkit-slider-thumb {
 
 .time-right {
     float: right;
-    color: #2980b9;
+    color: rgb(61, 141, 41);
 }
 
 .time-left {
     float: left;
-    color: #2980b9;
+    color: #b62323;
 }
