@@ -163,7 +163,7 @@ div.scrollmenu a:hover {
         line-height: 1;
         border-radius: 25px;
         margin-right: 10px;
-        &:hover {            
+        &:hover {
             -webkit-animation: neon5 1.5s ease-in-out infinite alternate;
   -moz-animation: neon5 1.5s ease-in-out infinite alternate;
   animation: neon5 1.5s ease-in-out infinite alternate;
@@ -199,15 +199,15 @@ div.scrollmenu a:hover {
 }
 
 .demo-one {
-    height: 260px;
+    height: calc(100vh*0.30);
     background-color: #FFFFFF;
     margin-left: 30px;
     margin-right: 30px;
 }
 
 .demo-one video {
-    height: 260px;
-    width: 260px;
+    height:calc(100vh*0.30);
+    width: calc(100vh*0.30);
 }
 
 .demo-border {

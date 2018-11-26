@@ -128,7 +128,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         payload.userCode = this.loggedInUser.firstName;
                     }
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
-                        if (!data2.warningFl && !data2.errorFl && data2.message !== null) {
+                        debugger;
+                        if (!data2.warningFl && !data2.errorFl && data2.message !== null
+                            && data2.message.toLowerCase().indexOf('success') > -1) {
                             this.meetingDetails = data2;
                             this.config.leftTime = parseInt(this.meetingDetails.duration.split(' ')[0]) * 60;
                             this.isHost = true;
@@ -166,10 +168,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             width: '350px',
             height: '420px',
         };
-        if (typeof (window['functionFromExternalScript']) === 'function') {    
+        if (typeof (window['functionFromExternalScript']) === 'function') {
             window['functionFromExternalScript'](params);
         }
-    }    
+    }
     // to set selected send message to
     changeMessageTo(member) {
         this.messageSendTo = member.name + ' ' + member.lastName;
@@ -245,6 +247,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     onFinished() {
         this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
+        this.document.getElementById('btn-end-meeting').click();
     }
     onNotify(time: number) {
         this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
@@ -269,7 +272,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     onIndexChanged(idx) {
-        this.index = idx;        
+        this.index = idx;
     }
 }
 
