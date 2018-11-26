@@ -123,14 +123,6 @@
                             <a class="btn btn-sec" (click)="scheduleMeeting()" style="color: #8f5a0a;">Schedule Meeting & Send Invitation</a>
                         </div>
                         <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings">
-                            <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true" class="alert alert-success alert-dismissable"
-                                [(ngModel)]="showScheduleMeetingSuccess">
-                                <strong>Success:&nbsp; </strong>
-                                <span style="font-weight: bold;">meeting has been scheduled Successfully.</span>
-                            </div>
-                            <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
-                                <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
-                            </div>
                             <div style="padding: 10px; font-size:14px;" class="span-font">
                                 <span>{{this.subject}}</span>
                                 <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}

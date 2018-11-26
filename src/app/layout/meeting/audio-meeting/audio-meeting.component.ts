@@ -145,9 +145,10 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     // save mom details
     saveMom() {
 
-        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === 'undefined') {
+        if (this.momTxt.trim() === '' || this.momTxt === null || typeof this.momTxt === 'undefined') {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
+            debugger;
             if (!this.isHost) {
                 this.downloadFile(this.momTxt);
             } else {
