@@ -25,9 +25,13 @@ document.getElementById('btn-mute').onclick = function () {
     try {
         var streamid = connection.streamEvents.selectFirst().streamid;
         if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0)
-            connection.streamEvents.selectFirst({ local: true }).stream.mute();
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.mute();
         else
-            connection.streamEvents.selectFirst({ local: true }).stream.unmute();
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.unmute();
     } catch (error) {
         console.log(error);
     }
@@ -223,7 +227,10 @@ connection.onstream = function (event) {
         }
     }
     setTimeout(function () {
-        mediaElement.media.play();
+        if (mediaElement.media == undefined)
+            mediaElement.play();
+        else
+            mediaElement.media.play();
     }, 5000);
     mediaElement.id = event.streamid;
 };
