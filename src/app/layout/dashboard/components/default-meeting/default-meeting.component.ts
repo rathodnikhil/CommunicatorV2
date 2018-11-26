@@ -25,7 +25,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
-    showCancelMeeting: boolean;
+    showScheduleMeetingFl: boolean;
     searchText: String;
     accessCode: any;
     meetNowMeeting: any;
@@ -68,9 +68,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        this.showCancelMeeting = false;
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';
+        this.showScheduleMeetingFl = false;
         // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
@@ -78,7 +78,17 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-
+                let userRoleArray = [];
+                userRoleArray = this.loggedInUser.roles;
+                let roleArray = [];
+                for (let i = 0; i < userRoleArray.length; i++) {
+                    roleArray.push(userRoleArray[i].role);
+                }
+                if (roleArray.indexOf('ADMINISTRATOR') === -1) {
+                    this.showScheduleMeetingFl = true;
+                } else {
+                    this.showScheduleMeetingFl = false;
+                }
                 const payload = { userCode: this.loggedInUser.userCode };
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
@@ -114,7 +124,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     if (meetingDate.getDate() === this.currentDate.getDate()
                         && meetingDate.getMonth() === this.currentDate.getMonth()
-                        && meetingDate.getFullYear() === this.currentDate.getFullYear()) {
+                        && meetingDate.getFullYear() === this.currentDate.getFullYear() ) {
                         this.filteredFutureMeetingList.push(meeting);
                     }
                 });

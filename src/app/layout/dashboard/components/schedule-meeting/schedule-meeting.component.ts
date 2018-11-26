@@ -155,7 +155,7 @@ export class ScheduleMeetingComponent implements OnInit {
          let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
             this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
             let today =  new Date();
-        if (this.subject.trim() === "" || this.subject === null || typeof this.subject === "undefined") {
+        if ( this.subject === null || typeof this.subject === "undefined" || this.subject.trim() === "") {
             return this.alertService.warning('Please enter meeting subject', "Warning");
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', "Warning");
@@ -226,13 +226,13 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.selectedTimeZone = 'Select Timezone';
         this.meeting.callType = 1;
         this.meeting.isRecurring = 1;
+        let today = new Date();
         this.meeting.datePicker = {
-            day: this.today.getDate(),
-            month: this.today.getMonth() + 1,
-            year: this.today.getFullYear()
+            day: today.getDate(),
+            month: today.getMonth() + 1,
+            year: today.getFullYear()
         };
-        this.meeting.meridianTime =  { hour: this.today.getHours(), minute: this.today.getMinutes() };
-        this.meeting.meridian =  true;
+        this.meeting.meridianTime =  { hour: today.getHours(), minute: today.getMinutes() };
     }
    
     copyToOutLook(event) {

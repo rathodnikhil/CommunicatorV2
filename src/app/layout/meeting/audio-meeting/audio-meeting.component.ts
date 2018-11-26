@@ -148,7 +148,6 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
         if (this.momTxt.trim() === '' || this.momTxt === null || typeof this.momTxt === 'undefined') {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
-            debugger;
             if (!this.isHost) {
                 this.downloadFile(this.momTxt);
             } else {
@@ -231,5 +230,16 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     onIndexChanged(idx) {
         this.index = idx;
         console.log('current index: ' + idx);
+    }
+    startMeeting(){
+        this.isMeetingStarted=!this.isMeetingStarted
+            if ((new Date(this.meetingDetails.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
+                return this.alertService.warning('Meeting is set in future.', 'Warning');
+            } else if (((this.meetingDetails.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
+                const hours = Math.round((this.meetingDetails.meetingStartDateTime - new Date().getTime()) / (3600000));
+                const min = Math.round((this.meetingDetails.meetingStartDateTime - new Date().getTime()) / (60000));
+                return this.alertService
+                    .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
+        }
     }
 }
