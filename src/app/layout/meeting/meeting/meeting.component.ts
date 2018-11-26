@@ -166,10 +166,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             width: '350px',
             height: '420px',
         };
-        if (typeof (window['functionFromExternalScript']) === 'function') {    
+        if (typeof (window['functionFromExternalScript']) === 'function') {
             window['functionFromExternalScript'](params);
         }
-    }    
+    }
     // to set selected send message to
     changeMessageTo(member) {
         this.messageSendTo = member.name + ' ' + member.lastName;
@@ -245,6 +245,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     onFinished() {
         this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
+        this.document.getElementById('btn-end-meeting').click();
     }
     onNotify(time: number) {
         this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
@@ -269,7 +270,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     onIndexChanged(idx) {
-        this.index = idx;        
+        this.index = idx;
     }
 }
 

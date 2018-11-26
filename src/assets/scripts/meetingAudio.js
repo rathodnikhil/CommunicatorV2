@@ -189,13 +189,13 @@ connection.audiosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
     var mediaElement = event.mediaElement;
     mediaElement.setAttribute("style", 'float:left;margin-top:200px;');
-    
-    var customDiv = document.createElement('div');    
+
+    var customDiv = document.createElement('div');
     customDiv.setAttribute("style", 'width:320px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/person.jpg"); background-repeat: no-repeat;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');    
+    heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
-    customDiv.appendChild(heading);    
+    customDiv.appendChild(heading);
     customDiv.appendChild(mediaElement);
     customDiv.setAttribute("drag-scroll-item", '');
     customDiv.setAttribute("id", event.streamid + 'parent');
@@ -329,6 +329,7 @@ var hashString = false; // location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
+debugger;
 var roomid = params["audio?meetingCode"];
 if (!roomid && hashString.length) {
     roomid = hashString;
@@ -344,7 +345,7 @@ if (roomid && roomid.length) {
         if (isHost) {
             document.getElementById('open-room').disabled = false;
             document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
-           
+
             return;
         } else if (!isHost) {
             // document.getElementById('btn-leave-room').disabled = true;

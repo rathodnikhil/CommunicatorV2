@@ -25,9 +25,13 @@ document.getElementById('btn-mute').onclick = function () {
     try {
         var streamid = connection.streamEvents.selectFirst().streamid;
         if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0)
-            connection.streamEvents.selectFirst({ local: true }).stream.mute();
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.mute();
         else
-            connection.streamEvents.selectFirst({ local: true }).stream.unmute();
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.unmute();
     } catch (error) {
         console.log(error);
     }
@@ -39,7 +43,7 @@ document.getElementById('open-room').onclick = function () {
         return false;
     }
     disableInputButtons();
-    connection.open(document.getElementById('room-id').value, function () {
+    connection.openOrJoin(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
         document.getElementById('resume-count').click();
@@ -63,6 +67,11 @@ document.getElementById('open-or-join-room').onclick = function () {
     });
 };
 
+document.getElementById('btn-end-meeting').onclick = function () {
+    connection.closeEntireSession(function () {
+        document.querySelector('h1').innerHTML = 'Entire session has been closed.';
+    });
+}
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
     connection.leave();
@@ -189,17 +198,17 @@ connection.onstream = function (event) {
         video.muted = true;
     }
     video.srcObject = event.stream;
-    video.height = '250';
-    video.width = '250';
+    video.height = Math.round(window.innerHeight*0.30)-10;
+    video.width = Math.round(window.innerHeight*0.30)-10;
     video.setAttribute("style", 'float:left;');
     // video.style.padding = '5';
     var customDiv = document.createElement('div');
-    customDiv.style.height = '260';
-    customDiv.style.width = '260';
+    customDiv.style.height = Math.round(window.innerHeight*0.30);
+    customDiv.style.width = Math.round(window.innerHeight*0.30);
     customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:260px;height:260px;padding:5px;text-align: center; float:left;');
+    customDiv.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)+'px;height:'+Math.round(window.innerHeight*0.30)+'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)-10+'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
@@ -337,7 +346,7 @@ var hashString = false; // location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
-
+debugger;
 var roomid = params.meetingCode;
 if (!roomid && hashString.length) {
     roomid = hashString;
