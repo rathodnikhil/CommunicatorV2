@@ -49,22 +49,24 @@ export class MyProfileComponent implements OnInit {
         });
     }
     updateProfile() {
-        if (this.loggedInUserObj.firstName === "" || this.loggedInUserObj.firstName === null || typeof this.loggedInUserObj.firstName === "undefined") {
+        if (this.loggedInUserObj.firstName === null || typeof this.loggedInUserObj.firstName === "undefined" || this.loggedInUserObj.firstName.trim() === "" ) {
             return this.alertService.warning('Please enter first name', "Warning");
-        } else if (this.loggedInUserObj.lastName === "" || this.loggedInUserObj.lastName === null || typeof this.loggedInUserObj.lastName === "undefined") {
+        } else if ( this.loggedInUserObj.lastName === null || typeof this.loggedInUserObj.lastName === "undefined" || this.loggedInUserObj.lastName.trim() === "") {
             return this.alertService.warning('Please enter last name', "Warning");
-        }else if (this.loggedInUserObj.email === "" || this.loggedInUserObj.email === null || typeof this.loggedInUserObj.email === "undefined") {
+        }else if ( this.loggedInUserObj.email === null || typeof this.loggedInUserObj.email === "undefined" || this.loggedInUserObj.email.trim() === "") {
             return this.alertService.warning('Please enter email', "Warning");
         }else{
             const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
             if (!EMAIL_REGEXP.test(this.loggedInUserObj.email)) {
               return this.alertService.warning("Please enter valid email","Warning");
             }
+        
         const payload = {
             firstName: this.loggedInUserObj.firstName,
             lastName: this.loggedInUserObj.lastName,
             email: this.loggedInUserObj.email,
-            userCode: this.loggedInUserObj.userCode
+            userCode: this.loggedInUserObj.userCode,
+            profileImgpath: this.loggedInUserObj.profileImgPath
         }
         this._userService.updateUserDetails(payload).subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){
