@@ -142,7 +142,7 @@ export class ManageTeamComponent implements OnInit {
                     }else{
                     this.userPermissionList.push(team);
                     this.newTeamName = '';
-                   return this.alertService.success("Team has been saved successfully ", "Success");   
+                   return this.alertService.success("Team has saved successfully ", "Success");   
                     }
                 });
         }
@@ -192,7 +192,7 @@ export class ManageTeamComponent implements OnInit {
                         this.userName = '';
                         this.email = '';
                         this.password = '';
-                        return this.alertService.success("Member has been saved successfull ", "Success");   
+                        return this.alertService.success("Member has saved successfully ", "Success");   
                     }
                });
             }
