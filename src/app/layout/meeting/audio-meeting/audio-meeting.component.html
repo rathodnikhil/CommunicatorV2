@@ -102,7 +102,7 @@
     <button id="btn-mute" class="btn pull-left" [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>
         <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
     </button>
-    <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'" (click)='startMeeting();'>
+    <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'" (click)='isMeetingStarted=!isMeetingStarted'>
         <i class="fa fa-2x fa-play" aria-hidden="true"></i>
     </button>
     <button id="join-room" class="btn default pull-left" style="display: none;">

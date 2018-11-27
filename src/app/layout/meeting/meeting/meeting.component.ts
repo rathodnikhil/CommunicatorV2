@@ -192,7 +192,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
-                this.downloadFile(this.momTxt);
+                this.downloadFile(this.momTxt,this.meetingDetails);
             } else {
                 const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
                 this._meetingService.saveMomDetails(payload).subscribe(resp => {
@@ -200,13 +200,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     if (this.errorFl === true) {
                         return this.alertService.warning(resp.message, 'Warning');
                     } else {
-                        this.downloadFile(this.momTxt);
+                        this.downloadFile(this.momTxt,this.meetingDetails);
                     }
                 });
             }
         }
     }
-    downloadFile(data) {
+    downloadFile(data,meetingDetails) {
+        const today = new Date();
+        const momHeader = 'Date of Meeting: '+meetingDetails.meetingDate +'\r\n\r\n'+'Subject: '+meetingDetails.subject+'\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
@@ -214,9 +216,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data)}`);
         // a.href = url;
-        a.download = this.meetingCode + '.txt';
+        a.download = 'MOM_'+ today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
