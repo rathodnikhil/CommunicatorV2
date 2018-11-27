@@ -69,16 +69,18 @@ export class PastMeetingsComponent implements OnInit {
         if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
             return this.alertService.warning('No MOM for this meeting has been added', "Warning");
         } else{
+            const today = new Date();
         data.mom.momDescription = data.mom.momDescription.split('\n');
         data.mom.momDescription = data.mom.momDescription.join('\r\n ');
+          const momHeader = 'Date of Meeting: '+data.meetingDate +'\r\n\r\n'+'Subject: '+data.subject+'\r\n\r\n';
         const fileType = 'text/json';
 
         var a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data.mom.momDescription)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data.mom.momDescription)}`);
         // a.href = url;
-        a.download = data.meetingCode + '.txt';
+        a.download = 'MOM_'+ today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element

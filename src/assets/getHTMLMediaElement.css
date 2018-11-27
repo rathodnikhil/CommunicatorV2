@@ -172,32 +172,36 @@ input[type="range"]::-webkit-slider-thumb {
     height: 26px;
 }
 
-.chat-background {
-    border: 1px solid #b62323;
-    background-color: #f8c0c0;
+.chat-background-invitee {
+    border: 1px solid #44767c;
+    background-color: #d3f4f8;
     opacity: 0.75;
     border-radius: 5px;
     padding: 15px;    
     margin: 10px 10px;
     line-height: 1;
+    color : #000;
 }
 
-.chat-background-invitee {
-    border: 1px solid rgb(61, 141, 41);
-    background-color: rgb(222, 250, 221);
+.chat-background {
+    border: 1px solid #8f5a0a;
+    background-color: #e7d7bd;
     opacity: 0.75;
     border-radius: 5px;
     line-height: 1;
     padding: 15px;
     margin: 10px 10px;
+    color : #000;
 }
 
 .time-right {
     float: right;
-    color: rgb(61, 141, 41);
+    color: #8f5a0a;
+    font-weight: bold;
 }
 
 .time-left {
     float: left;
-    color: #b62323;
+    color:#44767c;
+    font-weight: bold;
 }

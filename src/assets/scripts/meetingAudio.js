@@ -112,17 +112,14 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    if (user === 'you') {
-        div.className = 'chat-background';
-    } else {
-        div.className = 'chat-background-invitee';
-    }
     var message = event.data || event;
     var user = event.extra || 'you';
     html = '<p>' + message + '</p>';
     if (user === 'you') {
+        div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
+        div.className = 'chat-background-invitee';
         html += '<span class="time-left">';
     }
 
@@ -195,9 +192,9 @@ connection.onstream = function (event) {
     mediaElement.setAttribute("style", 'float:left;margin-top:200px;');
 
     var customDiv = document.createElement('div');
-    customDiv.setAttribute("style", 'width:320px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/person.jpg"); background-repeat: no-repeat;');
+    customDiv.setAttribute("style", 'width:250px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/pic.png"); background-repeat: no-repeat;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:250px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:211px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(mediaElement);
@@ -252,9 +249,12 @@ connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
-    if (isHost)
+    if (isHost){
         document.getElementById('btn-leave-room').disabled = false;
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+    }else{
+        document.getElementById('btn-leave-room').disabled = false;
+    }
 
 };
 
