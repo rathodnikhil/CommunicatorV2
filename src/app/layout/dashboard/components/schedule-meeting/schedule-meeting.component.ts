@@ -275,20 +275,16 @@ export class ScheduleMeetingComponent implements OnInit {
    
     //get meeting details
     getMeetingDetails(): string {
-        let meetingUrl = '';
-        if (this.meeting.callType === 'Video') {
-            this.vedioMeeting = true;
-            meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-        } else {
-            this.audioMeeting = true;
-            meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
-        }
-
+        
+            let meetingAudioUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+            let meetingVideoUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
+    
         const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.year + '/' + this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' + meetingUrl + this.accessCode + '\r\n\r\n' +
+            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' +'for audio meeting click below url :'+ meetingAudioUrl+this.accessCode 
+            'for joining video meeting click below url :'+meetingVideoUrl+this.accessCode + '\r\n\r\n' +
             '\r\n\r\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }
