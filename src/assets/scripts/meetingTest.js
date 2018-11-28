@@ -122,6 +122,7 @@ function appendDIV(event) {
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
     if (user === 'You') {
+
         div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
