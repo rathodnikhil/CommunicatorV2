@@ -66,7 +66,15 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
-    // @ViewChild(CountdownComponent) public counter: CountdownComponent;
+    @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
+    leaveMeeting: CustomModalModel = {
+        titleIcon: '<i class="fas fa-sign-out-alt"></i>',
+        title: 'Exit Meeting',
+        smallHeading: 'You can exit meeting here',
+        body: '',
+        Button1Content: '',
+        Button2Content: ''
+    };
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -188,12 +196,24 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     }
 
     exitMeeting() {
+        this.exitMeetingConfirmModal.open();
+    }
+    completeExit(){
+     this.exit();
+     if (!this.isHost) {
+        this.router.navigate(['/dashboard']);
+    } else{
+     this.router.navigate(['/login']);
+    }
+    }
+    exit(){
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
             this.errorFl = resp.errorFl;
             if (this.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
+                this.exitMeetingConfirmModal.close();
                 this.document.getElementById('btn-leave-room').click();
                 this.document.getElementById('btn-leave-room').disable = true;
                 this.document.getElementById('input-text-chat').disable = true;

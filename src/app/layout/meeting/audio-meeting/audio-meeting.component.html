@@ -42,6 +42,15 @@
                             <button id="btn-leave-room" class="btn  btn-danger" (click)="exitMeeting()"   >
                                 <i class="fa fa-2x fa-power-off" aria-hidden="true"></i>
                             </button>
+                            <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
+                                <div>
+                                    <label style="padding: 10px; ">Are you sure you want to completely exit meeting click yes or to save MOM and other meeting activity click No?</label>
+                                </div>
+                                <div class="modal-footer popFooter">
+                                    <button type="button" class="btn btn-sec" (click)="completeExit()">Yes</button>
+                                    <button type="button" class="btn btn-cancel" (click)="exit()">No</button>
+                                </div>
+                            </app-custom-modal>
                             <button id="btn-mute" class="btn " [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>
                                 <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                             </button>
