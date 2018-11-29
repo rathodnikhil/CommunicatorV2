@@ -47,7 +47,7 @@ div.scrollmenu a:hover {
 .parent {
     background-color: f1f1f1;
     position: relative;
-    height: 30vh;
+    height: 48vh;
     border: 1px solid #dedede;
     border-radius: 8px;
     background: rgb(238, 235, 235);
@@ -150,9 +150,9 @@ div.scrollmenu a:hover {
 
 
 .meeting-bottom {
-    position: absolute;
-    bottom: 15px;
+
     text-align: center;
+    padding-top: 10px;
 
     button {
         width: 50px;
@@ -240,4 +240,11 @@ div.scrollmenu a:hover {
 
 .sc_left {
     border-radius: 8px 0px 0px 8px;
+}
+.remove-border{
+    
+    font: bold 12px Arial, Helvetica;
+    cursor: default;
+    color: #8f5a0a;
+    background: #ffb94b;
 }

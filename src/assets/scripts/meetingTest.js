@@ -119,9 +119,9 @@ function appendDIV(event) {
     var div = document.createElement('div');
  //   div.className = 'chat-background';
     var message = event.data || event;
-    var user = event.extra || 'you';
+    var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
-    if (user === 'you') {
+    if (user === 'You') {
         div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
@@ -211,7 +211,7 @@ connection.onstream = function (event) {
     customDiv.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)+'px;height:'+Math.round(window.innerHeight*0.30)+'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
     heading.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)-10+'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
-    heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
+    heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');

@@ -40,8 +40,9 @@ export class ManageTeamComponent implements OnInit {
     searchTeam: any;
     showSelectedTeam: boolean;
     updateTeamName: any;
-    @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
+    selectedUserPermissionObj: any;
     @ViewChild("emailField") emailField: ElementRef;
+    @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
         title: 'New Team',
@@ -55,6 +56,15 @@ export class ManageTeamComponent implements OnInit {
         titleIcon: '<i class="fa fa-pencil-square-o"></i>',
         title: 'Update Team',
         smallHeading: 'You can update team details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Team',
+        Button2Content: ''
+    };
+    @ViewChild('deleteTeamModal') public deleteTeamModal: CustomModalComponent;
+    deleteTeam: CustomModalModel = {
+        titleIcon: '<i class="fas fa-trash-alt"></i>',
+        title: 'Delete Team',
+        smallHeading: 'You can delete team details here',
         body: '',
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Team',
         Button2Content: ''
@@ -106,17 +116,18 @@ export class ManageTeamComponent implements OnInit {
             }
         });
     }
-    displayTeamDetails(team) {
+    displayTeamDetails(userPermission) {
         this.showSelectedTeam = true;
-        this.selectedTeamName = team.teamName;
-        this.selectedTeamObj = team;
+        this.selectedTeamName = userPermission.team.teamName;
+        this.selectedTeamObj = userPermission.team;
         this.filterMemberList = [];
       
         for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
-            if (this.userPermissionMemberList[this.i].team.id == team.id) {
+            if (this.userPermissionMemberList[this.i].team.id == userPermission.team.id) {
                 this.filterMemberList.push(this.userPermissionMemberList[this.i]);
             }
         }
+        this.selectedUserPermissionObj = userPermission;
     }
     //to open modal popup
     open() {
@@ -211,6 +222,9 @@ export class ManageTeamComponent implements OnInit {
             case 'updateTeam':
                 this.addUpdateTeamModal.close();
                 break;
+            case 'deleteTeam':
+                this.deleteTeamModal.close();
+                break;
         }
     }
     editTeam(){
@@ -235,5 +249,21 @@ export class ManageTeamComponent implements OnInit {
                     }
                 });
         }
+    }
+    deleteSelectedTeam(){
+        this.deleteTeamModal.open();
+    }
+    deleteTeamDetails(){
+        const payload = {"teamCode": this.selectedUserPermissionObj.teamCode};
+     
+            this._teamService.deleteTeam(payload).subscribe(res => {
+                if(res.errorFl === true || res.warningFl === true){
+                    return this.alertService.warning(res.message, "Warning"); 
+                }else{
+               this.closePopup('deleteTeam');
+               this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+               return this.alertService.success("Team has been updated successfully ", "Success");   
+                }
+            });
     }
 }

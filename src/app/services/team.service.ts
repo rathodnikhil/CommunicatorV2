@@ -45,4 +45,8 @@ export class TeamService {
               });
           return resp;
       }
+      deleteTeam(payload) {
+        const url = urlConstants.baseUrl + 'deleteTeam?teamCode=' + payload.teamCode;
+        return this.apiRequest.post(url, payload);
+      }
 }
