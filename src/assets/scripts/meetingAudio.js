@@ -195,7 +195,11 @@ connection.onstream = function (event) {
     customDiv.setAttribute("style", 'width:250px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/pic.png"); background-repeat: no-repeat;');
     var heading = document.createElement('div');
     heading.setAttribute("style", 'width:211px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+<<<<<<< HEAD
     heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
+=======
+    heading.innerHTML = event.type === 'local' ? 'you' : event.extra;
+>>>>>>> dev
     customDiv.appendChild(heading);
     customDiv.appendChild(mediaElement);
     customDiv.setAttribute("drag-scroll-item", '');
