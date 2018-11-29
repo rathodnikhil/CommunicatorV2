@@ -150,7 +150,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
-                this.downloadFile(this.momTxt);
+                this.downloadFile(this.momTxt,this.meetingDetails);
             } else {
                 const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
                 this._meetingService.saveMomDetails(payload).subscribe(resp => {
@@ -158,23 +158,24 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
                     if (this.errorFl === true) {
                         return this.alertService.warning(resp.message, 'Warning');
                     } else {
-                        this.downloadFile(this.momTxt);
+                        this.downloadFile(this.momTxt,this.meetingDetails);
                     }
                 });
             }
         }
     }
-    downloadFile(data) {
+    downloadFile(data,meetingDetails) {
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
-
+        const momHeader = 'Date of Meeting: '+meetingDetails.meetingDate +'\r\n\r\n'+'Subject: '+meetingDetails.subject+'\r\n\r\n';
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(data)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data)}`);
         // a.href = url;
-        a.download = this.meetingCode + '.txt';
+        const today = new Date();
+        a.download = 'MOM_'+ today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
@@ -231,16 +232,5 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     onIndexChanged(idx) {
         this.index = idx;
         console.log('current index: ' + idx);
-    }
-    startMeeting(){
-        this.isMeetingStarted=!this.isMeetingStarted
-            if ((new Date(this.meetingDetails.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
-                return this.alertService.warning('Meeting is set in future.', 'Warning');
-            } else if (((this.meetingDetails.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
-                const hours = Math.round((this.meetingDetails.meetingStartDateTime - new Date().getTime()) / (3600000));
-                const min = Math.round((this.meetingDetails.meetingStartDateTime - new Date().getTime()) / (60000));
-                return this.alertService
-                    .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
-        }
     }
 }

@@ -117,13 +117,15 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    div.className = 'chat-background';
+ //   div.className = 'chat-background';
     var message = event.data || event;
     var user = event.extra || 'you';
     html = '<p>' + message + '</p>';
     if (user === 'you') {
+        div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
+        div.className = 'chat-background-invitee';
         html += '<span class="time-left">';
     }
 
@@ -260,10 +262,12 @@ connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
-    if (isHost)
+    if (isHost){
         document.getElementById('btn-leave-room').disabled = false;
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
-
+    }else{
+        document.getElementById('btn-leave-room').disabled = false;
+    } 
 };
 
 connection.onclose = function () {
