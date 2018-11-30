@@ -32,15 +32,7 @@ export class UserService {
     }
     updateUserDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'updateUserDetails';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.apiRequest.post(url, payload).subscribe(data => {
-            resp.next(data);
-        },
-            err => {
-                // alert(err);
-            });
-
-        return resp;
+        return this.apiRequest.post(url, payload);
     }
     saveMemberDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveMemberDetails';
@@ -181,7 +173,7 @@ export class UserService {
         return this.apiRequest.post(url, payload);
     }
     deleteUser(payload) {
-        const url = urlConstants.baseUrl + 'deleteUser?userCode=' + payload.usercode;
+        const url = urlConstants.baseUrl + 'deleteUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url,payload);
     }
 }

@@ -66,6 +66,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
+    @ViewChild("saveMomBtn") saveMomBtn: ElementRef;
     @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
     leaveMeeting: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',
@@ -188,6 +189,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
         this.alertService.success('File has been downloaded.', 'MOM Download');
+        this.saveMomBtn.nativeElement.blur();
     }
 
 
