@@ -10,7 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CountdownComponent } from 'ngx-countdown';
 import { DragScrollComponent } from 'ngx-drag-scroll/lib';
-
+import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -107,7 +107,16 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._loginService = loginService;
         this._meetingService = meetingService;
     }
-
+    @ViewChild("saveMomBtn") saveMomBtn: ElementRef;
+    @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
+    leaveMeeting: CustomModalModel = {
+        titleIcon: '<i class="fas fa-sign-out-alt"></i>',
+        title: 'Exit Meeting',
+        smallHeading: 'You can exit meeting here',
+        body: '',
+        Button1Content: '',
+        Button2Content: ''
+    };
     ngOnInit() {
         if (!localStorage.getItem('loggedInuserName')) {
             this._loginService.setPreviousUrl(this.router.url);
@@ -222,7 +231,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        this.alertService.success('File has been downloaded.', 'MOM Download');
+        this.saveMomBtn.nativeElement.blur();
+       return this.alertService.success('File has been downloaded.', 'MOM Download');
+
     }
 
 
@@ -230,16 +241,29 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.currentTab = tab;
     }
 
+   
     exitMeeting() {
+        this.exitMeetingConfirmModal.open();
+    }
+    completeExit(){
+     this.exit();
+     if (!this.isHost) {
+        this.router.navigate(['/dashboard']);
+    } else{
+     this.router.navigate(['/login']);
+    }
+    }
+    exit(){
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
             this.errorFl = resp.errorFl;
             if (this.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
+                this.exitMeetingConfirmModal.close();
                 this.document.getElementById('btn-leave-room').click();
-                this.document.getElementById('input-text-chat').disable = true;
                 this.document.getElementById('btn-leave-room').disable = true;
+                this.document.getElementById('input-text-chat').disable = true;
                 this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });

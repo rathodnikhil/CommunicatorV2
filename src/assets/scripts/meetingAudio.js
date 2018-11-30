@@ -5,6 +5,7 @@ window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
 document.getElementById('btn-leave-room').disabled = true;
+
 // ......................................................
 // .......................UI Code........................
 // ......................................................
@@ -74,6 +75,7 @@ document.getElementById('btn-leave-room').onclick = function () {
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
+    document.getElementById('btn-mute').disabled = true;
 };
 
 // ......................................................

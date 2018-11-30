@@ -55,6 +55,56 @@
         <button type="button" class="btn btn-cancel" (click)="closePopup('deleteAdmin')">Close</button>
     </div>
 </app-custom-modal>
+<app-custom-modal #editMemberModal [model]="editAdminPop">
+  <div class="modal-body row-label">
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>First Name</label>
+              </div>
+              <div>
+                  <input placeholder="Type Name Here.."  type="text" [(ngModel)]="firstName" value="{{updatedFirstName}}" required/>
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>Last Name</label>
+              </div>
+              <div>
+                  <input placeholder="Type Name Here.." type="text"  [(ngModel)]="lastName" value="{{updatedLastName}}" required/>
+              </div>
+          </div>
+          <div class="row form-group">
+                  <div class="col-md-3">
+                      <label>Email</label>
+                  </div>
+                  <div>
+                      <input placeholder="Type Email Here.."  type="text" [(ngModel)]="email" value="{{updatedEmail}}" required/>
+                  </div>
+              </div>
+
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>UserName</label>
+              </div>
+              <div>
+                  <input type="text" placeholder="Type Name Here.." [(ngModel)]="userName" value="{{updatedUserName}}" required/>
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>Status</label>
+              </div>
+              <div>
+            <input type="checkbox" id="statusChk" [(ngModel)]="status">
+            <p id="text" style="display:none">Checkbox is CHECKED!</p>
+            </div>
+          </div>
+  </div>
+  <div class="modal-footer popFooter">
+      <button type="button" class="btn btn-sec" (click)="updateMember()">Update Member</button>
+      <button type="button" class="btn btn-cancel" (click)="closePopup('editAdmin')">Close</button>
+  </div>
+</app-custom-modal>
   <div class="pageControl">
     <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
         [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"

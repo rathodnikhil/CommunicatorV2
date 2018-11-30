@@ -79,6 +79,7 @@ document.getElementById('btn-leave-room').onclick = function () {
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
+    document.getElementById('btn-mute').disabled = true;
 };
 
 // ......................................................

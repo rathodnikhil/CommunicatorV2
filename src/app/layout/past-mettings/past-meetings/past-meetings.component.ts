@@ -94,7 +94,4 @@ export class PastMeetingsComponent implements OnInit {
     replaceLineBreak(s:string) {
         return s && s.replace('meetNowFlag','');
       }
-      downloadRecording(data) {
-        this.alertService.warning("No recording for this meeting has been added", "Recording Download");
-    }
 }

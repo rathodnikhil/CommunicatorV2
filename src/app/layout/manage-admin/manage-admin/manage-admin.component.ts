@@ -30,21 +30,38 @@ public labels: any = {
     screenReaderPageLabel: 'page',
     screenReaderCurrentLabel: `You're on page`
 };
+firstName:any;
+lastName: any;
+userName: any;
+email: any;
+updatedLastName: any;
+updatedFirstName: any;
+updatedUserName: any;
+updatedEmail: any;
 allAdminList = [];
 selectedAdmin : any;
+updatedUserCode: any;
   constructor(userService: UserService,public alertService: AlertService) { 
     this._userService = userService;
   }
   @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
   deleteAdminPop: CustomModalModel = {
-      titleIcon: '<i class="fa fa-user"></i>',
+      titleIcon: '<i class="fa fa-trash"></i>',
       title: 'Delete Admin',
       smallHeading: 'You can delete admin here',
       body: '',
       Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete Admin',
       Button2Content: ''
   };
-
+  @ViewChild('editMemberModal') public editMemberModal: CustomModalComponent;
+  editAdminPop: CustomModalModel = {
+      titleIcon: '<i class="fa fa-pencil"></i>',
+      title: 'Edit Admin',
+      smallHeading: 'You can edit admin here',
+      body: '',
+      Button1Content: '<i class="fa fa-user"></i>&nbsp;Edit Admin',
+      Button2Content: ''
+  };
   ngOnInit() {
  
   this._userService.getAllAdminList().subscribe(data => {
@@ -63,21 +80,38 @@ this.deleteMemberModal.open();
 this.selectedAdmin = selectedAdmin;
 }
 deleteAdminNow(){
-   const payload = {'userCode': this.selectedAdmin.userCode}
-  // console.log(this.selectedAdmin.userCode);
+   const payload = {userCode: this.selectedAdmin.userCode}
   this._userService.deleteUser(payload).subscribe(data => {
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
-        return this.alertService.success("Admin "+data.FirstName +" " + data.lastName +"has deleted", 'Delete Admin');
+        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +"has deleted successfully", 'Delete Admin');
     }
 });
 }
 editAdmin(user){
-  this._userService.getLoggedInUserObj().subscribe(data => {
+    this.editMemberModal.open();
+    this.updatedFirstName = user.firstName;
+    this.updatedLastName = user.lastName;
+    this.updatedUserName = user.name;
+    this.updatedEmail = user.email;
+    this.updatedUserCode = user.userCode;
+}
+updateMember(){
+    const payload = {
+        firstName : this.firstName,
+        lastName: this.lastName,
+        name: this.userName,
+        email: this.email,
+        userCode: this.updatedUserCode
+    };
+    console.log(payload);
+  this._userService.updateUserDetails(payload).subscribe(data => {
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
+        this.editMemberModal.close();
+        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +"has edited successfully", 'Edit Admin');
     }
 });
 }
@@ -86,6 +120,9 @@ editAdmin(user){
     switch (popupType) {
         case 'deleteAdmin':
             this.deleteMemberModal.close();
+            break;
+        case 'editAdmin':
+            this.editMemberModal.close();
             break;
     }
 }

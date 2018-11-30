@@ -13,11 +13,9 @@
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
                     <div class="row" style="justify-content: left;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off autocapitalize=off size=20>
-
-
-                        <h4 *ngIf="meetingDetails.createdBy!=undefined">Host : [{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}]
+                        <h4  class="btn remove-border"  *ngIf="meetingDetails.createdBy!=undefined">Host : [{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}]
                         </h4>
-                        <span id="meeting-error"></span>
+                        <img src="assets/images/white_logo.png" class="img-fluid" style="float: right;"  alt="Responsive image" />
                     </div>
                     <div class="row" style="justify-content: left;">
                         <div id="room-urls" style="text-align: center;display: none;"></div>
@@ -45,6 +43,15 @@
                         <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
+                        <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
+                                <div>
+                                    <label style="padding: 10px; ">Are you sure you want to completely exit meeting click yes or to save MOM and other meeting activity click No?</label>
+                                </div>
+                                <div class="modal-footer popFooter">
+                                    <button type="button" class="btn btn-sec" (click)="completeExit()">Yes</button>
+                                    <button type="button" class="btn btn-cancel" (click)="exit()">No</button>
+                                </div>
+                            </app-custom-modal>
                         <button id="btn-mute" class="btn pull-left" [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
@@ -72,54 +79,54 @@
             </div>
 
             <div class="col-sm-4 meeting-activity">
-                <div class="card">
-                    <div class="card-header">
-                        <span *ngIf="meetingDetails.subject!=undefined">
-                            <h4>{{meetingDetails.subject}}</h4>
-                            <span>
-                                <i class="fa fa-clock-o"></i>&nbsp;
-                                <countdown #countdown [config]="config" (finished)="onFinished()" (notify)="onNotify($event)">$!m!:$!s!</countdown>
+                    <div class="card">
+                        <div class="card-header">
+                            <span *ngIf="meetingDetails.subject!=undefined">
+                                <h4>{{meetingDetails.subject}}</h4>
+                                <span>
+                                    <i class="fa fa-clock-o"></i>&nbsp;
+                                    <countdown #countdown [config]="config" (finished)="onFinished()" (notify)="onNotify($event)">$!m!:$!s!</countdown>
+                                </span>
                             </span>
-                        </span>
-                        <span id="meeting-error" style="float: right;" class="btn remove-border"></span>
-                    </div>
-                    <div class="card-body">
-                        <ul role="tablist" class="nav nav-tabs justify-content-start">
-                            <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
-                                    Chat
-                                </span>
-                            </li>
-                            <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
-                                    Minutes of Meeting
-                                </span>
-                            </li>
-                        </ul>
-                        <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
-                            <div style="height: 55vh; overflow-y: scroll" id="chat-container" class="chat-output">
-                            </div>
-                            <div class="col-md-12" style="padding-top: 20px;">
-                                <div class="row">
-                                    <span class="col-md-10">
-                                        <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px; overflow:auto;resize:none"></textarea>
+                            <span id="meeting-error" style="float: right;" class="btn remove-border"></span>
+                        </div>
+                        <div class="card-body">
+                            <ul role="tablist" class="nav nav-tabs justify-content-start">
+                                <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
+                                    <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
+                                        Chat
                                     </span>
-                                    <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
-                                        <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
+                                </li>
+                                <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
+                                    <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
+                                        Minutes of Meeting
                                     </span>
+                                </li>
+                            </ul>
+                            <div class="tab-content" style="overflow-y: scroll" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
+                                <div style="height: 65vh;" id="chat-container" class="chat-output">
+                                </div>
+                                <div class="col-md-12" style="padding-top: 20px;">
+                                    <div class="row">
+                                        <span class="col-md-10">
+                                            <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;overflow:auto;resize:none"></textarea>
+                                        </span>
+                                        <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
+                                            <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
-                            <div class="row content-tab" style="text-align:center">
-
-                                <textarea placeholder="Type MOM Here..." style="width: 100%; height: 70vh; margin: 10px; overflow:auto;resize:none" [(ngModel)]="momTxt" required></textarea>
-                                <button class="btn btn-sec momBtn" id="btn-save-mom" (click)="saveMom()">Save MOM</button>
+                            <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
+                                <div class="row content-tab" style="text-align:center">
+    
+                                    <textarea placeholder="Type MOM Here..." style="width: 100%; height:70vh; margin: 10px;overflow:auto;resize:none" [(ngModel)]="momTxt" required></textarea>
+                                    <button class="btn btn-sec momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Save MOM</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
