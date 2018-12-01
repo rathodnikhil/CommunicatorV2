@@ -30,7 +30,7 @@ export class NotificationComponent implements OnInit {
     broadcastMsgList = [];
     chattingHistoryList = [];
     constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
-        private router: Router,public alertService: AlertService) {
+        private router: Router, public alertService: AlertService) {
         this._userService = userService;
         this._groupService = groupService;
         this._loginService = loginService;
@@ -42,31 +42,35 @@ export class NotificationComponent implements OnInit {
         this.meetingMember = true;
         this.chattingHistoryList = [];
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if(data.errorFl === true || data.warningFl === true){
+            if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
                 return this.alertService.warning(data.message, "Warning");
-            }else{
-            this.loggedInUser = data;
-            this._userService.getUserList().subscribe(data => {
-                // if(data[0].errorFl === true || data[0].warningFl === true){
-                //     this.userList = [];
-                //     return this.alertService.warning(data[0].message, "Warning");
-                // } else{
-                    this.userList = data;
-             //   }
-            });
-    
-            this._groupService.getGroupList().subscribe(data => {
-                // if(data[0].errorFl || data[0].warningFl){
-                //     this.groupList = [];
-                //     return this.alertService.warning(data[0].message, "Warning");
-                // } else{
-                    this.groupList = data;
-               // }
-            });
+            } else {
+                this.loggedInUser = data;
+                this._userService.getUserList().subscribe(data => {
+                    if (data !== undefined && data.length > 0){
+                        this.userList = data;
+                    } else{
+                        this.userList=[];
+                        if (data[0] !== undefined && data[0].message !== undefined){
+                            return this.alertService.warning(data[0].message, 'Warning');
+                        }
+                    }                   
+                });
+
+                this._groupService.getGroupList().subscribe(data => {                    
+                    if (data !== undefined && data.length > 0){
+                        this.groupList = data;
+                    } else{
+                        this.groupList=[];
+                        if (data[0] !== undefined && data[0].message !== undefined){
+                            return this.alertService.warning(data[0].message, 'Warning');
+                        }
+                    } 
+                });
             }
         });
-    
+
     }
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
@@ -92,7 +96,7 @@ export class NotificationComponent implements OnInit {
             // alert(err);
             this.router.navigate(['/login']);
         });
-      
+
 
     }
 
@@ -106,38 +110,40 @@ export class NotificationComponent implements OnInit {
                 this._chatService.setChattingHistoryList(payload);
             }
         });
-     
+
     }
     searchInWholeMemberList() {
         if (this.searchText === "" || this.searchText === null || typeof this.searchText === "undefined") {
 
         } else {
-            const payload = { searchText: this.searchText , userCode: this.loggedInUser.userCode};
+            const payload = { searchText: this.searchText, userCode: this.loggedInUser.userCode };
             this._userService.searchWholememberList(payload).subscribe(data => {
-                if(data[0].errorFl || data[0].warningFl){
+                if (data[0].errorFl || data[0].warningFl) {
                     this.searchWholeMemberList = [];
                     return this.alertService.warning(data[0].message, "Warning");
-                } else{
-                this.searchWholeMemberList = data;
+                } else {
+                    this.searchWholeMemberList = data;
                 }
             });
         }
     }
     addNewMembersInList(user) {
-        const payload = {teamCode: this.loggedInUser.team.teamCode ,
-             team : this.loggedInUser.team ,
-             userId: user,
-            createdBy: this.loggedInUser.userCode }
+        const payload = {
+            teamCode: this.loggedInUser.team.teamCode,
+            team: this.loggedInUser.team,
+            userId: user,
+            createdBy: this.loggedInUser.userCode
+        }
 
-                        this._userService.addNewMemberFromWholeList(payload).subscribe(data => {
-                            if(data.errorFl === true || data.warningFl === true){
-                            return this.alertService.warning(data.message, "Warning");
-                        }else{
-                            this.searchText = '';
-                            this.userList.push(user);
-                            this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
-                          return this.alertService.success('User has been added successfully',"Success");
-                        }
-                        });
+        this._userService.addNewMemberFromWholeList(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, "Warning");
+            } else {
+                this.searchText = '';
+                this.userList.push(user);
+                this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
+                return this.alertService.success('User has been added successfully', "Success");
+            }
+        });
     }
 }
