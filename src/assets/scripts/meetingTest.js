@@ -245,7 +245,12 @@ connection.onstream = function (event) {
     }, 5000);
     video.id = event.streamid;
 };
+connection.onMediaError = function(event){
+    alertService.error(event.message,"Device error!");
+    document.getElementById('btn-leave-room').disabled = true;
+    document.getElementById('open-room').disabled = false;
 
+}
 connection.onmute = function (event) {
     connection.streamEvents[event.streamid].stream.mute();
 };
