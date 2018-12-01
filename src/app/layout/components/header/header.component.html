@@ -1,4 +1,4 @@
-<button *ngIf="!guestFlag" type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}"
+<button *ngIf="!guestFlag" type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open offset-md-3': !isClosed}" [ngStyle]="{'margin':isClosed &&this.router.url.toString().indexOf('meeting')>0?'5px 0px 0px 20px':'' }"
     (click)="hamburger_cross()">
     <span class="hamb-top"></span>
     <span class="hamb-middle"></span>

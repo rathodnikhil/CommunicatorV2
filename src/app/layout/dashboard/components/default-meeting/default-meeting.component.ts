@@ -51,7 +51,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button1Content: '<i class="fa fa - ban"></i>&nbsp;Cancel Meeting',
         Button2Content: ''
     };
-  
+
     @ViewChild('startMeetNowModal') public startMeetNowModal: CustomModalComponent;
     startMeetNow: CustomModalModel = {
         titleIcon: '<i class="fa fa - trash"></i>',
@@ -93,12 +93,16 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-                    if (data !== undefined && data.length > 0 && (data[0].errorFl || data[0].warningFl)) {
-                        this.futureMeetingList = [];
-                        return this.alertService.warning(data[0].message, 'Warning');
-                    } else {
+                    if (data !== undefined && data.length > 0) {
                         this.futureMeetingList = data;
                         this.filteredFutureMeetingList = data;
+
+                    } else {
+                        // debugger;
+                        this.futureMeetingList = [];
+                        this.filteredFutureMeetingList = [];
+                        if (data[0] !== undefined && data[0].message !== undefined)
+                            return this.alertService.warning(data[0].message, 'Warning');
                     }
                 });
             }
@@ -124,7 +128,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     if (meetingDate.getDate() === this.currentDate.getDate()
                         && meetingDate.getMonth() === this.currentDate.getMonth()
-                        && meetingDate.getFullYear() === this.currentDate.getFullYear() ) {
+                        && meetingDate.getFullYear() === this.currentDate.getFullYear()) {
                         this.filteredFutureMeetingList.push(meeting);
                     }
                 });
@@ -144,15 +148,20 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 break;
             case 'range':
                 this.selectedCriteria = 'Range';
+                const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
+                const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
 
-                    if ((meetingDate.getDate() >= this.selectedfromDate.day
-                        && meetingDate.getMonth() + 1 >= this.selectedfromDate.month
-                        && meetingDate.getFullYear() >= this.selectedfromDate.year)
-                        && (meetingDate.getDate() <= this.selectedtoDate.day
-                            && meetingDate.getMonth() + 1 <= this.selectedtoDate.month
-                            && meetingDate.getFullYear() <= this.selectedtoDate.year)) {
+                    // if ((meetingDate.getDate() >= this.selectedfromDate.day
+                    //     && meetingDate.getMonth() + 1 >= this.selectedfromDate.month
+                    //     && meetingDate.getFullYear() >= this.selectedfromDate.year)
+                    //     && (meetingDate.getDate() <= this.selectedtoDate.day
+                    //         && meetingDate.getMonth() + 1 <= this.selectedtoDate.month
+                    //         && meetingDate.getFullYear() <= this.selectedtoDate.year)) {
+                    //     this.filteredFutureMeetingList.push(meeting);
+                    // }
+                    if (toDate >= meetingDate && fromDate <= meetingDate) {
                         this.filteredFutureMeetingList.push(meeting);
                     }
                 });
@@ -173,12 +182,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
             }
         } else {
-         //   if (meeting.meetingStartDateTime <= Date.now()) {
-                if (meeting.callType === 'Video') {
-                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-                } else {
-                    this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-                }
+            //   if (meeting.meetingStartDateTime <= Date.now()) {
+            if (meeting.callType === 'Video') {
+                this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
+            } else {
+                this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
+            }
             // } else {
             //     if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
             //         return this.alertService.warning('Meeting is set in future.', 'Warning');
@@ -203,7 +212,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             }
         });
     }
- 
+
     cancelMeeting(meeting) {
         this.selectedMeeting = meeting;
         this.confirmCancelMeetingModal.open();
@@ -232,7 +241,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     // copy meeting content
     copyToClipboard() {
-        const meetingDetails ='Meet now: ' + new Date().toDateString()+ '  '+ this.getMeetingDetails();
+        const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails();
         const tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
         document.execCommand('copy');
         return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
@@ -284,7 +293,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     GetFormattedDate(): String {
         const todayTime = new Date();
-        return todayTime.getFullYear() + '/' + (todayTime.getMonth() + 1) + '/' +  todayTime.getDate();
+        return todayTime.getFullYear() + '/' + (todayTime.getMonth() + 1) + '/' + todayTime.getDate();
     }
     closePopup(popType) {
         switch (popType) {
