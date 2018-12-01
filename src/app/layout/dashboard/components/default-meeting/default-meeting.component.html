@@ -123,32 +123,6 @@
         <div class="row">
             <div #chatBody class="card-body" style="min-height:100%;">
                 <ul class="chat">
-                    <!-- <li class="left clearfix">
-                        <div *ngIf="recentMeeting.meetingCode!=undefined">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <i class="fa fa-calendar"></i>
-                                    <span style="font-weight: bold; font-size: 14px;">{{recentMeeting.subject}}&nbsp;({{recentMeeting.meetingCode}})
-                                        <br>
-                                        <i class="fa fa-clock-o"></i>&nbsp;{{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                                </div>
-                                <div class="col-md-3 row">
-                                    <a class="btn btn-primary" [routerLink]="['/meeting']">Now</a>
-                                    <a class="btn btn-warning" [routerLink]="['/meeting']">Cancel</a>
-                                    <a class="btn btn-danger" [routerLink]="['/meeting']">Delete</a>
-                                </div>
-                            </div>
-                             <div class="col-md-12">
-                                <strong class="primary-font" style="color:#353535;">
-                                    <br> Meeting Host : {{recentMeeting.createdBy.firstName}}&nbsp;{{recentMeeting.createdBy.lastName}}
-                                    <br> Meeting Start Date/time : {{recentMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}
-                                    <br> Meeting Duration : {{recentMeeting.duration}} Hour</strong>
-                            </div>
-                        </div>
-                        <p *ngIf="recentMeeting!=undefined&&recentMeeting.meetingCode===undefined">
-                            <strong class="primary-font">No recent meetings</strong>
-                        </p>
-                    </li> -->
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div class="col-md-9">

@@ -128,36 +128,16 @@ export class NotificationComponent implements OnInit {
              team : this.loggedInUser.team ,
              userId: user,
             createdBy: this.loggedInUser.userCode }
-       // this.viewMemeberDetails(user);
-    //    var flag = false;
-    //     this.userList.forEach(element => {
-    //         if(user.userCode === element.userCode){
-    //             return this.alertService.warning("User Already present", "Warning");
-    //         }else{
-    //             this.userList.push(user);
-                      //  this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
+
                         this._userService.addNewMemberFromWholeList(payload).subscribe(data => {
                             if(data.errorFl === true || data.warningFl === true){
                             return this.alertService.warning(data.message, "Warning");
                         }else{
-                            alert(data);
+                            this.searchText = '';
+                            this.userList.push(user);
+                            this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
                           return this.alertService.success('User has been added successfully',"Success");
                         }
                         });
-        //     }
-        // });
-    //    if(flag = true){
-    //         this.userList.push(user);
-    //         this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
-    //         this._userService.SaveUserPermission(payload).subscribe(data => {
-    //             if(data.errorFl === true || data.warningFl === true){
-    //             return this.alertService.warning(data.message, "Warning");
-    //         }else{
-    //           return this.alertService.success('User has been added successfully',"Success");
-    //         }
-    //         });
-    //     }else{
-    //         return this.alertService.warning("User Already present", "Warning");
-    //     }
     }
 }
