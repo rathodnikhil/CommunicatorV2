@@ -283,7 +283,7 @@ export class ScheduleMeetingComponent implements OnInit {
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + '\r\n\r\n' +
             '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' +'for audio meeting click below url :'+ meetingAudioUrl+this.accessCode 
-            'for joining video meeting click below url :'+meetingVideoUrl+this.accessCode + '\r\n\r\n' +
+            '\r\n\r\n for joining video meeting click below url :'+meetingVideoUrl+this.accessCode + '\r\n\r\n' +
             '\r\n\r\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }
