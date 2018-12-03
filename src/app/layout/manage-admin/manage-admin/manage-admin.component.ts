@@ -41,6 +41,7 @@ updatedEmail: any;
 allAdminList = [];
 selectedAdmin : any;
 updatedUserCode: any;
+updatedUserStaus: boolean;
   constructor(userService: UserService,public alertService: AlertService) { 
     this._userService = userService;
   }
@@ -56,10 +57,10 @@ updatedUserCode: any;
   @ViewChild('editMemberModal') public editMemberModal: CustomModalComponent;
   editAdminPop: CustomModalModel = {
       titleIcon: '<i class="fa fa-pencil"></i>',
-      title: 'Edit Admin',
-      smallHeading: 'You can edit admin here',
+      title: 'Update Admin',
+      smallHeading: 'You can update admin here',
       body: '',
-      Button1Content: '<i class="fa fa-user"></i>&nbsp;Edit Admin',
+      Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Admin',
       Button2Content: ''
   };
   ngOnInit() {
@@ -85,17 +86,23 @@ deleteAdminNow(){
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
-        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +"has deleted successfully", 'Delete Admin');
+        this.deleteMemberModal.close();
+        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Admin');
     }
 });
 }
 editAdmin(user){
+    if(user.status.status === "ACTIVE"){
+        this.updatedUserStaus = true;    
+    }
+    this.updatedUserStaus =false;
     this.editMemberModal.open();
     this.updatedFirstName = user.firstName;
     this.updatedLastName = user.lastName;
     this.updatedUserName = user.name;
     this.updatedEmail = user.email;
     this.updatedUserCode = user.userCode;
+   
 }
 updateMember(){
     const payload = {
@@ -111,7 +118,7 @@ updateMember(){
         return this.alertService.warning(data.message, 'Warning');
     } else {
         this.editMemberModal.close();
-        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +"has edited successfully", 'Edit Admin');
+        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +"has edited successfully", 'Update Admin');
     }
 });
 }

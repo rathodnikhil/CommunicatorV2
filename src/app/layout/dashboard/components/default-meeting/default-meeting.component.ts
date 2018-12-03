@@ -152,15 +152,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
-
-                    // if ((meetingDate.getDate() >= this.selectedfromDate.day
-                    //     && meetingDate.getMonth() + 1 >= this.selectedfromDate.month
-                    //     && meetingDate.getFullYear() >= this.selectedfromDate.year)
-                    //     && (meetingDate.getDate() <= this.selectedtoDate.day
-                    //         && meetingDate.getMonth() + 1 <= this.selectedtoDate.month
-                    //         && meetingDate.getFullYear() <= this.selectedtoDate.year)) {
-                    //     this.filteredFutureMeetingList.push(meeting);
-                    // }
                     if (toDate >= meetingDate && fromDate <= meetingDate) {
                         this.filteredFutureMeetingList.push(meeting);
                     }
@@ -247,7 +238,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     joinMeetingNow() {
-        this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
+        this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
         const payload = {
