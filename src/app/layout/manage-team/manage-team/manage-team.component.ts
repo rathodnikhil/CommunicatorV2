@@ -66,7 +66,7 @@ export class ManageTeamComponent implements OnInit {
         title: 'Delete Team',
         smallHeading: 'You can delete team details here',
         body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Team',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete Team',
         Button2Content: ''
     };
     @ViewChild('addNewMemberModal') public addNewMemberModal: CustomModalComponent;
@@ -245,7 +245,7 @@ export class ManageTeamComponent implements OnInit {
                   this.selectedTeamObj.teamName = this.updateTeamName;
                   this.selectedTeamName = this.updateTeamName;
                    this.closePopup('updateTeam');
-                   return this.alertService.success("Team has been updated successfully ", "Success");   
+                   return this.alertService.success("Team has updated successfully ", "Success");   
                     }
                 });
         }
@@ -262,7 +262,7 @@ export class ManageTeamComponent implements OnInit {
                 }else{
                this.closePopup('deleteTeam');
                this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
-               return this.alertService.success("Team has been updated successfully ", "Success");   
+               return this.alertService.success("Team has deleted successfully ", "Success");   
                 }
             });
     }

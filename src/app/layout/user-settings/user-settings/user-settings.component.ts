@@ -65,7 +65,6 @@ export class UserSettingsComponent implements OnInit {
       profileImgPath: this.userSettings.profileImgPath,
       chatNotification: this.userSettings.chatNotification,
       meetingReminder: this.userSettings.meetingReminder,
-     // downloadLocation: this.userSettings.downloadLocation
     };
     this._userService.saveUserSettings(payload).subscribe(data => {
       if(data.errorFl === true || data.warningFl === true){

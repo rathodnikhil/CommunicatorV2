@@ -165,7 +165,6 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please select future meeting date or time', "Warning");
         }else {
             this.meridian = !this.meridian;
-
             this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
             if (this.meeting.callType === 1) {
                 this.meeting.callType = 'Audio';
@@ -248,7 +247,7 @@ export class ScheduleMeetingComponent implements OnInit {
     //copy meeting content
     copyToClipboard() {
         var meetingDetails = this.subject + '  '+ this.getMeetingDetails();
-        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
+        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
         document.execCommand('copy');
       return this.alertService.success("Meeting Details has been Copied. Kindly share via your preferred Mail Id.", "Copy Meeting Details");
     }
