@@ -72,14 +72,52 @@ document.getElementById('btn-end-meeting').onclick = function () {
         document.querySelector('h1').innerHTML = 'Entire session has been closed.';
     });
 }
+document.getElementById('disable-video').onclick = function () {
+
+    var videoValue = this.value == "true";
+    connection.streamEvents.selectFirst({
+        local: true
+    }).stream.stop();
+    connection.session = {
+        audio: true,
+        video: videoValue,
+        data: true
+    };
+
+    connection.mediaConstraints = {
+        audio: true,
+        video: videoValue
+    };
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: videoValue
+    };
+    connection.addStream({
+        audio: true,
+        video: videoValue
+    });
+}
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
     connection.leave();
+    connection.attachStreams.forEach(function (stream) {
+        stream.stop();
+    });
+    //remove parent
+    connection.streamEvents.selectAll().forEach(function (streamEvent) {
+        var mediaElement = document.getElementById(event.streamid + 'parent');
+        if (mediaElement) {
+            streamEvent.stream.stop();
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    });
     document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
+    document.getElementById('open-room').disabled = false;
 };
 
 // ......................................................
@@ -118,7 +156,7 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
- //   div.className = 'chat-background';
+    //   div.className = 'chat-background';
     var message = event.data || event;
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
@@ -141,9 +179,23 @@ function appendDIV(event) {
 // ......................................................
 // ..................RTCMultiConnection Code.............
 // ......................................................
+(function () {
+    var params = {},
+        r = /([^&=]+)=?([^&]*)/g;
+
+    function d(s) {
+        return decodeURIComponent(s.replace(/\+/g, ' '));
+    }
+    var match, search = window.location.hash.substring(9);
+    while (match = r.exec(search.substring(1)))
+        params[d(match[1])] = d(match[2]);
+    window.params = params;
+})();
+
 
 var connection = new RTCMultiConnection();
-connection.socketCustomEvent = "cfsCommunicator_internal_message";
+// debugger;
+connection.socketCustomEvent = window.params.meetingCode;
 // to make sure file-saver dialog is not invoked.
 connection.autoSaveToDisk = false;
 var isHost = false;
@@ -199,19 +251,29 @@ connection.onstream = function (event) {
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
+    } else {
+        connection.streamEvents.selectAll({
+            userid: event.userid
+        }).forEach(function (streamEvent) {
+            var mediaElement = document.getElementById(event.streamid + 'parent');
+            if (mediaElement) {
+                streamEvent.stream.stop();
+                mediaElement.parentNode.removeChild(mediaElement);
+            }
+        });
     }
     video.srcObject = event.stream;
-    video.height = Math.round(window.innerHeight*0.30)-10;
-    video.width = Math.round(window.innerHeight*0.30)-10;
+    video.height = Math.round(window.innerHeight * 0.30) - 10;
+    video.width = Math.round(window.innerHeight * 0.30) - 10;
     video.setAttribute("style", 'float:left;');
     // video.style.padding = '5';
     var customDiv = document.createElement('div');
-    customDiv.style.height = Math.round(window.innerHeight*0.30);
-    customDiv.style.width = Math.round(window.innerHeight*0.30);
+    customDiv.style.height = Math.round(window.innerHeight * 0.30);
+    customDiv.style.width = Math.round(window.innerHeight * 0.30);
     customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)+'px;height:'+Math.round(window.innerHeight*0.30)+'px;padding:5px;text-align: center; float:left;');
+    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)-10+'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) - 10 + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
@@ -245,8 +307,8 @@ connection.onstream = function (event) {
     }, 5000);
     video.id = event.streamid;
 };
-connection.onMediaError = function(event){
-    alertService.error(event.message,"Device error!");
+connection.onMediaError = function (event) {
+    alertService.error(event.message, "Device error!");
     document.getElementById('btn-leave-room').disabled = true;
     document.getElementById('open-room').disabled = false;
 
@@ -267,13 +329,14 @@ connection.filesContainer = document.getElementById('file-container');
 connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
+    document.getElementById('disable-video').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
-    if (isHost){
+    if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
-    document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
-    }else{
+        document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+    } else {
         document.getElementById('btn-leave-room').disabled = false;
-    } 
+    }
 };
 
 connection.onclose = function () {
@@ -283,11 +346,9 @@ connection.onclose = function () {
         document.querySelector('h1').innerHTML = 'Seems session has been closed or all participants left.';
     }
 };
-// connection.onleave=function(event){
-//     debugger;
-// };
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
@@ -328,18 +389,6 @@ function showRoomURL(roomid) {
     roomURLsDiv.style.display = 'block';
 }
 
-(function () {
-    var params = {},
-        r = /([^&=]+)=?([^&]*)/g;
-
-    function d(s) {
-        return decodeURIComponent(s.replace(/\+/g, ' '));
-    }
-    var match, search = window.location.hash.substring(9);
-    while (match = r.exec(search.substring(1)))
-        params[d(match[1])] = d(match[2]);
-    window.params = params;
-})();
 
 var roomid = '';
 if (localStorage.getItem(connection.socketMessageEvent)) {
@@ -356,7 +405,7 @@ var hashString = false; // location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
-debugger;
+// debugger;
 var roomid = params.meetingCode;
 if (!roomid && hashString.length) {
     roomid = hashString;
