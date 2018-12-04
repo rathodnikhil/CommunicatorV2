@@ -179,16 +179,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
             }
-            // } else {
-            //     if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
-            //         return this.alertService.warning('Meeting is set in future.', 'Warning');
-            //     } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
-            //         const hours = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (3600000));
-            //         const min = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (60000));
-            //         return this.alertService
-            //             .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
-            //     }
-            // }
         }
     }
     deleteMeetingNow(meeting) {
