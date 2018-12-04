@@ -72,14 +72,41 @@ document.getElementById('btn-end-meeting').onclick = function () {
         document.querySelector('h1').innerHTML = 'Entire session has been closed.';
     });
 }
+document.getElementById('disable-video').onclick= function(){
+
+    var videoValue= this.value=="true";
+    connection.streamEvents.selectFirst({
+        local: true
+    }).stream.stop();
+    connection.session = {
+        audio: true,
+        video: videoValue,
+        data: true
+    };
+
+    connection.mediaConstraints = {
+        audio: true,
+        video: videoValue
+    };
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: videoValue
+    };
+    connection.addStream({ audio: true, video: videoValue });
+}
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
     connection.leave();
+    connection.attachStreams.forEach(function (stream) {
+        stream.stop();
+    });
     document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
+    document.getElementById('open-room').disabled = false;
 };
 
 // ......................................................
@@ -141,9 +168,23 @@ function appendDIV(event) {
 // ......................................................
 // ..................RTCMultiConnection Code.............
 // ......................................................
+(function () {
+    var params = {},
+        r = /([^&=]+)=?([^&]*)/g;
+
+    function d(s) {
+        return decodeURIComponent(s.replace(/\+/g, ' '));
+    }
+    var match, search = window.location.hash.substring(9);
+    while (match = r.exec(search.substring(1)))
+        params[d(match[1])] = d(match[2]);
+    window.params = params;
+})();
+
 
 var connection = new RTCMultiConnection();
-connection.socketCustomEvent = "cfsCommunicator_internal_message";
+// debugger;
+connection.socketCustomEvent =window.params.meetingCode;
 // to make sure file-saver dialog is not invoked.
 connection.autoSaveToDisk = false;
 var isHost = false;
@@ -267,13 +308,14 @@ connection.filesContainer = document.getElementById('file-container');
 connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
+    document.getElementById('disable-video').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost){
         document.getElementById('btn-leave-room').disabled = false;
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
     }else{
         document.getElementById('btn-leave-room').disabled = false;
-    } 
+    }
 };
 
 connection.onclose = function () {
@@ -283,11 +325,9 @@ connection.onclose = function () {
         document.querySelector('h1').innerHTML = 'Seems session has been closed or all participants left.';
     }
 };
-// connection.onleave=function(event){
-//     debugger;
-// };
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
@@ -328,18 +368,6 @@ function showRoomURL(roomid) {
     roomURLsDiv.style.display = 'block';
 }
 
-(function () {
-    var params = {},
-        r = /([^&=]+)=?([^&]*)/g;
-
-    function d(s) {
-        return decodeURIComponent(s.replace(/\+/g, ' '));
-    }
-    var match, search = window.location.hash.substring(9);
-    while (match = r.exec(search.substring(1)))
-        params[d(match[1])] = d(match[2]);
-    window.params = params;
-})();
 
 var roomid = '';
 if (localStorage.getItem(connection.socketMessageEvent)) {
@@ -356,7 +384,7 @@ var hashString = false; // location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
-debugger;
+// debugger;
 var roomid = params.meetingCode;
 if (!roomid && hashString.length) {
     roomid = hashString;

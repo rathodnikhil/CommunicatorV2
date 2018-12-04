@@ -96,9 +96,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
-    isMute=false;
-    isMeetingStarted=false;
-    isScreenSharingStarted=false;
+    isMute = false;
+    isMeetingStarted = false;
+    isScreenSharingStarted = false;
+    isVideoEnabled = true;
     // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
@@ -137,7 +138,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         payload.userCode = this.loggedInUser.firstName;
                     }
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
-                        debugger;
                         if (!data2.warningFl && !data2.errorFl && data2.message !== null
                             && data2.message.toLowerCase().indexOf('success') > -1) {
                             this.meetingDetails = data2;
@@ -201,7 +201,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
-                this.downloadFile(this.momTxt,this.meetingDetails);
+                this.downloadFile(this.momTxt, this.meetingDetails);
             } else {
                 const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
                 this._meetingService.saveMomDetails(payload).subscribe(resp => {
@@ -209,15 +209,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     if (this.errorFl === true) {
                         return this.alertService.warning(resp.message, 'Warning');
                     } else {
-                        this.downloadFile(this.momTxt,this.meetingDetails);
+                        this.downloadFile(this.momTxt, this.meetingDetails);
                     }
                 });
             }
         }
     }
-    downloadFile(data,meetingDetails) {
+    downloadFile(data, meetingDetails) {
         const today = new Date();
-        const momHeader = 'Date of Meeting: '+meetingDetails.meetingDate +'\r\n\r\n'+'Subject: '+meetingDetails.subject+'\r\n\r\n';
+        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
@@ -225,14 +225,14 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
         // a.href = url;
-        a.download = 'MOM_'+ today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
+        a.download = 'MOM_' + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
         this.saveMomBtn.nativeElement.blur();
-       return this.alertService.success('File has been downloaded.', 'MOM Download');
+        return this.alertService.success('File has been downloaded.', 'MOM Download');
 
     }
 
@@ -241,23 +241,22 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.currentTab = tab;
     }
 
-   
+
     exitMeeting() {
         this.exitMeetingConfirmModal.open();
     }
-    completeExit(){
-     this.exit();
-     if (!this.isHost) {
-        this.router.navigate(['/dashboard']);
-    } else{
-     this.router.navigate(['/login']);
+    completeExit() {
+        this.exit();
+        if (!this.isHost) {
+            this.router.navigate(['/dashboard']);
+        } else {
+            this.router.navigate(['/login']);
+        }
     }
-    }
-    exit(){
+    exit() {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
-            this.errorFl = resp.errorFl;
-            if (this.errorFl) {
+            if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
                 this.exitMeetingConfirmModal.close();
