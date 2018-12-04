@@ -103,6 +103,14 @@ document.getElementById('btn-leave-room').onclick = function () {
     connection.attachStreams.forEach(function (stream) {
         stream.stop();
     });
+    //remove parent
+    connection.streamEvents.selectAll().forEach(function (streamEvent) {
+        var mediaElement = document.getElementById(event.streamid + 'parent');
+        if (mediaElement) {
+            streamEvent.stream.stop();
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    });
     document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
