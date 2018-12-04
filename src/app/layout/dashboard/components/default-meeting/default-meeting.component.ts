@@ -152,15 +152,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
-
-                    // if ((meetingDate.getDate() >= this.selectedfromDate.day
-                    //     && meetingDate.getMonth() + 1 >= this.selectedfromDate.month
-                    //     && meetingDate.getFullYear() >= this.selectedfromDate.year)
-                    //     && (meetingDate.getDate() <= this.selectedtoDate.day
-                    //         && meetingDate.getMonth() + 1 <= this.selectedtoDate.month
-                    //         && meetingDate.getFullYear() <= this.selectedtoDate.year)) {
-                    //     this.filteredFutureMeetingList.push(meeting);
-                    // }
                     if (toDate >= meetingDate && fromDate <= meetingDate) {
                         this.filteredFutureMeetingList.push(meeting);
                     }
@@ -188,16 +179,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
             }
-            // } else {
-            //     if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
-            //         return this.alertService.warning('Meeting is set in future.', 'Warning');
-            //     } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
-            //         const hours = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (3600000));
-            //         const min = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (60000));
-            //         return this.alertService
-            //             .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
-            //     }
-            // }
         }
     }
     deleteMeetingNow(meeting) {
@@ -247,7 +228,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     joinMeetingNow() {
-        this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
+        this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
         const payload = {

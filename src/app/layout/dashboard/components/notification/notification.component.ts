@@ -52,9 +52,7 @@ export class NotificationComponent implements OnInit {
                         this.userList = data;
                     } else{
                         this.userList=[];
-                        if (data[0] !== undefined && data[0].message !== undefined){
-                            return this.alertService.warning(data[0].message, 'Warning');
-                        }
+                            return this.alertService.warning("Users are not added", 'Warning');
                     }                   
                 });
 

@@ -227,7 +227,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
         // a.href = url;
-        a.download = 'MOM_' + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
@@ -254,12 +254,12 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     exit() {
+        this.exitMeetingConfirmModal.close();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
-                this.exitMeetingConfirmModal.close();
                 this.document.getElementById('btn-leave-room').click();
                 this.document.getElementById('btn-leave-room').disable = true;
                 this.document.getElementById('input-text-chat').disable = true;

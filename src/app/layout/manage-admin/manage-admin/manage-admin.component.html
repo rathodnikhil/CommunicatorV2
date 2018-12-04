@@ -95,13 +95,13 @@
                   <label>Status</label>
               </div>
               <div>
-            <input type="checkbox" id="statusChk" [(ngModel)]="status">
+            <input type="checkbox" id="statusChk" [(ngModel)]="updatedUserStaus">
             <p id="text" style="display:none">Checkbox is CHECKED!</p>
             </div>
           </div>
   </div>
   <div class="modal-footer popFooter">
-      <button type="button" class="btn btn-sec" (click)="updateMember()">Update Member</button>
+      <button type="button" class="btn btn-sec" (click)="updateMember()">Update Admin</button>
       <button type="button" class="btn btn-cancel" (click)="closePopup('editAdmin')">Close</button>
   </div>
 </app-custom-modal>

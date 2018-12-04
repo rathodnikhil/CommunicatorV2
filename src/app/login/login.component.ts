@@ -116,6 +116,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
                         });
                     } else {
+                        this.userName = '';
+                        this.password = '';
                         return this.alertService.warning('Username and Password does not match', 'Incorrect Username');
                     }}
                 );
