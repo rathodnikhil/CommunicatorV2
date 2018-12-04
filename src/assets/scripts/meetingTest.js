@@ -72,9 +72,9 @@ document.getElementById('btn-end-meeting').onclick = function () {
         document.querySelector('h1').innerHTML = 'Entire session has been closed.';
     });
 }
-document.getElementById('disable-video').onclick= function(){
+document.getElementById('disable-video').onclick = function () {
 
-    var videoValue= this.value=="true";
+    var videoValue = this.value == "true";
     connection.streamEvents.selectFirst({
         local: true
     }).stream.stop();
@@ -92,7 +92,10 @@ document.getElementById('disable-video').onclick= function(){
         OfferToReceiveAudio: true,
         OfferToReceiveVideo: videoValue
     };
-    connection.addStream({ audio: true, video: videoValue });
+    connection.addStream({
+        audio: true,
+        video: videoValue
+    });
 }
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
@@ -145,7 +148,7 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
- //   div.className = 'chat-background';
+    //   div.className = 'chat-background';
     var message = event.data || event;
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
@@ -184,7 +187,7 @@ function appendDIV(event) {
 
 var connection = new RTCMultiConnection();
 // debugger;
-connection.socketCustomEvent =window.params.meetingCode;
+connection.socketCustomEvent = window.params.meetingCode;
 // to make sure file-saver dialog is not invoked.
 connection.autoSaveToDisk = false;
 var isHost = false;
@@ -240,19 +243,29 @@ connection.onstream = function (event) {
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
+    } else {
+        connection.streamEvents.selectAll({
+            userid: event.userid
+        }).forEach(function (streamEvent) {
+            var mediaElement = document.getElementById(event.streamid + 'parent');
+            if (mediaElement) {
+                streamEvent.stream.stop();
+                mediaElement.parentNode.removeChild(mediaElement);
+            }
+        });
     }
     video.srcObject = event.stream;
-    video.height = Math.round(window.innerHeight*0.30)-10;
-    video.width = Math.round(window.innerHeight*0.30)-10;
+    video.height = Math.round(window.innerHeight * 0.30) - 10;
+    video.width = Math.round(window.innerHeight * 0.30) - 10;
     video.setAttribute("style", 'float:left;');
     // video.style.padding = '5';
     var customDiv = document.createElement('div');
-    customDiv.style.height = Math.round(window.innerHeight*0.30);
-    customDiv.style.width = Math.round(window.innerHeight*0.30);
+    customDiv.style.height = Math.round(window.innerHeight * 0.30);
+    customDiv.style.width = Math.round(window.innerHeight * 0.30);
     customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)+'px;height:'+Math.round(window.innerHeight*0.30)+'px;padding:5px;text-align: center; float:left;');
+    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:'+Math.round(window.innerHeight*0.30)-10+'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) - 10 + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
@@ -286,8 +299,8 @@ connection.onstream = function (event) {
     }, 5000);
     video.id = event.streamid;
 };
-connection.onMediaError = function(event){
-    alertService.error(event.message,"Device error!");
+connection.onMediaError = function (event) {
+    alertService.error(event.message, "Device error!");
     document.getElementById('btn-leave-room').disabled = true;
     document.getElementById('open-room').disabled = false;
 
@@ -310,10 +323,10 @@ connection.onopen = function () {
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('disable-video').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
-    if (isHost){
+    if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
-    document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
-    }else{
+        document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+    } else {
         document.getElementById('btn-leave-room').disabled = false;
     }
 };
