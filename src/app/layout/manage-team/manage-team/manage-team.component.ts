@@ -41,6 +41,7 @@ export class ManageTeamComponent implements OnInit {
     showSelectedTeam: boolean;
     updateTeamName: any;
     selectedUserPermissionObj: any;
+    selectedNewTeamObj: any;
     @ViewChild("emailField") emailField: ElementRef;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
@@ -94,9 +95,7 @@ export class ManageTeamComponent implements OnInit {
                 return this.alertService.warning(data.message, "Warning"); 
             }else{  
             this.loggedInUser = data;  
-            }   
-         });
-        //getTeamsByLoggedInUserId webservice call
+              //getTeamsByLoggedInUserId webservice call
         const payload = { userCode: this.loggedInUser.userCode };
         this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
             if(data[0].errorFl || data[0].warningFl){
@@ -115,11 +114,18 @@ export class ManageTeamComponent implements OnInit {
                this.userPermissionMemberList = data;
             }
         });
+            }   
+         });
+      
     }
     displayTeamDetails(userPermission) {
+        if(userPermission.team.teamCode === "" || userPermission.team.teamCode === null || typeof userPermission.team.teamCode === "undefined"){
+            this.selectedTeamObj = this.selectedNewTeamObj ;
+        }else{
+            this.selectedTeamObj = userPermission.team;
+        }
         this.showSelectedTeam = true;
         this.selectedTeamName = userPermission.team.teamName;
-        this.selectedTeamObj = userPermission.team;
         this.filterMemberList = [];
       
         for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
@@ -153,6 +159,7 @@ export class ManageTeamComponent implements OnInit {
                     }else{
                     this.userPermissionList.push(team);
                     this.newTeamName = '';
+                    this.selectedNewTeamObj = res;
                    return this.alertService.success("Team has saved successfully ", "Success");   
                     }
                 });
@@ -161,15 +168,15 @@ export class ManageTeamComponent implements OnInit {
 
     // add new member  
     addMember() {
-        if (this.firstName.trim() === "" || this.firstName === null || typeof this.firstName === "undefined") {
+        if ( this.firstName === null || typeof this.firstName === "undefined" || this.firstName.trim() === "" ) {
             return this.alertService.warning("Please Enter First Name ", "Warning");   
-        }else if (this.lastName.trim() === "" || this.lastName === null || typeof this.lastName === "undefined") {
+        }else if ( this.lastName === null || typeof this.lastName === "undefined"|| this.lastName.trim() === "" ) {
             return this.alertService.warning("Please Enter Last Name ", "Warning");   
-        }  else if (this.email.trim() === "" || this.email === null || typeof this.email === "undefined") {
+        }  else if (this.email === null || typeof this.email === "undefined" || this.email.trim() === "" ) {
             return this.alertService.warning("Please Enter Email", "Warning");   
-        }else if (this.userName.trim() === "" || this.userName === null || typeof this.userName === "undefined") {
+        }else if (this.userName === null || typeof this.userName === "undefined" ||this.userName.trim() === "") {
             return this.alertService.warning("Please Enter UserName ", "Warning");   
-        } else if (this.password.trim() === "" || this.password === null || typeof this.password === "undefined") {
+        } else if (this.password === null || typeof this.password === "undefined" ||this.password.trim() === "") {
             return this.alertService.warning("Please Enter Password ", "Warning");   
         }
        else {

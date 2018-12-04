@@ -69,7 +69,6 @@ export class PastMeetingsComponent implements OnInit {
         if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
             return this.alertService.warning('No MOM for this meeting has been added', "Warning");
         } else{
-            const today = data.meetingDate;
         data.mom.momDescription = data.mom.momDescription.split('\n');
         data.mom.momDescription = data.mom.momDescription.join('\r\n ');
           const momHeader = 'Date of Meeting: '+data.meetingDate +'\r\n\r\n'+'Subject: '+data.subject+'\r\n\r\n';
@@ -80,7 +79,7 @@ export class PastMeetingsComponent implements OnInit {
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data.mom.momDescription)}`);
         // a.href = url;
-        a.download = 'MOM_'+ data.meetingDate+'('+data.meetingDate('en-us', {  weekday: 'long' })+').txt';
+        a.download = 'MOM_'+ data.meetingDate+'('+new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element

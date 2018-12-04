@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="modal-footer popFooter">
-                <button type="button" class="btn btn-sec" (click)="addTeam()">Update Team</button>
+                <button type="button" class="btn btn-sec" (click)="addTeam()">Add Team</button>
                 <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button>
             </div>
         </app-custom-modal>
@@ -94,7 +94,7 @@
                 <hr>
                 <div class="row" style="padding: 15px;">
                     <div *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTeam ;" class="search-box-container">
-                        <input type="text" value="{{userMemPermission.userId.firstName}} {{userMemPermission.userId.lastName}}" />
+                        <input type="text" value="{{userMemPermission.userId.firstName}} {{userMemPermission.userId.lastName}}" readonly/>
                     </div>
                 </div>
                 <div style="text-align:center;">
@@ -108,7 +108,7 @@
                                     <label>First Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.."  type="text" [(ngModel)]="firstName" required/>
+                                    <input placeholder="Type First Name Here.."  type="text" [(ngModel)]="firstName" required/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -116,7 +116,7 @@
                                     <label>Last Name</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.." type="text"  [(ngModel)]="lastName" required/>
+                                    <input placeholder="Type Last Name Here.." type="text"  [(ngModel)]="lastName" required/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -133,7 +133,7 @@
                                     <label>UserName</label>
                                 </div>
                                 <div>
-                                    <input type="text" placeholder="Type Name Here.." [(ngModel)]="userName" required/>
+                                    <input type="text" placeholder="Type UserName Here.." [(ngModel)]="userName" required/>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -141,18 +141,10 @@
                                     <label>Password</label>
                                 </div>
                                 <div>
-                                    <input placeholder="Type Name Here.."  type="text" [(ngModel)]="password" 
+                                    <input placeholder="Type Password Here.."  type="text" [(ngModel)]="password" 
                                      type="password" required/>
                                 </div>
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-md-3">
-                                    <label>Team Name</label>
-                                </div>
-                                <div>
-                                    <input placeholder="Type Name Here.." [(ngModel)]="newTeamName" required />
-                                </div>
-                            </div> -->
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-sec" (click)="addMember()">Add Member</button>
