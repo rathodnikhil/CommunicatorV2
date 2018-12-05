@@ -18,6 +18,7 @@ export class UserService {
     selectedGroup$: Subject<any> = new BehaviorSubject<any>({});
     UserList$: Subject<any[]> = new BehaviorSubject<any>({});
     loggedInUserRole$: Subject<any[]> = new BehaviorSubject<any>({});
+    isGuest$: Subject<any> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
@@ -77,16 +78,12 @@ export class UserService {
     getUserList() {
         return this.UserList$;
     }
-    // setLoggedInUserDetails(payload) {
-    //     const url = urlConstants.baseUrl + 'auth/login';
-    //     this.http.post(url, payload).subscribe(data => {
-    //         this.loggedInUser$.next(data.json());
-    //     });
-    // }
-
-    // getLoggedInUSerDetails() {
-    //     return this.loggedInUser$;
-    // }
+  setIsGuest(flag){
+    this.isGuest$.next(flag);
+  }
+  getIsGuest(flag){
+    return this.isGuest$;
+  }
     getUserSettingsByLoggedInUser(payload) {
         const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
@@ -130,14 +127,9 @@ export class UserService {
     }
     setUserRole(payload) {
         const url = urlConstants.baseUrl + 'getUserRole?userCode=' + payload.usercode;
-        // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
             this.loggedInUserRole$.next(data);
-        },
-            err => {
-                // alert(err);
-            });
-        // return resp;
+           });
     }
 
     getAllAdminList() {

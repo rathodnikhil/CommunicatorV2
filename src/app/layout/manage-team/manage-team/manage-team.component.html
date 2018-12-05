@@ -39,21 +39,47 @@
                 </div>
             </div>
             <div class="modal-footer popFooter">
-                <button type="button" class="btn btn-sec" (click)="addTeam()">Add Team</button>
+                <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
                 <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button>
             </div>
         </app-custom-modal>
     </div>
 </div>
 <div class="main">
-    <h4>Team Details</h4>
+    <h4 class="btn btn-sec remove-border" *ngIf="showSelectedTeam">{{selectedTeamName}}
+        <span>&nbsp;[{{filterMemberList.length}} Members]</span>
+    </h4>
+    <button (click)="editTeam()" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></button>
+        <button (click)="deleteSelectedTeam()" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
     <hr>
     <div class="row">
         <div class="member-block">
-            <h4 class="selected-team" *ngIf="showSelectedTeam">{{selectedTeamName}}
-                <span>&nbsp;[{{filterMemberList.length}} Members]</span><button (click)="editTeam()" class="btn btn-sucess"><i class="fa fa-pencil-square-o"></i></button>
-                <button (click)="deleteSelectedTeam()" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-            </h4>
+                
+                    <button class="btn btn-primary"  (click)="openMemberPopup()">+Member</button>
+            <hr>
+            <table style="margin: 20px;">
+                <tr>
+                    <th>Sr. No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Team Name</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
+                    <td>{{srNo+1}}</td>
+                    <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
+                    <td>{{userMemPermission.userId.email}}</td>
+                    <td>{{userMemPermission.userId.team.teamName}}</td>
+                    <td>{{userMemPermission.userId.status.status}} </td>
+                </tr>
+            </table>
+            <div class="pageControl">
+                <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+                    [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                    [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                    (pageChange)="onPageChange($event)"></pagination-controls>
+            </div>
+            
             <app-custom-modal #addUpdateTeamModal [model]="updateTeam">
                     <div class="modal-body row-label">
                         <div class="row">
@@ -67,7 +93,7 @@
                         </div>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-sec" (click)="updateTeamDetails()">Update Team</button>
+                        <button type="button" class="btn btn-primary" (click)="updateTeamDetails()">Update Team</button>
                         <button type="button" class="btn btn-cancel" (click)="closePopup('updateTeam')">Close</button>
                     </div>
                 </app-custom-modal>
@@ -76,31 +102,11 @@
                         <label style="padding: 10px; ">Are you sure you want to delete this team?</label>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-sec" (click)="deleteTeamDetails()">Yes</button>
+                        <button type="button" class="btn btn-primary" (click)="deleteTeamDetails()">Yes</button>
                         <button type="button" class="btn btn-cancel" (click)="closePopup('deleteTeam')">No</button>
                     </div>
                 </app-custom-modal>
-            <div class="form-group input-group"style="padding-top:5px;">
-                    <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchTeam">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            <div class="member-details">
-                <h5>
-                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
-                <hr>
-                <div class="row" style="padding: 15px;">
-                    <div *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTeam ;" class="search-box-container">
-                        <input type="text" value="{{userMemPermission.userId.firstName}} {{userMemPermission.userId.lastName}}" readonly/>
-                    </div>
-                </div>
-                <div style="text-align:center;">
-                    <button class="btn btn-primary" style="align:align-center" (click)="openMemberPopup()">Add New Member</button>
-                    <!-- <button class="btn btn-aecondary">Reset Changes</button> -->
-                </div>
+         
                 <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body row-label">
                             <div class="row form-group">
@@ -147,11 +153,10 @@
                             </div>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-sec" (click)="addMember()">Add Member</button>
+                        <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
                         <button type="button" class="btn btn-cancel" (click)="closePopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>
-            </div>
         </div>
     </div>
 </div>

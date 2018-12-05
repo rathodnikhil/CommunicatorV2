@@ -6,9 +6,10 @@ import { ManageTeamRoutingModule } from './manage-team-routing.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { FormsModule } from '@angular/forms';
 import { SharedPipesModule } from '../../shared';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   imports: [
-    CommonModule, ManageTeamRoutingModule, DashboardModule, FormsModule , SharedPipesModule
+    CommonModule, ManageTeamRoutingModule, DashboardModule, FormsModule , SharedPipesModule, NgxPaginationModule
   ],
   declarations: [ManageTeamComponent]
 })
