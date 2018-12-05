@@ -10,10 +10,6 @@ export class LoginService {
     previousUrl: string;
 
     constructor(private http: Http) { }
-    authUser(payload) {
-        const url = urlConstants.baseUrl + 'getUser?userNameAndMeetingId=' + payload;
-        return this.http.get(url);
-    }
     getAllMemUserNameList() {
         const url = urlConstants.baseUrl + 'getAllMemUserNameList';
         return this.http.post(url, null);

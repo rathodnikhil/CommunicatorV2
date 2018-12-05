@@ -13,7 +13,7 @@
          class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
             <i class="fa fa-user-circle fa-2x"></i>
             <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1',
-            'circleOffline':user.onlineStatus!=null &&  user.onlineStatus === '0' }"></div>
+            'circleOffline':user.onlineStatus!=null &&  user.onlineStatus === '2' }"></div>
             <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
             </span>
             <hr class="list-group-partition" />

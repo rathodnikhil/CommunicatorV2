@@ -30,6 +30,7 @@
       <th>Full Name</th>
       <th>UserName</th>
       <th>Email</th>
+      <th>Team</th>
       <th>UserCode</th>
       <th>Status</th>
       <th>Edit</th>
@@ -40,6 +41,7 @@
           <td>{{admin.firstName}} {{admin.lastName}}</td>
           <td>{{admin.name}}</td>
           <td>{{admin.email}}</td>
+          <td>{{admin.team.teamName}}</td>
           <td>{{admin.userCode}}</td>
           <td>{{admin.status.status}}</td>
           <td><i class="fa fa-pencil-square-o" (click)="editAdmin(admin);" style="color: green;"></i></td>
@@ -81,13 +83,20 @@
                       <input placeholder="Type Email Here.."  type="text" [(ngModel)]="email" value="{{updatedEmail}}" required/>
                   </div>
               </div>
-
+              <div class="row form-group">
+                <div class="col-md-3">
+                    <label>Team</label>
+                </div>
+                <div>
+                    <input placeholder="Type Team Here.."  type="text" [(ngModel)]="teamName" value="{{updatedTeamName}}" required/>
+                </div>
+            </div>
           <div class="row form-group">
               <div class="col-md-3">
                   <label>UserName</label>
               </div>
               <div>
-                  <input type="text" placeholder="Type Name Here.." [(ngModel)]="userName" value="{{updatedUserName}}" required/>
+                  <input type="text" placeholder="Type Username Here.." [(ngModel)]="userName" value="{{updatedUserName}}" required/>
               </div>
           </div>
           <div class="row form-group">
