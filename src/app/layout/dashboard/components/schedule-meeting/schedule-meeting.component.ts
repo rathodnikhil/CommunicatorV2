@@ -165,7 +165,6 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please select future meeting date or time', "Warning");
         }else {
             this.meridian = !this.meridian;
-
             this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
             if (this.meeting.callType === 1) {
                 this.meeting.callType = 'Audio';
@@ -248,7 +247,7 @@ export class ScheduleMeetingComponent implements OnInit {
     //copy meeting content
     copyToClipboard() {
         var meetingDetails = this.subject + '  '+ this.getMeetingDetails();
-        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select()
+        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
         document.execCommand('copy');
       return this.alertService.success("Meeting Details has been Copied. Kindly share via your preferred Mail Id.", "Copy Meeting Details");
     }
@@ -284,7 +283,7 @@ export class ScheduleMeetingComponent implements OnInit {
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + '\r\n\r\n' +
             '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' +'for audio meeting click below url :'+ meetingAudioUrl+this.accessCode 
-            'for joining video meeting click below url :'+meetingVideoUrl+this.accessCode + '\r\n\r\n' +
+            '\r\n\r\n for joining video meeting click below url :'+meetingVideoUrl+this.accessCode + '\r\n\r\n' +
             '\r\n\r\n Access Code :    ' + this.accessCode;
         return meetingDetails;
     }

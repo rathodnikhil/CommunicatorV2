@@ -184,11 +184,11 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data)}`);
         // a.href = url;
         const today = new Date();
-        a.download = 'MOM_'+ today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
+        a.download = 'MOM_'+meetingDetails.meetingDate+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        this.alertService.success('File has been downloaded.', 'MOM Download');
+        this.alertService.success('File has downloaded.', 'MOM Download');
         this.saveMomBtn.nativeElement.blur();
     }
 
@@ -209,13 +209,13 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     }
     }
     exit(){
+        this.exitMeetingConfirmModal.close();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this._meetingService.endMeeting(payload).subscribe(resp => {
             this.errorFl = resp.errorFl;
             if (this.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
-                this.exitMeetingConfirmModal.close();
                 this.document.getElementById('btn-leave-room').click();
                 this.document.getElementById('btn-leave-room').disable = true;
                 this.document.getElementById('input-text-chat').disable = true;

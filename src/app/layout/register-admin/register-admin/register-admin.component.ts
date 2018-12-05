@@ -58,25 +58,25 @@ export class RegisterAdminComponent implements OnInit {
        });
   }
   registerUser() {
-      if(this.firstName.trim() === "" || this.firstName === null || typeof this.firstName === "undefined"){
+      if( this.firstName === null || typeof this.firstName === "undefined"||this.firstName.trim() === "" ){
         this.firstNameField.nativeElement.focus();
          return this.alertService.warning("Please enter first name","Warning");
-      }else  if(this.lastName.trim() === "" || this.lastName === null || typeof this.lastName === "undefined"){
+      }else  if( this.lastName === null || typeof this.lastName === "undefined" ||this.lastName.trim() === "" ){
         this.lastNameField.nativeElement.focus();
         return this.alertService.warning("Please enter last name","Warning");
-      }else  if(this.userName.trim() === "" || this.userName === null || typeof this.userName === "undefined"){
+      }else  if(this.userName === null || typeof this.userName === "undefined" ||this.userName.trim() === "" ){
         this.usernameField.nativeElement.focus();
         return this.alertService.warning("Please enter username","Warning");
-      }else  if(this.email.trim() === "" || this.email === null || typeof this.email === "undefined"){
+      }else  if(this.email === null || typeof this.email === "undefined" ||this.email.trim() === ""){
         this.emailField.nativeElement.focus();
         return this.alertService.warning("Please enter email","Warning");
-      } else  if(this.password.trim() === "" || this.password === null || typeof this.password === "undefined"){
+      } else  if( this.password === null || typeof this.password === "undefined" ||this.password.trim() === ""){
         this.passwordField.nativeElement.focus();
         return this.alertService.warning("Please enter password","Warning");
-      }else  if(this.confirmPassword.trim() === "" || this.confirmPassword === null || typeof this.confirmPassword === "undefined"){
+      }else  if( this.confirmPassword === null || typeof this.confirmPassword === "undefined" ||this.confirmPassword.trim() === ""){
         this.confirmPasswordField.nativeElement.focus();
         return this.alertService.warning("Please enter confirm password","Warning");
-      }else  if(this.newTeamName.trim() === "" || this.newTeamName === null || typeof this.newTeamName === "undefined"){
+      }else  if(this.newTeamName === null || typeof this.newTeamName === "undefined" ||this.newTeamName.trim() === "" ){
         this.teamField.nativeElement.focus();
         return this.alertService.warning("Please enter team","Warning");
       }
@@ -102,7 +102,6 @@ export class RegisterAdminComponent implements OnInit {
               "lastName": this.lastName,
               "firstName": this.firstName,
               "status.onlineStatus": true,
-              //"team.teamName": this.newTeamName
           }
       this._userService.saveUserDetails(payload,this.newTeamName).subscribe(data => {
           duplicateUserNameFlag = data.json().warningFl;

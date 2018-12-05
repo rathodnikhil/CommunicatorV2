@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { PasswordService } from '../../services/password.service';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
+  providers: [PasswordService]
 })
 export class ResetPasswordComponent implements OnInit {
+  _passwordService: PasswordService;
   emailSuccessFlag: boolean;
   emailValidationFlag: boolean;
   passwordFlag: boolean;
@@ -18,8 +21,9 @@ export class ResetPasswordComponent implements OnInit {
   password: any;
   token: any;
   confirmPassword: any;
-  constructor(public router: Router, userService: UserService, private activatedRoute: ActivatedRoute) {
+  constructor(public router: Router, userService: UserService, private activatedRoute: ActivatedRoute , passwordService :PasswordService) {
     this._userService = userService;
+    this._passwordService = passwordService;
   }
 
   ngOnInit() {
@@ -32,7 +36,7 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
   resetPassword() {
-    const payload = { token: this.token, password: this.password }
+    const payload = { token: this.token, password: this._passwordService.encrypted(this.password) }
     if (this.password === '' || this.password === null || typeof this.password === 'undefined') {
       this.passwordFlag = true;
       setTimeout(function () {

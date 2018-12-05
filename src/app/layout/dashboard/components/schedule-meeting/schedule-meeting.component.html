@@ -123,7 +123,7 @@
                             <a class="btn btn-sec" (click)="scheduleMeeting()" style="color: #8f5a0a;">Schedule Meeting & Send Invitation</a>
                         </div>
                         <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings" (CancelEvent)="clearAllMeetingField()">
-                            <div style="padding: 10px; font-size:14px;" class="span-font">
+                            <div style="padding: 10px; font-size:14px; " class="span-font">
                                 <span>{{this.subject}}</span>
                                 <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}
                                     at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
