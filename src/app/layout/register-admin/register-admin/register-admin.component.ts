@@ -48,7 +48,6 @@ export class RegisterAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-      // this.selectedTeam = 'Select Team';
        this._teamService.getAllEnableTeams().subscribe(data => {
          if(data.warningFl){
           return this.alertService.warning(data.json().message,"Warning");   
@@ -115,7 +114,7 @@ export class RegisterAdminComponent implements OnInit {
           }else{
             this.clearAllField();
             this.teamArray.push(data);
-            return this.alertService.success("Admin has been registered successfully","Success");
+            return this.alertService.success("Admin has registered successfully","Success");
 
           }
       });

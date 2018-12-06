@@ -65,25 +65,33 @@ export class PastMeetingsComponent implements OnInit {
     }
    
     downloadMom(data) {
-     
         if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
             return this.alertService.warning('No MOM for this meeting has been added', "Warning");
-        } else{
-        data.mom.momDescription = data.mom.momDescription.split('\n');
-        data.mom.momDescription = data.mom.momDescription.join('\r\n ');
-          const momHeader = 'Date of Meeting: '+data.meetingDate +'\r\n\r\n'+'Subject: '+data.subject+'\r\n\r\n';
-        const fileType = 'text/json';
-
-        var a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data.mom.momDescription)}`);
-        // a.href = url;
-        a.download = 'MOM_'+ data.meetingDate+'('+new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
-        a.click();
-        // window.URL.revokeObjectURL(url);
-        a.remove(); // remove the element
-        this.alertService.success("File has been downloaded.", "MOM Download");
+        }  else{
+        let payload = {meetingCode: data.meetingCode};
+        let attendeeList ;
+        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+            if (resp.errorFl) {
+                this.alertService.warning(resp.message, 'Warning');
+            } else {
+                 attendeeList = resp;
+                 data.mom.momDescription = data.mom.momDescription.split('\n');
+                 data.mom.momDescription = data.mom.momDescription.join('\r\n ');
+                   const momHeader = 'Date of Meeting: '+data.meetingDate +'\r\n\r\n'+'Subject: '+data.subject+'\r\n\r\n' +'Attendees : '+attendeeList+'\r\n\r\n';
+                 const fileType = 'text/json';
+         
+                 var a = document.createElement('a');
+                 document.body.appendChild(a);
+                 a.setAttribute('style', 'display: none');
+                 a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data.mom.momDescription)}`);
+                 // a.href = url;
+                 a.download = 'MOM_'+ data.meetingDate+'('+new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
+                 a.click();
+                 // window.URL.revokeObjectURL(url);
+                 a.remove(); // remove the element
+                 this.alertService.success("File has been downloaded.", "MOM Download");
+            }
+        });
     }
     
     }

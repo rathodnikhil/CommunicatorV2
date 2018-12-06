@@ -174,4 +174,9 @@ color: red;
 .cursorPointer{
     cursor: pointer;
 }
-
+.edit-icon{
+    color: green;cursor: pointer;
+}
+.delete-icon{
+    color: red; cursor: pointer;
+}
