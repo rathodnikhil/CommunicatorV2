@@ -143,12 +143,22 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         if (!data2.warningFl && !data2.errorFl && data2.message !== null
                             && data2.message.toLowerCase().indexOf('success') > -1) {
                             this.meetingDetails = data2;
-                            this.config.leftTime = parseInt(this.meetingDetails.duration.split(' ')[0]) * 60;
+                            const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
+                            const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
+                            this.config.leftTime = (duration - delta) > 0 ? (duration - delta) : 0;
+                            if ((duration - delta) < 0) {
+                                this.alertService.error('Meeting is already over', 'Meeting Over');
+                            }
                             this.isHost = true;
                             this.document.getElementById('isHost').innerHTML = 'true';
                         } else if (data2.warningFl && data2.message !== null) {
                             this.meetingDetails = data2;
-                            this.config.leftTime = parseInt(this.meetingDetails.duration.split(' ')[0]) * 60;
+                            const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
+                            const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
+                            this.config.leftTime = (duration - delta) > 0 ? (duration - delta) : 0;
+                            if ((duration - delta) < 0) {
+                                this.alertService.error('Meeting is already over', 'Meeting Over');
+                            }
                             this.isHost = false;
                             this.document.getElementById('isHost').innerHTML = 'false';
                         } else {
@@ -183,7 +193,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             window['functionFromExternalScript'](params);
         }
     }
-  
+
     toggleMOM() {
         this.isMOMvisible = !this.isMOMvisible;
     }
@@ -210,32 +220,32 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     downloadFile(data, meetingDetails) {
-        let payload = {meetingCode: meetingDetails.meetingCode};
-        let attendeeList ;
+        let payload = { meetingCode: meetingDetails.meetingCode };
+        let attendeeList;
         this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
-                 attendeeList =resp;
-                 const today = new Date();
-            const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n' +'Attendees : '+attendeeList+'\r\n\r\n';
-            data = data.split('\n');
-            data = data.join('\r\n ');
-            const fileType = 'text/json';
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.setAttribute('style', 'display: none');
-            a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
-            // a.href = url;
-            a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
-            a.click();
-            // window.URL.revokeObjectURL(url);
-            a.remove(); // remove the element
-            this.saveMomBtn.nativeElement.blur();
-            return this.alertService.success('File has been downloaded.', 'MOM Download');
-                }
+                attendeeList = resp;
+                const today = new Date();
+                const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
+                data = data.split('\n');
+                data = data.join('\r\n ');
+                const fileType = 'text/json';
+                const a = document.createElement('a');
+                document.body.appendChild(a);
+                a.setAttribute('style', 'display: none');
+                a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
+                // a.href = url;
+                a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+                a.click();
+                // window.URL.revokeObjectURL(url);
+                a.remove(); // remove the element
+                this.saveMomBtn.nativeElement.blur();
+                return this.alertService.success('File has been downloaded.', 'MOM Download');
+            }
         });
-        
+
 
     }
 
@@ -278,11 +288,17 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
     }
     moveLeft() {
-        this.ds.moveLeft();
+        // debugger;
+        // this.ds.moveLeft();
+        this.ds.moveTo(this.index - 1);
     }
 
     moveRight() {
-        this.ds.moveRight();
+        // debugger;
+        // this.ds.moveRight();
+        if (this.ds._children.length > (this.index + 2)) {
+            this.ds.moveTo(this.index + 2);
+        }
     }
     leftBoundStat(reachesLeftBound: boolean) {
         this.leftNavDisabled = reachesLeftBound;
