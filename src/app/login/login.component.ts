@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
@@ -11,7 +11,7 @@ import { PasswordService } from '../services/password.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     animations: [routerTransition()],
-    providers: [AlertService,PasswordService]
+    providers: [AlertService, PasswordService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
     _loginService: LoginService;
@@ -33,14 +33,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     forgetPasswordFlag: boolean;
     Logintext = 'Login';
     loggedInUserObj: any;
-    @ViewChild("emailField") emailField: ElementRef;
-    constructor(public router: Router, loginService: LoginService, userService: UserService, public alertService: AlertService , passwordService: PasswordService) {
+    @ViewChild('emailField') emailField: ElementRef;
+    constructor(public router: Router, loginService: LoginService,
+        userService: UserService, public alertService: AlertService, passwordService: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
         this._passwordService = passwordService;
 
     }
-    ngOnInit() {        
+    ngOnInit() {
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
         this.loginUiFlag = true;
@@ -57,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     login() {
         if (this.userName === undefined || this.userName
-             === '' || this.userName === null) {
+            === '' || this.userName === null) {
             return this.alertService.error('Enter Username', 'Error');
         } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
             return this.alertService.error('Enter Password', 'Error');
@@ -67,27 +68,31 @@ export class LoginComponent implements OnInit, OnDestroy {
                 localStorage.setItem('loggedInuserName', this.userName);
                 if (this.email === undefined || this.email === '' || this.email === null) {
                     return this.alertService.error('Enter email id', 'Error');
-                }else{
+                } else {
                     const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-    
+
                     if (!EMAIL_REGEXP.test(this.email)) {
-                      this.emailField.nativeElement.focus();
-                      return this.alertService.warning("Please enter valid email","Warning");
-                    }{
-                const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
-                this._userService.setLoggedInUserObj(payload).subscribe(res => {
-                    if (res.firstName !== undefined) {
-                        if (!this.previousUrl) {
-                            this.router.navigate(['/meeting']);
-                        } else {
-                            this.router.navigateByUrl(this.previousUrl);
-                        }
+                        this.emailField.nativeElement.focus();
+                        return this.alertService.warning('Please enter valid email', 'Warning');
+                    } {
+                        const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
+                        this._userService.setLoggedInUserObj(payload).subscribe(res => {
+                            if (res.firstName !== undefined) {
+                                if (!this.previousUrl) {
+                                    this.router.navigate(['/meeting']);
+                                } else {
+                                    if (this.previousUrl.indexOf('meeting') > 0) {
+                                        this.router.navigateByUrl(this.previousUrl);
+                                    } else {
+                                        this.router.navigate(['/meeting']);
+                                    }
+                                }
+
+                            }
+                        });
                     }
-                });
                 }
-            }
             } else {
-                
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;
 
@@ -119,7 +124,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.userName = '';
                         this.password = '';
                         return this.alertService.warning('Username and Password does not match', 'Incorrect Username');
-                    }}
+                    }
+                }
                 );
             }
         }
@@ -139,15 +145,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
             return this.alertService.error('Please enter email', 'Error');
         } else {
-        let payload = { email: this.forgetEmail };
-        this._userService.forgotPasswordSendMail(payload).subscribe(res => {
-            if(res.json().errorFl === true || res.json().warningFl === true){
-                return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
-            }else{
-                return this.alertService.success('Password reset link has been successfully sent to your email account ,check your email.', 'Error');
-            }
-        });
-        this.forgetEmail = '';
+            const payload = { email: this.forgetEmail };
+            this._userService.forgotPasswordSendMail(payload).subscribe(res => {
+                if (res.json().errorFl === true || res.json().warningFl === true) {
+                    return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
+                } else {
+                    return this.alertService
+                    .success('Password reset link has been successfully sent to your email account ,check your email.', 'Error');
+                }
+            });
+            this.forgetEmail = '';
+        }
     }
-}
 }
