@@ -210,23 +210,32 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     downloadFile(data, meetingDetails) {
-        const today = new Date();
-        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n';
-        data = data.split('\n');
-        data = data.join('\r\n ');
-        const fileType = 'text/json';
-
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
-        // a.href = url;
-        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
-        a.click();
-        // window.URL.revokeObjectURL(url);
-        a.remove(); // remove the element
-        this.saveMomBtn.nativeElement.blur();
-        return this.alertService.success('File has been downloaded.', 'MOM Download');
+        let payload = {meetingCode: meetingDetails.meetingCode};
+        let attendeeList ;
+        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+            if (resp.errorFl) {
+                this.alertService.warning(resp.message, 'Warning');
+            } else {
+                 attendeeList =resp;
+                 const today = new Date();
+            const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n' +'Attendees : '+attendeeList+'\r\n\r\n';
+            data = data.split('\n');
+            data = data.join('\r\n ');
+            const fileType = 'text/json';
+            const a = document.createElement('a');
+            document.body.appendChild(a);
+            a.setAttribute('style', 'display: none');
+            a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
+            // a.href = url;
+            a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+            a.click();
+            // window.URL.revokeObjectURL(url);
+            a.remove(); // remove the element
+            this.saveMomBtn.nativeElement.blur();
+            return this.alertService.success('File has been downloaded.', 'MOM Download');
+                }
+        });
+        
 
     }
 
@@ -239,7 +248,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     completeExit() {
         this.exit();
-        alert(this.isGuest);
         if (this.isGuest == true) {
             this.router.navigate(['/login']);
         } else {

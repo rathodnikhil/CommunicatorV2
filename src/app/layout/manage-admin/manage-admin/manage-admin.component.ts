@@ -1,7 +1,7 @@
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
-import { Component, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewContainerRef ,ElementRef } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
@@ -12,6 +12,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 })
 export class ManageAdminComponent implements OnInit {
 _userService: UserService;
+_teamService: TeamService;
 searchText: any;
 public filter: string = '';
 public maxSize: number = 7;
@@ -30,11 +31,7 @@ public labels: any = {
     screenReaderPageLabel: 'page',
     screenReaderCurrentLabel: `You're on page`
 };
-firstName:any;
-lastName: any;
-userName: any;
-email: any;
-teamName: any;
+
 updatedLastName: any;
 updatedFirstName: any;
 updatedUserName: any;
@@ -44,9 +41,15 @@ selectedAdmin : any;
 updatedUserCode: any;
 updatedUserStaus: boolean;
 updatedTeamName: any;
-  constructor(userService: UserService,public alertService: AlertService) { 
+teamArray= [];
+newTeamName: any;
+  constructor(userService: UserService,public alertService: AlertService , teamService: TeamService) { 
     this._userService = userService;
+    this._teamService = teamService;
   }
+  @ViewChild("usernameField") usernameField: ElementRef;
+  @ViewChild("emailField") emailField: ElementRef;
+
   @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
   deleteAdminPop: CustomModalModel = {
       titleIcon: '<i class="fa fa-trash"></i>',
@@ -73,14 +76,26 @@ updatedTeamName: any;
     }
 });
 
+this._teamService.getAllEnableTeams().subscribe(data => {
+    if(data.warningFl){
+     return this.alertService.warning(data.json().message,"Warning");   
+    }else{
+      this.teamArray = data;
+     }
+  });
   }
   onPageChange(number: number) {
     // console.log('change to page', number);
     this.config.currentPage = number;
 }
 deleteAdmin(selectedAdmin){
-this.deleteMemberModal.open();
-this.selectedAdmin = selectedAdmin;
+    if(selectedAdmin.status.status === "ACTIVE"){
+        this.deleteMemberModal.open();
+        this.selectedAdmin = selectedAdmin;  
+    }else{
+        return this.alertService.warning("Admin "+selectedAdmin.firstName +" " + selectedAdmin.lastName +"  has already inactive", 'Inactive Admin');
+    }
+
 }
 deleteAdminNow(){
    const payload = {userCode: this.selectedAdmin.userCode}
@@ -109,22 +124,32 @@ editAdmin(user){
    
 }
 updateMember(){
+    let duplicateUserNameFlag ;
+    let exceptionFlag;
     const payload = {
-        firstName : this.firstName,
-        lastName: this.lastName,
-        name: this.userName,
-        email: this.email,
-        team: this.teamName,
+        firstName : this.updatedFirstName,
+        lastName: this.updatedLastName,
+        name: this.updatedUserName,
+        email: this.updatedEmail,
+        team: this.updatedTeamName,
         userCode: this.updatedUserCode
     };
-  this._userService.updateUserDetails(payload).subscribe(data => {
-    if (data.errorFl === true || data.warningFl === true) {
-        return this.alertService.warning(data.message, 'Warning');
-    } else {
-        this.editMemberModal.close();
-        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has edited successfully", 'Update Admin');
-    }
-});
+    this._userService.saveUserDetails(payload,this.newTeamName).subscribe(data => {
+        duplicateUserNameFlag = data.json().warningFl;
+        exceptionFlag = data.json().errorFl;
+        if(duplicateUserNameFlag == true) {
+          this.usernameField.nativeElement.focus();
+          return this.alertService.warning("Username already exist","Warning");
+        }else if(exceptionFlag == true) {
+          this.emailField.nativeElement.focus();
+          return this.alertService.warning(data.json().message,"Warning");
+        }else{
+         // this.clearAllField();
+          this.teamArray.push(data);
+          return this.alertService.success("Admin has updated successfully","Success");
+
+        }
+    });
 }
   //close team modal popup
   closePopup(popupType) {

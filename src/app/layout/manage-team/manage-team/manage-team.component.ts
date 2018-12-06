@@ -59,6 +59,15 @@ export class ManageTeamComponent implements OnInit {
     updateTeamName: any;
     selectedUserPermissionObj: any;
     selectedNewTeamObj: any;
+    teamArray = [];
+    updatedFirstName: any;
+    updatedLastName: any;
+    updatedEmail;
+    updatedTeamName: any;
+    updatedUserStaus: boolean;
+    updatedUserCode: any;
+    selectedMember: any;
+    newMemberUserCode: any;
     @ViewChild("emailField") emailField: ElementRef;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
@@ -96,7 +105,24 @@ export class ManageTeamComponent implements OnInit {
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Member',
         Button2Content: ''
     };
-
+    @ViewChild('UpdateMemberModal') public UpdateMemberModal: CustomModalComponent;
+    updateMember: CustomModalModel = {
+        titleIcon: '<i class="fa fa-pencil-square-o"></i>',
+        title: 'Update Member',
+        smallHeading: 'You can update member details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Member',
+        Button2Content: ''
+    };
+    @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
+    deleteMember: CustomModalModel = {
+        titleIcon: '<i class="fas fa-trash-alt"></i>',
+        title: 'Delete member',
+        smallHeading: 'You can delete member details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete member',
+        Button2Content: ''
+    };
 
     constructor(teamService: TeamService, userService: UserService , public alertService: AlertService , passwordService: PasswordService) {
         this._teamService = teamService;
@@ -133,7 +159,6 @@ export class ManageTeamComponent implements OnInit {
         });
             }   
          });
-      
     }
     displayTeamDetails(userPermission) {
         if(userPermission.team.teamCode === "" || userPermission.team.teamCode === null || typeof userPermission.team.teamCode === "undefined"){
@@ -144,12 +169,13 @@ export class ManageTeamComponent implements OnInit {
         this.showSelectedTeam = true;
         this.selectedTeamName = userPermission.team.teamName;
         this.filterMemberList = [];
-      
+        alert(this.userPermissionMemberList.length);
         for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
             if (this.userPermissionMemberList[this.i].team.id == userPermission.team.id) {
                 this.filterMemberList.push(this.userPermissionMemberList[this.i]);
             }
         }
+        alert("filter meeting length : "+this.filterMemberList.length);
         this.selectedUserPermissionObj = userPermission;
     }
     //to open modal popup
@@ -219,43 +245,28 @@ export class ManageTeamComponent implements OnInit {
                     if(res.errorFl === true || res.warningFl     === true){
                         return this.alertService.warning(res.message, "Warning"); 
                     }else{
-                        this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
-                        this.userPermissionMemberList.push(res);
-                        this.filterMemberList.push(res);
+                        this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName ,email: this.email,
+                            status: {status: 'ACTIVE'}} , team: this.selectedTeamObj}
+                        this.userPermissionMemberList.push(this.memObj);
+                        this.filterMemberList.push(this.memObj);
                         this.firstName = '';
                         this.lastName = '';
                         this.userName = '';
                         this.email = '';
                         this.password = '';
+                        this.newMemberUserCode = res.userCode;
                         return this.alertService.success("Member has saved successfully ", "Success");   
                     }
                });
             }
         } 
  }
-
-    //close team modal popup
-    closePopup(popupType) {
-        switch (popupType) {
-            case 'addNewTeam':
-                this.addNewTeamModal.close();
-                break;
-            case 'addNewMember':
-                this.addNewMemberModal.close();
-                break;
-            case 'updateTeam':
-                this.addUpdateTeamModal.close();
-                break;
-            case 'deleteTeam':
-                this.deleteTeamModal.close();
-                break;
-        }
-    }
     editTeam(){
         this.addUpdateTeamModal.open();
         this.updateTeamName = this.selectedTeamObj.teamName;
     }
     updateTeamDetails(){
+    
         if (this.updateTeamName === "" || this.updateTeamName === null || typeof this.updateTeamName === "undefined") {
             return this.alertService.warning("Please Enter Team Name", "Warning");   
         } else {
@@ -290,7 +301,85 @@ export class ManageTeamComponent implements OnInit {
                 }
             });
     }
+   
+    editMember(member){
+        if(member.userId.status.status === "ACTIVE"){
+            this.updatedUserStaus = true;    
+        }else{
+            this.updatedUserStaus =false;
+        }
+        this.UpdateMemberModal.open();
+        this.updatedFirstName = member.userId.firstName;
+        this.updatedLastName = member.userId.lastName;
+        this.updatedEmail = member.userId.email;
+        this.updatedUserCode = member.userId.userCode;
+        if(this.updatedUserCode === null || typeof this.updatedUserCode === "undefined" || this.updatedUserCode.trim() === "" ){
+            this.updatedUserCode = this.newMemberUserCode;
+        }
+    }
+   
+    deleteMemberPopup(member){
+        if(member.userId.status.status === "ACTIVE"){
+            this.deleteMemberModal.open();
+        this.selectedMember = member.userId;
+        }else{
+            return this.alertService.warning("Member "+member.userId.firstName +" " + member.userId.lastName +"  has already inactive", 'Inactive Member');
+        }
+    }
+  
+    deleteMemberDetails(){
+           const payload = {userCode: this.selectedMember.userCode}
+          this._userService.deleteUser(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.deleteMemberModal.close();
+                return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Member');
+            }
+        });
+        }
+   
+        updateMemberDetails(){
+            alert(this.updatedUserCode);
+            const payload = {
+                firstName : this.updatedFirstName,
+                lastName: this.updatedLastName,
+                email: this.updatedEmail,
+                userCode: this.updatedUserCode
+            };
+          this._userService.updateUserDetails(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.UpdateMemberModal.close();
+                return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has edited successfully", 'Update Admin');
+            }
+        });
+        }
     onPageChange(number: number) {
         this.config.currentPage = number;
+    }
+       //close team modal popup
+       closePopup(popupType) {
+        switch (popupType) {
+            case 'addNewTeam':
+                this.addNewTeamModal.close();
+                break;
+            case 'addNewMember':
+                this.addNewMemberModal.close();
+                break;
+            case 'updateTeam':
+                this.addUpdateTeamModal.close();
+                break;
+            case 'deleteTeam':
+                this.deleteTeamModal.close();
+                break;
+            case 'updateMember':
+                this.UpdateMemberModal.close();
+                break;
+            case 'deleteMember':
+                this.deleteMemberModal.close();
+                break;
+        }
     }
 }
