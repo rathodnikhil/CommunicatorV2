@@ -37,7 +37,7 @@
                 <div>
                     <div class="col-md-12 meeting-bottom">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
-                            autocapitalize=off size=20>
+                            autocapitalize=off size=10>
                         <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
@@ -48,21 +48,24 @@
                                     activity click No?</label>
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-sec" (click)="completeExit()">Yes</button>
+                                <button type="button" class="btn btn-primary" (click)="completeExit()">Yes</button>
                                 <button type="button" class="btn btn-cancel" (click)="exit()">No</button>
                             </div>
                         </app-custom-modal>
-                        <button id="btn-mute" class="btn pull-left" [ngClass]="isMute?'btn-sec':'default'" (click)='isMute=!isMute'>
+                        <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'"  (click)='isMute=!isMute'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
                             (click)='isMeetingStarted=!isMeetingStarted'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
+                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;" placement="top"
+                        ngbTooltip="Video On/Off"
                             (click)='isVideoEnabled=!isVideoEnabled' [value]="isVideoEnabled">
-                            <img class="custom-image" height="30" [src]="isVideoEnabled?'assets/images/video-call.png':'assets/images/no-video.png'" />
+                            <!-- <img class="custom-image" height="30" [src]="isVideoEnabled?'assets/images/video-call.png':'assets/images/no-video.png'" /> -->
+                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled" class="fa fa-2x fa-ban"></i>
                         </button>
+
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
@@ -113,7 +116,7 @@
                                 </span>
                             </li>
                         </ul>
-                        <div class="tab-content" style="overflow-y: scroll" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
+                        <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
                             <div id="chat-container" class="chat-output">
                             </div>
                             <div class="col-md-12" style="padding-top: 20px;">

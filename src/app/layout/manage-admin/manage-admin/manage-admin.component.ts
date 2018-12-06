@@ -34,6 +34,7 @@ firstName:any;
 lastName: any;
 userName: any;
 email: any;
+teamName: any;
 updatedLastName: any;
 updatedFirstName: any;
 updatedUserName: any;
@@ -42,6 +43,7 @@ allAdminList = [];
 selectedAdmin : any;
 updatedUserCode: any;
 updatedUserStaus: boolean;
+updatedTeamName: any;
   constructor(userService: UserService,public alertService: AlertService) { 
     this._userService = userService;
   }
@@ -94,13 +96,15 @@ deleteAdminNow(){
 editAdmin(user){
     if(user.status.status === "ACTIVE"){
         this.updatedUserStaus = true;    
+    }else{
+        this.updatedUserStaus =false;
     }
-    this.updatedUserStaus =false;
     this.editMemberModal.open();
     this.updatedFirstName = user.firstName;
     this.updatedLastName = user.lastName;
     this.updatedUserName = user.name;
     this.updatedEmail = user.email;
+    this.updatedTeamName = user.team.teamName;
     this.updatedUserCode = user.userCode;
    
 }
@@ -110,15 +114,15 @@ updateMember(){
         lastName: this.lastName,
         name: this.userName,
         email: this.email,
+        team: this.teamName,
         userCode: this.updatedUserCode
     };
-    console.log(payload);
   this._userService.updateUserDetails(payload).subscribe(data => {
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
         this.editMemberModal.close();
-        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +"has edited successfully", 'Update Admin');
+        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has edited successfully", 'Update Admin');
     }
 });
 }

@@ -263,6 +263,7 @@ div.scrollmenu a:hover {
 
 .chat-output {
     height: calc(100vh*0.60);
+    overflow-y: scroll;
 }
 
 .MomTextBox {

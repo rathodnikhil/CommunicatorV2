@@ -117,7 +117,7 @@ document.getElementById('btn-leave-room').onclick = function () {
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
-    document.getElementById('open-room').disabled = false;
+    document.getElementById('open-room').disabled = true;
 };
 
 // ......................................................
@@ -353,7 +353,7 @@ connection.onEntireSessionClosed = function (event) {
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
     document.getElementById('open-or-join-room').disabled = false;
-    document.getElementById('open-room').disabled = false;
+    document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = false;
     document.getElementById('room-id').disabled = false;
 

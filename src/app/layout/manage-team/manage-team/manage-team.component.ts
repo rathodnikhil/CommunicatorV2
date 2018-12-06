@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { PasswordService } from '../../../services/password.service';
-
+import { PaginationInstance } from 'ngx-pagination';
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
@@ -16,6 +16,24 @@ import { PasswordService } from '../../../services/password.service';
     providers: [TeamService ,AlertService,PasswordService],
 })
 export class ManageTeamComponent implements OnInit {
+    public searchText: string;
+    public filter = '';
+    public maxSize = 7;
+    public directionLinks = true;
+    public autoHide = false;
+    public responsive = false;
+    public config: PaginationInstance = {
+        id: 'userCode',
+        itemsPerPage: 10,
+        currentPage: 1
+    };
+    public labels: any = {
+        previousLabel: 'Previous',
+        nextLabel: 'Next',
+        screenReaderPaginationLabel: 'Pagination',
+        screenReaderPageLabel: 'page',
+        screenReaderCurrentLabel: `You're on page`
+    };
     newTeamName: any;
     memObj: any = {};
     i: number;
@@ -36,7 +54,6 @@ export class ManageTeamComponent implements OnInit {
     password: any;
     loggedInUser: any;
     selectedTeamObj: any;
-    searchText: string;
     searchTeam: any;
     showSelectedTeam: boolean;
     updateTeamName: any;
@@ -203,8 +220,8 @@ export class ManageTeamComponent implements OnInit {
                         return this.alertService.warning(res.message, "Warning"); 
                     }else{
                         this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName } }
-                        this.userPermissionMemberList.push(this.memObj);
-                        this.filterMemberList.push(this.memObj);
+                        this.userPermissionMemberList.push(res);
+                        this.filterMemberList.push(res);
                         this.firstName = '';
                         this.lastName = '';
                         this.userName = '';
@@ -272,5 +289,8 @@ export class ManageTeamComponent implements OnInit {
                return this.alertService.success("Team has deleted successfully ", "Success");   
                 }
             });
+    }
+    onPageChange(number: number) {
+        this.config.currentPage = number;
     }
 }

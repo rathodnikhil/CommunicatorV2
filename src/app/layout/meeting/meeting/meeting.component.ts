@@ -134,8 +134,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     const payload = { userCode: '', meetingCode: this.meetingCode };
                     if (!data.isGuest) {
                         payload.userCode = this.loggedInUser.userCode;
+                        this.isGuest = false;
                     } else if (data.isGuest) {
                         payload.userCode = this.loggedInUser.firstName;
+                        this.isGuest = true;
                     }
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
                         if (!data2.warningFl && !data2.errorFl && data2.message !== null
@@ -181,15 +183,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             window['functionFromExternalScript'](params);
         }
     }
-    // to set selected send message to
-    changeMessageTo(member) {
-        this.messageSendTo = member.name + ' ' + member.lastName;
-    }
-
-    // to set selected mom to
-    changeMomTo(member) {
-        this.momTo = member.name + ' ' + member.lastName;
-    }
+  
     toggleMOM() {
         this.isMOMvisible = !this.isMOMvisible;
     }
@@ -240,17 +234,16 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     switchTab(tab) {
         this.currentTab = tab;
     }
-
-
     exitMeeting() {
         this.exitMeetingConfirmModal.open();
     }
     completeExit() {
         this.exit();
-        if (!this.isHost) {
-            this.router.navigate(['/dashboard']);
-        } else {
+        alert(this.isGuest);
+        if (this.isGuest == true) {
             this.router.navigate(['/login']);
+        } else {
+            this.router.navigate(['/dashboard']);
         }
     }
     exit() {
@@ -261,9 +254,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
                 this.document.getElementById('btn-leave-room').click();
-                this.document.getElementById('btn-leave-room').disable = true;
-                this.document.getElementById('input-text-chat').disable = true;
                 this.alertService.success('Meeting has ended.', 'End Meeting');
+                this.counter.stop();
             }
         });
     }
