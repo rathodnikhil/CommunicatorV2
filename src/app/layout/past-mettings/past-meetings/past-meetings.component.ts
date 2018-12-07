@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import { MeetingService } from '../../../services/meeting-service';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
-// import * as fileSaver from 'file-saver';
+import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
@@ -35,11 +35,20 @@ export class PastMeetingsComponent implements OnInit {
     loggedInUser: any;
     pastMeetingList = [];
     searchText: string;
+    attendeeListByMeeting = [];
     constructor(meetingService: MeetingService, userService: UserService , public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
-
+    @ViewChild('viewAttendeeModal') public viewAttendeeModal: CustomModalComponent;
+    attendee: CustomModalModel = {
+        titleIcon: '<i class="fa fa-user"></i>',
+        title: 'New Team',
+        smallHeading: 'You can add new team details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Team',
+        Button2Content: ''
+    };
     ngOnInit() {
         //loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
@@ -68,13 +77,7 @@ export class PastMeetingsComponent implements OnInit {
         if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
             return this.alertService.warning('No MOM for this meeting has been added', "Warning");
         }  else{
-        let payload = {meetingCode: data.meetingCode};
-        let attendeeList ;
-        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
-            if (resp.errorFl) {
-                this.alertService.warning(resp.message, 'Warning');
-            } else {
-                 attendeeList = resp;
+                  let attendeeList = this.getAttendeeList(data);
                  data.mom.momDescription = data.mom.momDescription.split('\n');
                  data.mom.momDescription = data.mom.momDescription.join('\r\n ');
                    const momHeader = 'Date of Meeting: '+data.meetingDate +'\r\n\r\n'+'Subject: '+data.subject+'\r\n\r\n' +'Attendees : '+attendeeList+'\r\n\r\n';
@@ -90,8 +93,6 @@ export class PastMeetingsComponent implements OnInit {
                  // window.URL.revokeObjectURL(url);
                  a.remove(); // remove the element
                  this.alertService.success("File has been downloaded.", "MOM Download");
-            }
-        });
     }
     
     }
@@ -101,4 +102,21 @@ export class PastMeetingsComponent implements OnInit {
     replaceLineBreak(s:string) {
         return s && s.replace('meetNowFlag','');
       }
+      viewAttendee(meeting){
+          this.viewAttendeeModal.open();
+        this.attendeeListByMeeting = this.getAttendeeList(meeting);
+        alert(this.attendeeListByMeeting.length);
+      }
+      getAttendeeList(meeting) :any[]{
+        let attendeeList ;
+        let payload = {meetingCode: meeting.meetingCode};
+        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+            if (resp.errorFl) {
+                this.alertService.warning(resp.message, 'Warning');
+            } else {
+                 attendeeList = resp;
+            }
+    });
+    return attendeeList;
+}
 }

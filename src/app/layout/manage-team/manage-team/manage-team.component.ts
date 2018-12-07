@@ -38,6 +38,7 @@ export class ManageTeamComponent implements OnInit {
     memObj: any = {};
     i: number;
     teamCode: string;
+    searchTableText: string;
     _teamService: TeamService;
     _userService: UserService;
     _passwordService: PasswordService;
@@ -69,6 +70,7 @@ export class ManageTeamComponent implements OnInit {
     selectedMember: any;
     newMemberUserCode: any;
     @ViewChild("emailField") emailField: ElementRef;
+    @ViewChild("teamNameField") teamNameField: ElementRef;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -169,13 +171,11 @@ export class ManageTeamComponent implements OnInit {
         this.showSelectedTeam = true;
         this.selectedTeamName = userPermission.team.teamName;
         this.filterMemberList = [];
-        alert(this.userPermissionMemberList.length);
         for (this.i = 0; this.i < this.userPermissionMemberList.length; this.i++) {
             if (this.userPermissionMemberList[this.i].team.id == userPermission.team.id) {
                 this.filterMemberList.push(this.userPermissionMemberList[this.i]);
             }
         }
-        alert("filter meeting length : "+this.filterMemberList.length);
         this.selectedUserPermissionObj = userPermission;
     }
     //to open modal popup
@@ -198,10 +198,12 @@ export class ManageTeamComponent implements OnInit {
             this._teamService.saveTeamDetails(payload).subscribe(
                 (res) => {
                     if(res.errorFl === true || res.warningFl === true){
+                        this.newTeamName = '';
                         return this.alertService.warning(res.message, "Warning"); 
                     }else{
                     this.userPermissionList.push(team);
                     this.newTeamName = '';
+                    this.teamNameField.nativeElement.focus();
                     this.selectedNewTeamObj = res;
                    return this.alertService.success("Team has saved successfully ", "Success");   
                     }
@@ -266,7 +268,6 @@ export class ManageTeamComponent implements OnInit {
         this.updateTeamName = this.selectedTeamObj.teamName;
     }
     updateTeamDetails(){
-    
         if (this.updateTeamName === "" || this.updateTeamName === null || typeof this.updateTeamName === "undefined") {
             return this.alertService.warning("Please Enter Team Name", "Warning");   
         } else {
@@ -290,19 +291,21 @@ export class ManageTeamComponent implements OnInit {
     }
     deleteTeamDetails(){
         const payload = {"teamCode": this.selectedUserPermissionObj.teamCode};
-     
             this._teamService.deleteTeam(payload).subscribe(res => {
                 if(res.errorFl === true || res.warningFl === true){
                     return this.alertService.warning(res.message, "Warning"); 
                 }else{
                this.closePopup('deleteTeam');
                this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+               this.filterMemberList = [];
+               this.showSelectedTeam = false;
                return this.alertService.success("Team has deleted successfully ", "Success");   
                 }
             });
     }
    
     editMember(member){
+        this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
         if(member.userId.status.status === "ACTIVE"){
             this.updatedUserStaus = true;    
         }else{
@@ -317,45 +320,70 @@ export class ManageTeamComponent implements OnInit {
             this.updatedUserCode = this.newMemberUserCode;
         }
     }
-   
-    deleteMemberPopup(member){
-        if(member.userId.status.status === "ACTIVE"){
-            this.deleteMemberModal.open();
-        this.selectedMember = member.userId;
-        }else{
-            return this.alertService.warning("Member "+member.userId.firstName +" " + member.userId.lastName +"  has already inactive", 'Inactive Member');
-        }
-    }
-  
-    deleteMemberDetails(){
-           const payload = {userCode: this.selectedMember.userCode}
-          this._userService.deleteUser(payload).subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.deleteMemberModal.close();
-                return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Member');
-            }
-        });
-        }
-   
         updateMemberDetails(){
-            alert(this.updatedUserCode);
+      let currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
             const payload = {
                 firstName : this.updatedFirstName,
                 lastName: this.updatedLastName,
                 email: this.updatedEmail,
-                userCode: this.updatedUserCode
+                userCode: this.updatedUserCode,
+                status: {status: currentDisplayStatus}
             };
           this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
+                this.memObj = { userId: { firstName: this.updatedFirstName, lastName: this.updatedLastName ,email: this.updatedEmail,
+                    status: {status: currentDisplayStatus}} , team: this.selectedTeamObj};
                 this.UpdateMemberModal.close();
-                return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has edited successfully", 'Update Admin');
+                this.filterMemberList.push(this.memObj);
+                return this.alertService.success("Member "+data.firstName +" " + data.lastName +" has edited successfully", 'Update Member');
             }
         });
         }
+
+    private getStatusByUser(updatedStaus) {
+        let currentStatus;
+        let currentDisplayStatus;
+        if (updatedStaus == true) {
+            currentStatus = 1;
+            currentDisplayStatus = "ACTIVE";
+        }
+        else {
+            currentStatus = 2;
+            currentDisplayStatus = "INACTIVE";
+        }
+        return currentDisplayStatus;
+    }
+
+        deleteMemberPopup(member){
+            if(member.userId.status.status === "ACTIVE"){
+                this.deleteMemberModal.open();
+            this.selectedMember = member;
+            }else{
+                return this.alertService.warning("Member "+member.userId.firstName +" " + member.userId.lastName +"  has already inactive", 'Inactive Member');
+            }
+        }
+      
+        deleteMemberDetails(){
+            if(this.selectedMember.userId.userCode === null || typeof this.selectedMember.userId.userCode === "undefined" || this.selectedMember.userId.userCode.trim() === "" ){
+                this.selectedMember.userId.userCode = this.newMemberUserCode;
+            }
+               const payload = {userCode: this.selectedMember.userId.userCode};
+              this._userService.deleteUser(payload).subscribe(data => {
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                    this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
+                    this.deleteMemberModal.close();
+                    this.memObj = { userId: { firstName:  this.selectedMember.userId.firstName, lastName:  this.selectedMember.userId.lastName ,email:  this.selectedMember.userId.email,
+                        status: {status: 'INACTIVE'}} , team: this.selectedTeamObj}
+                    this.filterMemberList.push( this.memObj);
+                    return this.alertService.success("Member "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Member');
+                }
+            });
+            }
+
     onPageChange(number: number) {
         this.config.currentPage = number;
     }

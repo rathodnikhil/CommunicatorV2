@@ -10,14 +10,7 @@ export class LoginService {
     previousUrl: string;
 
     constructor(private http: Http) { }
-    getAllMemUserNameList() {
-        const url = urlConstants.baseUrl + 'getAllMemUserNameList';
-        return this.http.post(url, null);
-    }
-    getAllMemEmailList() {
-        const url = urlConstants.baseUrl + 'getAllMemEmailList';
-        return this.http.post(url, null);
-    }
+    
     getAuthenticationToken(payload) {
         const url = urlConstants.baseUrl + 'token/generate-token';
         this.http.post(url, payload).subscribe(data => {

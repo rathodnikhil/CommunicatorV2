@@ -151,7 +151,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
                 } else {
                     return this.alertService
-                    .success('Password reset link has been successfully sent to your email account ,check your email.', 'Error');
+                    .success('Password reset link has been successfully sent to your email account ,check your email.', 'Email Send');
                 }
             });
             this.forgetEmail = '';

@@ -122,15 +122,6 @@ export class UserService {
         }
         return this.loggedInUserObj$;
     }
-    getUserRole() {
-        return this.loggedInUserRole$;
-    }
-    setUserRole(payload) {
-        const url = urlConstants.baseUrl + 'getUserRole?userCode=' + payload.usercode;
-        this.apiRequest.post(url, payload).subscribe(data => {
-            this.loggedInUserRole$.next(data);
-           });
-    }
 
     getAllAdminList() {
         const url = urlConstants.baseUrl + 'getAllAdminList';

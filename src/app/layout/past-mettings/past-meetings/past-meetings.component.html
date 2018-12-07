@@ -38,17 +38,29 @@
             <td>{{meeting.meetingDate}}</td>
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
-            <td>{{meeting.attendee}}</td>
+            <td><i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)"></i></td>
             <td>{{meeting.status.status}}</td>
             <td>
                 <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i>
             </td>
         </tr>
     </table>
+    <app-custom-modal #viewAttendeeModal [model]="attendee">
+            <div class="modal-body row-label">
+                <h3>Attendee List</h3>
+                <input *ngFor="let attendee of attendeeListByMeeting "
+                value="{{attendee}}" />
+            </div>
+            <div class="modal-footer popFooter">
+                     <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
+                    <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button> 
+                </div>
+        </app-custom-modal>
     <div class="pageControl">
         <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
             [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
             [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
             (pageChange)="onPageChange($event)"></pagination-controls>
     </div>
+    
 </div>
