@@ -4,40 +4,7 @@
     //float: right;width: 50%;
      padding-left: 15px;
 }
-.member-block label{
-    color: #000000;
-}
-.member-block ul {
-    list-style-type: none;
-  }
-.member-table{
-    float:left; width: 50%;
-}
-// .member-details{
-//     height: 100%;  border: 1px solid #ccd1d4;
-//       box-shadow: 5px 5px 5px 5px #ccd1d4; background: #e5efff;
-//     padding:10px;
-//      margin:15px;
-// }
-.search-member{
-  background-color: #e5efff;
-    height:50px;
-    margin :15px;
-    border: 1px solid #ccd1d4;
-}
-.search-box-container input {
-    padding: 2px;
-    margin-bottom:5px;
-  }
 
-  .search-box-container:after {
-      content: "\f00d";
-      font-family: FontAwesome;
-      font-weight: bold;
-      margin-left: -25px;
-      margin-right: 25px;
-      color: #eb223d;
-  }
     .row-label label{
      font-weight: bold;
     }
