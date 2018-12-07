@@ -78,8 +78,8 @@ export class MeetingService {
     }
  
     getMeetingAttendee(payload) {
-        const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingId=' + payload.meetingId;
-        return this.http.post(url, payload);
+        const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
+        return this.apiRequest.post(url, payload);
     }
   
     getAllMeetingsbyLoggedInUserId(payload) {

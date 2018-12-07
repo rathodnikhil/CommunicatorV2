@@ -72,6 +72,74 @@ document.getElementById('btn-end-meeting').onclick = function () {
         document.querySelector('h1').innerHTML = 'Entire session has been closed.';
     });
 }
+function onDetectRTCLoaded() {
+    // debugger;
+    var videoValue = DetectRTC.hasWebcam;
+    if(!videoValue){
+        alertService.warning('Switching to audio mode.','Web Cam not detected');
+    }
+    connection.session = {
+        audio: true,
+        video: videoValue,
+        data: true
+    };
+
+    connection.mediaConstraints = {
+        audio: true,
+        video: videoValue
+    };
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: videoValue
+    };
+}
+function reloadDetectRTC(callback) {
+    DetectRTC.load(function() {
+        onDetectRTCLoaded();
+
+        if(callback && typeof callback == 'function') {
+            callback();
+        }
+    });
+}
+
+DetectRTC.load(function() {
+    reloadDetectRTC();
+
+    try {
+        if(DetectRTC.MediaDevices[0] && DetectRTC.MediaDevices[0].isCustomLabel) {
+            navigator.mediaDevices.getUserMedia({audio: true, video: true}).then(function(stream) {
+                var video;
+                try {
+                    video = document.createElement('video');
+                    video.muted = true;
+                    video.volume = 0;
+                    video.src = URL.createObjectURL(stream);
+                    video.style.display = 'none';
+                    video.style.opacity = 0;
+                    (document.body || document.documentElement).appendChild(vide);
+                }
+                catch(e) {}
+
+                reloadDetectRTC(function() {
+                    // release camera
+                    stream.getTracks().forEach(function(track) {
+                        track.stop();
+                    });
+
+                    if(video && video.parentNode) {
+                        video.parentNode.removeChild(video);
+                    }
+                });
+            }).catch(reloadDetectRTC);
+            return;
+        }
+    }
+    catch(e) {}
+
+    onDetectRTCLoaded();
+});
+
 document.getElementById('disable-video').onclick = function () {
 
     var videoValue = this.value == "true";

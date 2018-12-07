@@ -44,8 +44,8 @@
           <td>{{admin.team.teamName}}</td>
           <td>{{admin.userCode}}</td>
           <td>{{admin.status.status}}</td>
-          <td><i class="fa fa-pencil-square-o" (click)="editAdmin(admin);" style="color: green;"></i></td>
-          <td><i class="fa fa-trash-o" (click)="deleteAdmin(admin);" style="color: red;"></i></td>
+          <td><i class="fa fa-pencil-square-o edit-icon" (click)="editAdmin(admin);"></i></td>
+          <td><i class="fa fa-trash-o delete-icon" (click)="deleteAdmin(admin);" ></i></td>
     </tr>
   </table>
   <app-custom-modal #deleteMemberModal [model]="deleteAdminPop">
@@ -64,7 +64,7 @@
                   <label>First Name</label>
               </div>
               <div>
-                  <input placeholder="Type Name Here.."  type="text" [(ngModel)]="firstName" value="{{updatedFirstName}}" required/>
+                  <input placeholder="FirstName" class="form-control"  type="text" [(ngModel)]="updatedFirstName" />
               </div>
           </div>
           <div class="row form-group">
@@ -72,15 +72,23 @@
                   <label>Last Name</label>
               </div>
               <div>
-                  <input placeholder="Type Name Here.." type="text"  [(ngModel)]="lastName" value="{{updatedLastName}}" required/>
+                  <input placeholder="LastName" class="form-control" type="text"  [(ngModel)]="updatedLastName" />
               </div>
           </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+                <label>UserName</label>
+            </div>
+            <div>
+                <input placeholder="UserName" type="text" class="form-control" [(ngModel)]="updatedUserName" />
+            </div>
+        </div>
           <div class="row form-group">
                   <div class="col-md-3">
                       <label>Email</label>
                   </div>
                   <div>
-                      <input placeholder="Type Email Here.."  type="text" [(ngModel)]="email" value="{{updatedEmail}}" required/>
+                      <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail" />
                   </div>
               </div>
               <div class="row form-group">
@@ -88,7 +96,10 @@
                     <label>Team</label>
                 </div>
                 <div>
-                    <input placeholder="Type Team Here.."  type="text" [(ngModel)]="teamName" value="{{updatedTeamName}}" required/>
+                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="newTeamName" required #teamField>
+                    <datalist id="teamObjList">
+                        <option *ngFor="let team of teamArray" value="{{team.teamName}}">
+                      </datalist>
                 </div>
             </div>
           <div class="row form-group">
@@ -96,7 +107,7 @@
                   <label>UserName</label>
               </div>
               <div>
-                  <input type="text" placeholder="Type Username Here.." [(ngModel)]="userName" value="{{updatedUserName}}" required/>
+                  <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="updatedUserName" />
               </div>
           </div>
           <div class="row form-group">
