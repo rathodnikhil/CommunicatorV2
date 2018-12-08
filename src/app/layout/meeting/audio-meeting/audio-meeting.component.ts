@@ -7,7 +7,6 @@ import { Params, Router, ActivatedRoute } from '@angular/router';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 import { AlertService } from 'app/services/alert.service';
 import { CountdownComponent } from 'ngx-countdown';
-import { DragScrollComponent } from 'ngx-drag-scroll/lib';
 
 @Component({
     selector: 'app-audio-meeting',
@@ -43,7 +42,6 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     config: any = { leftTime: 10, notify: [300] };
     counter: CountdownComponent;
     endBtnFlag: boolean;
-    @ViewChild('videos_container', { read: DragScrollComponent }) ds: DragScrollComponent;
     @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
         if (tiles !== undefined) {
             this.counter = tiles;
@@ -231,14 +229,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     }
     onNotify(time: number) {
         this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
-    }
-    moveLeft() {
-        this.ds.moveLeft();
-    }
-
-    moveRight() {
-        this.ds.moveRight();
-    }
+    } 
     leftBoundStat(reachesLeftBound: boolean) {
         this.leftNavDisabled = reachesLeftBound;
     }

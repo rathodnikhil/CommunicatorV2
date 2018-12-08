@@ -1,6 +1,6 @@
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
 
-document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
+// document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
@@ -142,6 +142,7 @@ DetectRTC.load(function () {
 
 document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
+    document.getElementById('resume-count').click();
     setTimeout(function () {
         document.getElementById('disable-video').disabled = false;
     }, 6000);
@@ -170,13 +171,14 @@ document.getElementById('disable-video').onclick = function () {
 }
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
+    // debugger;
     connection.leave();
     connection.attachStreams.forEach(function (stream) {
         stream.stop();
     });
     //remove parent
     connection.streamEvents.selectAll().forEach(function (streamEvent) {
-        var mediaElement = document.getElementById(event.streamid + 'parent');
+        var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
         if (mediaElement) {
             streamEvent.stream.stop();
             mediaElement.parentNode.removeChild(mediaElement);
@@ -326,7 +328,7 @@ connection.onstream = function (event) {
         connection.streamEvents.selectAll({
             userid: event.userid
         }).forEach(function (streamEvent) {
-            var mediaElement = document.getElementById(event.streamid + 'parent');
+            var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
             if (mediaElement && !event.stream.isScreen) {
                 streamEvent.stream.stop();
                 mediaElement.parentNode.removeChild(mediaElement);
@@ -385,6 +387,7 @@ connection.onMediaError = function (event) {
 
 }
 connection.onmute = function (event) {
+    // document.getElementById(event.streamid).muted=true;
     connection.streamEvents[event.streamid].stream.mute();
 };
 connection.onstreamended = function (event) {
@@ -393,7 +396,18 @@ connection.onstreamended = function (event) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
 };
+connection.onleave = function(event){
+    connection.streamEvents.selectAll({
+        userid: event.userid
+    }).forEach(function (streamEvent) {
+        var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
+        if (mediaElement) {
+            streamEvent.stream.stop();
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    });
 
+}
 connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 

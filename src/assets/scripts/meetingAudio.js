@@ -1,6 +1,6 @@
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
 
-document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
+// document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;

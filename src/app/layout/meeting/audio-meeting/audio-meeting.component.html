@@ -19,18 +19,18 @@
                         </div>
                     </div>
                     <div class="attendee-row">
-                        <button class="scrollBtn sc_left btn btn-primary" [disabled]="leftNavDisabled" (click)="moveLeft()">
+                        <!-- <button class="scrollBtn sc_left btn btn-primary" [disabled]="leftNavDisabled" (click)="moveLeft()">
                             <i class='fa fa-angle-left'></i>
                         </button>
                         <button class="scrollBtn sc_right btn btn-primary" [disabled]="rightNavDisabled" (click)="moveRight()">
                             <i class='fa fa-angle-right'></i>
-                        </button>
-                        <drag-scroll class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" (indexChanged)="onIndexChanged($event)"
+                        </button> -->
+                        <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" (indexChanged)="onIndexChanged($event)"
                         (reachesLeftBound)="leftBoundStat($event)" (reachesRightBound)="rightBoundStat($event)" (snapAnimationFinished)="onSnapAnimationFinished()"
-                        #videos_container>
+                        #videos_container id="videos_container">
                         <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video>
                         <!-- <video drag-scroll-item *ngFor="let image of imagelist" poster="{{'https://ngx-drag-scroll.fanjin.io/assets/img/' + image}}" class="dummyVideoPlaceHolders"></video> -->
-                    </drag-scroll>
+                    </div>
                     </div>
                     <div class="row parent">
                         <div id="file-container" style="width: 100%; overflow-y: scroll;"></div>

@@ -9,7 +9,6 @@ import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CountdownComponent } from 'ngx-countdown';
-import { DragScrollComponent } from 'ngx-drag-scroll/lib';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-meeting',
@@ -39,7 +38,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isGuest = false;
     currentTab = 'chat';
     notify: string;
-    @ViewChild('videos_container', { read: DragScrollComponent }) ds: DragScrollComponent;
     config: any = { leftTime: 10, notify: [300] };
     counter: CountdownComponent;
     @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
@@ -48,19 +46,19 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.counter.pause();
         }
     }
-    imagelist = [
-        'luke.png',
-        'chubaka.png',
-        'boba.png',
-        'c3po.png',
-        'leia.png',
-        'obi.png',
-        'r2d2.png',
-        'storm.png',
-        'varder.png',
-        'yoda.png',
-        'yolo.png'
-    ];
+    // imagelist = [
+    //     'luke.png',
+    //     'chubaka.png',
+    //     'boba.png',
+    //     'c3po.png',
+    //     'leia.png',
+    //     'obi.png',
+    //     'r2d2.png',
+    //     'storm.png',
+    //     'varder.png',
+    //     'yoda.png',
+    //     'yolo.png'
+    // ];
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
@@ -94,14 +92,12 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.meetingDetails = {};
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
-            if (this.meetingCode == '') {
-                this.alertService.error('MeetingCode not present', 'Invalid meeting code');
-            }
+
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && this.loggedInUser == undefined) {
                 this.loggedInUser = data;
-                if (this.meetingCode !== '') {
+                if (this.meetingCode !== '' && this.meetingCode !== undefined) {
                     const payload = { userCode: '', meetingCode: this.meetingCode };
                     if (!data.isGuest) {
                         payload.userCode = this.loggedInUser.userCode;
@@ -137,6 +133,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             this.document.getElementById('isHost').innerHTML = 'false';
                         }
                     });
+                } else {
+                    this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.', 'Invalid meeting code');
+                    if (data.isGuest == true) {
+                        this.router.navigate(['/login']);
+                        // window.location.reload();
+                    } else {
+                        this.router.navigate(['/dashboard']);
+                        // window.location.reload();
+                    }
                 }
             }
         });
@@ -258,22 +263,23 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     onFinished() {
         this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
         this.document.getElementById('btn-end-meeting').click();
+        this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
+        setTimeout(()=>{ 
+            this.router.navigate(['/login']);
+            window.location.reload();
+       }, 180000);
+        
     }
     onNotify(time: number) {
-        this.alertService.warning('Meeting will end in 5 mins.', 'Meeting about to end!');
+        this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
     }
     moveLeft() {
         // debugger;
         // this.ds.moveLeft();
-        this.ds.moveTo(this.index - 1);
+        // this.ds.moveTo(this.index - 1);
     }
 
     moveRight() {
-        // debugger;
-        // this.ds.moveRight();
-        if (this.ds._children.length > (this.index + 2)) {
-            this.ds.moveTo(this.index + 2);
-        }
     }
     leftBoundStat(reachesLeftBound: boolean) {
         this.leftNavDisabled = reachesLeftBound;
