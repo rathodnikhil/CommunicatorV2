@@ -218,10 +218,13 @@ div.scrollmenu a:hover {
 }
 
 .demo-one {
-    height: calc(100vh*0.30);
+    // height: calc(100vh*0.30);
     background-color: #FFFFFF;
     margin-left: 30px;
     margin-right: 30px;
+    display: flex;
+    overflow-x: auto;
+    min-height:calc(100vh*0.30);
 }
 
 .demo-one video {

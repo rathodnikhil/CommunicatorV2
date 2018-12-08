@@ -97,6 +97,7 @@ export class HeaderComponent implements OnInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.router.navigate(['/login']);
+                window.location.reload();
             }
         });
 

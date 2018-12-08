@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 import { MyCalendarRoutingModule } from './my-calendar-routing.module';
 import { FullCalendarModule } from 'ng-fullcalendar';
+import { DashboardModule } from '../dashboard/dashboard.module';
 @NgModule({
   imports: [
-    CommonModule, MyCalendarRoutingModule, FullCalendarModule
+    CommonModule, MyCalendarRoutingModule, FullCalendarModule, DashboardModule
   ],
   declarations: [MyCalendarComponent]
 })

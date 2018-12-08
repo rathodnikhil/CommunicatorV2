@@ -155,7 +155,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     if (toDate >= meetingDate && fromDate <= meetingDate) {
                         this.filteredFutureMeetingList.push(meeting);
                     }
-                });
+                });                
                 break;
             default:
                 this.selectedCriteria = 'All';
@@ -167,18 +167,20 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
             this.meetNowModal.close();
-            if (meeting.callType === 'Video') {
-                this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            } else {
-                this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-            }
+            this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
+            // if (meeting.callType === 'Video') {
+            //     this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
+            // } else {
+            //     this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
+            // }
         } else {
+            this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
             //   if (meeting.meetingStartDateTime <= Date.now()) {
-            if (meeting.callType === 'Video') {
-                this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            } else {
-                this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-            }
+            // if (meeting.callType === 'Video') {
+            //     this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
+            // } else {
+            //     this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
+            // }
         }
     }
     deleteMeetingNow(meeting) {

@@ -45,11 +45,11 @@
                 <!-- /.card-body -->
             </div>
         </div>
-        <div class="col-lg-5" style="padding:0px">
+        <div  style="padding:0px" [ngClass]="!isAdministrator?'col-lg-5':'col-lg-9'">
             <router-outlet></router-outlet>
         </div>
 
-        <div class="col-lg-4" style="padding:1rem;height: 100vh">
+        <div class="col-lg-4" style="padding:1rem;height: 100vh" *ngIf="!isAdministrator">
             <div [ngSwitch]="currentRoute">
                 <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
                 <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
