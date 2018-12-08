@@ -184,7 +184,7 @@ export class ScheduleMeetingComponent implements OnInit {
                 'recurringType': this.meeting.isRecurring,
                 'callType': this.meeting.callType,
                 'timeZone': this.meeting.selectedTimeZone,
-                'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
+                'timeType': this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM',
                 'meetingId': this.accessCode,
                 'createdBy': this.loggedInUser
             };

@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { MeetingService } from '../../../services/meeting-service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
+import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-my-calendar',
     templateUrl: './my-calendar.component.html',
@@ -14,7 +15,17 @@ import { AlertService } from '../../../services/alert.service';
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
     allMeetingByLoggedInUserList = [];
-
+    meetingList = [];
+    meetingDetails = {
+        meetingCode : '',
+        subject : '',
+        meetingStartDateTime : '',
+        duration: '',
+        createdBy: {
+            firstName :'',
+            lastName : ''
+        }
+    };
     calendarOptions: Options;
     displayEvent: any;
     dateObj = new Date();
@@ -26,63 +37,22 @@ export class MyCalendarComponent implements OnInit {
             title: 'All Day Event',
             start: this.yearMonth + '-01'
         }
-        // ,
-        // {
-        //     title: 'Long Event',
-        //     start: this.yearMonth + '-07',
-        //     end: this.yearMonth + '-10'
-        // },
-        // {
-        //     id: 999,
-        //     title: 'Repeating Event',
-        //     start: this.yearMonth + '-09T16:00:00'
-        // },
-        // {
-        //     id: 999,
-        //     title: 'Repeating Event',
-        //     start: this.yearMonth + '-16T16:00:00'
-        // },
-        // {
-        //     title: 'Conference',
-        //     start: this.yearMonth + '-11',
-        //     end: this.yearMonth + '-13'
-        // },
-        // {
-        //     title: 'Meeting',
-        //     start: this.yearMonth + '-12T10:30:00',
-        //     end: this.yearMonth + '-12T12:30:00'
-        // },
-        // {
-        //     title: 'Lunch',
-        //     start: this.yearMonth + '-12T12:00:00'
-        // },
-        // {
-        //     title: 'Meeting',
-        //     start: this.yearMonth + '-12T14:30:00'
-        // },
-        // {
-        //     title: 'Happy Hour',
-        //     start: this.yearMonth + '-12T17:30:00'
-        // },
-        // {
-        //     title: 'Dinner',
-        //     start: this.yearMonth + '-12T20:00:00'
-        // },
-        // {
-        //     title: 'Birthday Party',
-        //     start: this.yearMonth + '-13T07:00:00'
-        // },
-        // {
-        //     title: 'Click for Google',
-        //     url: 'http://google.com/',
-        //     start: this.yearMonth + '-28'
-        // }
     ];
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+    @ViewChild('meetingDetailsModal') public meetingDetailsModal: CustomModalComponent;
+    meetingModalDetails: CustomModalModel = {
+        titleIcon: '<i class="fas fa-sign-out-alt"></i>',
+        title: 'Exit Meeting',
+        smallHeading: 'You can exit meeting here',
+        body: '',
+        Button1Content: '',
+        Button2Content: ''
+    };
     _meetingService: MeetingService;
     _userService: UserService;
     loggedInUser: any;
-    constructor(meetingService: MeetingService, userService: UserService, private router: Router,public alertService: AlertService) {
+
+    constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -94,22 +64,22 @@ export class MyCalendarComponent implements OnInit {
         });
 
         const payload = { userCode: this.loggedInUserObj.userCode };
-        this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {            
-            if(data[0].errorFl || data[0].warningFl){
-                return this.alertService.warning(data[0].message, "Warning"); 
-            } else{
+        this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
+            if (data[0].errorFl || data[0].warningFl) {
+                return this.alertService.warning(data[0].message, "Warning");
+            } else {
                 data.forEach(element => {
                     let endTime = new Date(new Date(element.meetingStartDateTime).getTime() + parseInt(element.duration.split(' Min')[0]) * 60000);
                     var meeting = {
                         title: element.subject + '(' + element.meetingCode + ')',
-                        url: '/meeting?meetingCode=' + element.meetingCode,
+                        // url: '#/meeting?meetingCode=' + element.meetingCode,
                         start: new Date(element.meetingStartDateTime),
                         end: endTime
                     };
                     this.ucCalendar.fullCalendar('renderEvent', meeting, true);
                     // this.calendarOptions.events.render()
                 });
-
+                this.meetingList = data;
             }
         });
 
@@ -140,7 +110,10 @@ export class MyCalendarComponent implements OnInit {
             },
             duration: {}
         };
+        const id = model.event.title.split('(')[1].split(')')[0];
+        this.meetingDetails = this.meetingList.find(x => x.meetingCode == id);
         this.displayEvent = model;
+        this.meetingDetailsModal.open();
     }
     updateEvent(model: any) {
         model = {
@@ -156,5 +129,8 @@ export class MyCalendarComponent implements OnInit {
             }
         };
         this.displayEvent = model;
+    }
+    exit() {
+        this.meetingDetailsModal.close();
     }
 }

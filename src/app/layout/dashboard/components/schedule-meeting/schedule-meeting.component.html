@@ -127,7 +127,7 @@
                                 <span>{{this.subject}}</span>
                                 <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}
                                     at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
-                                    {{this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}
+                                    {{this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}
                                     ) for
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>

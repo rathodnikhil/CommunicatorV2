@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     groupList = [];
     groupArray = [];
     array = [];
+    isAdministrator=false;
     i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
@@ -108,7 +109,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this._userService.setUserList(payload);
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
-                
+                // debugger;
+                this.isAdministrator =  this.loggedInUserObj.roles.find(x=>x.role=="ADMINISTRATOR")!==undefined;
                 // this._meetingService.setRecentMeetingByUser(payload);
                 this._userService.getSelectedUser().subscribe(res => {
                     if (res) {

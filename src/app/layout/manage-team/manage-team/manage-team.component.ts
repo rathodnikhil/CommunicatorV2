@@ -145,7 +145,6 @@ export class ManageTeamComponent implements OnInit {
         this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
             if(data[0].errorFl || data[0].warningFl){
                 this.userPermissionList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
             } else{
                this.userPermissionList = data;
             }

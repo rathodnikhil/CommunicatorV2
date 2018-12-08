@@ -51,5 +51,5 @@ export class CustomModalModel {
     smallHeading: string;
     body: string;
     Button1Content: string;
-    Button2Content: string;
+    Button2Content: string;    
 }
