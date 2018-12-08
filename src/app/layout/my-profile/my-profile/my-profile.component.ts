@@ -60,13 +60,13 @@ export class MyProfileComponent implements OnInit {
             if (!EMAIL_REGEXP.test(this.loggedInUserObj.email)) {
               return this.alertService.warning("Please enter valid email","Warning");
             }
-        
         const payload = {
             firstName: this.loggedInUserObj.firstName,
             lastName: this.loggedInUserObj.lastName,
             email: this.loggedInUserObj.email,
             userCode: this.loggedInUserObj.userCode,
-            profileImgpath: this.loggedInUserObj.profileImgPath
+           // name: this.loggedInUserObj.name,
+           status: {statusId : 1}
         }
         this._userService.updateUserDetails(payload).subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){

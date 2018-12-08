@@ -8,7 +8,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
   selector: 'app-manage-admin',
   templateUrl: './manage-admin.component.html',
   styleUrls: ['./manage-admin.component.scss'],
-  providers: [AlertService]
+  providers: [AlertService,TeamService]
 })
 export class ManageAdminComponent implements OnInit {
 _userService: UserService;
@@ -34,7 +34,6 @@ public labels: any = {
 
 updatedLastName: any;
 updatedFirstName: any;
-updatedUserName: any;
 updatedEmail: any;
 allAdminList = [];
 selectedAdmin : any;
@@ -92,6 +91,7 @@ deleteAdmin(selectedAdmin){
     if(selectedAdmin.status.status === "ACTIVE"){
         this.deleteMemberModal.open();
         this.selectedAdmin = selectedAdmin;  
+        this.allAdminList.splice(this.allAdminList.indexOf(selectedAdmin), 1);
     }else{
         return this.alertService.warning("Admin "+selectedAdmin.firstName +" " + selectedAdmin.lastName +"  has already inactive", 'Inactive Admin');
     }
@@ -104,6 +104,9 @@ deleteAdminNow(){
         return this.alertService.warning(data.message, 'Warning');
     } else {
         this.deleteMemberModal.close();
+         let memObj = { firstName:  this.selectedAdmin.firstName, lastName:  this.selectedAdmin.lastName ,email:  this.selectedAdmin.email,
+                     name: this.selectedAdmin.name, userCode: this.selectedAdmin.userCode ,status:  {status: 'INACTIVE'}, team:  {teamName: this.selectedAdmin.team.teamName}}
+        this.allAdminList.push(memObj);
         return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Admin');
     }
 });
@@ -115,9 +118,9 @@ editAdmin(user){
         this.updatedUserStaus =false;
     }
     this.editMemberModal.open();
+    this.allAdminList.splice(this.allAdminList.indexOf(user), 1);
     this.updatedFirstName = user.firstName;
     this.updatedLastName = user.lastName;
-    this.updatedUserName = user.name;
     this.updatedEmail = user.email;
     this.updatedTeamName = user.team.teamName;
     this.updatedUserCode = user.userCode;
@@ -126,15 +129,15 @@ editAdmin(user){
 updateMember(){
     let duplicateUserNameFlag ;
     let exceptionFlag;
+    let currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
     const payload = {
         firstName : this.updatedFirstName,
         lastName: this.updatedLastName,
-        name: this.updatedUserName,
         email: this.updatedEmail,
-        team: this.updatedTeamName,
+        status: {status: currentDisplayStatus},
         userCode: this.updatedUserCode
     };
-    this._userService.saveUserDetails(payload,this.newTeamName).subscribe(data => {
+    this._userService.updateUserDetails(payload).subscribe(data => {
         duplicateUserNameFlag = data.json().warningFl;
         exceptionFlag = data.json().errorFl;
         if(duplicateUserNameFlag == true) {
@@ -144,13 +147,28 @@ updateMember(){
           this.emailField.nativeElement.focus();
           return this.alertService.warning(data.json().message,"Warning");
         }else{
-         // this.clearAllField();
-          this.teamArray.push(data);
+          this.teamArray.push(data.team);
+          this.allAdminList.push(data);
+          this.editMemberModal.close();
           return this.alertService.success("Admin has updated successfully","Success");
 
         }
     });
 }
+private getStatusByUser(updatedStaus) {
+    let currentStatus;
+    let currentDisplayStatus;
+    if (updatedStaus == true) {
+        currentStatus = 1;
+        currentDisplayStatus = "ACTIVE";
+    }
+    else {
+        currentStatus = 2;
+        currentDisplayStatus = "INACTIVE";
+    }
+    return currentDisplayStatus;
+}
+
   //close team modal popup
   closePopup(popupType) {
     switch (popupType) {
