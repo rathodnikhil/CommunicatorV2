@@ -324,7 +324,7 @@ connection.onstream = function (event) {
             userid: event.userid
         }).forEach(function (streamEvent) {
             var mediaElement = document.getElementById(event.streamid + 'parent');
-            if (mediaElement) {
+            if (mediaElement && !event.stream.isScreen) {
                 streamEvent.stream.stop();
                 mediaElement.parentNode.removeChild(mediaElement);
             }
@@ -341,7 +341,7 @@ connection.onstream = function (event) {
     customDiv.style.padding = '5';
     customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) - 10 + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:' +(Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
@@ -507,4 +507,19 @@ if (roomid && roomid.length) {
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
+}
+
+window.onhashchange= function(){
+    connection.leave();
+    connection.attachStreams.forEach(function (stream) {
+        stream.stop();
+    });
+    //remove parent
+    connection.streamEvents.selectAll().forEach(function (streamEvent) {
+        var mediaElement = document.getElementById(event.streamid + 'parent');
+        if (mediaElement) {
+            streamEvent.stream.stop();
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    });
 }

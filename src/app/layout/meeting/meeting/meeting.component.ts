@@ -15,39 +15,7 @@ import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/com
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
     styleUrls: ['./meeting.component.scss'],
-    providers: [AlertService],
-    animations: [
-        trigger('MomBody', [
-            state('inactive', style({
-                display: 'block'
-            })),
-            state('active', style({
-                display: 'none'
-            })),
-            transition('inactive => active', animate('200ms ease-in')),
-            transition('active => inactive', animate('200ms ease-in'))
-        ]),
-        trigger('MomHeader', [
-            state('inactive', style({
-                top: '100%'
-            })),
-            state('active', style({
-                top: '65%'
-            })),
-            transition('inactive => active', animate('0.2ms ease-in')),
-            transition('active => inactive', animate('450ms ease-in'))
-        ]),
-        trigger('arrow', [
-            state('up', style({
-                transform: 'rotate(180deg)'
-            })),
-            state('down', style({
-                transform: 'rotate(0deg)'
-            })),
-            transition('up => down', animate('0.2ms ease-in')),
-            transition('down => up', animate('450ms ease-in'))
-        ]),
-    ],
+    providers: [AlertService]   
 })
 export class MeetingComponent implements OnInit, AfterViewInit {
     _userService: UserService;
@@ -177,6 +145,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingTest.js';
+        s.id="meetingTest";
         const __this = this; // to store the current instance to call
         // afterScriptAdded function on onload event of
         // script.

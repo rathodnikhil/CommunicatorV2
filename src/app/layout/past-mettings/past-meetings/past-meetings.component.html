@@ -5,24 +5,27 @@
 </div>
 
 <div class="main">
-        <div class="row">
-                <div class="col-md-9"><h4 class="btn btn-sec remove-border" style="cursor: default;">Past Meetings Details</h4></div>       
-                   <div class="align-center" class="col-md-3">
-                       <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
-                       <a style="padding-right:10px; cursor: default;">Date</a>
-                       <a class="date-period-select" style="cursor: default;">Meeting Id</a>
-                       <a class="date-period-select" style="cursor: default;">Status</a>
-                       </div>
-                       <div class="form-group input-group"style="padding-top:5px;">
-                         <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
-                         <div class="input-group-append">
-                             <button class="btn btn-secondary" type="button">
-                                 <i class="fa fa-search"></i>
-                             </button>
-                         </div>
-                     </div>
-                   </div>
-               </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h4 class="btn btn-sec remove-border" style="cursor: default;">Past Meetings Details</h4>
+        </div>
+        <div class="align-center" class="col-md-3">
+            <div class="btn btn-sec remove-border" style="cursor: default;">
+                <span class="span-dec">Filter By:&nbsp;</span>
+                <a style="padding-right:10px; cursor: default;">Date</a>
+                <a class="date-period-select" style="cursor: default;">Meeting Id</a>
+                <a class="date-period-select" style="cursor: default;">Status</a>
+            </div>
+            <div class="form-group input-group" style="padding-top:5px;">
+                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <table>
         <tr>
             <th>Sr. No</th>
@@ -34,11 +37,13 @@
             <th>MOM</th>
         </tr>
         <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
-            <td>{{srNo+1}}</td>
+            <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
             <td>{{meeting.meetingDate}}</td>
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
-            <td><i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)"></i></td>
+            <td>
+                <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)"></i>
+            </td>
             <td>{{meeting.status.status}}</td>
             <td>
                 <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i>
@@ -46,21 +51,20 @@
         </tr>
     </table>
     <app-custom-modal #viewAttendeeModal [model]="attendee">
-            <div class="modal-body row-label">
-                <h3>Attendee List</h3>
-                <input *ngFor="let attendee of attendeeListByMeeting "
-                value="{{attendee}}" />
-            </div>
-            <div class="modal-footer popFooter">
-                     <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
-                    <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button> 
-                </div>
-        </app-custom-modal>
+        <div class="modal-body row-label">
+            <h3>Attendee List</h3>
+            <input *ngFor="let attendee of attendeeListByMeeting " value="{{attendee}}" />
+        </div>
+        <div class="modal-footer popFooter">
+            <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
+            <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button>
+        </div>
+    </app-custom-modal>
     <div class="pageControl">
         <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
             [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
             [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
             (pageChange)="onPageChange($event)"></pagination-controls>
     </div>
-    
+
 </div>
