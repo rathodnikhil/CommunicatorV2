@@ -15,7 +15,7 @@ import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/com
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
     styleUrls: ['./meeting.component.scss'],
-    providers: [AlertService]   
+    providers: [AlertService]
 })
 export class MeetingComponent implements OnInit, AfterViewInit {
     _userService: UserService;
@@ -94,9 +94,12 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.meetingDetails = {};
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
+            if (this.meetingCode == '') {
+                this.alertService.error('MeetingCode not present', 'Invalid meeting code');
+            }
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.firstName !== undefined) {
+            if (data.firstName !== undefined && this.loggedInUser == undefined) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '') {
                     const payload = { userCode: '', meetingCode: this.meetingCode };
@@ -135,8 +138,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         }
                     });
                 }
-            } else if (data.firstName !== undefined && data.isGuest) {
-                this.isGuest = true;
             }
         });
     }
@@ -145,7 +146,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingTest.js';
-        s.id="meetingTest";
+        s.id = "meetingTest";
         const __this = this; // to store the current instance to call
         // afterScriptAdded function on onload event of
         // script.
@@ -174,7 +175,14 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
-                this.downloadFile(this.momTxt, this.meetingDetails);
+                if (this.isGuest) {
+                    this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendee');
+                } else {
+                    let payload = { meetingCode: this.meetingDetails.meetingCode };
+                    this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+                        this.downloadFile(this.momTxt, this.meetingDetails, resp);
+                    });
+                }
             } else {
                 const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
                 this._meetingService.saveMomDetails(payload).subscribe(resp => {
@@ -182,40 +190,34 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     if (this.errorFl === true) {
                         return this.alertService.warning(resp.message, 'Warning');
                     } else {
-                        this.downloadFile(this.momTxt, this.meetingDetails);
+                        let payload = { meetingCode: this.meetingDetails.meetingCode };
+                        let attendeeList;
+                        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+                            attendeeList = resp;
+                            this.downloadFile(this.momTxt, this.meetingDetails, attendeeList);
+                        });
                     }
                 });
             }
         }
     }
-    downloadFile(data, meetingDetails) {
-        let payload = { meetingCode: meetingDetails.meetingCode };
-        let attendeeList;
-        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
-            if (resp.errorFl) {
-                this.alertService.warning(resp.message, 'Warning');
-            } else {
-                attendeeList = resp;
-                const today = new Date();
-                const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
-                data = data.split('\n');
-                data = data.join('\r\n ');
-                const fileType = 'text/json';
-                const a = document.createElement('a');
-                document.body.appendChild(a);
-                a.setAttribute('style', 'display: none');
-                a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
-                // a.href = url;
-                a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
-                a.click();
-                // window.URL.revokeObjectURL(url);
-                a.remove(); // remove the element
-                this.saveMomBtn.nativeElement.blur();
-                return this.alertService.success('File has been downloaded.', 'MOM Download');
-            }
-        });
-
-
+    downloadFile(data, meetingDetails, attendeeList) {
+        const today = new Date();
+        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
+        data = data.split('\n');
+        data = data.join('\r\n ');
+        const fileType = 'text/json';
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
+        // a.href = url;
+        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+        a.click();
+        // window.URL.revokeObjectURL(url);
+        a.remove(); // remove the element
+        this.saveMomBtn.nativeElement.blur();
+        return this.alertService.success('File has been downloaded.', 'MOM Download');
     }
 
 
@@ -229,13 +231,17 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.exit();
         if (this.isGuest == true) {
             this.router.navigate(['/login']);
+            window.location.reload();
         } else {
             this.router.navigate(['/dashboard']);
+            window.location.reload();
         }
     }
     exit() {
         this.exitMeetingConfirmModal.close();
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+        let payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+        if (this.isGuest)
+            payload.userCode = this.loggedInUser.firstName;
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');

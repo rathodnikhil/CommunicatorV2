@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MeetingService } from '../../../services/meeting-service';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
@@ -8,7 +8,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
     styleUrls: ['./past-meetings.component.scss'],
-    providers : [AlertService]
+    providers: [AlertService]
 })
 export class PastMeetingsComponent implements OnInit {
     _meetingService: MeetingService;
@@ -30,13 +30,13 @@ export class PastMeetingsComponent implements OnInit {
         screenReaderPageLabel: 'page',
         screenReaderCurrentLabel: `You're on page`
     };
-    
+
     fileName: String;
     loggedInUser: any;
     pastMeetingList = [];
     searchText: string;
     attendeeListByMeeting = [];
-    constructor(meetingService: MeetingService, userService: UserService , public alertService: AlertService) {
+    constructor(meetingService: MeetingService, userService: UserService, public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -52,9 +52,9 @@ export class PastMeetingsComponent implements OnInit {
     ngOnInit() {
         //loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if(data.errorFl === true || data.warningFl === true){
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, "Warning");
+            } else {
                 this.loggedInUser = data;
                 this.getPastMeetingsByuser();
             }
@@ -64,59 +64,66 @@ export class PastMeetingsComponent implements OnInit {
     getPastMeetingsByuser() {
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
-        if(data[0].errorFl || data[0].warningFl){
-             this.pastMeetingList = [];
-             return this.alertService.warning(data[0].message, "Warning"); 
-         } else{
-            this.pastMeetingList = data;
-         }
+            if (data[0].errorFl || data[0].warningFl) {
+                this.pastMeetingList = [];
+                return this.alertService.warning(data[0].message, "Warning");
+            } else {
+                this.pastMeetingList = data;
+            }
         });
     }
-   
+
     downloadMom(data) {
         if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
             return this.alertService.warning('No MOM for this meeting has been added', "Warning");
-        }  else{
-                  let attendeeList = this.getAttendeeList(data);
-                 data.mom.momDescription = data.mom.momDescription.split('\n');
-                 data.mom.momDescription = data.mom.momDescription.join('\r\n ');
-                   const momHeader = 'Date of Meeting: '+data.meetingDate +'\r\n\r\n'+'Subject: '+data.subject+'\r\n\r\n' +'Attendees : '+attendeeList+'\r\n\r\n';
-                 const fileType = 'text/json';
-         
-                 var a = document.createElement('a');
-                 document.body.appendChild(a);
-                 a.setAttribute('style', 'display: none');
-                 a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data.mom.momDescription)}`);
-                 // a.href = url;
-                 a.download = 'MOM_'+ data.meetingDate+'('+new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
-                 a.click();
-                 // window.URL.revokeObjectURL(url);
-                 a.remove(); // remove the element
-                 this.alertService.success("File has been downloaded.", "MOM Download");
-    }
-    
+        } else {
+            let payload = { meetingCode: data.meetingCode };
+            this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+                if (resp.errorFl) {
+                    this.alertService.warning(resp.message, 'Warning');
+                } else {
+                    this.attendeeListByMeeting = resp;
+                }
+            });
+            //   let attendeeList = this.getAttendeeList(data);
+            data.mom.momDescription = data.mom.momDescription.split('\n');
+            data.mom.momDescription = data.mom.momDescription.join('\r\n ');
+            const momHeader = 'Date of Meeting: ' + data.meetingDate + '\r\n\r\n' + 'Subject: ' + data.subject + '\r\n\r\n' + 'Attendees : ' + this.attendeeListByMeeting + '\r\n\r\n';
+            const fileType = 'text/json';
+
+            var a = document.createElement('a');
+            document.body.appendChild(a);
+            a.setAttribute('style', 'display: none');
+            a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data.mom.momDescription)}`);
+            // a.href = url;
+            a.download = 'MOM_' + data.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+            a.click();
+            // window.URL.revokeObjectURL(url);
+            a.remove(); // remove the element
+            this.alertService.success("File has been downloaded.", "MOM Download");
+        }
+
     }
     onPageChange(number: number) {
         this.config.currentPage = number;
     }
-    replaceLineBreak(s:string) {
-        return s && s.replace('meetNowFlag','');
-      }
-      viewAttendee(meeting){
-          this.viewAttendeeModal.open();
-        this.attendeeListByMeeting = this.getAttendeeList(meeting);
-        alert(this.attendeeListByMeeting.length);
-      }
-      getAttendeeList(meeting) :any[]{
-        let attendeeList ;
-        let payload = {meetingCode: meeting.meetingCode};
+    replaceLineBreak(s: string) {
+        return s && s.replace('meetNowFlag', '');
+    }
+    viewAttendee(meeting) {
+        let payload = { meetingCode: meeting.meetingCode };
         this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
-                 attendeeList = resp;
+                this.attendeeListByMeeting = resp;
+                this.viewAttendeeModal.open();
             }
-    });
-    return attendeeList;
-}
+        });
+
+    }
+
+    closePopup() {
+        this.viewAttendeeModal.close();
+    }
 }

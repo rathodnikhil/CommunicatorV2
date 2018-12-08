@@ -17,7 +17,14 @@ export class MyCalendarComponent implements OnInit {
     allMeetingByLoggedInUserList = [];
     meetingList = [];
     meetingDetails = {
-        createdBy: {}
+        meetingCode : '',
+        subject : '',
+        meetingStartDateTime : '',
+        duration: '',
+        createdBy: {
+            firstName :'',
+            lastName : ''
+        }
     };
     calendarOptions: Options;
     displayEvent: any;

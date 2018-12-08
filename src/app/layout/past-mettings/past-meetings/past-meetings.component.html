@@ -53,11 +53,15 @@
     <app-custom-modal #viewAttendeeModal [model]="attendee">
         <div class="modal-body row-label">
             <h3>Attendee List</h3>
-            <input *ngFor="let attendee of attendeeListByMeeting " value="{{attendee}}" />
+            <div class="col-md-12">
+                <div class="row" *ngFor="let attendee of attendeeListByMeeting; let i = index">
+                    {{i+1}}. {{attendee}}
+                </div>
+            </div>
         </div>
         <div class="modal-footer popFooter">
-            <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
-            <button type="button" class="btn btn-cancel" (click)="closePopup('addNewTeam')">Close</button>
+            <!-- <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>-->
+            <button type="button" class="btn btn-cancel" (click)="closePopup()">Close</button>
         </div>
     </app-custom-modal>
     <div class="pageControl">

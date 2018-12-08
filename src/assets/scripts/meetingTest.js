@@ -75,8 +75,8 @@ document.getElementById('btn-end-meeting').onclick = function () {
 function onDetectRTCLoaded() {
     // debugger;
     var videoValue = DetectRTC.hasWebcam;
-    if(!videoValue){
-        alertService.warning('Switching to audio mode.','Web Cam not detected');
+    if (!videoValue) {
+        alertService.warning('Switching to audio mode.', 'Web Cam not detected');
     }
     connection.session = {
         audio: true,
@@ -94,21 +94,21 @@ function onDetectRTCLoaded() {
     };
 }
 function reloadDetectRTC(callback) {
-    DetectRTC.load(function() {
+    DetectRTC.load(function () {
         onDetectRTCLoaded();
 
-        if(callback && typeof callback == 'function') {
+        if (callback && typeof callback == 'function') {
             callback();
         }
     });
 }
 
-DetectRTC.load(function() {
+DetectRTC.load(function () {
     reloadDetectRTC();
 
     try {
-        if(DetectRTC.MediaDevices[0] && DetectRTC.MediaDevices[0].isCustomLabel) {
-            navigator.mediaDevices.getUserMedia({audio: true, video: true}).then(function(stream) {
+        if (DetectRTC.MediaDevices[0] && DetectRTC.MediaDevices[0].isCustomLabel) {
+            navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function (stream) {
                 var video;
                 try {
                     video = document.createElement('video');
@@ -119,15 +119,15 @@ DetectRTC.load(function() {
                     video.style.opacity = 0;
                     (document.body || document.documentElement).appendChild(vide);
                 }
-                catch(e) {}
+                catch (e) { }
 
-                reloadDetectRTC(function() {
+                reloadDetectRTC(function () {
                     // release camera
-                    stream.getTracks().forEach(function(track) {
+                    stream.getTracks().forEach(function (track) {
                         track.stop();
                     });
 
-                    if(video && video.parentNode) {
+                    if (video && video.parentNode) {
                         video.parentNode.removeChild(video);
                     }
                 });
@@ -135,13 +135,16 @@ DetectRTC.load(function() {
             return;
         }
     }
-    catch(e) {}
+    catch (e) { }
 
     onDetectRTCLoaded();
 });
 
 document.getElementById('disable-video').onclick = function () {
-
+    this.disabled = true;
+    setTimeout(function () {
+        document.getElementById('disable-video').disabled = false;
+    }, 6000);
     var videoValue = this.value == "true";
     connection.streamEvents.selectFirst({
         local: true
@@ -341,7 +344,7 @@ connection.onstream = function (event) {
     customDiv.style.padding = '5';
     customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:' +(Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
     customDiv.appendChild(heading);
     customDiv.appendChild(video);
@@ -509,7 +512,7 @@ if (roomid && roomid.length) {
     })();
 }
 
-window.onhashchange= function(){
+window.onhashchange = function () {
     connection.leave();
     connection.attachStreams.forEach(function (stream) {
         stream.stop();
