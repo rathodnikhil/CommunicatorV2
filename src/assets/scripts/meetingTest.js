@@ -73,10 +73,11 @@ document.getElementById('btn-end-meeting').onclick = function () {
     });
 }
 function onDetectRTCLoaded() {
-    // debugger;
     var videoValue = DetectRTC.hasWebcam;
     if (!videoValue) {
         alertService.warning('Switching to audio mode.', 'Web Cam not detected');
+        document.getElementById('disable-video').style.visibility = 'hidden';
+        //document.getElementById('disable-video').style.display = 'none';
     }
     connection.session = {
         audio: true,

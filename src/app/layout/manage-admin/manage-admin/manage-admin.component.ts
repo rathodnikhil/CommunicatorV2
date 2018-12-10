@@ -42,6 +42,7 @@ updatedUserStaus: boolean;
 updatedTeamName: any;
 teamArray= [];
 newTeamName: any;
+selectedDefaultTeam: any;
   constructor(userService: UserService,public alertService: AlertService , teamService: TeamService) { 
     this._userService = userService;
     this._teamService = teamService;
@@ -122,24 +123,28 @@ editAdmin(user){
     this.updatedFirstName = user.firstName;
     this.updatedLastName = user.lastName;
     this.updatedEmail = user.email;
-    this.updatedTeamName = user.team.teamName;
+    this.updatedTeamName = user.team;
     this.updatedUserCode = user.userCode;
+    this.selectedDefaultTeam = user.team.teamName;
    
 }
 updateMember(){
     let duplicateUserNameFlag ;
     let exceptionFlag;
+    alert(this.updatedTeamName.teamName);
     let currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
     const payload = {
         firstName : this.updatedFirstName,
         lastName: this.updatedLastName,
         email: this.updatedEmail,
         status: {status: currentDisplayStatus},
-        userCode: this.updatedUserCode
+        userCode: this.updatedUserCode,
+        team: this.updatedTeamName
+        
     };
     this._userService.updateUserDetails(payload).subscribe(data => {
-        duplicateUserNameFlag = data.json().warningFl;
-        exceptionFlag = data.json().errorFl;
+        duplicateUserNameFlag = data.warningFl;
+        exceptionFlag = data.errorFl;
         if(duplicateUserNameFlag == true) {
           this.usernameField.nativeElement.focus();
           return this.alertService.warning("Username already exist","Warning");

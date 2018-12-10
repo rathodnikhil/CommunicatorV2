@@ -77,46 +77,6 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-3">
-                            <label>Recurring</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.isRecurring">
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" [value]="1"> No
-                                </label>
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" value="2"> Yes
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-3">
-                            <label>Call Type</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.callType">
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" [value]="1"> Audio
-                                </label>
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" value="2"> Video
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="row form-group">
-                        <div class="col-sm-3">
-                            <label>MOM</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="mom-duty">By default mom duty is with you.
-                                <br> you can transfer MOM duty during the call
-                            </p>
-                        </div>
-                    </div> -->
-                    <div class="row form-group">
-                        <div class="col-sm-3">
 
                         </div>
                         <div class="col-sm-9">
@@ -134,11 +94,7 @@
                                 <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
                                     <label>For Video Meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                         <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
-                                        https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span></label>
-                                    <label>For Audio Meeting use this URL :<span style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
-                                                <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
-                                                https://cfscommunicator.com/#/meeting/audio?meetingCode={{accessCode}}</span></label>
-                           
+                                        https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span></label>               
                                 </p>
                                 <h5 style="margin-top: 40px;">Access Code :
                                     <span>{{accessCode}}</span>
