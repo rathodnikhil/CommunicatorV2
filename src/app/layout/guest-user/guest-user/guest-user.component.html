@@ -30,7 +30,7 @@
           <th>Email</th>
       </tr>
        <tr *ngFor="let guest of guestUserList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
-          <td>{{srNo+1}}</td>
+          <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
           <td>{{guest.firstName}}</td>
           <td>{{guest.email}}</td>
       </tr> 

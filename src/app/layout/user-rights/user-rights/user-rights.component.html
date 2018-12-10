@@ -33,7 +33,7 @@
         <th>Schedule Meeting</th>
       </tr>
       <tr *ngFor="let userPermission of userPermissionMemberList| genericSearchAllProp:searchText | paginate: config ; let srNo = index">
-            <td>{{srNo+1}}</td>
+            <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
             <td>{{userPermission.user.firstName}} {{userPermission.user.lastName}}</td>
             <td>{{userPermission.team.teamName}}</td>
             <td>{{userPermission.user.status.status}}</td>

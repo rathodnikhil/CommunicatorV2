@@ -255,7 +255,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // get meeting details
     getMeetingDetails(): string {
         let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+        meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
 
         const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
             '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n'

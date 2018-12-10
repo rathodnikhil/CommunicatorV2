@@ -83,7 +83,7 @@
                     <th>Delete</th>
                 </tr>
                 <tr *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTableText | paginate: config ;let srNo = index">
-                    <td>{{srNo+1}}</td>
+                    <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
                     <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
                     <td>{{userMemPermission.userId.email}}</td>
                     <td>{{userMemPermission.userId.status.status}} </td>

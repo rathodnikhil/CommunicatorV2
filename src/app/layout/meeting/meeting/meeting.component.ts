@@ -296,5 +296,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     onIndexChanged(idx) {
         this.index = idx;
     }
+    
 }
 
