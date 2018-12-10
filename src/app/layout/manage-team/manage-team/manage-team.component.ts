@@ -264,7 +264,8 @@ export class ManageTeamComponent implements OnInit {
  }
     editTeam(){
         this.addUpdateTeamModal.open();
-        this.updateTeamName = this.selectedTeamObj.teamName;
+        this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
+        this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
     }
     updateTeamDetails(){
         if (this.updateTeamName === "" || this.updateTeamName === null || typeof this.updateTeamName === "undefined") {
@@ -280,6 +281,8 @@ export class ManageTeamComponent implements OnInit {
                   this.selectedTeamObj.teamName = this.updateTeamName;
                   this.selectedTeamName = this.updateTeamName;
                    this.closePopup('updateTeam');
+                   this.userPermissionList.push(team
+                );
                    return this.alertService.success("Team has updated successfully ", "Success");   
                     }
                 });

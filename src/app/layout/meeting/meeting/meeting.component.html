@@ -56,7 +56,6 @@
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;" placement="top"
                         ngbTooltip="Video On/Off"
                             (click)='isVideoEnabled=!isVideoEnabled' [value]="isVideoEnabled">
-                            <!-- <img class="custom-image" height="30" [src]="isVideoEnabled?'assets/images/video-call.png':'assets/images/no-video.png'" /> -->
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled" class="fa fa-2x fa-ban"></i>
                         </button>
 
