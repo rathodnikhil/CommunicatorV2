@@ -42,8 +42,8 @@ export class MyCalendarComponent implements OnInit {
     @ViewChild('meetingDetailsModal') public meetingDetailsModal: CustomModalComponent;
     meetingModalDetails: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',
-        title: 'Exit Meeting',
-        smallHeading: 'You can exit meeting here',
+        title: 'View Meeting',
+        smallHeading: 'You can view meeting details here',
         body: '',
         Button1Content: '',
         Button2Content: ''

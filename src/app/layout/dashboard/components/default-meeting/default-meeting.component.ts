@@ -168,19 +168,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         if (isfromPopup) {
             this.meetNowModal.close();
             this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            // if (meeting.callType === 'Video') {
-            //     this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            // } else {
-            //     this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-            // }
         } else {
             this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            //   if (meeting.meetingStartDateTime <= Date.now()) {
-            // if (meeting.callType === 'Video') {
-            //     this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            // } else {
-            //     this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-            // }
         }
     }
     deleteMeetingNow(meeting) {
@@ -266,7 +255,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // get meeting details
     getMeetingDetails(): string {
         let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
+        meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
 
         const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
             '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n'
