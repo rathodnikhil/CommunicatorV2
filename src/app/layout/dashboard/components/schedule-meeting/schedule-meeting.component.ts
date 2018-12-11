@@ -247,8 +247,12 @@ export class ScheduleMeetingComponent implements OnInit {
     //copy meeting content
     copyToClipboard() {
         var meetingDetails = this.subject + '  '+ this.getMeetingDetails();
-        var tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
+        const el = document.createElement('textarea');
+        el.value = meetingDetails;
+        document.body.appendChild(el);
+        el.select();
         document.execCommand('copy');
+        document.body.removeChild(el);
       return this.alertService.success("Meeting Details has been Copied. Kindly share via your preferred Mail Id.", "Copy Meeting Details");
     }
     changeTimeZone(timezone) {

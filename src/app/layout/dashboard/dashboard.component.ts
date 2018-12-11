@@ -193,6 +193,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.router.navigate(['/login']);
+                window.location.reload();
             }
         });
 

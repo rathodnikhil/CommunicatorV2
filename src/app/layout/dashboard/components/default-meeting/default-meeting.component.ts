@@ -213,9 +213,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     // copy meeting content
     copyToClipboard() {
-        const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails();
-        const tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
+         const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails();
+        const el = document.createElement('textarea');
+        el.value = meetingDetails;
+        document.body.appendChild(el);
+        el.select();
         document.execCommand('copy');
+        document.body.removeChild(el);
         return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     joinMeetingNow() {

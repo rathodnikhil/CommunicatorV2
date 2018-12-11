@@ -46,19 +46,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.counter.pause();
         }
     }
-    // imagelist = [
-    //     'luke.png',
-    //     'chubaka.png',
-    //     'boba.png',
-    //     'c3po.png',
-    //     'leia.png',
-    //     'obi.png',
-    //     'r2d2.png',
-    //     'storm.png',
-    //     'varder.png',
-    //     'yoda.png',
-    //     'yolo.png'
-    // ];
+ 
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
@@ -75,6 +63,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._meetingService = meetingService;
     }
     @ViewChild("saveMomBtn") saveMomBtn: ElementRef;
+    @ViewChild("shareFileBtn") shareFileBtn: ElementRef;
+    @ViewChild("muteUnmuteBtn") muteUnmuteBtn: ElementRef;
+    @ViewChild("shareScreenBtn") shareScreenBtn: ElementRef;
+    @ViewChild("viewVideoBtn") viewVideoBtn: ElementRef;
     @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
     leaveMeeting: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',
@@ -296,6 +288,20 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     onIndexChanged(idx) {
         this.index = idx;
     }
-    
+    shareFile(){
+        this.shareFileBtn.nativeElement.blur();
+    }
+    mute(){
+        this.isMute =! this.isMute;
+        this.muteUnmuteBtn.nativeElement.blur();
+    }
+    shareScreen(){
+        this.isScreenSharingStarted =!this.isScreenSharingStarted;
+        this.shareScreenBtn.nativeElement.blur();
+    }
+    viewVideo(){
+        this.isVideoEnabled=! this.isVideoEnabled;
+        this.viewVideoBtn.nativeElement.blur();
+    }
 }
 

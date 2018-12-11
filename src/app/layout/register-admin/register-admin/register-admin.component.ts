@@ -113,7 +113,7 @@ export class RegisterAdminComponent implements OnInit {
             return this.alertService.warning(data.json().message,"Warning");
           }else{
             this.clearAllField();
-            this.teamArray.push(data);
+            this.teamArray.push(data.json().team);
             return this.alertService.success("Admin has registered successfully","Success");
 
           }
