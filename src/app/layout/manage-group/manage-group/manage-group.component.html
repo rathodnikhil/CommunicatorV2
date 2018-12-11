@@ -90,7 +90,7 @@
                     <th>Status</th>
                 </tr>
                 <tr *ngFor="let user of selectedGroupUsers | genericSearchAllProp:searchTextTable | paginate: config ;let srNo = index">
-                    <td>{{srNo+1}}</td>
+                    <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
                     <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.team.teamName}}</td>

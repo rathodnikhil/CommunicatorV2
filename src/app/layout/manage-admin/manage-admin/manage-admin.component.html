@@ -37,7 +37,7 @@
       <th>Delete</th>
     </tr>
      <tr *ngFor="let admin of allAdminList | genericSearchAllProp:searchText |  paginate: config ;let srNo = index">
-          <td>{{srNo+1}}</td>
+          <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
           <td>{{admin.firstName}} {{admin.lastName}}</td>
           <td>{{admin.name}}</td>
           <td>{{admin.email}}</td>
