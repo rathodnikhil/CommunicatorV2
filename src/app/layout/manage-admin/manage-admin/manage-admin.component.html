@@ -54,7 +54,7 @@
     </div>
     <div class="modal-footer popFooter">
         <button type="button" class="btn btn-sec" (click)="deleteAdminNow()">Delete</button>
-        <button type="button" class="btn btn-cancel" (click)="closePopup('deleteAdmin')">Close</button>
+        <button type="button" class="btn btn-cancel" (click)="closeDeletePopup()">Close</button>
     </div>
 </app-custom-modal>
 <app-custom-modal #editMemberModal [model]="editAdminPop">
@@ -88,7 +88,7 @@
                     <label>Team</label>
                 </div>
                 <div>
-                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="updatedTeamName" required #teamField value="{{selectedDefaultTeam}}">
+                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="selectedDefaultTeam" required #teamField >
                     <datalist id="teamObjList">
                         <option *ngFor="let team of teamArray" value="{{team.teamName}}">
                       </datalist>
@@ -106,7 +106,7 @@
   </div>
   <div class="modal-footer popFooter">
       <button type="button" class="btn btn-sec" (click)="updateMember()">Update Admin</button>
-      <button type="button" class="btn btn-cancel" (click)="closePopup('editAdmin')">Close</button>
+      <button type="button" class="btn btn-cancel" (click)="closeEditPopup()">Close</button>
   </div>
 </app-custom-modal>
   <div class="pageControl">

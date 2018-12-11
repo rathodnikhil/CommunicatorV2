@@ -10,22 +10,22 @@
     <hr>
     <div class="align-center text-center">
         <div class="form-group input-group"style="padding-top:5px;">
-                <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+                <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchTeam">
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
+                <button class="btn btn-sec" style="align:align-center" (click)="open()">+Team</button>
             </div>
     </div>
-    <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchText ;let teamCount = index">
+    <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamCount = index">
         <li>
             <label (click)="displayTeamDetails(userPermission)">{{teamCount+1}})&nbsp; {{userPermission.team.teamName}}
             </label>
         </li>
     </ul>
     <div style="text-align:center;">
-        <button class="btn btn-sec" style="align:align-center" (click)="open()">Add New Team</button>
         <app-custom-modal #addNewTeamModal [model]="newTeam">
             <div class="modal-body row-label">
                 <div class="row">
@@ -63,7 +63,7 @@
                                <a class="date-period-select" style="cursor: default;">Status</a>
                                </div>
                                <div class="form-group input-group"style="padding-top:5px;">
-                                 <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+                                 <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchTableText">
                                  <div class="input-group-append">
                                      <button class="btn btn-secondary" type="button">
                                          <i class="fa fa-search"></i>
