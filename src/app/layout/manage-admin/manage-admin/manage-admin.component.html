@@ -88,7 +88,7 @@
                     <label>Team</label>
                 </div>
                 <div>
-                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="selectedDefaultTeam" required #teamField >
+                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="selectedDefaultTeam" required #teamField readonly>
                     <datalist id="teamObjList">
                         <option *ngFor="let team of teamArray" value="{{team.teamName}}">
                       </datalist>

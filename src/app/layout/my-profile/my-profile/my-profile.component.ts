@@ -66,7 +66,8 @@ export class MyProfileComponent implements OnInit {
             email: this.loggedInUserObj.email,
             userCode: this.loggedInUserObj.userCode,
            // name: this.loggedInUserObj.name,
-           status: {status : "ACTIVE"}
+           status: {status : "ACTIVE"},
+           team: this.loggedInUserObj.team
         }
         this._userService.updateUserDetails(payload).subscribe(data => {
             if(data.errorFl === true || data.warningFl === true){

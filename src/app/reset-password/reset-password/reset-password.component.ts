@@ -7,7 +7,7 @@ import { AlertService } from '../../services/alert.service';
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
-  providers: [PasswordService]
+  providers: [PasswordService , AlertService]
 })
 export class ResetPasswordComponent implements OnInit {
   _passwordService: PasswordService;
@@ -30,14 +30,12 @@ export class ResetPasswordComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.token = params['token'];
       if (!this.token)
-        alert("inavlid Url");
-      //'ex-lf-er-oc-1534256481089'
-      // console.log(this.meetingCode);
+    //  this.alertService.warning("Invalid url","Invali Url");
+    alert('Invalid Url');
     });
   }
   resetPassword() {
-   // alert(this.token);
-    const payload = { token: this.token, password: this._passwordService.encrypted(this.password) }
+  
     if ( this.password === null || typeof this.password === 'undefined' ||this.password.trim() === '') {
        // return this.alertService.warning("Enter password","Warning");
     } else if (this.confirmPassword === '' || this.confirmPassword === null || typeof this.confirmPassword === 'undefined') {
@@ -45,6 +43,7 @@ export class ResetPasswordComponent implements OnInit {
     } else if (this.confirmPassword != this.password) {
      // return this.alertService.warning("Password and  confirm password does not match","Warning");
     } else {
+      const payload = { passwordAuthToken: this.token, newPassword: this._passwordService.encrypted(this.password) }
       this._userService.resetpassword(payload).subscribe(res => {
         const data = res.json();
         if (data.warningFl || data.errorFl) {

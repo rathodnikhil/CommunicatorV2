@@ -153,7 +153,7 @@ export class ManageTeamComponent implements OnInit {
         this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
             if(data[0].errorFl || data[0].warningFl){
                 this.userPermissionMemberList = [];
-                return this.alertService.warning(data[0].message, "Warning"); 
+               // return this.alertService.warning(data[0].message, "Warning"); 
             } else{
                this.userPermissionMemberList = data;
             }
@@ -203,7 +203,7 @@ export class ManageTeamComponent implements OnInit {
                     this.userPermissionList.push(team);
                     this.newTeamName = '';
                     this.teamNameField.nativeElement.focus();
-                    this.selectedNewTeamObj = res.team;
+                    this.selectedNewTeamObj = res;
                    return this.alertService.success("Team has saved successfully ", "Success");   
                     }
                 });
@@ -281,8 +281,7 @@ export class ManageTeamComponent implements OnInit {
                   this.selectedTeamObj.teamName = this.updateTeamName;
                   this.selectedTeamName = this.updateTeamName;
                    this.closePopup('updateTeam');
-                   this.userPermissionList.push(team
-                );
+                   this.userPermissionList.push(team );
                    return this.alertService.success("Team has updated successfully ", "Success");   
                     }
                 });
@@ -290,15 +289,16 @@ export class ManageTeamComponent implements OnInit {
     }
     deleteSelectedTeam(){
         this.deleteTeamModal.open();
+        this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
     }
     deleteTeamDetails(){
-        const payload = {"teamCode": this.selectedUserPermissionObj.teamCode};
+        const payload = {"teamCode": this.selectedTeamObj.team.teamCode};
             this._teamService.deleteTeam(payload).subscribe(res => {
                 if(res.errorFl === true || res.warningFl === true){
                     return this.alertService.warning(res.message, "Warning"); 
                 }else{
                this.closePopup('deleteTeam');
-               this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+               this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedTeamObj), 1);
                this.filterMemberList = [];
                this.showSelectedTeam = false;
                return this.alertService.success("Team has deleted successfully ", "Success");   
@@ -307,12 +307,12 @@ export class ManageTeamComponent implements OnInit {
     }
    
     editMember(member){
-        this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
         if(member.userId.status.status === "ACTIVE"){
             this.updatedUserStaus = true;    
         }else{
             this.updatedUserStaus =false;
         }
+        this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
         this.UpdateMemberModal.open();
         this.updatedFirstName = member.userId.firstName;
         this.updatedLastName = member.userId.lastName;
@@ -321,6 +321,7 @@ export class ManageTeamComponent implements OnInit {
         if(this.updatedUserCode === null || typeof this.updatedUserCode === "undefined" || this.updatedUserCode.trim() === "" ){
             this.updatedUserCode = this.newMemberUserCode;
         }
+        this.selectedMember = member;
     }
         updateMemberDetails(){
       let currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
@@ -329,7 +330,8 @@ export class ManageTeamComponent implements OnInit {
                 lastName: this.updatedLastName,
                 email: this.updatedEmail,
                 userCode: this.updatedUserCode,
-                status: {status: currentDisplayStatus}
+                status: {status: currentDisplayStatus},
+                team: this.selectedTeamObj
             };
           this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
@@ -362,6 +364,7 @@ export class ManageTeamComponent implements OnInit {
             if(member.userId.status.status === "ACTIVE"){
                 this.deleteMemberModal.open();
             this.selectedMember = member;
+            this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);  
             }else{
                 return this.alertService.warning("Member "+member.userId.firstName +" " + member.userId.lastName +"  has already inactive", 'Inactive Member');
             }
@@ -378,13 +381,21 @@ export class ManageTeamComponent implements OnInit {
                 } else {
                     this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
                     this.deleteMemberModal.close();
-                    this.memObj = { userId: { firstName:  this.selectedMember.userId.firstName, lastName:  this.selectedMember.userId.lastName ,email:  this.selectedMember.userId.email,
-                        status: {status: 'INACTIVE'}} , team: this.selectedTeamObj}
+                   this.memObj =  this.selectedmemObj(this.selectedMember);
                     this.filterMemberList.push( this.memObj);
                     return this.alertService.success("Member "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Member');
                 }
             });
             }
+
+    private selectedmemObj(obj) {
+       return  {
+        userId: {
+        firstName: obj.userId.firstName, lastName: obj.userId.lastName, email: obj.userId.email,
+            status: { status: 'INACTIVE' }
+        }, team: this.selectedTeamObj
+        };
+    }
 
     onPageChange(number: number) {
         this.config.currentPage = number;
@@ -401,15 +412,24 @@ export class ManageTeamComponent implements OnInit {
             case 'updateTeam':
                 this.addUpdateTeamModal.close();
                 break;
-            case 'deleteTeam':
-                this.deleteTeamModal.close();
-                break;
-            case 'updateMember':
-                this.UpdateMemberModal.close();
-                break;
-            case 'deleteMember':
-                this.deleteMemberModal.close();
-                break;
         }
+    }
+    closeEditPopup(){
+        this.deleteMemberModal.close();
+        let memObj = this.selectedmemObj(this.selectedMember);
+        this.filterMemberList.push(memObj);
+    }
+    closeDeletePopup(){
+        this.deleteMemberModal.close();
+        let memObj = this.selectedmemObj(this.selectedMember);
+        this.filterMemberList.push(memObj);
+    }
+    teamCloseEditPopup(){
+        this.addUpdateTeamModal.close();
+       this.userPermissionList.push(this.selectedUserPermissionObj);
+    }
+    teamCloseDeletePopup(){
+        this.deleteTeamModal.close();
+        this.userPermissionList.push(this.selectedUserPermissionObj);
     }
 }
