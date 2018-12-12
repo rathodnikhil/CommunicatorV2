@@ -94,7 +94,7 @@ deleteAdmin(selectedAdmin){
         this.selectedAdmin = selectedAdmin;  
         this.allAdminList.splice(this.allAdminList.indexOf(selectedAdmin), 1);   
     }else{
-        return this.alertService.warning("Admin "+selectedAdmin.firstName +" " + selectedAdmin.lastName +"  has already inactive", 'Inactive Admin');
+        return this.alertService.warning("Admin "+selectedAdmin.firstName +" " + selectedAdmin.lastName +"  is already inactive", 'Inactive Admin');
     }
 }
 deleteAdminNow(){
@@ -104,16 +104,16 @@ deleteAdminNow(){
         return this.alertService.warning(data.message, 'Warning');
     } else {
         this.deleteMemberModal.close();
-         let memObj = this.selectedAdminObj();
+         let memObj = this.selectedAdminObj(this.selectedAdmin);
         this.allAdminList.push(memObj);
         return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Admin');
     }
 });
 }
-    private selectedAdminObj() {
+    private selectedAdminObj(obj) {
         return {
-        firstName: this.selectedAdmin.firstName, lastName: this.selectedAdmin.lastName, email: this.selectedAdmin.email,
-            name: this.selectedAdmin.name, userCode: this.selectedAdmin.userCode, status: { status: 'INACTIVE' }, team: { teamName: this.selectedAdmin.team.teamName }
+        firstName: obj.firstName, lastName: obj.lastName, email: obj.email,
+            name: obj.name, userCode: obj.userCode, status: { status: obj.status.status }, team: { teamName: obj.team.teamName }
         };
     }
 
@@ -131,7 +131,7 @@ editAdmin(user){
     this.updatedTeamName = user.team;
     this.updatedUserCode = user.userCode;
     this.selectedDefaultTeam = user.team.teamName;
-   
+    this.selectedAdmin = user;  
 }
 updateMember(){
     let duplicateUserNameFlag ;
@@ -146,6 +146,7 @@ updateMember(){
         team: {teamName : this.selectedDefaultTeam}
         
     };
+  
     this._userService.updateUserDetails(payload).subscribe(data => {
         duplicateUserNameFlag = data.warningFl;
         exceptionFlag = data.errorFl;
@@ -181,10 +182,13 @@ private getStatusByUser(updatedStaus) {
 
 closeEditPopup(){
     this.deleteMemberModal.close();
+    let memObj = this.selectedAdminObj(this.selectedAdmin);
+    this.allAdminList.push(memObj);
 }
 closeDeletePopup(){
     this.editMemberModal.close();
-    let memObj = this.selectedAdminObj();
+    let memObj = this.selectedAdminObj(this.selectedAdmin);
     this.allAdminList.push(memObj);
 }
+
 }

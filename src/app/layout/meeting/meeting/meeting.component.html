@@ -54,7 +54,6 @@
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;" placement="top" #viewVideoBtn
-                        ngbTooltip="Video On/Off"
                             (click)='viewVideo()' [value]="isVideoEnabled">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled" class="fa fa-2x fa-ban"></i>
                         </button>
@@ -62,12 +61,10 @@
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top" #shareFileBtn (click)="shareFile()"
-                            ngbTooltip="Share File">
+                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top" #shareFileBtn (click)="shareFile()">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
-                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" #shareScreenBtn
-                            ngbTooltip="Share Screen" [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'>
+                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'>
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
