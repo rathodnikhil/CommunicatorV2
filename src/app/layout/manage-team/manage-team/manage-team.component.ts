@@ -203,7 +203,7 @@ export class ManageTeamComponent implements OnInit {
                     this.userPermissionList.push(team);
                     this.newTeamName = '';
                     this.teamNameField.nativeElement.focus();
-                    this.selectedNewTeamObj = res;
+                    this.selectedNewTeamObj = res.team;
                    return this.alertService.success("Team has saved successfully ", "Success");   
                     }
                 });
