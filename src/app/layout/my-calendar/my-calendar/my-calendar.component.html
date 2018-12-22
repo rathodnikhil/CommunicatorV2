@@ -11,29 +11,29 @@
 
 <app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
     <div class="col-md-12">
-        <div class="row">
+        <div class="row form-control">
             <div class="col-md-6">Access Code:</div>
             <div class="col-md-6">{{meetingDetails.meetingCode}}</div>
         </div>
-        <div class="row">
+        <div class="row form-control">
             <div class="col-md-6">Subject:</div>
             <div class="col-md-6">{{meetingDetails.subject}}</div>
         </div>
-        <div class="row">
+        <div class="row form-control">
             <div class="col-md-6">Start Date:</div>
-            <div class="col-md-6">{{meetingDetails.meetingStartDateTime}}</div>
+            <div class="col-md-6">{{meetingDetails.meetingStartDateTime | date:'fullDate'}}</div>
         </div>
-        <div class="row">
+        <div class="row form-control">
             <div class="col-md-6">Duration</div>
             <div class="col-md-6">{{meetingDetails.duration}}</div>
         </div>
-        <div class="row">
+        <div class="row form-control">
             <div class="col-md-6">Host Name:</div>
             <div class="col-md-6">{{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}</div>
         </div>
 
     </div>
     <div class="modal-footer popFooter">        
-        <button type="button" class="btn btn-cancel" (click)="exit()">Close</button>
+        <button type="button" class="btn btn-danger" (click)="exit()">Close</button>
     </div>
 </app-custom-modal>

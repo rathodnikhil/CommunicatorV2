@@ -21,7 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   password: any;
   token: any;
   confirmPassword: any;
-  constructor(public router: Router, userService: UserService, private activatedRoute: ActivatedRoute , public alertService: AlertService,passwordService :PasswordService) {
+  constructor(public router: Router, userService: UserService, private activatedRoute: ActivatedRoute,passwordService :PasswordService) {
     this._userService = userService;
     this._passwordService = passwordService;
   }
@@ -30,31 +30,31 @@ export class ResetPasswordComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.token = params['token'];
       if (!this.token)
-        alert("inavlid Url");
-      //'ex-lf-er-oc-1534256481089'
-      // console.log(this.meetingCode);
+    //  this.alertService.warning("Invalid url","Invali Url");
+    alert('Invalid Url');
     });
   }
   resetPassword() {
-    alert(this.token);
-    const payload = { token: this.token, password: this._passwordService.encrypted(this.password) }
+  
     if ( this.password === null || typeof this.password === 'undefined' ||this.password.trim() === '') {
-        return this.alertService.warning("Enter password","Warning");
+       // return this.alertService.warning("Enter password","Warning");
     } else if (this.confirmPassword === '' || this.confirmPassword === null || typeof this.confirmPassword === 'undefined') {
-      return this.alertService.warning("Enter confirm password","Warning");
+     // return this.alertService.warning("Enter confirm password","Warning");
     } else if (this.confirmPassword != this.password) {
-      return this.alertService.warning("Password and  confirm password does not match","Warning");
+     // return this.alertService.warning("Password and  confirm password does not match","Warning");
     } else {
+      const payload = { passwordAuthToken: this.token, newPassword: this._passwordService.encrypted(this.password) }
       this._userService.resetpassword(payload).subscribe(res => {
         const data = res.json();
         if (data.warningFl || data.errorFl) {
-          return this.alertService.warning(data.message,"Warning");
+       //   return this.alertService.warning(data.message,"Warning");
         }
         else {
           this.password = '';
           this.confirmPassword = '';
           this.router.navigate(['/login']);
-          return this.alertService.success("Password reset successfully","Reset Success");
+          window.location.reload();
+         // return this.alertService.success("Password reset successfully","Reset Success");
         }
       });
     }
