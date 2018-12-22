@@ -91,7 +91,7 @@ function onDetectRTCLoaded() {
     };
     connection.sdpConstraints.mandatory = {
         OfferToReceiveAudio: true,
-        OfferToReceiveVideo: videoValue
+        OfferToReceiveVideo: true
     };
 }
 function reloadDetectRTC(callback) {
@@ -245,7 +245,7 @@ function appendDIV(event) {
     html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
-    div.focus();
+    chatContainer.scrollTo(0,chatContainer.scrollHeight);
 
     document.getElementById('input-text-chat').focus();
 }
@@ -326,15 +326,17 @@ connection.onstream = function (event) {
     if (event.type === 'local') {
         video.muted = true;
     } else {
-        connection.streamEvents.selectAll({
-            userid: event.userid
-        }).forEach(function (streamEvent) {
-            var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
-            if (mediaElement && !event.stream.isScreen) {
-                streamEvent.stream.stop();
-                mediaElement.parentNode.removeChild(mediaElement);
-            }
-        });
+        if (document.getElementById(event.streamid + 'parent') == null) {
+            connection.streamEvents.selectAll({
+                userid: event.userid
+            }).forEach(function (streamEvent) {
+                var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
+                if (mediaElement && !event.stream.isScreen) {
+                    streamEvent.stream.stop();
+                    mediaElement.parentNode.removeChild(mediaElement);
+                }
+            });
+        }
     }
     video.srcObject = event.stream;
     video.height = Math.round(window.innerHeight * 0.30) - 10;
@@ -359,22 +361,25 @@ connection.onstream = function (event) {
             connection.filesContainer.appendChild(customDiv);
         }
     } else {
-        // connection.videosContainer.appendChild(button);
-        if (connection.videosContainer.children.length > 0) {
-            var dummyPresent = false;
-            for (let index = 0; index < connection.videosContainer.children.length; index++) {
-                var vid_element = connection.videosContainer.children[index];
-                if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
-                    connection.videosContainer.replaceChild(customDiv, vid_element);
-                    dummyPresent = true;
-                    break;
-                }
-            }
-            if (!dummyPresent)
-                connection.videosContainer.appendChild(customDiv);
-        } else {
+        if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
         }
+        // connection.videosContainer.appendChild(button);
+        // if (connection.videosContainer.children.length > 0) {
+        //     var dummyPresent = false;
+        //     for (let index = 0; index < connection.videosContainer.children.length; index++) {
+        //         var vid_element = connection.videosContainer.children[index];
+        //         if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
+        //             connection.videosContainer.replaceChild(customDiv, vid_element);
+        //             dummyPresent = true;
+        //             break;
+        //         }
+        //     }
+        //     if (!dummyPresent)
+        //         connection.videosContainer.appendChild(customDiv);
+        // } else {
+        //     connection.videosContainer.appendChild(customDiv);
+        // }
     }
     setTimeout(function () {
         video.play();
@@ -397,7 +402,7 @@ connection.onstreamended = function (event) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
 };
-connection.onleave = function(event){
+connection.onleave = function (event) {
     connection.streamEvents.selectAll({
         userid: event.userid
     }).forEach(function (streamEvent) {
