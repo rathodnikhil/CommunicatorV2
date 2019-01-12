@@ -47,9 +47,10 @@ selectedDefaultTeam: any;
     this._userService = userService;
     this._teamService = teamService;
   }
-  @ViewChild("usernameField") usernameField: ElementRef;
-  @ViewChild("emailField") emailField: ElementRef;
-
+  
+  @ViewChild("updatedEmailField") updatedEmailField: ElementRef;
+  @ViewChild("updatedFirstNameField") updatedFirstNameField: ElementRef;
+  @ViewChild("updatedLastNameField") updatedLastNameField: ElementRef;
   @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
   deleteAdminPop: CustomModalModel = {
       titleIcon: '<i class="fa fa-trash"></i>',
@@ -150,11 +151,21 @@ updateMember(){
     this._userService.updateUserDetails(payload).subscribe(data => {
         duplicateUserNameFlag = data.warningFl;
         exceptionFlag = data.errorFl;
-        if(duplicateUserNameFlag == true) {
-          this.usernameField.nativeElement.focus();
+        if( this.updatedFirstName === null || typeof this.updatedFirstName === "undefined"||this.updatedFirstName.trim() === "" ){
+            this.updatedFirstNameField.nativeElement.focus();
+             return this.alertService.warning("Please enter first name","Warning");
+          }else  if( this.updatedLastName === null || typeof this.updatedLastName === "undefined" ||this.updatedLastName.trim() === "" ){
+            this.updatedLastNameField.nativeElement.focus();
+            return this.alertService.warning("Please enter last name","Warning");
+          }else  if(this.updatedEmail === null || typeof this.updatedEmail === "undefined" ||this.updatedEmail.trim() === ""){
+            this.updatedEmailField.nativeElement.focus();
+            return this.alertService.warning("Please enter email","Warning");
+          }
+        else if(duplicateUserNameFlag == true) {
+          this.updatedFirstNameField.nativeElement.focus();
           return this.alertService.warning("Username already exist","Warning");
         }else if(exceptionFlag == true) {
-          this.emailField.nativeElement.focus();
+          this.updatedEmailField.nativeElement.focus();
           return this.alertService.warning(data.json().message,"Warning");
         }else{
           this.teamArray.push(data.team);

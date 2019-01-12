@@ -25,10 +25,6 @@ export class MeetingService {
         let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                //   alert("Error occured");
-                //   alert(err);
             });
 
         return resp;
@@ -40,7 +36,6 @@ export class MeetingService {
             this.apiRequest.post(url, payload).subscribe(data => {
                 resp.next(data);
              });
-    
             return resp;
         }
     
@@ -49,9 +44,6 @@ export class MeetingService {
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.futureMeetingList$.next(data);
-        },
-            err => {
-                // alert(err);
             });
     }
     getFutureMeetingListByUser() {
@@ -114,5 +106,10 @@ export class MeetingService {
         const url = urlConstants.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' +payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
-    
+    saveMeetingPermission(payload) {
+        const url = urlConstants.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;
+        return this.apiRequest.post(url, payload).map((resp: any) => {               
+            return resp.json()
+        });
+    }
 }

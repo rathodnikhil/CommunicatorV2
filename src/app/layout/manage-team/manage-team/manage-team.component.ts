@@ -69,6 +69,8 @@ export class ManageTeamComponent implements OnInit {
     updatedUserCode: any;
     selectedMember: any;
     newMemberUserCode: any;
+    deleteMemberFlag = 1;
+    addMemPermission = 1;
     @ViewChild("emailField") emailField: ElementRef;
     @ViewChild("teamNameField") teamNameField: ElementRef;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
@@ -153,7 +155,6 @@ export class ManageTeamComponent implements OnInit {
         this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
             if(data[0].errorFl || data[0].warningFl){
                 this.userPermissionMemberList = [];
-               // return this.alertService.warning(data[0].message, "Warning"); 
             } else{
                this.userPermissionMemberList = data;
             }
@@ -176,6 +177,12 @@ export class ManageTeamComponent implements OnInit {
             }
         }
         this.selectedUserPermissionObj = userPermission;
+       
+        if(this.selectedTeamObj.status.status === 'CANCEL'){
+            this.addMemPermission = 2;
+        }else{
+            this.addMemPermission = 1;
+        }
     }
     //to open modal popup
     open() {
@@ -185,7 +192,11 @@ export class ManageTeamComponent implements OnInit {
         if(this.selectedTeamObj === "" || this.selectedTeamObj === null || typeof this.selectedTeamObj === "undefined"){
             return this.alertService.warning("Please Select Team ", "Warning"); 
         }else{
-            this.addNewMemberModal.open();
+            if(this.addMemPermission != 2){
+                this.addNewMemberModal.open();
+            }else{
+                return this.alertService.warning("Selected team has deactivated you can not add member in this team ", "Warning");
+            }
         }
     }
     addTeam() {
@@ -263,12 +274,16 @@ export class ManageTeamComponent implements OnInit {
         } 
  }
     editTeam(){
-        this.addUpdateTeamModal.open();
-        this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
-        this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+        if(this.addMemPermission != 2){
+            this.addUpdateTeamModal.open();
+            this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
+            this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+        }else{
+            return this.alertService.warning("Selected team has deactivated you can not edit team", "Warning");
+        }
     }
     updateTeamDetails(){
-        if (this.updateTeamName === "" || this.updateTeamName === null || typeof this.updateTeamName === "undefined") {
+        if (this.updateTeamName === null || typeof this.updateTeamName === "undefined" || this.updateTeamName.trim() === "" ) {
             return this.alertService.warning("Please Enter Team Name", "Warning");   
         } else {
             const payload = { "teamName": this.updateTeamName , "userCode": this.loggedInUser.userCode ,"teamCode": this.selectedTeamObj.teamCode};
@@ -288,17 +303,21 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     deleteSelectedTeam(){
-        this.deleteTeamModal.open();
-        this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+        if(this.addMemPermission != 2){
+            this.deleteTeamModal.open();
+            this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+        }else{
+            return this.alertService.warning("Selected team has already deactivated", "Warning");
+        }   
     }
     deleteTeamDetails(){
-        const payload = {"teamCode": this.selectedTeamObj.team.teamCode};
+        const payload = {"teamCode": this.selectedTeamObj.teamCode};
             this._teamService.deleteTeam(payload).subscribe(res => {
                 if(res.errorFl === true || res.warningFl === true){
                     return this.alertService.warning(res.message, "Warning"); 
                 }else{
                this.closePopup('deleteTeam');
-               this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedTeamObj), 1);
+               //this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedTeamObj), 1);
                this.filterMemberList = [];
                this.showSelectedTeam = false;
                return this.alertService.success("Team has deleted successfully ", "Success");   
@@ -347,14 +366,11 @@ export class ManageTeamComponent implements OnInit {
         }
 
     private getStatusByUser(updatedStaus) {
-        let currentStatus;
         let currentDisplayStatus;
-        if (updatedStaus == true) {
-            currentStatus = 1;
+        if (updatedStaus === true) {
             currentDisplayStatus = "ACTIVE";
         }
         else {
-            currentStatus = 2;
             currentDisplayStatus = "INACTIVE";
         }
         return currentDisplayStatus;
@@ -380,19 +396,26 @@ export class ManageTeamComponent implements OnInit {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
                     this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
-                    this.deleteMemberModal.close();
-                   this.memObj =  this.selectedmemObj(this.selectedMember);
+                    this.deleteMemberFlag = 2;
+                    this.closeDeletePopup();
+                   this.memObj =  this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
                     this.filterMemberList.push( this.memObj);
                     return this.alertService.success("Member "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Member');
                 }
             });
             }
 
-    private selectedmemObj(obj) {
+    private selectedmemObj(obj , editDeletelag) {
+        let statusval ;
+        if(editDeletelag === 1){
+            statusval = this.getStatusByUser(this.updatedUserStaus);
+        }else{
+            statusval = 'INACTIVE';
+        }
        return  {
         userId: {
         firstName: obj.userId.firstName, lastName: obj.userId.lastName, email: obj.userId.email,
-            status: { status: 'INACTIVE' }
+            status: { status: statusval}
         }, team: this.selectedTeamObj
         };
     }
@@ -412,16 +435,19 @@ export class ManageTeamComponent implements OnInit {
             case 'updateTeam':
                 this.addUpdateTeamModal.close();
                 break;
+            case 'deleteTeam':
+                this.addUpdateTeamModal.close();
+                break;
         }
     }
     closeEditPopup(){
         this.deleteMemberModal.close();
-        let memObj = this.selectedmemObj(this.selectedMember);
+        let memObj = this.selectedmemObj(this.selectedMember , 1);
         this.filterMemberList.push(memObj);
     }
     closeDeletePopup(){
         this.deleteMemberModal.close();
-        let memObj = this.selectedmemObj(this.selectedMember);
+        let memObj = this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
         this.filterMemberList.push(memObj);
     }
     teamCloseEditPopup(){
@@ -429,7 +455,7 @@ export class ManageTeamComponent implements OnInit {
        this.userPermissionList.push(this.selectedUserPermissionObj);
     }
     teamCloseDeletePopup(){
-        this.deleteTeamModal.close();
+        this.closePopup('deleteTeam');
         this.userPermissionList.push(this.selectedUserPermissionObj);
     }
 }

@@ -38,11 +38,12 @@
             <td>{{userPermission.team.teamName}}</td>
             <td>{{userPermission.user.status.status}}</td>
             <td>
-                <input type="checkbox" id="meetChk" (click)="scheduleMeetingRight(userPermission.user.userCode)">
+                <input type="checkbox" id="meetChk" (click)="scheduleMeetingRight(userPermission.user , $event)">
                              <p id="text" style="display:none">Checkbox is CHECKED!</p>
             </td>
       </tr>
     </table>
+   <div style="text-align: center;padding-top: 20px;"> <button class="btn btn-sec" (click)="assignMeetingPermission()">Assign Meeting Permission</button></div>
     <div class="pageControl">
         <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
             [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
