@@ -85,7 +85,7 @@
                         <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings" (CancelEvent)="clearAllMeetingField()">
                             <div style="padding: 10px; font-size:14px; " class="span-font">
                                 <span>{{this.subject}}</span>
-                                <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}
+                                <p style="font-weight:bold;">Date : {{ meeting.datePicker.year }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.day}}
                                     at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
                                     {{this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}
                                     ) for
@@ -96,7 +96,7 @@
                                         <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                         https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span></label>               
                                 </p>
-                                <h5 style="margin-top: 40px;">Access Code :
+                                <h5 style="margin-top: 40px;">Meeting Id :
                                     <span>{{accessCode}}</span>
                                 </h5>
                             </div>

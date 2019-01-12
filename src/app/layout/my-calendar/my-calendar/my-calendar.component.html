@@ -12,7 +12,7 @@
 <app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
     <div class="col-md-12">
         <div class="row form-control">
-            <div class="col-md-6">Access Code:</div>
+            <div class="col-md-6">Meeting Id:</div>
             <div class="col-md-6">{{meetingDetails.meetingCode}}</div>
         </div>
         <div class="row form-control">
@@ -20,7 +20,7 @@
             <div class="col-md-6">{{meetingDetails.subject}}</div>
         </div>
         <div class="row form-control">
-            <div class="col-md-6">Start Date:</div>
+            <div class="col-md-6">Date:</div>
             <div class="col-md-6">{{meetingDetails.meetingStartDateTime | date:'fullDate'}}</div>
         </div>
         <div class="row form-control">

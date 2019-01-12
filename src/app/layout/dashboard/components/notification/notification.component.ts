@@ -50,6 +50,7 @@ export class NotificationComponent implements OnInit {
                 this._userService.getUserList().subscribe(data => {
                     if (data !== undefined && data.length > 0){
                         this.userList = data;
+                        alert('List size : '+this.userList.length);
                     } else{
                         this.userList=[];
                     }                   
@@ -85,16 +86,11 @@ export class NotificationComponent implements OnInit {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedUser = data;
-                const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode };
-                this._chatService.setChattingHistoryList(payload);
+                const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode,chatMsg: null };
+                this._chatService.getChattingHistoryList(payload);
                 this._chatService.setBroadcastMsgByLoggedInuserId(payload);
             }
-        }, err => {
-            // alert(err);
-            this.router.navigate(['/login']);
         });
-
-
     }
 
     getChattingHistoryBySelectedGroup() {
@@ -104,7 +100,7 @@ export class NotificationComponent implements OnInit {
             } else {
                 this.selectedGroup = data;
                 const payload = { userFrom: this.loggedInUser.userCode, groupCode: this.selectedGroup.groupId.groupId };
-                this._chatService.setChattingHistoryList(payload);
+                this._chatService.getChattingHistoryList(payload);
             }
         });
 

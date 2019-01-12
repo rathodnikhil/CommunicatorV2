@@ -3,6 +3,7 @@ import { TeamService } from '../../../services/team.service';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
+import { MeetingService } from '../../../services/meeting-service';
 @Component({
   selector: 'app-user-rights',
   templateUrl: './user-rights.component.html',
@@ -12,6 +13,7 @@ import { AlertService } from '../../../services/alert.service';
 export class UserRightsComponent implements OnInit {
 _teamService: TeamService;
 _userService: UserService;
+_meetingService: MeetingService;
 
 public filter: string = '';
 public maxSize: number = 7;
@@ -35,11 +37,13 @@ searchText: string;
 
 userPermissionList = [];
 userPermissionMemberList = [];
+meetingPermissionList = [];
 payloadSearch: any;
 
-  constructor(teamService: TeamService , userService: UserService ,public alertService: AlertService) {
+  constructor(teamService: TeamService , userService: UserService ,public alertService: AlertService , meetingService: MeetingService) {
       this._teamService = teamService;
       this._userService = userService;
+      this._meetingService = meetingService;
    }
 
   ngOnInit() {
@@ -68,11 +72,28 @@ payloadSearch: any;
    
   }
 
-  scheduleMeetingRight(userCode){
-    alert('userCode' +userCode);
+  scheduleMeetingRight(user , event){
+    let statusFlag = null;
+   if(event.target.checked === true){
+       statusFlag = {status : "ACTIVE"};
+   }else{
+    statusFlag = {status : "INACTIVE"};
+   }
+    let object = {user : user , meetingFlag: statusFlag}
+    this.meetingPermissionList.push(object);
   }
   onPageChange(number: number) {
     // console.log('change to page', number);
     this.config.currentPage = number;
+}
+assignMeetingPermission(){
+  this._meetingService.saveMeetingPermission(this.meetingPermissionList).subscribe(data => {
+    if(data.errorFl || data.warningFl){
+      //this.userPermissionMemberList = [];
+      return this.alertService.warning(data.message, "Warning"); 
+  } else{
+    return this.alertService.warning("Meeting Permission has saved successfully", "Warning"); 
+  }
+});
 }
 }

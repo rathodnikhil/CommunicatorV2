@@ -13,7 +13,7 @@
                 <td>Profile Picture</td>
                 <td>  <img src="assets/images/default.png"  alt="Responsive image"  class="img-fluid" />
                   &nbsp;&nbsp;<span><i class="fa fa-remove fa-2x" style="color: red;"></i></span></td>
-                <td><input type="file" [(ngModel)]="loggedInUserObj.profileImgPath" /></td>
+                <td><input type="file" [(ngModel)]="loggedInUserObj.profileImgPath" (change)="onProfilePicSelected($event)"/></td>
           </tr>
           <tr>
                 <td>First Name <span class="asterik-mark">&nbsp;*</span></td>
