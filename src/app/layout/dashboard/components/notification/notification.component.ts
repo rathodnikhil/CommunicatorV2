@@ -44,27 +44,27 @@ export class NotificationComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
-                return this.alertService.warning(data.message, "Warning");
+                return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-                this._userService.getUserList().subscribe(data => {
-                    if (data !== undefined && data.length > 0){
-                        this.userList = data;
-                        alert('List size : '+this.userList.length);
-                    } else{
-                        this.userList=[];
-                    }                   
+                this._userService.getUserList().subscribe(userData => {
+                    if (userData !== undefined && userData.length > 0) {
+                        this.userList = userData;
+                        // alert('List size : ' + this.userList.length);
+                    } else {
+                        this.userList = [];
+                    }
                 });
 
-                this._groupService.getGroupList().subscribe(data => {                    
-                    if (data !== undefined && data.length > 0){
-                        this.groupList = data;
-                    } else{
-                        this.groupList=[];
-                        if (data[0] !== undefined && data[0].message !== undefined){
+                this._groupService.getGroupList().subscribe(groupData => {
+                    if (groupData !== undefined && groupData.length > 0) {
+                        this.groupList = groupData;
+                    } else {
+                        this.groupList = [];
+                        if (groupData[0] !== undefined && groupData[0].message !== undefined) {
                             return this.alertService.warning(data[0].message, 'Warning');
                         }
-                    } 
+                    }
                 });
             }
         });
@@ -86,7 +86,7 @@ export class NotificationComponent implements OnInit {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 this.selectedUser = data;
-                const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode,chatMsg: null };
+                const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
                 this._chatService.getChattingHistoryList(payload);
                 this._chatService.setBroadcastMsgByLoggedInuserId(payload);
             }
@@ -106,14 +106,14 @@ export class NotificationComponent implements OnInit {
 
     }
     searchInWholeMemberList() {
-        if (this.searchText === "" || this.searchText === null || typeof this.searchText === "undefined") {
+        if (this.searchText === '' || this.searchText === null || typeof this.searchText === 'undefined') {
 
         } else {
             const payload = { searchText: this.searchText, userCode: this.loggedInUser.userCode };
             this._userService.searchWholememberList(payload).subscribe(data => {
                 if (data[0].errorFl || data[0].warningFl) {
                     this.searchWholeMemberList = [];
-                    return this.alertService.warning(data[0].message, "Warning");
+                    return this.alertService.warning(data[0].message, 'Warning');
                 } else {
                     this.searchWholeMemberList = data;
                 }
@@ -126,16 +126,16 @@ export class NotificationComponent implements OnInit {
             team: this.loggedInUser.team,
             userId: user,
             createdBy: this.loggedInUser.userCode
-        }
+        };
 
         this._userService.addNewMemberFromWholeList(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, "Warning");
+                return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.searchText = '';
                 this.userList.push(user);
                 this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
-                return this.alertService.success('User has been added successfully', "Success");
+                return this.alertService.success('User has been added successfully', 'Success');
             }
         });
     }

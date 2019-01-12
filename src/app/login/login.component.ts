@@ -14,6 +14,7 @@ import { PasswordService } from '../services/password.service';
     providers: [AlertService, PasswordService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    UserNameText = 'UserName';
     _loginService: LoginService;
     _userService: UserService;
     _passwordService: PasswordService;
@@ -52,6 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     guestLogin() {
         this.Logintext = this.isGuest ? 'Continue' : 'Login';
+        this.UserNameText = this.isGuest ? 'Name' : 'UserName';
     }
     onKey(event) {
         if (event.key === 'Enter') { this.login(); }
@@ -151,7 +153,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
                 } else {
                     return this.alertService
-                    .success('Password reset link has been successfully sent to your email account ,check your email.', 'Email Send');
+                        .success('Password reset link has been successfully sent to your email account ,check your email.', 'Email Send');
                 }
             });
             this.forgetEmail = '';
