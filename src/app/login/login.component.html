@@ -14,7 +14,7 @@
                                 <i class="fa fa-user"></i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" placeholder="UserName" [(ngModel)]="userName" (keyup)="onKey($event)" required>
+                        <input class="form-control" type="text" placeholder="{{UserNameText}}" [(ngModel)]="userName" (keyup)="onKey($event)" required>
                     </div>
                     <div class="input-group mb-3" *ngIf="isGuest">
                         <div class="input-group-prepend">

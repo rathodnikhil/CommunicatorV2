@@ -53,26 +53,26 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUser = data;
                 this.chattingHistoryList = [];
-                this._chatService.setChattingHistoryList().subscribe(data => {
-                    if (data.length > 0) {
-                        if (data[0].errorFl || data[0].warningFl) {
+                this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
+                    if (chatHistoryData.length > 0) {
+                        if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
                             this.chattingHistoryList = [];
-                            return this.alertService.warning(data[0].message, 'Warning');
+                            return this.alertService.warning(chatHistoryData[0].message, 'Warning');
                         } else {
-                            this.chattingHistoryList = data;
+                            this.chattingHistoryList = chatHistoryData;
                         }
                     } else {
                         this.chattingHistoryList = [];
                     }
                 });
                 this.broadcastMsgList = [];
-                this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
-                    if (data.length > 0) {
-                        if (data[0].errorFl || data[0].warningFl) {
+                this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(broadcastData => {
+                    if (broadcastData.length > 0) {
+                        if (broadcastData[0].errorFl || broadcastData[0].warningFl) {
                             this.broadcastMsgList = [];
-                            return this.alertService.warning(data[0].message, 'Warning');
+                            return this.alertService.warning(broadcastData[0].message, 'Warning');
                         } else {
-                            this.broadcastMsgList = data;
+                            this.broadcastMsgList = broadcastData;
                         }
                     } else {
                         this.broadcastMsgList = [];
@@ -80,7 +80,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 });
             }
         });
-     
     }
     ngAfterViewInit(): void {
         const s = this.document.createElement('script');
@@ -117,11 +116,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             this._chatService.saveChat(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
-                } else {
-                    this.chatMsg = '';
-                     this.chattingHistoryObj = data;
-                     alert(this.chattingHistoryObj.chatmsg);
-                     this.chattingHistoryList.push(this.chattingHistoryObj);
                 }
             });
 
