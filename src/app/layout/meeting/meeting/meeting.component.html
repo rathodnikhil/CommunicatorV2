@@ -64,7 +64,8 @@
                         <button id="share-file" class="btn default pull-left" style="display:none;" placement="top" #shareFileBtn (click)="shareFile()">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
-                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'>
+                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'"
+                         (click)='shareScreen()'>
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;"></span>

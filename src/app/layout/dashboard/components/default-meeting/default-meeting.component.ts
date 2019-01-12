@@ -167,10 +167,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
             this.meetNowModal.close();
-            this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-        } else {
-            this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
         }
+        this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
     }
     deleteMeetingNow(meeting) {
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
@@ -259,12 +257,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // get meeting details
     getMeetingDetails(): string {
         let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
+        meetingUrl = 'https://cfscommunicator.com/#/meeting/?meetingCode=';
 
         const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n'
+            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n for  '
+            + this.meetNowMeeting.duration + '\r\n\r\n'
             + meetingUrl + this.meetNowMeeting.meetingCode +
-            '\r\n\r\n' + '\r\n\r\n Access Code :  ' + this.meetNowMeeting.meetingCode;
+            '\r\n\r\n' + '\r\n\r\n Meeting Id :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
     }
     GetFormattedDate(): String {

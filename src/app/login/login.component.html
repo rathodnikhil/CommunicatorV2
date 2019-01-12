@@ -8,20 +8,6 @@
             <div id="login" class="col-md-4">
                 <div class="inner-border">
                     <h1>Log In</h1> 
-                    <!-- <div style="margin-top: 20px;" *ngIf="authFlag== true;" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Authentication Token is null</div>
-                    <div style="margin-top: 20px;" *ngIf="userNameFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Enter Username.
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="passwordFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Enter password.
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="passwordMacthFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>UserName and Password dose not match
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="isGuest&&!userNameFlag" class="alert alert-success alert-dismissable">
-                        Enter your name as UserName.
-                    </div> -->
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -67,10 +53,10 @@
                  </span>
              </div>
              <input class="form-control" type="text" placeholder="Enter Email" 
-             [(ngModel)]="forgetEmail" (keyup)="onKey($event)" required/>
+             [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)" required/>
          </div>
          
-         <button class="btn btn-sec" (click)="sendEmailForgotPassword()" (keyup)="onKeyUp($event)">Submit</button>
+         <button class="btn btn-sec" (click)="sendEmailForgotPassword()" >Submit</button>
          <div class="alink">  <a  (click)="backToLogin()">back to login</a></div>
      </div>
         <div class="row h-100 d-flex justify-content-center fixed-footer">

@@ -22,7 +22,7 @@
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
-                        <h5 style="margin-top: 40px;">Access Code :
+                        <h5 style="margin-top: 40px;">Meeting Id     :
                             <span>{{meetNowMeeting.meetingCode}}</span>
                         </h5>
                     </div>
@@ -130,7 +130,7 @@
                             </div>
                             <div style="float: right" >
                                 <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
-                                <a (click)="startMeeting(meeting,false)">
+                                <a (click)="startMeeting(meeting,false);">
                                     <i class="fa fa-play-circle actionIcon" style="color: #353535;" aria-hidden="true"
                                         placement="bottom" ngbTooltip="Start Meeting"></i>
                                 </a>

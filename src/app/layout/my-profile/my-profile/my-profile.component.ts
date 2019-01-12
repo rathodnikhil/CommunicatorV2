@@ -21,6 +21,7 @@ export class MyProfileComponent implements OnInit {
     currentFirstName : any;
     currentLastName : any;
     currentEmail : any;
+    selectedProfilePictureName: any;
     constructor( private router: Router,userService: UserService, meetingService: MeetingService, groupService: GroupService,public alertService: AlertService) {
         this._userService = userService;
         this._meetingservice = meetingService;
@@ -83,5 +84,8 @@ export class MyProfileComponent implements OnInit {
         this.loggedInUserObj.lastName =  this.currentLastName
         this.loggedInUserObj.email = this.currentEmail;
         this.router.navigate(['/dashboard']);
+    }
+    onProfilePicSelected(event){
+        this.selectedProfilePictureName = event.target.files[0];
     }
 }

@@ -24,13 +24,13 @@ export class ChatService {
     return resp;
   }
 
-  setChattingHistoryList(payload) {
+getChattingHistoryList(payload) {
     const url = urlConstants.baseUrl + 'getChatHistoryBySelecteduser';
     this.apiRequest.post(url, payload).subscribe(data => {
         this.chattingHistoryList$.next(data);
     });
 }
-getChattingHistoryList() {
+setChattingHistoryList() {
     return this.chattingHistoryList$;
 }
 

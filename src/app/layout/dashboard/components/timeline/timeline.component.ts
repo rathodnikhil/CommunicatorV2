@@ -53,7 +53,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUser = data;
                 this.chattingHistoryList = [];
-                this._chatService.getChattingHistoryList().subscribe(data => {
+                this._chatService.setChattingHistoryList().subscribe(data => {
                     if (data.length > 0) {
                         if (data[0].errorFl || data[0].warningFl) {
                             this.chattingHistoryList = [];
