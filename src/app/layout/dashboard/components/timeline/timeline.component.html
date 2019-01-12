@@ -21,22 +21,24 @@
 
         <ul class="timeline chat-output">
             <li *ngFor="let chatObj of chattingHistoryList">
-                <div class="timeline-badge">
-                    <i class="fa fa-check"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
-                        <p>
-                            <small class="text-muted">
-                                <i class="fa fa-calendar"></i> {{chatObj.msgDate |  date:'fullDate'}}&nbsp;
-                                ({{chatObj.msgDate |  date:'hh:mm:ss'}})</small>
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <p>{{chatObj.chatmsg}}</p>
-                    </div>
-                </div>
+                <ng-container *ngIf="chatObj.chatmsg">
+                        <div class="timeline-badge">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
+                                    <p>
+                                        <small class="text-muted">
+                                            <i class="fa fa-calendar"></i> {{chatObj.msgDate |  date:'fullDate'}}&nbsp;
+                                            ({{chatObj.msgDate |  date:'hh:mm:ss'}})</small>
+                                    </p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>{{chatObj.chatmsg}}</p>
+                                </div>
+                            </div>
+                </ng-container>                
             </li>
              <li   *ngFor="let broadcastMsg of broadcastMsgList" class="timeline-inverted">
                 <div class="timeline-badge warning">

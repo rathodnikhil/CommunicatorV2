@@ -9,8 +9,11 @@ document.getElementById('btn-leave-room').disabled = true;
 // .......................UI Code........................
 // ......................................................
 var alertService = window.customAlertService;
+var isMute=false;
+var isShareScreen=false;
 document.getElementById('share-screen').onclick = function () {
     try {
+        isShareScreen=true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -24,14 +27,18 @@ document.getElementById('share-screen').onclick = function () {
 document.getElementById('btn-mute').onclick = function () {
     try {
         var streamid = connection.streamEvents.selectFirst().streamid;
-        if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0)
+        if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0){
             connection.streamEvents.selectFirst({
                 local: true
             }).stream.mute();
-        else
+            isMute=true;
+        }
+        else{
             connection.streamEvents.selectFirst({
                 local: true
             }).stream.unmute();
+            isMute=false;
+        }
     } catch (error) {
         console.log(error);
     }
@@ -143,6 +150,15 @@ DetectRTC.load(function () {
 
 document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
+    if(isMute){
+        isMute=false;
+    alertService.warning('You will have mute yourself again!','unmute');
+    }
+    if(isShareScreen)
+    {
+        isShareScreen=false;
+        alertService.warning('You will have to share screen again!','screen share');
+    }
     document.getElementById('resume-count').click();
     setTimeout(function () {
         document.getElementById('disable-video').disabled = false;

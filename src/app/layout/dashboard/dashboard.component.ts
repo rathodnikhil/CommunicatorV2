@@ -133,6 +133,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }
     }
     ngAfterViewInit(): void {
+        (<any>window).customAlertService = this.alertService;
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingPeer.js';
