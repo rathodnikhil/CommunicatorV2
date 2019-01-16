@@ -5,30 +5,9 @@
 </div>
 <div class="center">
 <div class="main ">
-            <h4 class="btn btn-sec remove-border" style="cursor: default;">Setting Details</h4>
+            <h4>Setting Details</h4>
       <table >
-          
-            <tr>
-                  <td>Display Picture</td>
-                  <td>
-                        <img src="assets/images/default.png" alt="Responsive image" class="img-fluid" /><span>&nbsp;&nbsp;<i class="fa fa-remove fa-2x" style="color: red;"></i></span>
-                  </td>
-                  <td>
-                        <input type="file" />
-                  </td>
-            </tr>
-            <tr>
-                  <td>Display Name</td>
-                  <td>
-                        <input placeholder="Enter Name" type="text" value="{{userSettings.displayName}}" [(ngModel)]="userSettings.displayName" required/>
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        <h4>General Settings</h4>
-                  </td>
-
-            </tr>
+       
             <tr>
                   <td>Chat Notification</td>
                   <td>
@@ -43,23 +22,6 @@
                         <p id="text" style="display:none">Checkbox is CHECKED!</p>
                   </td>
             </tr>
-            <!-- <tr>
-                  <td>File Download Location</td>
-                  <td colspan="2">
-                        <input placeholder="Enter Name" type="text" value="{{userSettings.downloadLocation}}" [(ngModel)]="downloadLocation" requiredclass="col-md-12"
-                        />
-                  </td>
-                  <td>
-                        <div id="hide" class="col-lg-8 col-xs-8">
-                              <label class="hand-cursor">
-                                    <input type="file" nv-file-select uploader="$ctrl.uploader" style="visibility:hidden;" />
-                                    <a>
-                                          <span class="fa fa-folder-open">change Location</span>
-                                    </a>
-                              </label>
-                        </div>
-                  </td>
-            </tr> -->
       </table>
       <div class="button-block">
             <button class="btn btn-sec" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>

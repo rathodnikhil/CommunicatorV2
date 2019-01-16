@@ -18,11 +18,12 @@ export class MyProfileComponent implements OnInit {
     _groupService: GroupService;
     profileOtherDetails: any;
     loggedInUserObj: any;
-    currentFirstName : any;
-    currentLastName : any;
-    currentEmail : any;
+    currentFirstName: any;
+    currentLastName: any;
+    currentEmail: any;
     selectedProfilePictureName: any;
-    constructor( private router: Router,userService: UserService, meetingService: MeetingService, groupService: GroupService,public alertService: AlertService) {
+    constructor( private router: Router, userService: UserService, meetingService: MeetingService,
+        groupService: GroupService, public alertService: AlertService) {
         this._userService = userService;
         this._meetingservice = meetingService;
         this._groupService = groupService;
@@ -38,54 +39,68 @@ export class MyProfileComponent implements OnInit {
                 // webservice to get total meeting count
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this.profileOtherDetails = {};
-                this._groupService.profileOtherDetails(payload).subscribe(data => {
-                    if(data.errorFl === true || data.warningFl === true){
+                this._groupService.profileOtherDetails(payload).subscribe(profileData => {
+                    if (profileData.errorFl === true || profileData.warningFl === true) {
                         this.profileOtherDetails = {};
-                        return this.alertService.warning(data.message, "Warning"); 
-                    }else{
-                    this.profileOtherDetails = data;
+                        return this.alertService.warning(profileData.message, 'Warning');
+                    } else {
+                    this.profileOtherDetails = profileData;
                     }
                 });
             }
         });
     }
     updateProfile() {
-        if (this.loggedInUserObj.firstName === null || typeof this.loggedInUserObj.firstName === "undefined" || this.loggedInUserObj.firstName.trim() === "" ) {
-            return this.alertService.warning('Please enter first name', "Warning");
-        } else if ( this.loggedInUserObj.lastName === null || typeof this.loggedInUserObj.lastName === "undefined" || this.loggedInUserObj.lastName.trim() === "") {
-            return this.alertService.warning('Please enter last name', "Warning");
-        }else if ( this.loggedInUserObj.email === null || typeof this.loggedInUserObj.email === "undefined" || this.loggedInUserObj.email.trim() === "") {
-            return this.alertService.warning('Please enter email', "Warning");
-        }else{
+        if (this.loggedInUserObj.firstName === null ||
+            typeof this.loggedInUserObj.firstName === 'undefined' || this.loggedInUserObj.firstName.trim() === '' ) {
+            return this.alertService.warning('Please enter first name', 'Warning');
+        } else if ( this.loggedInUserObj.lastName === null ||
+            typeof this.loggedInUserObj.lastName === 'undefined' || this.loggedInUserObj.lastName.trim() === '') {
+            return this.alertService.warning('Please enter last name', 'Warning');
+        } else if ( this.loggedInUserObj.email === null ||
+            typeof this.loggedInUserObj.email === 'undefined' || this.loggedInUserObj.email.trim() === '') {
+            return this.alertService.warning('Please enter email', 'Warning');
+        } else {
             const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
             if (!EMAIL_REGEXP.test(this.loggedInUserObj.email)) {
-              return this.alertService.warning("Please enter valid email","Warning");
+              return this.alertService.warning('Please enter valid email', 'Warning');
             }
         const payload = {
             firstName: this.loggedInUserObj.firstName,
             lastName: this.loggedInUserObj.lastName,
             email: this.loggedInUserObj.email,
             userCode: this.loggedInUserObj.userCode,
-           // name: this.loggedInUserObj.name,
-           status: {status : "ACTIVE"},
+            profileImgPath:  this.loggedInUserObj.profileImgPath,
+           status: {status : 'ACTIVE'},
            team: this.loggedInUserObj.team
-        }
+        };
         this._userService.updateUserDetails(payload).subscribe(data => {
-            if(data.errorFl === true || data.warningFl === true){
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{
-            return this.alertService.success("User profile has been updated successfully", "Success"); 
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+            return this.alertService.success('User profile has been updated successfully', 'Success');
             }
         });
     }
     }
-    cancelUpdate(){
+    cancelUpdate() {
         this.loggedInUserObj.firstName = this.currentFirstName;
-        this.loggedInUserObj.lastName =  this.currentLastName
+        this.loggedInUserObj.lastName =  this.currentLastName;
         this.loggedInUserObj.email = this.currentEmail;
         this.router.navigate(['/dashboard']);
     }
-    onProfilePicSelected(event){
-        this.selectedProfilePictureName = event.target.files[0];
+    onProfilePicSelected(e) {
+        const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+        const pattern = /image-*/;
+        const reader = new FileReader();
+        if (!file.type.match(pattern)) {
+       return  this.alertService.success('Invalid Image format', 'Image Format');
+        }
+        reader.onload = this._onProfilePicSelected.bind(this);
+        reader.readAsDataURL(file);
+    }
+    _onProfilePicSelected(e) {
+        const reader = e.target;
+        this.loggedInUserObj.profileImgPath = reader.result;
     }
 }

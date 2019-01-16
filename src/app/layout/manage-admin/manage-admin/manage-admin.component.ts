@@ -1,14 +1,14 @@
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
-import { Component, OnInit, Output, ViewChild, ViewContainerRef ,ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewContainerRef , ElementRef } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 @Component({
   selector: 'app-manage-admin',
   templateUrl: './manage-admin.component.html',
   styleUrls: ['./manage-admin.component.scss'],
-  providers: [AlertService,TeamService]
+  providers: [AlertService, TeamService]
 })
 export class ManageAdminComponent implements OnInit {
 _userService: UserService;
@@ -36,21 +36,20 @@ updatedLastName: any;
 updatedFirstName: any;
 updatedEmail: any;
 allAdminList = [];
-selectedAdmin : any;
+selectedAdmin: any;
 updatedUserCode: any;
 updatedUserStaus: boolean;
 updatedTeamName: any;
-teamArray= [];
+teamArray = [];
 newTeamName: any;
 selectedDefaultTeam: any;
-  constructor(userService: UserService,public alertService: AlertService , teamService: TeamService) { 
+  constructor(userService: UserService, public alertService: AlertService , teamService: TeamService) {
     this._userService = userService;
     this._teamService = teamService;
   }
-  
-  @ViewChild("updatedEmailField") updatedEmailField: ElementRef;
-  @ViewChild("updatedFirstNameField") updatedFirstNameField: ElementRef;
-  @ViewChild("updatedLastNameField") updatedLastNameField: ElementRef;
+  @ViewChild('updatedEmailField') updatedEmailField: ElementRef;
+  @ViewChild('updatedFirstNameField') updatedFirstNameField: ElementRef;
+  @ViewChild('updatedLastNameField') updatedLastNameField: ElementRef;
   @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
   deleteAdminPop: CustomModalModel = {
       titleIcon: '<i class="fa fa-trash"></i>',
@@ -70,7 +69,6 @@ selectedDefaultTeam: any;
       Button2Content: ''
   };
   ngOnInit() {
- 
   this._userService.getAllAdminList().subscribe(data => {
     if (!data.warningFl && !data.errorFl) {
         this.allAdminList = data;
@@ -78,9 +76,9 @@ selectedDefaultTeam: any;
 });
 
 this._teamService.getAllEnableTeams().subscribe(data => {
-    if(data.warningFl){
-     return this.alertService.warning(data.json().message,"Warning");   
-    }else{
+    if (data.warningFl) {
+     return this.alertService.warning(data.json().message, 'Warning');
+    } else {
       this.teamArray = data;
      }
   });
@@ -89,25 +87,26 @@ this._teamService.getAllEnableTeams().subscribe(data => {
     // console.log('change to page', number);
     this.config.currentPage = number;
 }
-deleteAdmin(selectedAdmin){
-    if(selectedAdmin.status.status === "ACTIVE"){
+deleteAdmin(selectedAdmin) {
+    if (selectedAdmin.status.status === 'ACTIVE') {
         this.deleteMemberModal.open();
-        this.selectedAdmin = selectedAdmin;  
-        this.allAdminList.splice(this.allAdminList.indexOf(selectedAdmin), 1);   
-    }else{
-        return this.alertService.warning("Admin "+selectedAdmin.firstName +" " + selectedAdmin.lastName +"  is already inactive", 'Inactive Admin');
+        this.selectedAdmin = selectedAdmin;
+        this.allAdminList.splice(this.allAdminList.indexOf(selectedAdmin), 1);
+    } else {
+        return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
+         '  is already inactive', 'Inactive Admin');
     }
 }
-deleteAdminNow(){
-   const payload = {userCode: this.selectedAdmin.userCode}
+deleteAdminNow() {
+   const payload = {userCode: this.selectedAdmin.userCode};
   this._userService.deleteUser(payload).subscribe(data => {
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
         this.deleteMemberModal.close();
-         let memObj = this.selectedAdminObj(this.selectedAdmin);
+         const memObj = this.selectedAdminObj(this.selectedAdmin);
         this.allAdminList.push(memObj);
-        return this.alertService.success("Admin "+data.firstName +" " + data.lastName +" has deleted successfully", 'Delete Admin');
+        return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
     }
 });
 }
@@ -118,11 +117,11 @@ deleteAdminNow(){
         };
     }
 
-editAdmin(user){
-    if(user.status.status === "ACTIVE"){
-        this.updatedUserStaus = true;    
-    }else{
-        this.updatedUserStaus =false;
+editAdmin(user) {
+    if (user.status.status === 'ACTIVE') {
+        this.updatedUserStaus = true;
+    } else {
+        this.updatedUserStaus = false;
     }
     this.editMemberModal.open();
     this.allAdminList.splice(this.allAdminList.indexOf(user), 1);
@@ -132,12 +131,12 @@ editAdmin(user){
     this.updatedTeamName = user.team;
     this.updatedUserCode = user.userCode;
     this.selectedDefaultTeam = user.team.teamName;
-    this.selectedAdmin = user;  
+    this.selectedAdmin = user;
 }
-updateMember(){
+updateMember() {
     let duplicateUserNameFlag ;
     let exceptionFlag;
-    let currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
+    const currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
     const payload = {
         firstName : this.updatedFirstName,
         lastName: this.updatedLastName,
@@ -145,60 +144,54 @@ updateMember(){
         status: {status: currentDisplayStatus},
         userCode: this.updatedUserCode,
         team: {teamName : this.selectedDefaultTeam}
-        
     };
-  
     this._userService.updateUserDetails(payload).subscribe(data => {
         duplicateUserNameFlag = data.warningFl;
         exceptionFlag = data.errorFl;
-        if( this.updatedFirstName === null || typeof this.updatedFirstName === "undefined"||this.updatedFirstName.trim() === "" ){
+        if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
             this.updatedFirstNameField.nativeElement.focus();
-             return this.alertService.warning("Please enter first name","Warning");
-          }else  if( this.updatedLastName === null || typeof this.updatedLastName === "undefined" ||this.updatedLastName.trim() === "" ){
+             return this.alertService.warning('Please enter first name', 'Warning');
+          } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
             this.updatedLastNameField.nativeElement.focus();
-            return this.alertService.warning("Please enter last name","Warning");
-          }else  if(this.updatedEmail === null || typeof this.updatedEmail === "undefined" ||this.updatedEmail.trim() === ""){
+            return this.alertService.warning('Please enter last name', 'Warning');
+          } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
             this.updatedEmailField.nativeElement.focus();
-            return this.alertService.warning("Please enter email","Warning");
-          }
-        else if(duplicateUserNameFlag == true) {
+            return this.alertService.warning('Please enter email' , 'Warning');
+          } else if (duplicateUserNameFlag === true) {
           this.updatedFirstNameField.nativeElement.focus();
-          return this.alertService.warning("Username already exist","Warning");
-        }else if(exceptionFlag == true) {
+          return this.alertService.warning('Username already exist', 'Warning');
+        } else if (exceptionFlag === true) {
           this.updatedEmailField.nativeElement.focus();
-          return this.alertService.warning(data.json().message,"Warning");
-        }else{
+          return this.alertService.warning(data.json().message, 'Warning');
+        } else {
           this.teamArray.push(data.team);
           this.allAdminList.push(data);
           this.editMemberModal.close();
-          return this.alertService.success("Admin has updated successfully","Success");
+          return this.alertService.success('Admin has updated successfully', 'Success');
 
         }
     });
 }
 private getStatusByUser(updatedStaus) {
-    let currentStatus;
     let currentDisplayStatus;
-    if (updatedStaus == true) {
-        currentStatus = 1;
-        currentDisplayStatus = "ACTIVE";
-    }
-    else {
-        currentStatus = 2;
-        currentDisplayStatus = "INACTIVE";
+    if (updatedStaus === true) {
+
+        currentDisplayStatus = 'ACTIVE';
+    } else {
+        currentDisplayStatus = 'INACTIVE';
     }
     return currentDisplayStatus;
 }
 
 
-closeEditPopup(){
+closeEditPopup() {
     this.deleteMemberModal.close();
-    let memObj = this.selectedAdminObj(this.selectedAdmin);
+    const memObj = this.selectedAdminObj(this.selectedAdmin);
     this.allAdminList.push(memObj);
 }
-closeDeletePopup(){
+closeDeletePopup() {
     this.editMemberModal.close();
-    let memObj = this.selectedAdminObj(this.selectedAdmin);
+    const memObj = this.selectedAdminObj(this.selectedAdmin);
     this.allAdminList.push(memObj);
 }
 

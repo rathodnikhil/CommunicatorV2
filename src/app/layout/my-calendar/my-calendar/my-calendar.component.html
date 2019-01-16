@@ -5,7 +5,7 @@
 </div>
 <div class="main">
     <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
-        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
+        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)" style="cursor: pointer;"></ng-fullcalendar>
 
 </div>
 
@@ -24,7 +24,7 @@
             <div class="col-md-6">{{meetingDetails.meetingStartDateTime | date:'fullDate'}}</div>
         </div>
         <div class="row form-control">
-            <div class="col-md-6">Duration</div>
+            <div class="col-md-6">Duration:</div>
             <div class="col-md-6">{{meetingDetails.duration}}</div>
         </div>
         <div class="row form-control">

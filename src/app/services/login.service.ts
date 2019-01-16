@@ -10,7 +10,6 @@ export class LoginService {
     previousUrl: string;
 
     constructor(private http: Http) { }
-    
     getAuthenticationToken(payload) {
         const url = urlConstants.baseUrl + 'token/generate-token';
         this.http.post(url, payload).subscribe(data => {
@@ -24,7 +23,7 @@ export class LoginService {
         return this.caseDaSubject;
     }
     getJwtToken() {
-        return "Bearer " + this.jwtToken;
+        return 'Bearer ' + this.jwtToken;
     }
     setPreviousUrl(url) {
         this.previousUrl = url;

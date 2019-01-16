@@ -34,9 +34,9 @@
                         <div class="col-sm-9">
                             <div class="input-group datepicker-input">
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
-                                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                                <button class="input-group-addon" (click)="d.toggle()" type="button" style="cursor: pointer;">
                                     <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                    <span class="fa fa-calendar"></span>
+                                    <span class="fa fa-calendar" style="cursor: pointer;"></span>
                                 </button>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>
                                 <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
-                                    <label>For Video Meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                    <label>For Meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                         <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                         https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span></label>               
                                 </p>

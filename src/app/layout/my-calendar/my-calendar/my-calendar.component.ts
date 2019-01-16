@@ -22,7 +22,7 @@ export class MyCalendarComponent implements OnInit {
         meetingStartDateTime : '',
         duration: '',
         createdBy: {
-            firstName :'',
+            firstName : '',
             lastName : ''
         }
     };
@@ -66,11 +66,11 @@ export class MyCalendarComponent implements OnInit {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
-                return this.alertService.warning(data[0].message, "Warning");
+                return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 data.forEach(element => {
-                    let endTime = new Date(new Date(element.meetingStartDateTime).getTime() + parseInt(element.duration.split(' Min')[0]) * 60000);
-                    var meeting = {
+                    const endTime = new Date(new Date(element.meetingStartDateTime).getTime() + parseInt(element.duration.split(' Min')[0]) * 60000);
+                    const meeting = {
                         title: element.subject + '(' + element.meetingCode + ')',
                         // url: '#/meeting?meetingCode=' + element.meetingCode,
                         start: new Date(element.meetingStartDateTime),

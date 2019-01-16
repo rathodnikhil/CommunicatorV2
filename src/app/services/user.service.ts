@@ -22,10 +22,10 @@ export class UserService {
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
-    saveUserDetails(payload,teamName): Observable<any> {
+    saveUserDetails(payload, teamName): Observable<any> {
         const url = urlConstants.baseUrl + 'saveUserDetails?teamName=' + teamName;
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.http.post(url, payload,teamName).subscribe(data => {
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        this.http.post(url, payload, teamName).subscribe(data => {
             resp.next(data);
             });
 
@@ -37,51 +37,40 @@ export class UserService {
     }
     saveMemberDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveMemberDetails';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                // alert(err);
             });
 
         return resp;
     }
     saveUserSettings(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveUserSettings';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                // alert(err);
             });
 
         return resp;
     }
     // to verify whether user is registered or not
-    verifyUser(payload) {        
+    verifyUser(payload) {
         const url = urlConstants.baseUrl + 'verifyUser';
         return this.http.post(url, payload);
     }
     setUserList(payload) {
         const url = urlConstants.baseUrl + 'memberListByUser?userCode=' + payload.userCode;
-        // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
             this.UserList$.next(data);
-        },
-            err => {
-                // alert(err);
-            });
-        // return resp;
+        });
     }
     getUserList() {
         return this.UserList$;
     }
-  setIsGuest(flag){
+  setIsGuest(flag) {
     this.isGuest$.next(flag);
   }
-  getIsGuest(flag){
+  getIsGuest(flag) {
     return this.isGuest$;
   }
     getUserSettingsByLoggedInUser(payload) {
@@ -157,6 +146,6 @@ export class UserService {
     }
     deleteUser(payload) {
         const url = urlConstants.baseUrl + 'deleteUser?userCode=' + payload.userCode;
-        return this.apiRequest.post(url,payload);
+        return this.apiRequest.post(url , payload);
     }
 }

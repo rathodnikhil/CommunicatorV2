@@ -8,12 +8,13 @@
 <div class="main" >
            
       <table style="width: 80%; ">
-          <tr>  <h4 class="btn btn-sec remove-border" style="cursor: default;">Profile Details</h4></tr>
+          <tr ><h3 >Profile Details</h3>
+            <label style="color: orangered; float: right;">To view updated changes relogin to your account</label></tr>
           <tr >
                 <td>Profile Picture</td>
-                <td>  <img src="assets/images/default.png"  alt="Responsive image"  class="img-fluid" />
-                  &nbsp;&nbsp;<span><i class="fa fa-remove fa-2x" style="color: red;"></i></span></td>
-                <td><input type="file" [(ngModel)]="loggedInUserObj.profileImgPath" (change)="onProfilePicSelected($event)"/></td>
+                <td>  <img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath"  alt="Responsive image"  class="img-fluid image--cover"/>
+                  <img *ngIf='loggedInUserObj.profileImgPath === null' src="assets/images/default-profile.jpg"  alt="Responsive image"  class="img-fluid image--cover"/>
+                  <p><input type="file" name="imageUrl" accept="image/*" [(ngModel)]="loggedInUserObj.profileImgPath" (change)="onProfilePicSelected($event)" style="cursor: pointer;"/></p></td>
           </tr>
           <tr>
                 <td>First Name <span class="asterik-mark">&nbsp;*</span></td>
@@ -35,7 +36,7 @@
                 <td>Team Name</td>
                 <td><input value="{{loggedInUserObj.team.teamName}}" type="text" readonly/></td>
           </tr>
-          <tr> <h4 class="btn btn-sec remove-border" style="cursor: default;">Other Details</h4></tr>
+          <tr> <h4>Other Details</h4></tr>
           <tr> <td>Total Meetings</td>
             <td><input value="{{profileOtherDetails.meetingCount}}" type="text" readonly/></td>
         </tr>
@@ -46,7 +47,6 @@
         <div style="text-align:center;">
             <button class="btn btn-sec" style="align:align-center" (click)="updateProfile()">Save Changes</button>
             <a class="btn btn-danger"  style="color:#fff;" (click)="cancelUpdate()">Cancel</a>
-            <h3>To view updated changes relogin to your account</h3>
         </div>
       </div>
 </div>

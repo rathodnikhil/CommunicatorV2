@@ -7,37 +7,37 @@ export class PasswordService {
   constructor() { }
 
   encrypted(plainText) {
-    let ic = 1000;
-    let ks = 128;
+    const ic = 1000;
+    const ks = 128;
 
 
-    let iv = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
-    let salt = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
+    const iv = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
+    const salt = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
 
-    let pp = "coreflex"; //passphrase or key.
-    let encrypted = this.cipherText(salt, iv, pp, plainText)
-    console.log("ennnn=====" + encrypted);
+    const pp = 'coreflex'; // passphrase or key.
+    const encrypted = this.cipherText(salt, iv, pp, plainText);
+    // console.log('ennnn=====' + encrypted);
 
    // let de = this.decrypt(salt, iv, pp, encrypted);
-    //console.log("decry====" + de);
+    // console.log("decry====" + de);
 
-    let seperator = "__babacd_dcabab__"
-    let allValuesForencryption = [encrypted, iv, salt, pp, ic, ks];
+    const seperator = '__babacd_dcabab__';
+    const allValuesForencryption = [encrypted, iv, salt, pp, ic, ks];
 
-    let lastString = ""
-    for (var i = 0; i < allValuesForencryption.length; i++) {
+    let lastString = '';
+    for (let i = 0; i < allValuesForencryption.length; i++) {
       if (i !== allValuesForencryption.length - 1) {
-        lastString = lastString + allValuesForencryption[i] + seperator
+        lastString = lastString + allValuesForencryption[i] + seperator;
       } else {
-        lastString = lastString + allValuesForencryption[i]
+        lastString = lastString + allValuesForencryption[i];
       }
     }
-    console.log("ennnn=====" + lastString);
+    // console.log("ennnn=====" + lastString);
     return lastString;
   }
 
   generateKey(salt, passPhrase) {
-    var key = CryptoJS.PBKDF2(
+    const key = CryptoJS.PBKDF2(
       passPhrase,
       CryptoJS.enc.Hex.parse(salt),
       { keySize: (128 / 32), iterations: 1000 });
@@ -45,8 +45,8 @@ export class PasswordService {
   }
 
   cipherText(salt, iv, passPhrase, plainText) {
-    var key = this.generateKey(salt, passPhrase);
-    var encrypted = CryptoJS.AES.encrypt(
+    const key = this.generateKey(salt, passPhrase);
+    const encrypted = CryptoJS.AES.encrypt(
       plainText,
       key,
       { iv: CryptoJS.enc.Hex.parse(iv) });
@@ -54,16 +54,14 @@ export class PasswordService {
   }
 
   decrypt(salt, iv, passPhrase, cipherText) {
-    var key = this.generateKey(salt, passPhrase);
-    var cipherParams = CryptoJS.lib.CipherParams.create({
+    const key = this.generateKey(salt, passPhrase);
+    const cipherParams = CryptoJS.lib.CipherParams.create({
       ciphertext: CryptoJS.enc.Base64.parse(cipherText)
     });
-    var decrypted = CryptoJS.AES.decrypt(
+    const decrypted = CryptoJS.AES.decrypt(
       cipherParams,
       key,
       { iv: CryptoJS.enc.Hex.parse(iv) });
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
- 
-
 }

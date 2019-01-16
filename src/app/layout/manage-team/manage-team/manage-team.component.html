@@ -50,28 +50,22 @@
 <div class="main">
 
     <div class="row" *ngIf="showSelectedTeam" style="padding: 5px;">
-        <h4 style="padding-top: 2px; padding-right: 30px;">{{selectedTeamName}}
+        <h4 style="padding-top: 2px; padding-right: 30px; cursor: pointer;">{{selectedTeamName}}
             <span>&nbsp;[{{filterMemberList.length}} Members]</span>
         </h4>
-        <button (click)="editTeam()" class="btn btn-primary" style="margin-right: 5px;">
+        <button (click)="editTeam()" class="btn btn-primary" style="margin-right: 5px;" #editTeamField>
             <i class="fa fa-pencil-square-o"></i>
         </button>
         <button (click)="deleteSelectedTeam()" class="btn btn-danger">
-            <i class="fa fa-trash-o"></i>
+            <i class="fa fa-trash-o" #deleteTeamField></i>
         </button>
         <hr>
     </div>
     <div class="row">
         <div class="col-md-9">
-            <button class="btn btn-primary" (click)="openMemberPopup()">+Member</button>
+            <button class="btn btn-primary" (click)="openMemberPopup()" #addMemField>+Member</button>
         </div>
         <div class="align-center" class="col-md-3">
-            <div class="btn btn-sec remove-border" style="cursor: default;">
-                <span class="span-dec">Filter By:&nbsp;</span>
-                <a style="padding-right:10px; cursor: default;">Name</a>
-                <a class="date-period-select" style="cursor: default;">Email</a>
-                <a class="date-period-select" style="cursor: default;">Status</a>
-            </div>
             <div class="form-group input-group" style="padding-top:5px;">
                 <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTableText">
                 <div class="input-group-append">
@@ -89,6 +83,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Status</th>
+            <th>Meting Permission</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -97,6 +92,8 @@
             <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
             <td>{{userMemPermission.userId.email}}</td>
             <td>{{userMemPermission.userId.status.status}} </td>
+            <td><i class="fa fa-check" aria-hidden="true"  style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i> 
+                <i class="fa fa-times" aria-hidden="true"  style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
             <td>
                 <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);"></i>
             </td>
@@ -182,6 +179,15 @@
                     <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password" type="password" required/>
                 </div>
             </div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <label>Meeting Permission</label>
+                </div>
+                <div>
+                    <input type="checkbox" class="form-control" id="meetingStatusChk" [(ngModel)]="meetingPermissionStatus">
+                    <p id="meetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
+                </div>
+            </div>
         </div>
         <div class="modal-footer popFooter">
             <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
@@ -219,8 +225,17 @@
                     <label>Status</label>
                 </div>
                 <div>
-                    <input type="checkbox" class="form-control" id="statusChk" [(ngModel)]="updatedUserStaus">
+                    <input type="checkbox" class="form-control" id="statusChk" [(ngModel)]="updatedUserStatus">
                     <p id="text" style="display:none">Checkbox is CHECKED!</p>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <label>Meeting Permission</label>
+                </div>
+                <div>
+                    <input type="checkbox" class="form-control" id="updatedSeetingStatusChk" [(ngModel)]="updatedMeetingPermissionStatus">
+                    <p id="updatedMeetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
                 </div>
             </div>
         </div>
