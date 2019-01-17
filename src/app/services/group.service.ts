@@ -10,17 +10,15 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class GroupService {
-   
     _loginService: LoginService;
     loggedInUser: any;
     GroupList$: Subject<any[]> = new BehaviorSubject<any>({});
     groupMemberList$: Subject<any[]> = new BehaviorSubject<any>({});
     sideBarMenuList$: Subject<any[]> = new BehaviorSubject<any>({});
-    constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) { 
+    constructor(private http: Http , loginService: LoginService, private apiRequest: ApiRequestService) {
       this._loginService = loginService;
     }
-   
-    //get groups by loggedinuser
+    // get groups by loggedinuser
     setGroupList(payload) {
       const url = urlConstants.baseUrl + 'getGroupByLoggedInUserId?userCode=' + payload.userCode;
       // const resp = new BehaviorSubject<any>({});
@@ -41,26 +39,18 @@ export class GroupService {
       }
       saveGroupDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveGroupDetails';
-        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-          this.apiRequest.post(url,payload).subscribe(data => {
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+          this.apiRequest.post(url, payload).subscribe(data => {
               resp.next(data);
-          },
-            err => {
-           //   alert(err);
             });
-    
         return resp;
       }
       saveBroadcastMessage(payload) {
         const url = urlConstants.baseUrl + 'saveBroadcastMessage';
-        let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-          this.apiRequest.post(url,payload).subscribe(data => {
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+          this.apiRequest.post(url, payload).subscribe(data => {
               resp.next(data);
-          },
-            err => {
-          //    alert(err);
             });
-    
         return resp;
       }
 
@@ -69,9 +59,6 @@ export class GroupService {
         // const resp = new BehaviorSubject<any>({});
         this.apiRequest.post(url, payload).subscribe(data => {
             this.sideBarMenuList$.next(data);
-        },
-            err => {
-              //  alert(err);
             });
         // return resp;
       }
@@ -83,9 +70,6 @@ export class GroupService {
       // const resp = new BehaviorSubject<any>({});
       this.apiRequest.post(url, payload).subscribe(data => {
           this.groupMemberList$.next(data);
-      },
-          err => {
-            //  alert(err);
           });
       // return resp;
     }
@@ -96,17 +80,13 @@ export class GroupService {
     const url = urlConstants.baseUrl + 'getGroupMembersByGroup?userCode=' +payload.userCode;
     return this.apiRequest.post(url , payload);
 }
-  
+
   saveGroupMember(payload): Observable<any> {
     const url = urlConstants.baseUrl + 'saveGroupMember';
-    let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-      this.apiRequest.post(url,payload).subscribe(data => {
+    const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+      this.apiRequest.post(url, payload).subscribe(data => {
           resp.next(data);
-      },
-        err => {
-       //   alert(err);
         });
-
     return resp;
   }
 }

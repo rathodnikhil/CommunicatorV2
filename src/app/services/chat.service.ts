@@ -10,15 +10,15 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class ChatService {
-  chattingHistoryList$: Subject<any[]> = new BehaviorSubject<any>({});  
-  broadcastMsgHistoryList$: Subject<any[]> = new BehaviorSubject<any>({});  
+  chattingHistoryList$: Subject<any[]> = new BehaviorSubject<any>({});
+  broadcastMsgHistoryList$: Subject<any[]> = new BehaviorSubject<any>({});
   constructor( private apiRequest: ApiRequestService) { }
 
-   //save individual chatting
+   // save individual chatting
    saveChat(payload): Observable<any> {
     const url = urlConstants.baseUrl + 'saveChat';
-    let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-      this.apiRequest.post(url,payload).subscribe(data => {
+    const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+      this.apiRequest.post(url, payload).subscribe(data => {
           resp.next(data);
       });
     return resp;
@@ -35,7 +35,7 @@ setChattingHistoryList() {
 }
 
 setBroadcastMsgByLoggedInuserId(payload) {
-    const url = urlConstants.baseUrl + 'getBroadcastMsgByLoggedInuserId?userFrom=' + payload.userFrom +'&userTo=' +payload.userTo;
+    const url = urlConstants.baseUrl + 'getBroadcastMsgByLoggedInuserId?userFrom=' + payload.userFrom + '&userTo=' + payload.userTo;
     this.apiRequest.post(url, payload).subscribe(data => {
         this.broadcastMsgHistoryList$.next(data);
     });

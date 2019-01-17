@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef,ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef , ElementRef } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
@@ -15,7 +15,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ScheduleMeetingComponent implements OnInit {
     @Output() CurrentRoute = new EventEmitter();
-    @ViewChild("closeBtn") closeBtn: ElementRef;
+    @ViewChild('closeBtn') closeBtn: ElementRef;
     @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
     _meetingService: MeetingService;
     _userService: UserService;
@@ -152,18 +152,18 @@ export class ScheduleMeetingComponent implements OnInit {
         this.CurrentRoute.emit(0);
     }
     scheduleMeeting() {
-         let date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
+         const date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
             this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
-            let today =  new Date();
-        if ( this.subject === null || typeof this.subject === "undefined" || this.subject.trim() === "") {
-            return this.alertService.warning('Please enter meeting subject', "Warning");
+            const today =  new Date();
+        if ( this.subject === null || typeof this.subject === 'undefined' || this.subject.trim() === '') {
+            return this.alertService.warning('Please enter meeting subject', 'Warning');
         } else if (this.meeting.selectedDuration === 'Select Duration') {
-            return this.alertService.warning('Please select meeting duration', "Warning");
+            return this.alertService.warning('Please select meeting duration', 'Warning');
         } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
-            return this.alertService.warning('Please select timezone', "Warning");
-        }else if(date <= today){
-            return this.alertService.warning('Please select future meeting date or time', "Warning");
-        }else {
+            return this.alertService.warning('Please select timezone', 'Warning');
+        } else if (date <= today) {
+            return this.alertService.warning('Please select future meeting date or time', 'Warning');
+        } else {
             this.meridian = !this.meridian;
             this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
             if (this.meeting.callType === 1) {
@@ -174,9 +174,10 @@ export class ScheduleMeetingComponent implements OnInit {
             const payload = {
                 'meetingDate':   new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                     this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
-                // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour) + ':'
+                // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 :
+                // this.meeting.meridianTime.hour) + ':'
                 // + this.meeting.meridianTime.minute,
-                //'meetingEndDateTime': 1525067350000,
+                // 'meetingEndDateTime': 1525067350000,
                 'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                     this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
                 'subject': this.subject,
@@ -192,7 +193,7 @@ export class ScheduleMeetingComponent implements OnInit {
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     this.meeting = {};
-                    return this.alertService.warning(data.message, "Warning");
+                    return this.alertService.warning(data.message, 'Warning');
                 } else {
                     if (this.meeting.callType === 'Video') {
                         this.vedioMeeting = true;
@@ -205,27 +206,24 @@ export class ScheduleMeetingComponent implements OnInit {
                         this.futureMeetingList = [];
                     }
                     this.futureMeetingList.push(data);
-                
                     if (this.filteredFutureMeetingList === undefined || this.filteredFutureMeetingList.length <= 0) {
                         this.filteredFutureMeetingList = [];
                     }
                     this.filteredFutureMeetingList.push(data);
                    // this.showScheduleMeetingSuccess = true;
                    this.scheduleMeetingModal.open();
-                   return this.alertService.success("Meeting has scheduled successfully", "Schedule Meeting");
-                   
+                   return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
                 }
             });
         }
     }
-   
     clearAllMeetingField() {
         this.subject = '';
         this.meeting.selectedDuration = 'Select Duration';
         this.meeting.selectedTimeZone = 'Select Timezone';
         this.meeting.callType = 1;
         this.meeting.isRecurring = 1;
-        let today = new Date();
+        const today = new Date();
         this.meeting.datePicker = {
             day: today.getDate(),
             month: today.getMonth() + 1,
@@ -233,9 +231,8 @@ export class ScheduleMeetingComponent implements OnInit {
         };
         this.meeting.meridianTime =  { hour: today.getHours(), minute: today.getMinutes() };
     }
-   
     copyToOutLook(event) {
-        var meetingDetails = encodeURIComponent(this.getMeetingDetails());
+        const meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
         a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
         document.body.appendChild(a);
@@ -244,16 +241,16 @@ export class ScheduleMeetingComponent implements OnInit {
        // this.showScheduleMeetingSuccess = false;
         this.closeMeetingPopup('scheduleMeetings');
     }
-    //copy meeting content
+    // copy meeting content
     copyToClipboard() {
-        var meetingDetails = this.subject + '  '+ this.getMeetingDetails();
+        const meetingDetails = this.subject + '  ' + this.getMeetingDetails();
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-      return this.alertService.success("Meeting Details has been Copied. Kindly share via your preferred Mail Id.", "Copy Meeting Details");
+      return this.alertService.success('Meeting Details has been Copied. Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
     }
     changeTimeZone(timezone) {
         this.meeting.selectedTimeZone = timezone;
@@ -265,7 +262,7 @@ export class ScheduleMeetingComponent implements OnInit {
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
-    //close meeting modal popup
+    // close meeting modal popup
     closeMeetingPopup(popupType) {
         switch (popupType) {
             case 'scheduleMeetings':
@@ -275,17 +272,16 @@ export class ScheduleMeetingComponent implements OnInit {
                 break;
         }
     }
-   
-    //get meeting details
+
+    // get meeting details
     getMeetingDetails(): string {
-        
-            let meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-            
-        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.year + '/' + this.meeting.datePicker.month + '/'
+            const meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.year + '/' +
+         this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' + meetingUrl+this.accessCode 
+            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' + meetingUrl + this.accessCode +
             '\r\n\r\n Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }

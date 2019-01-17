@@ -28,7 +28,7 @@ export class GuestUserComponent implements OnInit {
   };
   guestUserList = [];
   loggedInUser: any;
-  searchText : string;
+  searchText: string;
   constructor(userService: UserService) {
     this._userService = userService;
    }
@@ -37,12 +37,10 @@ export class GuestUserComponent implements OnInit {
     this._userService.getLoggedInUserObj().subscribe(data => {
       this.loggedInUser = data;
       const payload = { userCode: this.loggedInUser.userCode };
-    this._userService.getGuestUsersByLoggedInUser(payload).subscribe(data => {
+    this._userService.getGuestUsersByLoggedInUser(payload).subscribe(guestUserData => {
       this.guestUserList = data;
   });
-  
   });
-   
   }
   onPageChange(number: number) {
     // console.log('change to page', number);

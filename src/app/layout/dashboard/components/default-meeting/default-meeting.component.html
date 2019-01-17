@@ -27,7 +27,7 @@
                         </h5>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go
+                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)" #goToOutlookBtnField>Go
                             to Outlook</button>
                         <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
                         <button type="button" class="btn btn-secondary  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start
@@ -56,20 +56,20 @@
             <label for="s1" class="accordion-label" (click)="selectMeetingFilterDate()">
                 <i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
                 <span style="float: right; font-size: 20px;">
-                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    <i class="fa fa-angle-down" aria-hidden="true" style="cursor: pointer;"></i>
                 </span>
             </label>
             <ul class="accordion-child">
-                <div class="row overall-padding">
+                <div class="row overall-padding" style="cursor: default;">
                     <div class="col-sm-6">
                         <label>From Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy-MM-dd'}}" name="fromDate"
+                            <input class="form-control" name="fromDate"
                                 [(ngModel)]="selectedfromDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
                                 #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                <span class="fa fa-calendar"></span>
+                                <span class="fa fa-calendar" style="cursor: pointer;"></span>
                             </button>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                                 #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                <span class="fa fa-calendar"></span>
+                                <span class="fa fa-calendar" style="cursor: pointer;"></span>
                             </button>
                         </div>
                     </div>

@@ -26,29 +26,28 @@ export class MeetingVideoCallComponent implements OnInit {
       this.momTo = 'set MOM Duty';
     const payload = {meetingId: 'MGDJG43223423'};
     this._userService.getLoggedInUserObj().subscribe(data => {
-        if(data.errorFl === true || data.warningFl === true){
+        if (data.errorFl === true || data.warningFl === true) {
             this.loggedInUser = {};
-            return this.alertService.warning(data.message, "Warning"); 
-        }else{ 
+            return this.alertService.warning(data.message, 'Warning');
+        } else {
         this.loggedInUser = data;
         }
     });
-    //to get list of member
+    // to get list of member
     this._meetingService.getMeetingAttendee(payload).subscribe(data => {
         this.userList = data.json();
     });
  }
 
- //to set selected send message to
+ // to set selected send message to
  changeMessageTo(member) {
     this.messageSendTo = member.name + ' ' + member.lastName;
 }
 
-//to set selected mom to
+// to set selected mom to
 changeMomTo(member) {
     this.momTo = member.name + ' ' + member.lastName;
 }
-saveMom(){
-   
+saveMom() {
 }
 }

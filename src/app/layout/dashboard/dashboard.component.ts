@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     groupList = [];
     groupArray = [];
     array = [];
-    isAdministrator=false;
+    isAdministrator = false;
     i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
@@ -110,7 +110,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
                 // debugger;
-                this.isAdministrator =  this.loggedInUserObj.roles.find(x=>x.role=="ADMINISTRATOR")!==undefined;
+                this.isAdministrator =  this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 // this._meetingService.setRecentMeetingByUser(payload);
                 this._userService.getSelectedUser().subscribe(res => {
                     if (res) {
@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
         let userRoleArray = [];
         userRoleArray = this.loggedInUserObj.roles;
-        let roleArray = [];
+        const roleArray = [];
         for (let i = 0; i < userRoleArray.length; i++) {
             roleArray.push(userRoleArray[i].role);
         }
@@ -187,7 +187,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }
     }
     logout() {
-        let payload = { userCode: this.loggedInUserObj.userCode };
+        const payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
             this.errorFl = data.errorFl;
             if (this.errorFl === true) {

@@ -46,7 +46,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.counter.pause();
         }
     }
- 
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
@@ -62,11 +61,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._loginService = loginService;
         this._meetingService = meetingService;
     }
-    @ViewChild("saveMomBtn") saveMomBtn: ElementRef;
-    @ViewChild("shareFileBtn") shareFileBtn: ElementRef;
-    @ViewChild("muteUnmuteBtn") muteUnmuteBtn: ElementRef;
-    @ViewChild("shareScreenBtn") shareScreenBtn: ElementRef;
-    @ViewChild("viewVideoBtn") viewVideoBtn: ElementRef;
+    @ViewChild('saveMomBtn') saveMomBtn: ElementRef;
+    @ViewChild('shareFileBtn') shareFileBtn: ElementRef;
+    @ViewChild('muteUnmuteBtn') muteUnmuteBtn: ElementRef;
+    @ViewChild('shareScreenBtn') shareScreenBtn: ElementRef;
+    @ViewChild('viewVideoBtn') viewVideoBtn: ElementRef;
     @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
     leaveMeeting: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',
@@ -87,7 +86,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.firstName !== undefined && this.loggedInUser == undefined) {
+            if (data.firstName !== undefined && this.loggedInUser === undefined) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '' && this.meetingCode !== undefined) {
                     const payload = { userCode: '', meetingCode: this.meetingCode };
@@ -126,8 +125,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         }
                     });
                 } else {
-                    this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.', 'Invalid meeting code');
-                    if (data.isGuest == true) {
+                    this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.',
+                         'Invalid meeting code');
+                    if (data.isGuest === true) {
                         this.router.navigate(['/login']);
                         // window.location.reload();
                     } else {
@@ -143,7 +143,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingTest.js';
-        s.id = "meetingTest";
+        s.id = 'meetingTest';
         const __this = this; // to store the current instance to call
         // afterScriptAdded function on onload event of
         // script.
@@ -175,7 +175,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 if (this.isGuest) {
                     this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendee');
                 } else {
-                    let payload = { meetingCode: this.meetingDetails.meetingCode };
+                    const payload = { meetingCode: this.meetingDetails.meetingCode };
                     this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
                         this.downloadFile(this.momTxt, this.meetingDetails, resp);
                     });
@@ -187,10 +187,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     if (this.errorFl === true) {
                         return this.alertService.warning(resp.message, 'Warning');
                     } else {
-                        let payload = { meetingCode: this.meetingDetails.meetingCode };
+                        const attendeePayload = { meetingCode: this.meetingDetails.meetingCode };
                         let attendeeList;
-                        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
-                            attendeeList = resp;
+                        this._meetingService.getMeetingAttendee(attendeePayload).subscribe(attendeeData => {
+                            attendeeList = attendeeData;
                             this.downloadFile(this.momTxt, this.meetingDetails, attendeeList);
                         });
                     }
@@ -200,7 +200,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     downloadFile(data, meetingDetails, attendeeList) {
         const today = new Date();
-        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject + '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
+        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
+         '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
@@ -226,7 +227,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     completeExit() {
         this.exit();
-        if (this.isGuest == true) {
+        if (this.isGuest === true) {
             this.router.navigate(['/login']);
             window.location.reload();
         } else {
@@ -236,9 +237,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     exit() {
         this.exitMeetingConfirmModal.close();
-        let payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-        if (this.isGuest)
+        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+        if (this.isGuest) {
             payload.userCode = this.loggedInUser.firstName;
+        }
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
@@ -256,11 +258,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
         this.document.getElementById('btn-end-meeting').click();
         this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
-        setTimeout(()=>{ 
+        setTimeout(() => {
             this.router.navigate(['/login']);
             window.location.reload();
        }, 180000);
-        
     }
     onNotify(time: number) {
         this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
@@ -282,25 +283,25 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     onSnapAnimationFinished() {
-        //tbd
+        // tbd
     }
 
     onIndexChanged(idx) {
         this.index = idx;
     }
-    shareFile(){
+    shareFile() {
         this.shareFileBtn.nativeElement.blur();
     }
-    mute(){
-        this.isMute =! this.isMute;
+    mute() {
+        this.isMute = ! this.isMute;
         this.muteUnmuteBtn.nativeElement.blur();
     }
-    shareScreen(){
-        this.isScreenSharingStarted =!this.isScreenSharingStarted;
+    shareScreen() {
+        this.isScreenSharingStarted = ! this.isScreenSharingStarted;
         this.shareScreenBtn.nativeElement.blur();
     }
-    viewVideo(){
-        this.isVideoEnabled=! this.isVideoEnabled;
+    viewVideo() {
+        this.isVideoEnabled = ! this.isVideoEnabled;
         this.viewVideoBtn.nativeElement.blur();
     }
 }

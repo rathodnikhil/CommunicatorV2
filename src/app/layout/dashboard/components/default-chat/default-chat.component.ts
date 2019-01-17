@@ -15,19 +15,19 @@ export class DefaultChatComponent implements OnInit {
     _userService: UserService;
     loggedInUserObj: any;
 
-    constructor(userService: UserService, private router: Router,loginService: LoginService ,public alertService: AlertService) {
+    constructor(userService: UserService, private router: Router, loginService: LoginService , public alertService: AlertService) {
         this._userService = userService;
         this._loginService = loginService;
     }
     ngOnInit() {
-        this._userService.getLoggedInUserObj().subscribe(data => {    
-            if(data.errorFl === true || data.warningFl === true){
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUserObj = {};
-                return this.alertService.warning(data.message, "Warning"); 
-            }else{ 
-                this.loggedInUserObj = data;    
-            } 
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.loggedInUserObj = data;
+            }
         });
     }
-
 }
+

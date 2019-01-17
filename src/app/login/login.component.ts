@@ -71,7 +71,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 if (this.email === undefined || this.email === '' || this.email === null) {
                     return this.alertService.error('Enter email id', 'Error');
                 } else {
-                    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                    const EMAIL_REGEXP =
+                     /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
                     if (!EMAIL_REGEXP.test(this.email)) {
                         this.emailField.nativeElement.focus();
@@ -102,7 +103,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     const loggedinUser = resp.json();
                     loginWarningFlag = loggedinUser.warningFl;
                     if (loginWarningFlag === false) {
-                        this._loginService.getAuthenticationToken(payload).subscribe(resp => {
+                        this._loginService.getAuthenticationToken(payload).subscribe(data => {
                             this.jwtToken = this._loginService.getJwtToken();
                             if (this.jwtToken === undefined ||
                                 this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
@@ -119,8 +120,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                                     }
                                 });
                             }
-                        }, err => {
-
                         });
                     } else {
                         this.userName = '';

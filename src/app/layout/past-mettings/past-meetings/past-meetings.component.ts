@@ -50,10 +50,10 @@ export class PastMeetingsComponent implements OnInit {
         Button2Content: ''
     };
     ngOnInit() {
-        //loggedInuser Object webservice call
+        // loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, "Warning");
+                return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
                 this.getPastMeetingsByuser();
@@ -66,7 +66,7 @@ export class PastMeetingsComponent implements OnInit {
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
                 this.pastMeetingList = [];
-                return this.alertService.warning(data[0].message, "Warning");
+                return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = data;
             }
@@ -74,10 +74,10 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     downloadMom(data) {
-        if (data.mom === "" || data.mom === null || typeof data.mom === "undefined") {
-            return this.alertService.warning('No MOM for this meeting has been added', "Warning");
+        if (data.mom === '' || data.mom === null || typeof data.mom === 'undefined') {
+            return this.alertService.warning('No MOM for this meeting has been added', 'Warning');
         } else {
-            let payload = { meetingCode: data.meetingCode };
+            const payload = { meetingCode: data.meetingCode };
             this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
                 if (resp.errorFl) {
                     this.alertService.warning(resp.message, 'Warning');
@@ -88,10 +88,11 @@ export class PastMeetingsComponent implements OnInit {
             //   let attendeeList = this.getAttendeeList(data);
             data.mom.momDescription = data.mom.momDescription.split('\n');
             data.mom.momDescription = data.mom.momDescription.join('\r\n ');
-            const momHeader = 'Date of Meeting: ' + data.meetingDate + '\r\n\r\n' + 'Subject: ' + data.subject + '\r\n\r\n' + 'Attendees : ' + this.attendeeListByMeeting + '\r\n\r\n';
+            const momHeader = 'Date of Meeting: ' + data.meetingDate + '\r\n\r\n' + 'Subject: ' + data.subject + '\r\n\r\n' +
+            'Attendees : ' + this.attendeeListByMeeting + '\r\n\r\n';
             const fileType = 'text/json';
 
-            var a = document.createElement('a');
+            const a = document.createElement('a');
             document.body.appendChild(a);
             a.setAttribute('style', 'display: none');
             a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data.mom.momDescription)}`);
@@ -100,7 +101,7 @@ export class PastMeetingsComponent implements OnInit {
             a.click();
             // window.URL.revokeObjectURL(url);
             a.remove(); // remove the element
-            this.alertService.success("File has been downloaded.", "MOM Download");
+            this.alertService.success('File has been downloaded.', 'MOM Download');
         }
 
     }
@@ -111,7 +112,7 @@ export class PastMeetingsComponent implements OnInit {
         return s && s.replace('meetNowFlag', '');
     }
     viewAttendee(meeting) {
-        let payload = { meetingCode: meeting.meetingCode };
+        const payload = { meetingCode: meeting.meetingCode };
         this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
