@@ -40,59 +40,58 @@ userPermissionMemberList = [];
 meetingPermissionList = [];
 payloadSearch: any;
 
-  constructor(teamService: TeamService , userService: UserService ,public alertService: AlertService , meetingService: MeetingService) {
+  constructor(teamService: TeamService , userService: UserService , public alertService: AlertService , meetingService: MeetingService) {
       this._teamService = teamService;
       this._userService = userService;
       this._meetingService = meetingService;
    }
 
   ngOnInit() {
-    this._userService.getLoggedInUserObj().subscribe(data => {     
-      this.loggedInUser = data;     
+    this._userService.getLoggedInUserObj().subscribe(data => {
+      this.loggedInUser = data;
    });
     this.userPermissionList = [];
     const payload = {userCode: this.loggedInUser.userCode};
     this._teamService.getTeamsByLoggedInUserId(payload).subscribe(data => {
-         if(data[0].errorFl || data[0].warningFl){
+         if (data[0].errorFl || data[0].warningFl) {
           this.userPermissionList = [];
-          return this.alertService.warning(data[0].message, "Warning"); 
-      } else{
+          return this.alertService.warning(data[0].message, 'Warning');
+      } else {
         this.userPermissionList = data;
       }
      });
 
      this._teamService.getMemberListByLoggedInUserId(payload).subscribe(data => {
-          if(data[0].errorFl || data[0].warningFl){
+          if (data[0].errorFl || data[0].warningFl) {
             this.userPermissionMemberList = [];
-            return this.alertService.warning(data[0].message, "Warning"); 
-        } else{
+            return this.alertService.warning(data[0].message, 'Warning');
+        } else {
           this.userPermissionMemberList = data;
         }
       });
-   
   }
 
-  scheduleMeetingRight(user , event){
+  scheduleMeetingRight(user , event) {
     let statusFlag = null;
-   if(event.target.checked === true){
-       statusFlag = {status : "ACTIVE"};
-   }else{
-    statusFlag = {status : "INACTIVE"};
+   if (event.target.checked === true) {
+       statusFlag = {status : 'ACTIVE'};
+   } else {
+    statusFlag = {status : 'INACTIVE'};
    }
-    let object = {user : user , meetingFlag: statusFlag}
+    const object = {user : user , meetingFlag: statusFlag};
     this.meetingPermissionList.push(object);
   }
   onPageChange(number: number) {
     // console.log('change to page', number);
     this.config.currentPage = number;
 }
-assignMeetingPermission(){
+assignMeetingPermission() {
   this._meetingService.saveMeetingPermission(this.meetingPermissionList).subscribe(data => {
-    if(data.errorFl || data.warningFl){
-      //this.userPermissionMemberList = [];
-      return this.alertService.warning(data.message, "Warning"); 
-  } else{
-    return this.alertService.warning("Meeting Permission has saved successfully", "Warning"); 
+    if (data.errorFl || data.warningFl) {
+      // this.userPermissionMemberList = [];
+      return this.alertService.warning(data.message, 'Warning');
+  } else {
+    return this.alertService.warning('Meeting Permission has saved successfully', 'Warning');
   }
 });
 }

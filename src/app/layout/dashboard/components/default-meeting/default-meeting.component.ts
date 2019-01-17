@@ -33,6 +33,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedMeeting: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
+    @ViewChild('goToOutlookBtnField') goToOutlookBtnField: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
     meetNowModel: CustomModalModel = {
         titleIcon: '<i class="fa fa - calendar - check - o"></i>',
@@ -80,7 +81,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.loggedInUser = data;
                 let userRoleArray = [];
                 userRoleArray = this.loggedInUser.roles;
-                let roleArray = [];
+                const roleArray = [];
                 for (let i = 0; i < userRoleArray.length; i++) {
                     roleArray.push(userRoleArray[i].role);
                 }
@@ -92,17 +93,17 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 const payload = { userCode: this.loggedInUser.userCode };
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
-                this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-                    if (data !== undefined && data.length > 0) {
-                        this.futureMeetingList = data;
-                        this.filteredFutureMeetingList = data;
+                this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
+                    if (futureData !== undefined && futureData.length > 0) {
+                        this.futureMeetingList = futureData;
+                        this.filteredFutureMeetingList = futureData;
 
                     } else {
-                        // debugger;
                         this.futureMeetingList = [];
                         this.filteredFutureMeetingList = [];
-                        if (data[0] !== undefined && data[0].message !== undefined)
+                        if (data[0] !== undefined && data[0].message !== undefined) {
                             return this.alertService.warning(data[0].message, 'Warning');
+                        }
                     }
                 });
             }
@@ -155,7 +156,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
                         this.filteredFutureMeetingList.push(meeting);
                     }
-                });                
+                });
                 break;
             default:
                 this.selectedCriteria = 'All';
@@ -201,13 +202,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         });
     }
     copyToOutLook(event) {
-        debugger;
         const meetingDetails = encodeURIComponent(this.getMeetingDetails());
         const a = document.createElement('a');
         a.href = 'mailto:?subject=' + 'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        this.goToOutlookBtnField.nativeElement.blur();
     }
     // copy meeting content
     copyToClipboard() {
@@ -218,7 +219,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
+        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.',
+        'Copy Meeting Details');
     }
     joinMeetingNow() {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);

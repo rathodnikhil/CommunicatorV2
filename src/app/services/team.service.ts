@@ -17,9 +17,9 @@ export class TeamService {
     email: any;
     teamId: any;
     _loginService: LoginService;
-    teamList$: Subject<any[]> = new BehaviorSubject<any>({});  
-    memberList$: Subject<any[]> = new BehaviorSubject<any>({});  
-    constructor(private http: Http ,loginService: LoginService , private apiRequest: ApiRequestService) {
+    teamList$: Subject<any[]> = new BehaviorSubject<any>({});
+    memberList$: Subject<any[]> = new BehaviorSubject<any>({});
+    constructor(private http: Http , loginService: LoginService , private apiRequest: ApiRequestService) {
       this._loginService = loginService;
      }
     getTeamsByLoggedInUserId(payload) {
@@ -31,16 +31,15 @@ export class TeamService {
         const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
       }
-    
        getAllEnableTeams() {
         const url = urlConstants.baseUrl + 'getAllEnableTeams';
         return this.apiRequest.get(url);
        }
-       //add new team
-        saveTeamDetails(payload): Observable<any>{
+       // add new team
+        saveTeamDetails(payload): Observable<any> {
           const url = urlConstants.baseUrl + 'saveTeamDetails';
-          let resp : ReplaySubject<any> = new ReplaySubject<any>(1);
-            this.apiRequest.post(url,payload).subscribe(data => {
+          const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+            this.apiRequest.post(url, payload).subscribe(data => {
                 resp.next(data);
               });
           return resp;

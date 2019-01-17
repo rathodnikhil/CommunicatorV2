@@ -7,17 +7,11 @@
 <div class="main">
     <div class="row">
         <div class="col-md-9">
-            <h4 class="btn btn-sec remove-border" style="cursor: default;">Past Meetings Details</h4>
+            <h4>Past Meetings Details</h4>
         </div>
         <div class="align-center" class="col-md-3">
-            <div class="btn btn-sec remove-border" style="cursor: default;">
-                <span class="span-dec">Filter By:&nbsp;</span>
-                <a style="padding-right:10px; cursor: default;">Date</a>
-                <a class="date-period-select" style="cursor: default;">Meeting Id</a>
-                <a class="date-period-select" style="cursor: default;">Status</a>
-            </div>
             <div class="form-group input-group" style="padding-top:5px;">
-                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+                <input type="text" class="form-control" placeholder="Search"  placeholder="Date/Meeting Id/Status" [(ngModel)]="searchText">
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button">
                         <i class="fa fa-search"></i>
@@ -42,7 +36,7 @@
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
             <td>
-                <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)"></i>
+                <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)" style="cursor: pointer;"></i>
             </td>
             <td>{{meeting.status.status}}</td>
             <td>

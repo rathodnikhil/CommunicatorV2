@@ -19,27 +19,26 @@ export class MeetingService {
         this._loginService = loginService;
     }
 
-    //schedule meeting webserce details
+    // schedule meeting webserce details
     scheduleMeeting(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'scheduleMeeting';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
             });
 
         return resp;
     }
-        //meetNow webservice details
+        // meetNow webservice details
         meetNow(payload): Observable<any> {
             const url = urlConstants.baseUrl + 'meetNow';
-            let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+            const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
             this.apiRequest.post(url, payload).subscribe(data => {
                 resp.next(data);
              });
             return resp;
         }
-    
-    //future meeting list webservice details
+    // future meeting list webservice details
     setFutureMeetimgList(payload) {
         const url = urlConstants.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
@@ -50,7 +49,7 @@ export class MeetingService {
         return this.futureMeetingList$;
     }
 
-    //recent meeting webservice
+    // recent meeting webservice
     setRecentMeetingByUser(payload) {
         const url = urlConstants.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
@@ -63,17 +62,14 @@ export class MeetingService {
     getRecentMeetingByUser() {
         return this.recentMeeting$;
     }
-  
     getPastMeetingsByUser(payload) {
         const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
- 
     getMeetingAttendee(payload) {
         const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
-  
     getAllMeetingsbyLoggedInUserId(payload) {
         const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
@@ -81,35 +77,31 @@ export class MeetingService {
 
     saveMomDetails(payload): Observable<any> {
         const url = urlConstants.baseUrl + 'saveMomDetails';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                //console.log(err);
-                //resp.next(err);
             });
 
         return resp;
     }
     verifyMeetingHost(payload) {
         const url = urlConstants.baseUrl + 'startMeetingByHost';
-        return this.http.post(url, payload).map((resp: any) => {               
-            return resp.json()
+        return this.http.post(url, payload).map((resp: any) => {
+            return resp.json();
         });
     }
     endMeeting(payload) {
-        const url = urlConstants.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' +payload.meetingCode;
+        const url = urlConstants.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     cancelMeeting(payload) {
-        const url = urlConstants.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' +payload.meetingCode;
+        const url = urlConstants.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     saveMeetingPermission(payload) {
         const url = urlConstants.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;
-        return this.apiRequest.post(url, payload).map((resp: any) => {               
-            return resp.json()
+        return this.apiRequest.post(url, payload).map((resp: any) => {
+            return resp.json();
         });
     }
 }

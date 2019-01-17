@@ -2,7 +2,6 @@
     <div class="col-md-12" style="top: 20%;">
         <div class="row h-100 d-flex justify-content-center fixed-header">
             <!-- <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " /> -->
-          
         </div>
         <div class="row h-100 d-flex justify-content-center"  *ngIf="loginUiFlag">
             <div id="login" class="col-md-4">
@@ -30,11 +29,11 @@
                                 <i class="fa fa-unlock"></i>
                             </span>
                         </div>
-                        <input class="form-control" type="password" placeholder="password" [(ngModel)]="password" (keyup)="onKey($event)" required>
+                        <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" (keyup)="onKey($event)" required>
                     </div>
                     <div class="input-group mb-3">
                         <input style="margin-top: 3px;" type="checkbox" [(ngModel)]="isGuest" (change)="guestLogin()" />
-                        <a (click)="guestLogin()" style="font-weight: bold">continue as guest?</a>
+                        <a (click)="guestLogin()" style="font-weight: bold">Continue as guest?</a>
                     </div>
                     <fieldset id="actions">
                         <input type="submit" id="submit" [(ngModel)]="Logintext" (click)="login()" />

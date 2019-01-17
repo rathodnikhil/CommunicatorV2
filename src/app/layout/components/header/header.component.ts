@@ -9,7 +9,7 @@ import { AlertService } from '../../../services/alert.service';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    providers: [GroupService,AlertService]
+    providers: [GroupService , AlertService]
 })
 export class HeaderComponent implements OnInit {
     _userService: UserService;
@@ -49,18 +49,18 @@ export class HeaderComponent implements OnInit {
             console.log(data.isGuest);
             if (data.firstName !== undefined && !data.isGuest) {
                 this.loggedInUserObj = data;
-                let payload = { userCode: this.loggedInUserObj.userCode };
+                const payload = { userCode: this.loggedInUserObj.userCode };
                 this._groupService.setSideBarMenuByLoggedInUSer(payload);
-                this._groupService.getSideBarMenuByLoggedInUSer().subscribe(data => {
-                    if (data.length > 0)
-                        this.sidebarMenuList = data;
+                this._groupService.getSideBarMenuByLoggedInUSer().subscribe(sideMenuData => {
+                    if (sideMenuData.length > 0) {
+                        this.sidebarMenuList = sideMenuData;
+                    }
                 });
-            }else{
+            } else {
                 this.sidebarMenuList = [];
                 this.guestFlag = true;
             }
         });
-
     }
 
     isToggled(): boolean {
@@ -90,7 +90,7 @@ export class HeaderComponent implements OnInit {
         this.isClosed = !this.isClosed;
     }
     logout() {
-        let payload = { userCode: this.loggedInUserObj.userCode };
+        const payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
             this.errorFl = data.errorFl;
             if (this.errorFl === true) {
