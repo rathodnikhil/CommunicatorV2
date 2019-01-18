@@ -8,14 +8,14 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./guest-user.component.scss']
 })
 export class GuestUserComponent implements OnInit {
-  _userService : UserService;
+  _userService: UserService;
   public filter: string = '';
   public maxSize: number = 7;
   public directionLinks: boolean = true;
   public autoHide: boolean = false;
   public responsive: boolean = false;
   public config: PaginationInstance = {
-      id: 'guestUsersCode',
+      id: 'userCode',
       itemsPerPage: 10,
       currentPage: 1
   };

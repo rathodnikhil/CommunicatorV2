@@ -111,7 +111,7 @@ export class MyCalendarComponent implements OnInit {
             duration: {}
         };
         const id = model.event.title.split('(')[1].split(')')[0];
-        this.meetingDetails = this.meetingList.find(x => x.meetingCode == id);
+        this.meetingDetails = this.meetingList.find(x => x.meetingCode === id);
         this.displayEvent = model;
         this.meetingDetailsModal.open();
     }

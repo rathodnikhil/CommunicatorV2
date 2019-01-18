@@ -90,6 +90,7 @@ export class UserService {
         return this.selectedGroup$;
     }
     getLoggedInUserObj() {
+        console.log(' this.loggedInUserObj$' +  this.loggedInUserObj$);
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
