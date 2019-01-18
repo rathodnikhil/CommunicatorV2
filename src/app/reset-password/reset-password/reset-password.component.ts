@@ -52,9 +52,9 @@ export class ResetPasswordComponent implements OnInit {
         } else {
           this.password = '';
           this.confirmPassword = '';
-          this.router.navigate(['/login']);
+        //  this.router.navigate(['/login']);
+        this.alertService.success('Password reset successfully', 'Reset Success');
           window.location.reload();
-          return this.alertService.success('Password reset successfully', 'Reset Success');
         }
       });
     }
