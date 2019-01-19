@@ -38,6 +38,7 @@ export class ManageTeamComponent implements OnInit {
     memObj: any = {};
     i: number;
     teamCode: string;
+    updatedMeetingPermissionStatus: any;
     searchTableText: string;
     _teamService: TeamService;
     _userService: UserService;

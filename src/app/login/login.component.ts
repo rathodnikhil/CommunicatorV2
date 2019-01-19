@@ -78,7 +78,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.emailField.nativeElement.focus();
                         return this.alertService.warning('Please enter valid email', 'Warning');
                     } {
-                        const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email };
+                        const currentDate = new Date();
+                        const guestUserCode = 'guest' + (+currentDate);
+                        const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email , userCode: guestUserCode};
                         this._userService.setLoggedInUserObj(payload).subscribe(res => {
                             if (res.firstName !== undefined) {
                                 if (!this.previousUrl) {
@@ -98,7 +100,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             } else {
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;
-
                 this._userService.verifyUser(payload).subscribe(resp => {
                     const loggedinUser = resp.json();
                     loginWarningFlag = loggedinUser.warningFl;

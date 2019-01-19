@@ -223,7 +223,10 @@ document.getElementById('share-file').onclick = function () {
 
 document.getElementById('input-text-chat').onkeyup = function (e) {
     if (e.keyCode != 13) return;
-
+    if (e.keyCode == 13 && e.shiftKey) {
+        this.value += "\n";
+        return;
+    }
     // removing trailing/leading whitespace
     this.value = this.value.replace(/^\s+|\s+$/g, '');
     if (!this.value.length) return;
@@ -317,6 +320,9 @@ connection.getScreenConstraints = function (callback) {
 connection.socketURL = 'https://cfscommunicatorsocket.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
+ // 60k -- assuming receiving client is chrome
+ var chunk_size = 60 * 1000;
+connection.chunkSize = chunk_size;
 connection.extra = localStorage.getItem('loggedInuserName');
 connection.enableFileSharing = true; // by default, it is "false".
 
