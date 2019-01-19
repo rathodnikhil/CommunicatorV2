@@ -85,10 +85,12 @@ export class NotificationComponent implements OnInit {
             if (data == null || data === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
             } else {
-                this.selectedUser = data;
-                const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
-                this._chatService.getChattingHistoryList(payload);
-                this._chatService.setBroadcastMsgByLoggedInuserId(payload);
+                if (this.selectedUser != null && this.selectedUser.userCode !== data.userCode) {
+                    this.selectedUser = data;
+                    const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
+                    this._chatService.getChattingHistoryList(payload);
+                    this._chatService.setBroadcastMsgByLoggedInuserId(payload);
+                }
             }
         });
     }
@@ -98,9 +100,11 @@ export class NotificationComponent implements OnInit {
             if (data == null || data === undefined || data.length === 0) {
                 this.router.navigate(['/dashboard/default']);
             } else {
-                this.selectedGroup = data;
-                const payload = { userFrom: this.loggedInUser.userCode, groupCode: this.selectedGroup.groupId.groupId };
-                this._chatService.getChattingHistoryList(payload);
+                if (this.selectedUser != null && this.selectedGroup.groupId.groupId !== data.groupId.groupId) {
+                    this.selectedGroup = data;
+                    const payload = { userFrom: this.loggedInUser.userCode, groupCode: this.selectedGroup.groupId.groupId };
+                    this._chatService.getChattingHistoryList(payload);
+                }
             }
         });
 
