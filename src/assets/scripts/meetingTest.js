@@ -418,8 +418,9 @@ connection.onmute = function (event) {
     // document.getElementById(event.streamid).muted=true;
     if (event.type !== "local") {
         // connection.streamEvents[event.streamid].stream.mute();
-        document.getElementById(event.streamid).muted=true;
-        document.getElementById(event.streamid).setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
+        var mediaElement = document.getElementById(event.streamid)
+        mediaElement.muted=true;
+        mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
     }
 };
 connection.onstreamended = function (event) {
