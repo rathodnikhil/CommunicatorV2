@@ -152,7 +152,7 @@ document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
     if(isMute){
         isMute=false;
-    alertService.warning('You will have mute yourself again!','unmute');
+    alertService.warning('You will have to mute yourself again!','unmute');
     }
     if(isShareScreen)
     {
