@@ -9,11 +9,11 @@ document.getElementById('btn-leave-room').disabled = true;
 // .......................UI Code........................
 // ......................................................
 var alertService = window.customAlertService;
-var isMute=false;
-var isShareScreen=false;
+var isMute = false;
+var isShareScreen = false;
 document.getElementById('share-screen').onclick = function () {
     try {
-        isShareScreen=true;
+        isShareScreen = true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -27,17 +27,17 @@ document.getElementById('share-screen').onclick = function () {
 document.getElementById('btn-mute').onclick = function () {
     try {
         var streamid = connection.streamEvents.selectFirst().streamid;
-        if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0){
+        if (!isMute || document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0) {
             connection.streamEvents.selectFirst({
                 local: true
             }).stream.mute();
-            isMute=true;
+            isMute = true;
         }
-        else{
+        else {
             connection.streamEvents.selectFirst({
                 local: true
             }).stream.unmute();
-            isMute=false;
+            isMute = false;
         }
     } catch (error) {
         console.log(error);
@@ -150,14 +150,14 @@ DetectRTC.load(function () {
 
 document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
-    if(isMute){
-        isMute=false;
-    alertService.warning('You will have mute yourself again!','unmute');
+    if (isMute) {
+        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone";
+        isMute = false;
+        alertService.warning('You will have to mute yourself again!', 'unmute');
     }
-    if(isShareScreen)
-    {
-        isShareScreen=false;
-        alertService.warning('You will have to share screen again!','screen share');
+    if (isShareScreen) {
+        isShareScreen = false;
+        alertService.warning('You will have to share screen again!', 'screen share');
     }
     document.getElementById('resume-count').click();
     setTimeout(function () {
@@ -264,7 +264,7 @@ function appendDIV(event) {
     html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
-    chatContainer.scrollTo(0,chatContainer.scrollHeight);
+    chatContainer.scrollTo(0, chatContainer.scrollHeight);
 
     document.getElementById('input-text-chat').focus();
 }
@@ -320,8 +320,8 @@ connection.getScreenConstraints = function (callback) {
 connection.socketURL = 'https://cfscommunicatorsocket.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
- // 60k -- assuming receiving client is chrome
- var chunk_size = 60 * 1000;
+// 60k -- assuming receiving client is chrome
+var chunk_size = 60 * 1000;
 connection.chunkSize = chunk_size;
 connection.extra = localStorage.getItem('loggedInuserName');
 connection.enableFileSharing = true; // by default, it is "false".
@@ -416,7 +416,11 @@ connection.onMediaError = function (event) {
 }
 connection.onmute = function (event) {
     // document.getElementById(event.streamid).muted=true;
-    connection.streamEvents[event.streamid].stream.mute();
+    if (event.type !== "local") {
+        // connection.streamEvents[event.streamid].stream.mute();
+        document.getElementById(event.streamid).muted=true;
+        document.getElementById(event.streamid).setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
+    }
 };
 connection.onstreamended = function (event) {
     var mediaElement = document.getElementById(event.streamid + 'parent');
