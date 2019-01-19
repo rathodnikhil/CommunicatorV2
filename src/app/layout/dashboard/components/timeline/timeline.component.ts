@@ -42,8 +42,14 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.selectedUser = {};
         this._userService.getSelectedUser().subscribe(res => {
-            if (res) {
-                this.selectedUser = res;
+            if (res == null || res === undefined || res.length || res.length === 0) {
+                this.router.navigate(['/dashboard/default']);
+            } else {
+                if (res.userCode === undefined) {
+                    this.router.navigate(['/dashboard/default']);
+                } else {
+                    this.selectedUser = res;
+                }
             }
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
