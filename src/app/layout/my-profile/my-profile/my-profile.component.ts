@@ -94,10 +94,12 @@ export class MyProfileComponent implements OnInit {
         const pattern = /image-*/;
         const reader = new FileReader();
         if (!file.type.match(pattern)) {
-       return  this.alertService.success('Invalid Image format', 'Image Format');
+            this.loggedInUserObj.profileImgPath = '';
+       return  this.alertService.warning('Invalid Image format', 'Image Format');
+        } else {
+            reader.onload = this._onProfilePicSelected.bind(this);
+            reader.readAsDataURL(file);
         }
-        reader.onload = this._onProfilePicSelected.bind(this);
-        reader.readAsDataURL(file);
     }
     _onProfilePicSelected(e) {
         const reader = e.target;

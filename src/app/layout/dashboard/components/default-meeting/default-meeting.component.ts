@@ -34,6 +34,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('goToOutlookBtnField') goToOutlookBtnField: ElementRef;
+    @ViewChild('serachDateField') serachDateField: ElementRef;
+    @ViewChild('clearDateField') clearDateField: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
     meetNowModel: CustomModalModel = {
         titleIcon: '<i class="fa fa - calendar - check - o"></i>',
@@ -121,6 +123,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectDateFlag = !this.selectDateFlag;
     }
     filterMeetingByDate(mode) {
+        this.serachDateField.nativeElement.blur();
+        this.clearDateField.nativeElement.blur();
+        if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
+         || this.selectedtoDate === null) {
+             this.alertService.warning('Select from date', 'Wanning');
+        } else {
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
@@ -163,7 +171,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.filteredFutureMeetingList = this.futureMeetingList;
                 break;
         }
-
+    }
     }
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
@@ -171,19 +179,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
         this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
     }
-    deleteMeetingNow(meeting) {
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: meeting.meetingCode };
-        this._meetingService.endMeeting(payload).subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
-                this.recentMeeting = {};
-                return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
-                this.closePopup('delete');
-            }
-        });
-    }
-
     cancelMeeting(meeting) {
         this.selectedMeeting = meeting;
         this.confirmCancelMeetingModal.open();
@@ -197,6 +192,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.closePopup('cancel');
                 this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
+                 this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });

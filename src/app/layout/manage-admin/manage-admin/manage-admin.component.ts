@@ -14,11 +14,11 @@ export class ManageAdminComponent implements OnInit {
 _userService: UserService;
 _teamService: TeamService;
 searchText: any;
-public filter: string = '';
-public maxSize: number = 7;
-public directionLinks: boolean = true;
-public autoHide: boolean = false;
-public responsive: boolean = false;
+public filter: String = '';
+public maxSize: Number = 7;
+public directionLinks: Boolean = true;
+public autoHide: Boolean = false;
+public responsive: Boolean = false;
 public config: PaginationInstance = {
     id: 'usersCode',
     itemsPerPage: 10,
@@ -104,16 +104,22 @@ deleteAdminNow() {
         return this.alertService.warning(data.message, 'Warning');
     } else {
         this.deleteMemberModal.close();
-         const memObj = this.selectedAdminObj(this.selectedAdmin);
+         const memObj = this.selectedAdminObj(this.selectedAdmin , 2);
         this.allAdminList.push(memObj);
         return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
     }
 });
 }
-    private selectedAdminObj(obj) {
+    private selectedAdminObj(obj , flag) {
+        let statusVal = null;
+        if (flag === 2) {
+            statusVal = 'INACTIVE';
+        } else {
+            statusVal = obj.status.status;
+        }
         return {
         firstName: obj.firstName, lastName: obj.lastName, email: obj.email,
-            name: obj.name, userCode: obj.userCode, status: { status: obj.status.status }, team: { teamName: obj.team.teamName }
+            name: obj.name, userCode: obj.userCode, status: { status: statusVal }, team: { teamName: obj.team.teamName }
         };
     }
 
@@ -186,12 +192,12 @@ private getStatusByUser(updatedStaus) {
 
 closeEditPopup() {
     this.deleteMemberModal.close();
-    const memObj = this.selectedAdminObj(this.selectedAdmin);
+    const memObj = this.selectedAdminObj(this.selectedAdmin , 1);
     this.allAdminList.push(memObj);
 }
 closeDeletePopup() {
     this.editMemberModal.close();
-    const memObj = this.selectedAdminObj(this.selectedAdmin);
+    const memObj = this.selectedAdminObj(this.selectedAdmin , 1);
     this.allAdminList.push(memObj);
 }
 

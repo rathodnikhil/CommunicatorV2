@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     } else {
                         this.userName = '';
                         this.password = '';
-                        return this.alertService.warning(loggedinUser.message, 'Incorrect Username');
+                        return this.alertService.warning(loggedinUser.message, 'Incorrect Credential');
                     }
                 }
                 );

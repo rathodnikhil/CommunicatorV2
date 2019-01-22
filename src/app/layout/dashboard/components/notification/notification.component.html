@@ -8,15 +8,17 @@
         </div>
     </div>
     <hr class="hr-partition" />
-    <div class="list-group">
-        <a *ngFor="let user of userList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
-         class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
+    <div class="list-group" >
+      <div *ngFor="let user of userList | genericSearchAllProp : searchText"> 
+          <a   *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
+         class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' >
             <i class="fa fa-user-circle fa-2x"></i>
             <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
-            <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
+            <span  style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
             </span>
             <hr class="list-group-partition" />
                 </a>
+                </div>
          <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
            (click)="viewGroupDetails(group.groupId)"
         class="list-group-item clearfix d-block">

@@ -4,7 +4,7 @@
          
         <h3>Hello {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</h3>
        <p><img *ngIf="loggedInUserObj.profileImgPath"  [src]="loggedInUserObj.profileImgPath" class="image--cover"  />
-        <img *ngIf="loggedInUserObj.profileImgPath === null"  src="assets/images/chat_icon.png"/></p>
+        <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"  src="assets/images/chat_icon.png"/></p>
         <h6 class="label-h6">Click on a member's name
             <br>and start a new conversation</h6>
     </div>

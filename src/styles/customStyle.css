@@ -48,14 +48,14 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.125);
         background: #353535;
         color: #ffffff;
-        background-image: url(/assets/images/logobg.png);
+        background-image: url(/assets/images/Coreflex-solutions-login-id.jpg);
         background-position-y: bottom;
     }
     .left {
         width: 15%;
         float:left;
         padding: 15px;
-        background: #e5efff;
+        /* background: #e5efff;
         background: #353535;
         background: -moz-linear-gradient(to right,#353535 0%, #868e96 74%, #868e96 100%);
         background: -webkit-gradient(left top, right top, color-stop(0%, #353535), color-stop(74%, #868e96), color-stop(100%, #868e96));
@@ -63,7 +63,8 @@
         background: -o-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
         background: -ms-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
         background: linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1); */
+        background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
         color: #ffffff;
         font-weight: bold;
         

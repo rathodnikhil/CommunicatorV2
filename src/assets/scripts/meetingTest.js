@@ -507,7 +507,6 @@ function showRoomURL(roomid) {
     roomURLsDiv.style.display = 'block';
 }
 
-
 var roomid = '';
 if (localStorage.getItem(connection.socketMessageEvent)) {
     roomid = localStorage.getItem(connection.socketMessageEvent);
@@ -523,7 +522,7 @@ var hashString = false; // location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
-// debugger;
+
 var roomid = params.meetingCode;
 if (!roomid && hashString.length) {
     roomid = hashString;

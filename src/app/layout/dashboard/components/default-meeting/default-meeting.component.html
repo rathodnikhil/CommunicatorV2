@@ -62,10 +62,9 @@
             <ul class="accordion-child">
                 <div class="row overall-padding" style="cursor: default;">
                     <div class="col-sm-6">
-                        <label>From Date</label>
                         <div class="input-group datepicker-input">
                             <input class="form-control" name="fromDate"
-                                [(ngModel)]="selectedfromDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
+                                [(ngModel)]="selectedfromDate" placeholder="From Date" ngbDatepicker
                                 #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -75,10 +74,9 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label>To Date</label>
                         <div class="input-group datepicker-input">
-                            <input class="form-control" placeholder="{{currentDate | date:'yyy-MM-dd'}}" name="toDate"
-                                [(ngModel)]="selectedtoDate" value="{{currentDate |  date:'yyy-MM-dd'}}" ngbDatepicker
+                            <input class="form-control" placeholder="To Date" name="toDate"
+                                [(ngModel)]="selectedtoDate"  ngbDatepicker
                                 #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
                                 <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
@@ -87,8 +85,8 @@
                         </div>
                     </div>
                     <div style="text-align: center;margin:0 auto;padding: 10px;">
-                        <button class="btn btn-primary" (click)="filterMeetingByDate('range')">Search</button>
-                        <button class="btn btn-primary" (click)="filterMeetingByDate('clear')">Clear</button>
+                        <button class="btn btn-primary" (click)="filterMeetingByDate('range')" #serachDateField>Search</button>
+                        <button class="btn btn-primary" (click)="filterMeetingByDate('clear')" #clearDateField>Clear</button>
                     </div>
                 </div>
             </ul>
@@ -121,7 +119,6 @@
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div class="col-md-9">
-
                                 <span style="font-weight: bold; font-size: 14px;">
                                     <i style="color:#353535;" class="fa" [ngClass]="{'fa-microphone': meeting.callType === 'Audio' ,
                                     'fa-video-camera': meeting.callType === 'Video'}"></i>&nbsp;({{meeting.meetingCode}})<br>
