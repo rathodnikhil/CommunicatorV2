@@ -14,7 +14,8 @@
                 <td>Profile Picture</td>
                 <td>  <img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath"  alt="Responsive image"  class="img-fluid image--cover"/>
                   <img *ngIf='loggedInUserObj.profileImgPath === null' src="assets/images/default-profile.jpg"  alt="Responsive image"  class="img-fluid image--cover"/>
-                  <p><input type="file" name="imageUrl" accept="image/*" [(ngModel)]="loggedInUserObj.profileImgPath" (change)="onProfilePicSelected($event)" style="cursor: pointer;"/></p></td>
+                  <p><input type="file" name="imageUrl" accept="image/*" [(ngModel)]="loggedInUserObj.profileImgPath" (change)="onProfilePicSelected($event)" 
+                        style="cursor: pointer;" accept=".jpg,.png,.jpeg"/></p></td>
           </tr>
           <tr>
                 <td>First Name <span class="asterik-mark">&nbsp;*</span></td>

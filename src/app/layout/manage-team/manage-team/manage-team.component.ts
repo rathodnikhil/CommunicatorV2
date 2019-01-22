@@ -263,7 +263,7 @@ export class ManageTeamComponent implements OnInit {
                         return this.alertService.warning(res.message, 'Warning');
                     } else {
                         this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName , email: this.email,
-                            status: {status: 'ACTIVE'} , meetingPermissionStatus: {meetingPermissionStatus: meetingCurrentDisplayStatus}}
+                            status: {status: 'ACTIVE'} , meetingPermissionStatus: {status: meetingCurrentDisplayStatus}}
                             , team: this.selectedTeamObj};
                             console.log('meetingCurrentDisplayStatus : ' + meetingCurrentDisplayStatus);
                         this.userPermissionMemberList.push(this.memObj);

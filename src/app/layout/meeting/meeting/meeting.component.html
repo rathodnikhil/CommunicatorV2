@@ -32,7 +32,7 @@
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10>
-                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()">
+                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="bottom" ngbTooltip="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
                         <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
@@ -46,26 +46,26 @@
                                 <button type="button" class="btn btn-cancel" (click)="exit()">No</button>
                             </div>
                         </app-custom-modal>
-                        <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'" #muteUnmuteBtn  (click)='mute()'>
-                            <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
+                        <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'" #muteUnmuteBtn placement="bottom" ngbTooltip="Mute" (click)='mute()'>
+                            <i class="fa fa-2x "  [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
-                        <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
+                        <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'" placement="bottom" ngbTooltip="Start"
                             (click)='isMeetingStarted=!isMeetingStarted'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;" placement="top" #viewVideoBtn
-                            (click)='viewVideo()' [value]="isVideoEnabled">
+                            (click)='viewVideo()' [value]="isVideoEnabled" placement="bottom" ngbTooltip="Start">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled" class="fa fa-2x fa-ban"></i>
                         </button>
 
-                        <button id="join-room" class="btn default pull-left" style="display: none;">
+                        <button id="join-room" class="btn default pull-left" style="display: none;" >
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top" #shareFileBtn (click)="shareFile()">
+                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top" #shareFileBtn (click)="shareFile()" placement="bottom" ngbTooltip="Share File">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
                         <button id="share-screen" class="btn pull-left" style="display:none;" placement="top" #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'"
-                         (click)='shareScreen()'>
+                         (click)='shareScreen()' placement="bottom" ngbTooltip="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;"></span>

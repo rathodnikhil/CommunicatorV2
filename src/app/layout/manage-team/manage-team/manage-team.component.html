@@ -22,7 +22,8 @@
     <div style="height:75vh; overflow: auto;">
         <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamCount = index">
             <li>
-                <label style=" cursor: pointer;" (click)="displayTeamDetails(userPermission)">{{teamCount+1}})&nbsp; {{userPermission.team.teamName}}
+                <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;" (click)="displayTeamDetails(userPermission)">
+                    {{userPermission.team.teamName}}
                 </label>
             </li>
         </ul>
