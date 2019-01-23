@@ -3,6 +3,36 @@
     color: #999999;
     margin-top: 7%;
 }
+.background{
+    color: #ffffff;
+       height:80px;
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+}
 
+.membername{
+    padding-top:3%;
+     font-weight: bold;
+     color: #4f595e;
+      padding-bottom: 25px;
 
-  
+    }
+    .describe{
+        padding-left:10px; 
+        padding-right:10px;
+         padding-top:10px;
+    }
+    
+    #readbtn {
+        background-color: #286090; 
+        color: white;
+    }
+    .header-img{
+        height:65px;width:250px; float: left;padding: 10px;
+    }
+    .header-label{
+        padding: 20px;
+    }
+    .footer{
+        position: absolute;
+        bottom: 0;
+    }
