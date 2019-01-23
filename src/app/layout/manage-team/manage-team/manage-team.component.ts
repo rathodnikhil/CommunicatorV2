@@ -205,7 +205,7 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     addTeam() {
-        if ( this.newTeamName === null || typeof this.newTeamName === 'undefined' || this.newTeamName.trm() === '') {
+        if ( this.newTeamName === null || typeof this.newTeamName === 'undefined' || this.newTeamName.trim() === '') {
             return this.alertService.warning('Please Enter Team Name', 'Warning');
         } else {
             const payload = { 'teamName': this.newTeamName , 'userCode': this.loggedInUser.userCode };
