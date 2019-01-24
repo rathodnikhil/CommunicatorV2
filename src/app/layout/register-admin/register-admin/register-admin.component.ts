@@ -30,7 +30,7 @@ export class RegisterAdminComponent implements OnInit {
   email: any;
   password: any;
   confirmPassword: any;
-  authFlag: boolean = false;
+  authFlag: Boolean = false;
   newTeamName: any;
   @ViewChild('firstNameField') firstNameField: ElementRef;
   @ViewChild('lastNameField') lastNameField: ElementRef;
@@ -95,8 +95,8 @@ export class RegisterAdminComponent implements OnInit {
               email: this.email,
               password: this._passwordService.encrypted(this.password),
               name: this.userName,
-              lastName: this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
-              firstName: this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
+              firstName: this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
+              lastName: this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
               'status.onlineStatus': true
           };
       this._userService.saveUserDetails(payload , this.newTeamName).subscribe(data => {

@@ -46,7 +46,7 @@
                                 <button type="button" class="btn btn-cancel" (click)="exit()">No</button>
                             </div>
                         </app-custom-modal>
-                        <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'" #muteUnmuteBtn placement="bottom" ngbTooltip="Mute" (click)='mute()'>
+                        <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'" #muteUnmuteBtn placement="bottom" ngbTooltip="Mute/Unmute" (click)='mute()'>
                             <i class="fa fa-2x "  [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'" placement="bottom" ngbTooltip="Start"
@@ -54,7 +54,7 @@
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;" placement="top" #viewVideoBtn
-                            (click)='viewVideo()' [value]="isVideoEnabled" placement="bottom" ngbTooltip="Start">
+                            (click)='viewVideo()' [value]="isVideoEnabled" placement="bottom" ngbTooltip="Video on/off">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled" class="fa fa-2x fa-ban"></i>
                         </button>
 

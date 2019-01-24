@@ -249,8 +249,8 @@ export class ManageTeamComponent implements OnInit {
                 'email': this.email,
                 'name': this.userName,
                 'password': this._passwordService.encrypted(this.password),
-                'lastName': this.lastName,
-                'firstName': this.firstName,
+                'firstName': this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
+                'lastName': this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
                 'status.onlineStatus': false,
                 'meetingPermissionStatus': {status: meetingCurrentDisplayStatus},
                 'registeredBy': this.loggedInUser.userCode,
@@ -344,34 +344,39 @@ export class ManageTeamComponent implements OnInit {
         this.updatedLastName = member.userId.lastName;
         this.updatedEmail = member.userId.email;
         this.updatedUserCode = member.userId.userCode;
-        if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '' ) {
-            this.updatedUserCode = this.newMemberUserCode;
-        } else  if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
-         this.updatedFirstName.trim() === '' ) {
-            return this.alertService.warning('Please Enter First Name ', 'Warning');
-        } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
-            return this.alertService.warning('Please Enter Last Name ', 'Warning');
-        }  else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '' ) {
-            return this.alertService.warning('Please Enter Email', 'Warning');
-        }
+        this.updatedMeetingPermissionStatus = member.userId.meetingPermissionStatus;
         this.selectedMember = member;
     }
         updateMemberDetails() {
+            if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '' ) {
+                this.updatedUserCode = this.newMemberUserCode;
+            } else  if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
+             this.updatedFirstName.trim() === '' ) {
+                return this.alertService.warning('Please Enter First Name ', 'Warning');
+            } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' ||
+             this.updatedLastName.trim() === '' ) {
+                return this.alertService.warning('Please Enter Last Name ', 'Warning');
+            }  else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '' ) {
+                return this.alertService.warning('Please Enter Email', 'Warning');
+            }
       const currentDisplayStatus = this.getStatusByUser(this.updatedUserStatus);
+      const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
             const payload = {
-                firstName : this.updatedFirstName,
-                lastName: this.updatedLastName,
+                firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
+                lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
                 email: this.updatedEmail,
                 userCode: this.updatedUserCode,
                 status: {status: currentDisplayStatus},
-                team: this.selectedTeamObj
+                team: this.selectedTeamObj,
+                meetingPermissionStatus: {status: currentDisplayMeetingStatus}
             };
           this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.memObj = { userId: { firstName: this.updatedFirstName, lastName: this.updatedLastName , email: this.updatedEmail,
-                    status: {status: currentDisplayStatus}} , team: this.selectedTeamObj};
+                this.memObj = { userId: { firstName: data.firstName, lastName: data.lastName, email: data.email,
+                    status: {status: currentDisplayStatus},  meetingPermissionStatus: {status: currentDisplayMeetingStatus}
+                    , team: data.team.teamName}};
                 this.UpdateMemberModal.close();
                 this.filterMemberList.push(this.memObj);
                 return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
@@ -413,8 +418,8 @@ export class ManageTeamComponent implements OnInit {
                     this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
                     this.deleteMemberFlag = 2;
                     this.closeDeletePopup();
-                   this.memObj =  this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
-                    this.filterMemberList.push( this.memObj);
+                 //  this.memObj =  this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
+                  //  this.filterMemberList.push( this.memObj);
                     return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
                     ' has deleted successfully', 'Delete Member');
                 }
@@ -431,8 +436,7 @@ export class ManageTeamComponent implements OnInit {
        return  {
         userId: {
         firstName: obj.userId.firstName, lastName: obj.userId.lastName, email: obj.userId.email,
-            status: { status: statusval}
-        }, team: this.selectedTeamObj
+            status: { status: statusval}, meetingPermissionStatus: {status: statusval}}, team: this.selectedTeamObj
         };
     }
 
@@ -458,7 +462,7 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     closeEditPopup() {
-        this.deleteMemberModal.close();
+        this.UpdateMemberModal.close();
         const memObj = this.selectedmemObj(this.selectedMember , 1);
         this.filterMemberList.push(memObj);
     }

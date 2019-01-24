@@ -123,12 +123,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectDateFlag = !this.selectDateFlag;
     }
     filterMeetingByDate(mode) {
-        this.serachDateField.nativeElement.blur();
-        this.clearDateField.nativeElement.blur();
-        if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
-         || this.selectedtoDate === null) {
-             this.alertService.warning('Select from date', 'Wanning');
-        } else {
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
@@ -156,6 +150,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
+            this.serachDateField.nativeElement.blur();
+            this.clearDateField.nativeElement.blur();
+            if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
+             || this.selectedtoDate === null) {
+                 this.alertService.warning('Select from date', 'Wanning');
+            } else {
                 this.selectedCriteria = 'Range';
                 const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
                 const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
@@ -165,12 +165,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                         this.filteredFutureMeetingList.push(meeting);
                     }
                 });
-                break;
+            }
+            break;
             default:
                 this.selectedCriteria = 'All';
                 this.filteredFutureMeetingList = this.futureMeetingList;
                 break;
-        }
     }
     }
     startMeeting(meeting, isfromPopup) {
@@ -192,7 +192,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.closePopup('cancel');
                 this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
-                 this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
+               //  this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });
