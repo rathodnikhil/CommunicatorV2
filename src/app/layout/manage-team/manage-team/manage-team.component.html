@@ -22,7 +22,7 @@
     <div style="height:75vh; overflow: auto;">
         <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamCount = index">
             <li>
-                <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;" (click)="displayTeamDetails(userPermission)">
+                <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;" (click)="displayTeamDetails(userPermission , teamCount)">
                     {{userPermission.team.teamName}}
                 </label>
             </li>
@@ -96,10 +96,10 @@
             <td><i class="fa fa-check" aria-hidden="true"  style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i> 
                 <i class="fa fa-times" aria-hidden="true"  style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
             <td>
-                <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);"></i>
+                <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission , srNo);"></i>
             </td>
             <td>
-                <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);"></i>
+                <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
             </td>
         </tr>
     </table>
@@ -242,7 +242,7 @@
         </div>
         <div class="modal-footer popFooter">
             <button type="button" class="btn btn-primary" (click)="updateMemberDetails()">Update Member</button>
-            <button type="button" class="btn btn-cancel" (click)="closeEditPopup()">Close</button>
+            <button type="button" class="btn btn-cancel" (click)="cancelEditPopup()">Close</button>
         </div>
     </app-custom-modal>
     <app-custom-modal #deleteMemberModal [model]="deleteMember">
