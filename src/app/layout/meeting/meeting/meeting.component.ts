@@ -154,6 +154,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
+        this.document.getElementById('disable-video').click();
         const params = {
             width: '350px',
             height: '420px',
