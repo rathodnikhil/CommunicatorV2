@@ -55,7 +55,7 @@
       text-align: center;
       font: Arial, Helvetica;
       color: rgb(248, 241, 241);
-    }  
+    }
     a{
         cursor: pointer;
         color: #ffffff;
@@ -85,7 +85,7 @@
         background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
         color: #ffffff;
         font-weight: bold;
-        
+
     }
     .main {
       margin-left:15%;
@@ -97,7 +97,7 @@
         width: 100%;
         padding:30px;
     }
-    
+
     td, th {
         border: 1px solid #bdb9b9;
         text-align: left;
@@ -116,19 +116,19 @@
     }
     .filter-list{
      border-right: 1px solid rgba(0, 0, 0, 0.125);
-     height: 100%; 
+     height: 100%;
      overflow: auto;
     }
-    
-    
+
+
     .date-period-select {
         border-left: 2px solid #999;
         padding-left: 10px;
         padding-right: 10px;
         height: 15%;
     }
-  
-   
+
+
     .filter-list ul{
         list-style-type: none;
     }
