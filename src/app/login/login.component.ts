@@ -80,7 +80,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                     } {
                         const currentDate = new Date();
                         const guestUserCode = 'guest' + (+currentDate);
-                        const payload = { firstName: this.userName, isGuest: this.isGuest, email: this.email , userCode: guestUserCode};
+                        const payload = { firstName:  this.userName.substring(0, 1).toUpperCase() + this.userName.substring(1) ,
+                             isGuest: this.isGuest, email: this.email , userCode: guestUserCode};
                         this._userService.setLoggedInUserObj(payload).subscribe(res => {
                             if (res.firstName !== undefined) {
                                 if (!this.previousUrl) {

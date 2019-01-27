@@ -126,52 +126,59 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.serachDateField.nativeElement.blur();
         this.clearDateField.nativeElement.blur();
         if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
-         || this.selectedtoDate === null) {
-             this.alertService.warning('Select from date', 'Wanning');
+            || this.selectedtoDate === null) {
+            this.alertService.warning('Select from date', 'Wanning');
         } else {
-        this.filteredFutureMeetingList = [];
-        switch (mode) {
-            case 'today':
-                this.selectedCriteria = 'Today';
-                this.futureMeetingList.forEach(meeting => {
-                    const meetingDate = new Date(meeting.meetingStartDateTime);
-                    if (meetingDate.getDate() === this.currentDate.getDate()
-                        && meetingDate.getMonth() === this.currentDate.getMonth()
-                        && meetingDate.getFullYear() === this.currentDate.getFullYear()) {
-                        this.filteredFutureMeetingList.push(meeting);
+            this.filteredFutureMeetingList = [];
+            switch (mode) {
+                case 'today':
+                    this.selectedCriteria = 'Today';
+                    this.futureMeetingList.forEach(meeting => {
+                        const meetingDate = new Date(meeting.meetingStartDateTime);
+                        if (meetingDate.getDate() === this.currentDate.getDate()
+                            && meetingDate.getMonth() === this.currentDate.getMonth()
+                            && meetingDate.getFullYear() === this.currentDate.getFullYear()) {
+                            this.filteredFutureMeetingList.push(meeting);
+                        }
+                    });
+                    break;
+                case 'tomorrow':
+                    this.selectedCriteria = 'Tomorrow';
+                    this.futureMeetingList.forEach(meeting => {
+                        const meetingDate = new Date(meeting.meetingStartDateTime);
+                        const tomorrow = new Date();
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        if (meetingDate.getDate() === tomorrow.getDate()
+                            && meetingDate.getMonth() === tomorrow.getMonth()
+                            && meetingDate.getFullYear() === tomorrow.getFullYear()) {
+                            this.filteredFutureMeetingList.push(meeting);
+                        }
+                    });
+                    break;
+                case 'range':
+                    this.serachDateField.nativeElement.blur();
+                    this.clearDateField.nativeElement.blur();
+                    if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
+                        || this.selectedtoDate === null) {
+                        this.alertService.warning('Select from date', 'Wanning');
+                    } else {
+                        this.selectedCriteria = 'Range';
+                        const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
+                        const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
+                        this.futureMeetingList.forEach(meeting => {
+                            const meetingDate = new Date(meeting.meetingStartDateTime);
+                            if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
+                                this.filteredFutureMeetingList.push(meeting);
+                            }
+                        });
                     }
-                });
-                break;
-            case 'tomorrow':
-                this.selectedCriteria = 'Tomorrow';
-                this.futureMeetingList.forEach(meeting => {
-                    const meetingDate = new Date(meeting.meetingStartDateTime);
-                    const tomorrow = new Date();
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    if (meetingDate.getDate() === tomorrow.getDate()
-                        && meetingDate.getMonth() === tomorrow.getMonth()
-                        && meetingDate.getFullYear() === tomorrow.getFullYear()) {
-                        this.filteredFutureMeetingList.push(meeting);
-                    }
-                });
-                break;
-            case 'range':
-                this.selectedCriteria = 'Range';
-                const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
-                const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
-                this.futureMeetingList.forEach(meeting => {
-                    const meetingDate = new Date(meeting.meetingStartDateTime);
-                    if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
-                        this.filteredFutureMeetingList.push(meeting);
-                    }
-                });
-                break;
-            default:
-                this.selectedCriteria = 'All';
-                this.filteredFutureMeetingList = this.futureMeetingList;
-                break;
+                    break;
+                default:
+                    this.selectedCriteria = 'All';
+                    this.filteredFutureMeetingList = this.futureMeetingList;
+                    break;
+            }
         }
-    }
     }
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
@@ -192,7 +199,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.closePopup('cancel');
                 this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
-                 this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
+                //  this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });
@@ -208,7 +215,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     // copy meeting content
     copyToClipboard() {
-         const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails();
+        const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails();
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
@@ -216,7 +223,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         document.execCommand('copy');
         document.body.removeChild(el);
         return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.',
-        'Copy Meeting Details');
+            'Copy Meeting Details');
     }
     joinMeetingNow() {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);

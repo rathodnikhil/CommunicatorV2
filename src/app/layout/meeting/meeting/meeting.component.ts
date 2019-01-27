@@ -89,7 +89,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             if (data.firstName !== undefined && this.loggedInUser === undefined) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '' && this.meetingCode !== undefined) {
-                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode ,
+                         email: this.loggedInUser.eamil };
                     console.log(this.loggedInUser.userCode + 'this.loggedInUser.userCode');
                     if (!data.isGuest) {
                       //  payload.userCode = this.loggedInUser.userCode;

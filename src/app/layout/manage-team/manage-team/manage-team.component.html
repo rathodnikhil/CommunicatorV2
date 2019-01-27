@@ -22,7 +22,7 @@
     <div style="height:75vh; overflow: auto;">
         <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamCount = index">
             <li>
-                <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;" (click)="displayTeamDetails(userPermission)">
+                <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;" (click)="displayTeamDetails(userPermission , teamCount)">
                     {{userPermission.team.teamName}}
                 </label>
             </li>
@@ -62,7 +62,7 @@
         </button>
         <hr>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="showSelectedTeam">
         <div class="col-md-9">
             <button class="btn btn-primary" (click)="openMemberPopup()" #addMemField>+Member</button>
         </div>
@@ -93,21 +93,21 @@
             <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
             <td>{{userMemPermission.userId.email}}</td>
             <td>{{userMemPermission.userId.status.status}} </td>
-            <td><i class="fa fa-check" aria-hidden="true"  style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i> 
-                <i class="fa fa-times" aria-hidden="true"  style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
+            <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
+                <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
             <td>
-                <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);"></i>
+                <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission , srNo);"></i>
             </td>
             <td>
-                <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);"></i>
+                <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
             </td>
         </tr>
     </table>
     <div class="pageControl">
-        <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
-            [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-            [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-            (pageChange)="onPageChange($event)"></pagination-controls>
+        <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide"
+            [responsive]="responsive" [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
+            [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel" [screenReaderPageLabel]="labels.screenReaderPageLabel"
+            [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)"></pagination-controls>
     </div>
 
 
@@ -145,7 +145,7 @@
                     <label>First Name</label>
                 </div>
                 <div>
-                    <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="firstName" required/>
+                    <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="firstName" required />
                 </div>
             </div>
             <div class="row form-group">
@@ -153,7 +153,7 @@
                     <label>Last Name</label>
                 </div>
                 <div>
-                    <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="lastName" required/>
+                    <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="lastName" required />
                 </div>
             </div>
             <div class="row form-group">
@@ -161,7 +161,8 @@
                     <label>Email</label>
                 </div>
                 <div>
-                    <input placeholder="Email" type="text" class="form-control" [(ngModel)]="email" #emailField required/>
+                    <input placeholder="Email" type="text" class="form-control" [(ngModel)]="email" #emailField
+                        required />
                 </div>
             </div>
             <div class="row form-group">
@@ -169,7 +170,7 @@
                     <label>UserName</label>
                 </div>
                 <div>
-                    <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="userName" required/>
+                    <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="userName" required />
                 </div>
             </div>
             <div class="row form-group">
@@ -177,7 +178,8 @@
                     <label>Password</label>
                 </div>
                 <div>
-                    <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password" type="password" required/>
+                    <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password" type="password"
+                        required />
                 </div>
             </div>
             <div class="row form-group">
@@ -202,7 +204,8 @@
                     <label>First Name</label>
                 </div>
                 <div>
-                    <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="updatedFirstName" required/>
+                    <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="updatedFirstName"
+                        required />
                 </div>
             </div>
             <div class="row form-group">
@@ -210,7 +213,8 @@
                     <label>Last Name</label>
                 </div>
                 <div>
-                    <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="updatedLastName" required/>
+                    <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="updatedLastName"
+                        required />
                 </div>
             </div>
             <div class="row form-group">
@@ -218,7 +222,8 @@
                     <label>Email</label>
                 </div>
                 <div>
-                    <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail" #emailField required/>
+                    <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail" #emailField
+                        required />
                 </div>
             </div>
             <div class="row form-group">
@@ -242,7 +247,7 @@
         </div>
         <div class="modal-footer popFooter">
             <button type="button" class="btn btn-primary" (click)="updateMemberDetails()">Update Member</button>
-            <button type="button" class="btn btn-cancel" (click)="closeEditPopup()">Close</button>
+            <button type="button" class="btn btn-cancel" (click)="cancelEditPopup()">Close</button>
         </div>
     </app-custom-modal>
     <app-custom-modal #deleteMemberModal [model]="deleteMember">

@@ -13,11 +13,11 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 export class PastMeetingsComponent implements OnInit {
     _meetingService: MeetingService;
     _userService: UserService;
-    public filter: string = '';
-    public maxSize: number = 7;
-    public directionLinks: boolean = true;
-    public autoHide: boolean = false;
-    public responsive: boolean = false;
+    public filter: String = '';
+    public maxSize: Number = 7;
+    public directionLinks: Boolean = true;
+    public autoHide: Boolean = false;
+    public responsive: Boolean = false;
     public config: PaginationInstance = {
         id: 'meetingCode',
         itemsPerPage: 10,
@@ -83,9 +83,7 @@ export class PastMeetingsComponent implements OnInit {
                     this.alertService.warning(resp.message, 'Warning');
                 } else {
                     this.attendeeListByMeeting = resp;
-                }
-            });
-            //   let attendeeList = this.getAttendeeList(data);
+                      //   let attendeeList = this.getAttendeeList(data);
             data.mom.momDescription = data.mom.momDescription.split('\n');
             data.mom.momDescription = data.mom.momDescription.join('\r\n ');
             const momHeader = 'Date of Meeting: ' + data.meetingDate + '\r\n\r\n' + 'Subject: ' + data.subject + '\r\n\r\n' +
@@ -102,6 +100,8 @@ export class PastMeetingsComponent implements OnInit {
             // window.URL.revokeObjectURL(url);
             a.remove(); // remove the element
             this.alertService.success('File has been downloaded.', 'MOM Download');
+                }
+            });
         }
 
     }
@@ -114,14 +114,13 @@ export class PastMeetingsComponent implements OnInit {
     viewAttendee(meeting) {
         const payload = { meetingCode: meeting.meetingCode };
         this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
-            if (resp.errorFl) {
+            if (resp.warningFl) {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
                 this.attendeeListByMeeting = resp;
                 this.viewAttendeeModal.open();
             }
         });
-
     }
 
     closePopup() {

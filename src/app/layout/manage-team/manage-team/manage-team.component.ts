@@ -73,6 +73,8 @@ export class ManageTeamComponent implements OnInit {
     deleteMemberFlag = 1;
     addMemPermission = 1;
     meetingPermissionStatus: any;
+    selectedMemIndex: any;
+    selectedTeamIndex: any;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('teamNameField') teamNameField: ElementRef;
     @ViewChild('addMemField') addMemField: ElementRef;
@@ -167,7 +169,7 @@ export class ManageTeamComponent implements OnInit {
             }
          });
     }
-    displayTeamDetails(userPermission) {
+    displayTeamDetails(userPermission , index) {
         if (userPermission.team.teamCode === '' || userPermission.team.teamCode === null ||
          typeof userPermission.team.teamCode === 'undefined') {
             this.selectedTeamObj = this.selectedNewTeamObj ;
@@ -188,6 +190,7 @@ export class ManageTeamComponent implements OnInit {
         } else {
             this.addMemPermission = 1;
         }
+        this.selectedNewTeamObj = index;
     }
     // to open modal popup
     open() {
@@ -205,11 +208,11 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     addTeam() {
-        if ( this.newTeamName === null || typeof this.newTeamName === 'undefined' || this.newTeamName.trm() === '') {
+        if ( this.newTeamName === null || typeof this.newTeamName === 'undefined' || this.newTeamName.trim() === '') {
             return this.alertService.warning('Please Enter Team Name', 'Warning');
         } else {
             const payload = { 'teamName': this.newTeamName , 'userCode': this.loggedInUser.userCode };
-            const team = { team: { teamName: this.newTeamName } };
+            const team = { team: { teamName: this.newTeamName  , status: {status: 'ACTIVE'}} };
             this._teamService.saveTeamDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {
@@ -249,8 +252,8 @@ export class ManageTeamComponent implements OnInit {
                 'email': this.email,
                 'name': this.userName,
                 'password': this._passwordService.encrypted(this.password),
-                'lastName': this.lastName,
-                'firstName': this.firstName,
+                'firstName': this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
+                'lastName': this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
                 'status.onlineStatus': false,
                 'meetingPermissionStatus': {status: meetingCurrentDisplayStatus},
                 'registeredBy': this.loggedInUser.userCode,
@@ -265,7 +268,6 @@ export class ManageTeamComponent implements OnInit {
                         this.memObj = { userId: { firstName: this.firstName, lastName: this.lastName , email: this.email,
                             status: {status: 'ACTIVE'} , meetingPermissionStatus: {status: meetingCurrentDisplayStatus}}
                             , team: this.selectedTeamObj};
-                            console.log('meetingCurrentDisplayStatus : ' + meetingCurrentDisplayStatus);
                         this.userPermissionMemberList.push(this.memObj);
                         this.filterMemberList.push(this.memObj);
                        this.clearMemPopupField();
@@ -279,6 +281,7 @@ export class ManageTeamComponent implements OnInit {
         this.addMemField.nativeElement.blur();
  }
     editTeam() {
+        this.editTeamField.nativeElement.blur();
         if (this.addMemPermission !== 2) {
             this.addUpdateTeamModal.open();
             this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
@@ -286,7 +289,6 @@ export class ManageTeamComponent implements OnInit {
         } else {
             return this.alertService.warning('Selected team has deactivated, you can not edit team', 'Warning');
         }
-        this.editTeamField.nativeElement.blur();
     }
     updateTeamDetails() {
         if (this.updateTeamName === null || typeof this.updateTeamName === 'undefined' || this.updateTeamName.trim() === '' ) {
@@ -303,20 +305,21 @@ export class ManageTeamComponent implements OnInit {
                   this.selectedTeamObj.teamName = this.updateTeamName;
                   this.selectedTeamName = this.updateTeamName;
                    this.closePopup('updateTeam');
-                   this.userPermissionList.push(team );
+                   // this.userPermissionList.push(team );
+                   this.userPermissionList.splice(this.selectedTeamIndex , 0 , team);
                    return this.alertService.success('Team has updated successfully ', 'Success');
                     }
                 });
         }
     }
     deleteSelectedTeam() {
+        this.deleteTeamField.nativeElement.blur();
         if (this.addMemPermission !== 2) {
             this.deleteTeamModal.open();
             this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
         } else {
             return this.alertService.warning('Selected team has already deactivated', 'Warning');
         }
-        this.deleteTeamField.nativeElement.blur();
     }
     deleteTeamDetails() {
         const payload = {'teamCode': this.selectedTeamObj.teamCode};
@@ -332,7 +335,7 @@ export class ManageTeamComponent implements OnInit {
                 }
             });
     }
-    editMember(member) {
+    editMember(member , index) {
         if (member.userId.status.status === 'ACTIVE') {
             this.updatedUserStatus = true;
         } else {
@@ -344,36 +347,42 @@ export class ManageTeamComponent implements OnInit {
         this.updatedLastName = member.userId.lastName;
         this.updatedEmail = member.userId.email;
         this.updatedUserCode = member.userId.userCode;
-        if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '' ) {
-            this.updatedUserCode = this.newMemberUserCode;
-        } else  if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
-         this.updatedFirstName.trim() === '' ) {
-            return this.alertService.warning('Please Enter First Name ', 'Warning');
-        } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
-            return this.alertService.warning('Please Enter Last Name ', 'Warning');
-        }  else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '' ) {
-            return this.alertService.warning('Please Enter Email', 'Warning');
-        }
+        this.updatedMeetingPermissionStatus = member.userId.meetingPermissionStatus;
         this.selectedMember = member;
+        this.selectedMemIndex = index;
     }
         updateMemberDetails() {
+            if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '' ) {
+                this.updatedUserCode = this.newMemberUserCode;
+            } else  if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
+             this.updatedFirstName.trim() === '' ) {
+                return this.alertService.warning('Please Enter First Name ', 'Warning');
+            } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' ||
+             this.updatedLastName.trim() === '' ) {
+                return this.alertService.warning('Please Enter Last Name ', 'Warning');
+            }  else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '' ) {
+                return this.alertService.warning('Please Enter Email', 'Warning');
+            }
       const currentDisplayStatus = this.getStatusByUser(this.updatedUserStatus);
+      const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
             const payload = {
-                firstName : this.updatedFirstName,
-                lastName: this.updatedLastName,
+                firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
+                lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
                 email: this.updatedEmail,
                 userCode: this.updatedUserCode,
                 status: {status: currentDisplayStatus},
-                team: this.selectedTeamObj
+                team: this.selectedTeamObj,
+                meetingPermissionStatus: {status: currentDisplayMeetingStatus}
             };
           this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.memObj = { userId: { firstName: this.updatedFirstName, lastName: this.updatedLastName , email: this.updatedEmail,
-                    status: {status: currentDisplayStatus}} , team: this.selectedTeamObj};
+                this.memObj = { userId: { firstName: data.firstName, lastName: data.lastName, email: data.email,
+                    status: {status: currentDisplayStatus},  meetingPermissionStatus: {status: currentDisplayMeetingStatus}
+                    , team: data.team.teamName}};
                 this.UpdateMemberModal.close();
-                this.filterMemberList.push(this.memObj);
+                this.filterMemberList.splice(this.selectedMemIndex , 0 , this.memObj);
                 return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
                 ' has edited successfully', 'Update Member');
             }
@@ -390,7 +399,7 @@ export class ManageTeamComponent implements OnInit {
         return currentDisplayStatus;
     }
 
-        deleteMemberPopup(member) {
+        deleteMemberPopup(member , index) {
             if (member.userId.status.status === 'ACTIVE') {
                 this.deleteMemberModal.open();
             this.selectedMember = member;
@@ -399,6 +408,7 @@ export class ManageTeamComponent implements OnInit {
                 return this.alertService.warning('Member ' + member.userId.firstName + ' ' + member.userId.lastName +
                  '  has already inactive', 'Inactive Member');
             }
+            this.selectedMemIndex = index;
         }
         deleteMemberDetails() {
             if (this.selectedMember.userId.userCode === null || typeof this.selectedMember.userId.userCode === 'undefined'
@@ -413,8 +423,8 @@ export class ManageTeamComponent implements OnInit {
                     this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
                     this.deleteMemberFlag = 2;
                     this.closeDeletePopup();
-                   this.memObj =  this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
-                    this.filterMemberList.push( this.memObj);
+                 //  this.memObj =  this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
+                  //  this.filterMemberList.push( this.memObj);
                     return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
                     ' has deleted successfully', 'Delete Member');
                 }
@@ -423,6 +433,7 @@ export class ManageTeamComponent implements OnInit {
 
     private selectedmemObj(obj , editDeletelag) {
         let statusval ;
+        alert('this.updatedUserStatus' + this.updatedUserStatus);
         if (editDeletelag === 1) {
             statusval = this.getStatusByUser(this.updatedUserStatus);
         } else {
@@ -431,8 +442,7 @@ export class ManageTeamComponent implements OnInit {
        return  {
         userId: {
         firstName: obj.userId.firstName, lastName: obj.userId.lastName, email: obj.userId.email,
-            status: { status: statusval}
-        }, team: this.selectedTeamObj
+            status: { status: statusval}, meetingPermissionStatus: {status: statusval}}, team: this.selectedTeamObj
         };
     }
 
@@ -458,14 +468,14 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     closeEditPopup() {
-        this.deleteMemberModal.close();
+        this.UpdateMemberModal.close();
         const memObj = this.selectedmemObj(this.selectedMember , 1);
-        this.filterMemberList.push(memObj);
+        this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
     }
     closeDeletePopup() {
         this.deleteMemberModal.close();
         const memObj = this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
-        this.filterMemberList.push(memObj);
+        this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
     }
     teamCloseEditPopup() {
         this.addUpdateTeamModal.close();
@@ -474,6 +484,11 @@ export class ManageTeamComponent implements OnInit {
     teamCloseDeletePopup() {
         this.closePopup('deleteTeam');
         this.userPermissionList.push(this.selectedUserPermissionObj);
+    }
+    cancelEditPopup() {
+        this.deleteMemberModal.close();
+        const memObj = this.selectedmemObj(this.selectedMember , 1);
+        this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
     }
     clearMemPopupField() {
      this.firstName = '';
