@@ -21,6 +21,7 @@ export class MyProfileComponent implements OnInit {
     currentFirstName: any;
     currentLastName: any;
     currentEmail: any;
+    currentProfileImg: any;
     selectedProfilePictureName: any;
     constructor( private router: Router, userService: UserService, meetingService: MeetingService,
         groupService: GroupService, public alertService: AlertService) {
@@ -36,6 +37,7 @@ export class MyProfileComponent implements OnInit {
                 this.currentFirstName = data.firstName;
                 this.currentLastName = data.lastName;
                 this.currentEmail = data.email;
+                this.currentProfileImg = data.profileImgPath;
                 // webservice to get total meeting count
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this.profileOtherDetails = {};
@@ -87,6 +89,7 @@ export class MyProfileComponent implements OnInit {
         this.loggedInUserObj.firstName = this.currentFirstName;
         this.loggedInUserObj.lastName =  this.currentLastName;
         this.loggedInUserObj.email = this.currentEmail;
+        this.loggedInUserObj.profileImgPath = this.currentProfileImg;
         this.router.navigate(['/dashboard']);
     }
     onProfilePicSelected(e) {

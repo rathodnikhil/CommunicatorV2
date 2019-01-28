@@ -89,7 +89,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             if (data.firstName !== undefined && this.loggedInUser === undefined) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '' && this.meetingCode !== undefined) {
-                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode ,
+                         email: this.loggedInUser.eamil };
                     console.log(this.loggedInUser.userCode + 'this.loggedInUser.userCode');
                     if (!data.isGuest) {
                       //  payload.userCode = this.loggedInUser.userCode;
@@ -153,6 +154,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
+        this.document.getElementById('disable-video').click();
         const params = {
             width: '350px',
             height: '420px',

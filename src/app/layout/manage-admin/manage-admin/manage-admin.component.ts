@@ -144,8 +144,8 @@ updateMember() {
     let exceptionFlag;
     const currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
     const payload = {
-        firstName : this.updatedFirstName,
-        lastName: this.updatedLastName,
+        firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
+        lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
         email: this.updatedEmail,
         status: {status: currentDisplayStatus},
         userCode: this.updatedUserCode,

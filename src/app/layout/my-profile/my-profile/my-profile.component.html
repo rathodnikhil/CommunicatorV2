@@ -1,53 +1,61 @@
-
 <div class="top">
-      <div class="col-md-12 header" style="text-align: center;">
-          <h3>My Profile</h3>
-      </div>
-  </div>
+    <div class="col-md-12 header" style="text-align: center;">
+        <h3>My Profile</h3>
+    </div>
+</div>
 <div class="center">
-<div class="main" >
-           
-      <table style="width: 80%; ">
-          <tr ><h3 >Profile Details</h3>
-            <label style="color: orangered;">To view updated changes relogin to your account</label></tr>
-          <tr >
+    <div class="main">
+
+        <table style="width: 80%; ">
+            <tr>
+                <h3>Profile Details</h3>
+                <label style="color: orangered;">To view updated changes relogin to your account</label>
+            </tr>
+            <tr>
                 <td>Profile Picture</td>
-                <td>  <img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath"  alt="Responsive image"  class="img-fluid image--cover"/>
-                  <img *ngIf='loggedInUserObj.profileImgPath === null' src="assets/images/default-profile.jpg"  alt="Responsive image"  class="img-fluid image--cover"/>
-                  <p><input type="file" name="imageUrl" accept="image/*" [(ngModel)]="loggedInUserObj.profileImgPath" (change)="onProfilePicSelected($event)" 
-                        style="cursor: pointer;" accept=".jpg,.png,.jpeg"/></p></td>
-          </tr>
-          <tr>
+                <td> <img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath" alt="Responsive image"
+                        class="img-fluid image--cover" />
+                    <img *ngIf='loggedInUserObj.profileImgPath === null' src="assets/images/default-profile.jpg" alt="Responsive image"
+                        class="img-fluid image--cover" />
+                    <p><input type="file" name="imageUrl" accept="image/*" [(ngModel)]="loggedInUserObj.profileImgPath"
+                            (change)="onProfilePicSelected($event)" style="cursor: pointer;" accept=".jpg,.png,.jpeg" /></p>
+                </td>
+            </tr>
+            <tr>
                 <td>First Name <span class="asterik-mark">&nbsp;*</span></td>
-                <td><input value="{{loggedInUserObj.firstName}}" [(ngModel)]="loggedInUserObj.firstName" type="text"/></td>
-          </tr>
-          <tr>
-            <td>Last Name <span class="asterik-mark">&nbsp;*</span></td>
-            <td><input value="{{loggedInUserObj.lastName}}"  [(ngModel)]="loggedInUserObj.lastName" type="text"/></td>
-      </tr>
-          <tr>
+                <td><input value="{{loggedInUserObj.firstName}}" [(ngModel)]="loggedInUserObj.firstName" type="text" /></td>
+            </tr>
+            <tr>
+                <td>Last Name <span class="asterik-mark">&nbsp;*</span></td>
+                <td><input value="{{loggedInUserObj.lastName}}" [(ngModel)]="loggedInUserObj.lastName" type="text" /></td>
+            </tr>
+            <tr>
                 <td>Email <span class="asterik-mark">&nbsp;*</span></td>
-                <td><input value="{{loggedInUserObj.email}}" [(ngModel)]="loggedInUserObj.email" type="text" width="auto"/></td>
-          </tr>
-          <tr>
-            <td>Username</td>
-            <td><input value="{{loggedInUserObj.name}}" [(ngModel)]="loggedInUserObj.name" type="text" readonly/></td>
-      </tr>
-          <tr>
+                <td><input value="{{loggedInUserObj.email}}" [(ngModel)]="loggedInUserObj.email" type="text" width="auto" /></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td><input value="{{loggedInUserObj.name}}" [(ngModel)]="loggedInUserObj.name" type="text" readonly /></td>
+            </tr>
+            <tr>
                 <td>Team Name</td>
-                <td><input value="{{loggedInUserObj.team.teamName}}" type="text" readonly/></td>
-          </tr>
-          <tr> <h4>Other Details</h4></tr>
-          <tr> <td>Total Meetings</td>
-            <td><input value="{{profileOtherDetails.meetingCount}}" type="text" readonly/></td>
-        </tr>
-        <tr> <td>Total Groups</td>
-            <td><input value="{{profileOtherDetails.groupCount}}" type="text" readonly/></td>
-        </tr>
+                <td><input value="{{loggedInUserObj.team.teamName}}" type="text" readonly /></td>
+            </tr>
+            <tr>
+                <h4>Other Details</h4>
+            </tr>
+            <tr>
+                <td>Total Meetings</td>
+                <td><input value="{{profileOtherDetails.meetingCount}}" type="text" readonly /></td>
+            </tr>
+            <tr>
+                <td>Total Groups</td>
+                <td><input value="{{profileOtherDetails.groupCount}}" type="text" readonly /></td>
+            </tr>
         </table>
         <div style="text-align:center;">
             <button class="btn btn-sec" style="align:align-center" (click)="updateProfile()">Save Changes</button>
-            <a class="btn btn-danger"  style="color:#fff;" (click)="cancelUpdate()">Cancel</a>
+            <a class="btn btn-danger" style="color:#fff;" (click)="cancelUpdate()">Cancel</a>
         </div>
-      </div>
+    </div>
 </div>

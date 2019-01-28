@@ -18,7 +18,7 @@
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
                         <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
-                            <label>For Video Meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                            <label>For meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
@@ -53,7 +53,7 @@
     <ul class="accordion">
         <li class="accordion-item">
             <input id="s1" class="hide" type="checkbox">
-            <label for="s1" class="accordion-label" (click)="selectMeetingFilterDate()">
+            <label for="s1" class="accordion-label" style="cursor: pointer;" (click)="selectMeetingFilterDate()">
                 <i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
                 <span style="float: right; font-size: 20px;">
                     <i class="fa fa-angle-down" aria-hidden="true" style="cursor: pointer;"></i>
