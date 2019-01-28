@@ -125,10 +125,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     filterMeetingByDate(mode) {
         this.serachDateField.nativeElement.blur();
         this.clearDateField.nativeElement.blur();
-        if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
-            || this.selectedtoDate === null) {
-            this.alertService.warning('Select from date', 'Wanning');
-        } else {
             this.filteredFutureMeetingList = [];
             switch (mode) {
                 case 'today':
@@ -178,7 +174,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     this.filteredFutureMeetingList = this.futureMeetingList;
                     break;
             }
-        }
     }
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {

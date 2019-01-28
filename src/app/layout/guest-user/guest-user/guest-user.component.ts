@@ -9,11 +9,11 @@ import { UserService } from '../../../services/user.service';
 })
 export class GuestUserComponent implements OnInit {
   _userService: UserService;
-  public filter: string = '';
-  public maxSize: number = 7;
-  public directionLinks: boolean = true;
-  public autoHide: boolean = false;
-  public responsive: boolean = false;
+  public filter: String = '';
+  public maxSize: Number = 7;
+  public directionLinks: Boolean = true;
+  public autoHide: Boolean = false;
+  public responsive: Boolean = false;
   public config: PaginationInstance = {
       id: 'userCode',
       itemsPerPage: 10,
@@ -38,7 +38,7 @@ export class GuestUserComponent implements OnInit {
       this.loggedInUser = data;
       const payload = { userCode: this.loggedInUser.userCode };
     this._userService.getGuestUsersByLoggedInUser(payload).subscribe(guestUserData => {
-      this.guestUserList = data;
+      this.guestUserList = guestUserData;
   });
   });
   }
