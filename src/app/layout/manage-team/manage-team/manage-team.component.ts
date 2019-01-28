@@ -404,6 +404,7 @@ export class ManageTeamComponent implements OnInit {
                 this.deleteMemberModal.open();
             this.selectedMember = member;
             this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
+         //   this.userPermissionMemberList.splice(this.filterMemberList.indexOf(member) , this.memObj);
             } else {
                 return this.alertService.warning('Member ' + member.userId.firstName + ' ' + member.userId.lastName +
                  '  has already inactive', 'Inactive Member');
@@ -422,21 +423,21 @@ export class ManageTeamComponent implements OnInit {
                 } else {
                     this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
                     this.deleteMemberFlag = 2;
-                    this.closeDeletePopup();
-                 //  this.memObj =  this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
-                  //  this.filterMemberList.push( this.memObj);
+                    this.closeDeletePopup(1);
                     return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
                     ' has deleted successfully', 'Delete Member');
                 }
             });
             }
 
-    private selectedmemObj(obj , editDeletelag) {
+    private selectedmemObj(obj , editDeletelag , noFlag) {
         let statusval ;
-        alert('this.updatedUserStatus' + this.updatedUserStatus);
-        if (editDeletelag === 1) {
+         if (noFlag === 2) {
+            statusval = 'ACTIVE';
+        } else if (editDeletelag === 1) {
             statusval = this.getStatusByUser(this.updatedUserStatus);
         } else {
+            alert('else');
             statusval = 'INACTIVE';
         }
        return  {
@@ -469,13 +470,15 @@ export class ManageTeamComponent implements OnInit {
     }
     closeEditPopup() {
         this.UpdateMemberModal.close();
-        const memObj = this.selectedmemObj(this.selectedMember , 1);
+        const memObj = this.selectedmemObj(this.selectedMember , 1 , 2);
         this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
+      //  this.userPermissionMemberList.splice(this.selectedMemIndex , 0 , this.memObj);
     }
-    closeDeletePopup() {
+    closeDeletePopup(noFlag) {
         this.deleteMemberModal.close();
-        const memObj = this.selectedmemObj(this.selectedMember , this.deleteMemberFlag);
+        const memObj = this.selectedmemObj(this.selectedMember , this.deleteMemberFlag , noFlag);
         this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
+        // this.userPermissionMemberList.splice(this.selectedMemIndex , 0 , this.memObj);
     }
     teamCloseEditPopup() {
         this.addUpdateTeamModal.close();
@@ -487,7 +490,7 @@ export class ManageTeamComponent implements OnInit {
     }
     cancelEditPopup() {
         this.deleteMemberModal.close();
-        const memObj = this.selectedmemObj(this.selectedMember , 1);
+        const memObj = this.selectedmemObj(this.selectedMember , 1 , 2);
         this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
     }
     clearMemPopupField() {
@@ -496,5 +499,6 @@ export class ManageTeamComponent implements OnInit {
     this.userName = '';
     this.email = '';
     this.password = '';
+    this.meetingPermissionStatus = false;
     }
 }
