@@ -1,10 +1,10 @@
 {
-  "name": "SB-Admin-BS4-Angular-5",
-  "version": "4.0.0",
+  "name": "CoreFlexMeeting",
+  "version": "1.0.0",
   "license": "Apache",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ec true",
+    "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -39,8 +39,8 @@
     "ngx-toastr": "^8.10.2",
     "npm": "^6.4.1",
     "rtcmulticonnection-v3": "^3.4.5",
-    "rxjs": "^6.2.0",
-    "rxjs-compat": "^6.2.0",
+    "rxjs": "6.2.0",
+    "rxjs-compat": "6.2.0",
     "unique-random": "^2.0.0",
     "yarn": "^1.3.2",
     "zone.js": "^0.8.20"

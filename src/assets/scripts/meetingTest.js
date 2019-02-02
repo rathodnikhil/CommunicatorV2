@@ -30,7 +30,7 @@ document.getElementById('btn-mute').onclick = function () {
         if (!isMute || document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0) {
             connection.streamEvents.selectFirst({
                 local: true
-            }).stream.mute();
+            }).stream.mute("audio");
             isMute = true;
         }
         else {
@@ -84,8 +84,9 @@ function onDetectRTCLoaded() {
     if (!videoValue) {
         alertService.warning('Switching to audio mode.', 'Web Cam not detected');
         document.getElementById('disable-video').style.visibility = 'hidden';
-        //document.getElementById('disable-video').style.display = 'none';
     }
+    videoValue = false;
+
     connection.session = {
         audio: true,
         video: videoValue,
@@ -419,7 +420,7 @@ connection.onmute = function (event) {
     if (event.type !== "local") {
         // connection.streamEvents[event.streamid].stream.mute();
         var mediaElement = document.getElementById(event.streamid)
-        mediaElement.muted=true;
+        mediaElement.muted = true;
         mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
     }
 };
