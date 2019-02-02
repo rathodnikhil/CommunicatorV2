@@ -85,8 +85,7 @@ function onDetectRTCLoaded() {
         alertService.warning('Switching to audio mode.', 'Web Cam not detected');
         document.getElementById('disable-video').style.visibility = 'hidden';
     }
-    videoValue = false;
-
+    videoValue = false;    
     connection.session = {
         audio: true,
         video: videoValue,
@@ -165,9 +164,11 @@ document.getElementById('disable-video').onclick = function () {
         document.getElementById('disable-video').disabled = false;
     }, 6000);
     var videoValue = this.value == "true";
-    connection.streamEvents.selectFirst({
-        local: true
-    }).stream.stop();
+    if (connection.streamEvents.selectFirst({ local: true }) != undefined) {
+        connection.streamEvents.selectFirst({
+            local: true
+        }).stream.stop();
+    }
     connection.session = {
         audio: true,
         video: videoValue,
@@ -344,7 +345,6 @@ connection.onstream = function (event) {
     event.mediaElement.removeAttribute('srcObject');
 
     var video = document.createElement('video');
-
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
@@ -362,47 +362,63 @@ connection.onstream = function (event) {
         }
     }
     video.srcObject = event.stream;
-    video.height = Math.round(window.innerHeight * 0.30) - 10;
-    video.width = Math.round(window.innerHeight * 0.30) - 10;
-    video.setAttribute("style", 'float:left;');
+    video.height = connection.videosContainer.clientHeight - 30;
+    video.width = connection.videosContainer.clientHeight;
+    // video.setAttribute("style", 'float:left;margin-top:-15px');
     // video.style.padding = '5';
     var customDiv = document.createElement('div');
-    customDiv.style.height = Math.round(window.innerHeight * 0.30);
-    customDiv.style.width = Math.round(window.innerHeight * 0.30);
-    customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
-    var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
-    heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
-    customDiv.appendChild(heading);
-    customDiv.appendChild(video);
-    customDiv.setAttribute("drag-scroll-item", '');
+    customDiv.className = "grid_column";
+    customDiv.setAttribute("style", "flex: 20%;max-width: 20%;margin: 20px;border-radius: 10px; background-color: #fff;");
+    var heightDiv = document.createElement('div');
+    heightDiv.className = "height-100";
+    heightDiv.setAttribute("style", "height: 100%;");
+
+    var attendeeName = document.createElement('div');
+    attendeeName.className = "attendee-name";
+    attendeeName.setAttribute("style", "color: #000;text-align: center;height: 25%;font-size: 1.3vh;");
+    attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>';    
     customDiv.setAttribute("id", event.streamid + 'parent');
+    if (event.stream.isVideo == 0) {
+        video.setAttribute("style", "display:none;");
+        video.hidden = true;
+        var attendeeInit = document.createElement('div');
+        attendeeInit.className = "attendee-initial-letter";
+        attendeeInit.setAttribute("style", "background-color: #3283b9;color: #fff;height: 85%;border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;font-size: 80px;");
+        attendeeInit.innerHTML = event.type === 'local' ? 'You' : event.extra.substring(0, 1);
+        attendeeInit.appendChild(video);
+        heightDiv.appendChild(attendeeInit);
+    } else {
+        var attendeeDiv = document.createElement('div');
+        attendeeDiv.className = "attendee-video";
+        attendeeDiv.setAttribute("style", "background-color: #3283b9;color: #fff;height: 85%; border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;");
+        attendeeDiv.appendChild(video);
+        heightDiv.appendChild(attendeeDiv);
+    }
+    heightDiv.appendChild(attendeeName);
+    customDiv.appendChild(heightDiv);
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(customDiv);
+            var screenShareContainer = document.getElementById('screen-share-container');
+            var screenCustomDiv = document.createElement('div');
+            screenCustomDiv.className = "grid_column";
+            screenCustomDiv.setAttribute("style", "flex: 20%;max-width: 20%;margin: 20px;border-radius: 10px; background-color: #fff;");
+            var screenShareDiv = document.createElement('div');
+            screenShareDiv.className="screen-share-div";
+            screenShareDiv.setAttribute("style", "color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 80px;text-align: center;");
+            var attendeeName = document.createElement('div');
+            attendeeName.className = "attendee-name";
+            attendeeName.setAttribute("style", "color: #000;text-align: center;height: 25%;font-size: 1.3vh;");
+            attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>'; 
+            screenShareDiv.appendChild(video);
+            screenShareDiv.appendChild(attendeeName);
+            screenShareContainer.appendChild(screenShareDiv);          
+            // connection.filesContainer.appendChild(customDiv);
         }
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
-        }
-        // connection.videosContainer.appendChild(button);
-        // if (connection.videosContainer.children.length > 0) {
-        //     var dummyPresent = false;
-        //     for (let index = 0; index < connection.videosContainer.children.length; index++) {
-        //         var vid_element = connection.videosContainer.children[index];
-        //         if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
-        //             connection.videosContainer.replaceChild(customDiv, vid_element);
-        //             dummyPresent = true;
-        //             break;
-        //         }
-        //     }
-        //     if (!dummyPresent)
-        //         connection.videosContainer.appendChild(customDiv);
-        // } else {
-        //     connection.videosContainer.appendChild(customDiv);
-        // }
+        }        
     }
     setTimeout(function () {
         video.play();
@@ -421,7 +437,7 @@ connection.onmute = function (event) {
         // connection.streamEvents[event.streamid].stream.mute();
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
-        mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
+        // mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
     }
 };
 connection.onstreamended = function (event) {

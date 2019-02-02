@@ -67,37 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         } else {
             if (this.isGuest) {
-                localStorage.setItem('loggedInuserName', this.userName);
-                if (this.email === undefined || this.email === '' || this.email === null) {
-                    return this.alertService.error('Enter email id', 'Error');
-                } else {
-                    const EMAIL_REGEXP =
-                     /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-
-                    if (!EMAIL_REGEXP.test(this.email)) {
-                        this.emailField.nativeElement.focus();
-                        return this.alertService.warning('Please enter valid email', 'Warning');
-                    } {
-                        const currentDate = new Date();
-                        const guestUserCode = 'guest' + (+currentDate);
-                        const payload = { firstName:  this.userName.substring(0, 1).toUpperCase() + this.userName.substring(1) ,
-                             isGuest: this.isGuest, email: this.email , userCode: guestUserCode};
-                        this._userService.setLoggedInUserObj(payload).subscribe(res => {
-                            if (res.firstName !== undefined) {
-                                if (!this.previousUrl) {
-                                    this.router.navigate(['/meeting']);
-                                } else {
-                                    if (this.previousUrl.indexOf('meeting') > 0) {
-                                        this.router.navigateByUrl(this.previousUrl);
-                                    } else {
-                                        this.router.navigate(['/meeting']);
-                                    }
-                                }
-
-                            }
-                        });
-                    }
-                }
+               
             } else {
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;

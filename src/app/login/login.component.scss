@@ -2,7 +2,7 @@
 .container-bg {
     background-position: center;
     background-size: cover;
-    background-image: url("/assets/images/Coreflex-solutions-login-id.jpg");
+    background-image: url(/assets/images/Coreflex-solutions-login-id.jpg);
     background-repeat: no-repeat;
     width: 100%;
     height:100vh;
@@ -23,7 +23,7 @@
 
 #login {
     background-color: #fff;
-    background-image: linear-gradient(to bottom, #fff, #eee);
+ //   background-image: linear-gradient(to bottom, #fff, #eee);
     height: auto;
     /* width: auto; */
     padding: 5px;
@@ -67,22 +67,22 @@ h1:before {
 }
 
 h1:after {
-    background-image: -webkit-gradient(linear, left top, right top, from(rgb(44, 95, 224)), to(#fff));
-    background-image: -webkit-linear-gradient(to right, rgb(44, 95, 224), #fff);
-    background-image: -moz-linear-gradient(to right, rgb(44, 95, 224), #fff);
-    background-image: -ms-linear-gradient(to right, rgb(44, 95, 224), #fff);
-    background-image: -o-linear-gradient(to right,rgb(44, 95, 224), #fff);
-    background-image: linear-gradient(to right, rgb(44, 95, 224), #fff);
+    background-image: -webkit-gradient(linear, left top, right top, from(#3283b9), to(#fff));
+    background-image: -webkit-linear-gradient(to left, #3283b9, #fff);
+    background-image: -moz-linear-gradient(to left, #3283b9, #fff);
+    background-image: -ms-linear-gradient(to left, #3283b9, #fff);
+    background-image: -o-linear-gradient(to left,#3283b9, #fff);
+    background-image: linear-gradient(to left, #3283b9, #fff);
     right: 0;
 }
 
 h1:before {
-    background-image: -webkit-gradient(linear, left top, right top, from(rgb(44, 95, 224)), to(#fff));
-    background-image: -webkit-linear-gradient(to right, rgb(44, 95, 224), #fff);
-    background-image: -moz-linear-gradient(to right, rgb(44, 95, 224), #fff);
-    background-image: -ms-linear-gradient(to right, rgb(44, 95, 224), #fff);
-    background-image: -o-linear-gradient(to right,rgb(44, 95, 224), #fff);
-    background-image: linear-gradient(to right, rgb(44, 95, 224), #fff);
+    background-image: -webkit-gradient(linear, left top, right top, from(#3283b9), to(#fff));
+    background-image: -webkit-linear-gradient(to right, #3283b9, #fff);
+    background-image: -moz-linear-gradient(to right, #3283b9, #fff);
+    background-image: -ms-linear-gradient(to right, #3283b9, #fff);
+    background-image: -o-linear-gradient(to right,#3283b9, #fff);
+    background-image: linear-gradient(to right, #3283b9, #fff);
     left: 0;
 }
 
@@ -134,42 +134,23 @@ fieldset {
     margin: 40px 0 10px 0;
 }
 
-#submit {
-    background-color: #ffb94b;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
-    background-image: -webkit-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: -moz-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: -ms-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: -o-linear-gradient(to bottom, #fddb6f, #ffb94b);
-    background-image: linear-gradient(to bottom, #fddb6f, #ffb94b);
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #d69e31 #e3a037 #d5982d #e3a037;
+#submit {    
+    cursor: pointer;
+    font: bold 13px Arial, Helvetica;
+    color: #ffffff;
     float: left;
     height: 35px;
     padding: 0;
     width: 120px;
     cursor: pointer;
     font: bold 15px Arial, Helvetica;
-    color: #8f5a0a;
+
+  
 }
 
 #submit:hover,
-#submit:focus {
-    background-color: #fddb6f;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
-    background-image: -webkit-linear-gradient(to bottom, #ffb94b, #fddb6f);
-    background-image: -moz-linear-gradient(to bottom, #ffb94b, #fddb6f);
-    background-image: -ms-linear-gradient(to bottom, #ffb94b, #fddb6f);
-    background-image: -o-linear-gradient(to bottom, #ffb94b, #fddb6f);
-    background-image: linear-gradient(to bottom, #ffb94b, #fddb6f);
+#submit:focus {  
+    background:linear-gradient(to bottom, #2199e8 0%, #33ccff 100%);
 }
 
 #submit:active {
@@ -211,4 +192,158 @@ fieldset {
     margin-left: 10px;
     font-weight: bold;
     text-decoration: underline;
+}
+
+/*** CSS added by shruti*********/
+
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-top:10px; 
+    margin-bottom: 18px;
+    padding: 3px;
+  }
+
+
+ 
+#meeting-id{
+   
+        font-size: 15px;
+        background-color: #4CAF50;
+        margin-left: 0%;
+     
+  
+}
+
+#meeting-id:hover{
+   text-decoration: underline;
+}
+
+  
+.checkbox-style{
+    margin-top: 3px; 
+    //  outline: 1px solid #ac0d02 ;
+    box-shadow:inset 1px 1px 0 #fff, 0 0 4px rgba(0,0,0,0.3);
+    margin-left: 3px;
+    height: 1.3em;
+    width: 1.3em;
+
+}
+/* input checked border color */
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+    border-color:#cc0000;
+}
+
+
+/* checkbox checked */
+input[type="checkbox"]:checked:before {
+font-weight: bold;
+color: #cc0000;
+content: '\2713';
+-webkit-margin-start: 0;
+margin-left: 2px;
+font-size: 0.9em;
+}
+
+
+.logo-background{
+    background-size: cover;
+    background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
+    background-repeat: no-repeat;
+// background: linear-gradient(to right, #3283b9 0%, #2199e8 100%);
+/*set position of div*/
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    margin:0 auto;
+    width:auto;
+}
+
+// #guest-div{
+//     background-color:#fae9e9;
+//     margin-left: 12px;
+//     display: inline;
+  
+// }
+// #guest-user{
+//     font-size: 16px;
+//      font-family: "Calibri";
+//      padding:10px;
+//      color:#ac0d02;
+// }
+
+// #register-user{
+//     color:#3283b9;
+//      font-weight: bold; 
+//      font-size: 13px;
+     
+// }
+
+// .registeruser-div{
+//    text-align: right;
+//    margin-left:70%;
+// }
+.logo{
+    height: 60px;
+    width: 260px;
+}
+
+.cfsfooter{
+background-size: cover;
+background-color: #696969;
+background-repeat: no-repeat;
+/*set position of div*/
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+margin:0 auto;
+width:auto;
+text-align: center;
+height:3%;
+color:#fff;;
+padding-top: 5px;
+opacity: 0.6;
+    
+}
+
+#register-user1
+{
+    background-color: #2e77b2;
+    
+    padding-bottom:10px;
+    color: #F0F1F1;
+     top:0;
+      margin-left: 0;
+      margin-right:0;
+       margin-bottom: 15px;
+       padding-top: 7px;
+        padding-left: 10px;
+        font-size:15px;
+}
+.unregister{
+    margin-top: 2%;
+    border:1px solid  #344351;
+    font-size:15px;
+     background-color:#344351 ;
+     color:#fff;
+     padding-top: 10px;
+}
+.unregister-guest{
+    position:absolute;
+    margin-left:7%;
+    overflow-wrap: break-word; 
+}
+
+.join-meeting-id{
+    border:1px solid #c43636;
+    background-color: #c43636;
+     margin-top:2%;
+     color:#fff;
+     
 }

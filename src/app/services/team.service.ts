@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import * as urlConstants from './urlConstants';
+import { environment } from 'environments/environment';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
 import { RequestOptions, ResponseContentType } from '@angular/http';
@@ -23,21 +23,21 @@ export class TeamService {
       this._loginService = loginService;
      }
     getTeamsByLoggedInUserId(payload) {
-          const url = urlConstants.baseUrl + 'getTeamsByLoggedInUserId?userCode=' + payload.userCode;
+          const url = environment.baseUrl + 'getTeamsByLoggedInUserId?userCode=' + payload.userCode;
           return this.apiRequest.post(url, payload);
 
     }
       getMemberListByLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
       }
        getAllEnableTeams() {
-        const url = urlConstants.baseUrl + 'getAllEnableTeams';
+        const url = environment.baseUrl + 'getAllEnableTeams';
         return this.apiRequest.get(url);
        }
        // add new team
         saveTeamDetails(payload): Observable<any> {
-          const url = urlConstants.baseUrl + 'saveTeamDetails';
+          const url = environment.baseUrl + 'saveTeamDetails';
           const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
             this.apiRequest.post(url, payload).subscribe(data => {
                 resp.next(data);
@@ -45,7 +45,7 @@ export class TeamService {
           return resp;
       }
       deleteTeam(payload) {
-        const url = urlConstants.baseUrl + 'deleteTeam?teamCode=' + payload.teamCode;
+        const url = environment.baseUrl + 'deleteTeam?teamCode=' + payload.teamCode;
         return this.apiRequest.post(url, payload);
       }
 }
