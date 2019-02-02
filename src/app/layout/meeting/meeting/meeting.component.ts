@@ -52,7 +52,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isMute = false;
     isMeetingStarted = false;
     isScreenSharingStarted = false;
-    isVideoEnabled = true;
+    isVideoEnabled = false;
     // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
@@ -154,7 +154,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
-        this.document.getElementById('disable-video').click();
+        // this.document.getElementById('disable-video').click();
         const params = {
             width: '350px',
             height: '420px',
