@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import * as urlConstants from './urlConstants';
+import { environment } from 'environments/environment';
 import { BehaviorSubject, Subject } from 'rxjs/Rx';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class LoginService {
 
     constructor(private http: Http) { }
     getAuthenticationToken(payload) {
-        const url = urlConstants.baseUrl + 'token/generate-token';
+        const url = environment.baseUrl + 'token/generate-token';
         this.http.post(url, payload).subscribe(data => {
             this.jwtToken = data.json().token;
             this.caseDaSubject.next(this.jwtToken);

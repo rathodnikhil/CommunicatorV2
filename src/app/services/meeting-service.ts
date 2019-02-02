@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import * as urlConstants from './urlConstants';
+import { environment } from 'environments/environment';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 import { RequestOptions, ResponseContentType } from '@angular/http';
@@ -21,7 +21,7 @@ export class MeetingService {
 
     // schedule meeting webserce details
     scheduleMeeting(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'scheduleMeeting';
+        const url = environment.baseUrl + 'scheduleMeeting';
         const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
@@ -31,7 +31,7 @@ export class MeetingService {
     }
         // meetNow webservice details
         meetNow(payload): Observable<any> {
-            const url = urlConstants.baseUrl + 'meetNow';
+            const url = environment.baseUrl + 'meetNow';
             const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
             this.apiRequest.post(url, payload).subscribe(data => {
                 resp.next(data);
@@ -40,7 +40,7 @@ export class MeetingService {
         }
     // future meeting list webservice details
     setFutureMeetimgList(payload) {
-        const url = urlConstants.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.futureMeetingList$.next(data);
             });
@@ -51,7 +51,7 @@ export class MeetingService {
 
     // recent meeting webservice
     setRecentMeetingByUser(payload) {
-        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.recentMeeting$.next(data);
         },
@@ -63,20 +63,20 @@ export class MeetingService {
         return this.recentMeeting$;
     }
     getPastMeetingsByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     getMeetingAttendee(payload) {
-        const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
+        const url = environment.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     getAllMeetingsbyLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
 
     saveMomDetails(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'saveMomDetails';
+        const url = environment.baseUrl + 'saveMomDetails';
         const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
@@ -85,21 +85,21 @@ export class MeetingService {
         return resp;
     }
     verifyMeetingHost(payload) {
-        const url = urlConstants.baseUrl + 'startMeetingByHost';
+        const url = environment.baseUrl + 'startMeetingByHost';
         return this.http.post(url, payload).map((resp: any) => {
             return resp.json();
         });
     }
     endMeeting(payload) {
-        const url = urlConstants.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
+        const url = environment.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     cancelMeeting(payload) {
-        const url = urlConstants.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
+        const url = environment.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     saveMeetingPermission(payload) {
-        const url = urlConstants.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;
+        const url = environment.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;
         return this.apiRequest.post(url, payload).map((resp: any) => {
             return resp.json();
         });

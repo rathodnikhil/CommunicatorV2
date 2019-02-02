@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestMethod } from '@angular/http';
-import * as urlConstants from './urlConstants';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
@@ -23,43 +23,43 @@ export class UserService {
         this._loginService = loginService;
     }
     saveUserDetails(payload, teamName): Observable<any> {
-        const url = urlConstants.baseUrl + 'saveUserDetails?teamName=' + teamName;
+        const url = environment.baseUrl + 'saveUserDetails?teamName=' + teamName;
         const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.http.post(url, payload, teamName).subscribe(data => {
             resp.next(data);
-            });
+        });
 
         return resp;
     }
     updateUserDetails(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'updateUserDetails';
+        const url = environment.baseUrl + 'updateUserDetails';
         return this.apiRequest.post(url, payload);
     }
     saveMemberDetails(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'saveMemberDetails';
+        const url = environment.baseUrl + 'saveMemberDetails';
         const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-            });
+        });
 
         return resp;
     }
     saveUserSettings(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'saveUserSettings';
+        const url = environment.baseUrl + 'saveUserSettings';
         const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-            });
+        });
 
         return resp;
     }
     // to verify whether user is registered or not
     verifyUser(payload) {
-        const url = urlConstants.baseUrl + 'verifyUser';
+        const url = environment.baseUrl + 'verifyUser';
         return this.http.post(url, payload);
     }
     setUserList(payload) {
-        const url = urlConstants.baseUrl + 'memberListByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'memberListByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.UserList$.next(data);
         });
@@ -67,14 +67,14 @@ export class UserService {
     getUserList() {
         return this.UserList$;
     }
-  setIsGuest(flag) {
-    this.isGuest$.next(flag);
-  }
-  getIsGuest(flag) {
-    return this.isGuest$;
-  }
+    setIsGuest(flag) {
+        this.isGuest$.next(flag);
+    }
+    getIsGuest(flag) {
+        return this.isGuest$;
+    }
     getUserSettingsByLoggedInUser(payload) {
-        const url = urlConstants.baseUrl + 'getUserSettingsByLoggedInUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getUserSettingsByLoggedInUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     setSelectedUser(user) {
@@ -90,13 +90,13 @@ export class UserService {
         return this.selectedGroup$;
     }
     getLoggedInUserObj() {
-        console.log(' this.loggedInUserObj$' +  this.loggedInUserObj$);
+        console.log(' this.loggedInUserObj$' + this.loggedInUserObj$);
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
         if (payload.isGuest) {
             // save guest user
-            const url = urlConstants.baseUrl + 'saveGuestUserDetails';
+            const url = environment.baseUrl + 'saveGuestUserDetails';
             this.http.post(url, payload).subscribe(data => {
                 this.loggedInUserObj$.next(payload);
                 return this.loggedInUserObj$;
@@ -104,7 +104,7 @@ export class UserService {
             this.loggedInUserObj$.next(payload);
             return this.loggedInUserObj$;
         } else {
-            const url = urlConstants.baseUrl + 'loggedInUser?userName=' + payload.userName;
+            const url = environment.baseUrl + 'loggedInUser?userName=' + payload.userName;
             this.apiRequest.post(url, payload).subscribe(data => {
                 this.loggedInUserObj$.next(data);
                 localStorage.setItem('loggedInuserName', data.firstName + ' ' + data.lastName);
@@ -114,39 +114,39 @@ export class UserService {
     }
 
     getAllAdminList() {
-        const url = urlConstants.baseUrl + 'getAllAdminList';
+        const url = environment.baseUrl + 'getAllAdminList';
         return this.apiRequest.get(url);
     }
     forgotPasswordSendMail(payload) {
-        const url = urlConstants.baseUrl + 'forgotPasswordSendMail?email=' + payload.email;
+        const url = environment.baseUrl + 'forgotPasswordSendMail?email=' + payload.email;
         return this.http.post(url, payload);
     }
     resetpassword(payload) {
-        const url = urlConstants.baseUrl + 'resetPassword';
+        const url = environment.baseUrl + 'resetPassword';
         return this.http.post(url, payload);
     }
     logoutApplication(payload) {
-        const url = urlConstants.baseUrl + 'logoutApplication?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'logoutApplication?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     searchWholememberList(payload) {
-        const url = urlConstants.baseUrl + 'searchWholememberList?searchText=' + payload.searchText + '&userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'searchWholememberList?searchText=' + payload.searchText + '&userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     SaveUserPermission(payload) {
-        const url = urlConstants.baseUrl + 'SaveUserPermission';
+        const url = environment.baseUrl + 'SaveUserPermission';
         return this.apiRequest.post(url, payload);
     }
     addNewMemberFromWholeList(payload) {
-        const url = urlConstants.baseUrl + 'addNewMemberFromWholeList';
+        const url = environment.baseUrl + 'addNewMemberFromWholeList';
         return this.apiRequest.post(url, payload);
     }
     getGuestUsersByLoggedInUser(payload) {
-        const url = urlConstants.baseUrl + 'getGuestUsersByLoggedInUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getGuestUsersByLoggedInUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
     deleteUser(payload) {
-        const url = urlConstants.baseUrl + 'deleteUser?userCode=' + payload.userCode;
-        return this.apiRequest.post(url , payload);
+        const url = environment.baseUrl + 'deleteUser?userCode=' + payload.userCode;
+        return this.apiRequest.post(url, payload);
     }
 }
