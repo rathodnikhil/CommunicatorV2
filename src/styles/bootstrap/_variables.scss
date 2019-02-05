@@ -36,7 +36,7 @@ $grays: map-merge((
   "900": $gray-900
 ), $grays);
 
-$blue:    #2199e8 !default;// #2980b9 !default;
+$blue:    #3283b9 !default;// #2980b9 !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
@@ -670,8 +670,8 @@ $card-columns-margin:               $card-spacer-y !default;
 // Tooltips
 
 $tooltip-max-width:           200px !default;
-$tooltip-color:               #000  !default;
-$tooltip-bg:                  #ffb94b !default;
+$tooltip-color:               #393a3f!default;
+$tooltip-bg:                  #e7e3d4 !default;
 $tooltip-opacity:               1!default;
 $tooltip-padding-y:           .25rem !default;
 $tooltip-padding-x:           .5rem !default;

@@ -155,7 +155,7 @@
             <div class="logo-img">
                 <img src="../../../../assets/images/C_4_white.png" class="img-responsive" width="260px" height="60px">
             </div>
-
+            <span id="meeting-error" style="font-weight: bolder;background-color: yellow;color: #000;"></span>
             <div class="organiser-name-right">
                 <div>
                     <h4 class="organiser-name-timer" *ngIf="meetingDetails.createdBy!=undefined">{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</h4>
@@ -170,14 +170,12 @@
 
     <div id="content" class="content-div">
         <div class="col-md-12 content-main-div">
-
             <div class="row content-row-div">
-
                 <div class="attendee-container">
-                    <div class="attendee-title">
+                    <div class="screen-share-title">
                         <p>Attendee</p>
                     </div>
-                    <div class="grid_row" id="videos_container">
+                    <!-- <div class="grid_row" id="videos_container">
                         <div class="grid_column">
                             <div class="height-100">
                                 <div class="attendee-initial-letter">t</div>
@@ -186,55 +184,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
-
                 <div class="div-divider-space"></div>
-
                 <div class="files-container">
-                    <div class="files-title">
+                    <div class="screen-share-title">
                         <p>Files</p>
                     </div>
-                    <div class="row file-row-1" id="file-container">
-                        <div class="col-md-6">
-                            <label class="file-name">File 1</label>
-                            <i class="fa fa-download download-icon" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-md-6 file-sender-name">
-                            <h6>Kuldeep Kulkarni</h6>
-                        </div>
-                    </div>
-
-                    <div class="row file-row-2">
-                        <div class="col-md-6">
-                            <label class="file-name">File 2</label>
-                            <i class="fa fa-download download-icon" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-md-6 file-sender-name">
-                            <h6>Kuldeep Kulkarni</h6>
-                        </div>
-                    </div>
-
-                    <div class="row file-row-1">
-                        <div class="col-md-6">
-                            <label class="file-name">File 3</label>
-                            <i class="fa fa-download download-icon" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-md-6 file-sender-name">
-                            <h6>Kuldeep Kulkarni</h6>
-                        </div>
-                    </div>
-
-                    <div class="row file-row-2">
-                        <div class="col-md-6">
-                            <label class="file-name">File 4</label>
-                            <i class="fa fa-download download-icon" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-md-6 file-sender-name">
-                            <h6>Kuldeep Kulkarni</h6>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -242,42 +198,41 @@
                 <div class="screen-share-title">
                     <p>Screen Share</p>
                 </div>
-
                 <div class="grid_row" id="screen-share-container">
-
                 </div>
-
             </div>
 
             <div class="row button-container">
-                <button class="btn btn-background pull-left btn1" id="btn-mute">
-                    <i class="fa fa-2x fa-microphone" aria-hidden="true"></i>
-                </button>
-
-                <button class="btn btn-background pull-left btn1" id="open-room">
+               <div class="col-md-8"> 
+                    <!-- <button class="btn btn-background pull-left btn1" id="btn-mute"> -->
+                    <!-- <i class="fa fa-2x fa-microphone" aria-hidden="true"></i> -->
+                    <img src="/assets/images/mute_fancy.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;" />
+                <!-- </button> -->
+                <img src="/assets/images/start-meet.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;" />
+                <!-- <button class="btn btn-background pull-left btn1" id="open-room">
                     <i class="fa fa-2x fa-play" aria-hidden="true"></i>
-                </button>
-
-                <button class="btn btn-background btn1 pull-left" id="disable-video" #viewVideoBtn (click)='viewVideo()'
+                </button> -->
+                <img src="/assets/images/video.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;" />
+                <!-- <button class="btn btn-background btn1 pull-left" id="disable-video" #viewVideoBtn (click)='viewVideo()'
                     [value]="isVideoEnabled" style="display:none;">
                     <i class="fa fa-2x fa-video-camera" aria-hidden="true"></i>
-                </button>
-
-                <button class="btn btn-background btn1 pull-left" id="share-screen" style="display:none;">
+                </button> -->
+                <img src="/assets/images/share-screen.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;"/>
+                <!-- <button class="btn btn-background btn1 pull-left" id="share-screen" style="display:none;">
                     <i class="fa fa-2x fa-desktop" aria-hidden="true"></i>
-                </button>
-
-                <button class="btn btn-background btn1 pull-left" id="share-file" style="display:none;">
+                </button> -->
+                <img src="/assets/images/file-share.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;" />
+                <!-- <button class="btn btn-background btn1 pull-left" id="share-file" style="display:none;">
                     <i class="fa fa-2x fa-file" aria-hidden="true"></i>
-                </button>
-
-                <button class="btn btn-background btn1 pull-left">
-                    <!-- <h3>REC</h3> -->
+                </button> -->
+                <img src="/assets/images/record.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;"/>
+                <!-- <button class="btn btn-background btn1 pull-left">
                     <i class="fa fa-2x fa-circle" aria-hidden="true"></i>
-                </button>
-                <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-responsive">
+                </button> -->
+                
+            </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-responsive ">
                         Copy Meeting Link
                     </button>
 
@@ -285,9 +240,10 @@
                         Copy Meeting Id
                     </button>
 
-                    <button class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()">
+                    <!-- <button class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()">
                         <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
-                    </button>
+                    </button> -->
+                    <img src="/assets/images/stop.png" style="height:50px; width:50px;"/>
                 </div>
             </div>
 

@@ -150,7 +150,7 @@ fieldset {
 
 #submit:hover,
 #submit:focus {  
-    background:linear-gradient(to bottom, #2199e8 0%, #33ccff 100%);
+    background:linear-gradient(to bottom, #3283b9 0%, #33ccff 100%);
 }
 
 #submit:active {
@@ -254,7 +254,7 @@ font-size: 0.9em;
     background-size: cover;
     background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
     background-repeat: no-repeat;
-// background: linear-gradient(to right, #3283b9 0%, #2199e8 100%);
+// background: linear-gradient(to right, #3283b9 0%, #3283b9 100%);
 /*set position of div*/
     position:fixed;
     top:0;
@@ -314,7 +314,7 @@ opacity: 0.6;
 
 #register-user1
 {
-    background-color: #2e77b2;
+    background-color: #3283b9;
     
     padding-bottom:10px;
     color: #F0F1F1;
@@ -328,9 +328,9 @@ opacity: 0.6;
 }
 .unregister{
     margin-top: 2%;
-    border:1px solid  #344351;
+    border:1px solid  #3283b9;
     font-size:15px;
-     background-color:#344351 ;
+     background-color:#3283b9 ;
      color:#fff;
      padding-top: 10px;
 }
@@ -346,4 +346,9 @@ opacity: 0.6;
      margin-top:2%;
      color:#fff;
      
+}
+#submit{
+    border: 1px solid #c43636;
+    color: #c43636;
+    background-color: #e7e3d4;
 }

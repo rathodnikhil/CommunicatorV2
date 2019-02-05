@@ -104,4 +104,10 @@ export class MeetingService {
             return resp.json();
         });
     }
+    sendMeetingInvitationMail(payload) {
+        const url = environment.baseUrl + 'sendMeetingInvitationMail?' + payload;
+        return this.apiRequest.post(url, payload).map((resp: any) => {
+            return resp;
+        });
+    }
 }

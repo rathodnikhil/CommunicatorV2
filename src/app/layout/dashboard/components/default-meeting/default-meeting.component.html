@@ -126,13 +126,12 @@
                                     date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
                             <div style="float: right" >
-                                <!-- <a (click)="startMeeting()"[routerLink]="['/meeting']" [queryParams]="{meetingCode:meeting.meetingCode}" target="_blank"> -->
                                 <a (click)="startMeeting(meeting,false);">
-                                    <i class="fa fa-play-circle actionIcon" style="color: #353535;" aria-hidden="true"
+                                    <i class="fa fa-play-circle actionIcon"  aria-hidden="true" style="color:green"
                                         placement="bottom" ngbTooltip="Start Meeting"></i>
                                 </a>
                                 <a>
-                                    <i class="fa fa-times-circle actionIcon" style="color: red" (click)="cancelMeeting(meeting)"
+                                    <i class="fa fa-times-circle actionIcon"  (click)="cancelMeeting(meeting)"
                                         placement="bottom" ngbTooltip="Cancel Meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
