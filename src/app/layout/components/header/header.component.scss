@@ -14,10 +14,11 @@
     ::-webkit-scrollbar {
         display: none;
     }
-    background-image: url("/assets/images/Coreflex-solutions-popup.jpg");
+    background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
     background-position-x: center;
     background-repeat: no-repeat;
     background-size: cover;
+    color: #115c7d;
 }
 
 /*-------------------------------*/
@@ -40,20 +41,19 @@
         width: 100%;
         :first-child a {
             color: #fff;
-            background-color: #1a1a1a;
+            background-color: #115c7d;
         }
         a {
             display: block;
-            color: #fff;
+            color: #ffffff;
+            font-weight: bold;
             text-decoration: none;
             padding: 10px 15px 10px 30px;
             &:hover,
             &:active,
             &:focus {
-                color:   #353535;
-                text-decoration: none;
+                color:   #115c7d;
                 background-color: transparent;
-                font-weight: bold;
             }
         }
         &:hover::before,
@@ -69,7 +69,7 @@
         &:focus {
             text-decoration: none;
             background-color: #e8f0fc  !important;
-            border : 1px solid #353535;
+            border : 1px solid #115c7d;
         
         }
     }
@@ -77,11 +77,12 @@
         height: auto;
         font-size: 20px;
         line-height: 44px;
-        background: #fff;
+        background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
         &:hover,
         &:active,
         &:focus {
-            background-color: #fff;
+         //  background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+            background-image: url(/assets/images/Coreflex-solutions-header.jpg);
         }
     }
 }
