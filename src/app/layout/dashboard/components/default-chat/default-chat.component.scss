@@ -1,8 +1,11 @@
 @import "styles/customStyle.css";
 .label-h6 {
     color:  #999999;
-    margin-top: 10%;
+    padding-top:4%;
     font-weight: bold;
+    font-size:15px;
+    padding-bottom: 25px;
+
 }
 .background{
     color: #ffffff;
@@ -28,7 +31,17 @@
     .header-label{
         padding: 20px;
     }
-    .footer{
-        position: absolute;
-        bottom: 0;
+    .responsive1
+    {
+max-width: 80%; 
+height: auto;
+margin-bottom: 2%;
     }
+    .footer{
+        position: relative;
+        left: 0;
+        bottom: 0; 
+        margin-bottom: 0 ;
+        top: 148px;
+    }
+ 

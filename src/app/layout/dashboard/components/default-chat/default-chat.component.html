@@ -1,29 +1,32 @@
-<div class="card card-default">
+<div class="card card-default" style="overflow: auto;">
     <div style="text-align: center;width:100%;height:99vh;">
         <div class="background"> <img class="header-img" src="assets\images\C_4_white.png"></div>
         <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b></h3>
-        <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover" />
+        <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
             <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
-                src="assets/images/Coreflex-solutions-chat-screen-option1.png" /></p>
-        <h6><b>{{loggedInUserObj.team.teamName}}</b></h6>
-        <h5 class="label-h6">Click on a member's name
+                src="assets/images/Coreflex-solutions-chat-screen-option1.png" class= "responsive1" /></p>
+        
+                <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>   
+            <h5 class="label-h6 ">Click on a member's name
             <br>and start a new conversation</h5>
-        <div class="footer">
-            <div class="card mx-auto" style="width: 50rem; ">
+        <div class=" mt-5" >    
+        <div class="footer" style="width:100%;">
+            <div class="card mx-auto">
                 <div class="card bg-light text-dark">
-                    <h3>CoreFlex Communicator</h3>
+                    <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4>
                     <p class="describe text-center"><strong>"</strong>Communicator is an online meeting, desktop
                         sharing, and video conferencing software solution <br>that enables the user to meet with
                         clients or colleagues via Internet anywhere anytime<b>"</b>.</p>
                     <p class="describe text-center">It makes online meetings easy with its features <br>like screen
                         share, file share, audio/video conference, meeting chat and recording.</p>
 
-                    <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-sec" role="button">Explore
+                    <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary" role="button" style="font-size:15px;">Explore
                         CoreFlex Communicator</a>
                 </div>
             </div>
             <h5 class="membername text-center">To easily log in later, save this URL:
-                <a style="color: #3283b9;" href="#">https://cfscommunicator.com</a></h5>
+          <a style="color: #3283b9;" href="#">https://cfscommunicator.com</a></h5>
         </div>
     </div>
+</div>
 </div>
