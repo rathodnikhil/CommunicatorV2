@@ -4,7 +4,7 @@
         <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b></h3>
         <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
             <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
-                src="assets/images/Coreflex-solutions-chat-screen-option1.png" class= "responsive1" /></p>
+                src="assets/images/Coreflex-solutions-chat-screen-option1 (2).png" class= "responsive1" /></p>
         
                 <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>   
             <h5 class="label-h6 ">Click on a member's name
@@ -13,7 +13,8 @@
         <div class="footer" style="width:100%;">
             <div class="card mx-auto">
                 <div class="card bg-light text-dark">
-                    <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4>
+                        <img class="card-img setlogo" src="assets\images\coreflex-logo.png" style="height:60px;width:200px; ">
+                    <!-- <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4> -->
                     <p class="describe text-center"><strong>"</strong>Communicator is an online meeting, desktop
                         sharing, and video conferencing software solution <br>that enables the user to meet with
                         clients or colleagues via Internet anywhere anytime<b>"</b>.</p>
@@ -24,8 +25,8 @@
                         CoreFlex Communicator</a>
                 </div>
             </div>
-            <h5 class="membername text-center">To easily log in later, save this URL:
-          <a style="color: #3283b9;" href="#">https://cfscommunicator.com</a></h5>
+            <h6 class="membername text-center">To easily log in later, save this URL:
+          <a style="color: #c43636;" href="#">https://cfscommunicator.com</a></h6>
         </div>
     </div>
 </div>
