@@ -1,7 +1,9 @@
 @import "styles/customStyle.css";
 .card-body {
-    background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
-    color: #ffffff;
+    // background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+    // border: 1px solid #c43636;
+    // color: #c43636;
+    background-color: #eaeaea;
     font-weight: bold;
     height: 93vh;
 }
@@ -72,13 +74,13 @@
 }
 
 .list-group-partition {
-    border-top: 1px solid #ffff;
+    border-top: 1px solid #919090;
     width: 100%;
     margin-top: 8px;
     margin-bottom: 0px;
 }
 .hr-partition{
-    border-top: 2px solid #d3d3d3;
+    border-top: 2px solid #919090;
     width: 100%;
     margin-bottom: 0px;
     padding-left: 25px;
@@ -86,4 +88,7 @@
 }
 .add-member{
     color: #ffffff; padding-left: 10px; padding-top: 12px; cursor: pointer;
+}
+.list-group-item span,a{
+    color: #212529;
 }

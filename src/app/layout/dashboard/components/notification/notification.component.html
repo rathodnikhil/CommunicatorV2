@@ -9,8 +9,8 @@
     </div>
     <hr class="hr-partition" />
     <div class="list-group" >
-      <div *ngFor="let user of userList | genericSearchAllProp : searchText"> 
-          <a   *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
+      <div  style="color:#0000" *ngFor="let user of userList | genericSearchAllProp : searchText"> 
+          <a  *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']"  (click)="viewMemeberDetails(user)"
          class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' >
             <i class="fa fa-user-circle fa-2x"></i>
             <div  [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
@@ -27,13 +27,13 @@
            <hr class="list-group-partition" />
        </a>
     </div>
-   <div style="text-align: center;"> <button class="btn btn-sec"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div>
+   <div style="text-align: center;"> <button class="btn btn-primary"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div>
     <div class="row" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText" >
     <a  class="list-group-item clearfix d-block">
             <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
                
      </a>
-     <i class="add-member" class="fa fa-plus" style="padding-top: 17px; color: #ffffff; cursor: pointer;" (click)="addNewMembersInList(user)"></i>  </div>
+     <i class="add-member" class="fa fa-plus-circle" style="padding-top: 17px; color: green; cursor: pointer;" (click)="addNewMembersInList(user)"></i>  </div>
        <!-- /.list-group -->
 </div>
 

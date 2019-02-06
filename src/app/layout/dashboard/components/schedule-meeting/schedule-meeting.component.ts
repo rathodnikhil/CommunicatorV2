@@ -283,9 +283,6 @@ export class ScheduleMeetingComponent implements OnInit {
                 this.clearAllMeetingField();
                // this.switchRoute();
                 break;
-            case 'outlookClose':
-                this.outlookModal.close();
-               break;
         }
     }
 
@@ -302,7 +299,7 @@ export class ScheduleMeetingComponent implements OnInit {
         return meetingDetails;
     }
     sendEmail(e) {
-        const newLine = '</br>';
+        const newLine = '<br>';
         const outLookBodyJson = this.getMeetingDetails(newLine);
         const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
             meetingDetailsBody: outLookBodyJson , meeting: this.meetingObj};
@@ -311,8 +308,18 @@ export class ScheduleMeetingComponent implements OnInit {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
                     this.outlookModal.close();
+                    this.clearOutlookField();
                     return this.alertService.success('Meeting Invitation has sent successfully', 'Meeting Invitation');
                 }
         });
+}
+closeoutMaliPopup() {
+    this.outlookModal.close();
+   this.clearOutlookField();
+}
+clearOutlookField() {
+    this.toAttendees = '';
+    this.ccAttendees = '';
+    this.outLookBody = '';
 }
 }
