@@ -3,6 +3,8 @@ import { GroupService } from '../../../services/group.service';
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
+import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+
 @Component({
     selector: 'app-manage-group',
     templateUrl: './manage-group.component.html',
@@ -16,6 +18,7 @@ export class ManageGroupComponent implements OnInit {
     public directionLinks = true;
     public autoHide = false;
     public responsive = false;
+    public newGroupName : any;
     public config: PaginationInstance = {
         id: 'userCode',
         itemsPerPage: 10,
@@ -50,8 +53,21 @@ export class ManageGroupComponent implements OnInit {
     userList: any[];
     showNewGroup: boolean;
     searchGroupName: any;
+    searchGroup: any;
     searchTextTable: any;
-    @ViewChild("groupNameTxt") groupNameTxt: ElementRef;
+    @ViewChild('groupNameTxt') groupNameTxt: ElementRef;
+    @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
+    newGroup: CustomModalModel = {
+        titleIcon: '<i class="fa fa-user"></i>',
+        title: 'New Group',
+        smallHeading: 'You can add new group details here',
+        body: '',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Group',
+        Button2Content: ''
+    };
+
+    //@ViewChild('teamNameField') teamNameField: ElementRef;
+
     constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
@@ -61,6 +77,7 @@ export class ManageGroupComponent implements OnInit {
         this.showGroupNameUiFlag = false;
         this.countFlag = false;
         this.showSelectedGroup = false;
+        this.newGroupName = '';
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
             if (data.errorFl === true || data.warningFl === true) {
@@ -71,18 +88,17 @@ export class ManageGroupComponent implements OnInit {
                 this._userService.setUserList(payload);
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
-                this._groupService.getGroupList().subscribe(data => {
-                    if(data[0].errorFl || data[0].warningFl){
+                this._groupService.getGroupList().subscribe(groupData => {
+                    if(groupData[0].errorFl || groupData[0].warningFl){
                         this.groupList = [];
-                        return this.alertService.warning(data[0].message, 'Warning');
+                        return this.alertService.warning(groupData[0].message, 'Warning');
                     } else{
-                    this.groupList = data;
+                    this.groupList = groupData;
                     }
                 });
             }
         });
        
-
         this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
             this.groupMemberObjList = data;
         });
@@ -117,28 +133,52 @@ export class ManageGroupComponent implements OnInit {
         this.showNewGroup = !this.showNewGroup;
     }
     // create new group
-    addGroup(createGroupsVal) {
-        if (createGroupsVal === '' || createGroupsVal === null || typeof createGroupsVal === 'undefined') {
-            return this.alertService.warning('Please enter group name', 'Warning');
+    // addGroup(createGroupsVal) {
+    //     if (createGroupsVal === '' || createGroupsVal === null || typeof createGroupsVal === 'undefined') {
+    //         return this.alertService.warning('Please enter group name', 'Warning');
+    //     } else {
+    //         for (const i in this.groupList) {
+    //             this.groupArray.push(this.groupList[i].groupId.groupName);
+    //         }
+    //         const duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
+    //         if (duplicateGroupFlag !== -1) {
+    //             return this.alertService.warning('Group name already exist', 'Warning');
+    //         } else {
+    //             const payload = { 'groupName': createGroupsVal, 'user': this.loggedInUserObj }
+    //             this._groupService.saveGroupDetails(payload).subscribe(res => {
+    //                 const newGroup = { groupId: res };
+    //                 this.groupList.push(newGroup);
+    //                 this.groupNameTxt.nativeElement.value = '';
+    //                 return this.alertService.success('Group has been added successfully', 'Success');
+    //             });
+    //         }
+    //     }
+    // }
+
+    addGroup() 
+    {
+        console.log('CHECK : '+this.newGroupName);
+        if ( this.newGroupName === null || typeof this.newGroupName === 'undefined' || this.newGroupName.trim() === '') {
+            return this.alertService.warning('Please Enter Group Name', 'Warning');
         } else {
-            for (const i in this.groupList) {
-                this.groupArray.push(this.groupList[i].groupId.groupName);
-            }
-            const duplicateGroupFlag = this.groupArray.indexOf(createGroupsVal);
-            if (duplicateGroupFlag !== -1) {
-                return this.alertService.warning('Group name already exist', 'Warning');
-            } else {
-                const payload = { 'groupName': createGroupsVal, 'user': this.loggedInUserObj }
-                this._groupService.saveGroupDetails(payload).subscribe(res => {
-                    const newGroup = { groupId: res };
-                    this.groupList.push(newGroup);
-                    this.groupNameTxt.nativeElement.value = '';
-                    return this.alertService.success('Group has been added successfully', 'Success');
+            const payload = { 'groupName': this.newGroupName , 'userCode': this.loggedInUserObj.userCode };
+            const group = { group: { groupName: this.newGroupName  , status: {status: 'ACTIVE'}} };
+            this._groupService.saveGroupDetails(payload).subscribe(
+                (res) => {
+                    if (res.errorFl === true || res.warningFl === true) {
+                        this.newGroupName = '';
+                        return this.alertService.warning(res.message, 'Warning');
+                    } else {
+                    this.groupList.push(group);
+                    this.newGroupName = '';
+                    this.groupNameTxt.nativeElement.focus();
+                    this.selectedGroupObj = res.team;
+                   return this.alertService.success('Group has been added successfully', 'Success');
+                    }
                 });
             }
-        }
-
     }
+    
     // get details for selected group
     displayGroupDetails(groupId) {
         // this._userService.getUserList().subscribe(data => {
@@ -160,6 +200,12 @@ export class ManageGroupComponent implements OnInit {
                 this.countFlag = true;
             }
         });
+    }
+
+    
+    // to open group popup
+    openGroup() {
+        this.addNewGroupModal.open();
     }
 
     // add new member in group
@@ -192,5 +238,24 @@ export class ManageGroupComponent implements OnInit {
     }
     onPageChange(number: number) {
         this.config.currentPage = number;
+    }
+
+    // close team modal popup
+    closePopup(popupType) {
+        switch (popupType) {
+            case 'addNewGroup':
+                this.addNewGroupModal.close();
+                break;
+            // case 'addNewMember':
+            //     this.addNewMemberModal.close();
+            //     this.clearMemPopupField();
+            //     break;
+            // case 'updateTeam':
+            //     this.addUpdateTeamModal.close();
+            //     break;
+            // case 'deleteTeam':
+            //     this.addUpdateTeamModal.close();
+            //     break;
+        }
     }
 }
