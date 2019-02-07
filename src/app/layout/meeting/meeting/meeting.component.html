@@ -154,9 +154,9 @@
 
             <div class="logo-img">
         
-                <img src="../../../../assets/images/white_logo.png" class="img-responsive" width="260px" height="60px" style="margin-left:45px;">
+                <img src="../../../../assets/images/white_logo.png" class="responsive1" width="260px" height="60px" style="margin-left:45px;">
             </div>
-            <span id="meeting-error" style="font-weight: bolder;background-color: yellow;color: #000;"></span>
+            <span id="meeting-error" class="text"></span>
             <div class="organiser-name-right">
                 <div>
                     <h4 class="organiser-name-timer" *ngIf="meetingDetails.createdBy!=undefined">{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</h4>
@@ -177,14 +177,7 @@
                         <p>Attendee</p>
                     </div>
                      <div class="grid_row" id="videos_container">
-                        <!-- <div class="grid_column">
-                            <div class="height-100">
-                                <div class="attendee-initial-letter">t</div>
-                                <div class="attendee-name">
-                                    <label>test User</label>
-                                </div>
-                            </div>
-                        </div> -->
+                       
                     </div> 
                 </div>
                 <div class="div-divider-space"></div>
@@ -252,7 +245,7 @@
                     <button type="button" class="btn btn-responsive" (click)="copyMeetingLink(2)">
                         Copy Meeting Id
                     </button>
-                    <input class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()" type="image" src="/assets/images/stop.png" alt="Submit"width="54" height="60" > 
+                    <input class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()" type="image" src="/assets/images/stop.png" alt="Submit"width="52" height="60" > 
 
                     <!-- <button class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()">
                             <img src="/assets/images/stop.png" style="height:50px; width:50px;"/>
@@ -313,7 +306,7 @@
                         <div class="col-md-12" style="padding-top: 20px;">
                             <div class="row">
                                 <span class="col-md-10">
-                                    <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;overflow:auto;resize:none"></textarea>
+                                    <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;overflow:auto;resize:none;margin-bottom:-10px;"></textarea>
                                 </span>
                                 <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
                                     <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
