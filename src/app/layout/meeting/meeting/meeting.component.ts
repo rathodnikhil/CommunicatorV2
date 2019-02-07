@@ -311,9 +311,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const newLine = '\r\n\r\n';
         let meetingDetails = null;
         if(copyContentFlag === 1){
-             meetingDetails = 'For Regsiter user copy this url : https://cfscommunicator.com/#/meeting?meetingCode='+this.meetingDetails.meetingCode + newLine
-            +'For GuestUser or having only meeting Id use this url :  https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode='
-            +this.meetingDetails.meetingCode;
+            //  meetingDetails = 'For Regsiter user copy this url : https://cfscommunicator.com/#/meeting?meetingCode='+this.meetingDetails.meetingCode + newLine
+            // +'For GuestUser or having only meeting Id use this url :  https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode='
+            // +this.meetingDetails.meetingCode;
+            meetingDetails =' https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode='+this.meetingDetails.meetingCode;
         } else{
             meetingDetails = this.meetingDetails.meetingCode;
         }

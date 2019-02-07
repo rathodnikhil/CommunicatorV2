@@ -388,7 +388,7 @@ connection.onstream = function (event) {
     attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>';    
     customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isVideo == 0) {
-        video.setAttribute("style", "display:none;");
+        video.setAttribute("style", "display:none; ");
         video.hidden = true;
         var attendeeInit = document.createElement('div');
         attendeeInit.className = "attendee-initial-letter";
@@ -403,6 +403,7 @@ connection.onstream = function (event) {
         heightDiv.appendChild(attendeeInit);
     } else {
         var attendeeDiv = document.createElement('div');
+        video.setAttribute("style", " border:2px solid #F0F1F1;");
         attendeeDiv.className = "attendee-video";
         attendeeDiv.setAttribute("style", "background-color: #3283b9;color: #fff;height: 85%; border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;");
         attendeeDiv.appendChild(video);
@@ -416,13 +417,13 @@ connection.onstream = function (event) {
             var screenShareContainer = document.getElementById('screen-share-container');
             var screenCustomDiv = document.createElement('div');
             screenCustomDiv.className = "grid_column";
-            screenCustomDiv.setAttribute("style", "flex: 20%;max-width: 20%;margin: 20px;border-radius: 10px; background-color: #3283b9;");
+            screenCustomDiv.setAttribute("style", "flex: 20%;max-width: 20%;margin: 20px;border-radius: 10px;background-color: #3283b9;");
             var screenShareDiv = document.createElement('div');
             screenShareDiv.className="screen-share-div";
-            screenShareDiv.setAttribute("style", "color: #fff;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 80px;text-align: center;");
+            screenShareDiv.setAttribute("style", "text-align: center;");
             var attendeeName = document.createElement('div');
             attendeeName.className = "attendee-name";
-            attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 25%;font-size: 1.3vh; background-color: #3283b9");
+            attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 10%;font-size: 1.3vh; background-color: #bc151b");
             attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>'; 
             screenShareDiv.appendChild(video);
             screenShareDiv.appendChild(attendeeName);
