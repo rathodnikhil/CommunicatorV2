@@ -1,40 +1,23 @@
 
 .btn-sec {
-    background-color: #fd5e53;
+    /* background-color: #fd5e53;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#e23c30), to(#cc2b20));
     background-image: -webkit-linear-gradient(to bottom, #e23c30, #cc2b20);
     background-image: -moz-linear-gradient(to bottom, #e23c30, #cc2b20);
     background-image: -ms-linear-gradient(to bottom, #e23c30, #cc2b20);
     background-image: -o-linear-gradient(to bottom, #e23c30, #cc2b20);
-    background-image: linear-gradient(to bottom, #e23c30, #cc2b20);
+    background-image: linear-gradient(to bottom, #e23c30, #cc2b20); */
     /* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
     -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
     -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #c03e35 #be2419 #ac0d02 #9c322a;
     cursor: pointer;
     font: bold 13px Arial, Helvetica;
     color: #ffffff;
-
-    /* background-color: #df6259;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#e23c30), to(#df6259));
-    background-image: -webkit-linear-gradient(to bottom, #e23c30, #df6259);
-    background-image: -moz-linear-gradient(to bottom, #e23c30, #df6259);
-    background-image: -ms-linear-gradient(to bottom, #e23c30, #df6259);
-    background-image: -o-linear-gradient(to bottom, #e23c30, #df6259);
-    background-image: linear-gradient(to bottom, #e23c30, #df6259);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #d69e31 #e3a037 #d5982d #e3a037;
-    cursor: pointer;
-    font: bold 13px Arial, Helvetica;
-    color: #8f5a0a; */
+    border: 1px solid #c43636;
+    color: #c43636;
+    background-color: #e7e3d4;
+    padding: 0.375rem 0.75rem;
 }
 .btn-cancel{
     color: rgb(248, 87, 87);
@@ -73,16 +56,7 @@
         width: 15%;
         float:left;
         padding: 15px;
-        /* background: #e5efff;
-        background: #353535;
-        background: -moz-linear-gradient(to right,#353535 0%, #868e96 74%, #868e96 100%);
-        background: -webkit-gradient(left top, right top, color-stop(0%, #353535), color-stop(74%, #868e96), color-stop(100%, #868e96));
-        background: -webkit-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-        background: -o-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-        background: -ms-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-        background: linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1); */
-        background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
+        background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
         color: #ffffff;
         font-weight: bold;
 
@@ -136,7 +110,7 @@
     cursor: pointer;
     }
     .btn.btn-secondary {
-        background:  #2199e8;
+        background:  #3283b9;
         /* color:  #353535; */
         border-color:  #1d7bb9;
         border-radius: 0px 5px 5px 0px;
@@ -208,4 +182,6 @@ color: red;
     object-fit: cover;
     object-position: center right;
   }
+
+/* responsive css*/
 

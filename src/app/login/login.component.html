@@ -19,7 +19,7 @@
                 <div class="inner-border">
 
                     <h1 style="color: #3283b9;">Log In</h1>
-                    <div style=" border: 1px solid #2e77b2;">
+                    <div style=" border: 1px solid #3283b9;">
                         <div id="register-user1">I am a Registered User:</div>
                         <div class="input-group mb-3" style="padding:0px 15px 5px 15px;">
 
@@ -53,12 +53,13 @@
                         </div>
                     </div> -->
 
-                    <div class="join-meeting-id">
-                        <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
-                            role="button" style="font-size: 15px;">
+                    <div class="join-meeting-id" >
+                            <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
+                            role="button" style="font-size: 15px;word-wrap: break-word">
                             <i class="fa fa-sign-in" aria-hidden="true" style="padding-right:5px;font-size:18px;"></i>
-                            Join with Meeting ID (Guest user)
+                           Join with Meeting ID (Guest user)
                         </a>
+                  
                     </div>
 
                     <fieldset id="actions">
@@ -82,10 +83,10 @@
                     required />
             </div>
 
-            <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
+            <button class="btn" (click)="sendEmailForgotPassword()">Submit</button>
             <div class="alink"> <a (click)="backToLogin()">back to login</a></div>
         </div>
     </div>
-    <div class="cfsfooter "><b>Copyright &copy; 2018 Coreflex Solutions</b>
+    <div class="cfsfooter "><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
     </div>
 </div>

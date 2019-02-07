@@ -1,15 +1,9 @@
 @import "styles/customStyle.css";
 .card-body {
-    // background: #353535;
-    // background: -moz-linear-gradient(to right,#353535 0%, #868e96 74%, #868e96 100%);
-    // background: -webkit-gradient(left top, right top, color-stop(0%, #353535), color-stop(74%, #868e96), color-stop(100%, #868e96));
-    // background: -webkit-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-    // background: -o-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-    // background: -ms-linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-    // background: linear-gradient(to right, #353535 0%, #868e96 74%, #868e96 100%);
-    // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #353535', endColorstr=' #353535', GradientType=1);
-    background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
-    color: #ffffff;
+    // background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+    // border: 1px solid #c43636;
+    // color: #c43636;
+    background-color: #eaeaea;
     font-weight: bold;
     height: 93vh;
 }
@@ -80,13 +74,13 @@
 }
 
 .list-group-partition {
-    border-top: 1px solid #ffff;
+    border-top: 1px solid #919090;
     width: 100%;
     margin-top: 8px;
     margin-bottom: 0px;
 }
 .hr-partition{
-    border-top: 2px solid #d3d3d3;
+    border-top: 2px solid #919090;
     width: 100%;
     margin-bottom: 0px;
     padding-left: 25px;
@@ -94,4 +88,7 @@
 }
 .add-member{
     color: #ffffff; padding-left: 10px; padding-top: 12px; cursor: pointer;
+}
+.list-group-item span,a{
+    color: #212529;
 }

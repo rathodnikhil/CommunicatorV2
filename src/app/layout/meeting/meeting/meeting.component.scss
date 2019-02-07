@@ -825,7 +825,7 @@ box-sizing: border-box;
                     } */
   /*Meeting Activity Header*/
 .meeting-activity{
-  background-color: #344351;
+  background-color: #F0F0F0;
    /*background: linear-gradient(to right, #3283b9 0%, #4caf50 100%);*/
   color: #F0F1F1;
   font-family: Gorgia;
@@ -897,27 +897,34 @@ color:#fff;
 }*/
 
 .btn-background{
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 60px;
     text-align: center;
     padding: 6px 0;
     font-size: 12px;
     line-height: 1;
-    border: 1px solid #c43636;
-    border-radius: 25px;
+    // border: 1px solid #c43636;
+    // border-radius: 25px;
     margin-right: 10px;
-    color: #c43636;
-    background-color: #d6d9db;
+    // color: #c43636;
+    // background-color: #d6d9db;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    // overflow: hidden;
+    outline:none;
 }
 
-.btn-background:hover{
-color: #fff;
-  font-family: Monoton;
-  -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
-  -moz-animation: neon1 1.5s ease-in-out infinite alternate;
-  animation: neon1 1.5s ease-in-out infinite alternate;
-}
-
+// .btn-background:hover{
+// color: #fff;
+//   font-family: Monoton;
+//   -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
+//   -moz-animation: neon1 1.5s ease-in-out infinite alternate;
+//   animation: neon1 1.5s ease-in-out infinite alternate;
+// }
+*:focus {outline:none !important;
+  box-shadow: none;}
 
 /*.icon-background1 {
     color: #C2E3FF;
@@ -943,26 +950,32 @@ color: #fff;
 
 
 .exit{
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 60px;
     text-align: center;
     padding: 6px 0;
-    font-size: 12px;
+    // font-size: 12px;
     line-height: 1;
-    border: 1px solid #A81207;
-    border-radius: 25px;
+    // border: 1px solid #A81207;
+    // border-radius: 25px;
     margin-right: 10px;
     color: #fff;
-    background-color: #be2419;
+    // background-color: #be2419;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    // overflow: hidden;
+    outline:none;
 }
 
-.exit:hover{
-   color: #fff;
-  font-family: Monoton;
-  -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
-  -moz-animation: neon2 1.5s ease-in-out infinite alternate;
-  animation: neon2 1.5s ease-in-out infinite alternate;
-}
+// .exit:hover{
+//    color: #fff;
+//   font-family: Monoton;
+//   -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+//   -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+//   animation: neon2 1.5s ease-in-out infinite alternate;
+// }
 
 @-webkit-keyframes neon2 {
 from {
@@ -1100,13 +1113,6 @@ display: inline-block;
   height: 100%; 
 }
 
-.attendee-title{
-  text-align: center; 
-  background-color: #344351; 
-  font-family: Georgia;
-  color: #E8EDF2;
-}
-
 .height-100{
   height: 100%;
 }
@@ -1158,14 +1164,6 @@ display: inline-block;
   margin-left: 11px;
   border:1px solid #ccc;
 }
-
-.files-title{
-  text-align: center;  
-  background-color: #344351; 
-  font-family: Georgia;
-  color: #E8EDF2;
-}
-
 .file-row-1{
   margin: 10px; 
   background-color: #eee;
@@ -1202,10 +1200,11 @@ display: inline-block;
 
 .screen-share-title{
 text-align: center;
-    background-color: #344351;
-    font-family: Georgia;
-    color: #E8EDF2;
+    background-color: #e7e3d4;
+    border-bottom: 3px solid #241d1d;
     width:100%;
+    height: 8%;
+    font-weight: bold;
 }
 
 .screen-share-div{
@@ -1233,8 +1232,9 @@ text-align: center;
 
 .btn-responsive{
   margin: 10px; 
-  background-color: #344351; 
-  color: #fff; 
+  border: 1px solid #fff;
+  color: #fff;;
+  background-color: #3283b9;
   font-weight: bold; 
   /*border: 1px solid #237826;*/
 }
@@ -1244,6 +1244,11 @@ text-align: center;
   padding-right: 20px;
   /* height: 80vh;
   overflow: auto; */
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
 }
 
 /* Responsive layout - makes a two column-layout instead of four columns */
@@ -1291,13 +1296,36 @@ font-size:10px;
 
 @media (min-width: 1200px) {
 .btn1 {
-  width:50px;
-  height:50px;
+  width:52px;
+  height:60px;
 font-size:12px;
 }
 }
 
+// @media (min-width: 768px) {
+//   #btn11 {
+//   // font-size:9px;
+//     width: 24px;
+//     height:24px;  }
+//   }
+  
+//   @media (min-width: 992px) {
+//   #btn11 {
+//   // font-size:10px;
+//     width:30px;
+//     height:30px;
+//   }
+//   }
+  
+//   @media (min-width: 1200px) {
+//   #btn11 {
+//     width:50px;
+//     height:50px;
+//   // font-size:12px;
+//   }
+//   }
 
+  
 /*********for square button************/
 
 

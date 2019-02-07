@@ -14,9 +14,6 @@ import { DOCUMENT } from '@angular/common';
     providers: [AlertService]
 })
 export class ScheduleMeetingComponent implements OnInit {
-    @Output() CurrentRoute = new EventEmitter();
-    @ViewChild('closeBtn') closeBtn: ElementRef;
-    @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
     _meetingService: MeetingService;
     _userService: UserService;
     currentDate: any;
@@ -30,7 +27,15 @@ export class ScheduleMeetingComponent implements OnInit {
     vedioMeeting: boolean;
     futureMeetingList: any[];
     filteredFutureMeetingList: any[];
+    outLookBody: any;
+    outLooksubject: any;
+    toAttendees: any;
+    ccAttendees: any;
+    meetingObj: any;
     // public radioGroupForm: FormGroup;
+    @Output() CurrentRoute = new EventEmitter();
+    @ViewChild('closeBtn') closeBtn: ElementRef;
+    @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
     scheduleMeetings: CustomModalModel = {
         titleIcon: '<i class="fa fa-calendar-check-o"></i>',
         title: 'Invite Attendees',
@@ -38,6 +43,15 @@ export class ScheduleMeetingComponent implements OnInit {
         body: '',
         Button1Content: '<i class="fa fa-envelope"></i> Outlook',
         Button2Content: '<i class="fa fa-copy"></i> Copy'
+    };
+    @ViewChild('outlookModal') public outlookModal: CustomModalComponent;
+    scheduleOutlookWindow: CustomModalModel = {
+        titleIcon: '<i class="fa fa-calendar-check-o"></i>',
+        title: 'Send Email',
+        smallHeading: 'Add attendees to your meeting here',
+        body: '',
+        Button1Content: '<i class="fa fa-envelope"></i>Send',
+        Button2Content: '<i class="fa fa-copy"></i> Csncel'
     };
     durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)', '90 Min (1.5 Hour)', '120 Min (2 Hour)', '150 Min (2.5 Hour)',
         '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
@@ -195,13 +209,6 @@ export class ScheduleMeetingComponent implements OnInit {
                     this.meeting = {};
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
-                    if (this.meeting.callType === 'Video') {
-                        this.vedioMeeting = true;
-                        this.audioMeeting = false;
-                    } else {
-                        this.audioMeeting = true;
-                        this.vedioMeeting = false;
-                    }
                     if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
                         this.futureMeetingList = [];
                     }
@@ -210,6 +217,7 @@ export class ScheduleMeetingComponent implements OnInit {
                         this.filteredFutureMeetingList = [];
                     }
                     this.filteredFutureMeetingList.push(data);
+                    this.meetingObj = data;
                    // this.showScheduleMeetingSuccess = true;
                    this.scheduleMeetingModal.open();
                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
@@ -232,18 +240,23 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.meridianTime =  { hour: today.getHours(), minute: today.getMinutes() };
     }
     copyToOutLook(event) {
-        const meetingDetails = encodeURIComponent(this.getMeetingDetails());
-        const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-       // this.showScheduleMeetingSuccess = false;
+        this.outlookModal.open();
+        // open outlook or other compose email
+        // const meetingDetails = encodeURIComponent(this.getMeetingDetails());
+        // const a = document.createElement('a');
+        // a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
+        // document.body.appendChild(a);
+        // a.click();
+        // document.body.removeChild(a);
+        const newLine = '\r\n\r\n';
+       this.outLookBody = this.getMeetingDetails(newLine);
+       this.outLooksubject = this.subject;
         this.closeMeetingPopup('scheduleMeetings');
     }
     // copy meeting content
     copyToClipboard() {
-        const meetingDetails = this.subject + '  ' + this.getMeetingDetails();
+        const newLine = '\r\n\r\n';
+        const meetingDetails = this.subject + '  ' + this.getMeetingDetails(newLine);
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
@@ -274,16 +287,39 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     // get meeting details
-    getMeetingDetails(): string {
+    getMeetingDetails(newLine): string {
             const meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.meeting.datePicker.year + '/' +
+        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
          this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
-            + this.meeting.selectedDuration + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone\r\n\r\n' + meetingUrl + this.accessCode +
-            '\r\n\r\n Meeting Id :    ' + this.accessCode;
+            + this.meeting.selectedDuration + newLine +
+            + newLine + ' Please join my meeting from your computer , tablet or smartphone' + newLine + meetingUrl + this.accessCode +
+            +newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }
+    sendEmail(e) {
+        const newLine = '<br>';
+        const outLookBodyJson = this.getMeetingDetails(newLine);
+        const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
+            meetingDetailsBody: outLookBodyJson , meeting: this.meetingObj};
+            this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                    this.outlookModal.close();
+                    this.clearOutlookField();
+                    return this.alertService.success('Meeting Invitation has sent successfully', 'Meeting Invitation');
+                }
+        });
 }
-
+closeoutMaliPopup() {
+    this.outlookModal.close();
+   this.clearOutlookField();
+}
+clearOutlookField() {
+    this.toAttendees = '';
+    this.ccAttendees = '';
+    this.outLookBody = '';
+}
+}

@@ -307,5 +307,24 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.isVideoEnabled = ! this.isVideoEnabled;
         this.viewVideoBtn.nativeElement.blur();
     }
+    copyMeetingLink(copyContentFlag) {
+        const newLine = '\r\n\r\n';
+        let meetingDetails = null;
+        if(copyContentFlag === 1){
+             meetingDetails = 'For Regsiter user copy this url : https://cfscommunicator.com/#/meeting?meetingCode='+this.meetingDetails.meetingCode + newLine
+            +'For GuestUser or having only meeting Id use this url :  https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode='
+            +this.meetingDetails.meetingCode;
+        } else{
+            meetingDetails = this.meetingDetails.meetingCode;
+        }
+       
+        const el = document.createElement('textarea');
+        el.value = meetingDetails;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+      return this.alertService.success('Meeting Details has been Copied. Kindly share via your preferred Mail Id.', 'Copy Meeting Details');
+    }
 }
 
