@@ -372,7 +372,16 @@ connection.onstream = function (event) {
     var heightDiv = document.createElement('div');
     heightDiv.className = "height-100";
     heightDiv.setAttribute("style", "height: 100%;");
-
+    var attendeeFullName = event.extra;
+    attendeeFullName = attendeeFullName.split(" ");
+    var attendeeFullNameArray = new Array();
+    for(var i =0; i < attendeeFullName.length; i++){
+        attendeeFullNameArray.push(attendeeFullName[i]);
+        if(i != attendeeFullName.length-1){
+            attendeeFullNameArray.push(" ");
+        }
+    }
+   var  attendeeNameLetter = null;
     var attendeeName = document.createElement('div');
     attendeeName.className = "attendee-name";
     attendeeName.setAttribute("style", "color: #000;text-align: center;height: 25%;font-size: 1.3vh;");
@@ -384,7 +393,12 @@ connection.onstream = function (event) {
         var attendeeInit = document.createElement('div');
         attendeeInit.className = "attendee-initial-letter";
         attendeeInit.setAttribute("style", "background-color: #3283b9;color: #fff;height: 85%;border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;font-size: 80px;");
-        attendeeInit.innerHTML = event.type === 'local' ? 'You' : event.extra.substring(0, 1);
+        if(attendeeFullNameArray.length < 3) {
+            attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
+        }else{
+            attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase()+ attendeeFullNameArray[2].substring(0 , 1).toUpperCase();
+        }
+        attendeeInit.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         attendeeInit.appendChild(video);
         heightDiv.appendChild(attendeeInit);
     } else {
