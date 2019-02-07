@@ -20,11 +20,10 @@
         </div>
     </div>
     <div style="height:75vh; overflow: auto;">
-        <ul *ngFor="let groupItem of groupList  | genericSearchAllProp:searchGroup;let groupCount = index">
+        <ul *ngFor="let group of groupList  | genericSearchAllProp:searchGroup;let groupCount = index">
             <li>
-                <label style=" cursor: pointer;" >   
-                    <!-- *ngIf="groupItem.team.status.status === 'ACTIVE'"  (click)="displayTeamDetails(groupItem, groupCount)"-->
-                    <!-- {{groupItem.item_text}} -->
+                 <label style=" cursor: pointer;" *ngIf="group.groupId.status.status === 'ACTIVE'"> 
+                    {{group.groupId.groupName}}
                 </label>
             </li>
         </ul>
