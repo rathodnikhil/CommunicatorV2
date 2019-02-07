@@ -66,8 +66,6 @@ export class ManageGroupComponent implements OnInit {
         Button2Content: ''
     };
 
-    //@ViewChild('teamNameField') teamNameField: ElementRef;
-
     constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
@@ -89,16 +87,15 @@ export class ManageGroupComponent implements OnInit {
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
                 this._groupService.getGroupList().subscribe(groupData => {
-                    if(groupData[0].errorFl || groupData[0].warningFl){
+                    if (groupData.errorFl === true || groupData.warningFl === true) {
                         this.groupList = [];
-                        return this.alertService.warning(groupData[0].message, 'Warning');
-                    } else{
-                    this.groupList = groupData;
+                        return this.alertService.warning(groupData.message, 'Warning');
+                    } else {
+                         this.groupList = groupData;
                     }
                 });
             }
         });
-       
         this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
             this.groupMemberObjList = data;
         });
@@ -155,13 +152,12 @@ export class ManageGroupComponent implements OnInit {
     //     }
     // }
 
-    addGroup() 
-    {
-        console.log('CHECK : '+this.newGroupName);
+    addGroup() {
         if ( this.newGroupName === null || typeof this.newGroupName === 'undefined' || this.newGroupName.trim() === '') {
             return this.alertService.warning('Please Enter Group Name', 'Warning');
         } else {
-            const payload = { 'groupName': this.newGroupName , 'userCode': this.loggedInUserObj.userCode };
+            // const payload = { 'groupName': this.newGroupName , 'userCode': this.loggedInUserObj.userCode };
+            const payload = { 'groupName': this.newGroupName , 'user': this.loggedInUserObj };
             const group = { group: { groupName: this.newGroupName  , status: {status: 'ACTIVE'}} };
             this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {
@@ -178,7 +174,6 @@ export class ManageGroupComponent implements OnInit {
                 });
             }
     }
-    
     // get details for selected group
     displayGroupDetails(groupId) {
         // this._userService.getUserList().subscribe(data => {
@@ -201,8 +196,6 @@ export class ManageGroupComponent implements OnInit {
             }
         });
     }
-
-    
     // to open group popup
     openGroup() {
         this.addNewGroupModal.open();
