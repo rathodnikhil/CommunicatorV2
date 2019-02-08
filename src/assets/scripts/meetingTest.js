@@ -361,6 +361,12 @@ connection.onstream = function (event) {
             });
         }
     }
+    var viewersContainer = document.getElementById('viewers-container');
+    var viewersCustomDiv = document.createElement('div');
+    viewersCustomDiv.className = "list-div-style";
+    viewersCustomDiv.setAttribute("style","margin-bottom: -10px;height:5%;background-color:gray;padding:25px;background:#eee; margin:10px;");
+    viewersCustomDiv.innerHTML = event.type === 'local' ?  '<label style="font-weight: bold;">You</label>' : '<label style="font-size: 13px;padding-top:5px;font-weight: bold;">'+ event.extra+'</label>';
+    viewersContainer.appendChild(viewersCustomDiv);
     video.srcObject = event.stream;
     video.height = connection.videosContainer.clientHeight - 30;
     video.width = connection.videosContainer.clientHeight;
@@ -384,7 +390,7 @@ connection.onstream = function (event) {
    var  attendeeNameLetter = null;
     var attendeeName = document.createElement('div');
     attendeeName.className = "attendee-name";
-    attendeeName.setAttribute("style", "color: #000;text-align: center;height: 25%;font-size: 1.3vh;");
+    attendeeName.setAttribute("style", "color: #000;text-align: center;height: 25%;font-size: 1.3vh; padding-top:3px;");
     attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>';    
     customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isVideo == 0) {
@@ -392,7 +398,7 @@ connection.onstream = function (event) {
         video.hidden = true;
         var attendeeInit = document.createElement('div');
         attendeeInit.className = "attendee-initial-letter";
-        attendeeInit.setAttribute("style", "background-color: #3283b9;color: #fff;height: 85%;border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;font-size: 80px;");
+        attendeeInit.setAttribute("style", "background-color: #bc151b; color: #fff;height: 85%;border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;font-size: 4.0vw;");
         if(attendeeFullNameArray.length < 3) {
             attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
         }else{
@@ -403,15 +409,17 @@ connection.onstream = function (event) {
         heightDiv.appendChild(attendeeInit);
     } else {
         var attendeeDiv = document.createElement('div');
-        video.setAttribute("style", " border:2px solid #F0F1F1;");
+        video.setAttribute("style", "");
         attendeeDiv.className = "attendee-video";
-        attendeeDiv.setAttribute("style", "background-color: #3283b9;color: #fff;height: 85%; border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;");
+        attendeeDiv.setAttribute("style", "background-color:#f7f7f7;color: #fff;height: 85%; border-top-left-radius: 10px;border:2px solid #605253;border-top-right-radius: 10px;text-align: center;");
+        attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 15%;font-size: 1.3vh;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;background-color: #605253;padding-top:3px;");
         attendeeDiv.appendChild(video);
         heightDiv.appendChild(attendeeDiv);
     }
     heightDiv.appendChild(attendeeName);
     customDiv.appendChild(heightDiv);
     if (event.stream.isScreen) {
+        video.setAttribute("style", " border:2px solid #344351;border-top-left-radius:10px;border-top-right-radius:10px;padding:0px; ");
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id
             var screenShareContainer = document.getElementById('screen-share-container');
@@ -423,7 +431,7 @@ connection.onstream = function (event) {
             screenShareDiv.setAttribute("style", "text-align: center;");
             var attendeeName = document.createElement('div');
             attendeeName.className = "attendee-name";
-            attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 10%;font-size: 1.3vh; background-color: #bc151b");
+            attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 10%;font-size: 1.3vh;background-color: #344351;");
             attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>'; 
             screenShareDiv.appendChild(video);
             screenShareDiv.appendChild(attendeeName);
@@ -435,6 +443,7 @@ connection.onstream = function (event) {
             connection.videosContainer.appendChild(customDiv);
         }        
     }
+ 
     setTimeout(function () {
         video.play();
     }, 5000);
