@@ -10,6 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CountdownComponent } from 'ngx-countdown';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
+import { e } from '@angular/core/src/render3';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -91,7 +92,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 if (this.meetingCode !== '' && this.meetingCode !== undefined) {
                     const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode ,
                          email: this.loggedInUser.eamil };
-                    console.log(this.loggedInUser.userCode + 'this.loggedInUser.userCode');
                     if (!data.isGuest) {
                       //  payload.userCode = this.loggedInUser.userCode;
                         this.isGuest = false;
