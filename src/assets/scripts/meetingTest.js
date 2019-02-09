@@ -32,8 +32,7 @@ document.getElementById('btn-mute').onclick = function () {
                 local: true
             }).stream.mute("audio");
             isMute = true;
-        }
-        else {
+        } else {
             connection.streamEvents.selectFirst({
                 local: true
             }).stream.unmute();
@@ -79,13 +78,14 @@ document.getElementById('btn-end-meeting').onclick = function () {
         document.querySelector('h1').innerHTML = 'Entire session has been closed.';
     });
 }
+
 function onDetectRTCLoaded() {
     var videoValue = DetectRTC.hasWebcam;
     if (!videoValue) {
         alertService.warning('Switching to audio mode.', 'Web Cam not detected');
         document.getElementById('disable-video').style.visibility = 'hidden';
+        //document.getElementById('disable-video').style.display = 'none';
     }
-    videoValue = false;    
     connection.session = {
         audio: true,
         video: videoValue,
@@ -101,6 +101,7 @@ function onDetectRTCLoaded() {
         OfferToReceiveVideo: true
     };
 }
+
 function reloadDetectRTC(callback) {
     DetectRTC.load(function () {
         onDetectRTCLoaded();
@@ -116,7 +117,10 @@ DetectRTC.load(function () {
 
     try {
         if (DetectRTC.MediaDevices[0] && DetectRTC.MediaDevices[0].isCustomLabel) {
-            navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(function (stream) {
+            navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: true
+            }).then(function (stream) {
                 var video;
                 try {
                     video = document.createElement('video');
@@ -126,8 +130,7 @@ DetectRTC.load(function () {
                     video.style.display = 'none';
                     video.style.opacity = 0;
                     (document.body || document.documentElement).appendChild(vide);
-                }
-                catch (e) { }
+                } catch (e) {}
 
                 reloadDetectRTC(function () {
                     // release camera
@@ -142,8 +145,7 @@ DetectRTC.load(function () {
             }).catch(reloadDetectRTC);
             return;
         }
-    }
-    catch (e) { }
+    } catch (e) {}
 
     onDetectRTCLoaded();
 });
@@ -164,7 +166,9 @@ document.getElementById('disable-video').onclick = function () {
         document.getElementById('disable-video').disabled = false;
     }, 6000);
     var videoValue = this.value == "true";
-    if (connection.streamEvents.selectFirst({ local: true }) != undefined) {
+    if (connection.streamEvents.selectFirst({
+            local: true
+        }) != undefined) {
         connection.streamEvents.selectFirst({
             local: true
         }).stream.stop();
@@ -345,6 +349,7 @@ connection.onstream = function (event) {
     event.mediaElement.removeAttribute('srcObject');
 
     var video = document.createElement('video');
+
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
@@ -361,89 +366,33 @@ connection.onstream = function (event) {
             });
         }
     }
-    var viewersContainer = document.getElementById('viewers-container');
-    var viewersCustomDiv = document.createElement('div');
-    viewersCustomDiv.className = "list-div-style";
-    viewersCustomDiv.setAttribute("style","margin-bottom: -10px;height:5%;background-color:gray;padding:25px;background:#eee; margin:10px;");
-    viewersCustomDiv.innerHTML = event.type === 'local' ?  '<label style="font-weight: bold;">You</label>' : '<label style="font-size: 13px;padding-top:5px;font-weight: bold;">'+ event.extra+'</label>';
-    viewersContainer.appendChild(viewersCustomDiv);
     video.srcObject = event.stream;
-    video.height = connection.videosContainer.clientHeight - 30;
-    video.width = connection.videosContainer.clientHeight;
-    // video.setAttribute("style", 'float:left;margin-top:-15px');
+    video.height = Math.round(window.innerHeight * 0.30) - 10;
+    video.width = Math.round(window.innerHeight * 0.30) - 10;
+    video.setAttribute("style", 'float:left;');
     // video.style.padding = '5';
     var customDiv = document.createElement('div');
-    customDiv.className = "grid_column";
-    customDiv.setAttribute("style", "flex: 20%;max-width: 20%;margin: 20px;border-radius: 10px; background-color: #fff;");
-    var heightDiv = document.createElement('div');
-    heightDiv.className = "height-100";
-    heightDiv.setAttribute("style", "height: 100%;");
-    var attendeeFullName = event.extra;
-    attendeeFullName = attendeeFullName.split(" ");
-    var attendeeFullNameArray = new Array();
-    for(var i =0; i < attendeeFullName.length; i++){
-        attendeeFullNameArray.push(attendeeFullName[i]);
-        if(i != attendeeFullName.length-1){
-            attendeeFullNameArray.push(" ");
-        }
-    }
-   var  attendeeNameLetter = null;
-    var attendeeName = document.createElement('div');
-    attendeeName.className = "attendee-name";
-    attendeeName.setAttribute("style", "color: #000;text-align: center;height: 25%;font-size: 1.3vh; padding-top:3px;");
-    attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>';    
+    customDiv.style.height = Math.round(window.innerHeight * 0.30);
+    customDiv.style.width = Math.round(window.innerHeight * 0.30);
+    customDiv.style.padding = '5';
+    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
+    var heading = document.createElement('div');
+    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
+    customDiv.appendChild(heading);
+    customDiv.appendChild(video);
+    customDiv.setAttribute("drag-scroll-item", '');
     customDiv.setAttribute("id", event.streamid + 'parent');
-    if (event.stream.isVideo == 0) {
-        video.setAttribute("style", "display:none; ");
-        video.hidden = true;
-        var attendeeInit = document.createElement('div');
-        attendeeInit.className = "attendee-initial-letter";
-        attendeeInit.setAttribute("style", "background-color: #bc151b; color: #fff;height: 85%;border-top-left-radius: 10px;border-top-right-radius: 10px;text-align: center;font-size: 4.0vw;");
-        if(attendeeFullNameArray.length < 3) {
-            attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
-        }else{
-            attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase()+ attendeeFullNameArray[2].substring(0 , 1).toUpperCase();
-        }
-        attendeeInit.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
-        attendeeInit.appendChild(video);
-        heightDiv.appendChild(attendeeInit);
-    } else {
-        var attendeeDiv = document.createElement('div');
-        video.setAttribute("style", "");
-        attendeeDiv.className = "attendee-video";
-        attendeeDiv.setAttribute("style", "background-color:#f7f7f7;color: #fff;height: 85%; border-top-left-radius: 10px;border:2px solid #605253;border-top-right-radius: 10px;text-align: center;");
-        attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 15%;font-size: 1.3vh;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;background-color: #605253;padding-top:3px;");
-        attendeeDiv.appendChild(video);
-        heightDiv.appendChild(attendeeDiv);
-    }
-    heightDiv.appendChild(attendeeName);
-    customDiv.appendChild(heightDiv);
     if (event.stream.isScreen) {
-        video.setAttribute("style", " border:2px solid #344351;border-top-left-radius:10px;border-top-right-radius:10px;padding:0px; ");
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id
-            var screenShareContainer = document.getElementById('screen-share-container');
-            var screenCustomDiv = document.createElement('div');
-            screenCustomDiv.className = "grid_column";
-            screenCustomDiv.setAttribute("style", "flex: 20%;max-width: 20%;margin: 20px;border-radius: 10px;background-color: #3283b9;");
-            var screenShareDiv = document.createElement('div');
-            screenShareDiv.className="screen-share-div";
-            screenShareDiv.setAttribute("style", "text-align: center;");
-            var attendeeName = document.createElement('div');
-            attendeeName.className = "attendee-name";
-            attendeeName.setAttribute("style", "color: #fff;text-align: center;height: 10%;font-size: 1.3vh;background-color: #344351;");
-            attendeeName.innerHTML = event.type === 'local' ? '<label>You</label>' : '<label>' + event.extra + '</label>'; 
-            screenShareDiv.appendChild(video);
-            screenShareDiv.appendChild(attendeeName);
-            screenShareContainer.appendChild(screenShareDiv);          
-            // connection.filesContainer.appendChild(customDiv);
+            connection.filesContainer.appendChild(customDiv);
         }
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
-        }        
+        }
     }
- 
     setTimeout(function () {
         video.play();
     }, 5000);
