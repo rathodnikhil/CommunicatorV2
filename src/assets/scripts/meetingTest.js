@@ -52,7 +52,6 @@ document.getElementById('open-room').onclick = function () {
     connection.openOrJoin(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
-        document.getElementById('resume-count').click();
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;
         document.getElementById('btn-leave-room').disabled = false;
@@ -86,6 +85,7 @@ function onDetectRTCLoaded() {
         document.getElementById('disable-video').style.visibility = 'hidden';
         //document.getElementById('disable-video').style.display = 'none';
     }
+    videoValue = false;
     connection.session = {
         audio: true,
         video: videoValue,
@@ -161,7 +161,6 @@ document.getElementById('disable-video').onclick = function () {
         isShareScreen = false;
         alertService.warning('You will have to share screen again!', 'screen share');
     }
-    document.getElementById('resume-count').click();
     setTimeout(function () {
         document.getElementById('disable-video').disabled = false;
     }, 6000);
@@ -378,8 +377,32 @@ connection.onstream = function (event) {
     customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
     heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    var attendeeFullName = event.extra;
+    attendeeFullName = attendeeFullName.split(" ");
+    var attendeeFullNameArray = new Array();
+    for (var i = 0; i < attendeeFullName.length; i++) {
+        attendeeFullNameArray.push(attendeeFullName[i]);
+        if (i != attendeeFullName.length - 1) {
+            attendeeFullNameArray.push(" ");
+        }
+    }
+    var attendeeNameLetter = null;
     heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
     customDiv.appendChild(heading);
+    if (event.stream.isVideo == 0) {
+        video.setAttribute("style", "display:none; ");
+        video.hidden = true;
+        if (attendeeFullNameArray.length < 3) {
+            attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
+        } else {
+            attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase() + attendeeFullNameArray[2].substring(0, 1).toUpperCase();
+        }
+        var initialsDiv = document.createElement('div');
+        initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
+        initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#bc151b;color:#fff;margin-top: 30px;font-size: 4.0vw;');
+        customDiv.appendChild(initialsDiv);
+    }
+
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');
     customDiv.setAttribute("id", event.streamid + 'parent');
@@ -490,11 +513,36 @@ function disableInputButtons() {
 // ......................................................
 
 function showRoomURL(roomid) {
-    var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
-    html = 'Meeting URL: <a style="color:white;" href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+    // var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
+    // html = 'Meeting URL: <a style="color:white;" href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
     var roomURLsDiv = document.getElementById('room-urls');
-    roomURLsDiv.innerHTML = html;
+    // roomURLsDiv.innerHTML = html;
     roomURLsDiv.style.display = 'block';
+}
+
+document.getElementById("copyMeetingLink").onclick = function () {
+    var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
+    copyToClipBoard(roomQueryStringURL, 'Meeting Link has been Copied. Kindly share via your preferred Mail Id.',
+        'Copy Meeting Link')
+};
+document.getElementById("copyGuestMeetingLink").onclick = function () {
+    var roomQueryStringURL = window.location.origin + '/#/Login/GuestUserWithMeeting?meetingCode=' + roomid;
+    copyToClipBoard(roomQueryStringURL, 'Meeting Link for guest has been Copied. Kindly share via your preferred Mail Id.',
+        'Copy Guest Meeting Link')
+};
+document.getElementById("copyMeetingId").onclick = function () {
+    copyToClipBoard(roomid, 'Meeting Id has been Copied. Kindly share via your preferred Mail Id.',
+        'Copy Meeting Id')
+};
+
+function copyToClipBoard(content, message, title) {
+    const el = document.createElement('textarea');
+    el.value = content;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alertService.success(message, title);
 }
 
 var roomid = '';
@@ -537,7 +585,6 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
-                document.getElementById('resume-count').click();
                 document.getElementById('btn-save-mom').disabled = false;
                 document.getElementById('input-text-chat').disabled = false;
                 return;
@@ -560,5 +607,132 @@ window.onhashchange = function () {
             streamEvent.stream.stop();
             mediaElement.parentNode.removeChild(mediaElement);
         }
+    });
+}
+
+/** Record screen functionality */
+var screenRecordVideo = document.getElementById('screenRecordVideo');
+document.getElementById('screenRecordVideo').style.display = 'none';
+if (!navigator.getDisplayMedia && !navigator.mediaDevices.getDisplayMedia) {
+    var error = 'Your browser does NOT supports getDisplayMedia API.';
+    // document.querySelector('h1').innerHTML = error;
+    document.getElementById('screenRecordVideo').style.display = 'none';
+    document.getElementById('btn-start-recording').style.display = 'none';
+    // document.getElementById('btn-stop-recording').style.display = 'none';
+    alertService.error(error, "record screen not supported");
+}
+
+function invokeGetDisplayMedia(success, error) {
+    var displaymediastreamconstraints = {
+        video: {
+            displaySurface: 'monitor', // monitor, window, application, browser
+            logicalSurface: true,
+            cursor: 'always' // never, always, motion
+        }
+    };
+
+    // above constraints are NOT supported YET
+    // that's why overridnig them
+    displaymediastreamconstraints = {
+        video: true
+    };
+
+    if (navigator.mediaDevices.getDisplayMedia) {
+        navigator.mediaDevices.getDisplayMedia(displaymediastreamconstraints).then(success).catch(error);
+    } else {
+        navigator.getDisplayMedia(displaymediastreamconstraints).then(success).catch(error);
+    }
+}
+
+function captureScreen(callback) {
+    invokeGetDisplayMedia(function (screen) {
+        addStreamStopListener(screen, function () {
+            // document.getElementById('btn-stop-recording').click();
+            document.getElementById('rec_start').style.display = 'block';
+            document.getElementById('rec_stop').style.display = 'none';
+            recorder.stopRecording(stopRecordingCallback);
+        });
+        callback(screen);
+    }, function (error) {
+        // console.error(error);
+        // alert('Unable to capture your screen. Please check console logs.\n' + error);
+        alertService.error("Unable to record meeting", "Permission Denied");
+    });
+}
+
+function stopRecordingCallback() {
+    screenRecordVideo.src = screenRecordVideo.srcObject = null;
+    screenRecordVideo.src = URL.createObjectURL(recorder.getBlob());
+
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.setAttribute('href', URL.createObjectURL(recorder.getBlob()));
+    // a.href = screenRecordVideo.src;
+    a.download = 'screenRecordVideo' + roomid + '.webm';
+    a.click();
+    // window.URL.revokeObjectURL(url);
+    a.remove();
+    recorder.screen.stop();
+    recorder.destroy();
+    recorder = null;
+
+    document.getElementById('btn-start-recording').disabled = false;
+}
+
+var recorder; // globally accessible
+
+document.getElementById('btn-start-recording').onclick = function () {
+    // this.disabled = true;
+    debugger;
+
+    if (document.getElementById('rec_start').style.display != 'none') {
+        captureScreen(function (screen) {
+            screenRecordVideo.srcObject = screen;
+
+            recorder = RecordRTC(screen, {
+                type: 'video'
+            });
+
+            recorder.startRecording();
+
+            // release screen on stopRecording
+            recorder.screen = screen;
+
+            // document.getElementById('btn-stop-recording').disabled = false;
+            document.getElementById('rec_start').style.display = 'none';
+            document.getElementById('rec_stop').style.display = 'block';
+
+        });
+    } else {
+        recorder.stopRecording(stopRecordingCallback);
+        document.getElementById('rec_start').style.display = 'block';
+        document.getElementById('rec_stop').style.display = 'none';
+    }
+};
+
+// document.getElementById('btn-stop-recording').onclick = function () {
+//     this.disabled = true;
+//     recorder.stopRecording(stopRecordingCallback);
+// };
+
+function addStreamStopListener(stream, callback) {
+    stream.addEventListener('ended', function () {
+        callback();
+        callback = function () {};
+    }, false);
+    stream.addEventListener('inactive', function () {
+        callback();
+        callback = function () {};
+    }, false);
+    stream.getTracks().forEach(function (track) {
+        track.addEventListener('ended', function () {
+            callback();
+            callback = function () {};
+        }, false);
+        track.addEventListener('inactive', function () {
+            callback();
+            callback = function () {};
+        }, false);
     });
 }
