@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 // import { ResetPasswordComponent } from './reset-password/reset-password/reset-password.component';
 import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
     imports: [
         CommonModule,

@@ -251,7 +251,17 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 };
 
 var chatContainer = document.querySelector('.chat-output');
-
+function formatDate(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    // return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+    return strTime;
+  }
 function appendDIV(event) {
     var div = document.createElement('div');
     //   div.className = 'chat-background';
@@ -266,7 +276,7 @@ function appendDIV(event) {
         html += '<span class="time-left">';
     }
 
-    html += '<i class="fa fa-user"></i>&nbsp;' + user + '</span>'
+    html += '<i class="fa fa-user"></i>&nbsp;' + user+' '+ formatDate(new Date()) + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -533,7 +543,7 @@ document.getElementById("copyMeetingLink").onclick = function () {
         'Copy Meeting Link')
 };
 document.getElementById("copyGuestMeetingLink").onclick = function () {
-    var roomQueryStringURL = window.location.origin + '/#/Login/GuestUserWithMeeting?meetingCode=' + roomid;
+    var roomQueryStringURL = window.location.origin + '/#/login/GuestUserWithMeeting?meetingCode=' + roomid;
     copyToClipBoard(roomQueryStringURL, 'Meeting Link for guest has been Copied. Kindly share via your preferred Mail Id.',
         'Copy Guest Meeting Link')
 };

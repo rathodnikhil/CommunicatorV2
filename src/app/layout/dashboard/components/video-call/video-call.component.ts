@@ -16,11 +16,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         this._userService = userService;
     }
     ngAfterViewInit(): void {
-        // const s = document.createElement('script');
-        // s.type = 'text/javascript';
-        // s.innerHTML = 'console.log(\'done\');'; // inline script
-        // s.src = '../../../assets/scripts/meetingTest.js';
-
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingPeer.js';
