@@ -1,46 +1,29 @@
 <div class="card card-default">
-    <div class="row" style="margin:0px;">
-        <div class="col-md-8 card-header" id="timeline-icon">
-            {{selectedUser.firstName}} {{selectedUser.lastName}}&nbsp;
-            <a id="view-profile" (click)="open()">(View Full Profile)</a>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-video-camera" [routerLink]="['/videoCall']"></i>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-phone"></i>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-desktop"></i>
-        </div>
-        <div class="col-md-1 card-header">
-            <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
-        </div>
-    </div>
+    <app-selected-user-header [SelectedUser]="selectedUser"></app-selected-user-header>
     <div class="card-body">
 
         <ul class="timeline chat-output">
             <li *ngFor="let chatObj of chattingHistoryList">
                 <ng-container *ngIf="chatObj.chatmsg">
-                        <div class="timeline-badge">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
-                                    <p>
-                                        <small class="text-muted">
-                                            <i class="fa fa-calendar"></i> {{chatObj.msgDate |  date:'fullDate'}}&nbsp;
-                                            ({{chatObj.msgDate |  date:'hh:mm:ss'}})</small>
-                                    </p>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>{{chatObj.chatmsg}}</p>
-                                </div>
-                            </div>
-                </ng-container>                
+                    <div class="timeline-badge">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
+                            <p>
+                                <small class="text-muted">
+                                    <i class="fa fa-calendar"></i> {{chatObj.msgDate | date:'fullDate'}}&nbsp;
+                                    ({{chatObj.msgDate | date:'hh:mm:ss'}})</small>
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>{{chatObj.chatmsg}}</p>
+                        </div>
+                    </div>
+                </ng-container>
             </li>
-             <li   *ngFor="let broadcastMsg of broadcastMsgList" class="timeline-inverted">
+            <li *ngFor="let broadcastMsg of broadcastMsgList" class="timeline-inverted">
                 <div class="timeline-badge warning">
                     <i class="fa fa-bullhorn fa-fw"></i>
                 </div>
@@ -49,8 +32,9 @@
                         <h6 class="timeline-title">{{broadcastMsg.generatedBy.firstName}}&nbsp;{{broadcastMsg.generatedBy.lastName}}</h6>
                         <p>
                             <small class="text-muted">
-                                <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |  date:'fullDate'}}&nbsp;
-                                ({{broadcastMsg.broadcastMsgDate |  date:'hh:mm:ss'}})</small>
+                                <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |
+                                date:'fullDate'}}&nbsp;
+                                ({{broadcastMsg.broadcastMsgDate | date:'hh:mm:ss'}})</small>
                         </p>
                     </div>
                     <div class="timeline-body">
@@ -60,7 +44,7 @@
             </li>
 
 
-             <!-- <li>
+            <!-- <li>
                 <div class="timeline-badge">
                     <i class="fa fa-check"></i>
                 </div>
@@ -196,7 +180,7 @@
 </div>
 <div class="input-group">
     <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"
-      (keyup.enter)="sendMessage()" required >
+        (keyup.enter)="sendMessage()" required>
     </textarea>
     <div class="input-group-append">
         <a class="btn">
@@ -207,43 +191,3 @@
         </a>
     </div>
 </div>
-
-<app-custom-modal #viewProfileModal [model]="viewProfile">
-    <div class="modal-body row-label">
-        <div class="row">
-            <div class="col-md-4">
-                <label>FullName</label>
-            </div>
-            <div class="col-md-8"><label>{{selectedUser.firstName}} &nbsp; {{selectedUser.lastName}}</label></div>
-        </div>
-        <div class="row">
-                <div class="col-md-4">
-                    <label>UserName</label>
-                </div>
-                <div class="col-md-8"><label>{{selectedUser.name}}</label></div>
-            </div>
-            <div class="row">
-                    <div class="col-md-4">
-                        <label>Email</label>
-                    </div>
-                    <div class="col-md-8"><label>{{selectedUser.email}}</label></div>
-                </div>
-                <div class="row">
-                        <div class="col-md-4">
-                            <label>Team Name</label>
-                        </div>
-                        <!-- <div class="col-md-8"><label>{{selectedUser.team.teamName}}</label></div> -->
-                    </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <label>Display Picture</label></div>
-            <div class="col-md-8">
-                <i class="fa fa-user" style="font-size:80px;"></i>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer popFooter">
-            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closePopup('profileDetails')">Close</button>
-    </div>
-</app-custom-modal>
