@@ -343,6 +343,7 @@ connection.sdpConstraints.mandatory = {
 };
 var screenshareCheck = {};
 connection.videosContainer = document.getElementById('videos_container');
+var viewerListDiv = document.getElementById('viewersList');
 connection.onstream = function (event) {
     event.mediaElement.removeAttribute('src');
     event.mediaElement.removeAttribute('srcObject');
@@ -414,6 +415,12 @@ connection.onstream = function (event) {
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
+            if (event.type !== 'local') {
+                var viewer = document.createElement('li');
+                viewer.id = event.streamid + 'viewer';
+                viewer.innerHTML = event.extra + ' joined';
+                viewerListDiv.appendChild(viewer);
+            }
         }
     }
     setTimeout(function () {
