@@ -23,6 +23,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
+    currentTab = 'chat';
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;

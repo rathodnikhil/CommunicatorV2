@@ -1,10 +1,9 @@
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
 
-// document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
-// document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
 document.getElementById('btn-leave-room').disabled = true;
+
 // ......................................................
 // .......................UI Code........................
 // ......................................................
@@ -522,19 +521,4 @@ if (roomid && roomid.length) {
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
-}
-
-window.onhashchange = function () {
-    connection.leave();
-    connection.attachStreams.forEach(function (stream) {
-        stream.stop();
-    });
-    //remove parent
-    connection.streamEvents.selectAll().forEach(function (streamEvent) {
-        var mediaElement = document.getElementById(event.streamid + 'parent');
-        if (mediaElement) {
-            streamEvent.stream.stop();
-            mediaElement.parentNode.removeChild(mediaElement);
-        }
-    });
 }

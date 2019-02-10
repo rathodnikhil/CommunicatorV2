@@ -1,61 +1,59 @@
+<div class="row" style="margin:0px;">
+        {{SelectedUser.firstName}} {{SelectedUser.lastName}}&nbsp;
+        <a id="view-profile" (click)="open()">(View Full Profile)</a>
+    <!-- <div class="col-md-8 card-header" id="timeline-icon">
+        {{SelectedUser.firstName}} {{SelectedUser.lastName}}&nbsp;
+        <a id="view-profile" (click)="open()">(View Full Profile)</a>
+    </div>
+    <div class="col-md-1 card-header" id="video_call">
+        <i class="fa fa-video-camera"></i>
+    </div>
+    <div class="col-md-1 card-header" id="audio_call">
+        <i class="fa fa-phone"></i>
+    </div>
+    <div class="col-md-1 card-header" id="share-screen">
+        <i class="fa fa-desktop"></i>
+    </div>
+    <div class="col-md-1 card-header">
+        <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
+    </div> -->
+</div>
+<app-custom-modal #viewProfileModal [model]="viewProfile">
+    <div class="modal-body row-label">
+        <div class="row">
+            <div class="col-md-4">
+                <label>FullName</label>
+            </div>
+            <div class="col-md-8"><label>{{SelectedUser.firstName}} &nbsp; {{SelectedUser.lastName}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>UserName</label>
+            </div>
+            <div class="col-md-8"><label>{{SelectedUser.name}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Email</label>
+            </div>
+            <div class="col-md-8"><label>{{SelectedUser.email}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Team Name</label>
+            </div>
+            <!-- <div class="col-md-8"><label>{{SelectedUser.team.teamName}}</label></div> -->
+        </div>
 
-    <div class="row" style="margin:0px;">
-        <div class="col-md-8 card-header" id="timeline-icon">
-            {{SelectedUser.firstName}} {{SelectedUser.lastName}}&nbsp;
-            <a id="view-profile" (click)="open()">(View Full Profile)</a>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-video-camera" [routerLink]="['/videoCall']"></i>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-phone"></i>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-desktop"></i>
-        </div>
-        <div class="col-md-1 card-header">
-            <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Display Picture</label></div>
+            <div class="col-md-8">
+                <i class="fa fa-user" style="font-size:80px;"></i>
+            </div>
         </div>
     </div>
-
-
-
-    <app-custom-modal #viewProfileModal [model]="viewProfile">
-        <div class="modal-body row-label">
-            <div class="row">
-                <div class="col-md-4">
-                    <label>FullName</label>
-                </div>
-                <div class="col-md-8"><label>{{SelectedUser.firstName}} &nbsp; {{SelectedUser.lastName}}</label></div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>UserName</label>
-                </div>
-                <div class="col-md-8"><label>{{SelectedUser.name}}</label></div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Email</label>
-                </div>
-                <div class="col-md-8"><label>{{SelectedUser.email}}</label></div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Team Name</label>
-                </div>
-                <!-- <div class="col-md-8"><label>{{SelectedUser.team.teamName}}</label></div> -->
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Display Picture</label></div>
-                <div class="col-md-8">
-                    <i class="fa fa-user" style="font-size:80px;"></i>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer popFooter">
-            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closePopup('profileDetails')">Close</button>
-        </div>
-    </app-custom-modal>
+    <div class="modal-footer popFooter">
+        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closePopup('profileDetails')">Close</button>
+    </div>
+</app-custom-modal>

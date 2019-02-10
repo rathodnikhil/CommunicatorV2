@@ -1,193 +1,172 @@
-<div class="card card-default">
-    <app-selected-user-header [SelectedUser]="selectedUser"></app-selected-user-header>
-    <div class="card-body">
-
-        <ul class="timeline chat-output">
-            <li *ngFor="let chatObj of chattingHistoryList">
-                <ng-container *ngIf="chatObj.chatmsg">
-                    <div class="timeline-badge">
-                        <i class="fa fa-check"></i>
-                    </div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
-                            <p>
-                                <small class="text-muted">
-                                    <i class="fa fa-calendar"></i> {{chatObj.msgDate | date:'fullDate'}}&nbsp;
-                                    ({{chatObj.msgDate | date:'hh:mm:ss'}})</small>
-                            </p>
+<!-- <div class="row">
+    <div class="col-md-6">
+        <div class="card card-default">
+            <app-selected-user-header [SelectedUser]="selectedUser"></app-selected-user-header>
+            <div class="card-body">
+                <ul class="timeline chat-output">
+                    <li *ngFor="let chatObj of chattingHistoryList">
+                        <ng-container *ngIf="chatObj.chatmsg">
+                            <div class="timeline-badge">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h6 class="timeline-title">{{chatObj.userId.firstName}}&nbsp;{{chatObj.userId.lastName}}</h6>
+                                    <p>
+                                        <small class="text-muted">
+                                            <i class="fa fa-calendar"></i> {{chatObj.msgDate | date:'fullDate'}}&nbsp;
+                                            ({{chatObj.msgDate | date:'hh:mm:ss'}})</small>
+                                    </p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>{{chatObj.chatmsg}}</p>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </li>
+                    <li *ngFor="let broadcastMsg of broadcastMsgList" class="timeline-inverted">
+                        <div class="timeline-badge warning">
+                            <i class="fa fa-bullhorn fa-fw"></i>
                         </div>
-                        <div class="timeline-body">
-                            <p>{{chatObj.chatmsg}}</p>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h6 class="timeline-title">{{broadcastMsg.generatedBy.firstName}}&nbsp;{{broadcastMsg.generatedBy.lastName}}</h6>
+                                <p>
+                                    <small class="text-muted">
+                                        <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |
+                                        date:'fullDate'}}&nbsp;
+                                        ({{broadcastMsg.broadcastMsgDate | date:'hh:mm:ss'}})</small>
+                                </p>
+                            </div>
+                            <div class="timeline-body">
+                                <p>{{broadcastMsg.broadcastMessage}}</p>
+                            </div>
                         </div>
-                    </div>
-                </ng-container>
-            </li>
-            <li *ngFor="let broadcastMsg of broadcastMsgList" class="timeline-inverted">
-                <div class="timeline-badge warning">
-                    <i class="fa fa-bullhorn fa-fw"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h6 class="timeline-title">{{broadcastMsg.generatedBy.firstName}}&nbsp;{{broadcastMsg.generatedBy.lastName}}</h6>
-                        <p>
-                            <small class="text-muted">
-                                <i class="fa fa-calendar"></i> {{broadcastMsg.broadcastMsgDate |
-                                date:'fullDate'}}&nbsp;
-                                ({{broadcastMsg.broadcastMsgDate | date:'hh:mm:ss'}})</small>
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <p>{{broadcastMsg.broadcastMessage}}</p>
-                    </div>
-                </div>
-            </li>
-
-
-            <!-- <li>
-                <div class="timeline-badge">
-                    <i class="fa fa-check"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                        <p>
-                            <small class="text-muted">
-                                <i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis
-                            exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro
-                            voluptas suscipit facere rem dicta, debitis.</p>
-                    </div>
-                </div>
-            </li>
-                 <li class="timeline-inverted">
-                <div class="timeline-badge warning">
-                    <i class="fa fa-credit-card"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi
-                            provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi
-                            officiis alias, officia repellendus.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora
-                            eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae
-                            minus eaque facere.</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="timeline-badge danger">
-                    <i class="fa fa-bomb"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque,
-                            tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat,
-                            magni commodi quisquam.
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="timeline-inverted">
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente,
-                            eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus
-                            libero, omnis ut debitis!</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="timeline-badge info">
-                    <i class="fa fa-save"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est
-                            molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla
-                            qui! Laborum, atque.
-                        </p>
-                        <hr>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-gear"></i>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Another action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Something else here</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">Separated link</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita,
-                            incidunt unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi.
-                            Consequuntur, commodi.
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="timeline-inverted">
-                <div class="timeline-badge success">
-                    <i class="fa fa-graduation-cap"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia
-                            voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim
-                            incidunt quisquam maxime neque eaque.</p>
-                    </div>
-                </div>
-            </li>   -->
-        </ul>
-    </div>
-</div>
-<div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"
-        (keyup.enter)="sendMessage()" required>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="input-group">
+            <textarea class="form-control send-box" placeholder="Type message here" [(ngModel)]="chatMsg" id="input-text-chat"
+                (keyup.enter)="sendMessage()" required>
     </textarea>
-    <div class="input-group-append">
-        <a class="btn">
-            <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage()"></i>
-        </a>
-        <a class="btn">
-            <i class="fa fa-file" aria-hidden="true"></i>
-        </a>
+            <div class="input-group-append">
+                <a class="btn">
+                    <i class="fa fa-paper-plane" aria-hidden="true" id="alternate-send-chat" (click)="sendMessage()"></i>
+                </a>
+                <a class="btn">
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+</div> -->
+<div id="room-urls" style="text-align: center;display: none;"></div>
+<div class="row">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8 meeting-activity">
+                <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
+                    <div class="row">
+                        <app-selected-user-header [SelectedUser]="selectedUser"></app-selected-user-header>
+                    </div>
+                </div>
+                <div class="attendee-row">
+                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" id="videos_container">
+                        <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
+                    </div>
+                </div>
+                <div class="row parent">
+                    <div id="file-container" style="width: 100%; overflow-y: scroll;"></div>
+                </div>
+                <div>
+                    <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
+                        <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
+                            autocapitalize=off size=10 style="display:none;">
+                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="top"
+                            ngbTooltip="Exit Meeting">
+                            <i class="fa fa-2x fa-power-off"></i>
+                        </button>
+                        <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'"
+                            #muteUnmuteBtn placement="top" ngbTooltip="Mute/Unmute" (click)='mute()'>
+                            <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
+                        </button>
+                        <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
+                            placement="top" ngbTooltip="Start" (click)='isMeetingStarted=!isMeetingStarted'>
+                            <i class="fa fa-2x fa-play" aria-hidden="true"></i>
+                        </button>
+                        <button id="btn-start-recording" class="btn pull-left" alt="Start Recording">
+                            <i class="fa fa-2x fa-circle" placement="top" ngbTooltip="start recording" aria-hidden="true"
+                                style="color:#dc3545" id="rec_start"></i>
+                            <i class="fa fa-2x fa-stop" aria-hidden="true" placement="top" ngbTooltip="stop recording"
+                                style="color:#dc3545;display: none" id="rec_stop"></i>
+                        </button>
+                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
+                            placement="top" #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" placement="top"
+                            ngbTooltip="Video on/off">
+                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
+                                class="fa fa-2x fa-ban"></i>
+                        </button>
+
+                        <button id="join-room" class="btn default pull-left" style="display: none;">
+                            <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
+                        </button>
+                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top"
+                            #shareFileBtn (click)="shareFile()" placement="top" ngbTooltip="Share File">
+                            <i class="fa fa-2x fa-clipboard"></i>
+                        </button>
+                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top"
+                            #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'
+                            placement="top" ngbTooltip="Share Screen">
+                            <i class="fa fa-2x fa-desktop"></i>
+                        </button>
+                        <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
+                        <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
+                        <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
+                        <div style="display: none;" id="isHost"></div>
+                        <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
+                        <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
+                            Meeting
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 meeting-activity">
+                <div class="card">
+                    <div class="card-header col-md-12">
+                        <div class="col-md-8" style="float: left;">
+                            <img src="assets/images/coreflex-logo1.png" class="img-fluid" alt="Responsive image" />
+                        </div>
+                        <div class="col-md-1" style="float: right;">
+                            <h4 style="cursor: pointer;">
+                                <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="chat-container" class="chat-output">
+                        </div>
+                        <div class="col-md-12" style="padding-top: 20px;">
+                            <div class="row">
+                                <span class="col-md-10">
+                                    <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;overflow:auto;resize:none"></textarea>
+                                </span>
+                                <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
+                                    <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<section class="make-center" style="display:none;">
+    <h1 style="display:none;"></h1>
+    <!-- <div id="chat-container">
+    </div> -->
+</section>
+<!-- <video id="screenRecordVideo" style="display: none;"></video> -->
