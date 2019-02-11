@@ -78,6 +78,8 @@ export class UserService {
         return this.apiRequest.post(url, payload);
     }
     setSelectedUser(user) {
+        // localStorage.setItem('selectedUser', this.userName);
+        localStorage.setItem('selectedUser', user.firstName + ' ' + user.lastName);
         this.selectedUser$.next(user);
     }
     getSelectedUser() {

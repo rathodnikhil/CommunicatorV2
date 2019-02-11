@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="row parent">
-                    <div id="file-container" style="width: 100%; overflow-y: scroll;"></div>
+                    <div id="shareScreen-container" style="width: 100%; overflow-y: scroll;"></div>
                 </div>
                 <div>
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
@@ -105,11 +105,11 @@
 
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
-                    <div class="card-header col-md-12">
+                    <div class="card-header col-md-12" style="background: #efefef;">
                         <div class="col-md-8" style="float: left;">
-                            <img src="assets/images/coreflex-logo1.png" class="img-fluid" alt="Responsive image" />
+                            <img src="assets/images/color-logo1.png" class="img-fluid" alt="Responsive image" />
                         </div>
-                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;">
+                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;color:#000;">
                             <h4>
                                 <i class="fa fa-clock-o"></i>&nbsp;
                                 {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
@@ -121,9 +121,11 @@
                             <a href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
                                     class="fa fa-comments-o"></i></a>
                             <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
-                                title="Minutes Of Meeting"><i class="fa fa-sticky-note-o"></i></a>
+                                title="Notes"><i class="fa fa-sticky-note-o"></i></a>
                             <a href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
                                 title="Viewers"><i class="fa fa-user-o"></i></a>
+                            <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
+                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared files"><i class="fa fa-file-text-o"></i></a>
                             <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ"><i class="fa fa-question"></i></a>
                             <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
                         </div>
@@ -135,12 +137,17 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
-                                    Minutes of Meeting
+                                    Notes
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
                                     Viewers
+                                </span>
+                            </li>
+                            <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
+                                <span class="nav-link" [ngClass]="{'active': currentTab=='downloadedFiles'}">
+                                    Files Shared
                                 </span>
                             </li>
                         </ul>
@@ -170,6 +177,12 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center">
                                 <ul id="viewersList"></ul>
+
+                            </div>
+                        </div>
+                        <div class="tab-content" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
+                            <div id="file-container" class="row content-tab" style="text-align:center">
+
 
                             </div>
                         </div>
