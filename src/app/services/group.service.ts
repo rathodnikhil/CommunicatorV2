@@ -37,6 +37,7 @@ export class GroupService {
     const url = environment.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
     return this.http.post(url, payload);
   }
+
   saveGroupDetails(payload): Observable<any> {
     const url = environment.baseUrl + 'saveGroupDetails';
     const resp: ReplaySubject<any> = new ReplaySubject<any>(1);

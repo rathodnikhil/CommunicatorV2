@@ -18,7 +18,8 @@ export class ManageGroupComponent implements OnInit {
     public directionLinks = true;
     public autoHide = false;
     public responsive = false;
-    public newGroupName : any;
+    public newGroupName: any;
+    i: number;
     public config: PaginationInstance = {
         id: 'userCode',
         itemsPerPage: 10,
@@ -45,16 +46,21 @@ export class ManageGroupComponent implements OnInit {
     groupArray = [];
     loggedInUserObj: any;
     selectedGroupObj: any;
+    selectedNewGroupObj: any;
+    selectedGroupName: any;
+    selectedGroupObjFromList: any;
     groupMemberCount: any;
     groupMemberObjList = [];
     showSelectedGroup: boolean;
     countFlag: boolean;
     selectedGroupUsers: any[];
     userList: any[];
+    filterMemberList = [];
     showNewGroup: boolean;
     searchGroupName: any;
     searchGroup: any;
     searchTextTable: any;
+    addMemPermission = 1;
     @ViewChild('groupNameTxt') groupNameTxt: ElementRef;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
     newGroup: CustomModalModel = {
@@ -76,6 +82,7 @@ export class ManageGroupComponent implements OnInit {
         this.countFlag = false;
         this.showSelectedGroup = false;
         this.newGroupName = '';
+        this.selectedGroupObj = null;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
             if (data.errorFl === true || data.warningFl === true) {
@@ -94,11 +101,18 @@ export class ManageGroupComponent implements OnInit {
                          this.groupList = groupData;
                     }
                 });
+                // this._groupService.getMemberListByLoggedInUserId(payload).subscribe(memberData => {
+                //     if (memberData[0].errorFl || memberData[0].warningFl) {
+                //         this.groupMemberObjList = [];
+                //     } else {
+                //     this.groupMemberObjList = memberData;
+                //     }
+                // });
             }
         });
-        this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
-            this.groupMemberObjList = data;
-        });
+        // this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
+        //     this.groupMemberObjList = data;
+        // });
         // this.selectedItems = [{ item_id: 4, item_text: 'Pune' }, { item_id: 6, item_text: 'Navsari' }];
         this.selectedItems = [];
         this.dropdownSettings = {
@@ -168,34 +182,61 @@ export class ManageGroupComponent implements OnInit {
                     this.groupList.push(group);
                     this.newGroupName = '';
                     this.groupNameTxt.nativeElement.focus();
-                    this.selectedGroupObj = res.team;
+                    this.selectedGroupObj = res.group;
                    return this.alertService.success('Group has been added successfully', 'Success');
                     }
                 });
             }
     }
     // get details for selected group
-    displayGroupDetails(groupId) {
-        // this._userService.getUserList().subscribe(data => {
-        //     this.userList = data;
-        // });
+    // displayGroupDetails(groupId) {
+    //     // this._userService.getUserList().subscribe(data => {
+    //     //     this.userList = data;
+    //     // });
+    //     this.showSelectedGroup = true;
+    //     this.selectedGroupObj = groupId;
+    //     const payload = { userCode: this.loggedInUserObj.userCode };
+    //     this._groupService.getGroupMembersByGroup(payload).subscribe(data => {
+    //         const groupMemberList = data;
+    //         this.selectedGroupUsers = [];
+    //         for (const i in groupMemberList) {
+    //             if (groupMemberList[i].groupId.groupId === groupId.groupId) {
+    //                 this.selectedGroupUsers.push(groupMemberList[i].userId);
+    //             }
+    //         }
+    //         this.groupMemberCount = this.selectedGroupUsers.length;
+    //         if (this.groupMemberCount !== 0) {
+    //             this.countFlag = true;
+    //         }
+    //     });
+    // }
+
+    displayGroupDetails(group, index) {
+        if (group.groupId.groupId === '' || group.groupId.groupId === null ||
+         typeof group.groupId.groupId === 'undefined') {
+            this.selectedGroupObj = this.selectedNewGroupObj ;
+        } else {
+            this.selectedGroupObj = group.groupId;
+        }
         this.showSelectedGroup = true;
-        this.selectedGroupObj = groupId;
-        const payload = { userCode: this.loggedInUserObj.userCode };
-        this._groupService.getGroupMembersByGroup(payload).subscribe(data => {
-            const groupMemberList = data;
-            this.selectedGroupUsers = [];
-            for (const i in groupMemberList) {
-                if (groupMemberList[i].groupId.groupId === groupId.groupId) {
-                    this.selectedGroupUsers.push(groupMemberList[i].userId);
-                }
+        this.selectedGroupName = group.groupId.groupName;
+        this.filterMemberList = [];
+        // console.log('SIZE: ' + this.groupMemberObjList.length);
+        for (this.i = 0; this.i < this.groupMemberObjList.length; this.i++) {
+            // console.log('ID: ' + this.groupMemberObjList[this.i].team.id);
+            if (this.groupMemberObjList[this.i].team.id === group.groupId.groupId) {
+                this.filterMemberList.push(this.groupMemberObjList[this.i]);
             }
-            this.groupMemberCount = this.selectedGroupUsers.length;
-            if (this.groupMemberCount !== 0) {
-                this.countFlag = true;
-            }
-        });
+        }
+        this.selectedGroupObjFromList = group;
+        if (this.selectedGroupObj.status.status === 'CANCEL') {
+            this.addMemPermission = 2;
+        } else {
+            this.addMemPermission = 1;
+        }
+        this.selectedNewGroupObj = index;
     }
+
     // to open group popup
     openGroup() {
         this.addNewGroupModal.open();
@@ -218,7 +259,7 @@ export class ManageGroupComponent implements OnInit {
             }
             return this.alertService.warning('Member already exist', 'Warning');
         }
-        const payload = { groupMemObjList: this.selectedItems, groupId: this.selectedGroupObj.groupId }
+        const payload = { groupMemObjList: this.selectedItems, groupId: this.selectedGroupObj.groupId };
         this._groupService.saveGroupMember(payload).subscribe(res => {
             this.userList = res;
             for (const i in this.userList) {
