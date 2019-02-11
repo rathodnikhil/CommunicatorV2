@@ -1,6 +1,3 @@
-// https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
-
-// document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
@@ -251,17 +248,19 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 };
 
 var chatContainer = document.querySelector('.chat-output');
+
 function formatDate(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     // return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
     return strTime;
-  }
+}
+
 function appendDIV(event) {
     var div = document.createElement('div');
     //   div.className = 'chat-background';
@@ -276,7 +275,7 @@ function appendDIV(event) {
         html += '<span class="time-left">';
     }
 
-    html += '<i class="fa fa-user"></i>&nbsp;' + user+' '+ formatDate(new Date()) + '</span>'
+    html += '<i class="fa fa-user"></i>&nbsp;' + user + ' ' + formatDate(new Date()) + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -419,16 +418,21 @@ connection.onstream = function (event) {
     customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
-            screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(customDiv);
+            screenshareCheck = event.stream.id;
+            var screenShareContainer = document.getElementById('shareScreen-container');
+            screenShareContainer.appendChild(customDiv);
+            if (document.getElementById(event.userid + 'viewer') !== null) {
+                var viewer = document.getElementById(event.userid + 'viewer');
+                viewer.innerHTML = event.extra + ' shared screen';
+            }
         }
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
             if (event.type !== 'local') {
                 var viewer = document.createElement('li');
-                viewer.id = event.streamid + 'viewer';
-                viewer.innerHTML = event.extra + ' joined';
+                viewer.id = event.userid + 'viewer';
+                viewer.innerHTML = event.extra + ' joined meeting on ' + (event.stream.isVideo == 0 ? "audio" : "video") + " mode";
                 viewerListDiv.appendChild(viewer);
             }
         }
@@ -630,96 +634,54 @@ window.onhashchange = function () {
 /** Record screen functionality */
 var screenRecordVideo = document.getElementById('screenRecordVideo');
 document.getElementById('screenRecordVideo').style.display = 'none';
-if (!navigator.getDisplayMedia && !navigator.mediaDevices.getDisplayMedia) {
-    var error = 'Your browser does NOT supports getDisplayMedia API.';
-    // document.querySelector('h1').innerHTML = error;
-    document.getElementById('screenRecordVideo').style.display = 'none';
-    document.getElementById('btn-start-recording').style.display = 'none';
-    // document.getElementById('btn-stop-recording').style.display = 'none';
-    alertService.error(error, "record screen not supported");
-}
 
-function invokeGetDisplayMedia(success, error) {
-    var displaymediastreamconstraints = {
-        video: {
-            displaySurface: 'monitor', // monitor, window, application, browser
-            logicalSurface: true,
-            cursor: 'always' // never, always, motion
-        }
-    };
-
-    // above constraints are NOT supported YET
-    // that's why overridnig them
-    displaymediastreamconstraints = {
+function captureCamera(callback) {
+    navigator.mediaDevices.getUserMedia({
+        audio: true,
         video: true
-    };
-
-    if (navigator.mediaDevices.getDisplayMedia) {
-        navigator.mediaDevices.getDisplayMedia(displaymediastreamconstraints).then(success).catch(error);
-    } else {
-        navigator.getDisplayMedia(displaymediastreamconstraints).then(success).catch(error);
-    }
-}
-
-function captureScreen(callback) {
-    invokeGetDisplayMedia(function (screen) {
-        addStreamStopListener(screen, function () {
-            // document.getElementById('btn-stop-recording').click();
-            document.getElementById('rec_start').style.display = 'block';
-            document.getElementById('rec_stop').style.display = 'none';
-            recorder.stopRecording(stopRecordingCallback);
-        });
-        callback(screen);
-    }, function (error) {
-        // console.error(error);
-        // alert('Unable to capture your screen. Please check console logs.\n' + error);
-        alertService.error("Unable to record meeting", "Permission Denied");
+    }).then(function (camera) {
+        callback(camera);
+    }).catch(function (error) {
+        alert('Unable to capture your camera. Please check console logs.');
+        console.error(error);
     });
 }
 
 function stopRecordingCallback() {
     screenRecordVideo.src = screenRecordVideo.srcObject = null;
+    screenRecordVideo.muted = false;
+    screenRecordVideo.volume = 1;
     screenRecordVideo.src = URL.createObjectURL(recorder.getBlob());
 
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.setAttribute('href', URL.createObjectURL(recorder.getBlob()));
-    // a.href = screenRecordVideo.src;
     a.download = 'screenRecordVideo' + roomid + '.webm';
     a.click();
-    // window.URL.revokeObjectURL(url);
     a.remove();
     recorder.screen.stop();
     recorder.destroy();
     recorder = null;
-
-    document.getElementById('btn-start-recording').disabled = false;
 }
-
 var recorder; // globally accessible
 
 document.getElementById('btn-start-recording').onclick = function () {
-    // this.disabled = true;
-    debugger;
-
     if (document.getElementById('rec_start').style.display != 'none') {
-        captureScreen(function (screen) {
-            screenRecordVideo.srcObject = screen;
 
-            recorder = RecordRTC(screen, {
+        captureCamera(function (camera) {
+            screenRecordVideo.muted = true;
+            screenRecordVideo.volume = 0;
+            screenRecordVideo.srcObject = camera;
+
+            recorder = RecordRTC(camera, {
                 type: 'video'
             });
 
             recorder.startRecording();
-
-            // release screen on stopRecording
-            recorder.screen = screen;
-
-            // document.getElementById('btn-stop-recording').disabled = false;
+            recorder.camera = camera;
             document.getElementById('rec_start').style.display = 'none';
             document.getElementById('rec_stop').style.display = 'block';
-
         });
     } else {
         recorder.stopRecording(stopRecordingCallback);
@@ -727,29 +689,3 @@ document.getElementById('btn-start-recording').onclick = function () {
         document.getElementById('rec_stop').style.display = 'none';
     }
 };
-
-// document.getElementById('btn-stop-recording').onclick = function () {
-//     this.disabled = true;
-//     recorder.stopRecording(stopRecordingCallback);
-// };
-
-function addStreamStopListener(stream, callback) {
-    stream.addEventListener('ended', function () {
-        callback();
-        callback = function () {};
-    }, false);
-    stream.addEventListener('inactive', function () {
-        callback();
-        callback = function () {};
-    }, false);
-    stream.getTracks().forEach(function (track) {
-        track.addEventListener('ended', function () {
-            callback();
-            callback = function () {};
-        }, false);
-        track.addEventListener('inactive', function () {
-            callback();
-            callback = function () {};
-        }, false);
-    });
-}

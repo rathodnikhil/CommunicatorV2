@@ -39,7 +39,7 @@
                     options.extra[key] = file.extra[key];
                 });
             }
-
+            options.extra['senderId']=localStorage.getItem('loggedInuserName');
             fbrHelper.readAsArrayBuffer(fbr, options);
         };
 

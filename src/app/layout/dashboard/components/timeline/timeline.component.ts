@@ -24,6 +24,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     broadcastMsgList = [];
     chatMsg: any;
     currentTab = 'chat';
+    isMute = false;
+    isMeetingStarted = false;
+    isScreenSharingStarted = false;
+    isVideoEnabled = false;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
@@ -90,6 +94,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         // this.document.getElementById('setup-meeting').click();
+        this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
     }
 
     sendMessage() {
@@ -111,5 +116,27 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
     onKey(chatMessage) {
         this.sendMessage();
+    }
+    onFinished() {
+        this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
+        this.document.getElementById('btn-end-meeting').click();
+        this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
+        setTimeout(() => {
+            this.router.navigate(['/login']);
+            window.location.reload();
+        }, 180000);
+    }
+    onNotify() {
+        this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
+    }
+
+    mute() {
+        this.isMute = !this.isMute;
+    }
+    shareScreen() {
+        this.isScreenSharingStarted = !this.isScreenSharingStarted;
+    }
+    viewVideo() {
+        this.isVideoEnabled = !this.isVideoEnabled;
     }
 }
