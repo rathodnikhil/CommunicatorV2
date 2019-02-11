@@ -5,7 +5,12 @@
         <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
             <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
                 src="assets/images/Coreflex-solutions-chat-screen-option1.png" class= "responsive1" /></p>
-        
+                <span class="fa-stack fa-2x">                      
+                        <i class="fa fa-circle fa-stack-2x edit-circle-icon-background"></i>
+                        <a [routerLink]="['/myProfile']">
+                        <i class="fa fa-pencil fa-stack-1x profile-img-edit-icon"></i>
+                        </a>
+                      </span>
                 <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>   
             <h5 class="label-h6 ">Click on a member's name
             <br>and start a new conversation</h5>

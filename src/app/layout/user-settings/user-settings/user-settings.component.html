@@ -5,7 +5,30 @@
 </div>
 <div class="center">
 <div class="main ">
-            <h4>Setting Details</h4>
+            <div class="">
+                        <div class="profile-headings">
+                                <i class="fa fa-list profile-headings-icon" aria-hidden="true"></i>Other Details
+                         </div>
+                        <div class="center margin-top">
+                                            <div class = "row margin-top-20">
+                                                    <div class="col-lg-4">
+                                                        <label>Total Meetings:</label>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <input value="{{profileOtherDetails.meetingCount}}" class = "width-100" type="text" id="totalMeetings" name="totalMeetings" readonly/>
+                                                    </div>
+                                                </div>
+                                                <div class = "row margin-top-20">
+                                                        <div class="col-lg-4">
+                                                            <label>Total Groups:</label>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <input value="{{profileOtherDetails.groupCount}}" class = "width-100" type="text" id="totalGroups" name="totalGroups" readonly/>
+                                                        </div>
+                                                    </div>
+                        </div>
+                </div>
+            <!-- <h4>Setting Details</h4>
       <table >
        
             <tr>
@@ -26,7 +49,9 @@
       <div class="button-block">
             <button class="btn btn-sec" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>
             <a class="btn btn-danger"  [routerLink]="['/dashboard/default']">Cancel</a>
-      </div>
+      </div> -->
 
+</div>
+<div class="cfsfooter "><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
 </div>
 </div>

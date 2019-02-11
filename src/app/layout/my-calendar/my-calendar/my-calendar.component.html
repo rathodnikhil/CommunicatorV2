@@ -7,7 +7,7 @@
                     <h3 style="padding-top: 8px;">My Calendar</h3>
     <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
         (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)" style="cursor: pointer;"></ng-fullcalendar>
-
+     
 </div>
 
 <app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
