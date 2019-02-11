@@ -1,20 +1,32 @@
 @import '../../user-rights/user-rights/user-rights.component.scss';
 @import "styles/customStyle.css";
+@import "app/layout/my-profile/my-profile/my-profile.component.scss";
 
 .main{
-    padding: 15px;
-    border: 1px solid #ccd1d4;
-    margin:2%;
-    box-shadow: 5px 10px 5px 5px #ccd1d4;
+    margin-top:2%;
+   margin-bottom: 20px;   
+   padding-top:0px; 
+   padding-bottom: 0px;
+   padding-left: 0px;
+   padding-right: 0px;
+   border: 1px solid #C0C0C0;
+   box-shadow: 10px 10px 10px 10px #c9cacc;
+   background: #fff;
 }
-.button-block{
-    text-align:center; padding-top: 15px;
-}
-a{
-    color: #ffffff;
-    cursor: pointer;
-}
-input[type="file"]
-{
-   color: transparent;
-}
+// .main{
+//     padding: 15px;
+//     border: 1px solid #ccd1d4;
+//     margin:2%;
+//     box-shadow: 5px 10px 5px 5px #ccd1d4;
+// }
+// .button-block{
+//     text-align:center; padding-top: 15px;
+// }
+// a{
+//     color: #ffffff;
+//     cursor: pointer;
+// }
+// input[type="file"]
+// {
+//    color: transparent;
+// }

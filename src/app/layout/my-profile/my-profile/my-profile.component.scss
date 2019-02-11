@@ -2,9 +2,113 @@
 
 
 .main{
-    padding: 15px;
-    border: 1px solid #ccd1d4;
-    margin:2%;
-    box-shadow: 5px 10px 5px 5px #ccd1d4;
+     margin-top:2%;
+    margin-bottom: 20px;   
+    padding-top:0px; 
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: 1px solid #C0C0C0;
+    box-shadow: 10px 10px 10px 10px #c9cacc;
+    background: #fff;
+}
+.profile-img-background
+{
+   
+    background-image: linear-gradient(to right top, #d6d9db, #c5ccd1, #b4bec7, #a4b1bd, #94a4b3);
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.profile-headings
+{
+   
+    background-image: linear-gradient(to right top, #4b9fd7, #4598cf, #3f91c8, #388ac0, #3283b9);
+    padding: 10px; 
+    color: #ffff; 
+    font-weight:bold; 
+    text-align: center;
+}
+.profile-headings-icon
+{
+    margin-right:10px;
+    font-size: 16px;
+    color: #ffff; 
+}
+.profile-img-edit-icon
+{
+    margin-left: -35px;
+    color:#fff;
+    font-size: 24px;
+}
+.edit-circle-icon-background {
+    color: #2e8b57;
+    margin-left: -35px;
+}
+// icon {
+//     color: green;
+//     font-size: 28px;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(290%, -20%);
+//     -ms-transform: translate(-50%, -50%);
+//     text-align: center;
+//     }
+    
+//     .icon:hover{
+//     color:green;
+//     }
+@media screen and (min-width: 300px) and (max-width: 799px) {
+    .profile-img-edit-icon
+    {
+        color:#fff;
+        text-align: center;
+    }
+    .edit-circle-icon-background {
+        color: #2e8b57;
+        text-align: center;
+    }
 }
 
+.margin-top-20
+{
+    margin-top: 20px;
+}
+.margin-top-5
+{
+    margin-top: 5px;
+}
+.margin-bottom-5
+{
+    margin-bottom: 5px;
+}
+.width-100
+{
+    width: 100%;
+}
+.profile-details-footer
+{
+    text-align:center;
+    padding:20px;
+    background: #e7e3d4;
+    border-top:1px solid #C0C0C0;
+}
+
+.profile-img{
+    width:170px; height: 170px;margin: 10px;
+}
+.profile-firstname-lastname
+{
+    font-size: 2.1vh;
+    color:#000000;
+}
+.profile-team-name
+{
+    font-size:1.7vh;
+    color:#000000;
+}
+.note{
+    color: orangered;
+    margin: 10px;
+    text-align: left;
+}

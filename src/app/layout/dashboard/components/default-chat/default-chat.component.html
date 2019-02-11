@@ -1,3 +1,30 @@
+
+<div class="card card-default" style="overflow: auto;">
+    <div style="text-align: center;width:100%;height:99vh;">
+        <div class="background"> <img class="header-img" src="assets\images\C_4_white.png"></div>
+        <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b></h3>
+        <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
+            <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
+                src="assets/images/Coreflex-solutions-chat-screen-option1.png" class= "responsive1" /></p>
+                <span class="fa-stack fa-2x">                      
+                        <i class="fa fa-circle fa-stack-2x edit-circle-icon-background"></i>
+                        <a [routerLink]="['/myProfile']">
+                        <i class="fa fa-pencil fa-stack-1x profile-img-edit-icon"></i>
+                        </a>
+                      </span>
+                <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>   
+            <h5 class="label-h6 ">Click on a member's name
+            <br>and start a new conversation</h5>
+        <div class=" mt-5" >    
+        <div class="footer" style="width:100%;">
+            <div class="card mx-auto">
+                <div class="card bg-light text-dark">
+                    <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4>
+                    <p class="describe text-center"><strong>"</strong>Communicator is an online meeting, desktop
+                        sharing, and video conferencing software solution <br>that enables the user to meet with
+                        clients or colleagues via Internet anywhere anytime<b>"</b>.</p>
+                    <p class="describe text-center">It makes online meetings easy with its features <br>like screen
+                        share, file share, audio/video conference, meeting chat and recording.</p>
 <div class="row">
     <div [ngClass]="!isAdministrator?'col-lg-7':'col-lg-12'" style="padding:0px;">
         <div class="card card-default" style="overflow: auto;">
@@ -7,6 +34,7 @@
                 <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
                     <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
                         src="assets/images/Coreflex-solutions-chat-screen-option1 (2).png" class="responsive1" /></p>
+
 
                 <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>
                 <h5 class="label-h6 ">Click on a member's name
