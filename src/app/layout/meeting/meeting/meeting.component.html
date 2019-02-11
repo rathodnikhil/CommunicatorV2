@@ -183,5 +183,233 @@
     <h1 style="display:none;"></h1>
     <div id="chat-container">
     </div>
+</section> 
+
+
+<div class="main-container">
+    <div id="header" class="main-header">
+        <div class="fixed-header">
+            <div class="logo-img">
+                <img src="../../../../assets/images/white_logo.png" class="responsive1" width="260px" height="60px" style="margin-left:45px;">
+            </div>
+            <span id="meeting-error" class="text"></span>
+            <div class="organiser-name-right">
+                <div>
+                    <h4 class="organiser-name-timer" *ngIf="meetingDetails.createdBy!=undefined">{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</h4>
+                </div>
+                <div>
+                    <h4 class="organiser-name-timer" id="resume-count">00:00:00</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="content-div">
+        <div class="col-md-12 content-main-div">
+            <div class="row content-row-div">
+                <div class="attendee-container">
+                    <div class="screen-share-title">
+                        <p>Attendee</p>
+                    </div>
+                     <div class="grid_row" id="videos_container">
+                       
+                    </div> 
+                </div>
+                <div class="div-divider-space"></div>
+                <div class="files-container">
+                    <div class="screen-share-title">
+                        <p>Files</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row screen-share-container">
+                <div class="screen-share-title">
+                    <p>Screen Share</p>
+                </div>
+                <div class="grid_row" id="screen-share-container">
+                </div>
+            </div>
+
+            <div class="row button-container">
+               <div class="col-md-8">
+                    <input class="btn btn-background btn1 pull-left  " id="btn-mute" type="image" src="/assets/images/mute_fancy.png" alt="Submit" width="52" height="60">
+                    <input class="btn btn-background btn1 pull-left " id="open-room" type="image" src="/assets/images/start-meet.png" alt="Submit" width="52" height="60"> 
+                    <input class="btn btn-background btn1 pull-left" type="image" id="disable-video" #viewVideoBtn (click)='viewVideo()'
+                    [value]="isVideoEnabled" style="display:none;" src="/assets/images/video.png" alt="Submit" width="52" height="60">
+                     <input class="btn btn-background btn1 pull-left" id="share-screen" style="display:none;" type="image" src="/assets/images/share-screen.png" alt="Submit"width="52" height="60" > 
+                     <input class="btn btn-background btn1 pull-left" id="share-file" style="display:none;" type="image" src="/assets/images/file-share.png" alt="Submit"width="52" height="60"> 
+                     <input class="btn btn-background btn1 pull-left" type="image" src="/assets/images/record.png" alt="Submit"width="52" height="60" > 
+                    <!-- <button class="btn btn-background pull-left btn1 " id="btn-mute">  -->
+                    <!-- <i class="fa fa-2x fa-microphone" aria-hidden="true"></i>-->
+                     <!-- <img src="/assets/images/mute_fancy.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;" />
+                </button> 
+                 -->
+                <!-- <button class="btn btn-background pull-left btn1" id="open-room"> -->
+                        <!-- <img src="/assets/images/start-meet.png" class=" pull-left " style="height:50px; width:50px;margin: 5px;" /> -->
+                    <!-- <i class="fa fa-2x fa-play" aria-hidden="true"></i>-->
+                <!-- </button> -->
+                
+                <!-- <button class="btn btn-background btn1 pull-left " id="disable-video" #viewVideoBtn (click)='viewVideo()'
+                    [value]="isVideoEnabled" style="display:none;">
+                    <img src="/assets/images/video.png" class=" pull-left " style="height:50px; width:50px;margin: 5px;" /> -->
+                    <!-- <i class="fa fa-2x fa-video-camera" aria-hidden="true"></i> -->
+                <!-- </button>
+               
+                <button class="btn btn-background btn1 pull-left" id="share-screen" style="display:none; ">
+                        <img src="/assets/images/share-screen.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;"/> -->
+                    <!-- <i class="fa fa-2x fa-desktop" aria-hidden="true"></i> -->
+                <!-- </button>
+               
+                <button class="btn btn-background btn1 pull-left" id="share-file" style="display:none;">
+                        <img src="/assets/images/file-share.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;" /> -->
+                    <!-- <i class="fa fa-2x fa-file" aria-hidden="true"></i> -->
+                <!-- </button>
+              
+                <button class="btn btn-background btn1 pull-left">
+                        <img src="/assets/images/record.png" class=" pull-left" style="height:50px; width:50px;margin: 5px;"/> -->
+                    <!-- <i class="fa fa-2x fa-circle" aria-hidden="true"></i> -->
+                <!-- </button> -->
+               
+            </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-responsive" (click)="copyMeetingLink(1)">
+                        Copy Meeting Link
+                    </button>
+
+                    <button type="button" class="btn btn-responsive" (click)="copyMeetingLink(2)">
+                        Copy Meeting Id
+                    </button>
+                    <input class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()" type="image" src="/assets/images/stop.png" alt="Submit"width="52" height="60" > 
+
+                    <!-- <button class="btn exit btn1" id="btn-leave-room" (click)="exitMeeting()">
+                            <img src="/assets/images/stop.png" style="height:50px; width:50px;"/>
+                    </button> -->
+                   
+                </div>
+            </div>
+
+        </div>
+
+        <ul class="menu">
+            <li title="Chats"><a class="menu-button chat" onclick="$('#tab1').trigger('click')" id="chat"></a></li>
+            <li title="Notes"><a class="menu-button notes" onclick="$('#tab2').trigger('click')" id="notes"></a></li>
+            <li title="Viewers"><a class="menu-button viewers" onclick="$('#tab3').trigger('click')" id="viewers"></a></li>
+            <li title="Help"><a href="http://www.xanadutec.com/FAQ.html" target="_blank" class="menu-button help"></a></li>
+            <li title="Settings"><a href="#" class="menu-button settings"></a></li>
+            <li title="Info"><a href="http://www.xanadutec.com/communicator.html" target="_blank" class="menu-button info"></a></li>
+        </ul>
+
+        <ul class="menu-bar open">
+
+            <div class="header meeting-activity"style="text-align:center;">
+                  
+        
+                            <img src="../../../../assets/images/coreflex-logo.png" class="img-responsive" width="180px" height="50px">
+                        
+                <!-- Meeting Activity -->
+                <!-- <button type="button" style="float: right; margin-right: 10px;" class="btn-danger btn" id="close">
+            <i class="fa fa-close"></i>
+          </button> -->
+            </div>
+
+            <div class="tabset">
+
+                <!-- Tab 1 -->
+
+                <input type="radio" name="tabset" id="tab1" aria-controls="chats" checked>
+
+                <label for="tab1">Chats</label>
+
+                <!-- Tab 2 -->
+
+                <input type="radio" name="tabset" id="tab2" aria-controls="meeting_notes">
+
+                <label for="tab2">Meeting Notes</label>
+
+                <!-- Tab 3 -->
+
+                <input type="radio" name="tabset" id="tab3" aria-controls="viewers">
+
+                <label for="tab3">Viewers</label>
+
+                <div class="tab-panels" style="overflow: auto;">
+
+                    <section id="chats" class="tab-panel">
+                        <div id="chat-container" class="chat-output">
+                        </div>
+                        <div class="col-md-12" style="padding-top: 20px;">
+                            <div class="row">
+                                <span class="col-md-10">
+                                    <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;overflow:auto;resize:none;margin-bottom:-10px;"></textarea>
+                                </span>
+                                <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
+                                    <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="meeting_notes" class="tab-panel">
+                        <div class="textarea-div">
+                            <!-- <textarea class="form-control" rows="30" class="width-100"></textarea> -->
+                            <textarea placeholder="Type MOM Here..." class="form-control" rows="30" class="width-100"
+                            [(ngModel)]="momTxt" ></textarea>
+                            <span>
+                                <button type="button"  #saveMomBtn id="btn-save-mom" (click)="saveMom()"
+                                 class="btn generate-meeting-notes-btn-primary">Generate
+                                    Meeting
+                                    Notes</button>
+                            </span>
+                        </div>
+                    </section>
+
+                    <section id="viewers" class="tab-panel">
+                        <div class="list-alternate-colors list-style">
+                            <div class="list-div-style">
+                                <p class="viewer-name">Martina Makasare</p>
+                                <p class="viewer-present">Present</p>
+                            </div>
+                            <div class="list-div-style">
+                                <p class="viewer-name">Kuldeep Kulkarni</p>
+                                <p class="viewer-left-out">Left Out</p>
+                            </div>
+                            <div class="list-div-style">
+                                <p class="viewer-name">Mahadev Mandale</p>
+                                <p class="viewer-left-out">Left Out</p>
+                            </div>
+                            <div class="list-div-style">
+                                <p class="viewer-name">Shruti Marane</p>
+                                <p class="viewer-present">Present</p>
+                            </div>
+                            <div class="list-div-style">
+                                <p class="viewer-name">Vrushali Shah</p>
+                                <p class="viewer-left-out">Left Out</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off autocapitalize=off size=10
+    style="display: none">
+<div style="display: none;" id="isHost"></div>
+<div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
+<button id="join-room" class="btn default pull-left" style="display: none;">
+    <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
+</button>
+<button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
+<button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
+<div id="room-urls" style="text-align: center;display: none;"></div>
+<h1 style="display:none;"></h1>
+
 </section>
 <video id="screenRecordVideo" style="display: none;"></video>
+

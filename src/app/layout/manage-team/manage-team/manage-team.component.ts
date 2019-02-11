@@ -472,7 +472,7 @@ export class ManageTeamComponent implements OnInit {
         this.UpdateMemberModal.close();
         const memObj = this.selectedmemObj(this.selectedMember , 1 , 2);
         this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
-      //  this.userPermissionMemberList.splice(this.selectedMemIndex , 0 , this.memObj);
+      // this.userPermissionMemberList.splice(this.selectedMemIndex , 0 , this.memObj);
     }
     closeDeletePopup(noFlag) {
         this.deleteMemberModal.close();

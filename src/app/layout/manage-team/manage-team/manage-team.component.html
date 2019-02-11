@@ -83,7 +83,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Status</th>
-            <th>Meting Permission</th>
+            <th>Meeting Permission</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -109,7 +109,6 @@
             [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)"></pagination-controls>
     </div>
 
-
     <app-custom-modal #addUpdateTeamModal [model]="updateTeam">
         <div class="modal-body row-label">
             <div class="row">
@@ -118,7 +117,6 @@
                 </div>
                 <div>
                     <textarea placeholder="Team Name" [(ngModel)]="updateTeamName" value="{{newTeamName}}"></textarea>
-
                 </div>
             </div>
         </div>
