@@ -23,6 +23,7 @@ import { BroadcastMessageComponent } from './broadcast-message/broadcast-message
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { SearchFutureMeetingPipe } from './components/default-meeting/search-future-meeting.pipe';
 import { VideoCallComponent } from './components/video-call/video-call.component';
+import { SelectedUserHeaderComponent } from './components/selected-user-header/selected-user-header.component';
 
 @NgModule({
     imports: [
@@ -50,7 +51,8 @@ import { VideoCallComponent } from './components/video-call/video-call.component
         BroadcastMessageComponent,
         CreateGroupComponent,
         SearchFutureMeetingPipe,
-        VideoCallComponent
+        VideoCallComponent,
+        SelectedUserHeaderComponent
     ],
     exports: [CustomModalComponent]
 })

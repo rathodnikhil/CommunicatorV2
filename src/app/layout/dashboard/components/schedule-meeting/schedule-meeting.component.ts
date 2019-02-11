@@ -139,8 +139,6 @@ export class ScheduleMeetingComponent implements OnInit {
     ngOnInit() {
         this.audioMeeting = false;
         this.vedioMeeting = false;
-       // this.showCopyDetailsSuccess = false;
-      //  this.showScheduleMeetingSuccess = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
         });
@@ -188,10 +186,6 @@ export class ScheduleMeetingComponent implements OnInit {
             const payload = {
                 'meetingDate':   new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                     this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
-                // 'meetingStartDateTime': (this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 :
-                // this.meeting.meridianTime.hour) + ':'
-                // + this.meeting.meridianTime.minute,
-                // 'meetingEndDateTime': 1525067350000,
                 'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                     this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
                 'subject': this.subject,
@@ -218,7 +212,6 @@ export class ScheduleMeetingComponent implements OnInit {
                     }
                     this.filteredFutureMeetingList.push(data);
                     this.meetingObj = data;
-                   // this.showScheduleMeetingSuccess = true;
                    this.scheduleMeetingModal.open();
                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
                 }
@@ -241,13 +234,6 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     copyToOutLook(event) {
         this.outlookModal.open();
-        // open outlook or other compose email
-        // const meetingDetails = encodeURIComponent(this.getMeetingDetails());
-        // const a = document.createElement('a');
-        // a.href = 'mailto:?subject=' + this.subject + '&body=' + meetingDetails;
-        // document.body.appendChild(a);
-        // a.click();
-        // document.body.removeChild(a);
         const newLine = '\r\n\r\n';
        this.outLookBody = this.getMeetingDetails(newLine);
        this.outLooksubject = this.subject;
@@ -283,9 +269,6 @@ export class ScheduleMeetingComponent implements OnInit {
                 this.clearAllMeetingField();
                // this.switchRoute();
                 break;
-            case 'outlookClose':
-                this.outlookModal.close();
-               break;
         }
     }
 
@@ -297,13 +280,16 @@ export class ScheduleMeetingComponent implements OnInit {
             + this.meeting.datePicker.day + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + newLine +
-            + newLine + ' Please join my meeting from your computer , tablet or smartphone' + newLine + meetingUrl + this.accessCode +
-            +newLine + ' Meeting Id :    ' + this.accessCode;
+            newLine + ' Please join my meeting from your computer , tablet or smartphone' + newLine + meetingUrl + this.accessCode +
+            newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }
     sendEmail(e) {
-        const newLine = '</br>';
-        const outLookBodyJson = this.getMeetingDetails(newLine);
+        if ( this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
+            return this.alertService.warning('Please enter attendee email id', 'Warning');
+        } else {
+        const newLine = '<br>';
+        const outLookBodyJson = this.outLookBody;
         const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
             meetingDetailsBody: outLookBodyJson , meeting: this.meetingObj};
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
@@ -311,8 +297,19 @@ export class ScheduleMeetingComponent implements OnInit {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
                     this.outlookModal.close();
+                    this.clearOutlookField();
                     return this.alertService.success('Meeting Invitation has sent successfully', 'Meeting Invitation');
                 }
         });
+    }
+}
+closeoutMaliPopup() {
+    this.outlookModal.close();
+   this.clearOutlookField();
+}
+clearOutlookField() {
+    this.toAttendees = '';
+    this.ccAttendees = '';
+    this.outLookBody = '';
 }
 }

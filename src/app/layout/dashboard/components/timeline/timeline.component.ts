@@ -1,6 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, Inject, ElementRef, AfterViewInit } from '@angular/core';
-import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Inject, ElementRef, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
@@ -13,15 +11,7 @@ import { DOCUMENT } from '@angular/common';
     providers: [AlertService]
 })
 export class TimelineComponent implements OnInit, AfterViewInit {
-    @ViewChild('viewProfileModal') public viewProfileModal: CustomModalComponent;
-    viewProfile: CustomModalModel = {
-        titleIcon: '<i class="fa fa-user"></i>',
-        title: 'Profile Details',
-        smallHeading: 'User profile details',
-        body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Profile',
-        Button2Content: ''
-    };
+
     selectedUser: any;
     selectedGroup: any;
     loggedInUser: any;
@@ -33,6 +23,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
+    currentTab = 'chat';
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
@@ -100,16 +91,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     afterScriptAdded() {
         // this.document.getElementById('setup-meeting').click();
     }
-    open() {
-        this.viewProfileModal.open();
-    }
-    closeviewProfilePopup(popupType) {
-        switch (popupType) {
-            case 'profileDetails':
-                this.viewProfileModal.close();
-                break;
-        }
-    }
+
     sendMessage() {
         const payload = {
             userFrom: this.loggedInUser.userCode,
@@ -129,12 +111,5 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
     onKey(chatMessage) {
         this.sendMessage();
-    }
-    closePopup(popupType) {
-        switch (popupType) {
-            case 'profileDetails':
-                this.viewProfileModal.close();
-                break;
-        }
     }
 }

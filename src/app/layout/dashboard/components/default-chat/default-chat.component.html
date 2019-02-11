@@ -1,3 +1,4 @@
+
 <div class="card card-default" style="overflow: auto;">
     <div style="text-align: center;width:100%;height:99vh;">
         <div class="background"> <img class="header-img" src="assets\images\C_4_white.png"></div>
@@ -24,14 +25,52 @@
                         clients or colleagues via Internet anywhere anytime<b>"</b>.</p>
                     <p class="describe text-center">It makes online meetings easy with its features <br>like screen
                         share, file share, audio/video conference, meeting chat and recording.</p>
+<div class="row">
+    <div [ngClass]="!isAdministrator?'col-lg-7':'col-lg-12'" style="padding:0px;">
+        <div class="card card-default" style="overflow: auto;">
+            <div style="text-align: center;width:100%;height:100%;">
+                <div class="background"> <img class="header-img" src="assets\images\C_4_white.png"></div>
+                <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b></h3>
+                <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
+                    <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
+                        src="assets/images/Coreflex-solutions-chat-screen-option1 (2).png" class="responsive1" /></p>
 
-                    <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary" role="button" style="font-size:15px;">Explore
-                        CoreFlex Communicator</a>
+
+                <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>
+                <h5 class="label-h6 ">Click on a member's name
+                    <br>and start a new conversation</h5>
+                <!-- <div class=" mt-5"> -->
+                <div class="footer">
+                    <div class="card mx-auto">
+                        <div class="card bg-light text-dark">
+                            <img class="card-img setlogo" src="assets\images\coreflex-logo.png" style="height:60px;width:200px; ">
+                            <!-- <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4> -->
+                            <p class="describe text-center"><strong>"</strong>Communicator is an online meeting,
+                                desktop
+                                sharing, and video conferencing software solution <br>that enables the user to meet
+                                with
+                                clients or colleagues via Internet anywhere anytime<b>"</b>.</p>
+                            <p class="describe text-center">It makes online meetings easy with its features <br>like
+                                screen
+                                share, file share, audio/video conference, meeting chat and recording.</p>
+
+                            <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary"
+                                role="button" style="font-size:15px;">Explore
+                                CoreFlex Communicator</a>
+                        </div>
+                    </div>
+                    <h6 class="membername text-center">To easily log in later, save this URL:
+                        <a style="color: #be181e;" href="#">https://cfscommunicator.com</a></h6>
                 </div>
+                <!-- </div> -->
             </div>
-            <h5 class="membername text-center">To easily log in later, save this URL:
-          <a style="color: #3283b9;" href="#">https://cfscommunicator.com</a></h5>
         </div>
     </div>
-</div>
+
+    <div class="col-lg-5" style="padding:1rem;height: 100vh" *ngIf="!isAdministrator">
+        <div [ngSwitch]="currentRoute">
+            <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
+            <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
+        </div>
+    </div>
 </div>

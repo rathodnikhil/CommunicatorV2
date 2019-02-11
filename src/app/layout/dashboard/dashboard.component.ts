@@ -37,8 +37,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     errorFl: boolean;
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
-    currentRoute = 0;
-
+    isUserSelected = false;
     @ViewChild('broadcastMsgModal') public broadcastMsgModal: CustomModalComponent;
     broadcastMsgContent: CustomModalModel = {
         titleIcon: '<i class="fa fa-bullhorn"></i>',
@@ -109,7 +108,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this._userService.setUserList(payload);
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
-                this.isAdministrator =  this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
+                this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 // this._meetingService.setRecentMeetingByUser(payload);
                 this._userService.getSelectedUser().subscribe(res => {
                     if (res) {
@@ -148,9 +147,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
-    }
-    switchRoute(newRoute) {
-        this.currentRoute = newRoute;
     }
 
     openMemberPopup() {
@@ -197,5 +193,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
         });
 
+    }
+    SetIsUserSelected(event) {
+        this.isUserSelected = event;
     }
 }

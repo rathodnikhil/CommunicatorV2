@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, trigger, transition, style, animate, state,
+    Component, OnInit,
     AfterViewInit, ElementRef, Inject, ViewChild
 } from '@angular/core';
 import { UserService } from '../../../services/user.service';
@@ -8,7 +8,6 @@ import { MeetingService } from '../../../services/meeting-service';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
-import { CountdownComponent } from 'ngx-countdown';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-meeting',
@@ -38,14 +37,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isGuest = false;
     currentTab = 'chat';
     notify: string;
-    config: any = { leftTime: 10, notify: [300] };
-    counter: CountdownComponent;
-    @ViewChild(CountdownComponent) set ft(tiles: CountdownComponent) {
-        if (tiles !== undefined) {
-            this.counter = tiles;
-            this.counter.pause();
-        }
-    }
+    hour = 0;
+    minute = 0;
+    second = 0;
+    tick = 0;
+    timeLeft = 0;
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
@@ -53,7 +49,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isMeetingStarted = false;
     isScreenSharingStarted = false;
     isVideoEnabled = false;
-    // @ViewChild(CountdownComponent) public counter: CountdownComponent;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -89,14 +84,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             if (data.firstName !== undefined && this.loggedInUser === undefined) {
                 this.loggedInUser = data;
                 if (this.meetingCode !== '' && this.meetingCode !== undefined) {
-                    const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode ,
-                         email: this.loggedInUser.eamil };
-                    console.log(this.loggedInUser.userCode + 'this.loggedInUser.userCode');
+                    const payload = {
+                        userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode,
+                        email: this.loggedInUser.eamil
+                    };
                     if (!data.isGuest) {
-                      //  payload.userCode = this.loggedInUser.userCode;
+                        //  payload.userCode = this.loggedInUser.userCode;
                         this.isGuest = false;
                     } else if (data.isGuest) {
-                     //   payload.userCode = this.loggedInUser.firstName;
+                        //   payload.userCode = this.loggedInUser.firstName;
                         this.isGuest = true;
                     }
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
@@ -105,7 +101,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             this.meetingDetails = data2;
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
-                            this.config.leftTime = (duration - delta) > 0 ? (duration - delta) : 0;
+                            this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
+                            this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting is already over', 'Meeting Over');
                             }
@@ -115,7 +112,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             this.meetingDetails = data2;
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
-                            this.config.leftTime = (duration - delta) > 0 ? (duration - delta) : 0;
+                            this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
+                            this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting is already over', 'Meeting Over');
                             }
@@ -128,7 +126,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                     });
                 } else {
                     this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.',
-                         'Invalid meeting code');
+                        'Invalid meeting code');
                     if (data.isGuest === true) {
                         this.router.navigate(['/login']);
                         // window.location.reload();
@@ -154,7 +152,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
-        // this.document.getElementById('disable-video').click();
         const params = {
             width: '350px',
             height: '420px',
@@ -204,7 +201,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     downloadFile(data, meetingDetails, attendeeList) {
         const today = new Date();
         const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
-         '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
+            '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';
@@ -250,12 +247,13 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.document.getElementById('btn-leave-room').click();
                 this.alertService.success('Meeting has ended.', 'End Meeting');
-                this.counter.stop();
             }
         });
     }
     startTimer() {
-        this.counter.resume();
+        setInterval(() => { this.calculateTimeSpan(); }, 1000);
+        setInterval(function () {
+        }, 1000);
     }
     onFinished() {
         this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
@@ -264,48 +262,45 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
             this.router.navigate(['/login']);
             window.location.reload();
-       }, 180000);
+        }, 180000);
     }
-    onNotify(time: number) {
+    onNotify() {
         this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
-    }
-    moveLeft() {
-        // debugger;
-        // this.ds.moveLeft();
-        // this.ds.moveTo(this.index - 1);
-    }
-
-    moveRight() {
-    }
-    leftBoundStat(reachesLeftBound: boolean) {
-        this.leftNavDisabled = reachesLeftBound;
-    }
-
-    rightBoundStat(reachesRightBound: boolean) {
-        this.rightNavDisabled = reachesRightBound;
-    }
-
-    onSnapAnimationFinished() {
-        // tbd
-    }
-
-    onIndexChanged(idx) {
-        this.index = idx;
     }
     shareFile() {
         this.shareFileBtn.nativeElement.blur();
     }
     mute() {
-        this.isMute = ! this.isMute;
+        this.isMute = !this.isMute;
         this.muteUnmuteBtn.nativeElement.blur();
     }
     shareScreen() {
-        this.isScreenSharingStarted = ! this.isScreenSharingStarted;
+        this.isScreenSharingStarted = !this.isScreenSharingStarted;
         this.shareScreenBtn.nativeElement.blur();
     }
     viewVideo() {
-        this.isVideoEnabled = ! this.isVideoEnabled;
+        this.isVideoEnabled = !this.isVideoEnabled;
         this.viewVideoBtn.nativeElement.blur();
+    }
+    calculateTimeSpan() {
+        if (this.tick === this.timeLeft) {
+            this.onFinished();
+        } else if (this.tick === (this.timeLeft - 300000)) {
+            this.onNotify();
+        }
+
+        if (this.second === 59) {
+            if (this.minute === 59) {
+                this.hour += 1;
+                this.minute = 0;
+            } else {
+                this.minute += 1;
+            }
+            this.second = 0;
+        } else {
+            this.second += 1;
+        }
+        this.tick++;
     }
 }
 

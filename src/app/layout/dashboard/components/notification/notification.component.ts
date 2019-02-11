@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { GroupService } from '../../../../services/group.service';
 import { LoginService } from '../../../../services/login.service';
@@ -29,6 +29,7 @@ export class NotificationComponent implements OnInit {
     searchText: string;
     broadcastMsgList = [];
     chattingHistoryList = [];
+    @Output() isUserSelected = new EventEmitter();
     constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
         private router: Router, public alertService: AlertService) {
         this._userService = userService;
@@ -73,12 +74,14 @@ export class NotificationComponent implements OnInit {
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
         this.getChattingHistoryBySelectedUser();
+        this.isUserSelected.emit(true);
     }
 
     viewGroupDetails(group) {
         this.chattingHistoryList = [];
         this._userService.setSelectedGroup(group);
         this.getChattingHistoryBySelectedGroup();
+        this.isUserSelected.emit(true);
     }
     getChattingHistoryBySelectedUser() {
         this._userService.getSelectedUser().subscribe(data => {
