@@ -14,8 +14,9 @@ export class DefaultChatComponent implements OnInit {
     _loginService: LoginService;
     _userService: UserService;
     loggedInUserObj: any;
-
-    constructor(userService: UserService, private router: Router, loginService: LoginService , public alertService: AlertService) {
+    isAdministrator = false;
+    currentRoute = 0;
+    constructor(userService: UserService, private router: Router, loginService: LoginService, public alertService: AlertService) {
         this._userService = userService;
         this._loginService = loginService;
     }
@@ -26,8 +27,12 @@ export class DefaultChatComponent implements OnInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUserObj = data;
+                this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
             }
         });
+    }
+    switchRoute(newRoute) {
+        this.currentRoute = newRoute;
     }
 }
 

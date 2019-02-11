@@ -1,4 +1,4 @@
-<!-- <div>
+<div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-8 meeting-activity">
@@ -14,14 +14,26 @@
                             </h4>
                         </div>
                     </div>
-                    <div class="row" style="justify-content: left;">
-                        <div id="room-urls" style="text-align: center;display: none;"></div>
+                    <div class="row" style="text-align: center;">
+                        <div id="room-urls" style="text-align: center;display: none;">
+                            <button type="button" class="btn btn-responsive" id="copyMeetingLink">
+                                Copy Meeting Link
+                            </button>
+                            <button type="button" class="btn btn-responsive" id="copyGuestMeetingLink">
+                                Copy Guest Meeting Link
+                            </button>
+
+                            <button type="button" class="btn btn-responsive" id="copyMeetingId">
+                                Copy Meeting Id
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="attendee-row">
                     <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" (indexChanged)="onIndexChanged($event)"
                         (reachesLeftBound)="leftBoundStat($event)" (reachesRightBound)="rightBoundStat($event)"
                         (snapAnimationFinished)="onSnapAnimationFinished()" #videos_container id="videos_container">
+                        <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
                     </div>
                 </div>
                 <div class="row parent">
@@ -30,8 +42,8 @@
                 <div>
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
-                            autocapitalize=off size=10>
-                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="bottom"
+                            autocapitalize=off size=10 style="display:none;">
+                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="top"
                             ngbTooltip="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
@@ -47,15 +59,21 @@
                             </div>
                         </app-custom-modal>
                         <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'"
-                            #muteUnmuteBtn placement="bottom" ngbTooltip="Mute/Unmute" (click)='mute()'>
+                            #muteUnmuteBtn placement="top" ngbTooltip="Mute/Unmute" (click)='mute()'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
-                            placement="bottom" ngbTooltip="Start" (click)='isMeetingStarted=!isMeetingStarted'>
+                            placement="top" ngbTooltip="Start" (click)='isMeetingStarted=!isMeetingStarted'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
+                        <button id="btn-start-recording" class="btn pull-left" alt="Start Recording">
+                            <i class="fa fa-2x fa-circle" placement="top" ngbTooltip="start recording" aria-hidden="true"
+                                style="color:#dc3545" id="rec_start"></i>
+                            <i class="fa fa-2x fa-stop" aria-hidden="true" placement="top" ngbTooltip="stop recording"
+                                style="color:#dc3545;display: none" id="rec_stop"></i>
+                        </button>
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
-                            placement="top" #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" placement="bottom"
+                            placement="top" #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" placement="top"
                             ngbTooltip="Video on/off">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
@@ -65,19 +83,19 @@
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
                         <button id="share-file" class="btn default pull-left" style="display:none;" placement="top"
-                            #shareFileBtn (click)="shareFile()" placement="bottom" ngbTooltip="Share File">
+                            #shareFileBtn (click)="shareFile()" placement="top" ngbTooltip="Share File">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
                         <button id="share-screen" class="btn pull-left" style="display:none;" placement="top"
                             #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'
-                            placement="bottom" ngbTooltip="Share Screen">
+                            placement="top" ngbTooltip="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
-                        <button id="resume-count" (click)="startTimer()" style="display: none;" class="btn btn-link btn-sm">resume</button>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
-                       
+                        <div style="display: none;" id="isHost"></div>
+                        <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
                         <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
                             Meeting
                         </button>
@@ -89,16 +107,26 @@
                 <div class="card">
                     <div class="card-header col-md-12">
                         <div class="col-md-8" style="float: left;">
-                            <img src="assets/images/white_logo.png" class="img-fluid" alt="Responsive image" />
+                            <img src="assets/images/coreflex-logo1.png" class="img-fluid" alt="Responsive image" />
                         </div>
                         <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;">
                             <h4>
                                 <i class="fa fa-clock-o"></i>&nbsp;
-                                <countdown #countdown [config]="config" (finished)="onFinished()" (notify)="onNotify($event)">$!h!:$!m!:$!s!</countdown>
+                                {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
                             </h4>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="padding-right:50px;">
+                        <div class="icon-bar">
+                            <a href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
+                                    class="fa fa-comments-o"></i></a>
+                            <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
+                                title="Minutes Of Meeting"><i class="fa fa-sticky-note-o"></i></a>
+                            <a href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
+                                title="Viewers"><i class="fa fa-user-o"></i></a>
+                            <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ"><i class="fa fa-question"></i></a>
+                            <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
+                        </div>
                         <ul role="tablist" class="nav nav-tabs justify-content-start">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
@@ -108,6 +136,11 @@
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
                                     Minutes of Meeting
+                                </span>
+                            </li>
+                            <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
+                                <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
+                                    Viewers
                                 </span>
                             </li>
                         </ul>
@@ -134,6 +167,12 @@
                                     MOM</button>
                             </div>
                         </div>
+                        <div class="tab-content" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
+                            <div class="row content-tab" style="text-align:center">
+                                <ul id="viewersList"></ul>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,7 +183,7 @@
     <h1 style="display:none;"></h1>
     <div id="chat-container">
     </div>
-</section> -->
+</section> 
 
 
 <div class="main-container">
@@ -370,3 +409,7 @@
 <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
 <div id="room-urls" style="text-align: center;display: none;"></div>
 <h1 style="display:none;"></h1>
+
+</section>
+<video id="screenRecordVideo" style="display: none;"></video>
+
