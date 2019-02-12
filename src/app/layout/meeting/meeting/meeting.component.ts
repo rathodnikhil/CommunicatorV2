@@ -102,7 +102,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            this.startTimer();
+                           // this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting is already over', 'Meeting Over');
                             }
@@ -113,7 +113,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            this.startTimer();
+                         //   this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting is already over', 'Meeting Over');
                             }
@@ -173,7 +173,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         } else {
             if (!this.isHost) {
                 if (this.isGuest) {
-                    this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendee');
+                    this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendees');
                 } else {
                     const payload = { meetingCode: this.meetingDetails.meetingCode };
                     this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
@@ -199,8 +199,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     downloadFile(data, meetingDetails, attendeeList) {
-        const today = new Date();
-        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
+        const meetingDate = new Date();
+        meetingDate.setTime(meetingDetails.meetingStartDateTime);
+        const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
             '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
@@ -210,7 +211,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
         // a.href = url;
-        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
@@ -301,6 +302,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.second += 1;
         }
         this.tick++;
+    }
+    startMeeting() {
+        this.isMeetingStarted = !this.isMeetingStarted;
+        this.startTimer();
     }
 }
 

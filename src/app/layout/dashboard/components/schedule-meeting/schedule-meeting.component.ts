@@ -28,7 +28,7 @@ export class ScheduleMeetingComponent implements OnInit {
     futureMeetingList: any[];
     filteredFutureMeetingList: any[];
     outLookBody: any;
-    outLooksubject: any;
+    outLookSubject: any;
     toAttendees: any;
     ccAttendees: any;
     meetingObj: any;
@@ -236,7 +236,7 @@ export class ScheduleMeetingComponent implements OnInit {
         this.outlookModal.open();
         const newLine = '\r\n\r\n';
        this.outLookBody = this.getMeetingDetails(newLine);
-       this.outLooksubject = this.subject;
+       this.outLookSubject = this.subject;
         this.closeMeetingPopup('scheduleMeetings');
     }
     // copy meeting content
@@ -288,8 +288,8 @@ export class ScheduleMeetingComponent implements OnInit {
         if ( this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
-        const newLine = '<br>';
-        const outLookBodyJson = this.outLookBody;
+            const newLine = '<br>';
+        const outLookBodyJson =    this.getMeetingDetails(newLine);
         const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
             meetingDetailsBody: outLookBodyJson , meeting: this.meetingObj};
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
