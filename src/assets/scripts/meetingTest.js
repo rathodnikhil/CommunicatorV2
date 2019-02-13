@@ -207,6 +207,7 @@ document.getElementById('btn-leave-room').onclick = function () {
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
+    document.getElementById('btn-start-recording').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
     document.getElementById('open-room').disabled = true;
@@ -252,11 +253,12 @@ var chatContainer = document.querySelector('.chat-output');
 function formatDate(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    var strTime = hours + ':' + minutes + ':' +seconds+ ' ' + ampm;
     // return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
     return strTime;
 }
@@ -386,7 +388,6 @@ connection.onstream = function (event) {
     customDiv.style.padding = '5';
     customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     var attendeeFullName = event.extra;
     attendeeFullName = attendeeFullName.split(" ");
     var attendeeFullNameArray = new Array();
@@ -396,20 +397,37 @@ connection.onstream = function (event) {
             attendeeFullNameArray.push(" ");
         }
     }
-    var attendeeNameLetter = null;
-    heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
-    customDiv.appendChild(heading);
+    
     if (event.stream.isVideo == 0) {
         video.setAttribute("style", "display:none; ");
         video.hidden = true;
+        var viewerNameString = null;
+        var attendeeNameLetter = null;
         if (attendeeFullNameArray.length < 3) {
             attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
+            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
+            heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
+            viewerNameString = '<p>' + event.extra  + '</p>';
         } else {
             attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase() + attendeeFullNameArray[2].substring(0, 1).toUpperCase();
+            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1) + ' ' 
+            +attendeeFullNameArray[2].charAt(0).toUpperCase()+attendeeFullNameArray[2].slice(1);
+            heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
+            viewerNameString =  '<p>' + firstNameUpperCase  + '</p>';
         }
+        if(heading.innerHTML ===  "You"){
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
+        }else{
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+        }
+        customDiv.appendChild(heading);
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
-        initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#bc151b;color:#fff;margin-top: 30px;font-size: 4.0vw;');
+        if(initialsDiv.innerHTML === "You"){
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#FDFAE8;border:1px solid #bc151b;color:#bc151b;margin-top: 30px;font-size: 4.0vw;');
+        } else{
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
+        }
         customDiv.appendChild(initialsDiv);
     }
 
@@ -430,9 +448,17 @@ connection.onstream = function (event) {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
             if (event.type !== 'local') {
-                var viewer = document.createElement('li');
+                var viewer = document.createElement('div');
                 viewer.id = event.userid + 'viewer';
-                viewer.innerHTML = event.extra + ' joined meeting on ' + (event.stream.isVideo == 0 ? "audio" : "video") + " mode";
+                html = viewerNameString;
+                viewer.className = 'chat-background-invitee';
+                html += '<span class="time-left">';
+                if(event.stream.isVideo === false){
+                    html += '<i class="fa fa-microphone"></i>&nbsp;' + ' joined meeting on audio mode</span>';
+                }else{
+                    html += '<i class="fa fa-video"></i>&nbsp;' + ' joined meeting on video mode</span>';
+                }
+                viewer.innerHTML = html;
                 viewerListDiv.appendChild(viewer);
             }
         }
@@ -482,6 +508,7 @@ connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('disable-video').style.display = 'block';
+    document.getElementById('btn-start-recording').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
@@ -500,6 +527,7 @@ connection.onclose = function () {
 };
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('btn-start-recording').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;

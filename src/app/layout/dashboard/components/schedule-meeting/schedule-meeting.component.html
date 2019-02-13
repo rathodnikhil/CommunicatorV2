@@ -86,7 +86,7 @@
                             <div style="padding: 10px; font-size:14px; " class="span-font">
                                 <span>{{this.subject}}</span>
                                 <p style="font-weight:bold;">Date : {{ meeting.datePicker.year }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.day}}
-                                    at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
+                                    at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{ meeting.meridianTime.minute < 10 ? '0'+meeting.meridianTime.minute:meeting.meridianTime.minute}}
                                     {{this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}
                                     ) for
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
@@ -127,7 +127,7 @@
                                 <div class="form-group row">
                                 <div class="col-lg-2"> <label for="subject" class="outlook-email-label">Subject: </label>
                                 </div>
-                                <div class="col-lg-10"><textarea class="form-control" [(ngModel)]="outLooksubject"   name="subject">
+                                <div class="col-lg-10"><textarea class="form-control" [(ngModel)]="outLookSubject"   name="subject">
                                  </textarea>  </div>
                                 </div>
                                 </div>

@@ -16,14 +16,14 @@
                     </div>
                     <div class="row" style="text-align: center;">
                         <div id="room-urls" style="text-align: center;display: none;">
-                            <button type="button" class="btn btn-responsive" id="copyMeetingLink">
+                            <button type="button" class="btn btn-responsive btn-warning" id="copyMeetingLink">
                                 Copy Meeting Link
                             </button>
-                            <button type="button" class="btn btn-responsive" id="copyGuestMeetingLink">
+                            <button type="button" class="btn btn-responsive btn-warning" id="copyGuestMeetingLink">
                                 Copy Guest Meeting Link
                             </button>
 
-                            <button type="button" class="btn btn-responsive" id="copyMeetingId">
+                            <button type="button" class="btn btn-responsive btn-warning" id="copyMeetingId">
                                 Copy Meeting Id
                             </button>
                         </div>
@@ -63,10 +63,10 @@
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
-                            placement="top" ngbTooltip="Start" (click)='isMeetingStarted=!isMeetingStarted'>
+                            placement="top"  (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn pull-left" alt="Start Recording">
+                        <button id="btn-start-recording" class="btn pull-left" alt="Start Recording" style="display:none;">
                             <i class="fa fa-2x fa-circle" placement="top" ngbTooltip="start recording" aria-hidden="true"
                                 style="color:#dc3545" id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" placement="top" ngbTooltip="stop recording"
@@ -91,7 +91,7 @@
                             placement="top" ngbTooltip="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
+                        <span id="meeting-error" style="float: right;font-weight: bolder;background-color: yellow;"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <div style="display: none;" id="isHost"></div>
@@ -129,7 +129,7 @@
                             <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ"><i class="fa fa-question"></i></a>
                             <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
                         </div>
-                        <ul role="tablist" class="nav nav-tabs justify-content-start">
+                        <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-color: #7d7d7f;color: #fff;">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
                                     Chat
@@ -170,20 +170,18 @@
 
                                 <textarea placeholder="Type MOM Here..." style="width: 100%; margin: 10px;overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn btn-sec momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Generate
-                                    MOM</button>
+                                <button class="btn btn-primary momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Generate
+                                    Meeting Notes</button>
                             </div>
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
-                            <div class="row content-tab" style="text-align:center">
-                                <ul id="viewersList"></ul>
+                            <div class="row content-tab" >
+                                <div id="viewersList" class="col-md-12"></div>
 
                             </div>
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
-                            <div id="file-container" class="row content-tab" style="text-align:center">
-
-
+                            <div id="file-container" class="row content-tab" >
                             </div>
                         </div>
                     </div>
