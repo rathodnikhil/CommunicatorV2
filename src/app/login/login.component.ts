@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         } else {
             if (this.isGuest) {
-               
             } else {
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;

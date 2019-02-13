@@ -273,7 +273,7 @@ function appendDIV(event) {
     if (senderNameArray.length < 3) {
         var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1);
     } else {
-        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) + ' ' 
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) +
         +senderNameArray[2].charAt(0).toUpperCase()+senderNameArray[2].slice(1);
     }
     if (firstNameUpperCase === 'You') {
@@ -401,7 +401,7 @@ connection.onstream = function (event) {
     if (attendeeFullNameArray.length < 3) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
         heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
-        viewerNameString = '<p>' + event.extra  + '</p>';
+        viewerNameString = '<p>' + firstNameUpperCase  + '</p>';
     } else {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1) + ' ' 
         +attendeeFullNameArray[2].charAt(0).toUpperCase()+attendeeFullNameArray[2].slice(1);
@@ -443,24 +443,15 @@ connection.onstream = function (event) {
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
-                viewer.innerHTML = event.extra + ' shared screen';
+                var viewer = displayViewerList(viewer, event, viewerNameString,1);
+                viewerListDiv.appendChild(viewer);
             }
         }
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
             if (event.type !== 'local') {
-                var viewer = document.createElement('div');
-                viewer.id = event.userid + 'viewer';
-                html = viewerNameString;
-                viewer.className = 'chat-background-invitee';
-                html += '<span class="time-left">';
-                if(event.stream.isVideo === false){
-                    html += '<i class="fa fa-microphone"></i>&nbsp;' + ' joined meeting on audio mode</span>';
-                }else{
-                    html += '<i class="fa fa-video"></i>&nbsp;' + ' joined meeting on video mode</span>';
-                }
-                viewer.innerHTML = html;
+                var viewer = displayViewerList(viewer, event, viewerNameString,0);
                 viewerListDiv.appendChild(viewer);
             }
         }
@@ -551,6 +542,26 @@ connection.onEntireSessionClosed = function (event) {
 connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
+
+function displayViewerList(viewer, event, viewerNameString,sharedScreenFlag) {
+    var viewer = document.createElement('div');
+    viewer.id = event.userid + 'viewer';
+    html = viewerNameString;
+    viewer.className = 'chat-background-invitee';
+    html += '<span class="time-left">';
+    if(sharedScreenFlag === 1){
+        html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span>';
+    }else{
+        if (event.stream.isVideo === false) {
+            html += '<i class="fa fa-microphone"></i>&nbsp;' + ' Joined meeting on audio mode</span>';
+        }
+        else {
+            html += '<i class="fa fa-video"></i>&nbsp;' + ' Joined meeting on video mode</span>';
+        }
+    }
+    viewer.innerHTML = html;
+    return viewer;
+}
 
 function setAttendeeName(attendeeFullName) {
     attendeeFullName = attendeeFullName.split(" ");
