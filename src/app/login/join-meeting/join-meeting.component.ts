@@ -15,6 +15,7 @@ export class JoinMeetingComponent implements OnInit {
   previousUrl: string;
   meetingCode: string;
   _userService: UserService;
+  readOnlyFlag = false;
   constructor(public router: Router, userService: UserService, private activatedRoute: ActivatedRoute, public alertService: AlertService) {
     this._userService = userService;
   }
@@ -38,7 +39,7 @@ export class JoinMeetingComponent implements OnInit {
     const guestUserCode = 'guest' + (+currentDate);
     const payload = {
       firstName: this.userName.substring(0, 1).toUpperCase() + this.userName.substring(1),
-      isGuest: this.isGuest, userCode: guestUserCode
+      isGuest: this.isGuest, userCode: guestUserCode , email: guestUserCode + '@guest.com'
     };
     this._userService.setLoggedInUserObj(payload).subscribe(res => {
       if (res.firstName !== undefined) {
