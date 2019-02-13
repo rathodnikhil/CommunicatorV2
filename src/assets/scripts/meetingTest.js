@@ -269,7 +269,14 @@ function appendDIV(event) {
     var message = event.data || event;
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
-    if (user === 'You') {
+    var senderNameArray = setAttendeeName(user);
+    if (senderNameArray.length < 3) {
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1);
+    } else {
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) + ' ' 
+        +senderNameArray[2].charAt(0).toUpperCase()+senderNameArray[2].slice(1);
+    }
+    if (firstNameUpperCase === 'You') {
         div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
@@ -277,7 +284,7 @@ function appendDIV(event) {
         html += '<span class="time-left">';
     }
 
-    html += '<i class="fa fa-user"></i>&nbsp;' + user + ' ' + formatDate(new Date()) + '</span>'
+    html += '<i class="fa fa-user"></i>&nbsp;' + firstNameUpperCase + ' ' + formatDate(new Date()) + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -389,38 +396,33 @@ connection.onstream = function (event) {
     customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
-    attendeeFullName = attendeeFullName.split(" ");
-    var attendeeFullNameArray = new Array();
-    for (var i = 0; i < attendeeFullName.length; i++) {
-        attendeeFullNameArray.push(attendeeFullName[i]);
-        if (i != attendeeFullName.length - 1) {
-            attendeeFullNameArray.push(" ");
-        }
+    var viewerNameString = null;
+    var attendeeFullNameArray = setAttendeeName(attendeeFullName);
+    if (attendeeFullNameArray.length < 3) {
+        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
+        heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
+        viewerNameString = '<p>' + event.extra  + '</p>';
+    } else {
+        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1) + ' ' 
+        +attendeeFullNameArray[2].charAt(0).toUpperCase()+attendeeFullNameArray[2].slice(1);
+        heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
+        viewerNameString =  '<p>' + firstNameUpperCase  + '</p>';
     }
-    
+    if(heading.innerHTML ===  "You"){
+        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
+    }else{
+        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+    }
+    customDiv.appendChild(heading);
     if (event.stream.isVideo == 0) {
         video.setAttribute("style", "display:none; ");
         video.hidden = true;
-        var viewerNameString = null;
         var attendeeNameLetter = null;
         if (attendeeFullNameArray.length < 3) {
             attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
-            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
-            heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
-            viewerNameString = '<p>' + event.extra  + '</p>';
         } else {
             attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase() + attendeeFullNameArray[2].substring(0, 1).toUpperCase();
-            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1) + ' ' 
-            +attendeeFullNameArray[2].charAt(0).toUpperCase()+attendeeFullNameArray[2].slice(1);
-            heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
-            viewerNameString =  '<p>' + firstNameUpperCase  + '</p>';
         }
-        if(heading.innerHTML ===  "You"){
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
-        }else{
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
-        }
-        customDiv.appendChild(heading);
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if(initialsDiv.innerHTML === "You"){
@@ -550,6 +552,18 @@ connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
 
+function setAttendeeName(attendeeFullName) {
+    attendeeFullName = attendeeFullName.split(" ");
+    var attendeeFullNameArray = new Array();
+    for (var i = 0; i < attendeeFullName.length; i++) {
+        attendeeFullNameArray.push(attendeeFullName[i]);
+        if (i != attendeeFullName.length - 1) {
+            attendeeFullNameArray.push(" ");
+        }
+    }
+    return  attendeeFullNameArray ;
+}
+
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
     document.getElementById('open-room').disabled = true;
@@ -571,16 +585,16 @@ function showRoomURL(roomid) {
 
 document.getElementById("copyMeetingLink").onclick = function () {
     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
-    copyToClipBoard(roomQueryStringURL, 'Meeting Link has been Copied. Kindly share via your preferred Mail Id.',
+    copyToClipBoard(roomQueryStringURL, 'Meeting link has been copied. Kindly share via your preferred email id.',
         'Copy Meeting Link')
 };
 document.getElementById("copyGuestMeetingLink").onclick = function () {
     var roomQueryStringURL = window.location.origin + '/#/login/GuestUserWithMeeting?meetingCode=' + roomid;
-    copyToClipBoard(roomQueryStringURL, 'Meeting Link for guest has been Copied. Kindly share via your preferred Mail Id.',
+    copyToClipBoard(roomQueryStringURL, 'Meeting link for guest has been copied. Kindly share via your preferred email id.',
         'Copy Guest Meeting Link')
 };
 document.getElementById("copyMeetingId").onclick = function () {
-    copyToClipBoard(roomid, 'Meeting Id has been Copied. Kindly share via your preferred Mail Id.',
+    copyToClipBoard(roomid, 'Meeting id has been copied. Kindly share via your preferred email id.',
         'Copy Meeting Id')
 };
 
@@ -685,7 +699,7 @@ function stopRecordingCallback() {
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.setAttribute('href', URL.createObjectURL(recorder.getBlob()));
-    a.download = 'screenRecordVideo' + roomid + '.webm';
+    a.download = 'Meeting-Rec' + roomid + '(' + new Date().toString().slice(0, 24) + ').webm';
     a.click();
     a.remove();
     recorder.screen.stop();

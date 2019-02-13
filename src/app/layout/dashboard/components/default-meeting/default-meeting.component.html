@@ -17,10 +17,13 @@
                             for
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
-                        <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
-                            <label>For meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                        <p style="padding-top: 20px;"> Please join my meeting from your computer 
+                            <label>For registered use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                                <label>For guest use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                    <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
+                                    http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
                         <h5 style="margin-top: 40px;">Meeting Id     :
                             <span>{{meetNowMeeting.meetingCode}}</span>

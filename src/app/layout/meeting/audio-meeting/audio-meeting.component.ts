@@ -35,7 +35,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     previousHtml: any;
     isGuest = false;
     isScreenSharingStarted=false;
-    isMute=false;
+    isMute =false;
     isMeetingStarted=false;
     currentTab = 'chat';
     notify: string;
@@ -64,7 +64,7 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
-    @ViewChild("saveMomBtn") saveMomBtn: ElementRef;
+    @ViewChild('saveMomBtn') saveMomBtn: ElementRef;
     @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
     leaveMeeting: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',

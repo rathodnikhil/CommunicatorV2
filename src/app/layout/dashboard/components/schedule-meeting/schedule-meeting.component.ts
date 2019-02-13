@@ -275,13 +275,15 @@ export class ScheduleMeetingComponent implements OnInit {
     // get meeting details
     getMeetingDetails(newLine): string {
             const meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+            const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
          this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
             this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + newLine +
-            newLine + ' Please join my meeting from your computer , tablet or smartphone' + newLine + meetingUrl + this.accessCode +
-            newLine + ' Meeting Id :    ' + this.accessCode;
+            newLine + ' Please join my meeting from your computer ' + newLine + 'Register user use below url : ' + newLine
+             + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + guestMeetingUrl + + this.accessCode
+             + newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }
     sendEmail(e) {

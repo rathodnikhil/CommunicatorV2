@@ -305,12 +305,12 @@ closeoutMaliPopup() {
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
         meetingUrl = 'https://cfscommunicator.com/#/meeting/?meetingCode=';
-
+        const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.GetFormattedDate() + newLine +
             ' Please join my meeting from your computer , tablet or smartphone ' + newLine + ' for  '
-            + this.meetNowMeeting.duration + newLine
-            + meetingUrl + this.meetNowMeeting.meetingCode +
-            newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
+            + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
+            + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below url :  ' + guestMeetingUrl +
+            this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
     }
     GetFormattedDate(): String {
