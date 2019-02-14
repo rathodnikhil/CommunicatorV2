@@ -273,7 +273,7 @@ function appendDIV(event) {
     if (senderNameArray.length < 3) {
         var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1);
     } else {
-        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) +
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) + ' '
         +senderNameArray[2].charAt(0).toUpperCase()+senderNameArray[2].slice(1);
     }
     if (firstNameUpperCase === 'You') {
@@ -290,6 +290,7 @@ function appendDIV(event) {
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 
     document.getElementById('input-text-chat').focus();
+    document.getElementById('chatAnchor').click();
 }
 
 // ......................................................
@@ -550,16 +551,17 @@ function displayViewerList(viewer, event, viewerNameString,sharedScreenFlag) {
     viewer.className = 'chat-background-invitee';
     html += '<span class="time-left">';
     if(sharedScreenFlag === 1){
-        html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span>';
+        html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
     }else{
         if (event.stream.isVideo === false) {
-            html += '<i class="fa fa-microphone"></i>&nbsp;' + ' Joined meeting on audio mode</span>';
+            html += '<i class="fa fa-microphone"></i>&nbsp;' + ' Joined meeting on audio mode</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
         }
         else {
-            html += '<i class="fa fa-video"></i>&nbsp;' + ' Joined meeting on video mode</span>';
+            html += '<i class="fa fa-video-camera"></i>&nbsp;' + ' Joined meeting on video mode</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
         }
     }
     viewer.innerHTML = html;
+    document.getElementById('viewerAnchor').click();
     return viewer;
 }
 

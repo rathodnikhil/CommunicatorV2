@@ -44,7 +44,7 @@
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
                         <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="top"
-                            ngbTooltip="Exit Meeting">
+                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
                         <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
@@ -59,38 +59,37 @@
                             </div>
                         </app-custom-modal>
                         <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'"
-                            #muteUnmuteBtn placement="top" ngbTooltip="Mute/Unmute" (click)='mute()'>
+                            #muteUnmuteBtn placement="top" data-toggle="tooltip"  title="Mute/Unmute" (click)='mute()'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
-                        <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
+                        <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
                             placement="top"  (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn pull-left" alt="Start Recording" style="display:none;">
-                            <i class="fa fa-2x fa-circle" placement="top" ngbTooltip="Start Recording" aria-hidden="true"
-                                style="color:#dc3545" id="rec_start"></i>
-                            <i class="fa fa-2x fa-stop" aria-hidden="true" placement="top" ngbTooltip="Stop Recording"
+                        <button id="btn-start-recording" class="btn pull-left default" alt="Start Recording" style="display:none;"  >
+                            <i class="fa fa-2x fa-circle"  title="Start Recording" data-toggle="tooltip" aria-hidden="true"
+                                 id="rec_start"></i>
+                            <i class="fa fa-2x fa-stop" aria-hidden="true"  title="Stop Recording" data-toggle="tooltip"
                                 style="color:#dc3545;display: none" id="rec_stop"></i>
                         </button>
-                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
-                            placement="top" #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" placement="top"
-                            ngbTooltip="Video on/off">
-                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
-                                class="fa fa-2x fa-ban"></i>
-                        </button>
-
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top"
-                            #shareFileBtn (click)="shareFile()" placement="top" ngbTooltip="Share File">
+                        <button id="share-file" class="btn default pull-left" style="display:none;" 
+                            #shareFileBtn (click)="shareFile()" title="Share File" data-toggle="tooltip">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
-                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top"
+                        <button id="share-screen" class="btn pull-left" style="display:none;"
                             #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'
-                            placement="top" ngbTooltip="Share Screen">
+                             data-toggle="tooltip" title="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
+                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
+                         #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" 
+                        title="Video on/off" data-toggle="tooltip">
+                        <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
+                            class="fa fa-2x fa-ban"></i>
+                    </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;background-color: yellow;"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
@@ -118,11 +117,11 @@
                     </div>
                     <div class="card-body" style="padding-right:50px;">
                         <div class="icon-bar">
-                            <a href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
+                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
                                     class="fa fa-comments-o"></i></a>
                             <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
                                 title="Notes"><i class="fa fa-sticky-note-o"></i></a>
-                            <a href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
+                            <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
                                 title="Viewers"><i class="fa fa-user-o"></i></a>
                             <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
                                 [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared files"><i class="fa fa-file-text-o"></i></a>
@@ -147,7 +146,7 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='downloadedFiles'}">
-                                    Files Shared
+                                   Shared Files 
                                 </span>
                             </li>
                         </ul>
@@ -168,7 +167,7 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center">
 
-                                <textarea placeholder="Type MOM Here..." style="width: 100%; margin: 10px;overflow:auto;resize:none"
+                                <textarea placeholder="Type MOM Here..." style="width: 100%; margin:5%;overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn btn-primary momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Generate
                                     Meeting Notes</button>
