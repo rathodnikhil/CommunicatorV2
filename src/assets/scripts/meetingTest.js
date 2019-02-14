@@ -712,7 +712,7 @@ function stopRecordingCallback() {
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.setAttribute('href', URL.createObjectURL(recorder.getBlob()));
-    a.download = 'Meeting-Rec' + roomid + '(' + new Date().toString().slice(0, 24) + ').webm';
+    a.download = 'Meeting-Rec-' + roomid + '(' + new Date().toString().slice(0, 24) + ').webm';
     a.click();
     a.remove();
     recorder.screen.stop();
