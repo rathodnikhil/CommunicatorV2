@@ -23,7 +23,7 @@ import { CountdownModule } from 'ngx-countdown';
         NgbModule.forRoot(),
         DashboardModule,
         FormsModule,
-        CountdownModule        
+        CountdownModule
     ],
 
     declarations: [MeetingComponent, AudioMeetingComponent, HorizontalScrollingComponent]

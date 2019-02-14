@@ -17,23 +17,54 @@
                             for
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
-                        <p style="padding-top: 20px;"> Please join my meeting from your computer , tablet or smartphone
-                            <label>For meeting use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                        <p style="padding-top: 20px;"> Please join my meeting from your computer 
+                            <label>For registered use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                                <label>For guest use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                    <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
+                                    http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
                         <h5 style="margin-top: 40px;">Meeting Id     :
                             <span>{{meetNowMeeting.meetingCode}}</span>
                         </h5>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)" #goToOutlookBtnField>Go
+                        <button type="button" class="btn btn-sec btn-border-radius" (click)="copyToOutLook($event)" #goToOutlookBtnField>Go
                             to Outlook</button>
-                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
-                        <button type="button" class="btn btn-secondary  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start
+                        <button type="button" class="btn btn-sec btn-border-radius" (click)="copyToClipboard()">Copy</button>
+                        <button type="button" class="btn btn-sec  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start
                             Meeting</button>
+                            <button type="button" class="btn btn-danger" (click)="closePopup(meetNow)">Close</button>
                     </div>
 
+                </app-custom-modal>
+                <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearAllMeetingField()">
+                    <div class="outlook-email-background">
+                        <div class="form-group row">
+                        <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
+                        <div class="col-lg-10"><textarea class="form-control" id="to" [(ngModel)]="toAttendees" name="to" > </textarea></div>
+                        </div>
+                        <div class="form-group row">
+                        <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
+                        <div class="col-lg-10">  <textarea class="form-control" id="cc" name="cc" [(ngModel)]="ccAttendees"> </textarea>
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <div class="col-lg-2"> <label for="subject" class="outlook-email-label">Subject: </label>
+                        </div>
+                        <div class="col-lg-10"><textarea class="form-control" [(ngModel)]="outLookSubject"   name="subject">
+                         </textarea>  </div>
+                        </div>
+                        </div>
+                        <div style="height: 100%">
+                             <textarea class="form-control" id="body" [(ngModel)]="outLookBody" name="body" rows="13"> 
+                            </textarea>
+                        </div>
+                        <div class="modal-footer popFooter">
+                            <button type="button" class="btn btn-secondary btn-border-radius" (click)="sendEmail($event)">Send</button>
+                            <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeoutMaliPopup()">Close</button>
+                        </div>
                 </app-custom-modal>
             </div>
             <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">

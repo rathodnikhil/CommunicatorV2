@@ -15,6 +15,7 @@ export class JoinMeetingComponent implements OnInit {
   previousUrl: string;
   meetingCode: string;
   _userService: UserService;
+  readOnlyFlag = false;
   constructor(public router: Router, userService: UserService, private activatedRoute: ActivatedRoute, public alertService: AlertService) {
     this._userService = userService;
   }
@@ -36,27 +37,50 @@ export class JoinMeetingComponent implements OnInit {
     localStorage.setItem('loggedInuserName', this.userName);
     const currentDate = new Date();
     const guestUserCode = 'guest' + (+currentDate);
+    const senderNameArray = this.setAttendeeName(this.userName);
+    let firstNameUpperCase = null;
+    if (senderNameArray.length < 3) {
+       firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
+  } else {
+      firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
+      + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
+  }
     const payload = {
-      firstName: this.userName.substring(0, 1).toUpperCase() + this.userName.substring(1),
-      isGuest: this.isGuest, userCode: guestUserCode
+      firstName: firstNameUpperCase,
+      isGuest: this.isGuest, userCode: guestUserCode , email: guestUserCode + '@guest.com' , meetingCode: this.meetingCode
     };
     this._userService.setLoggedInUserObj(payload).subscribe(res => {
-      if (res.firstName !== undefined) {
-        if (!this.previousUrl) {
-          // this.router.navigate(['meeting' + this.meetingCode]);
-          this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-        } else {
-          if (this.previousUrl.indexOf('meeting') > 0) {
-            this.router.navigateByUrl(this.previousUrl);
-          } else {
+      if (res === 'invalid') {
+          this.alertService.warning('Please enter valid Meeting Id' , 'Invalid Data');
+      } else {
+        if (res.firstName !== undefined) {
+          if (!this.previousUrl) {
+            // this.router.navigate(['meeting' + this.meetingCode]);
             this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+          } else {
+            if (this.previousUrl.indexOf('meeting') > 0) {
+              this.router.navigateByUrl(this.previousUrl);
+            } else {
+              this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+            }
           }
         }
-
       }
     });
   }
   onKey(event) {
     if (event.key === 'Enter') { this.guestLogin(); }
   }
+  setAttendeeName(attendeeFullName) {
+    attendeeFullName = attendeeFullName.split(' ');
+    const attendeeFullNameArray = new Array();
+    for (let i = 0; i < attendeeFullName.length; i++) {
+        attendeeFullNameArray.push(attendeeFullName[i]);
+        if (i !== attendeeFullName.length - 1) {
+            attendeeFullNameArray.push(' ');
+        }
+    }
+    return  attendeeFullNameArray ;
+}
+
 }

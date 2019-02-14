@@ -1,6 +1,3 @@
-// https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
-
-// document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
 document.getElementById('btn-save-mom').disabled = true;
 document.getElementById('input-text-chat').disabled = true;
@@ -210,6 +207,7 @@ document.getElementById('btn-leave-room').onclick = function () {
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
+    document.getElementById('btn-start-recording').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
     document.getElementById('open-room').disabled = true;
@@ -251,24 +249,34 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 };
 
 var chatContainer = document.querySelector('.chat-output');
+
 function formatDate(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ':' +seconds+ ' ' + ampm;
     // return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
     return strTime;
-  }
+}
+
 function appendDIV(event) {
     var div = document.createElement('div');
     //   div.className = 'chat-background';
     var message = event.data || event;
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
-    if (user === 'You') {
+    var senderNameArray = setAttendeeName(user);
+    if (senderNameArray.length < 3) {
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1);
+    } else {
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) + ' '
+        +senderNameArray[2].charAt(0).toUpperCase()+senderNameArray[2].slice(1);
+    }
+    if (firstNameUpperCase === 'You') {
         div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
@@ -276,12 +284,13 @@ function appendDIV(event) {
         html += '<span class="time-left">';
     }
 
-    html += '<i class="fa fa-user"></i>&nbsp;' + user+' '+ formatDate(new Date()) + '</span>'
+    html += '<i class="fa fa-user"></i>&nbsp;' + firstNameUpperCase + ' ' + formatDate(new Date()) + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 
     document.getElementById('input-text-chat').focus();
+    document.getElementById('chatAnchor').click();
 }
 
 // ......................................................
@@ -387,22 +396,29 @@ connection.onstream = function (event) {
     customDiv.style.padding = '5';
     customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
     var attendeeFullName = event.extra;
-    attendeeFullName = attendeeFullName.split(" ");
-    var attendeeFullNameArray = new Array();
-    for (var i = 0; i < attendeeFullName.length; i++) {
-        attendeeFullNameArray.push(attendeeFullName[i]);
-        if (i != attendeeFullName.length - 1) {
-            attendeeFullNameArray.push(" ");
-        }
+    var viewerNameString = null;
+    var attendeeFullNameArray = setAttendeeName(attendeeFullName);
+    if (attendeeFullNameArray.length < 3) {
+        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
+        heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
+        viewerNameString = '<p>' + firstNameUpperCase  + '</p>';
+    } else {
+        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1) + ' ' 
+        +attendeeFullNameArray[2].charAt(0).toUpperCase()+attendeeFullNameArray[2].slice(1);
+        heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
+        viewerNameString =  '<p>' + firstNameUpperCase  + '</p>';
     }
-    var attendeeNameLetter = null;
-    heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
+    if(heading.innerHTML ===  "You"){
+        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
+    }else{
+        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+    }
     customDiv.appendChild(heading);
     if (event.stream.isVideo == 0) {
         video.setAttribute("style", "display:none; ");
         video.hidden = true;
+        var attendeeNameLetter = null;
         if (attendeeFullNameArray.length < 3) {
             attendeeNameLetter = attendeeFullNameArray[0].substring(0, 1).toUpperCase();
         } else {
@@ -410,7 +426,11 @@ connection.onstream = function (event) {
         }
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
-        initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#bc151b;color:#fff;margin-top: 30px;font-size: 4.0vw;');
+        if(initialsDiv.innerHTML === "You"){
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#FDFAE8;border:1px solid #bc151b;color:#bc151b;margin-top: 30px;font-size: 4.0vw;');
+        } else{
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
+        }
         customDiv.appendChild(initialsDiv);
     }
 
@@ -419,16 +439,20 @@ connection.onstream = function (event) {
     customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
-            screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(customDiv);
+            screenshareCheck = event.stream.id;
+            var screenShareContainer = document.getElementById('shareScreen-container');
+            screenShareContainer.appendChild(customDiv);
+            if (document.getElementById(event.userid + 'viewer') !== null) {
+                var viewer = document.getElementById(event.userid + 'viewer');
+                var viewer = displayViewerList(viewer, event, viewerNameString,1);
+                viewerListDiv.appendChild(viewer);
+            }
         }
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
             if (event.type !== 'local') {
-                var viewer = document.createElement('li');
-                viewer.id = event.streamid + 'viewer';
-                viewer.innerHTML = event.extra + ' joined';
+                var viewer = displayViewerList(viewer, event, viewerNameString,0);
                 viewerListDiv.appendChild(viewer);
             }
         }
@@ -478,6 +502,7 @@ connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('disable-video').style.display = 'block';
+    document.getElementById('btn-start-recording').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
@@ -496,6 +521,7 @@ connection.onclose = function () {
 };
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
+    document.getElementById('btn-start-recording').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
@@ -518,6 +544,39 @@ connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
 
+function displayViewerList(viewer, event, viewerNameString,sharedScreenFlag) {
+    var viewer = document.createElement('div');
+    viewer.id = event.userid + 'viewer';
+    html = viewerNameString;
+    viewer.className = 'chat-background-invitee';
+    html += '<span class="time-left">';
+    if(sharedScreenFlag === 1){
+        html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
+    }else{
+        if (event.stream.isVideo === false) {
+            html += '<i class="fa fa-microphone"></i>&nbsp;' + ' Joined meeting on audio mode</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
+        }
+        else {
+            html += '<i class="fa fa-video-camera"></i>&nbsp;' + ' Joined meeting on video mode</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
+        }
+    }
+    viewer.innerHTML = html;
+    document.getElementById('viewerAnchor').click();
+    return viewer;
+}
+
+function setAttendeeName(attendeeFullName) {
+    attendeeFullName = attendeeFullName.split(" ");
+    var attendeeFullNameArray = new Array();
+    for (var i = 0; i < attendeeFullName.length; i++) {
+        attendeeFullNameArray.push(attendeeFullName[i]);
+        if (i != attendeeFullName.length - 1) {
+            attendeeFullNameArray.push(" ");
+        }
+    }
+    return  attendeeFullNameArray ;
+}
+
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
     document.getElementById('open-room').disabled = true;
@@ -539,16 +598,16 @@ function showRoomURL(roomid) {
 
 document.getElementById("copyMeetingLink").onclick = function () {
     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
-    copyToClipBoard(roomQueryStringURL, 'Meeting Link has been Copied. Kindly share via your preferred Mail Id.',
+    copyToClipBoard(roomQueryStringURL, 'Meeting link has been copied. Kindly share via your preferred email id.',
         'Copy Meeting Link')
 };
 document.getElementById("copyGuestMeetingLink").onclick = function () {
     var roomQueryStringURL = window.location.origin + '/#/login/GuestUserWithMeeting?meetingCode=' + roomid;
-    copyToClipBoard(roomQueryStringURL, 'Meeting Link for guest has been Copied. Kindly share via your preferred Mail Id.',
+    copyToClipBoard(roomQueryStringURL, 'Meeting link for guest has been copied. Kindly share via your preferred email id.',
         'Copy Guest Meeting Link')
 };
 document.getElementById("copyMeetingId").onclick = function () {
-    copyToClipBoard(roomid, 'Meeting Id has been Copied. Kindly share via your preferred Mail Id.',
+    copyToClipBoard(roomid, 'Meeting id has been copied. Kindly share via your preferred email id.',
         'Copy Meeting Id')
 };
 
@@ -630,96 +689,54 @@ window.onhashchange = function () {
 /** Record screen functionality */
 var screenRecordVideo = document.getElementById('screenRecordVideo');
 document.getElementById('screenRecordVideo').style.display = 'none';
-if (!navigator.getDisplayMedia && !navigator.mediaDevices.getDisplayMedia) {
-    var error = 'Your browser does NOT supports getDisplayMedia API.';
-    // document.querySelector('h1').innerHTML = error;
-    document.getElementById('screenRecordVideo').style.display = 'none';
-    document.getElementById('btn-start-recording').style.display = 'none';
-    // document.getElementById('btn-stop-recording').style.display = 'none';
-    alertService.error(error, "record screen not supported");
-}
 
-function invokeGetDisplayMedia(success, error) {
-    var displaymediastreamconstraints = {
-        video: {
-            displaySurface: 'monitor', // monitor, window, application, browser
-            logicalSurface: true,
-            cursor: 'always' // never, always, motion
-        }
-    };
-
-    // above constraints are NOT supported YET
-    // that's why overridnig them
-    displaymediastreamconstraints = {
+function captureCamera(callback) {
+    navigator.mediaDevices.getUserMedia({
+        audio: true,
         video: true
-    };
-
-    if (navigator.mediaDevices.getDisplayMedia) {
-        navigator.mediaDevices.getDisplayMedia(displaymediastreamconstraints).then(success).catch(error);
-    } else {
-        navigator.getDisplayMedia(displaymediastreamconstraints).then(success).catch(error);
-    }
-}
-
-function captureScreen(callback) {
-    invokeGetDisplayMedia(function (screen) {
-        addStreamStopListener(screen, function () {
-            // document.getElementById('btn-stop-recording').click();
-            document.getElementById('rec_start').style.display = 'block';
-            document.getElementById('rec_stop').style.display = 'none';
-            recorder.stopRecording(stopRecordingCallback);
-        });
-        callback(screen);
-    }, function (error) {
-        // console.error(error);
-        // alert('Unable to capture your screen. Please check console logs.\n' + error);
-        alertService.error("Unable to record meeting", "Permission Denied");
+    }).then(function (camera) {
+        callback(camera);
+    }).catch(function (error) {
+        alert('Unable to capture your camera. Please check console logs.');
+        console.error(error);
     });
 }
 
 function stopRecordingCallback() {
     screenRecordVideo.src = screenRecordVideo.srcObject = null;
+    screenRecordVideo.muted = false;
+    screenRecordVideo.volume = 1;
     screenRecordVideo.src = URL.createObjectURL(recorder.getBlob());
 
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.setAttribute('href', URL.createObjectURL(recorder.getBlob()));
-    // a.href = screenRecordVideo.src;
-    a.download = 'screenRecordVideo' + roomid + '.webm';
+    a.download = 'Meeting-Rec' + roomid + '(' + new Date().toString().slice(0, 24) + ').webm';
     a.click();
-    // window.URL.revokeObjectURL(url);
     a.remove();
     recorder.screen.stop();
     recorder.destroy();
     recorder = null;
-
-    document.getElementById('btn-start-recording').disabled = false;
 }
-
 var recorder; // globally accessible
 
 document.getElementById('btn-start-recording').onclick = function () {
-    // this.disabled = true;
-    debugger;
-
     if (document.getElementById('rec_start').style.display != 'none') {
-        captureScreen(function (screen) {
-            screenRecordVideo.srcObject = screen;
 
-            recorder = RecordRTC(screen, {
+        captureCamera(function (camera) {
+            screenRecordVideo.muted = true;
+            screenRecordVideo.volume = 0;
+            screenRecordVideo.srcObject = camera;
+
+            recorder = RecordRTC(camera, {
                 type: 'video'
             });
 
             recorder.startRecording();
-
-            // release screen on stopRecording
-            recorder.screen = screen;
-
-            // document.getElementById('btn-stop-recording').disabled = false;
+            recorder.camera = camera;
             document.getElementById('rec_start').style.display = 'none';
             document.getElementById('rec_stop').style.display = 'block';
-
         });
     } else {
         recorder.stopRecording(stopRecordingCallback);
@@ -727,29 +744,3 @@ document.getElementById('btn-start-recording').onclick = function () {
         document.getElementById('rec_stop').style.display = 'none';
     }
 };
-
-// document.getElementById('btn-stop-recording').onclick = function () {
-//     this.disabled = true;
-//     recorder.stopRecording(stopRecordingCallback);
-// };
-
-function addStreamStopListener(stream, callback) {
-    stream.addEventListener('ended', function () {
-        callback();
-        callback = function () {};
-    }, false);
-    stream.addEventListener('inactive', function () {
-        callback();
-        callback = function () {};
-    }, false);
-    stream.getTracks().forEach(function (track) {
-        track.addEventListener('ended', function () {
-            callback();
-            callback = function () {};
-        }, false);
-        track.addEventListener('inactive', function () {
-            callback();
-            callback = function () {};
-        }, false);
-    });
-}

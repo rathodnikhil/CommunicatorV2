@@ -16,14 +16,14 @@
                     </div>
                     <div class="row" style="text-align: center;">
                         <div id="room-urls" style="text-align: center;display: none;">
-                            <button type="button" class="btn btn-responsive" id="copyMeetingLink">
+                            <button type="button" class="btn btn-responsive btn-warning" id="copyMeetingLink">
                                 Copy Meeting Link
                             </button>
-                            <button type="button" class="btn btn-responsive" id="copyGuestMeetingLink">
+                            <button type="button" class="btn btn-responsive btn-warning" id="copyGuestMeetingLink">
                                 Copy Guest Meeting Link
                             </button>
 
-                            <button type="button" class="btn btn-responsive" id="copyMeetingId">
+                            <button type="button" class="btn btn-responsive btn-warning" id="copyMeetingId">
                                 Copy Meeting Id
                             </button>
                         </div>
@@ -37,14 +37,14 @@
                     </div>
                 </div>
                 <div class="row parent">
-                    <div id="file-container" style="width: 100%; overflow-y: scroll;"></div>
+                    <div id="shareScreen-container" style="width: 100%; overflow-y: scroll;"></div>
                 </div>
                 <div>
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
                         <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="top"
-                            ngbTooltip="Exit Meeting">
+                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
                         <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
@@ -59,39 +59,38 @@
                             </div>
                         </app-custom-modal>
                         <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'"
-                            #muteUnmuteBtn placement="top" ngbTooltip="Mute/Unmute" (click)='mute()'>
+                            #muteUnmuteBtn placement="top" data-toggle="tooltip"  title="Mute/Unmute" (click)='mute()'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
-                        <button id="open-room" class="btn pull-left" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
-                            placement="top" ngbTooltip="Start" (click)='isMeetingStarted=!isMeetingStarted'>
+                        <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
+                            placement="top"  (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn pull-left" alt="Start Recording">
-                            <i class="fa fa-2x fa-circle" placement="top" ngbTooltip="start recording" aria-hidden="true"
-                                style="color:#dc3545" id="rec_start"></i>
-                            <i class="fa fa-2x fa-stop" aria-hidden="true" placement="top" ngbTooltip="stop recording"
+                        <button id="btn-start-recording" class="btn pull-left default" alt="Start Recording" style="display:none;"  >
+                            <i class="fa fa-2x fa-circle"  title="Start Recording" data-toggle="tooltip" aria-hidden="true"
+                                 id="rec_start"></i>
+                            <i class="fa fa-2x fa-stop" aria-hidden="true"  title="Stop Recording" data-toggle="tooltip"
                                 style="color:#dc3545;display: none" id="rec_stop"></i>
                         </button>
-                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
-                            placement="top" #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" placement="top"
-                            ngbTooltip="Video on/off">
-                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
-                                class="fa fa-2x fa-ban"></i>
-                        </button>
-
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn default pull-left" style="display:none;" placement="top"
-                            #shareFileBtn (click)="shareFile()" placement="top" ngbTooltip="Share File">
+                        <button id="share-file" class="btn default pull-left" style="display:none;" 
+                            #shareFileBtn (click)="shareFile()" title="Share File" data-toggle="tooltip">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
-                        <button id="share-screen" class="btn pull-left" style="display:none;" placement="top"
+                        <button id="share-screen" class="btn pull-left" style="display:none;"
                             #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'
-                            placement="top" ngbTooltip="Share Screen">
+                             data-toggle="tooltip" title="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
+                        <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
+                         #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" 
+                        title="Video on/off" data-toggle="tooltip">
+                        <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
+                            class="fa fa-2x fa-ban"></i>
+                    </button>
+                        <span id="meeting-error" style="float: right;font-weight: bolder;background-color: yellow;"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <div style="display: none;" id="isHost"></div>
@@ -105,11 +104,11 @@
 
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
-                    <div class="card-header col-md-12">
+                    <div class="card-header col-md-12" style="background: #efefef;">
                         <div class="col-md-8" style="float: left;">
-                            <img src="assets/images/coreflex-logo1.png" class="img-fluid" alt="Responsive image" />
+                            <img src="assets/images/color-logo1.png" class="img-fluid" alt="Responsive image" />
                         </div>
-                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;">
+                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;color:#000;">
                             <h4>
                                 <i class="fa fa-clock-o"></i>&nbsp;
                                 {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
@@ -118,16 +117,18 @@
                     </div>
                     <div class="card-body" style="padding-right:50px;">
                         <div class="icon-bar">
-                            <a href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
+                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
                                     class="fa fa-comments-o"></i></a>
                             <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
-                                title="Minutes Of Meeting"><i class="fa fa-sticky-note-o"></i></a>
-                            <a href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
+                                title="Notes"><i class="fa fa-sticky-note-o"></i></a>
+                            <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
                                 title="Viewers"><i class="fa fa-user-o"></i></a>
-                            <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ"><i class="fa fa-question"></i></a>
+                            <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
+                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared files"><i class="fa fa-file-text-o"></i></a>
+                            <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
                             <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
                         </div>
-                        <ul role="tablist" class="nav nav-tabs justify-content-start">
+                        <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-color: #7d7d7f;color: #fff;">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
                                     Chat
@@ -135,12 +136,17 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
-                                    Minutes of Meeting
+                                    Notes
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
                                     Viewers
+                                </span>
+                            </li>
+                            <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
+                                <span class="nav-link" [ngClass]="{'active': currentTab=='downloadedFiles'}">
+                                   Shared Files 
                                 </span>
                             </li>
                         </ul>
@@ -161,16 +167,20 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center">
 
-                                <textarea placeholder="Type MOM Here..." style="width: 100%; margin: 10px;overflow:auto;resize:none"
+                                <textarea placeholder="Type MOM Here..." style="width: 100%; margin:5%;overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn btn-sec momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Generate
-                                    MOM</button>
+                                <button class="btn btn-primary momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Generate
+                                    Meeting Notes</button>
                             </div>
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
-                            <div class="row content-tab" style="text-align:center">
-                                <ul id="viewersList"></ul>
+                            <div class="row content-tab" >
+                                <div id="viewersList" class="col-md-12"></div>
 
+                            </div>
+                        </div>
+                        <div class="tab-content" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
+                            <div id="file-container" class="row content-tab" style="overflow-y: scroll" >
                             </div>
                         </div>
                     </div>

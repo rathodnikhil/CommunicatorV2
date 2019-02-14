@@ -49,6 +49,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isMeetingStarted = false;
     isScreenSharingStarted = false;
     isVideoEnabled = false;
+    actualMeetingTime: any;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -86,13 +87,13 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 if (this.meetingCode !== '' && this.meetingCode !== undefined) {
                     const payload = {
                         userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode,
-                        email: this.loggedInUser.eamil
+                        email: this.loggedInUser.email
                     };
                     if (!data.isGuest) {
-                        //  payload.userCode = this.loggedInUser.userCode;
+                          // payload.userCode = this.loggedInUser.userCode;
                         this.isGuest = false;
                     } else if (data.isGuest) {
-                        //   payload.userCode = this.loggedInUser.firstName;
+                          // payload.userCode = this.loggedInUser.firstName;
                         this.isGuest = true;
                     }
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
@@ -102,7 +103,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            this.startTimer();
+                           // this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting is already over', 'Meeting Over');
                             }
@@ -113,7 +114,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            this.startTimer();
+                         //   this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting is already over', 'Meeting Over');
                             }
@@ -173,7 +174,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         } else {
             if (!this.isHost) {
                 if (this.isGuest) {
-                    this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendee');
+                    this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendees');
                 } else {
                     const payload = { meetingCode: this.meetingDetails.meetingCode };
                     this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
@@ -199,8 +200,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     downloadFile(data, meetingDetails, attendeeList) {
-        const today = new Date();
-        const momHeader = 'Date of Meeting: ' + meetingDetails.meetingDate + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
+        const meetingDate = new Date();
+        meetingDate.setTime(meetingDetails.meetingStartDateTime);
+        const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
             '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
@@ -208,9 +210,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Meeting Notes : ' + '\r\n\r\n' + data)}`);
         // a.href = url;
-        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+        a.download = 'MOM_' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
@@ -236,6 +238,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     exit() {
+        this.stopTimer();
         this.exitMeetingConfirmModal.close();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         if (this.isGuest) {
@@ -250,23 +253,26 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             }
         });
     }
+    stopTimer() {
+        clearInterval(this.actualMeetingTime);
+    }
     startTimer() {
-        setInterval(() => { this.calculateTimeSpan(); }, 1000);
+         this.actualMeetingTime =  setInterval(() => { this.calculateTimeSpan(); }, 1000);
         setInterval(function () {
         }, 1000);
     }
-    onFinished() {
-        this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
-        this.document.getElementById('btn-end-meeting').click();
-        this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
-        setTimeout(() => {
-            this.router.navigate(['/login']);
-            window.location.reload();
-        }, 180000);
-    }
-    onNotify() {
-        this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
-    }
+    // onFinished() {
+    //     this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
+    //     this.document.getElementById('btn-end-meeting').click();
+    // this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
+    //     setTimeout(() => {
+    //         this.router.navigate(['/login']);
+    //         window.location.reload();
+    //     }, 180000);
+    // }
+    // onNotify() {
+    //     this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
+    // }
     shareFile() {
         this.shareFileBtn.nativeElement.blur();
     }
@@ -283,11 +289,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.viewVideoBtn.nativeElement.blur();
     }
     calculateTimeSpan() {
-        if (this.tick === this.timeLeft) {
-            this.onFinished();
-        } else if (this.tick === (this.timeLeft - 300000)) {
-            this.onNotify();
-        }
+        // if (this.tick === this.timeLeft) {
+        //     this.onFinished();
+        // } else if (this.tick === (this.timeLeft - 300000)) {
+        //     this.onNotify();
+        // }
 
         if (this.second === 59) {
             if (this.minute === 59) {
@@ -301,6 +307,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.second += 1;
         }
         this.tick++;
+    }
+    startMeeting() {
+        this.isMeetingStarted = !this.isMeetingStarted;
+        this.startTimer();
     }
 }
 

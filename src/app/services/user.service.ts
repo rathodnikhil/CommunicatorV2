@@ -78,6 +78,8 @@ export class UserService {
         return this.apiRequest.post(url, payload);
     }
     setSelectedUser(user) {
+        // localStorage.setItem('selectedUser', this.userName);
+        localStorage.setItem('selectedUser', user.firstName + ' ' + user.lastName);
         this.selectedUser$.next(user);
     }
     getSelectedUser() {
@@ -98,7 +100,11 @@ export class UserService {
             // save guest user
             const url = environment.baseUrl + 'saveGuestUserDetails';
             this.http.post(url, payload).subscribe(data => {
-                this.loggedInUserObj$.next(payload);
+                if (data.json().warningFl === true) {
+                    this.loggedInUserObj$.next('invalid');
+                } else {
+                    this.loggedInUserObj$.next(payload);
+                }
                 return this.loggedInUserObj$;
             });
             this.loggedInUserObj$.next(payload);

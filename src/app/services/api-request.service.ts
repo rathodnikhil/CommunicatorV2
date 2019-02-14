@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, Response, Request, RequestOptions, URLSearchParams,RequestMethod ,QueryEncoder} from '@angular/http';
+import { Http, Headers, Response, Request, RequestOptions, URLSearchParams, RequestMethod , QueryEncoder} from '@angular/http';
 import { Router} from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
@@ -158,7 +158,7 @@ export class ApiRequestService {
             });
     }
 
-    delete(url: string): Observable<any>{
+    delete(url: string): Observable<any> {
         const me = this;
         const requestOptions = this.getRequestOptions(RequestMethod.Delete, url);
         return this.http.request(new Request(requestOptions))

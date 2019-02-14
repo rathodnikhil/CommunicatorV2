@@ -31,6 +31,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     meetNowMeeting: any;
     selectedCriteria: any;
     selectedMeeting: any;
+    outLookBody: any;
+    outLookSubject: any;
+    toAttendees: any;
+    ccAttendees: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('goToOutlookBtnField') goToOutlookBtnField: ElementRef;
@@ -63,6 +67,15 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         body: '',
         Button1Content: '<i class="fa fa - trash"></i>&nbsp;Meet Now',
         Button2Content: ''
+    };
+    @ViewChild('meetNowOutlookModal') public meetNowOutlookModal: CustomModalComponent;
+    meetNowOutlookWindow: CustomModalModel = {
+        titleIcon: '<i class="fa fa-calendar-check-o"></i>',
+        title: 'Send Email',
+        smallHeading: 'Add attendees to your meeting here',
+        body: '',
+        Button1Content: '<i class="fa fa-envelope"></i>Send',
+        Button2Content: '<i class="fa fa-copy"></i> Csncel'
     };
     constructor(userService: UserService, meetingService: MeetingService,
         private router: Router, private toastr: ToastrService, public alertService: AlertService) {
@@ -199,18 +212,26 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             }
         });
     }
+    // copyToOutLook(event) {
+    //     const meetingDetails = encodeURIComponent(this.getMeetingDetails());
+    //     const a = document.createElement('a');
+    //     a.href = 'mailto:?subject=' + 'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
+    //     document.body.appendChild(a);
+    //     a.click();
+    //     document.body.removeChild(a);
+    //     this.goToOutlookBtnField.nativeElement.blur();
+    // }
     copyToOutLook(event) {
-        const meetingDetails = encodeURIComponent(this.getMeetingDetails());
-        const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + 'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        this.goToOutlookBtnField.nativeElement.blur();
+        this.meetNowOutlookModal.open();
+        const newLine = '\r\n\r\n';
+       this.outLookBody = this.getMeetingDetails(newLine);
+       this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+        this.closePopup('meetNow');
     }
     // copy meeting content
     copyToClipboard() {
-        const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails();
+        const newLine = '\r\n\r\n';
+        const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails(newLine);
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
@@ -252,18 +273,44 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
-
-
+    sendEmail(e) {
+        if ( this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
+            return this.alertService.warning('Please enter attendee email id', 'Warning');
+        } else {
+            const newLine = '<br>';
+            const outLookBodyJson  = this.getMeetingDetails(newLine);
+        const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
+            meetingDetailsBody: outLookBodyJson , meeting: this.meetNowMeeting};
+            this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                    this.meetNowOutlookModal.close();
+                    this.clearOutlookField();
+                    return this.alertService.success('Meeting Invitation has sent successfully', 'Meeting Invitation');
+                }
+        });
+    }
+}
+clearOutlookField() {
+    this.toAttendees = '';
+    this.ccAttendees = '';
+    this.outLookBody = '';
+}
+closeoutMaliPopup() {
+    this.meetNowOutlookModal.close();
+   this.clearOutlookField();
+}
     // get meeting details
-    getMeetingDetails(): string {
+    getMeetingDetails(newLine): string {
         let meetingUrl = '';
         meetingUrl = 'https://cfscommunicator.com/#/meeting/?meetingCode=';
-
-        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer , tablet or smartphone \r\n\r\n for  '
-            + this.meetNowMeeting.duration + '\r\n\r\n'
-            + meetingUrl + this.meetNowMeeting.meetingCode +
-            '\r\n\r\n' + '\r\n\r\n Meeting Id :  ' + this.meetNowMeeting.meetingCode;
+        const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.GetFormattedDate() + newLine +
+            ' Please join my meeting from your computer , tablet or smartphone ' + newLine + ' for  '
+            + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
+            + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below url :  ' + guestMeetingUrl +
+            this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
     }
     GetFormattedDate(): String {
