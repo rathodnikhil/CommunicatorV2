@@ -1,114 +1,84 @@
 @import "styles/customStyle.css";
 
-
-.main{
-     margin-top:2%;
-    margin-bottom: 20px;   
-    padding-top:0px; 
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    border: 1px solid #C0C0C0;
-    box-shadow: 10px 10px 10px 10px #c9cacc;
-    background: #fff;
-}
-.profile-img-background
-{
-   
-    background-image: linear-gradient(to right top, #d6d9db, #c5ccd1, #b4bec7, #a4b1bd, #94a4b3);
-    margin-left: 0px;
-    margin-right: 0px;
-}
-.profile-headings
-{
-   
-    background-image: linear-gradient(to right top, #4b9fd7, #4598cf, #3f91c8, #388ac0, #3283b9);
-    padding: 10px; 
-    color: #ffff; 
-    font-weight:bold; 
+#leftPanel{
+    background-color:rgb(252, 223, 223);
+    color:#464646;
     text-align: center;
-}
-.profile-headings-icon
-{
-    margin-right:10px;
-    font-size: 16px;
-    color: #ffff; 
-}
-.profile-img-edit-icon
-{
-    margin-left: -35px;
-    color:#fff;
-    font-size: 24px;
-}
-.edit-circle-icon-background {
-    color: #2e8b57;
-    margin-left: -35px;
-}
-// icon {
-//     color: green;
-//     font-size: 28px;
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(290%, -20%);
-//     -ms-transform: translate(-50%, -50%);
-//     text-align: center;
-//     }
-    
-//     .icon:hover{
-//     color:green;
-//     }
-@media screen and (min-width: 300px) and (max-width: 799px) {
-    .profile-img-edit-icon
-    {
-        color:#fff;
-        text-align: center;
-    }
-    .edit-circle-icon-background {
-        color: #2e8b57;
-        text-align: center;
-    }
+    border: 1px solid #db9ba1; 
+    border-right: none; 
 }
 
-.margin-top-20
-{
-    margin-top: 20px;
-}
-.margin-top-5
-{
-    margin-top: 5px;
-}
-.margin-bottom-5
-{
-    margin-bottom: 5px;
-}
-.width-100
-{
-    width: 100%;
-}
-.profile-details-footer
-{
-    text-align:center;
-    padding:20px;
-    background: #e7e3d4;
-    border-top:1px solid #C0C0C0;
+#rightPanel{
+    min-height:415px;
+    border: 1px solid #db9ba1; 
+    border-left: none; 
+    padding: 8px; 
+    // background-color: #e0e0e0;
 }
 
-.profile-img{
-    width:170px; height: 170px;margin: 10px;
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
-.profile-firstname-lastname
-{
-    font-size: 2.1vh;
-    color:#000000;
+
+.header{
+    position:absolute; 
+    top:0px; left:0px; 
+    height:90px; 
+    right:0px;
+    padding-top: 20px;
+    color: white;
+    overflow:hidden;
+    text-align: center;
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
 }
-.profile-team-name
-{
-    font-size:1.7vh;
-    color:#000000;
+
+.body-container{
+    position:absolute; 
+    top:100px; 
+    bottom:100px; 
+    left:0px; 
+    right:0px; 
+    overflow:auto;
 }
+
+.footer{
+    position:absolute; 
+    bottom:0px; 
+    height:100px; 
+    left:0px; 
+    right:0px; 
+    overflow:hidden;
+}
+
+.main-container{
+    width: 100%; 
+    height:100%;
+}
+
 .note{
     color: orangered;
     margin: 10px;
     text-align: left;
+}
+
+.profile-img{
+    width: 200px; 
+    height: 200px;
+    padding: 10px;
+}
+
+.padding-top-20{
+    padding-top: 20px;
+}
+
+.margin-left-30{
+    margin-left: 30px;
 }
