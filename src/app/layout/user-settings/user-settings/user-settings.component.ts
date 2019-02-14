@@ -14,11 +14,11 @@ export class UserSettingsComponent implements OnInit {
   userSettings: any;
   user: any;
 
-  public filter: string = '';
-  public maxSize: number = 7;
-  public directionLinks: boolean = true;
-  public autoHide: boolean = false;
-  public responsive: boolean = false;
+  public filter: String = '';
+  public maxSize: Number = 7;
+  public directionLinks: Boolean = true;
+  public autoHide: Boolean = false;
+  public responsive: Boolean = false;
   public config: PaginationInstance = {
       id: 'meetingCode',
       itemsPerPage: 10,

@@ -3,10 +3,21 @@
         <div class="card card-default" style="overflow: auto;">
             <div style="text-align: center;width:100%;height:100%;">
                 <div class="background"> <img class="header-img" src="assets\images\C_4_white.png"></div>
-                <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b></h3>
-                <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath" class="image--cover  responsive1" />
+                <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
+                </h3>
+                <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath"
+                        class="image--cover  responsive1" />
                     <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
-                        src="assets/images/Coreflex-solutions-chat-screen-option1 (2).png" class="responsive1" /></p>
+                    src="assets/images/Coreflex-solutions-chat-screen-option1 (2).png" class="rounded-circle responsive1" /></p>
+                <span class="fa-stack fa-2x edit-icon">
+                    <i class="fa fa-circle fa-stack-2x edit-circle-icon-background"></i>
+                    <a [routerLink]="['/myProfile']">
+                        <i class="fa fa-pencil fa-stack-1x profile-img-edit-icon"></i>
+                    </a>
+                </span>
+
+                <!-- <a [routerLink]="['/myProfile']"><i class="fa fa-pencil-square-o" style="color: green; font-size: 1.7vh;" aria-hidden="true">
+                                    Edit profile pic</i></a> -->
 
                 <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>
                 <h5 class="label-h6 ">Click on a member's name
@@ -15,7 +26,8 @@
                 <div class="footer">
                     <div class="card mx-auto">
                         <div class="card bg-light text-dark">
-                            <img class="card-img setlogo" src="assets\images\coreflex-logo.png" style="height:60px;width:200px; ">
+                            <img class="card-img setlogo" src="assets\images\coreflex-logo.png"
+                                style="height:60px;width:200px; ">
                             <!-- <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4> -->
                             <p class="describe text-center"><strong>"</strong>Communicator is an online meeting,
                                 desktop
