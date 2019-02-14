@@ -23,6 +23,7 @@ export class MyProfileComponent implements OnInit {
     currentEmail: any;
     currentProfileImg: any;
     selectedProfilePictureName: any;
+    fileSize: number;
     constructor( private router: Router, userService: UserService, meetingService: MeetingService,
         groupService: GroupService, public alertService: AlertService) {
         this._userService = userService;
@@ -53,6 +54,7 @@ export class MyProfileComponent implements OnInit {
         });
     }
     updateProfile() {
+        // console.log('UPDATE_FILE_Size : ' + this.fileSize);
         if (this.loggedInUserObj.firstName === null ||
             typeof this.loggedInUserObj.firstName === 'undefined' || this.loggedInUserObj.firstName.trim() === '' ) {
             return this.alertService.warning('Please enter first name', 'Warning');
@@ -62,6 +64,8 @@ export class MyProfileComponent implements OnInit {
         } else if ( this.loggedInUserObj.email === null ||
             typeof this.loggedInUserObj.email === 'undefined' || this.loggedInUserObj.email.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
+        } else if ( this.fileSize >= 700 ) {
+            return this.alertService.warning('File not supported, please select image below 700KB.', 'Warning');
         } else {
             const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
             if (!EMAIL_REGEXP.test(this.loggedInUserObj.email)) {
@@ -96,6 +100,8 @@ export class MyProfileComponent implements OnInit {
         const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
         const pattern = /image-*/;
         const reader = new FileReader();
+        // console.log('FILE_DETAILS : ' + Math.round(file.size / 1024));
+        this.fileSize = Math.round(file.size / 1024);
         if (!file.type.match(pattern)) {
             this.loggedInUserObj.profileImgPath = '';
        return  this.alertService.warning('Invalid Image format', 'Image Format');
