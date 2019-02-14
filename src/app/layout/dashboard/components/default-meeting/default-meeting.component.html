@@ -30,11 +30,12 @@
                         </h5>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)" #goToOutlookBtnField>Go
+                        <button type="button" class="btn btn-sec btn-border-radius" (click)="copyToOutLook($event)" #goToOutlookBtnField>Go
                             to Outlook</button>
-                        <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
-                        <button type="button" class="btn btn-secondary  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start
+                        <button type="button" class="btn btn-sec btn-border-radius" (click)="copyToClipboard()">Copy</button>
+                        <button type="button" class="btn btn-sec  btn-border-radius" (click)="startMeeting(meetNowMeeting,true)">Start
                             Meeting</button>
+                            <button type="button" class="btn btn-danger" (click)="closePopup(meetNow)">Close</button>
                     </div>
 
                 </app-custom-modal>

@@ -212,7 +212,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Meeting Notes : ' + '\r\n\r\n' + data)}`);
         // a.href = url;
-        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + meetingDate.toString().slice(0, 24) + ').txt';
+        a.download = 'MOM_' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
