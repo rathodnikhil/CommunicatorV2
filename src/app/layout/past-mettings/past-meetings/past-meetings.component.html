@@ -36,12 +36,13 @@
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
             <td>
-                <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)" style="cursor: pointer; color: #546e7a;"></i>
+                <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)" style="cursor: pointer; color: brown;"></i>   
+                <!-- 546e7a -->
             </td>
             <td>{{meeting.status.status}}</td>
             <td>
+                <!-- <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i> -->
                 <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i>
-                <!-- <i (click)="downloadMom(meeting)" class="fa fa-download download-file"></i> -->
             </td>
         </tr>
     </table>
