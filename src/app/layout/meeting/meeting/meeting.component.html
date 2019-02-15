@@ -35,6 +35,7 @@
                         (snapAnimationFinished)="onSnapAnimationFinished()" #videos_container id="videos_container">
                         <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
                     </div>
+                   <!-- <p  id="muteIcon"> </p>  -->
                 </div>
                 <div class="row parent">
                     <div id="shareScreen-container" style="width: 100%; overflow-y: scroll;"></div>
@@ -131,7 +132,7 @@
                         <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-color: #7d7d7f;color: #fff;">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
-                                    Chat
+                                    Chat<span id="messageCount" class="step"></span>
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
@@ -141,7 +142,7 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
-                                    Viewers
+                                    Viewers<span id="viewerCount" class="step"></span>
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
@@ -173,13 +174,13 @@
                                     Meeting Notes</button>
                             </div>
                         </div>
-                        <div class="tab-content" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
+                        <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
                             <div class="row content-tab" >
                                 <div id="viewersList" class="col-md-12"></div>
 
                             </div>
                         </div>
-                        <div class="tab-content" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
+                        <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
                             <div id="file-container" class="row content-tab" style="overflow-y: scroll" >
                             </div>
                         </div>

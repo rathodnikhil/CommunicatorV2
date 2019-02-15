@@ -103,9 +103,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                           // this.startTimer();
+                            if (this.isHost === false && this.isGuest === true) {
+                                this.startTimer();
+                            }
                             if ((duration - delta) < 0) {
-                                this.alertService.error('Meeting is already over', 'Meeting Over');
+                                this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
                             }
                             this.isHost = true;
                             this.document.getElementById('isHost').innerHTML = 'true';
@@ -114,9 +116,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                         //   this.startTimer();
+                            if (this.isHost === false || this.isGuest === true) {
+                                this.startTimer();
+                            }
                             if ((duration - delta) < 0) {
-                                this.alertService.error('Meeting is already over', 'Meeting Over');
+                                this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
                             }
                             this.isHost = false;
                             this.document.getElementById('isHost').innerHTML = 'false';
@@ -212,7 +216,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Meeting Notes : ' + '\r\n\r\n' + data)}`);
         // a.href = url;
-        a.download = 'MOM_' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
+        a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element

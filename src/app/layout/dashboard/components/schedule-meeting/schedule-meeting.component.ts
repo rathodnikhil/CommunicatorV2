@@ -274,12 +274,16 @@ export class ScheduleMeetingComponent implements OnInit {
 
     // get meeting details
     getMeetingDetails(newLine): string {
+           const hours = parseInt(this.meeting.meridianTime.hour , 10) < 10 ? '0' + parseInt(this.meeting.meridianTime.hour , 10) : ''
+             + parseInt(this.meeting.meridianTime.hour , 10);
+             const minutes = parseInt(this.meeting.meridianTime.minute , 10) < 10 ? '0' + parseInt(this.meeting.meridianTime.minute , 10) :
+              '' + parseInt(this.meeting.meridianTime.minute , 10);
             const meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
             const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
          this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
-            this.meeting.meridianTime.hour + ':' + this.meeting.meridianTime.minute + '  (' + this.meeting.selectedTimeZone + ')   for  '
+           hours + ':' + minutes + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + newLine +
             newLine + ' Please join my meeting from your computer ' + newLine + 'Register user use below url : ' + newLine
              + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + guestMeetingUrl + + this.accessCode
