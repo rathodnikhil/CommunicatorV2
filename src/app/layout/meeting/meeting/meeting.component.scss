@@ -284,17 +284,13 @@ div.scrollmenu a:hover {
 
 .icon-bar {
     position: fixed;
-    top: 80px;
+    top: 100px;
     right: 0px;
     height: 100%;
     background: rgb(50, 131, 185);
-    /* Old browsers */
     background: -moz-linear-gradient(top, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
-    /* FF3.6-15 */
     background: -webkit-linear-gradient(top, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
-    /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3283b9', endColorstr='#0b72b7', GradientType=0)
 }
 
@@ -315,3 +311,22 @@ div.scrollmenu a:hover {
 .selected {
     background-color: #be2419;
 }
+.tab-content-srcoll{
+    overflow-y: scroll;
+    height: 100%;
+    padding: 8px;
+}
+span.step {
+    background: #a201ff;
+    border-radius: 0.8em;
+    -moz-border-radius: 0.8em;
+    -webkit-border-radius: 0.8em;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.6em;
+    margin-right: 5px;
+    text-align: center;
+    width: 1.6em; 
+    margin-left: 6px;
+  }

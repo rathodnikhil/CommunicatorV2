@@ -283,9 +283,13 @@ function appendDIV(event) {
         div.className = 'chat-background-invitee';
         html += '<span class="time-left">';
     }
-
+    var messageCounter = document.getElementById('messageCount').innerHTML;
+    messageCounter++;
+    var messageCounterEl = document.getElementById('messageCount');
+    messageCounterEl.innerHTML = messageCounter;
     html += '<i class="fa fa-user"></i>&nbsp;' + firstNameUpperCase + ' ' + formatDate(new Date()) + '</span>'
     div.innerHTML = html;
+
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 
@@ -398,6 +402,7 @@ connection.onstream = function (event) {
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
     var viewerNameString = null;
+    var viewerCounter = 0;
     var attendeeFullNameArray = setAttendeeName(attendeeFullName);
     if (attendeeFullNameArray.length < 3) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
@@ -431,9 +436,19 @@ connection.onstream = function (event) {
         } else{
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
         }
+        // var muteIconDiv = document.getElementById('muteIcon');
+        // muteIconDiv.innerHTML = '<i class="fa fa-microphone-slash"  ></i>';
+        // muteIconDiv.setAttribute('style','bottom:0; float:right');
+        // initialsDiv.appendChild(muteIconDiv);
         customDiv.appendChild(initialsDiv);
     }
-
+    var viewerCounter = document.getElementById('viewerCount').innerHTML;
+    if(typeof viewerCounter === undefined){
+        viewerCounter = 0;
+    }
+    viewerCounter++;
+    var vCounterEl = document.getElementById('viewerCount');
+    vCounterEl.innerHTML = viewerCounter
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');
     customDiv.setAttribute("id", event.streamid + 'parent');
@@ -474,7 +489,7 @@ connection.onmute = function (event) {
         // connection.streamEvents[event.streamid].stream.mute();
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
-        // mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
+        //mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
     }
 };
 connection.onstreamended = function (event) {
