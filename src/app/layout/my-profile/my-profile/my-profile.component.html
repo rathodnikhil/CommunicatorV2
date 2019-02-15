@@ -13,11 +13,14 @@
                         <div class="col-md-12">
                             <div class="padding-top-20">
                                 <div>
-                                    <img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath"
-                                        alt="Responsive image" class="rounded-circle profile-img img-fluid" />
-                                    <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
-                                        src="assets/images/default-profile.jpg" alt="Responsive image"
-                                        class="rounded-circle profile-img img-fluid" />
+                                    <a (click)="file.click()">
+                                        <img *ngIf='loggedInUserObj.profileImgPath'
+                                            [src]="loggedInUserObj.profileImgPath" alt="Responsive image"
+                                            class="rounded-circle profile-img img-fluid" />
+                                        <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
+                                            src="assets/images/default-profile.jpg" alt="Responsive image"
+                                            class="rounded-circle profile-img img-fluid" />
+                                    </a>
                                 </div>
                                 <div class="btn-group">
                                     <a (click)="file.click()">
@@ -44,7 +47,7 @@
                             <form role="form">
                                 <h2>Personal Details</h2>
                                 <hr class="colorgraph">
-                                <!-- <hr/> -->
+                            
                                 <label class="note">To view updated changes relogin to your account</label>
                                 <div class="row margin-left-30">
                                     <div class="col-xs-12 col-sm-5 col-md-5">
@@ -96,8 +99,8 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <label style="overflow-wrap: break-word; color: black;">
-                                                {{loggedInUserObj.name}}</label>
+                                            <b style="overflow-wrap: break-word; color: black;">
+                                                {{loggedInUserObj.name}}</b>
                                         </div>
                                     </div>
                                 </div>
@@ -110,15 +113,15 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <label style="overflow-wrap: break-word; color: black;">
-                                                {{loggedInUserObj.team.teamName}}</label>
+                                            <b style="overflow-wrap: break-word; color: black;">
+                                                {{loggedInUserObj.team.teamName}}</b>
                                         </div>
                                     </div>
                                 </div>
 
                                 <h2 class="padding-top-20">Other Details</h2>
                                 <hr class="colorgraph">
-                                <!-- <hr/> -->
+                                
                                 <div class="row margin-left-30">
                                     <div class="col-xs-12 col-sm-5 col-md-5">
                                         <div class="form-group">
@@ -127,8 +130,8 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <label style="overflow-wrap: break-word; color: black;">
-                                                {{profileOtherDetails.meetingCount}}</label>
+                                            <b style="overflow-wrap: break-word; color: black;">
+                                                {{profileOtherDetails.meetingCount}}</b>
                                         </div>
                                     </div>
                                 </div>
@@ -141,18 +144,15 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <label style="overflow-wrap: break-word; color: black;">
-                                                {{profileOtherDetails.groupCount}}</label>
+                                            <b style="overflow-wrap: break-word; color: black;">
+                                                {{profileOtherDetails.groupCount}}</b>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-6 padding-top-20">
-                                        <a href="#" class="btn btn-success btn-block btn-lg"
-                                            (click)="updateProfile()">Save</a></div>
-                                    <div class="col-xs-12 col-md-6 padding-top-20"> <a
-                                            class="btn btn-danger btn-block btn-lg" (click)="cancelUpdate()"
-                                            style="color: #ffff;">Cancel</a></div>
+                                <div style="text-align: center;">
+                                    <button class="btn btn-primary" (click)="updateProfile()">Save</button>
+                                    <button class="btn btn-danger" (click)="cancelUpdate()"
+                                        style="color: #ffff;">Cancel</button>
                                 </div>
                             </form>
                         </div>

@@ -34,7 +34,7 @@
                                 <h2>Setting Details</h2>
                                 <hr class="colorgraph">
 
-                                <div class="row margin-left-30">
+                                <div class="row">
                                     <div class="col-xs-12 col-sm-5 col-md-5">
                                         <div class="form-group">
                                             <label>Chat Notification</label>
@@ -48,7 +48,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row margin-left-30">
+                                <div class="row">
                                     <div class="col-xs-12 col-sm-5 col-md-5">
                                         <div class="form-group">
                                             <label>Meeting Reminders</label>
@@ -63,15 +63,10 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-6 padding-top-20">
-                                        <a href="#" class="btn btn-success btn-block btn-lg"
-                                            (click)="saveUserSetting()">Save Changes</a>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6 padding-top-20">
-                                        <a class="btn btn-danger btn-block btn-lg"
+                                <div style="text-align: center;">
+                                        <button class="btn btn-primary" (click)="saveUserSetting()">Save</button>
+                                        <a class="btn btn-danger"
                                             [routerLink]="['/dashboard/default']">Cancel</a>
-                                    </div>
                                 </div>
                             </form>
                         </div>

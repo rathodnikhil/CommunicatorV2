@@ -7,9 +7,12 @@
                 <h6 class="style-links">{{currentDate | date:'fullDate'}}</h6>
             </div>
             <div class="col-md-4">
-                <button class="btn btn-cancel pull-right" type="button" (click)="switchRoute()">
+                <!-- <button class="btn btn-cancel pull-right" type="button" (click)="switchRoute()">
                    X
-                </button>
+                </button> -->
+                <!-- <button class="btn pull-right" (click)="switchRoute()"><i class="fa fa-close"></i> </button> -->
+                <button class="btn btn-danger pull-right" (click)="switchRoute()"><i class="fa fa-window-close" aria-hidden="true"></i> </button>
+                
             </div>
         </div>
     </div>
@@ -107,12 +110,12 @@
                                 </h5>
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
-                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
+                                <button type="button" class="btn btn-sec btn-border-radius" (click)="copyToOutLook($event)">Go to Outlook</button>
+                                <button type="button" class="btn btn-sec btn-border-radius" (click)="copyToClipboard()">Copy</button>
                                 <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
                             </div>
-
                         </app-custom-modal>
+
                         <app-custom-modal #outlookModal [model]="scheduleOutlookWindow" (CancelEvent)="clearAllMeetingField()">
                             <div class="outlook-email-background">
                                 <div class="form-group row">
