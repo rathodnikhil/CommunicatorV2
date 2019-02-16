@@ -105,7 +105,7 @@ export class MeetingService {
         });
     }
     sendMeetingInvitationMail(payload) {
-        const url = environment.baseUrl + 'sendMeetingInvitationMail?' + payload;
+        const url = environment.baseUrl + 'sendMeetingInvitationMail';
         return this.apiRequest.post(url, payload).map((resp: any) => {
             return resp;
         });

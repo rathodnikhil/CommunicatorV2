@@ -127,7 +127,7 @@ DetectRTC.load(function () {
                     video.style.display = 'none';
                     video.style.opacity = 0;
                     (document.body || document.documentElement).appendChild(vide);
-                } catch (e) {}
+                } catch (e) { }
 
                 reloadDetectRTC(function () {
                     // release camera
@@ -142,7 +142,7 @@ DetectRTC.load(function () {
             }).catch(reloadDetectRTC);
             return;
         }
-    } catch (e) {}
+    } catch (e) { }
 
     onDetectRTCLoaded();
 });
@@ -163,8 +163,8 @@ document.getElementById('disable-video').onclick = function () {
     }, 6000);
     var videoValue = this.value == "true";
     if (connection.streamEvents.selectFirst({
-            local: true
-        }) != undefined) {
+        local: true
+    }) != undefined) {
         connection.streamEvents.selectFirst({
             local: true
         }).stream.stop();
@@ -258,7 +258,9 @@ function formatDate(date) {
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ':' +seconds+ ' ' + ampm;
+    hours = hours < 10 ? '0' + hours : hours;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    var strTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
     // return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
     return strTime;
 }
@@ -271,10 +273,10 @@ function appendDIV(event) {
     html = '<p>' + message + '</p>';
     var senderNameArray = setAttendeeName(user);
     if (senderNameArray.length < 3) {
-        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1);
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
     } else {
-        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase()+senderNameArray[0].slice(1) + ' '
-        +senderNameArray[2].charAt(0).toUpperCase()+senderNameArray[2].slice(1);
+        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
+            + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
     }
     if (firstNameUpperCase === 'You') {
         div.className = 'chat-background';
@@ -405,18 +407,16 @@ connection.onstream = function (event) {
     var viewerCounter = 0;
     var attendeeFullNameArray = setAttendeeName(attendeeFullName);
     if (attendeeFullNameArray.length < 3) {
-        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1);
-        heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
-        viewerNameString = '<p>' + firstNameUpperCase  + '</p>';
+        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
     } else {
-        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase()+attendeeFullNameArray[0].slice(1) + ' ' 
-        +attendeeFullNameArray[2].charAt(0).toUpperCase()+attendeeFullNameArray[2].slice(1);
-        heading.innerHTML = event.type === 'local' ? 'You' : firstNameUpperCase;
-        viewerNameString =  '<p>' + firstNameUpperCase  + '</p>';
+        var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
+            + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
     }
-    if(heading.innerHTML ===  "You"){
+    heading.innerHTML = '<span style="font-size: large; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-2x fa-microphone-slash pull-right" style="display:none;"></i>';
+    viewerNameString = '<p>' + firstNameUpperCase + '</p>';
+    if (event.type === 'local') {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
-    }else{
+    } else {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
     }
     customDiv.appendChild(heading);
@@ -431,24 +431,18 @@ connection.onstream = function (event) {
         }
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
-        if(initialsDiv.innerHTML === "You"){
+        if (initialsDiv.innerHTML === "You") {
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#FDFAE8;border:1px solid #bc151b;color:#bc151b;margin-top: 30px;font-size: 4.0vw;');
-        } else{
+        } else {
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
         }
-        // var muteIconDiv = document.getElementById('muteIcon');
-        // muteIconDiv.innerHTML = '<i class="fa fa-microphone-slash"  ></i>';
-        // muteIconDiv.setAttribute('style','bottom:0; float:right');
-        // initialsDiv.appendChild(muteIconDiv);
         customDiv.appendChild(initialsDiv);
     }
     var viewerCounter = document.getElementById('viewerCount').innerHTML;
-    if(typeof viewerCounter === undefined){
+    if (typeof viewerCounter === undefined) {
         viewerCounter = 0;
     }
-    viewerCounter++;
-    var vCounterEl = document.getElementById('viewerCount');
-    vCounterEl.innerHTML = viewerCounter
+
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');
     customDiv.setAttribute("id", event.streamid + 'parent');
@@ -459,7 +453,7 @@ connection.onstream = function (event) {
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
-                var viewer = displayViewerList(viewer, event, viewerNameString,1);
+                var viewer = displayViewerList(event, viewerNameString, 1);
                 viewerListDiv.appendChild(viewer);
             }
         }
@@ -467,8 +461,11 @@ connection.onstream = function (event) {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
             if (event.type !== 'local') {
-                var viewer = displayViewerList(viewer, event, viewerNameString,0);
+                var viewer = displayViewerList(event, viewerNameString, 0);
                 viewerListDiv.appendChild(viewer);
+                viewerCounter++;
+                var vCounterEl = document.getElementById('viewerCount');
+                vCounterEl.innerHTML = viewerCounter
             }
         }
     }
@@ -484,18 +481,39 @@ connection.onMediaError = function (event) {
 
 }
 connection.onmute = function (event) {
-    // document.getElementById(event.streamid).muted=true;
     if (event.type !== "local") {
-        // connection.streamEvents[event.streamid].stream.mute();
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
-        //mediaElement.setAttribute('poster', '//www.webrtc-experiment.com/images/muted.png');
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;");
+    }
+};
+connection.onunmute = function (event) {
+    if (event.type !== "local") {
+        var mediaElement = document.getElementById(event.streamid)
+        mediaElement.muted = false;
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:none;");
     }
 };
 connection.onstreamended = function (event) {
     var mediaElement = document.getElementById(event.streamid + 'parent');
     if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
+    }
+    if (event.type !== 'local') {
+        var attendeeFullName = event.extra;
+        var viewerNameString = null;
+        var attendeeFullNameArray = setAttendeeName(attendeeFullName);
+        if (attendeeFullNameArray.length < 3) {
+            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
+        } else {
+            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
+                + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
+        }
+        viewerNameString = '<p>' + firstNameUpperCase + '</p>';
+        var viewer =null;
+        if (event.stream.isScreen) {viewer = displayViewerList(event, viewerNameString, 3); }
+        else { viewer = displayViewerList(event, viewerNameString, 2); }
+        viewerListDiv.appendChild(viewer);
     }
 };
 connection.onleave = function (event) {
@@ -559,22 +577,38 @@ connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
 
-function displayViewerList(viewer, event, viewerNameString,sharedScreenFlag) {
-    var viewer = document.createElement('div');
+function displayViewerList(event, viewerNameString, sharedScreenFlag) {
+    var viewer = null;
+    if (document.getElementById(event.userid + 'viewer') == undefined && document.getElementById(event.userid + 'viewer') == null) {
+        viewer = document.createElement('div');
+    }
+    else {
+        viewer = document.getElementById(event.userid + 'viewer');
+    }
     viewer.id = event.userid + 'viewer';
     html = viewerNameString;
     viewer.className = 'chat-background-invitee';
     html += '<span class="time-left">';
-    if(sharedScreenFlag === 1){
-        html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
-    }else{
-        if (event.stream.isVideo === false) {
-            html += '<i class="fa fa-microphone"></i>&nbsp;' + ' Joined meeting on audio mode</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
-        }
-        else {
-            html += '<i class="fa fa-video-camera"></i>&nbsp;' + ' Joined meeting on video mode</span><span style="color: #7d7d7f">' + new Date().toString().slice(0, 24) +'</span>';
-        }
+    switch (sharedScreenFlag) {
+        case 1:
+            html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            break;
+        case 2:
+            html += '<i class="fa fa-sign-out"></i>&nbsp;' + ' Left the meeting</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            break;
+        case 3:
+            html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Stopped shared screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            break;
+        default:
+            if (event.stream.isVideo === false) {
+                html += '<i class="fa fa-microphone"></i>&nbsp;' + ' Joined meeting on audio mode</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            }
+            else {
+                html += '<i class="fa fa-video-camera"></i>&nbsp;' + ' Joined meeting on video mode</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            }
+            break;
     }
+   
     viewer.innerHTML = html;
     document.getElementById('viewerAnchor').click();
     return viewer;
@@ -589,7 +623,7 @@ function setAttendeeName(attendeeFullName) {
             attendeeFullNameArray.push(" ");
         }
     }
-    return  attendeeFullNameArray ;
+    return attendeeFullNameArray;
 }
 
 function disableInputButtons() {
@@ -686,47 +720,26 @@ if (roomid && roomid.length) {
     })();
 }
 
-window.onhashchange = function () {
-    connection.leave();
-    connection.attachStreams.forEach(function (stream) {
-        stream.stop();
-    });
-    //remove parent
-    connection.streamEvents.selectAll().forEach(function (streamEvent) {
-        var mediaElement = document.getElementById(event.streamid + 'parent');
-        if (mediaElement) {
-            streamEvent.stream.stop();
-            mediaElement.parentNode.removeChild(mediaElement);
-        }
-    });
-}
 
 /** Record screen functionality */
 var screenRecordVideo = document.getElementById('screenRecordVideo');
 document.getElementById('screenRecordVideo').style.display = 'none';
 
-function captureCamera(callback) {
-    navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true
-    }).then(function (camera) {
-        callback(camera);
-    }).catch(function (error) {
-        alert('Unable to capture your camera. Please check console logs.');
-        console.error(error);
-    });
+
+if (typeof RecordRTC_Extension === 'undefined') {
+    alert('RecordRTC chrome extension is either disabled or not installed.');
 }
 
-function stopRecordingCallback() {
+function stopRecordingCallback(blob) {
     screenRecordVideo.src = screenRecordVideo.srcObject = null;
     screenRecordVideo.muted = false;
     screenRecordVideo.volume = 1;
-    screenRecordVideo.src = URL.createObjectURL(recorder.getBlob());
+    screenRecordVideo.src = URL.createObjectURL(blob);;
 
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
-    a.setAttribute('href', URL.createObjectURL(recorder.getBlob()));
+    a.setAttribute('href', URL.createObjectURL(blob));
     a.download = 'Meeting-Rec-' + roomid + '(' + new Date().toString().slice(0, 24) + ').webm';
     a.click();
     a.remove();
@@ -734,25 +747,20 @@ function stopRecordingCallback() {
     recorder.destroy();
     recorder = null;
 }
-var recorder; // globally accessible
+var recorder = new RecordRTC_Extension(); // globally accessible
 
 document.getElementById('btn-start-recording').onclick = function () {
     if (document.getElementById('rec_start').style.display != 'none') {
 
-        captureCamera(function (camera) {
-            screenRecordVideo.muted = true;
-            screenRecordVideo.volume = 0;
-            screenRecordVideo.srcObject = camera;
+        var options = recorder.getSupoortedFormats()[3];
 
-            recorder = RecordRTC(camera, {
-                type: 'video'
-            });
-
-            recorder.startRecording();
-            recorder.camera = camera;
+        // second step
+        recorder.startRecording(options, function () {
+            // document.getElementById('btn-stop-recording').disabled = false;
             document.getElementById('rec_start').style.display = 'none';
             document.getElementById('rec_stop').style.display = 'block';
         });
+
     } else {
         recorder.stopRecording(stopRecordingCallback);
         document.getElementById('rec_start').style.display = 'block';

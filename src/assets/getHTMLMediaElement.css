@@ -192,6 +192,7 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 15px;
     margin: 10px 10px;
     color : #000;
+    width:100%;
 }
 
 .time-left {

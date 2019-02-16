@@ -107,13 +107,14 @@ export class UserService {
                 }
                 return this.loggedInUserObj$;
             });
-            this.loggedInUserObj$.next(payload);
-            return this.loggedInUserObj$;
+            // this.loggedInUserObj$.next(payload);
+            // return this.loggedInUserObj$;
         } else {
             const url = environment.baseUrl + 'loggedInUser?userName=' + payload.userName;
             this.apiRequest.post(url, payload).subscribe(data => {
                 this.loggedInUserObj$.next(data);
                 localStorage.setItem('loggedInuserName', data.firstName + ' ' + data.lastName);
+                return this.loggedInUserObj$;
             });
         }
         return this.loggedInUserObj$;
