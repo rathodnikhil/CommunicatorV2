@@ -165,9 +165,11 @@ document.getElementById('disable-video').onclick = function () {
     if (connection.streamEvents.selectFirst({
         local: true
     }) != undefined) {
-        connection.streamEvents.selectFirst({
+        connection.streamEvents.selectAll({
             local: true
-        }).stream.stop();
+        }).forEach(streamElement => {
+            streamElement.stream.stop();
+        });
     }
     connection.session = {
         audio: true,
@@ -374,7 +376,10 @@ connection.onstream = function (event) {
     event.mediaElement.removeAttribute('srcObject');
 
     var video = document.createElement('video');
-
+    var viewerCounter = document.getElementById('viewerCount').innerHTML;
+    if (typeof viewerCounter === undefined) {
+        viewerCounter = 0;
+    }
     video.controls = true;
     if (event.type === 'local') {
         video.muted = true;
@@ -387,6 +392,7 @@ connection.onstream = function (event) {
                 if (mediaElement && !event.stream.isScreen) {
                     streamEvent.stream.stop();
                     mediaElement.parentNode.removeChild(mediaElement);
+                    viewerCounter--;
                 }
             });
         }
@@ -438,10 +444,7 @@ connection.onstream = function (event) {
         }
         customDiv.appendChild(initialsDiv);
     }
-    var viewerCounter = document.getElementById('viewerCount').innerHTML;
-    if (typeof viewerCounter === undefined) {
-        viewerCounter = 0;
-    }
+   
 
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');
