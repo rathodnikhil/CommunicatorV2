@@ -1,22 +1,6 @@
 <div class="row" style="margin:0px;">
         {{SelectedUser.firstName}} {{SelectedUser.lastName}}&nbsp;
-        <a id="view-profile" (click)="open()">(View Full Profile)</a>
-    <!-- <div class="col-md-8 card-header" id="timeline-icon">
-        {{SelectedUser.firstName}} {{SelectedUser.lastName}}&nbsp;
-        <a id="view-profile" (click)="open()">(View Full Profile)</a>
-    </div>
-    <div class="col-md-1 card-header" id="video_call">
-        <i class="fa fa-video-camera"></i>
-    </div>
-    <div class="col-md-1 card-header" id="audio_call">
-        <i class="fa fa-phone"></i>
-    </div>
-    <div class="col-md-1 card-header" id="share-screen">
-        <i class="fa fa-desktop"></i>
-    </div>
-    <div class="col-md-1 card-header">
-        <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
-    </div> -->
+        <a id="view-profile" (click)="open()">(View Full Profile)</a>    
 </div>
 <app-custom-modal #viewProfileModal [model]="viewProfile">
     <div class="modal-body row-label">
@@ -54,6 +38,6 @@
         </div>
     </div>
     <div class="modal-footer popFooter">
-        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closePopup('profileDetails')">Close</button>
+        <button type="button" class="btn btn-danger  btn-border-radius" (click)="closePopup()">Close</button>
     </div>
 </app-custom-modal>

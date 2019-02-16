@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, Inject } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service';
 import { Injectable } from '@angular/core';
 import { AlertService } from '../services/alert.service';
 import { PasswordService } from '../services/password.service';
+import { DOCUMENT } from '@angular/common';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -13,7 +14,7 @@ import { PasswordService } from '../services/password.service';
     animations: [routerTransition()],
     providers: [AlertService, PasswordService]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     UserNameText = 'UserName';
     _loginService: LoginService;
     _userService: UserService;
@@ -34,8 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     forgetPasswordFlag: boolean;
     Logintext = 'Login';
     loggedInUserObj: any;
-    @ViewChild('emailField') emailField: ElementRef;
-    constructor(public router: Router, loginService: LoginService,
+    constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
+        public router: Router, loginService: LoginService,
         userService: UserService, public alertService: AlertService, passwordService: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -46,6 +47,28 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
         this.loginUiFlag = true;
+    }
+    ngAfterViewInit(): void {
+        (<any>window).customAlertService = this.alertService;
+        const s = this.document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '../../../assets/scripts/checkPlugins.js';
+        s.id = 'meetingTest';
+        const __this = this; // to store the current instance to call
+        // afterScriptAdded function on onload event of
+        // script.
+        s.onload = function () { __this.afterScriptAdded(); };
+        this.elementRef.nativeElement.appendChild(s);
+    }
+    afterScriptAdded() {
+        // this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
+        const params = {
+            width: '350px',
+            height: '420px',
+        };
+        if (typeof (window['functionFromExternalScript']) === 'function') {
+            window['functionFromExternalScript'](params);
+        }
     }
 
     ngOnDestroy(): void {
@@ -59,6 +82,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (event.key === 'Enter') { this.login(); }
     }
     login() {
+        if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
+            || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
+            return this.alertService.error('Close the popup to continue', 'Error');
+        }
         if (this.userName === undefined || this.userName
             === '' || this.userName === null) {
             return this.alertService.error('Enter Username', 'Error');
