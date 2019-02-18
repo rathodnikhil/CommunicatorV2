@@ -265,18 +265,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         setInterval(function () {
         }, 1000);
     }
-    // onFinished() {
-    //     this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
-    //     this.document.getElementById('btn-end-meeting').click();
-    // this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
-    //     setTimeout(() => {
-    //         this.router.navigate(['/login']);
-    //         window.location.reload();
-    //     }, 180000);
-    // }
-    // onNotify() {
-    //     this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
-    // }
     shareFile() {
         this.shareFileBtn.nativeElement.blur();
     }

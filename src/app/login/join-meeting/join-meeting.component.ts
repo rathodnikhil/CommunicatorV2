@@ -40,18 +40,19 @@ export class JoinMeetingComponent implements OnInit {
     const senderNameArray = this.setAttendeeName(this.userName);
     let firstNameUpperCase = null;
     if (senderNameArray.length < 3) {
-       firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
-  } else {
+      firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
+    } else {
       firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
-      + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
-  }
+        + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
+    }
     const payload = {
       firstName: firstNameUpperCase,
-      isGuest: this.isGuest, userCode: guestUserCode , email: guestUserCode + '@guest.com' , meetingCode: this.meetingCode
+      isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.meetingCode
     };
     this._userService.setLoggedInUserObj(payload).subscribe(res => {
       if (res === 'invalid') {
-          this.alertService.warning('Please enter valid Meeting Id' , 'Invalid Data');
+        this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
+        return false;
       } else {
         if (res.firstName !== undefined) {
           if (!this.previousUrl) {
@@ -75,12 +76,12 @@ export class JoinMeetingComponent implements OnInit {
     attendeeFullName = attendeeFullName.split(' ');
     const attendeeFullNameArray = new Array();
     for (let i = 0; i < attendeeFullName.length; i++) {
-        attendeeFullNameArray.push(attendeeFullName[i]);
-        if (i !== attendeeFullName.length - 1) {
-            attendeeFullNameArray.push(' ');
-        }
+      attendeeFullNameArray.push(attendeeFullName[i]);
+      if (i !== attendeeFullName.length - 1) {
+        attendeeFullNameArray.push(' ');
+      }
     }
-    return  attendeeFullNameArray ;
-}
+    return attendeeFullNameArray;
+  }
 
 }
