@@ -214,7 +214,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Meeting Notes : ' + '\r\n\r\n' + data)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Meeting Notes: ' + '\r\n\r\n' + data)}`);
         // a.href = url;
         a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();

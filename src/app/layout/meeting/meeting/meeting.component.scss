@@ -212,7 +212,7 @@ div.scrollmenu a:hover {
 .momBtn {
     display: inline-block;
     margin: 0 auto;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 [hidden] {
@@ -284,7 +284,7 @@ div.scrollmenu a:hover {
 
 .icon-bar {
     position: fixed;
-    top: 100px;
+    top: auto;
     right: 0px;
     height: 100%;
     background: rgb(50, 131, 185);
@@ -315,6 +315,7 @@ div.scrollmenu a:hover {
     overflow-y: scroll;
     height: 100%;
     padding: 8px;
+    padding-bottom: 30px;
 }
 span.step {
     background: #a201ff;
@@ -329,4 +330,17 @@ span.step {
     text-align: center;
     width: 1.6em; 
     margin-left: 6px;
+  }
+  .btn-url{
+      border: 2px solid #fff;
+      border-radius: 5px;
+      background: transparent;
+      font-weight: bold;
+      color: #fff;
+      box-shadow: 0 2px #f4edf8;
+  }
+  .btn-url:hover{
+     background-color: #a201ff;
+     border: 1px solid #f7f7f7;
+    
   }

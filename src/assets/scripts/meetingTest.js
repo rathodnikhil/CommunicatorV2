@@ -338,7 +338,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+                alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -371,6 +371,7 @@ connection.sdpConstraints.mandatory = {
 var screenshareCheck = {};
 connection.videosContainer = document.getElementById('videos_container');
 var viewerListDiv = document.getElementById('viewersList');
+var viewerCounter = 0;
 connection.onstream = function (event) {
     event.mediaElement.removeAttribute('src');
     event.mediaElement.removeAttribute('srcObject');
@@ -406,11 +407,11 @@ connection.onstream = function (event) {
     customDiv.style.height = Math.round(window.innerHeight * 0.30);
     customDiv.style.width = Math.round(window.innerHeight * 0.30);
     customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
+    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:8px;text-align: center; float:left;');
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
     var viewerNameString = null;
-    var viewerCounter = 0;
+  
     var attendeeFullNameArray = setAttendeeName(attendeeFullName);
     if (attendeeFullNameArray.length < 3) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
@@ -438,7 +439,7 @@ connection.onstream = function (event) {
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if (initialsDiv.innerHTML === "You") {
-            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#FDFAE8;border:1px solid #bc151b;color:#bc151b;margin-top: 30px;font-size: 4.0vw;');
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #bc151b;color:#bc151b;margin-top: 30px;font-size: 4.0vw;');
         } else {
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
         }
@@ -468,7 +469,7 @@ connection.onstream = function (event) {
                 viewerListDiv.appendChild(viewer);
                 viewerCounter++;
                 var vCounterEl = document.getElementById('viewerCount');
-                vCounterEl.innerHTML = viewerCounter
+                vCounterEl.innerText = viewerCounter
             }
         }
     }
@@ -478,9 +479,9 @@ connection.onstream = function (event) {
     video.id = event.streamid;
 };
 connection.onMediaError = function (event) {
-    alertService.error(event.message, "Device error!");
+    alertService.error(event.message + ', connect your device and refresh again', "Device error!");
     document.getElementById('btn-leave-room').disabled = true;
-    document.getElementById('open-room').disabled = false;
+  //  document.getElementById('open-room').disabled = false;
 
 }
 connection.onmute = function (event) {
@@ -717,7 +718,7 @@ if (roomid && roomid.length) {
                 document.getElementById('input-text-chat').disabled = false;
                 return;
             }
-            document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';
+            document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
