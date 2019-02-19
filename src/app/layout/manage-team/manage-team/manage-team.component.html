@@ -136,7 +136,7 @@
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="updateTeamDetails()">Update Team</button>
-                        <button type="button" class="btn btn-cancel" (click)="teamCloseEditPopup()">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="teamCloseEditPopup()">Close</button>
                     </div>
                 </app-custom-modal>
                 <app-custom-modal #deleteTeamModal [model]="deleteTeam">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="deleteTeamDetails()">Yes</button>
-                        <button type="button" class="btn btn-cancel" (click)="teamCloseDeletePopup()">No</button>
+                        <button type="button" class="btn btn-danger" (click)="teamCloseDeletePopup()">No</button>
                     </div>
                 </app-custom-modal>
 
@@ -209,7 +209,7 @@
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
-                        <button type="button" class="btn btn-cancel" (click)="closePopup('addNewMember')">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="closePopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>
                 <app-custom-modal #UpdateMemberModal [model]="updateMember">
@@ -266,7 +266,7 @@
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="updateMemberDetails()">Update
                             Member</button>
-                        <button type="button" class="btn btn-cancel" (click)="cancelEditPopup()">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="cancelEditPopup()">Close</button>
                     </div>
                 </app-custom-modal>
                 <app-custom-modal #deleteMemberModal [model]="deleteMember">
@@ -275,7 +275,7 @@
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="deleteMemberDetails()">Yes</button>
-                        <button type="button" class="btn btn-cancel" (click)="closeDeletePopup(2)">No</button>
+                        <button type="button" class="btn btn-danger" (click)="closeDeletePopup(2)">No</button>
                     </div>
                 </app-custom-modal>
 
