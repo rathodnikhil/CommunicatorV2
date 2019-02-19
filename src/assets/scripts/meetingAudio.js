@@ -367,7 +367,7 @@ if (roomid && roomid.length) {
                 document.getElementById('input-text-chat').disabled = false;
                 return;
             }
-            document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';
+            document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
