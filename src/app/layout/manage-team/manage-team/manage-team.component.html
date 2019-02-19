@@ -17,13 +17,12 @@
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
-                            <button class="btn btn-sec" style="align:align-center; margin-left: 5px;" (click)="open()">+Team</button>
+                            <button class="btn btn-sec" style="align:align-center; margin-left: 5px;" (click)="open()" #addTeamField>+Team</button>
                         </div>
                     </div>
                 </div>
                 <div class="team-name-list">
-                    <ul
-                        *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamCount = index">
+                    <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamCount = index">
                         <li>
                             <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;"
                                 (click)="displayTeamDetails(userPermission , teamCount)">
@@ -62,8 +61,8 @@
                     <button (click)="editTeam()" class="btn btn-primary" style="margin-right: 5px;" #editTeamField>
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button (click)="deleteSelectedTeam()" class="btn btn-danger">
-                        <i class="fa fa-trash-o" #deleteTeamField></i>
+                    <button (click)="deleteSelectedTeam()" class="btn btn-danger" #deleteTeamField>
+                        <i class="fa fa-trash-o"></i>
                     </button>
                     <hr>
                 </div>
@@ -113,7 +112,7 @@
                         </td>
                     </tr>
                 </table>
-                <div class="pageControl">
+                <div class="pageControl" style="text-align:center;">
                     <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
                         [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
                         [nextLabel]="labels.nextLabel"
