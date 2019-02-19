@@ -41,13 +41,13 @@
                         </div>
                     </div> -->
 
-                    <div class="join-meeting-id" >
-                            <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
+                    <div class="join-meeting-id">
+                        <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
                             role="button" style="font-size: 15px;word-wrap: break-word">
                             <i class="fa fa-sign-in" aria-hidden="true" style="padding-right:5px;font-size:18px;"></i>
-                           Join with Meeting ID (Guest user)
+                            Join with Meeting ID (Guest user)
                         </a>
-                  
+
                     </div>
 
                     <fieldset id="actions">
@@ -75,9 +75,14 @@
             <div class="alink"> <a (click)="backToLogin()">back to login</a></div>
         </div>
     </div>
+  <div style="display: none;">
+        <label id="isScreenSharePopupClosed"></label>
+        <label id="isRecordScreenPopupClosed"></label>
+    </div>
     <div class="cfsfooter ">
         <img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; ">
         <br>
+    <div class="cfsfooter">
         <b>Copyright &copy; 2018 Coreflex Solutions</b>
     </div>
 </div>

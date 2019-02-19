@@ -30,22 +30,20 @@
                     </div>
                 </div>
                 <div class="attendee-row">
-                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" (indexChanged)="onIndexChanged($event)"
-                        (reachesLeftBound)="leftBoundStat($event)" (reachesRightBound)="rightBoundStat($event)"
-                        (snapAnimationFinished)="onSnapAnimationFinished()" #videos_container id="videos_container">
+                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true"  #videos_container id="videos_container">
                         <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
                     </div>
-                   <!-- <p  id="muteIcon"> </p>  -->
+                    <!-- <p  id="muteIcon"> </p>  -->
                 </div>
                 <div class="row parent">
-                    <div id="shareScreen-container" style="width: 100%; overflow-y: scroll;"></div>
+                    <div id="shareScreen-container" style="width: 100%; overflow-y: scroll;height: calc(100vh*0.40);"></div>
                 </div>
                 <div>
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
                         <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="top"
-                             data-toggle="tooltip" title="Exit Meeting">
+                            data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
                         <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
@@ -60,37 +58,36 @@
                             </div>
                         </app-custom-modal>
                         <button id="btn-mute" class="btn pull-left default" [ngClass]="isMute?'btn-sec':'default'"
-                            #muteUnmuteBtn placement="top" data-toggle="tooltip"  title="Mute/Unmute" (click)='mute()'>
+                            #muteUnmuteBtn placement="top" data-toggle="tooltip" title="Mute/Unmute" (click)='mute()'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
-                        <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
-                            placement="top"  (click)='startMeeting();'>
+                        <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting"
+                            [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn pull-left default" alt="Start Recording" style="display:none;"  >
-                            <i class="fa fa-2x fa-circle"  title="Start Recording" data-toggle="tooltip" aria-hidden="true"
-                                 id="rec_start"></i>
-                            <i class="fa fa-2x fa-stop" aria-hidden="true"  title="Stop Recording" data-toggle="tooltip"
+                        <button id="btn-start-recording" class="btn pull-left default" alt="Start Recording" style="display:none;">
+                            <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip" aria-hidden="true"
+                                id="rec_start"></i>
+                            <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
                                 style="color:#dc3545;display: none" id="rec_stop"></i>
                         </button>
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn default pull-left" style="display:none;" 
-                            #shareFileBtn (click)="shareFile()" title="Share File" data-toggle="tooltip">
+                        <button id="share-file" class="btn default pull-left" style="display:none;" #shareFileBtn
+                            (click)="shareFile()" title="Share File" data-toggle="tooltip">
                             <i class="fa fa-2x fa-clipboard"></i>
                         </button>
-                        <button id="share-screen" class="btn pull-left" style="display:none;"
-                            #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" (click)='shareScreen()'
-                             data-toggle="tooltip" title="Share Screen">
+                        <button id="share-screen" class="btn pull-left" style="display:none;" #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'"
+                            (click)='shareScreen()' data-toggle="tooltip" title="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
-                         #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" 
-                        title="Video on/off" data-toggle="tooltip">
-                        <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
-                            class="fa fa-2x fa-ban"></i>
-                    </button>
+                            #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" title="Video on/off"
+                            data-toggle="tooltip">
+                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
+                                class="fa fa-2x fa-ban"></i>
+                        </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;background-color: yellow;"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
@@ -118,8 +115,8 @@
                     </div>
                     <div class="card-body" style="padding-right:50px;">
                         <div class="icon-bar">
-                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="chat" [ngClass]="{'selected': currentTab=='chat'}"><i
-                                    class="fa fa-comments-o"></i></a>
+                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="chat"
+                                [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
                             <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
                                 title="Notes"><i class="fa fa-sticky-note-o"></i></a>
                             <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
@@ -147,7 +144,7 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='downloadedFiles'}">
-                                   Shared Files 
+                                    Shared Files
                                 </span>
                             </li>
                         </ul>
@@ -175,13 +172,13 @@
                             </div>
                         </div>
                         <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
-                            <div class="row content-tab" >
+                            <div class="row content-tab">
                                 <div id="viewersList" class="col-md-12"></div>
 
                             </div>
                         </div>
                         <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
-                            <div id="file-container" class="row content-tab" style="overflow-y: scroll" >
+                            <div id="file-container" class="row content-tab" style="overflow-y: scroll">
                             </div>
                         </div>
                     </div>
