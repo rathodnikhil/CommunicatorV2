@@ -4,14 +4,14 @@
             <div class="col-sm-8 meeting-activity">
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
                     <div class="row">
-                        <div class="col-md-5 offset-md-1" style="padding-left:15px">
-                            <h5 *ngIf="meetingDetails.createdBy!=undefined"><b>Host:
+                        <div class="col-md-4 offset-md-1" style="padding-left:15px">
+                            <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word;"><b>Host:
                                 {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
-                            <h5 *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
+                            <h5 style="overflow-wrap: break-word;" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
                             </h5>
                         </div>
-                        <div class="col-md-6" >
+                        <div class="col-md-7" >
                             <div id="room-urls" style="text-align: center;display: none;">
                                 <button type="button" 
                                 class="btn btn-url" id="copyMeetingLink">
@@ -139,7 +139,7 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
-                                    Viewers<span id="viewerCount" class="step"  [(ngModel)]="viewerCount" ></span>
+                                    Viewers<span id="viewerCount" class="step"   ></span>
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
