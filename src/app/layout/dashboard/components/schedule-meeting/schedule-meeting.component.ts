@@ -32,6 +32,7 @@ export class ScheduleMeetingComponent implements OnInit {
     toAttendees: any;
     ccAttendees: any;
     meetingObj: any;
+    outLookBodyJson: any;
     // public radioGroupForm: FormGroup;
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -213,6 +214,7 @@ export class ScheduleMeetingComponent implements OnInit {
                     this.filteredFutureMeetingList.push(data);
                     this.meetingObj = data;
                    this.scheduleMeetingModal.open();
+                 //  this.switchRoute();
                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
                 }
             });
@@ -237,6 +239,8 @@ export class ScheduleMeetingComponent implements OnInit {
         const newLine = '\r\n\r\n';
        this.outLookBody = this.getMeetingDetails(newLine);
        this.outLookSubject = this.subject;
+       const newLineJson = '<br>';
+       this.outLookBodyJson =    this.getMeetingDetails(newLineJson);
         this.closeMeetingPopup('scheduleMeetings');
     }
     // copy meeting content
@@ -286,7 +290,7 @@ export class ScheduleMeetingComponent implements OnInit {
            hours + ':' + minutes + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + newLine +
             newLine + ' Please join my meeting from your computer ' + newLine + 'Register user use below url : ' + newLine
-             + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + guestMeetingUrl + + this.accessCode
+             + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + newLine +  guestMeetingUrl + + this.accessCode
              + newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }
@@ -294,17 +298,15 @@ export class ScheduleMeetingComponent implements OnInit {
         if ( this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
-            const newLine = '<br>';
-        const outLookBodyJson =    this.getMeetingDetails(newLine);
         const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
-            meetingDetailsBody: outLookBodyJson , meeting: this.meetingObj};
+            meetingDetailsBody: this.outLookBodyJson , meeting: this.meetingObj};
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
-                    this.outlookModal.close();
-                    this.clearOutlookField();
-                    return this.alertService.success('Meeting Invitation has sent successfully', 'Meeting Invitation');
+                    this.closeoutMaliPopup();
+                    this.switchRoute();
+                    return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
                 }
         });
     }

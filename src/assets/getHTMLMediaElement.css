@@ -174,13 +174,14 @@ input[type="range"]::-webkit-slider-thumb {
 
 .chat-background {
     border: 1px solid #bc151b;
-    background-color: #FDFAE8;
+    background-color: #f1f0ea;
     /* opacity: 0.75; */
     border-radius: 5px;
     padding: 15px;    
     margin: 10px 10px;
     line-height: 1;
     color : #000;
+    max-width:95%;
 }
 
 .chat-background-invitee {
@@ -192,7 +193,7 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 15px;
     margin: 10px 10px;
     color : #000;
-    width:100%;
+    max-width:95%;
 }
 
 .time-left {

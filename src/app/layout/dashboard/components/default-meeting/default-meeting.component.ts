@@ -75,7 +75,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         smallHeading: 'Add attendees to your meeting here',
         body: '',
         Button1Content: '<i class="fa fa-envelope"></i>Send',
-        Button2Content: '<i class="fa fa-copy"></i> Csncel'
+        Button2Content: '<i class="fa fa-copy"></i> Cancel'
     };
     constructor(userService: UserService, meetingService: MeetingService,
         private router: Router, private toastr: ToastrService, public alertService: AlertService) {
@@ -212,15 +212,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             }
         });
     }
-    // copyToOutLook(event) {
-    //     const meetingDetails = encodeURIComponent(this.getMeetingDetails());
-    //     const a = document.createElement('a');
-    //     a.href = 'mailto:?subject=' + 'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
-    //     document.body.appendChild(a);
-    //     a.click();
-    //     document.body.removeChild(a);
-    //     this.goToOutlookBtnField.nativeElement.blur();
-    // }
     copyToOutLook(event) {
         this.meetNowOutlookModal.open();
         const newLine = '\r\n\r\n';
@@ -265,6 +256,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
+                this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
+               // this.futureMeetingList.splice(0 , 0 , this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });
@@ -287,7 +280,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 } else {
                     this.meetNowOutlookModal.close();
                     this.clearOutlookField();
-                    return this.alertService.success('Meeting Invitation has sent successfully', 'Meeting Invitation');
+                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
+                    return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
                 }
         });
     }

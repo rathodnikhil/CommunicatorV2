@@ -4,30 +4,30 @@
             <div class="col-sm-8 meeting-activity">
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
                     <div class="row">
-                        <div class="col-md-3 offset-md-1">
-                            <h4 *ngIf="meetingDetails.createdBy!=undefined">Host :
-                                {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}
-                            </h4>
+                        <div class="col-md-5 offset-md-1" style="padding-left:15px">
+                            <h5 *ngIf="meetingDetails.createdBy!=undefined"><b>Host:
+                                {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
+                            </h5>
+                            <h5 *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
+                            </h5>
                         </div>
-                        <div class="col-md-7">
-                            <h4 *ngIf="meetingDetails.subject!=undefined">Subject : {{meetingDetails.subject}}
-                            </h4>
+                        <div class="col-md-6" >
+                            <div id="room-urls" style="text-align: center;display: none;">
+                                <button type="button" 
+                                class="btn btn-url" id="copyMeetingLink">
+                                    Copy Meeting Link
+                                </button>
+                                <button type="button" class="btn btn-url" id="copyGuestMeetingLink">
+                                    Copy Guest Meeting Link
+                                </button>
+    
+                                <button type="button" class="btn btn-url" id="copyMeetingId">
+                                    Copy Meeting Id
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row" style="text-align: center;">
-                        <div id="room-urls" style="text-align: center;display: none;">
-                            <button type="button" class="btn btn-responsive btn-warning" id="copyMeetingLink">
-                                Copy Meeting Link
-                            </button>
-                            <button type="button" class="btn btn-responsive btn-warning" id="copyGuestMeetingLink">
-                                Copy Guest Meeting Link
-                            </button>
-
-                            <button type="button" class="btn btn-responsive btn-warning" id="copyMeetingId">
-                                Copy Meeting Id
-                            </button>
-                        </div>
-                    </div>
+                   
                 </div>
                 <div class="attendee-row">
                     <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true"  #videos_container id="videos_container">
@@ -36,7 +36,7 @@
                     <!-- <p  id="muteIcon"> </p>  -->
                 </div>
                 <div class="row parent">
-                    <div id="shareScreen-container" style="width: 100%; overflow-y: scroll;height: calc(100vh*0.40);"></div>
+                    <div id="shareScreen-container" style="width: 100%; overflow-y: auto;height: calc(100vh*0.40);"></div>
                 </div>
                 <div>
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
@@ -83,12 +83,12 @@
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <button id="disable-video" class="btn pull-left default" alt="Disable video" style="display:none;"
-                            #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" title="Video on/off"
+                            #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" title="Video On/Off"
                             data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
-                        <span id="meeting-error" style="float: right;font-weight: bolder;background-color: yellow;"></span>
+                        <span id="meeting-error" style="float: right;font-weight: bolder;background-color:#b031fa; color: #fff"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <div style="display: none;" id="isHost"></div>
@@ -115,14 +115,14 @@
                     </div>
                     <div class="card-body" style="padding-right:50px;">
                         <div class="icon-bar">
-                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="chat"
+                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
                                 [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
                             <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
                                 title="Notes"><i class="fa fa-sticky-note-o"></i></a>
                             <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
                                 title="Viewers"><i class="fa fa-user-o"></i></a>
                             <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
-                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared files"><i class="fa fa-file-text-o"></i></a>
+                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i class="fa fa-file-text-o"></i></a>
                             <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
                             <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
                         </div>
@@ -139,7 +139,7 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
-                                    Viewers<span id="viewerCount" class="step"></span>
+                                    Viewers<span id="viewerCount" class="step"  [(ngModel)]="viewerCount" ></span>
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
@@ -151,7 +151,7 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
                             <div id="chat-container" class="chat-output">
                             </div>
-                            <div class="col-md-12" style="padding-top: 20px;">
+                            <div class="col-md-12" style="padding-top: 5px;">
                                 <div class="row">
                                     <span class="col-md-10">
                                         <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;overflow:auto;resize:none"></textarea>
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                         <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
-                            <div id="file-container" class="row content-tab" style="overflow-y: scroll">
+                            <div id="file-container" class="row content-tab" >
                             </div>
                         </div>
                     </div>
