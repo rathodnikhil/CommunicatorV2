@@ -4,28 +4,28 @@
             <div class="col-sm-8 meeting-activity">
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
                     <div class="row">
-                        <div class="col-md-4 offset-md-1" style="padding-left:15px">
+                        <div class="col-md-5 offset-md-1">
                             <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word;"><b>Host:
                                 {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
-                            <h5 style="overflow-wrap: break-word;" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
-                            </h5>
                         </div>
-                        <div class="col-md-7" >
+                        <div class="col-md-6" style="float: right;" >
                             <div id="room-urls" style="text-align: center;display: none;">
-                                <button type="button" 
-                                class="btn btn-url" id="copyMeetingLink">
-                                    Copy Meeting Link
+                                <button type="button"  data-toggle="tooltip" title="Copy User Link"
+                                class="btn-sm btn-url" id="copyMeetingLink">
+                                <i class="fa fa-clipboard" aria-hidden="true"></i> User Link
                                 </button>
-                                <button type="button" class="btn btn-url" id="copyGuestMeetingLink">
-                                    Copy Guest Meeting Link
+                                <button type="button" data-toggle="tooltip" title="Copy Guest Link" class="btn-sm btn-url" id="copyGuestMeetingLink">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Guest Link
                                 </button>
     
-                                <button type="button" class="btn btn-url" id="copyMeetingId">
-                                    Copy Meeting Id
+                                <button type="button"  data-toggle="tooltip" title="Copy Meeting Id" class="btn-sm btn-url" id="copyMeetingId">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Id
                                 </button>
                             </div>
                         </div>
+                        <h6 class="offset-md-1" style="overflow-wrap: break-word; padding-top: 2px;" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
+                        </h6>
                     </div>
                    
                 </div>
@@ -42,7 +42,7 @@
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" placement="top"
+                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" 
                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
