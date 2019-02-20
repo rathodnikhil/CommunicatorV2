@@ -207,7 +207,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         const meetingDate = new Date();
         meetingDate.setTime(meetingDetails.meetingStartDateTime);
         const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
-            '\r\n\r\n' + 'Attendees : ' + attendeeList + '\r\n\r\n';
+            '\r\n\r\n' + 'Attendees: ' + attendeeList + '\r\n\r\n';
         data = data.split('\n');
         data = data.join('\r\n ');
         const fileType = 'text/json';

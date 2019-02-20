@@ -239,7 +239,7 @@ export class ScheduleMeetingComponent implements OnInit {
         const newLine = '\r\n\r\n';
        this.outLookBody = this.getMeetingDetails(newLine);
        this.outLookSubject = this.subject;
-       const newLineJson = '<br>';
+       const newLineJson = '<br><br>';
        this.outLookBodyJson =    this.getMeetingDetails(newLineJson);
         this.closeMeetingPopup('scheduleMeetings');
     }
@@ -289,8 +289,9 @@ export class ScheduleMeetingComponent implements OnInit {
             + this.meeting.datePicker.day + '  at  ' +
            hours + ':' + minutes + '  (' + this.meeting.selectedTimeZone + ')   for  '
             + this.meeting.selectedDuration + newLine +
-            newLine + ' Please join my meeting from your computer ' + newLine + 'Register user use below url : ' + newLine
-             + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + newLine +  guestMeetingUrl + + this.accessCode
+            newLine + ' Please join my meeting from your computer using chrome browser ' + newLine +
+             'Register user use below url : ' + newLine
+             + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + newLine +  guestMeetingUrl  + this.accessCode
              + newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }
