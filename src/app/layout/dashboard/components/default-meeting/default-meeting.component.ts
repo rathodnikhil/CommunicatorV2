@@ -222,7 +222,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
-        const meetingDetails = 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails(newLine);
+        const meetingDetails = newLine + 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails(newLine);
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
@@ -256,8 +256,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
-                this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
-               // this.futureMeetingList.splice(0 , 0 , this.meetNowMeeting);
+               // this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
+                this.futureMeetingList.splice(0 , 0 , this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });
@@ -270,8 +270,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         if ( this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
-            const newLine = '<br>';
-            const outLookBodyJson  = this.getMeetingDetails(newLine);
+            const newLineJson = '<br><br>';
+            const outLookBodyJson  = this.getMeetingDetails(newLineJson);
         const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
             meetingDetailsBody: outLookBodyJson , meeting: this.meetNowMeeting};
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
@@ -300,16 +300,12 @@ closeoutMaliPopup() {
         let meetingUrl = '';
         meetingUrl = 'https://cfscommunicator.com/#/meeting/?meetingCode=';
         const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
-        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.GetFormattedDate() + newLine +
+        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
             ' Please join my meeting from your computer , tablet or smartphone ' + newLine + ' for  '
             + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
             + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below url :  ' + newLine + guestMeetingUrl +
             this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
-    }
-    GetFormattedDate(): String {
-        const todayTime = new Date();
-        return todayTime.getFullYear() + '/' + (todayTime.getMonth() + 1) + '/' + todayTime.getDate();
     }
     closePopup(popType) {
         switch (popType) {

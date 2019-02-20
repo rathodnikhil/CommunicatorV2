@@ -200,10 +200,12 @@ input[type="range"]::-webkit-slider-thumb {
     float: right;
     color: #3283b9;
     font-weight: bold;
+    font-size: 0.7vw;
 }
 
 .time-right {
     float: left;
     color:#bc151b;
     font-weight: bold;
+    font-size: 0.7vw;
 }
