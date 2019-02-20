@@ -470,6 +470,7 @@ connection.onstream = function (event) {
                 viewerCounter++;
                 var vCounterEl = document.getElementById('viewerCount');
                 vCounterEl.innerText = viewerCounter
+               
             }
         }
     }
@@ -595,7 +596,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
     html += '<span class="time-left">';
     switch (sharedScreenFlag) {
         case 1:
-            html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared Screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Shared screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
             break;
         case 2:
             html += '<i class="fa fa-sign-out"></i>&nbsp;' + ' Left the meeting</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';

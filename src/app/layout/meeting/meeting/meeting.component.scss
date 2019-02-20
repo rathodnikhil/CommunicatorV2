@@ -332,15 +332,18 @@ span.step {
     margin-left: 6px;
   }
   .btn-url{
-      border: 2px solid #fff;
-      border-radius: 5px;
-      background: transparent;
-      font-weight: bold;
-      color: #fff;
-      box-shadow: 0 2px #f4edf8;
+      border: 1px solid #bc151b;
+    //   border-radius: 8px;
+    //   background: #fda32c;
+    background: #efefef;
+    font-weight: bold;
+    color: #bc151b;
+
+    //   background-color: #ffb444;
+    //   box-shadow: 0 2px #f4edf8;
   }
   .btn-url:hover{
-     background-color: #a201ff;
-     border: 1px solid #f7f7f7;
-    
+    background-color: #a201ff;
+    border: 1px solid #fff;
+    color: #fff;
   }
