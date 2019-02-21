@@ -213,8 +213,7 @@ export class ScheduleMeetingComponent implements OnInit {
                     }
                     this.filteredFutureMeetingList.push(data);
                     this.meetingObj = data;
-                   this.scheduleMeetingModal.open();
-                 //  this.switchRoute();
+                    this.scheduleMeetingModal.open();
                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
                 }
             });
@@ -271,7 +270,6 @@ export class ScheduleMeetingComponent implements OnInit {
             case 'scheduleMeetings':
                  this.scheduleMeetingModal.close();
                 this.clearAllMeetingField();
-               // this.switchRoute();
                 break;
         }
     }

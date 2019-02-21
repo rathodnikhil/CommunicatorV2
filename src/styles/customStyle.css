@@ -1,13 +1,5 @@
 
 .btn-sec {
-    /* background-color: #fd5e53;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#e23c30), to(#cc2b20));
-    background-image: -webkit-linear-gradient(to bottom, #e23c30, #cc2b20);
-    background-image: -moz-linear-gradient(to bottom, #e23c30, #cc2b20);
-    background-image: -ms-linear-gradient(to bottom, #e23c30, #cc2b20);
-    background-image: -o-linear-gradient(to bottom, #e23c30, #cc2b20);
-    background-image: linear-gradient(to bottom, #e23c30, #cc2b20); */
-    /* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
     -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
     -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
