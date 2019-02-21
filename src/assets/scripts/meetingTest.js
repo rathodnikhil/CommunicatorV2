@@ -1,6 +1,6 @@
 window.enableAdapter = true; // enable adapter.js
-document.getElementById('btn-save-mom').disabled = true;
-document.getElementById('input-text-chat').disabled = true;
+//document.getElementById('btn-save-mom').disabled = true;
+//document.getElementById('input-text-chat').disabled = true;
 document.getElementById('btn-leave-room').disabled = true;
 // ......................................................
 // .......................UI Code........................
@@ -49,9 +49,6 @@ document.getElementById('open-room').onclick = function () {
     connection.openOrJoin(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
         document.getElementById('meeting-error').innerText = 'Meeting has started.';
-        document.getElementById('btn-save-mom').disabled = false;
-        document.getElementById('input-text-chat').disabled = false;
-        document.getElementById('btn-leave-room').disabled = false;
     });
 };
 
@@ -154,6 +151,7 @@ document.getElementById('disable-video').onclick = function () {
         isMute = false;
         alertService.warning('You will have to mute yourself again!', 'unmute');
     }
+    alert(isShareScreen + '_******************************');
     if (isShareScreen) {
         isShareScreen = false;
         alertService.warning('You will have to share screen again!', 'screen share');
@@ -615,7 +613,9 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
     }
    
     viewer.innerHTML = html;
-    document.getElementById('viewerAnchor').click();
+    var viewerTab =  document.getElementById('viewerAnchor')
+    viewerTab.click();
+    viewerTab.scrollTop = viewerTab.scrollHeight;
     return viewer;
 }
 
@@ -705,7 +705,8 @@ if (roomid && roomid.length) {
         isHost = document.getElementById('isHost').innerText === "true";
         if (isHost) {
             document.getElementById('open-room').disabled = false;
-            document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
+            document.getElementById('open-room').click();
+            // /document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
             document.getElementById('btn-leave-room').disabled = false;
             return;
         } else if (!isHost) {
@@ -715,8 +716,8 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
-                document.getElementById('btn-save-mom').disabled = false;
-                document.getElementById('input-text-chat').disabled = false;
+            //    document.getElementById('btn-save-mom').disabled = false;
+             //   document.getElementById('input-text-chat').disabled = false;
                 return;
             }
             document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
@@ -751,6 +752,8 @@ function stopRecordingCallback(blob) {
     recorder.screen.stop();
     recorder.destroy();
     recorder = null;
+    var recordBtn = document.getElementById('btn-start-recording');
+    recordBtn.className = 'btn-sec';
 }
 var recorder = new RecordRTC_Extension(); // globally accessible
 
