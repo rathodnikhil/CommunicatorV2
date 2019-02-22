@@ -11,11 +11,11 @@
                         </div>
                         <div class="col-md-6" style="float: right;" >
                             <div id="room-urls" style="text-align: center;display: none;">
-                                <button type="button"  data-toggle="tooltip" title="Copy User Link"
+                                <button type="button"  data-toggle="tooltip" title="Copy Register User Link"
                                 class="btn-sm btn-url" id="copyMeetingLink">
                                 <i class="fa fa-clipboard" aria-hidden="true"></i> User Link
                                 </button>
-                                <button type="button" data-toggle="tooltip" title="Copy Guest Link" class="btn-sm btn-url" id="copyGuestMeetingLink">
+                                <button type="button" data-toggle="tooltip" title="Copy Guest User Link" class="btn-sm btn-url" id="copyGuestMeetingLink">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i> Guest Link
                                 </button>
     
@@ -76,7 +76,7 @@
                         </button>
                         <button id="share-file" class="btn default pull-left" style="display:none;" #shareFileBtn
                             (click)="shareFile()" title="Share File" data-toggle="tooltip">
-                            <i class="fa fa-2x fa-clipboard"></i>
+                            <i class="fa fa-2x fa-file-text"></i>
                         </button>
                         <button id="share-screen" class="btn pull-left" style="display:none;" #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'"
                             (click)='shareScreen()' data-toggle="tooltip" title="Share Screen">
