@@ -207,11 +207,11 @@ export class ScheduleMeetingComponent implements OnInit {
                     if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
                         this.futureMeetingList = [];
                     }
-                    this.futureMeetingList.push(data);
+                    this.futureMeetingList.splice(0 , 0 , data);
                     if (this.filteredFutureMeetingList === undefined || this.filteredFutureMeetingList.length <= 0) {
                         this.filteredFutureMeetingList = [];
                     }
-                    this.filteredFutureMeetingList.push(data);
+                    this.filteredFutureMeetingList.splice(0 , 0 , data);
                     this.meetingObj = data;
                     this.scheduleMeetingModal.open();
                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
@@ -270,7 +270,7 @@ export class ScheduleMeetingComponent implements OnInit {
             case 'scheduleMeetings':
                  this.scheduleMeetingModal.close();
                 this.clearAllMeetingField();
-                this.switchRoute(0);
+               // this.switchRoute(0);
                 break;
         }
     }
@@ -282,7 +282,7 @@ export class ScheduleMeetingComponent implements OnInit {
              const minutes = parseInt(this.meeting.meridianTime.minute , 10) < 10 ? '0' + parseInt(this.meeting.meridianTime.minute , 10) :
               '' + parseInt(this.meeting.meridianTime.minute , 10);
             const meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-            const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+            const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
          this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +

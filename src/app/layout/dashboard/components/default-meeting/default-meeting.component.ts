@@ -222,7 +222,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
-        const meetingDetails = newLine + 'Meet now: ' + new Date().toDateString() + '  ' + this.getMeetingDetails(newLine);
+        const meetingDetails =  'Meet now: ' + new Date().toDateString() + newLine  + this.getMeetingDetails(newLine);
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);

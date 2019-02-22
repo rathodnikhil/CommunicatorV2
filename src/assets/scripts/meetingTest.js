@@ -147,11 +147,11 @@ DetectRTC.load(function () {
 document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
     if (isMute) {
-        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone";
+        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone btn-sec";
         isMute = false;
         alertService.warning('You will have to mute yourself again!', 'unmute');
+
     }
-    alert(isShareScreen + '_******************************');
     if (isShareScreen) {
         isShareScreen = false;
         alertService.warning('You will have to share screen again!', 'screen share');
@@ -613,9 +613,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
     }
    
     viewer.innerHTML = html;
-    var viewerTab =  document.getElementById('viewerAnchor')
-    viewerTab.click();
-    viewerTab.scrollTop = viewerTab.scrollHeight;
+    document.getElementById('viewerAnchor').click();
     return viewer;
 }
 
