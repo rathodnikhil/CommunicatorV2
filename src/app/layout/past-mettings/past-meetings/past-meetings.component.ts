@@ -43,10 +43,10 @@ export class PastMeetingsComponent implements OnInit {
     @ViewChild('viewAttendeeModal') public viewAttendeeModal: CustomModalComponent;
     attendee: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
-        title: 'New Team',
-        smallHeading: 'You can add new team details here',
+        title: 'Meeting Attendee',
+        smallHeading: 'You can view meeting attendee',
         body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Team',
+        Button1Content: '',
         Button2Content: ''
     };
     ngOnInit() {
@@ -86,8 +86,10 @@ export class PastMeetingsComponent implements OnInit {
                       //   let attendeeList = this.getAttendeeList(data);
             data.mom.momDescription = data.mom.momDescription.split('\n');
             data.mom.momDescription = data.mom.momDescription.join('\r\n ');
-            const momHeader = 'Date of Meeting: ' + data.meetingDate + '\r\n\r\n' + 'Subject: ' + data.subject + '\r\n\r\n' +
-            'Attendees : ' + this.attendeeListByMeeting + '\r\n\r\n';
+            const meetingDate = new Date();
+            meetingDate.setTime(data.meetingStartDateTime);
+            const momHeader = 'Date of Meeting:' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject:' + data.subject +
+                '\r\n\r\n' + 'Attendees:' + this.attendeeListByMeeting + '\r\n\r\n';
             const fileType = 'text/json';
 
             const a = document.createElement('a');
@@ -95,7 +97,7 @@ export class PastMeetingsComponent implements OnInit {
             a.setAttribute('style', 'display: none');
             a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data.mom.momDescription)}`);
             // a.href = url;
-            a.download = 'MOM_' + data.meetingDate + '(' + new Date().toLocaleString('en-us', { weekday: 'long' }) + ').txt';
+            a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
             a.click();
             // window.URL.revokeObjectURL(url);
             a.remove(); // remove the element

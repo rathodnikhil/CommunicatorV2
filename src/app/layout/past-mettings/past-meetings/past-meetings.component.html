@@ -32,7 +32,7 @@
         </tr>
         <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
             <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
-            <td>{{meeting.meetingDate}}</td>
+            <td>{{meeting.meetingStartDateTime}}</td>
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
             <td>

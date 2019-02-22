@@ -147,11 +147,11 @@ DetectRTC.load(function () {
 document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
     if (isMute) {
-        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone";
+        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone btn-sec";
         isMute = false;
         alertService.warning('You will have to mute yourself again!', 'unmute');
+
     }
-    alert(isShareScreen + '_******************************');
     if (isShareScreen) {
         isShareScreen = false;
         alertService.warning('You will have to share screen again!', 'screen share');
@@ -417,7 +417,7 @@ connection.onstream = function (event) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
             + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
     }
-    heading.innerHTML = '<span style="font-size: 0.8vw; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-2x fa-microphone-slash pull-right" style="display:none;"></i>';
+    heading.innerHTML = '<span style="font-size: 0.8vw; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash pull-right" style="display:none; font-size: 1.1vw;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
@@ -487,7 +487,7 @@ connection.onmute = function (event) {
     if (event.type !== "local") {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;");
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;font-size: 1.1vw;");
     }
 };
 connection.onunmute = function (event) {
@@ -613,9 +613,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
     }
    
     viewer.innerHTML = html;
-    var viewerTab =  document.getElementById('viewerAnchor')
-    viewerTab.click();
-    viewerTab.scrollTop = viewerTab.scrollHeight;
+    document.getElementById('viewerAnchor').click();
     return viewer;
 }
 
