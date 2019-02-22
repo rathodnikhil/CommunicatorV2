@@ -11,8 +11,8 @@
                    X
                 </button> -->
                 <!-- <button class="btn pull-right" (click)="switchRoute()"><i class="fa fa-close"></i> </button> -->
-                <button class="btn btn-danger pull-right" (click)="switchRoute()"><i class="fa fa-window-close" aria-hidden="true"></i> </button>
-                
+                <button class="btn btn-danger pull-right" (click)="switchRoute(0)"><i class="fa fa-window-close" aria-hidden="true"></i> </button>
+
             </div>
         </div>
     </div>
@@ -95,15 +95,15 @@
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>
                                 <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
-                                    <label>Registered Users use this URL for meeting : 
-                                    <span  
+                                    <label>Registered Users use this URL for meeting :
+                                    <span
                                         style="text-decoration :underline;  font-weight: bold; padding-top:10px;">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
-                                    </span>     </label> 
+                                    </span>     </label>
                                      <label>Guest Users use this URL for meeting :
-                                         <span 
+                                         <span
                                               style="text-decoration :underline; font-weight: bold; padding-top:10px;">
                                               https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{accessCode}}
-                                    </span>  </label> 
+                                    </span>  </label>
                                 </p>
                                 <h5 style="margin-top: 40px;">Meeting Id :
                                     <span>{{accessCode}}</span>
@@ -135,7 +135,7 @@
                                 </div>
                                 </div>
                                 <div style="height: 100%">
-                                     <textarea class="form-control"  [(ngModel)]="outLookBody" name="body" rows="13"> 
+                                     <textarea class="form-control"  [(ngModel)]="outLookBody" name="body" rows="13">
                                     </textarea>
                                 </div>
                                 <div class="modal-footer popFooter">

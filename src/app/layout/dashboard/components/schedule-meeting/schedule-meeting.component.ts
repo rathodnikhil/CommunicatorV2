@@ -161,8 +161,8 @@ export class ScheduleMeetingComponent implements OnInit {
         // current date and time
         this.currentDate = Date.now();
     }
-    switchRoute() {
-        this.CurrentRoute.emit(0);
+    switchRoute(value) {
+        this.CurrentRoute.emit(value);
     }
     scheduleMeeting() {
          const date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
@@ -213,8 +213,7 @@ export class ScheduleMeetingComponent implements OnInit {
                     }
                     this.filteredFutureMeetingList.push(data);
                     this.meetingObj = data;
-                   this.scheduleMeetingModal.open();
-                 //  this.switchRoute();
+                    this.scheduleMeetingModal.open();
                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
                 }
             });
@@ -271,7 +270,7 @@ export class ScheduleMeetingComponent implements OnInit {
             case 'scheduleMeetings':
                  this.scheduleMeetingModal.close();
                 this.clearAllMeetingField();
-               // this.switchRoute();
+                this.switchRoute(0);
                 break;
         }
     }
@@ -306,7 +305,7 @@ export class ScheduleMeetingComponent implements OnInit {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
                     this.closeoutMaliPopup();
-                    this.switchRoute();
+                    this.switchRoute(0);
                     return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
                 }
         });
