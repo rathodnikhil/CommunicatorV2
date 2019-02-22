@@ -417,7 +417,7 @@ connection.onstream = function (event) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
             + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
     }
-    heading.innerHTML = '<span style="font-size: 0.8vw; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-2x fa-microphone-slash pull-right" style="display:none;"></i>';
+    heading.innerHTML = '<span style="font-size: 0.8vw; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash pull-right" style="display:none; font-size: 1.1vw;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
@@ -487,7 +487,7 @@ connection.onmute = function (event) {
     if (event.type !== "local") {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;");
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;font-size: 1.1vw;");
     }
 };
 connection.onunmute = function (event) {
