@@ -291,7 +291,7 @@ clearOutlookField() {
     this.ccAttendees = '';
     this.outLookBody = '';
 }
-closeoutMaliPopup() {
+closeOutLookMailPopup() {
     this.meetNowOutlookModal.close();
    this.clearOutlookField();
 }

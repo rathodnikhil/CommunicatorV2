@@ -25,14 +25,18 @@ document.getElementById('btn-mute').onclick = function () {
     try {
         var streamid = connection.streamEvents.selectFirst().streamid;
         if (!isMute || document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0) {
-            connection.streamEvents.selectFirst({
+            connection.streamEvents.selectAll({
                 local: true
-            }).stream.mute("audio");
+            }).forEach(element => {
+                if (!element.stream.isScreen) { element.stream.mute("audio"); }
+            });
             isMute = true;
         } else {
-            connection.streamEvents.selectFirst({
+            connection.streamEvents.selectAll({
                 local: true
-            }).stream.unmute();
+            }).forEach(element => {
+                if (!element.stream.isScreen) { element.stream.unmute(); }
+            });
             isMute = false;
         }
     } catch (error) {
@@ -146,16 +150,11 @@ DetectRTC.load(function () {
 
 document.getElementById('disable-video').onclick = function () {
     this.disabled = true;
-    if (isMute) {
-        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone btn-sec";
-        isMute = false;
-        alertService.warning('You will have to mute yourself again!', 'unmute');
 
-    }
-    if (isShareScreen) {
-        isShareScreen = false;
-        alertService.warning('You will have to share screen again!', 'screen share');
-    }
+    // if (isShareScreen) {
+    //     isShareScreen = false;
+    //     alertService.warning('You will have to share screen again!', 'screen share');
+    // }
     setTimeout(function () {
         document.getElementById('disable-video').disabled = false;
     }, 6000);
@@ -166,7 +165,9 @@ document.getElementById('disable-video').onclick = function () {
         connection.streamEvents.selectAll({
             local: true
         }).forEach(streamElement => {
-            streamElement.stream.stop();
+            if (!streamElement.stream.isScreen) {
+                streamElement.stream.stop();
+            }
         });
     }
     connection.session = {
@@ -187,6 +188,17 @@ document.getElementById('disable-video').onclick = function () {
         audio: true,
         video: videoValue
     });
+    if (isMute) {
+        setTimeout(function () {
+            connection.streamEvents.selectAll({
+                local: true
+            }).forEach(element => {
+                if (!element.stream.isScreen) {
+                    element.stream.mute("audio");
+                }
+            });
+        }, 3000);
+    }
 }
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
@@ -289,14 +301,14 @@ function appendDIV(event) {
     messageCounter++;
     var messageCounterEl = document.getElementById('messageCount');
     messageCounterEl.innerHTML = messageCounter;
-    html += '<i class="fa fa-user"></i>&nbsp;' + firstNameUpperCase + ' ' + formatDate(new Date()) + '</span>'
+    html += formatDate(new Date()) + ' <i class="fa fa-user"></i>&nbsp; ' + firstNameUpperCase + '</span>'
     div.innerHTML = html;
 
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 
-    document.getElementById('input-text-chat').focus();
     document.getElementById('chatAnchor').click();
+    document.getElementById('input-text-chat').focus();
 }
 
 // ......................................................
@@ -388,7 +400,7 @@ connection.onstream = function (event) {
                 userid: event.userid
             }).forEach(function (streamEvent) {
                 var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
-                if (mediaElement && !event.stream.isScreen) {
+                if (mediaElement && !event.stream.isScreen && !streamEvent.stream.isScreen) {
                     streamEvent.stream.stop();
                     mediaElement.parentNode.removeChild(mediaElement);
                     viewerCounter--;
@@ -409,7 +421,7 @@ connection.onstream = function (event) {
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
     var viewerNameString = null;
-  
+
     var attendeeFullNameArray = setAttendeeName(attendeeFullName);
     if (attendeeFullNameArray.length < 3) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
@@ -443,7 +455,7 @@ connection.onstream = function (event) {
         }
         customDiv.appendChild(initialsDiv);
     }
-   
+
 
     customDiv.appendChild(video);
     customDiv.setAttribute("drag-scroll-item", '');
@@ -452,6 +464,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;');
+            video.setAttribute("style","background: azure;border: 2px solid #3283b9;float:left;margin-top");
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -463,12 +477,14 @@ connection.onstream = function (event) {
         if (document.getElementById(event.streamid + 'parent') == null) {
             connection.videosContainer.appendChild(customDiv);
             if (event.type !== 'local') {
+                if (document.getElementById(event.userid + 'viewer') == undefined && document.getElementById(event.userid + 'viewer') == null) {
+                    viewerCounter++;
+                }
                 var viewer = displayViewerList(event, viewerNameString, 0);
                 viewerListDiv.appendChild(viewer);
-                viewerCounter++;
                 var vCounterEl = document.getElementById('viewerCount');
                 vCounterEl.innerText = viewerCounter
-               
+
             }
         }
     }
@@ -480,7 +496,7 @@ connection.onstream = function (event) {
 connection.onMediaError = function (event) {
     alertService.error(event.message + ', connect your device and refresh again', "Device error!");
     document.getElementById('btn-leave-room').disabled = true;
-  //  document.getElementById('open-room').disabled = false;
+    //  document.getElementById('open-room').disabled = false;
 
 }
 connection.onmute = function (event) {
@@ -495,6 +511,8 @@ connection.onunmute = function (event) {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = false;
         document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:none;");
+        var muteUnmuteBtn = document.getElementById('btn-mute');
+        muteUnmuteBtn.className = "btn-sec";
     }
 };
 connection.onstreamended = function (event) {
@@ -513,8 +531,8 @@ connection.onstreamended = function (event) {
                 + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
         }
         viewerNameString = '<p>' + firstNameUpperCase + '</p>';
-        var viewer =null;
-        if (event.stream.isScreen) {viewer = displayViewerList(event, viewerNameString, 3); }
+        var viewer = null;
+        if (event.stream.isScreen) { viewer = displayViewerList(event, viewerNameString, 3); }
         else { viewer = displayViewerList(event, viewerNameString, 2); }
         viewerListDiv.appendChild(viewer);
     }
@@ -527,6 +545,21 @@ connection.onleave = function (event) {
         if (mediaElement) {
             streamEvent.stream.stop();
             mediaElement.parentNode.removeChild(mediaElement);
+        }
+        if (event.type !== 'local') {
+            var attendeeFullName = event.extra;
+            var viewerNameString = null;
+            var attendeeFullNameArray = setAttendeeName(attendeeFullName);
+            if (attendeeFullNameArray.length < 3) {
+                var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
+            } else {
+                var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
+                    + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
+            }
+            viewerNameString = '<p>' + firstNameUpperCase + '</p>';
+            var viewer = null;
+            viewer = displayViewerList(event, viewerNameString, 2);
+            viewerListDiv.appendChild(viewer);
         }
     });
 
@@ -611,7 +644,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             }
             break;
     }
-   
+
     viewer.innerHTML = html;
     document.getElementById('viewerAnchor').click();
     return viewer;
@@ -714,8 +747,9 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
-            //    document.getElementById('btn-save-mom').disabled = false;
-             //   document.getElementById('input-text-chat').disabled = false;
+                //    document.getElementById('btn-save-mom').disabled = false;
+                //   document.getElementById('input-text-chat').disabled = false;
+                showRoomURL(roomid);
                 return;
             }
             document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
