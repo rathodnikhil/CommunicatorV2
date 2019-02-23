@@ -39,7 +39,7 @@
                     </div>
 
                 </app-custom-modal>
-                <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearAllMeetingField()">
+                <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearOutlookField()">
                     <div class="outlook-email-background">
                         <div class="form-group row">
                         <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="modal-footer popFooter">
                             <button type="button" class="btn btn-primary" (click)="sendEmail($event)">Send</button>
-                            <button type="button" class="btn btn-danger" (click)="closeoutMaliPopup()">Close</button>
+                            <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
                         </div>
                 </app-custom-modal>
             </div>
@@ -87,7 +87,7 @@
             <label for="s1" class="accordion-label" style="cursor: pointer;" (click)="selectMeetingFilterDate()">
                 <i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
                 <span style="float: right; font-size: 20px;">
-                    <i class="fa fa-angle-down" aria-hidden="true" style="cursor: pointer;"></i>
+                    <i class="fa fa-angle-up" [ngClass]="{'fa-angle-down':!selectDateFlag}" aria-hidden="true" style="cursor: pointer;"></i>
                 </span>
             </label>
             <ul class="accordion-child">

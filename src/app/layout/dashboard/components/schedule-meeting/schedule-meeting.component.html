@@ -112,7 +112,7 @@
                             <div class="modal-footer popFooter">
                                 <button type="button" class="btn btn-primary" (click)="copyToOutLook($event)">Go to Outlook</button>
                                 <button type="button" class="btn btn-primary" (click)="copyToClipboard()">Copy</button>
-                                <button type="button" class="btn btn-danger" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
+                                <button type="button" class="btn btn-danger" (click)="closeMeetingPopup('scheduleMeetings',true)">Close</button>
                             </div>
                         </app-custom-modal>
 
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="modal-footer popFooter">
                                     <button type="button" class="btn btn-primary" (click)="sendEmail($event)">Send</button>
-                                    <button type="button" class="btn btn-danger" (click)="closeoutMaliPopup()">Close</button>
+                                    <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
                                 </div>
                         </app-custom-modal>
                     </div>

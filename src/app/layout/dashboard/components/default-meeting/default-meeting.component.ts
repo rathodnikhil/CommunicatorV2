@@ -138,55 +138,57 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     filterMeetingByDate(mode) {
         this.serachDateField.nativeElement.blur();
         this.clearDateField.nativeElement.blur();
-            this.filteredFutureMeetingList = [];
-            switch (mode) {
-                case 'today':
-                    this.selectedCriteria = 'Today';
-                    this.futureMeetingList.forEach(meeting => {
-                        const meetingDate = new Date(meeting.meetingStartDateTime);
-                        if (meetingDate.getDate() === this.currentDate.getDate()
-                            && meetingDate.getMonth() === this.currentDate.getMonth()
-                            && meetingDate.getFullYear() === this.currentDate.getFullYear()) {
-                            this.filteredFutureMeetingList.push(meeting);
-                        }
-                    });
-                    break;
-                case 'tomorrow':
-                    this.selectedCriteria = 'Tomorrow';
-                    this.futureMeetingList.forEach(meeting => {
-                        const meetingDate = new Date(meeting.meetingStartDateTime);
-                        const tomorrow = new Date();
-                        tomorrow.setDate(tomorrow.getDate() + 1);
-                        if (meetingDate.getDate() === tomorrow.getDate()
-                            && meetingDate.getMonth() === tomorrow.getMonth()
-                            && meetingDate.getFullYear() === tomorrow.getFullYear()) {
-                            this.filteredFutureMeetingList.push(meeting);
-                        }
-                    });
-                    break;
-                case 'range':
-                    this.serachDateField.nativeElement.blur();
-                    this.clearDateField.nativeElement.blur();
-                    if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate.trim() === ''
-                        || this.selectedtoDate === null) {
-                        this.alertService.warning('Select from date', 'Wanning');
-                    } else {
-                        this.selectedCriteria = 'Range';
-                        const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
-                        const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
-                        this.futureMeetingList.forEach(meeting => {
-                            const meetingDate = new Date(meeting.meetingStartDateTime);
-                            if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
-                                this.filteredFutureMeetingList.push(meeting);
-                            }
-                        });
+        this.filteredFutureMeetingList = [];
+        switch (mode) {
+            case 'today':
+                this.selectedCriteria = 'Today';
+                this.futureMeetingList.forEach(meeting => {
+                    const meetingDate = new Date(meeting.meetingStartDateTime);
+                    if (meetingDate.getDate() === this.currentDate.getDate()
+                        && meetingDate.getMonth() === this.currentDate.getMonth()
+                        && meetingDate.getFullYear() === this.currentDate.getFullYear()) {
+                        this.filteredFutureMeetingList.push(meeting);
                     }
-                    break;
-                default:
-                    this.selectedCriteria = 'All';
+                });
+                break;
+            case 'tomorrow':
+                this.selectedCriteria = 'Tomorrow';
+                this.futureMeetingList.forEach(meeting => {
+                    const meetingDate = new Date(meeting.meetingStartDateTime);
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    if (meetingDate.getDate() === tomorrow.getDate()
+                        && meetingDate.getMonth() === tomorrow.getMonth()
+                        && meetingDate.getFullYear() === tomorrow.getFullYear()) {
+                        this.filteredFutureMeetingList.push(meeting);
+                    }
+                });
+                break;
+            case 'range':
+                this.serachDateField.nativeElement.blur();
+                this.clearDateField.nativeElement.blur();
+                if (this.selectedfromDate === null || this.selectedfromDate === undefined
+                    || this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedfromDate === '') {
+                    this.alertService.warning('Select from date', 'Wanning');
                     this.filteredFutureMeetingList = this.futureMeetingList;
-                    break;
-            }
+                    return false;
+                } else {
+                    this.selectedCriteria = 'Range';
+                    const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
+                    const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
+                    this.futureMeetingList.forEach(meeting => {
+                        const meetingDate = new Date(meeting.meetingStartDateTime);
+                        if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
+                            this.filteredFutureMeetingList.push(meeting);
+                        }
+                    });
+                }
+                break;
+            default:
+                this.selectedCriteria = 'All';
+                this.filteredFutureMeetingList = this.futureMeetingList;
+                break;
+        }
     }
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
@@ -215,14 +217,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     copyToOutLook(event) {
         this.meetNowOutlookModal.open();
         const newLine = '\r\n\r\n';
-       this.outLookBody = this.getMeetingDetails(newLine);
-       this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+        this.outLookBody = this.getMeetingDetails(newLine);
+        this.outLookSubject = 'Meet now: ' + new Date().toDateString();
         this.closePopup('meetNow');
     }
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
-        const meetingDetails =  'Meet now: ' + new Date().toDateString() + newLine  + this.getMeetingDetails(newLine);
+        const meetingDetails = 'Meet now: ' + new Date().toDateString() + newLine + this.getMeetingDetails(newLine);
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
@@ -256,8 +258,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
-               // this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
-                this.futureMeetingList.splice(0 , 0 , this.meetNowMeeting);
+                // this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
+                this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });
@@ -267,13 +269,15 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
     sendEmail(e) {
-        if ( this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
+        if (this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
             const newLineJson = '<br><br>';
-            const outLookBodyJson  = this.getMeetingDetails(newLineJson);
-        const payload = {toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
-            meetingDetailsBody: outLookBodyJson , meeting: this.meetNowMeeting};
+            const outLookBodyJson = this.getMeetingDetails(newLineJson);
+            const payload = {
+                toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
+                meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
+            };
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
@@ -283,18 +287,18 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
                     return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
                 }
-        });
+            });
+        }
     }
-}
-clearOutlookField() {
-    this.toAttendees = '';
-    this.ccAttendees = '';
-    this.outLookBody = '';
-}
-closeoutMaliPopup() {
-    this.meetNowOutlookModal.close();
-   this.clearOutlookField();
-}
+    clearOutlookField() {
+        this.toAttendees = '';
+        this.ccAttendees = '';
+        this.outLookBody = '';
+    }
+    closeOutLookMailPopup() {
+        this.meetNowOutlookModal.close();
+        this.clearOutlookField();
+    }
     // get meeting details
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
