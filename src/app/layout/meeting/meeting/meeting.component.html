@@ -6,20 +6,22 @@
                     <div class="row">
                         <div class="col-md-5 offset-md-1">
                             <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word;"><b>Host:
-                                {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
+                                    {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
                         </div>
-                        <div class="col-md-6" style="float: right;" >
+                        <div class="col-md-6" style="float: right;">
                             <div id="room-urls" style="text-align: center;display: none;">
-                                <button type="button"  data-toggle="tooltip" title="Copy Register User Link"
-                                class="btn-sm btn-url" id="copyMeetingLink">
-                                <i class="fa fa-clipboard" aria-hidden="true"></i> User Link
+                                <button type="button" data-toggle="tooltip" title="Copy Register User Link" class="btn-sm btn-url"
+                                    id="copyMeetingLink">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> User Link
                                 </button>
-                                <button type="button" data-toggle="tooltip" title="Copy Guest User Link" class="btn-sm btn-url" id="copyGuestMeetingLink">
+                                <button type="button" data-toggle="tooltip" title="Copy Guest User Link" class="btn-sm btn-url"
+                                    id="copyGuestMeetingLink">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i> Guest Link
                                 </button>
-    
-                                <button type="button"  data-toggle="tooltip" title="Copy Meeting Id" class="btn-sm btn-url" id="copyMeetingId">
+
+                                <button type="button" data-toggle="tooltip" title="Copy Meeting Id" class="btn-sm btn-url"
+                                    id="copyMeetingId">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Id
                                 </button>
                             </div>
@@ -27,10 +29,10 @@
                         <h6 class="offset-md-1" style="overflow-wrap: break-word; padding-top: 2px;" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
                         </h6>
                     </div>
-                   
+
                 </div>
                 <div class="attendee-row">
-                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true"  #videos_container id="videos_container">
+                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" #videos_container id="videos_container">
                         <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
                     </div>
                     <!-- <p  id="muteIcon"> </p>  -->
@@ -42,7 +44,7 @@
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()" 
+                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()"
                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
@@ -65,7 +67,7 @@
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording" >
+                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording">
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip" aria-hidden="true"
                                 id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
@@ -74,24 +76,24 @@
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn-sec pull-left"  #shareFileBtn
-                            (click)="shareFile()" title="Share File" data-toggle="tooltip">
+                        <button id="share-file" class="btn-sec pull-left" #shareFileBtn (click)="shareFile()" title="Share File"
+                            data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
                         <!-- <button id="share-screen" class="btn-sec pull-left"  #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" -->
-                                <button id="share-screen" class="btn-sec pull-left"  #shareScreenBtn
-                            (click)='shareScreen()' data-toggle="tooltip" title="Share Screen">
+                        <button id="share-screen" class="btn-sec pull-left" #shareScreenBtn (click)='shareScreen()'
+                            data-toggle="tooltip" title="Share Screen">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec pull-left default" alt="Disable video"
-                            #viewVideoBtn (click)='viewVideo()' [value]="isVideoEnabled" title="Video On/Off"
-                            data-toggle="tooltip">
+                        <button id="disable-video" class="btn-sec pull-left default" alt="Disable video" #viewVideoBtn
+                            (click)='viewVideo()' [value]="isVideoEnabled" title="Video On/Off" data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
                         <span id="meeting-error" style="float: right;font-weight: bolder;background-color:#b031fa; color: #fff"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
+                        <button id="recording_hidden" style="display:none;">HIdden stuff for recor</button>
                         <div style="display: none;" id="isHost"></div>
                         <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
                         <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
@@ -140,7 +142,7 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
-                                    Viewers<span id="viewerCount" class="step"   ></span>
+                                    Viewers<span id="viewerCount" class="step"></span>
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
@@ -179,7 +181,7 @@
                             </div>
                         </div>
                         <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
-                            <div id="file-container" class="row content-tab" >
+                            <div id="file-container" class="row content-tab">
                             </div>
                         </div>
                     </div>
@@ -194,3 +196,95 @@
     </div>
 </section>
 <video id="screenRecordVideo" style="display: none;"></video>
+
+
+
+
+
+<section class="experiment recordrtc" style="display:none;">
+    <h2 class="header" style="margin: 0;">
+        <select class="recording-media">
+            <option value="record-audio-plus-video">Microphone+Camera</option>
+            <option value="record-audio">Microphone</option>
+            <option value="record-screen">Full Screen</option>
+            <option value="record-audio-plus-screen">Microphone+Screen</option>
+        </select>
+
+        <span style="font-size: 15px;">into</span>
+
+        <select class="media-container-format">
+            <option>default</option>
+            <option>vp8</option>
+            <option>vp9</option>
+            <option>h264</option>
+            <option>mkv</option>
+            <option>opus</option>
+            <option>ogg</option>
+            <option>pcm</option>
+            <option>gif</option>
+            <option>whammy</option>
+            <option>WebAssembly</option>
+        </select>
+
+        <input type="checkbox" id="chk-timeSlice" style="margin:0;width:auto;" title="Use intervals based recording">
+        <label for="chk-timeSlice" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;"
+            title="Use intervals based recording">Use timeSlice?</label>
+
+        <br>
+
+        <!-- <button id="btn-start-recording">Start Recording</button> -->
+        <button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>
+
+        <div style="display: inline-block;">
+            <input type="checkbox" id="chk-fixSeeking" style="margin:0;width:auto;" title="Fix video seeking issues?">
+            <label for="chk-fixSeeking" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;"
+                title="Fix video seeking issues?">Fix Seeking Issues?</label>
+        </div>
+
+        <hr style="border-top: 0;border-bottom: 1px solid rgb(189, 189, 189);margin: 4px -12px;margin-top: 8px;">
+        <select class="media-resolutions">
+            <option value="default">Default resolutions</option>
+            <option value="1920x1080">1080p</option>
+            <option value="1280x720">720p</option>
+            <option value="640x480">480p</option>
+            <option value="3840x2160">4K Ultra HD (3840x2160)</option>
+        </select>
+
+        <select class="media-framerates">
+            <option value="default">Default framerates</option>
+            <option value="5">5 fps</option>
+            <option value="15">15 fps</option>
+            <option value="24">24 fps</option>
+            <option value="30">30 fps</option>
+            <option value="60">60 fps</option>
+        </select>
+
+        <select class="media-bitrates">
+            <option value="default">Default bitrates</option>
+            <option value="8000000000">1 GB bps</option>
+            <option value="800000000">100 MB bps</option>
+            <option value="8000000">1 MB bps</option>
+            <option value="800000">100 KB bps</option>
+            <option value="8000">1 KB bps</option>
+            <option value="800">100 Bytes bps</option>
+        </select>
+    </h2>
+
+    <div style="text-align: center; display: none;">
+        <button id="save-to-disk">Save To Disk</button>
+        <button id="upload-to-php">Upload to PHP</button>
+        <button id="open-new-tab">Open New Tab</button>
+
+        <div style="margin-top: 10px;">
+            <span id="signinButton" class="pre-sign-in">
+                <span class="g-signin" data-callback="signinCallback" data-clientid="41556190767-115ifahd55lk4ln5pop4jus55cr4l7oh.apps.googleusercontent.com"
+                    data-cookiepolicy="single_host_origin" data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
+                </span>
+            </span>
+
+            <button id="upload-to-youtube" style="vertical-align:top;">Upload to YouTube</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 10px;" id="recording-player"></div>
+</section>
