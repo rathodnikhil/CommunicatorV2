@@ -60,14 +60,14 @@
                             </div>
                         </app-custom-modal>
                         <button id="btn-mute" class="btn-sec pull-left" [ngClass]="isMute?'btn-mute-click':'btn-sec'"
-                            #muteUnmuteBtn placement="top" data-toggle="tooltip" title="Mute/Unmute" (click)='mute()'>
+                            placement="top" data-toggle="tooltip" title="Mute/Unmute" (click)='mute()'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" style="display: none;"
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording">
+                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;"> 
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip" aria-hidden="true"
                                 id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
@@ -76,21 +76,20 @@
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn-sec pull-left" #shareFileBtn (click)="shareFile()" title="Share File"
+                        <button id="share-file" class="btn-sec pull-left"  (click)="shareFile()" title="Share File" style="display: none;"
                             data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
-                        <!-- <button id="share-screen" class="btn-sec pull-left"  #shareScreenBtn [ngClass]="isScreenSharingStarted?'btn-sec':'default'" -->
-                        <button id="share-screen" class="btn-sec pull-left" #shareScreenBtn (click)='shareScreen()'
-                            data-toggle="tooltip" title="Share Screen">
+                        <button id="share-screen" class="btn-sec pull-left"   [ngClass]="isScreenSharingStarted?'btn-sec':'btn-sec'" style="display: none;"
+                            data-toggle="tooltip" title="Share Screen" (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec pull-left default" alt="Disable video" #viewVideoBtn
+                        <button id="disable-video" class="btn-sec pull-left default" alt="Disable video" style="display: none;"
                             (click)='viewVideo()' [value]="isVideoEnabled" title="Video On/Off" data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
-                        <span id="meeting-error" style="float: right;font-weight: bolder;background-color:#b031fa; color: #fff"></span>
+                        <span id="meeting-error" style="float: right;font-weight: bolder; color: rgb(13, 75, 36)"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <button id="recording_hidden" style="display:none;">HIdden stuff for recor</button>
@@ -170,7 +169,7 @@
 
                                 <textarea placeholder="Type MOM Here..." style="width: 100%; margin:5%; overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn btn-primary momBtn" #saveMomBtn id="btn-save-mom" (click)="saveMom()">Generate
+                                <button class="btn btn-primary momBtn"  id="btn-save-mom" (click)="saveMom()">Generate
                                     Meeting Notes</button>
                             </div>
                         </div>

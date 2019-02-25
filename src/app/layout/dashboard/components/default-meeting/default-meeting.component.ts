@@ -35,11 +35,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     outLookSubject: any;
     toAttendees: any;
     ccAttendees: any;
+    rememberEmailList = [];
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
-    @ViewChild('goToOutlookBtnField') goToOutlookBtnField: ElementRef;
-    @ViewChild('serachDateField') serachDateField: ElementRef;
-    @ViewChild('clearDateField') clearDateField: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
     meetNowModel: CustomModalModel = {
         titleIcon: '<i class="fa fa - calendar - check - o"></i>',
@@ -136,8 +134,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectDateFlag = !this.selectDateFlag;
     }
     filterMeetingByDate(mode) {
-        this.serachDateField.nativeElement.blur();
-        this.clearDateField.nativeElement.blur();
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
@@ -165,8 +161,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
-                this.serachDateField.nativeElement.blur();
-                this.clearDateField.nativeElement.blur();
                 if (this.selectedfromDate === null || this.selectedfromDate === undefined
                     || this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedfromDate === '') {
                     this.alertService.warning('Select from date', 'Wanning');
@@ -215,11 +209,20 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         });
     }
     copyToOutLook(event) {
-        this.meetNowOutlookModal.open();
-        const newLine = '\r\n\r\n';
-        this.outLookBody = this.getMeetingDetails(newLine);
-        this.outLookSubject = 'Meet now: ' + new Date().toDateString();
-        this.closePopup('meetNow');
+        const payload = {userCode: this.loggedInUser.userCode};
+        this._meetingService.getRemeberEmails(payload).subscribe(data => {
+          if (data.errorFl === true || data.warningFl === true) {
+            this.rememberEmailList = [];
+              return this.alertService.warning(data.message, 'Warning');
+          } else {
+            this.rememberEmailList = data;
+            this.meetNowOutlookModal.open();
+            const newLine = '\r\n\r\n';
+            this.outLookBody = this.getMeetingDetails(newLine);
+            this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+            this.closePopup('meetNow');
+            }
+      });
     }
     // copy meeting content
     copyToClipboard() {
@@ -294,16 +297,17 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.toAttendees = '';
         this.ccAttendees = '';
         this.outLookBody = '';
-    }
-    closeOutLookMailPopup() {
         this.meetNowOutlookModal.close();
-        this.clearOutlookField();
     }
+    // closeOutLookMailPopup() {
+    //     this.meetNowOutlookModal.close();
+    //     this.clearOutlookField();
+    // }
     // get meeting details
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting/?meetingCode=';
-        const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+        meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+        const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
             ' Please join my meeting from your computer , tablet or smartphone ' + newLine + ' for  '
             + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
@@ -320,5 +324,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.confirmCancelMeetingModal.close();
                 break;
         }
+    }
+    selectedEmail() {
+        alert('selected called');
     }
 }

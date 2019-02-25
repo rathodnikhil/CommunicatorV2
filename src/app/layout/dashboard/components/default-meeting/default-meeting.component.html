@@ -43,11 +43,19 @@
                     <div class="outlook-email-background">
                         <div class="form-group row">
                         <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
-                        <div class="col-lg-10"><textarea class="form-control" id="to" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on" > </textarea></div>
+                        <div class="col-lg-10"> 
+                            <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on" />
+                            <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                  </datalist></div>
                         </div>
                         <div class="form-group row">
                         <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
-                        <div class="col-lg-10">  <textarea class="form-control" id="cc" name="cc" [(ngModel)]="ccAttendees" autocomplete="on"> </textarea>
+                        <div class="col-lg-10"> 
+                                <input class="form-control" (onchange)="selectedEmail()" id="to" list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                <datalist id="rememberEmailListEl">
+                                        <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                      </datalist>
                         </div>
                         </div>
                         <div class="form-group row">
@@ -63,7 +71,7 @@
                         </div>
                         <div class="modal-footer popFooter">
                             <button type="button" class="btn btn-primary" (click)="sendEmail($event)">Send</button>
-                            <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
+                            <!-- <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button> -->
                         </div>
                 </app-custom-modal>
             </div>

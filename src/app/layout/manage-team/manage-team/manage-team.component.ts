@@ -195,11 +195,9 @@ export class ManageTeamComponent implements OnInit {
     }
     // to open modal popup
     open() {
-        this.addTeamField.nativeElement.blur();
         this.addNewTeamModal.open();
     }
     openMemberPopup() {
-        this.addMemField.nativeElement.blur();
         if (this.selectedTeamObj === '' || this.selectedTeamObj === null || typeof this.selectedTeamObj === 'undefined') {
             return this.alertService.warning('Please Select Team', 'Warning');
         } else {
@@ -234,7 +232,6 @@ export class ManageTeamComponent implements OnInit {
 
     // add new member
     addMember() {
-        this.addMemField.nativeElement.blur();
         if ( this.firstName === null || typeof this.firstName === 'undefined' || this.firstName.trim() === '' ) {
             return this.alertService.warning('Please Enter First Name ', 'Warning');
         } else if ( this.lastName === null || typeof this.lastName === 'undefined' || this.lastName.trim() === '' ) {
@@ -284,7 +281,6 @@ export class ManageTeamComponent implements OnInit {
         }
  }
     editTeam() {
-        this.editTeamField.nativeElement.blur();
         if (this.addMemPermission !== 2) {
             this.addUpdateTeamModal.open();
             this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
@@ -316,7 +312,6 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     deleteSelectedTeam() {
-        this.deleteTeamField.nativeElement.blur();
         if (this.addMemPermission !== 2) {
             this.deleteTeamModal.open();
             this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);

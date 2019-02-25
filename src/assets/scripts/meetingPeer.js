@@ -42,7 +42,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+               // alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
