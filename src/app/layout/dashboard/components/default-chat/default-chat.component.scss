@@ -26,7 +26,8 @@
          padding-top:10px;
     }
     .header-img{
-        height:65px;width:250px; float: left;padding: 10px;
+        height:65px;width:250px; padding: 10px;
+        // float: left;
     }
     .header-label{
         padding: 20px;
@@ -64,5 +65,11 @@
     .edit-circle-icon-background {
         color: #b031fa;
         margin-left: -20px;
-    }    
+    }  
+    
+    .details-container{
+        text-align: center;
+        width:100%;
+        height:100%;
+    }
 
