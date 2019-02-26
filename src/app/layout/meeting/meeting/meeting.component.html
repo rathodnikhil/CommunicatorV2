@@ -26,7 +26,7 @@
                                 </button>
                             </div>
                         </div>
-                        <h6 class="offset-md-1" style="overflow-wrap: break-word; padding-top: 2px;" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
+                        <h6 class="offset-md-1 subject-line" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
                         </h6>
                     </div>
 
@@ -167,7 +167,7 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center">
 
-                                <textarea placeholder="Type MOM Here..." style="width: 100%; margin:5%; overflow:auto;resize:none"
+                                <textarea placeholder="Type MOM Here..." style="width: 100%; margin:4%; overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn btn-primary momBtn"  id="btn-save-mom" (click)="saveMom()">Generate
                                     Meeting Notes</button>
