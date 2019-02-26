@@ -44,7 +44,7 @@ export class PastMeetingsComponent implements OnInit {
     attendee: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
         title: 'Meeting Attendee',
-        smallHeading: 'You can view meeting attendee',
+        smallHeading: 'You can view meeting attendees',
         body: '',
         Button1Content: '',
         Button2Content: ''
@@ -88,14 +88,15 @@ export class PastMeetingsComponent implements OnInit {
             data.mom.momDescription = data.mom.momDescription.join('\r\n ');
             const meetingDate = new Date();
             meetingDate.setTime(data.meetingStartDateTime);
-            const momHeader = 'Date of Meeting:' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject:' + data.subject +
-                '\r\n\r\n' + 'Attendees:' + this.attendeeListByMeeting + '\r\n\r\n';
+            const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + data.subject +
+                '\r\n\r\n' + 'Attendees: ' + this.attendeeListByMeeting + '\r\n\r\n';
             const fileType = 'text/json';
 
             const a = document.createElement('a');
             document.body.appendChild(a);
             a.setAttribute('style', 'display: none');
-            a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + data.mom.momDescription)}`);
+            a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + '\r\n\r\n' +
+             'Meetings Notes:' + '\r\n\r\n' + data.mom.momDescription)}`);
             // a.href = url;
             a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
             a.click();

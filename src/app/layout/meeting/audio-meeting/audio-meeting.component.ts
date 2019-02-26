@@ -182,12 +182,11 @@ export class AudioMeetingComponent implements OnInit, AfterViewInit {
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader+data)}`);
         // a.href = url;
         const today = new Date();
-        a.download = 'MOM_'+meetingDetails.meetingDate+'('+ new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
+        a.download = 'MOM_' + meetingDetails.meetingDate + '(' + new Date().toLocaleString('en-us', {  weekday: 'long' })+').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
         this.alertService.success('File has downloaded.', 'MOM Download');
-        this.saveMomBtn.nativeElement.blur();
     }
 
 

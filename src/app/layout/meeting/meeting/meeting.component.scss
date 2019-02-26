@@ -343,7 +343,7 @@ span.step {
     //   box-shadow: 0 2px #f4edf8;
   }
   .btn-url:hover{
-    color: #212529;
+    color: #36383a;
     background-color: #ffc107;
     border-color: #ffc107;
   }
@@ -351,4 +351,10 @@ span.step {
       background-color: green;
       color: #fff;
       border: 1px solid #fff;
+  }
+
+  .subject-line{
+    overflow-wrap: break-word; 
+    padding-top: 2px;
+    padding-left: 15px;
   }

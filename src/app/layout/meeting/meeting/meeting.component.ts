@@ -57,11 +57,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._loginService = loginService;
         this._meetingService = meetingService;
     }
-    @ViewChild('saveMomBtn') saveMomBtn: ElementRef;
-    @ViewChild('shareFileBtn') shareFileBtn: ElementRef;
-    @ViewChild('muteUnmuteBtn') muteUnmuteBtn: ElementRef;
-    @ViewChild('shareScreenBtn') shareScreenBtn: ElementRef;
-    @ViewChild('viewVideoBtn') viewVideoBtn: ElementRef;
     @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
     leaveMeeting: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',
@@ -222,7 +217,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        this.saveMomBtn.nativeElement.blur();
         return this.alertService.success('File has been downloaded.', 'MOM Download');
     }
 
@@ -244,8 +238,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     exit() {
-        this.stopTimer();
         this.exitMeetingConfirmModal.close();
+        this.stopTimer();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         if (this.isGuest) {
             payload.userCode = this.loggedInUser.firstName;
@@ -267,20 +261,14 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         setInterval(function () {
         }, 1000);
     }
-    shareFile() {
-        this.shareFileBtn.nativeElement.blur();
-    }
     mute() {
         this.isMute = !this.isMute;
-        this.muteUnmuteBtn.nativeElement.blur();
     }
     shareScreen() {
         this.isScreenSharingStarted = !this.isScreenSharingStarted;
-        this.shareScreenBtn.nativeElement.blur();
     }
     viewVideo() {
         this.isVideoEnabled = !this.isVideoEnabled;
-        this.viewVideoBtn.nativeElement.blur();
     }
     calculateTimeSpan() {
         // if (this.tick === this.timeLeft) {

@@ -98,6 +98,10 @@ export class MeetingService {
         const url = environment.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
+    getRemeberEmails(payload) {
+        const url = environment.baseUrl + 'getRemeberEmails?userCode=' + payload.userCode;
+        return this.apiRequest.post(url, payload);
+    }
     saveMeetingPermission(payload) {
         const url = environment.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;
         return this.apiRequest.post(url, payload).map((resp: any) => {

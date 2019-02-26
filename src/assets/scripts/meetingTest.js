@@ -1,6 +1,6 @@
 window.enableAdapter = true; // enable adapter.js
-//document.getElementById('btn-save-mom').disabled = true;
-//document.getElementById('input-text-chat').disabled = true;
+document.getElementById('btn-save-mom').disabled = true;
+document.getElementById('input-text-chat').disabled = true;
 document.getElementById('btn-leave-room').disabled = true;
 // ......................................................
 // .......................UI Code........................
@@ -348,7 +348,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+             //   alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -465,7 +465,7 @@ connection.onstream = function (event) {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
             heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;');
-            video.setAttribute("style", "background: azure;border: 2px solid #3283b9;float:left;margin-top");
+            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:nonefloat:left;margin-top");
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -747,8 +747,8 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
-                //    document.getElementById('btn-save-mom').disabled = false;
-                //   document.getElementById('input-text-chat').disabled = false;
+                    document.getElementById('btn-save-mom').disabled = false;
+                   document.getElementById('input-text-chat').disabled = false;
                 showRoomURL(roomid);
                 return;
             }
@@ -1927,7 +1927,7 @@ function getFileName(fileExtension) {
     var year = d.getUTCFullYear();
     var month = d.getUTCMonth();
     var date = d.getUTCDate();
-    return 'RecordRTC-' + year + month + date + '-' + getRandomString() + '.' + fileExtension;
+    return 'Meeting-Rec-(' + year + (month+1) + date + ')-' + getRandomString() + '.' + fileExtension;
 }
 
 function SaveFileURLToDisk(fileUrl, fileName) {

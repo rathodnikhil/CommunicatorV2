@@ -34,12 +34,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     outLookBody: any;
     outLookSubject: any;
     toAttendees: any;
+    Product: any;
+    selectedAttendee: UserService;
     ccAttendees: any;
+    rememberEmailList = [];
+    selectedEmails: any;
+    selectedCcEmails: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
-    @ViewChild('goToOutlookBtnField') goToOutlookBtnField: ElementRef;
-    @ViewChild('serachDateField') serachDateField: ElementRef;
-    @ViewChild('clearDateField') clearDateField: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
     meetNowModel: CustomModalModel = {
         titleIcon: '<i class="fa fa - calendar - check - o"></i>',
@@ -136,8 +138,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectDateFlag = !this.selectDateFlag;
     }
     filterMeetingByDate(mode) {
-        this.serachDateField.nativeElement.blur();
-        this.clearDateField.nativeElement.blur();
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
@@ -165,8 +165,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
-                this.serachDateField.nativeElement.blur();
-                this.clearDateField.nativeElement.blur();
                 if (this.selectedfromDate === null || this.selectedfromDate === undefined
                     || this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedfromDate === '') {
                     this.alertService.warning('Select from date', 'Wanning');
@@ -215,11 +213,20 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         });
     }
     copyToOutLook(event) {
-        this.meetNowOutlookModal.open();
-        const newLine = '\r\n\r\n';
-        this.outLookBody = this.getMeetingDetails(newLine);
-        this.outLookSubject = 'Meet now: ' + new Date().toDateString();
-        this.closePopup('meetNow');
+        const payload = {userCode: this.loggedInUser.userCode};
+        this._meetingService.getRemeberEmails(payload).subscribe(data => {
+          if (data.errorFl === true || data.warningFl === true) {
+            this.rememberEmailList = [];
+              return this.alertService.warning(data.message, 'Warning');
+          } else {
+            this.rememberEmailList = data;
+            this.meetNowOutlookModal.open();
+            const newLine = '\r\n\r\n';
+            this.outLookBody = this.getMeetingDetails(newLine);
+            this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+            this.closePopup('meetNow');
+            }
+      });
     }
     // copy meeting content
     copyToClipboard() {
@@ -269,13 +276,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
     sendEmail(e) {
-        if (this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
+        if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
             const newLineJson = '<br><br>';
             const outLookBodyJson = this.getMeetingDetails(newLineJson);
             const payload = {
-                toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
+                toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
             };
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
@@ -294,6 +301,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.toAttendees = '';
         this.ccAttendees = '';
         this.outLookBody = '';
+        this.selectedEmails = '';
+        this.selectedCcEmails = '';
+        // this.meetNowOutlookModal.close();
     }
     closeOutLookMailPopup() {
         this.meetNowOutlookModal.close();
@@ -302,8 +312,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // get meeting details
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting/?meetingCode=';
-        const guestMeetingUrl = 'http://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+        meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+        const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
             ' Please join my meeting from your computer , tablet or smartphone ' + newLine + ' for  '
             + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
@@ -320,5 +330,21 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.confirmCancelMeetingModal.close();
                 break;
         }
+    }
+    onEmailSelect() {
+        this.selectedEmails += ',' + this.toAttendees;
+        if (typeof this.selectedEmails.find === 'undefined') {
+            this.selectedEmails = this.selectedEmails.replace('undefined', '');
+            this.selectedEmails = this.selectedEmails.replace(/^,/, '');
+        }
+        this.toAttendees = '';
+    }
+    selectedCcEmail() {
+        this.selectedCcEmails += ',' + this.ccAttendees;
+        if (typeof this.selectedCcEmails.find === 'undefined') {
+            this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
+            this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
+        }
+        this.ccAttendees = '';
     }
 }
