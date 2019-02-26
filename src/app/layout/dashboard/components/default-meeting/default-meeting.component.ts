@@ -34,8 +34,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     outLookBody: any;
     outLookSubject: any;
     toAttendees: any;
+    Product: any;
+    selectedAttendee: UserService;
     ccAttendees: any;
     rememberEmailList = [];
+    selectedEmails: any;
+    selectedCcEmails: any;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -272,13 +276,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
     sendEmail(e) {
-        if (this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
+        if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
             const newLineJson = '<br><br>';
             const outLookBodyJson = this.getMeetingDetails(newLineJson);
             const payload = {
-                toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
+                toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
             };
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
@@ -297,12 +301,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.toAttendees = '';
         this.ccAttendees = '';
         this.outLookBody = '';
-        this.meetNowOutlookModal.close();
+        this.selectedEmails = '';
+        this.selectedCcEmails = '';
+        // this.meetNowOutlookModal.close();
     }
-    // closeOutLookMailPopup() {
-    //     this.meetNowOutlookModal.close();
-    //     this.clearOutlookField();
-    // }
+    closeOutLookMailPopup() {
+        this.meetNowOutlookModal.close();
+        this.clearOutlookField();
+    }
     // get meeting details
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
@@ -325,7 +331,20 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
-    selectedEmail() {
-        alert('selected called');
+    onEmailSelect() {
+        this.selectedEmails += ',' + this.toAttendees;
+        if (typeof this.selectedEmails.find === 'undefined') {
+            this.selectedEmails = this.selectedEmails.replace('undefined', '');
+            this.selectedEmails = this.selectedEmails.replace(/^,/, '');
+        }
+        this.toAttendees = '';
+    }
+    selectedCcEmail() {
+        this.selectedCcEmails += ',' + this.ccAttendees;
+        if (typeof this.selectedCcEmails.find === 'undefined') {
+            this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
+            this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
+        }
+        this.ccAttendees = '';
     }
 }
