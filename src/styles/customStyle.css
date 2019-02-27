@@ -205,5 +205,8 @@ color: red;
     border:1px solid #C0C0C0;
     border-left:1px solid #ffff; 
     border-right:1px solid #ffff;
-    
+    }
+    button:focus {
+        outline:none !important;
+        box-shadow: none;
     }

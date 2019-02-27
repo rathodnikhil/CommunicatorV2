@@ -1,19 +1,19 @@
 <div class="row">
     <div [ngClass]="!isAdministrator?'col-lg-7':'col-lg-12'" style="padding:0px;">
-        <div class="card card-default" style="overflow: auto;">
+        <div class="card-default" style="overflow: auto;">
             <div class="details-container">
                 <div class="background">
-                     <!-- <img class="header-img" src="assets\images\C_4_white.png"> -->
+                     <!-- <img class="header-img" src="assets\images\color-logo1.png"> -->
                         <ng-template [ngIf]="isAdministrator" [ngIfElse]="notAdmin">
-                            <img class="header-img" src="assets\images\C_4_white.png">
+                            <img class="header-img" src="assets\images\color-logo1.png">
                         </ng-template>
                               
                         <ng-template #notAdmin>
-                            <img style="float:left;" class="header-img" src="assets\images\C_4_white.png">
+                            <img style="float:left;" class="header-img" src="assets\images\color-logo1.png">
                         </ng-template>
                 </div>
                
-                <h3 class="header-label"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
+                <h3 class="header-label" style="margin-top:20%;"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
                 </h3>
                 <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath"
                         class="image--cover  responsive1" />
@@ -34,11 +34,10 @@
                     <br>and start a new conversation</h5>
                 <!-- <div class=" mt-5"> -->
                 <div class="footer">
-                    <div class="card mx-auto">
+                    <!-- <div class="card mx-auto">
                         <div class="card bg-light text-dark">
                             <img class="card-img setlogo" src="assets\images\coreflex-logo.png"
                                 style="height:60px;width:200px; ">
-                            <!-- <h4 style="padding-top: 10px; font-weight: bold;">CoreFlex Communicator</h4> -->
                             <p class="describe text-center"><strong>"</strong>Communicator is an online meeting,
                                 desktop
                                 sharing, and video conferencing software solution <br>that enables the user to meet
@@ -54,17 +53,21 @@
                         </div>
                     </div>
                     <h6 class="membername text-center">To easily log in later, save this URL:
-                        <span style="color: #be181e;" >https://cfscommunicator.com</span></h6>
+                        <span style="color: #be181e;" >https://cfscommunicator.com</span></h6> -->
                 </div>
                 <!-- </div> -->
             </div>
         </div>
     </div>
 
-    <div class="col-lg-5" style="padding:1rem;" *ngIf="!isAdministrator">
+    <div class="col-lg-5" style="padding:1rem; height: 98vh;" *ngIf="!isAdministrator">
         <div [ngSwitch]="currentRoute">
             <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
             <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
         </div>
     </div>
+
+    <!-- <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary"
+                                role="button" style="font-size:15px; bottom: 0;">Explore
+                                CoreFlex Communicator</a> -->
 </div>
