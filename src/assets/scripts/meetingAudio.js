@@ -46,7 +46,7 @@ document.getElementById('open-room').onclick = function () {
     disableInputButtons();
     connection.open(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
-        document.getElementById('meeting-error').innerText = 'Meeting has started.';
+        document.getElementById('meeting-error').display = none;
         document.getElementById('resume-count').click();
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;

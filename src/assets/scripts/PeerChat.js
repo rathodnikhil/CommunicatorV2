@@ -12,6 +12,8 @@ connection.socket.emit(connection.socketCustomEvent, {
 document.getElementById('share-screen').onclick = function () {
     try {
         isShareScreen = true;
+        var shareScreenEl = document.getElementById('share-screen');
+        shareScreenEl.className = 'btn-primary';
         connection.addStream({
             screen: true,
             oneway: true
@@ -47,7 +49,7 @@ document.getElementById('open-room').onclick = function () {
     disableInputButtons();
     connection.openOrJoin(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
-        document.getElementById('meeting-error').innerText = 'Meeting has started.';
+        document.getElementById('meeting-error').display = none;
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;
         document.getElementById('btn-leave-room').disabled = false;
