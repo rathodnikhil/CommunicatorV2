@@ -38,8 +38,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedAttendee: UserService;
     ccAttendees: any;
     rememberEmailList = [];
-    selectedEmails: any;
+   selectedEmails: any;
     selectedCcEmails: any;
+
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -301,13 +302,15 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.toAttendees = '';
         this.ccAttendees = '';
         this.outLookBody = '';
+
         this.selectedEmails = '';
         this.selectedCcEmails = '';
         // this.meetNowOutlookModal.close();
     }
-    closeOutLookMailPopup() {
-        this.meetNowOutlookModal.close();
-        this.clearOutlookField();
+  
+     closeOutLookMailPopup() {
+         this.meetNowOutlookModal.close();
+         this.clearOutlookField();
     }
     // get meeting details
     getMeetingDetails(newLine): string {
@@ -331,6 +334,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
+
     onEmailSelect() {
         this.selectedEmails += ',' + this.toAttendees;
         if (typeof this.selectedEmails.find === 'undefined') {
@@ -346,5 +350,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
         }
         this.ccAttendees = '';
+
     }
 }

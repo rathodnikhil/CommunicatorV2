@@ -120,12 +120,37 @@
                             <div class="outlook-email-background">
                                 <div class="form-group row">
                                 <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
-                                <div class="col-lg-10"><textarea class="form-control" id="to" [(ngModel)]="toAttendees" name="to"> </textarea></div>
+                                <!-- <div class="col-lg-10"><textarea class="form-control" id="to" [(ngModel)]="toAttendees" name="to"> </textarea></div> -->
+                                
+                                <div class="col-lg-10"> 
+                                    <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
+                                        (change)="onEmailSelect()" />
+                                    <datalist id="rememberEmailListEl">
+                                        <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                    </datalist>
+                                </div>
+                                <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
+                                <div class="col-lg-10" style="margin-top: 5px; color: green; overflow: auto; font-weight: bold;"> 
+                                    <span>( </span><label style=" overflow-wrap: break-word;" *ngIf="selectedEmails">{{selectedEmails}}</label><span> )</span>
+                                </div>  
+
                                 </div>
                                 <div class="form-group row">
                                 <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
-                                <div class="col-lg-10">  <textarea class="form-control" id="cc" name="cc" [(ngModel)]="ccAttendees"> </textarea>
+                                <!-- <div class="col-lg-10">  <textarea class="form-control" id="cc" name="cc" [(ngModel)]="ccAttendees"> </textarea>
+                                </div> -->
+                                
+                                <div class="col-lg-10"> 
+                                    <input class="form-control" (change)="selectedCcEmail()" id="to" list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                        <datalist id="rememberEmailListEl">
+                                            <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                        </datalist>
                                 </div>
+                                <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
+                                <div class="col-lg-10" style="margin-top: 5px; color: green; overflow: auto; font-weight: bold;"> 
+                                    <span>( </span> <label style=" overflow-wrap: break-word;" *ngIf="selectedCcEmails">{{selectedCcEmails}}</label><span> )</span>
+                                </div>
+
                                 </div>
                                 <div class="form-group row">
                                 <div class="col-lg-2"> <label for="subject"  class="outlook-email-label">Subject: </label>
