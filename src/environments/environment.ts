@@ -8,5 +8,4 @@ export const environment = {
 
   baseUrl: 'http://localhost:8080/communicatorV2/'
 //  baseUrl : 'https://cfscommunicator.com:8443/communicatorv2/'
-
 };

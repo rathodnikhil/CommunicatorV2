@@ -33,6 +33,9 @@ export class ScheduleMeetingComponent implements OnInit {
     ccAttendees: any;
     meetingObj: any;
     outLookBodyJson: any;
+    rememberEmailList = [];
+    selectedEmails: any;
+    selectedCcEmails: any;
     // public radioGroupForm: FormGroup;
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -184,6 +187,7 @@ export class ScheduleMeetingComponent implements OnInit {
             } else {
                 this.meeting.callType = 'Video';
             }
+            debugger;
             const payload = {
                 'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                     this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
@@ -234,13 +238,30 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.meridianTime = { hour: today.getHours(), minute: today.getMinutes() };
     }
     copyToOutLook(event) {
-        this.outlookModal.open();
-        const newLine = '\r\n\r\n';
-        this.outLookBody = this.getMeetingDetails(newLine);
-        this.outLookSubject = this.subject;
-        const newLineJson = '<br><br>';
-        this.outLookBodyJson = this.getMeetingDetails(newLineJson);
-        this.closeMeetingPopup('scheduleMeetings',false);
+        // this.outlookModal.open();
+        // const newLine = '\r\n\r\n';
+        // this.outLookBody = this.getMeetingDetails(newLine);
+        // this.outLookSubject = this.subject;
+        // const newLineJson = '<br><br>';
+        // this.outLookBodyJson = this.getMeetingDetails(newLineJson);
+        // this.closeMeetingPopup('', false);
+
+        const payload = {userCode: this.loggedInUser.userCode};
+        this._meetingService.getRemeberEmails(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+              this.rememberEmailList = [];
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+              this.rememberEmailList = data;
+              this.outlookModal.open();
+              const newLine = '\r\n\r\n';
+              this.outLookBody = this.getMeetingDetails(newLine);
+              this.outLookSubject = this.subject;
+              this.closeMeetingPopup('scheduleMeetings', false);
+
+              }
+        });
+
     }
     // copy meeting content
     copyToClipboard() {
@@ -296,11 +317,11 @@ export class ScheduleMeetingComponent implements OnInit {
         return meetingDetails;
     }
     sendEmail(e) {
-        if (this.toAttendees === null || typeof this.toAttendees === 'undefined' || this.toAttendees.trim() === '') {
+        if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
             const payload = {
-                toAttendees: this.toAttendees, ccAttendees: this.ccAttendees,
+                toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: this.outLookBodyJson, meeting: this.meetingObj
             };
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
@@ -322,5 +343,23 @@ export class ScheduleMeetingComponent implements OnInit {
         this.toAttendees = '';
         this.ccAttendees = '';
         this.outLookBody = '';
+        this.selectedEmails = '';
+        this.selectedCcEmails = '';
+    }
+    onEmailSelect() {
+        this.selectedEmails += ',' + this.toAttendees;
+        if (typeof this.selectedEmails.find === 'undefined') {
+            this.selectedEmails = this.selectedEmails.replace('undefined', '');
+            this.selectedEmails = this.selectedEmails.replace(/^,/, '');
+        }
+        this.toAttendees = '';
+    }
+    selectedCcEmail() {
+        this.selectedCcEmails += ',' + this.ccAttendees;
+        if (typeof this.selectedCcEmails.find === 'undefined') {
+            this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
+            this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
+        }
+        this.ccAttendees = '';
     }
 }
