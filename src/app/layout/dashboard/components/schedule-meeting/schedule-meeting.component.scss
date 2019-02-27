@@ -76,4 +76,15 @@
    }
   
   
-   
+   /*emailid background*/
+   .email-list
+   {
+   overflow-wrap: break-word;
+   border:1px solid aliceblue;
+   background:aliceblue;
+   width:100%;
+    height:80%;
+    overflow-y:auto;
+    padding: 4px 4px 4px 5px;
+    margin-bottom: 5px; 
+   }
