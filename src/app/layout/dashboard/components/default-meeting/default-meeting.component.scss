@@ -400,5 +400,20 @@ $border-color: #e0e0e0;
 .outlook-email-background
     {
     padding: 20px;
+    background: #F6F8F5;
+    border-left: 1px solid #ffff;
+    border-right: 1px solid #ffff;
     }
 
+   /*emailid background*/
+   .email-list
+   {
+   overflow-wrap: break-word;
+   border:1px solid aliceblue;
+   background:aliceblue;
+   width:100%;
+    height:80%;
+    overflow-y:auto;
+    padding: 4px 4px 4px 5px;
+    margin-bottom: 5px; 
+   }
