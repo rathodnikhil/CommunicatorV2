@@ -65,7 +65,7 @@
                                 </datalist>
                         </div>
                         <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
-                        <div class="col-lg-10" style="margin-top: 5px; color: darkgreen; overflow: auto; font-weight: bold;"> 
+                        <div class="col-lg-10" style="margin-top: 5px; color: green; overflow: auto; font-weight: bold;"> 
                             <span>( </span> <label style=" overflow-wrap: break-word;" *ngIf="selectedCcEmails">{{selectedCcEmails}}</label><span> )</span>
                         </div>
                         </div>
@@ -105,9 +105,7 @@
             <input id="s1" class="hide" type="checkbox">
             <label for="s1" class="accordion-label" style="cursor: pointer;" (click)="selectMeetingFilterDate()">
                 <i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
-                <span style="float: right; font-size: 20px;">
-                    <i class="fa fa-angle-up" [ngClass]="{'fa-angle-down':!selectDateFlag}" aria-hidden="true" style="cursor: pointer;"></i>
-                </span>
+                <i class="fa fa-angle-up" [ngClass]="{'fa-angle-down':!selectDateFlag}" aria-hidden="true" style="cursor: pointer; float: right; font-size: 19px;"></i>
             </label>
             <ul class="accordion-child">
                 <div class="row overall-padding" style="cursor: default;">
