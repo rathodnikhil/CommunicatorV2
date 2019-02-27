@@ -9,21 +9,22 @@
                                     {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
                         </div>
-                        <div class="col-md-6" style="float: right;">
-                            <div id="room-urls" style="text-align: center;display: none;">
-                                <button type="button" data-toggle="tooltip" title="Copy Register User Link" class="btn-sm btn-url"
+                        <div class="col-md-6">
+                            <div id="room-urls" style="display: none; float: right;">
+                                <!-- <button type="button" data-toggle="tooltip" title="Copy Register User Link" class="btn-sm btn-url"
                                     id="copyMeetingLink">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i> User Link
-                                </button>
-                                <button type="button" data-toggle="tooltip" title="Copy Guest User Link" class="btn-sm btn-url"
+                                </button> -->
+                                <button type="button" data-toggle="tooltip" title="Copy Meeting Link" class="btn btn-url"
                                     id="copyGuestMeetingLink">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Guest Link
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
                                 </button>
-
-                                <button type="button" data-toggle="tooltip" title="Copy Meeting Id" class="btn-sm btn-url"
+                                <label style="margin-left: 10px;">[Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                                <!-- <label style="margin-left: 10px;">Meeting Id: {{meetingDetails.meetingCode}}</label> -->
+                                <!-- <button type="button" data-toggle="tooltip" title="Copy Meeting Id" class="btn-sm btn-url"
                                     id="copyMeetingId">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Id
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                         <h6 class="offset-md-1 subject-line" *ngIf="meetingDetails.subject!=undefined"><b>{{meetingDetails.subject}}</b>
@@ -59,8 +60,8 @@
                                 <button type="button" class="btn btn-danger" (click)="exit()">No</button>
                             </div>
                         </app-custom-modal>
-                        <button id="btn-mute" class="btn-sec pull-left" [ngClass]="isMute?'btn-mute-click':'btn-sec'"
-                            placement="top" data-toggle="tooltip" title="Mute/Unmute" (click)='mute()'>
+                        <button id="btn-mute" class="btn-sec pull-left btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'"
+                            placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}" (click)='mute()'>
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" style="display: none;"
