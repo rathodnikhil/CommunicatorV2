@@ -331,28 +331,27 @@ span.step {
     width: 1.6em; 
     margin-left: 6px;
   }
-  .btn-url{
-      border: 1px solid #bc151b;
-    //   border-radius: 8px;
-    //   background: #fda32c;
+  .btn-url:hover{
+    border: 1px solid #bc151b;
     background: #efefef;
     font-weight: bold;
     color: #bc151b;
-
-    //   background-color: #ffb444;
-    //   box-shadow: 0 2px #f4edf8;
   }
-  .btn-url:hover{
-    color: #36383a;
-    background-color: #ffc107;
-    border-color: #ffc107;
+  .btn-url{
+    color: #ffffff;
+    background-color: #fd7e14;
+    border-color: #fff;
   }
-  .btn-mute-click{
+  .btn-unmute{
       background-color: green;
       color: #fff;
       border: 1px solid #fff;
   }
-
+  .btn-mute{
+    background-color: #fd7e14;
+    color: #fff;
+    border: 1px solid #b65200;
+  }
   .subject-line{
     overflow-wrap: break-word; 
     padding-top: 2px;

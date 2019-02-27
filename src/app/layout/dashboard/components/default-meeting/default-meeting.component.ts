@@ -299,15 +299,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         }
     }
     clearOutlookField() {
-        this.toAttendees = '';
-        this.ccAttendees = '';
         this.outLookBody = '';
-
         this.selectedEmails = '';
         this.selectedCcEmails = '';
-        // this.meetNowOutlookModal.close();
     }
-  
      closeOutLookMailPopup() {
          this.meetNowOutlookModal.close();
          this.clearOutlookField();

@@ -52,7 +52,7 @@ document.getElementById('open-room').onclick = function () {
     disableInputButtons();
     connection.openOrJoin(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
-        document.getElementById('meeting-error').innerText = 'Meeting has started.';
+        document.getElementById('meeting-error').display = none;
     });
 };
 
@@ -464,8 +464,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;');
-            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:nonefloat:left;margin-top");
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-top: 45px');
+            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:nonefloat:left;");
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -511,8 +511,6 @@ connection.onunmute = function (event) {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = false;
         document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:none;");
-        var muteUnmuteBtn = document.getElementById('btn-mute');
-        muteUnmuteBtn.className = "btn-sec";
     }
 };
 connection.onstreamended = function (event) {
@@ -644,7 +642,6 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             }
             break;
     }
-
     viewer.innerHTML = html;
     document.getElementById('viewerAnchor').click();
     return viewer;
@@ -681,20 +678,20 @@ function showRoomURL(roomid) {
     roomURLsDiv.style.display = 'block';
 }
 
-document.getElementById("copyMeetingLink").onclick = function () {
-    var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
-    copyToClipBoard(roomQueryStringURL, 'Meeting link has been copied. Kindly share via your preferred email id.',
-        'Copy Meeting Link')
-};
+// document.getElementById("copyMeetingLink").onclick = function () {
+//     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
+//     copyToClipBoard(roomQueryStringURL, 'Meeting link has been copied. Kindly share via your preferred email id.',
+//         'Copy Meeting Link')
+// };
 document.getElementById("copyGuestMeetingLink").onclick = function () {
     var roomQueryStringURL = window.location.origin + '/#/login/GuestUserWithMeeting?meetingCode=' + roomid;
     copyToClipBoard(roomQueryStringURL, 'Meeting link for guest has been copied. Kindly share via your preferred email id.',
         'Copy Guest Meeting Link')
 };
-document.getElementById("copyMeetingId").onclick = function () {
-    copyToClipBoard(roomid, 'Meeting id has been copied. Kindly share via your preferred email id.',
-        'Copy Meeting Id')
-};
+// document.getElementById("copyMeetingId").onclick = function () {
+//     copyToClipBoard(roomid, 'Meeting id has been copied. Kindly share via your preferred email id.',
+//         'Copy Meeting Id')
+// };
 
 function copyToClipBoard(content, message, title) {
     const el = document.createElement('textarea');
