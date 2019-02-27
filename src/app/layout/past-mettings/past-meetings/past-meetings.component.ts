@@ -89,7 +89,7 @@ export class PastMeetingsComponent implements OnInit {
             const meetingDate = new Date();
             meetingDate.setTime(data.meetingStartDateTime);
             const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + data.subject +
-                '\r\n\r\n' + 'Attendees: ' + this.attendeeListByMeeting + '\r\n\r\n';
+                '\r\n\r\n' + 'Attendees: ' + this.attendeeListByMeeting;
             const fileType = 'text/json';
 
             const a = document.createElement('a');

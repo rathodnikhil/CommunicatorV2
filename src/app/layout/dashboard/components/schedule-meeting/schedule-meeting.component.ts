@@ -187,7 +187,6 @@ export class ScheduleMeetingComponent implements OnInit {
             } else {
                 this.meeting.callType = 'Video';
             }
-            debugger;
             const payload = {
                 'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                     this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
@@ -238,14 +237,6 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.meridianTime = { hour: today.getHours(), minute: today.getMinutes() };
     }
     copyToOutLook(event) {
-        // this.outlookModal.open();
-        // const newLine = '\r\n\r\n';
-        // this.outLookBody = this.getMeetingDetails(newLine);
-        // this.outLookSubject = this.subject;
-        // const newLineJson = '<br><br>';
-        // this.outLookBodyJson = this.getMeetingDetails(newLineJson);
-        // this.closeMeetingPopup('', false);
-
         const payload = {userCode: this.loggedInUser.userCode};
         this._meetingService.getRemeberEmails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
@@ -256,9 +247,10 @@ export class ScheduleMeetingComponent implements OnInit {
               this.outlookModal.open();
               const newLine = '\r\n\r\n';
               this.outLookBody = this.getMeetingDetails(newLine);
-              this.outLookSubject = this.subject;
+              this.outLookSubject = 'Subject: ' + this.subject;
+              const newLineJson = '<br><br>';
+              this.outLookBodyJson = this.getMeetingDetails(newLineJson);
               this.closeMeetingPopup('scheduleMeetings', false);
-
               }
         });
 
@@ -266,7 +258,7 @@ export class ScheduleMeetingComponent implements OnInit {
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
-        const meetingDetails = this.subject + '  ' + this.getMeetingDetails(newLine);
+        const meetingDetails = 'Subject: ' + this.subject + newLine + this.getMeetingDetails(newLine);
         const el = document.createElement('textarea');
         el.value = meetingDetails;
         document.body.appendChild(el);
@@ -309,7 +301,7 @@ export class ScheduleMeetingComponent implements OnInit {
             this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
             hours + ':' + minutes + '  (' + this.meeting.selectedTimeZone + ')   for  '
-            + this.meeting.selectedDuration + newLine +
+            + this.meeting.selectedDuration +
             newLine + ' Please join my meeting from your computer using chrome browser ' + newLine +
             'Register user use below url : ' + newLine
             + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + newLine + guestMeetingUrl + this.accessCode
@@ -337,14 +329,13 @@ export class ScheduleMeetingComponent implements OnInit {
     closeOutLookMailPopup() {
         this.outlookModal.close();
         this.clearOutlookField();
-        this.switchRoute(0);
+     //   this.switchRoute(0);
     }
     clearOutlookField() {
-        this.toAttendees = '';
-        this.ccAttendees = '';
         this.outLookBody = '';
         this.selectedEmails = '';
         this.selectedCcEmails = '';
+        this.switchRoute(0);
     }
     onEmailSelect() {
         this.selectedEmails += ',' + this.toAttendees;

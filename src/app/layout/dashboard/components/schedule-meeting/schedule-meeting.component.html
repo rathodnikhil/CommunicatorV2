@@ -116,7 +116,7 @@
                             </div>
                         </app-custom-modal>
 
-                        <app-custom-modal #outlookModal [model]="scheduleOutlookWindow" (CancelEvent)="clearAllMeetingField()">
+                        <app-custom-modal #outlookModal [model]="scheduleOutlookWindow" (CancelEvent)="clearOutlookField()">
                             <div class="outlook-email-background">
                                 <div class="form-group row">
                                 <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
                                 <div class="col-lg-10" style="margin-top: 5px; color: green; overflow: auto; font-weight: bold;"> 
-                                    <span>( </span><label style=" overflow-wrap: break-word;" *ngIf="selectedEmails">{{selectedEmails}}</label><span> )</span>
+                                    <label *ngIf="selectedEmails"><span>( </span><span style=" overflow-wrap: break-word;" >{{selectedEmails}}</span><span> )</span></label>
                                 </div>  
 
                                 </div>
@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
                                 <div class="col-lg-10" style="margin-top: 5px; color: green; overflow: auto; font-weight: bold;"> 
-                                    <span>( </span> <label style=" overflow-wrap: break-word;" *ngIf="selectedCcEmails">{{selectedCcEmails}}</label><span> )</span>
+                                    <label *ngIf="selectedCcEmails"><span>( </span><span style=" overflow-wrap: break-word;" >{{selectedCcEmails}}</span><span> )</span></label>
                                 </div>
 
                                 </div>
