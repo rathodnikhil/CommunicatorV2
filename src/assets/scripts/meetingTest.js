@@ -432,7 +432,7 @@ connection.onstream = function (event) {
     heading.innerHTML = '<span style="font-size: 0.8vw; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash pull-right" style="display:none; font-size: 1.1vw;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
-        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#bc151b;color:#fff;margin-bottom: -30px;');
+        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
     } else {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
     }
@@ -449,7 +449,7 @@ connection.onstream = function (event) {
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if (initialsDiv.innerHTML === "You") {
-            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #bc151b;color:#bc151b;margin-top: 30px;font-size: 4.0vw;');
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #fd7a2a;color:#fd7a2a ;margin-top: 30px;font-size: 4.0vw;');
         } else {
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
         }

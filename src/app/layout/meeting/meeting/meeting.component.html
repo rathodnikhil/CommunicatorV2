@@ -19,7 +19,7 @@
                                     id="copyGuestMeetingLink">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
                                 </button>
-                                <label style="margin-left: 10px;">[Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                                <label style="margin-left: 10px;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                                 <!-- <label style="margin-left: 10px;">Meeting Id: {{meetingDetails.meetingCode}}</label> -->
                                 <!-- <button type="button" data-toggle="tooltip" title="Copy Meeting Id" class="btn-sm btn-url"
                                     id="copyMeetingId">
@@ -77,7 +77,7 @@
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn-sec pull-left"  (click)="shareFile()" title="Share File" style="display: none;"
+                        <button id="share-file" class="btn-sec pull-left"  title="Share File" style="display: none;"
                             data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
@@ -85,7 +85,7 @@
                             data-toggle="tooltip" title="Share Screen" (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec pull-left default" alt="Disable video" style="display: none;"
+                        <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none;"
                             (click)='viewVideo()' [value]="isVideoEnabled" title="Video On/Off" data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
@@ -129,7 +129,7 @@
                             <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
                             <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
                         </div>
-                        <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-color: #7d7d7f;color: #fff;">
+                        <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-image: linear-gradient(to right,#fd7a2a,orange);color: #fff;">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
                                     Chat<span id="messageCount" class="step"></span>
