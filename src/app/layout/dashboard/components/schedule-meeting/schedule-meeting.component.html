@@ -73,7 +73,7 @@
                             <div ngbDropdown class="d-inline-block dropdown" >
                                 <button class="btn btn-outline-primary" style="white-space: pre-wrap;" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
                                 <div ngbDropdownMenu>
-                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" style="white-space: pre-wrap;" (click)="changeTimeZone(timezone)">{{timezone}}</button>
+                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" style="white-space: pre-wrap; border-bottom: 1px solid #C4C4C4;" (click)="changeTimeZone(timezone)">{{timezone}}</button>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
                                 <div class="col-lg-10"> 
-                                    <label class="email-list"  *ngIf="selectedEmails"><span>( </span><span style=" overflow-wrap: break-word;" >{{selectedEmails}}</span><span> )</span></label>
+                                    <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails"></textarea>
                                 </div>  
 
                                 </div>
@@ -148,7 +148,8 @@
                                 </div>
                                 <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
                                 <div class="col-lg-10"> 
-                       <label  class="email-list" *ngIf="selectedCcEmails"><span style=" overflow-wrap: break-word;" >{{selectedCcEmails}}</span></label>
+
+                                    <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails"></textarea>
                                 </div>
 
                                 </div>

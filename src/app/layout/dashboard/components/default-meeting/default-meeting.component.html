@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
                             <div class="col-lg-10" > 
-                                <label class="email-list" *ngIf="selectedEmails"><span style=" overflow-wrap: break-word;" >{{selectedEmails}}</span></label>
+                                <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails"></textarea>
                             </div>  
                         </div>
                         <div class="form-group row">
@@ -65,7 +65,7 @@
                         </div>
                         <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
                         <div class="col-lg-10"> 
-                         <label class="email-list" *ngIf="selectedCcEmails"><span style=" overflow-wrap: break-word;" >{{selectedCcEmails}}</span></label>
+                            <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails"></textarea>
                         </div>
                         </div>
                         <div class="form-group row">
