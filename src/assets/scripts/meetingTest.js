@@ -464,8 +464,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-top: 45px');
-            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:nonefloat:left;");
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;');
+            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:none;float:left;");
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');

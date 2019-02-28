@@ -51,6 +51,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isVideoEnabled = false;
     actualMeetingTime: any;
     muteBtnTitle = 'Mute';
+    videoBtnTitle = 'Video On';
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -264,7 +265,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     mute() {
         this.isMute = !this.isMute;
-        if(this.isMute){
+        if (this.isMute) {
             this.muteBtnTitle = 'Unmute';
         } else {
             this.muteBtnTitle = 'Mute';
@@ -275,6 +276,12 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     viewVideo() {
         this.isVideoEnabled = !this.isVideoEnabled;
+        alert(this.isVideoEnabled);
+        if (this.isVideoEnabled) {
+            this.videoBtnTitle = 'Video Off';
+        } else {
+            this.videoBtnTitle = 'Video On';
+        }
     }
     calculateTimeSpan() {
         // if (this.tick === this.timeLeft) {
