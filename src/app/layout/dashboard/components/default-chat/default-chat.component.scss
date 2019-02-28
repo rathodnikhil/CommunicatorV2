@@ -1,7 +1,8 @@
 @import "styles/customStyle.css";
 .label-h6 {
-    color:  #999999;
-    padding-top:4%;
+    // color:  #999999;
+    color:#3283b9;
+    padding-top:2%;
     font-weight: bold;
     font-size:15px;
     padding-bottom: 25px;
@@ -27,7 +28,7 @@
          padding-top:10px;
     }
     .header-img{
-        height:85px;
+        height:80px;
         width:320px;
         padding: 10px;
         
@@ -77,4 +78,23 @@
         width:100%;
         height:100%;
     }
+    .colorgraph{
+        height: 5px;
+        border-top: 0;
+        background: #c4e17f;
+        border-radius: 5px;
+        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    }
 
+
+    .label-h5{
+        // color:  #999999;
+        padding-top:4%;
+        font-weight: bold;
+        // font-size:15px;
+        text-shadow: 1px 1px #dc3545;
+       }
+    //    .bg-img
+    //    {
+    //     background-image: url(/assets/images/Coreflex-solutions-login-id.jpg);
+    //    }

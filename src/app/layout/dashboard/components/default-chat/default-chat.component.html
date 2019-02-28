@@ -6,13 +6,18 @@
                      <!-- <img class="header-img" src="assets\images\color-logo1.png"> -->
                         <ng-template [ngIf]="isAdministrator" [ngIfElse]="notAdmin">
                             <img class="header-img" src="assets\images\color-logo1.png">
+                      
                         </ng-template>
                               
                         <ng-template #notAdmin>
                             <img style="float:left;" class="header-img" src="assets\images\color-logo1.png">
+                            <h5 class="label-h5"style="color:#bc151b; text-align:right;margin-right:10px;">Corporate Communication Solution</h5>
+
                         </ng-template>
+                        
                 </div>
-               
+                <div class="colorgraph"></div>
+                
                 <h3 class="header-label" style="margin-top:20%;"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
                 </h3>
                 <p><img *ngIf="loggedInUserObj.profileImgPath" [src]="loggedInUserObj.profileImgPath"
@@ -29,9 +34,11 @@
                 <!-- <a [routerLink]="['/myProfile']"><i class="fa fa-pencil-square-o" style="color: green; font-size: 1.7vh;" aria-hidden="true">
                                     Edit profile pic</i></a> -->
 
-                <h6 style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>
+                <h6  style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>
                 <h5 class="label-h6 ">Click on a member's name
                     <br>and start a new conversation</h5>
+                    <!-- <div class="colorgraph" style="width:40%;text-align:center; margin-left:30%;"></div>
+                   <h5 class="label-h5 " style="color:#fd7a2a;">Communicator : Corporate Communication Solution</h5> -->
                 <!-- <div class=" mt-5"> -->
                 <div class="footer">
                     <!-- <div class="card mx-auto">
@@ -71,3 +78,5 @@
                                 role="button" style="font-size:15px; bottom: 0;">Explore
                                 CoreFlex Communicator</a> -->
 </div>
+
+
