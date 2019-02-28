@@ -86,7 +86,7 @@
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none;"
-                            (click)='viewVideo()' [value]="isVideoEnabled" title="Video On/Off" data-toggle="tooltip">
+                            (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}" data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
