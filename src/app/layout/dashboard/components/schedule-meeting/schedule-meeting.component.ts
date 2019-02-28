@@ -7,11 +7,12 @@ import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { DOCUMENT } from '@angular/common';
+import { DatePipe } from '@angular/common';
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
     styleUrls: ['./schedule-meeting.component.scss'],
-    providers: [AlertService]
+    providers: [AlertService , DatePipe]
 })
 export class ScheduleMeetingComponent implements OnInit {
     _meetingService: MeetingService;
@@ -135,7 +136,7 @@ export class ScheduleMeetingComponent implements OnInit {
         'Europe/London (GMT) Dublin, Edinburgh, Lisbon, London'];
 
     constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService, userService: UserService,
-        private router: Router, public alertService: AlertService) {
+        private router: Router, public alertService: AlertService , private datePipe: DatePipe) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
@@ -201,7 +202,6 @@ export class ScheduleMeetingComponent implements OnInit {
                 'meetingId': this.accessCode,
                 'createdBy': this.loggedInUser
             };
-
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     this.meeting = {};

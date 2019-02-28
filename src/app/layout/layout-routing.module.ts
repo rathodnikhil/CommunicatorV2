@@ -28,7 +28,6 @@ const routes: Routes = [
             { path: 'ManageGroup', loadChildren: './manage-group/manage-group.module#ManageGroupModule'},
              { path: 'GuestUser', loadChildren: './guest-user/guest-user.module#GuestUserModule'},
              { path: 'RegisterAdmin', loadChildren: './register-admin/register-admin.module#RegisterAdminModule'},
-            
         ]
     }
 ];

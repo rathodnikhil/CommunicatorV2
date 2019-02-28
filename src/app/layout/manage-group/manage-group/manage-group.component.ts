@@ -179,7 +179,7 @@ export class ManageGroupComponent implements OnInit {
                         this.newGroupName = '';
                         return this.alertService.warning(res.message, 'Warning');
                     } else {
-                    this.groupList.push(group);
+                    this.groupList.push(res);
                     this.newGroupName = '';
                     this.groupNameTxt.nativeElement.focus();
                     this.selectedGroupObj = res.group;

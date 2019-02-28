@@ -1,9 +1,10 @@
 @import "styles/customStyle.css";
 .userlist-header{
-    background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+    //background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
     color:#ffffff;
     border-right: 1px solid #dadadc;
-    opacity: 0.85;
+   // opacity: 0.85;
     height:6vh;
     text-align: center;
     &:first-child{
@@ -21,10 +22,9 @@
     border-color: #8f5a0a;
     cursor: pointer;
     color: #8f5a0a;
-  
     height:6vh;
     text-align: center;
     &:first-child{
-        opacity: 1;
+    opacity: 1;
     }
     }
