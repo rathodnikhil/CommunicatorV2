@@ -285,6 +285,8 @@ export class ManageTeamComponent implements OnInit {
             this.addUpdateTeamModal.open();
             this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
             this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+            // this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 0,
+            //  this.selectedUserPermissionObj);
         } else {
             return this.alertService.warning('Selected team has deactivated, you can not edit team', 'Warning');
         }
@@ -410,6 +412,7 @@ export class ManageTeamComponent implements OnInit {
             this.selectedMemIndex = index;
         }
         deleteMemberDetails() {
+            debugger;
             if (this.selectedMember.userId.userCode === null || typeof this.selectedMember.userId.userCode === 'undefined'
             || this.selectedMember.userId.userCode.trim() === '' ) {
                 this.selectedMember.userId.userCode = this.newMemberUserCode;
@@ -419,7 +422,7 @@ export class ManageTeamComponent implements OnInit {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
-                    this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
+                //    this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
                     this.deleteMemberFlag = 2;
                     this.closeDeletePopup(1);
                     return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
