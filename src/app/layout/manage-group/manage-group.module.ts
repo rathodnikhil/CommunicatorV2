@@ -8,10 +8,7 @@ import { SharedPipesModule } from '../../shared';
 import { DashboardModule } from '../dashboard/dashboard.module';
 @NgModule({
   imports: [
-    CommonModule, 
-    ManageGroupRoutingModule, 
-    NgxPaginationModule,
-    SharedPipesModule,DashboardModule, FormsModule , SharedPipesModule
+    CommonModule, ManageGroupRoutingModule, DashboardModule, FormsModule , SharedPipesModule, NgxPaginationModule
   ],
   declarations: [ManageGroupComponent]
 })
