@@ -289,6 +289,8 @@ export class ManageTeamComponent implements OnInit {
             this.addUpdateTeamModal.open();
             this.updateTeamName = this.selectedUserPermissionObj.team.teamName;
             this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 1);
+            // this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedUserPermissionObj), 0,
+            //  this.selectedUserPermissionObj);
         } else {
             return this.alertService.warning('Selected team has deactivated, you can not edit team', 'Warning');
         }
