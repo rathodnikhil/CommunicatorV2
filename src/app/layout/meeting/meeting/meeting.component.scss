@@ -356,5 +356,11 @@ span.step {
   .subject-line{
     overflow-wrap: break-word; 
     padding-top: 2px;
+    padding-left: 15px;
     margin-left: 6%;
+  }
+  .btn-share-on{
+    background-image: linear-gradient(to right,#fd7a2a,orange);
+    color: #fff;
+    border: 1px solid #fd7a2a;
   }
