@@ -425,6 +425,26 @@ export class ManageTeamComponent implements OnInit {
             return this.alertService.warning('Member ' + member.userId.firstName + ' ' + member.userId.lastName +
                 '  has already inactive', 'Inactive Member');
         }
+<<<<<<< HEAD
+        deleteMemberDetails() {
+            if (this.selectedMember.userId.userCode === null || typeof this.selectedMember.userId.userCode === 'undefined'
+            || this.selectedMember.userId.userCode.trim() === '' ) {
+                this.selectedMember.userId.userCode = this.newMemberUserCode;
+            }
+               const payload = {userCode: this.selectedMember.userId.userCode};
+              this._userService.deleteUser(payload).subscribe(data => {
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                //    this.filterMemberList.splice(this.filterMemberList.indexOf(this.selectedMember), 1);
+                    this.deleteMemberFlag = 2;
+                    this.closeDeletePopup(1);
+                    return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
+                    ' has deleted successfully', 'Delete Member');
+                }
+            });
+        }
+=======
         this.selectedMemIndex = index;
     }
     deleteMemberDetails() {
@@ -445,6 +465,7 @@ export class ManageTeamComponent implements OnInit {
             }
         });
     }
+>>>>>>> dev
 
     private selectedmemObj(obj, editDeletelag, noFlag) {
         let statusval;
