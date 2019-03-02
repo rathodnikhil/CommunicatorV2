@@ -13,11 +13,12 @@
                         <div class="form-group input-group" style="padding-top:5px;">
                             <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTeam">
                             <div class="input-group-append">
-                                    <button class="btn " type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            <button class="btn btn-sec" style="align:align-center; margin-left: 5px;" (click)="open()" #addTeamField>+Team</button>
+                                <button class="btn " type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <button class="btn btn-sec" style="align:align-center; margin-left: 5px;" (click)="open()"
+                                #addTeamField>+Team</button>
                         </div>
                     </div>
                 </div>
@@ -39,22 +40,22 @@
                                     <label>Team Name</label>
                                 </div>
                                 <div>
-                                    <textarea placeholder="Team Name" [(ngModel)]="newTeamName" #teamNameField
-                                        value="{{newTeamName}}"></textarea>
+                                    <textarea placeholder="Team Name" [(ngModel)]="newTeamName" #teamNameField value="{{newTeamName}}"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer popFooter">
                             <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
-                            <button type="button" class="btn btn-danger"
-                                (click)="closePopup('addNewTeam')">Close</button>
+                            <button type="button" class="btn btn-danger" (click)="closePopup('addNewTeam')">Close</button>
                         </div>
                     </app-custom-modal>
                 </div>
             </div>
-
-            <div class="col-lg-10 col-md-10" style="padding-bottom: 100px;">
-                <div class="row" *ngIf="showSelectedTeam" style="padding: 5px;">
+            <div class="col-lg-10 col-md-10" *ngIf="!showSelectedTeam">
+                <h3>Kindly select the team to view details</h3>
+            </div>
+            <div class="col-lg-10 col-md-10" style="padding-bottom: 100px;" *ngIf="showSelectedTeam">
+                <div class="row" style="padding: 5px;">
                     <h4 style="padding-top: 2px; padding-right: 30px;">{{selectedTeamName}}
                         <span>&nbsp;[{{filterMemberList.length}} Members]</span>
                     </h4>
@@ -66,7 +67,7 @@
                     </button>
                     <hr>
                 </div>
-                <div class="row" *ngIf="showSelectedTeam">
+                <div class="row">
                     <div class="col-md-9">
                         <button class="btn btn-sec" (click)="openMemberPopup()" #addMemField>+Member</button>
                     </div>
@@ -92,33 +93,26 @@
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
-                    <tr
-                        *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTableText | paginate: config ;let srNo = index">
+                    <tr *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTableText | paginate: config ;let srNo = index">
                         <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
                         <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
                         <td>{{userMemPermission.userId.email}}</td>
                         <td>{{userMemPermission.userId.status.status}} </td>
-                        <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);"
-                                *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
-                            <i class="fa fa-times" aria-hidden="true" style="color: red"
-                                *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
+                        <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
+                            <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
                         <td>
-                            <i class="fa fa-pencil-square-o edit-icon"
-                                (click)="editMember(userMemPermission , srNo);"></i>
+                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission , srNo);"></i>
                         </td>
                         <td>
-                            <i class="fa fa-trash-o delete-icon"
-                                (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
+                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
                         </td>
                     </tr>
                 </table>
                 <div class="pageControl" style="text-align:center;">
                     <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
                         [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
-                        [nextLabel]="labels.nextLabel"
-                        [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                        [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                        [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                        [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                        [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
                         (pageChange)="onPageChange($event)"></pagination-controls>
                 </div>
 
@@ -129,8 +123,7 @@
                                 <label>Team Name</label>
                             </div>
                             <div>
-                                <textarea placeholder="Team Name" [(ngModel)]="updateTeamName"
-                                    value="{{newTeamName}}"></textarea>
+                                <textarea placeholder="Team Name" [(ngModel)]="updateTeamName" value="{{newTeamName}}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -201,8 +194,7 @@
                                 <label>Meeting Permission</label>
                             </div>
                             <div>
-                                <input type="checkbox" class="form-control" id="meetingStatusChk"
-                                    [(ngModel)]="meetingPermissionStatus">
+                                <input type="checkbox" class="form-control" id="meetingStatusChk" [(ngModel)]="meetingPermissionStatus">
                                 <p id="meetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
                             </div>
                         </div>
@@ -219,8 +211,8 @@
                                 <label>First Name</label>
                             </div>
                             <div>
-                                <input placeholder="First Name" type="text" class="form-control"
-                                    [(ngModel)]="updatedFirstName" required />
+                                <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="updatedFirstName"
+                                    required />
                             </div>
                         </div>
                         <div class="row form-group">
@@ -228,8 +220,8 @@
                                 <label>Last Name</label>
                             </div>
                             <div>
-                                <input placeholder="Last Name" type="text" class="form-control"
-                                    [(ngModel)]="updatedLastName" required />
+                                <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="updatedLastName"
+                                    required />
                             </div>
                         </div>
                         <div class="row form-group">
@@ -246,8 +238,7 @@
                                 <label>Status</label>
                             </div>
                             <div>
-                                <input type="checkbox" class="form-control" id="statusChk"
-                                    [(ngModel)]="updatedUserStatus">
+                                <input type="checkbox" class="form-control" id="statusChk" [(ngModel)]="updatedUserStatus">
                                 <p id="text" style="display:none">Checkbox is CHECKED!</p>
                             </div>
                         </div>
@@ -256,8 +247,7 @@
                                 <label>Meeting Permission</label>
                             </div>
                             <div>
-                                <input type="checkbox" class="form-control" id="updatedSeetingStatusChk"
-                                    [(ngModel)]="updatedMeetingPermissionStatus">
+                                <input type="checkbox" class="form-control" id="updatedSeetingStatusChk" [(ngModel)]="updatedMeetingPermissionStatus">
                                 <p id="updatedMeetingText" style="display:none">Meeting Permission Checkbox is CHECKED!
                                 </p>
                             </div>
@@ -279,11 +269,12 @@
                     </div>
                 </app-custom-modal>
 
-                <div id="footer" class="footer">
-                    <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png"
-                            style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex
-                            Solutions</b>
-                    </div>
+
+            </div>
+            <div id="footer" class="footer">
+                <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px;"><br><b>Copyright
+                        &copy; 2018 Coreflex
+                        Solutions</b>
                 </div>
             </div>
         </div>
