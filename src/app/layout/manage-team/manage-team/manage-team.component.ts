@@ -351,7 +351,7 @@ export class ManageTeamComponent implements OnInit {
         this.selectedMember = member;
         this.selectedMemIndex = index;
     }
-        updateMemberDetails() {
+    updateMemberDetails() {
             if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '' ) {
                 this.updatedUserCode = this.newMemberUserCode;
             } else  if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
@@ -387,7 +387,7 @@ export class ManageTeamComponent implements OnInit {
                 ' has edited successfully', 'Update Member');
             }
         });
-        }
+    }
 
     private getStatusByUser(updatedStaus) {
         let currentDisplayStatus;
@@ -412,7 +412,6 @@ export class ManageTeamComponent implements OnInit {
             this.selectedMemIndex = index;
         }
         deleteMemberDetails() {
-            debugger;
             if (this.selectedMember.userId.userCode === null || typeof this.selectedMember.userId.userCode === 'undefined'
             || this.selectedMember.userId.userCode.trim() === '' ) {
                 this.selectedMember.userId.userCode = this.newMemberUserCode;
@@ -429,7 +428,7 @@ export class ManageTeamComponent implements OnInit {
                     ' has deleted successfully', 'Delete Member');
                 }
             });
-            }
+        }
 
     private selectedmemObj(obj , editDeletelag , noFlag) {
         let statusval ;
@@ -451,8 +450,8 @@ export class ManageTeamComponent implements OnInit {
     onPageChange(number: number) {
         this.config.currentPage = number;
     }
-       // close team modal popup
-       closePopup(popupType) {
+    // close team modal popup
+    closePopup(popupType) {
         switch (popupType) {
             case 'addNewTeam':
                 this.addNewTeamModal.close();
@@ -495,11 +494,11 @@ export class ManageTeamComponent implements OnInit {
         this.filterMemberList.splice(this.selectedMemIndex , 0 , memObj);
     }
     clearMemPopupField() {
-     this.firstName = '';
-    this.lastName = '';
-    this.userName = '';
-    this.email = '';
-    this.password = '';
-    this.meetingPermissionStatus = false;
+        this.firstName = '';
+        this.lastName = '';
+        this.userName = '';
+        this.email = '';
+        this.password = '';
+        this.meetingPermissionStatus = false;
     }
 }

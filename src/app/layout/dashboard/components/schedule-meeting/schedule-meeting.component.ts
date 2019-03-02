@@ -353,4 +353,12 @@ export class ScheduleMeetingComponent implements OnInit {
         }
         this.ccAttendees = '';
     }
+    editToAttendees() {
+        this.toAttendees = this.selectedEmails;
+        this.selectedEmails = '';
+    }
+    editCcAttendees() {
+        this.ccAttendees = this.selectedCcEmails;
+        this.selectedCcEmails = '';
+    }
 }

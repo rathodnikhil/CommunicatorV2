@@ -345,6 +345,13 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
         }
         this.ccAttendees = '';
-
+    }
+    editToAttendees() {
+        this.toAttendees = this.selectedEmails;
+        this.selectedEmails = '';
+    }
+    editCcAttendees() {
+        this.ccAttendees = this.selectedCcEmails;
+        this.selectedCcEmails = '';
     }
 }
