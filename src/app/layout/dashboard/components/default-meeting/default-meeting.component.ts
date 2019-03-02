@@ -38,7 +38,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedAttendee: UserService;
     ccAttendees: any;
     rememberEmailList = [];
-   selectedEmails: any;
+    selectedEmails: any;
     selectedCcEmails: any;
 
     @ViewChild('chatPanel') chatPanel: ElementRef;
@@ -207,27 +207,31 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.closePopup('cancel');
-                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
-                //  this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
+                if (this.filteredFutureMeetingList.indexOf(this.selectedMeeting) !== -1) {
+                    this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
+                }
+                if (this.futureMeetingList.indexOf(this.selectedMeeting) !== -1) {
+                    this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
+                }
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });
     }
     copyToOutLook(event) {
-        const payload = {userCode: this.loggedInUser.userCode};
+        const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getRemeberEmails(payload).subscribe(data => {
-          if (data.errorFl === true || data.warningFl === true) {
-            this.rememberEmailList = [];
-              return this.alertService.warning(data.message, 'Warning');
-          } else {
-            this.rememberEmailList = data;
-            this.meetNowOutlookModal.open();
-            const newLine = '\r\n\r\n';
-            this.outLookBody = this.getMeetingDetails(newLine);
-            this.outLookSubject = 'Meet now: ' + new Date().toDateString();
-            this.closePopup('meetNow');
+            if (data.errorFl === true || data.warningFl === true) {
+                this.rememberEmailList = [];
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.rememberEmailList = data;
+                this.meetNowOutlookModal.open();
+                const newLine = '\r\n\r\n';
+                this.outLookBody = this.getMeetingDetails(newLine);
+                this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+                this.closePopup('meetNow');
             }
-      });
+        });
     }
     // copy meeting content
     copyToClipboard() {
@@ -303,9 +307,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectedEmails = '';
         this.selectedCcEmails = '';
     }
-     closeOutLookMailPopup() {
-         this.meetNowOutlookModal.close();
-         this.clearOutlookField();
+    closeOutLookMailPopup() {
+        this.meetNowOutlookModal.close();
+        this.clearOutlookField();
     }
     // get meeting details
     getMeetingDetails(newLine): string {

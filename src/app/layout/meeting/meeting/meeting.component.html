@@ -70,21 +70,22 @@
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;"> 
+                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;">
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip" aria-hidden="true"
                                 id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
                                 style="color:#dc3545;display: none" id="rec_stop"></i>
                         </button>
+                        <button id="btn-stop-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;"></button>
                         <button id="join-room" class="btn default pull-left" style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="share-file" class="btn-sec pull-left"  title="Share File" style="display: none;"
+                        <button id="share-file" class="btn-sec pull-left" title="Share File" style="display: none;"
                             data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
-                        <button id="share-screen" class="btn-sec pull-left"   [ngClass]="isScreenSharingStarted?'btn-sec':'btn-sec'" style="display: none;"
-                            data-toggle="tooltip" title="Share Screen" (click)="shareScreen()">
+                        <button id="share-screen" class="pull-left btn-sec" style="display: none;" data-toggle="tooltip"
+                            title="Share Screen" (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
                         <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none;"
@@ -172,7 +173,7 @@
 
                                 <textarea placeholder="Type MOM Here..." style="width: 100%; margin:4%; overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn btn-primary momBtn"  id="btn-save-mom" (click)="saveMom()">Generate
+                                <button class="btn btn-primary momBtn" id="btn-save-mom" (click)="saveMom()">Generate
                                     Meeting Notes</button>
                             </div>
                         </div>
