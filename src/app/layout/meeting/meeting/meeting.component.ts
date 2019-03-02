@@ -241,9 +241,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     exit() {
         this.exitMeetingConfirmModal.close();
-        this.stopTimer();
+       // this.stopTimer();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         if (this.isGuest) {
+            this.stopTimer();
             payload.userCode = this.loggedInUser.firstName;
         }
         this._meetingService.endMeeting(payload).subscribe(resp => {
@@ -251,6 +252,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.alertService.warning(resp.message, 'Warning');
             } else {
                 this.document.getElementById('btn-leave-room').click();
+                this.stopTimer();
                 this.alertService.success('Meeting has ended.', 'End Meeting');
             }
         });
