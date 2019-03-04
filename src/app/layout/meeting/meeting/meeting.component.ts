@@ -278,7 +278,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     viewVideo() {
         this.isVideoEnabled = !this.isVideoEnabled;
-        alert(this.isVideoEnabled);
         if (this.isVideoEnabled) {
             this.videoBtnTitle = 'Video Off';
         } else {
