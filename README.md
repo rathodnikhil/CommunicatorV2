@@ -1,59 +1,57 @@
-# SB Admin rewritten in Angular5 and Bootstrap 4
+# CoreFlex Communicator in Angular5 and Bootstrap 4
 
-Simple Dashboard Admin App built using Angular 5 and Bootstrap 4
+Communicator is an online meeting, desktop sharing, and video conferencing software solution that enables the user to meet with clients or colleagues via Internet anywhere anytime.
 
-This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v5.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular5 Theme.
+Powered by [Xanadutec Data Solutions]( http://www.xanadutec.com/)
 
-Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
-
-## [Demo](http://rawgit.com/start-angular/SB-Admin-BS4-Angular-5/master/dist/)
+## Visit our website to know more about CoreFlex Communicator :
+       http://www.xanadutec.com/communicator.html
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
-### Introduction
-Provides fast, reliable and extensible starter for the development of Angular projects.
+Introduction
 
-`sb-admin-bs4-angular5` provides the following features:
-- Developed using boostrap-v4.0.0
-- angular-v5.2.5
-- angular/cli-v1.7.0
-- [ng-bootstrap-v1.0.0](https://github.com/ng-bootstrap/)
-- [ngx-translate-v9.1.1](https://github.com/ngx-translate)
-- Following the best practices.
-- Ahead-of-Time compilation support.
-- Official Angular i18n support.
-- Production and development builds.
-- Tree-Shaking production builds.
+CoreFlex Communicator is an online meeting, desktop sharing, and audio/video conferencing software solution that enable the user to meet with their clients or colleagues via Internet anywhere anytime. 
 
-### How to start
-**Note** that this seed project requires  **node >=v6.9.0 and npm >=3**.
+CoreFlex Communicator is built using:
+1.	Angular4
+2.	Bootstrap4 
+3.	Spring Boot JPA(jdk 8)
 
-In order to start the project use:
-```bash
-$ git clone https://github.com/start-angular/SB-Admin-BS4-Angular-5
-$ cd SB-Admin-BS4-Angular-5
-# install the project's dependencies
-$ npm install
-# watches your files and uses livereload by default run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-$ npm start
-# prod build, will output the production application in `dist`
-# the produced code can be deployed (rsynced) to a remote server
-$ npm run build
-```
 
-### Code scaffolding
+Features:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+	Schedule future online meetings in advance or schedule instant online meetings.
+	Screen Share
+	File Share
+	Generate Minutes of Meeting
+	Chats
+	Video/Audio Conference
+	Recording the Meeting.
 
-### Running unit tests
+Pre-requisite Requirements:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1.	Download and install Git.exe.
+2.	Download and install Visual Studio Code.
+3.	Download and install Nodejs.
 
-### Running end-to-end tests
+How to Start
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+**Note** that this project requires  **node >=v6.9.0 and npm>=3**.
 
-### Further help
+In order to start the project, follow the below steps:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1.	Go to any drive on your computer and create directory to store the Angular project (create workspace for Angular project).
+2.	Open Visual Studio Code.
+3.	Go to file menu, click on Open Folder and select the directory (AngularWorkspace folder), which you have created in step no 1. Click on Open button.
+4.	Go to view menu, click on Terminal.
+5.	Type command git clone https://github.com/rathodnikhil/CommunicatorV2.git as shown below in the Terminal.
+6.	In the Terminal, type cd .\CommunicatorV2\
+7.	Enter thecommandnpm install -g @angular/cli to install Angular 4. The installation process will start and will take a few minutes to complete.
+8.	When the above installation process gets completed,then type ng serve or npm start in the Terminal. This command will build the application and will start the web server.
+9.	Type the url http://localhost:4200/ in the Chrome browser and see the output.
+
+
+
+
+
