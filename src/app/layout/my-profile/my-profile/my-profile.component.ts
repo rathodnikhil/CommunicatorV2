@@ -98,6 +98,9 @@ export class MyProfileComponent implements OnInit {
     }
     onProfilePicSelected(e) {
         const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+        if (file === '' || file === null || file === undefined) {
+            this.loggedInUserObj.profileImgPath = this.currentProfileImg;
+        }
         const pattern = /image-*/;
         const reader = new FileReader();
         // console.log('FILE_DETAILS : ' + Math.round(file.size / 1024));

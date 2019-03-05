@@ -338,15 +338,19 @@ export class ScheduleMeetingComponent implements OnInit {
         this.switchRoute(0);
     }
     onEmailSelect() {
-        this.selectedEmails += ',' + this.toAttendees;
-        if (typeof this.selectedEmails.find === 'undefined') {
+        if (this.toAttendees.trim() !== '') {
+            this.selectedEmails += ',' + this.toAttendees.trim();
+        }
+        if (this.selectedEmails.find === undefined) {
             this.selectedEmails = this.selectedEmails.replace('undefined', '');
             this.selectedEmails = this.selectedEmails.replace(/^,/, '');
         }
         this.toAttendees = '';
     }
     selectedCcEmail() {
-        this.selectedCcEmails += ',' + this.ccAttendees;
+        if (this.ccAttendees.trim() !== '') {
+            this.selectedCcEmails += ',' + this.ccAttendees;
+        }
         if (typeof this.selectedCcEmails.find === 'undefined') {
             this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
             this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
@@ -354,11 +358,17 @@ export class ScheduleMeetingComponent implements OnInit {
         this.ccAttendees = '';
     }
     editToAttendees() {
-        this.toAttendees = this.selectedEmails;
-        this.selectedEmails = '';
+        if (this.selectedEmails === '' || this.selectedEmails === null || this.selectedEmails === undefined) {
+        } else {
+            this.toAttendees = this.selectedEmails;
+            this.selectedEmails = '';
+        }
     }
     editCcAttendees() {
+        if (this.selectedCcEmails === '' || this.selectedCcEmails === null || this.selectedCcEmails === undefined) {
+        } else {
         this.ccAttendees = this.selectedCcEmails;
         this.selectedCcEmails = '';
+        }
     }
 }
