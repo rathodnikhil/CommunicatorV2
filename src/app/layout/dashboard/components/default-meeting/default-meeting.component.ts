@@ -317,7 +317,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
         const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
-            ' Please join my meeting from your computer , tablet or smartphone ' + newLine + ' for  '
+            ' Please join my meeting from your computer using chrome browser ' + newLine + ' for  '
             + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
             + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below url :  ' + newLine + guestMeetingUrl +
             this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;

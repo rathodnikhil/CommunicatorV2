@@ -786,7 +786,7 @@ function stopRecordingCallback(blob) {
     a.setAttribute('style', 'display: none');
     a.setAttribute('href', URL.createObjectURL(blob));
     // a.href = screenRecordVideo.src;
-    a.download = 'screenRecordVideo' + roomid + '.webm';
+    a.download = 'Rec-' + roomid + '-' + new Date() + '.webm';
     a.click();
     // window.URL.revokeObjectURL(url);
     a.remove();
