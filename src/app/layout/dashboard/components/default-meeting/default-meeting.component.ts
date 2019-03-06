@@ -287,6 +287,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         } else {
             const newLineJson = '<br><br>';
             const outLookBodyJson = this.getMeetingDetails(newLineJson);
+            if (this.ccAttendees !== '') {
+                this.selectedCcEmails =  this.ccAttendees;
+            }
             const payload = {
                 toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
