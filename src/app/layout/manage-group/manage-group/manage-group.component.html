@@ -84,11 +84,75 @@
                 </div>
                 <hr>
 
+                <app-custom-modal #addNewMemberModal [model]="newMember">
+                    <div class="modal-body row-label">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>First Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="firstName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Last Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="lastName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Email</label>
+                            </div>
+                            <div>
+                                <input placeholder="Email" type="text" class="form-control" [(ngModel)]="email"
+                                    #emailField required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>UserName</label>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="userName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Password</label>
+                            </div>
+                            <div>
+                                <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password"
+                                    type="password" required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Meeting Permission</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="form-control" id="meetingStatusChk"
+                                    [(ngModel)]="meetingPermissionStatus">
+                                <p id="meetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
+                        <button type="button" class="btn btn-danger" (click)="closePopup('addNewMember')">Close</button>
+                    </div>
+                </app-custom-modal>
+
                 <!-- <div class="col-lg-9"> 
-                    <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
-                    (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
-                    <datalist id="rememberEmailListEl">
-                        <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                    <input class="form-control" id="memberOfGroup" list="memberListListEl" [(ngModel)]="members" autofocus name="memberOfGroup" autocomplete="on"
+                    (change)="onMemberSelect()" />
+                    <datalist id="memberListListEl">
+                        <option *ngFor="let member of filterMemberList" value="{{member}}">
                     </datalist>
                 </div> -->
 

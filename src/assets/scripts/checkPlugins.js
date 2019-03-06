@@ -2,7 +2,8 @@ var alertService = window.customAlertService;
 
 var ua = navigator.userAgent.toLowerCase();
 var isAndroid = ua.indexOf("android") > -1;
-if (!isAndroid) {
+var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
+if (!isAndroid || !iOS) {
     var extensionid = 'ajhifddimkapgcifgcodmmfdlknahffk';
 
     var image = document.createElement('img');
@@ -15,7 +16,7 @@ if (!isAndroid) {
         try {
             popup_window.focus();
         } catch (e) {
-            // alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+             alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
         }
         var timer = setInterval(checkChild, 500);
         document.getElementById("isRecordScreenPopupClosed").innerHTML = "true";

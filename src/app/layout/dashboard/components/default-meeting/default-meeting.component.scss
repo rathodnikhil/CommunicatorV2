@@ -261,7 +261,7 @@
     //background:#353535;
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
-    height: 7vh;
+    height: auto;
    // opacity: 0.85;
     //background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
     background-image: url(/assets/images/Coreflex-solutions-header.jpg);
@@ -295,7 +295,7 @@
    }
    
 .form-control {
-    border-radius: 5px 0px 0px 5px;
+    border-radius: 5px 5px 5px 5px;
 }
 .hr-partition{
      border-top: 2px dotted #848484;
