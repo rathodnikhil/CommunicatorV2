@@ -20,7 +20,7 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
     this.setAttribute('class', 'btn-share-on pull-left');
-    // this.disabled = true;
+     this.disabled = true;
 };
 
 document.getElementById('btn-mute').onclick = function () {
