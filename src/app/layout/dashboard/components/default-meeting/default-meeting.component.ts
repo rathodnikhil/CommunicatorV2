@@ -250,6 +250,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
+        debugger;
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
@@ -286,6 +287,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         } else {
             const newLineJson = '<br><br>';
             const outLookBodyJson = this.getMeetingDetails(newLineJson);
+            if (this.ccAttendees !== '') {
+                this.selectedCcEmails =  this.ccAttendees;
+            }
             const payload = {
                 toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
