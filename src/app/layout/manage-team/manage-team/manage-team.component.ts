@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { PasswordService } from '../../../services/password.service';
 import { PaginationInstance } from 'ngx-pagination';
+import { disableDebugTools } from '@angular/platform-browser';
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
@@ -347,6 +348,7 @@ export class ManageTeamComponent implements OnInit {
         } else {
             this.updatedUserStatus = false;
         }
+        debugger;
         this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
         this.UpdateMemberModal.open();
         this.updatedFirstName = member.userId.firstName;
@@ -358,6 +360,7 @@ export class ManageTeamComponent implements OnInit {
         this.selectedMemIndex = index;
     }
     updateMemberDetails() {
+        const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
         if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '') {
             this.updatedUserCode = this.newMemberUserCode;
         } else if (this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
@@ -368,6 +371,9 @@ export class ManageTeamComponent implements OnInit {
             return this.alertService.warning('Please Enter Last Name ', 'Warning');
         } else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
             return this.alertService.warning('Please Enter Email', 'Warning');
+        } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
+            this.emailField.nativeElement.focus();
+            return this.alertService.warning('Please enter valid email', 'Warning');
         }
         const currentDisplayStatus = this.getStatusByUser(this.updatedUserStatus);
         const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
