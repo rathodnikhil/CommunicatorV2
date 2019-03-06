@@ -20,7 +20,7 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
     this.setAttribute('class', 'btn-share-on pull-left');
-    // this.disabled = true;
+     this.disabled = true;
 };
 
 document.getElementById('btn-mute').onclick = function () {
@@ -791,7 +791,7 @@ function stopRecordingCallback(blob) {
     a.setAttribute('style', 'display: none');
     a.setAttribute('href', URL.createObjectURL(blob));
     // a.href = screenRecordVideo.src;
-    a.download = 'screenRecordVideo' + roomid + '.webm';
+    a.download = 'Rec-' + roomid + '-' + new Date() + '.webm';
     a.click();
     // window.URL.revokeObjectURL(url);
     a.remove();

@@ -249,7 +249,7 @@ export class ScheduleMeetingComponent implements OnInit {
               this.outlookModal.open();
               const newLine = '\r\n\r\n';
               this.outLookBody = this.getMeetingDetails(newLine);
-              this.outLookSubject = 'Subject: ' + this.subject;
+              this.outLookSubject = this.subject;
               const newLineJson = '<br><br>';
               this.outLookBodyJson = this.getMeetingDetails(newLineJson);
               this.closeMeetingPopup('scheduleMeetings', false);

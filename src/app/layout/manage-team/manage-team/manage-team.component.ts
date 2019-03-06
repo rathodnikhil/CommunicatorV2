@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { PasswordService } from '../../../services/password.service';
 import { PaginationInstance } from 'ngx-pagination';
+import { disableDebugTools } from '@angular/platform-browser';
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
@@ -301,7 +302,7 @@ export class ManageTeamComponent implements OnInit {
         } else {
             const payload = {
                 'teamName': this.updateTeamName, 'userCode': this.loggedInUser.userCode,
-                'teamCode': this.selectedTeamObj.teamCode
+                'teamCode': this.selectedTeamObj.teamCode , status: this.loggedInUser.team.status
             };
             const team = { team: { teamName: this.updateTeamName } };
             this._teamService.saveTeamDetails(payload).subscribe(
@@ -313,7 +314,7 @@ export class ManageTeamComponent implements OnInit {
                         this.selectedTeamName = this.updateTeamName;
                         this.closePopup('updateTeam');
                         // this.userPermissionList.push(team );
-                        this.userPermissionList.splice(this.selectedTeamIndex, 0, team);
+                        this.userPermissionList.splice(this.selectedTeamIndex, 0, res);
                         return this.alertService.success('Team has updated successfully ', 'Success');
                     }
                 });
@@ -347,6 +348,7 @@ export class ManageTeamComponent implements OnInit {
         } else {
             this.updatedUserStatus = false;
         }
+        debugger;
         this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
         this.UpdateMemberModal.open();
         this.updatedFirstName = member.userId.firstName;
@@ -358,6 +360,7 @@ export class ManageTeamComponent implements OnInit {
         this.selectedMemIndex = index;
     }
     updateMemberDetails() {
+        const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
         if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '') {
             this.updatedUserCode = this.newMemberUserCode;
         } else if (this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
@@ -368,6 +371,9 @@ export class ManageTeamComponent implements OnInit {
             return this.alertService.warning('Please Enter Last Name ', 'Warning');
         } else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
             return this.alertService.warning('Please Enter Email', 'Warning');
+        } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
+            this.emailField.nativeElement.focus();
+            return this.alertService.warning('Please enter valid email', 'Warning');
         }
         const currentDisplayStatus = this.getStatusByUser(this.updatedUserStatus);
         const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
@@ -387,7 +393,7 @@ export class ManageTeamComponent implements OnInit {
                 this.memObj = {
                     userId: {
                         firstName: data.firstName, lastName: data.lastName, email: data.email,
-                        status: { status: currentDisplayStatus }, meetingPermissionStatus: { status: currentDisplayMeetingStatus }
+                        status: { status: data.status.status }, meetingPermissionStatus: { status: data.meetingPermissionStatus.status }
                         , team: data.team.teamName
                     }
                 };
@@ -396,7 +402,7 @@ export class ManageTeamComponent implements OnInit {
                 for (let i = 0; i < this.userPermissionMemberList.length; i++) {
                     if (this.userPermissionMemberList[i].userCode === data.userCode) {
                         this.userPermissionMemberList[i] = data;
-                        this.userPermissionMemberList[i].meetingPermissionStatus = { status: currentDisplayMeetingStatus };
+                        this.userPermissionMemberList[i].meetingPermissionStatus = { status: data.meetingPermissionStatus };
                     }
                 }
                 return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
@@ -453,7 +459,6 @@ export class ManageTeamComponent implements OnInit {
         } else if (editDeletelag === 1) {
             statusval = this.getStatusByUser(this.updatedUserStatus);
         } else {
-            alert('else');
             statusval = 'INACTIVE';
         }
         return {

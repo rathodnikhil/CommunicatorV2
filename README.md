@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Introduction
 
-CoreFlex Communicator is an online meeting, desktop sharing, and audio/video conferencing software solution that enable the user to meet with their clients or colleagues via Internet anywhere anytime. 
+CoreFlex Communicator lets you schedule instant meetings or schedule future meetings in advance at anytime and from anywhere. You can connect with your colleagues from anywhere by just sharing a meeting invitation link with them. It’s an easy-to–use product, which can be adopted by the professionals and by the small to medium sized businesses around the world. It’s powerful features like Video/Audio Conferencing, Screen Sharing, File Sharing, Meeting Chats, Meeting Notes and Meeting Recording simplifies the interaction between the people, no matter where they are.
 
 CoreFlex Communicator is built using:
 1.	Angular4
