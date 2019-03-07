@@ -1,15 +1,27 @@
 <div #chatPanel class="chat-panel card card-default">
     <div class="card-header meetingHeader">
         <div class="row">
-            <div class="col-md-8">
+            <div style="width: 70%; float: left;">
+            <i class="fa fa-calendar-check-o"></i>
+                Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+            <h6 class="style-links">Schedule upcoming Meetings</h6>
+            </div>
+
+            <i class="fa fa-caret-square-o-right cursorPointer fa-2x" style="float: right; width: 15%; border-left: 1px solid #dadadc; text-align: center;" aria-hidden="true" (click)="joinMeetingNow()"
+                    placement="bottom" ngbTooltip="Meet Now"></i>
+
+            <i class="fa fa-calendar cursorPointer fa-2x" style="float: right; width: 15%; border-left: 1px solid #dadadc; text-align: center;" aria-hidden="true" (click)="switchRoute()" placement="bottom"
+                    ngbTooltip="Schedule Meeting"></i>
+
+            <!-- <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
                 Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
                 <h6 class="style-links">Schedule upcoming Meetings</h6>
-            </div>
-            <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc; text-align: center;">
+            </div> -->
+            <div *ngIf="showScheduleMeetingFl" style="text-align: center;">
                 <!-- <a href="javascript:void(0)" class="btn btn-sec">Meet Now</a> -->
-                <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
-                    placement="bottom" ngbTooltip="Meet Now"></i>
+                <!-- <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
+                    placement="bottom" ngbTooltip="Meet Now"></i> -->
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
                     <div style="padding: 10px; font-size:14px;" class="span-font">
                         <span>Meet now: &nbsp;{{meetNowMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
@@ -35,13 +47,13 @@
                         <button type="button" class="btn btn-primary" (click)="copyToClipboard()">Copy</button>
                         <button type="button" class="btn btn-primary" (click)="startMeeting(meetNowMeeting,true)">Start
                             Meeting</button>
-                            <button type="button" class="btn btn-danger" (click)="closePopup('meetNow')">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="closePopup('meetNow')">Close</button>
                     </div>
 
                 </app-custom-modal>
                 <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearOutlookField()">
                     <div class="outlook-email-background">
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
                             <div class="col-lg-9"> 
                                 <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
@@ -55,8 +67,43 @@
                             <div class="col-lg-9" > 
                                 <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly></textarea>
                             </div>  
+                        </div> -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">To: </label>
+
+                                <input class="form-control" id="to" list="rememberEmailListEl" style="width: 68%;" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
+                                (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
+                                <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                </datalist>
+
+                                <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" style="width: 12%; text-align: center;" aria-hidden="true"></i>
+                            </div>
+                            <div class="row">
+                                <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly style="width: 68%; margin-left: 20%;"></textarea>
+                            </div>
                         </div>
-                        <div class="form-group row">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">Cc: </label>
+    
+                                <input class="form-control" (change)="selectedCcEmail()" style="width: 68%;" id="to" (blur)="selectedCcEmail()"
+                                    list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                </datalist>
+    
+                                <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="row">
+                                <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group row">
                         <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
                         <div class="col-lg-9"> 
                             <input class="form-control" (change)="selectedCcEmail()" id="to" (blur)="selectedCcEmail()"
@@ -70,7 +117,8 @@
                         <div class="col-lg-9"> 
                             <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
                         </div>
-                        </div>
+                        </div> -->
+
                         <div class="form-group row">
                         <div class="col-lg-2"> <label for="subject" class="outlook-email-label">Subject: </label>
                         </div>
@@ -88,20 +136,19 @@
                         </div>
                 </app-custom-modal>
             </div>
-            <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
+            <!-- <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
                 <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
                     ngbTooltip="Schedule Meeting"></i>
-            </div>
+            </div> -->
         </div>
     </div>
-    <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true">
-        <div class="align-center hand-pointer">
+    <!-- <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true"> -->
+        <div class="align-center hand-pointer" *ngIf="selectDateFlag === true" style="text-align: center;">
             <a style="padding-right:10px; cursor: pointer;" (click)="filterMeetingByDate('all')">All</a>
             <a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a>
             <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a>
-            <!-- <a (click)="meetingByDate()" class="date-period-select">Select Date</a> -->
         </div>
-    </div>
+    <!-- </div> -->
     <ul class="accordion">
         <li class="accordion-item">
             <input id="s1" class="hide" type="checkbox">
@@ -141,8 +188,8 @@
                 </div>
             </ul>
         </li>
-
     </ul>
+
     <div class="card-header">
         <div class="row">
             <div class="col-md-6">
@@ -161,27 +208,27 @@
                 </div>
             </div>
             <hr class="hr-partition" />
-            <h4>{{selectedCriteria}}</h4>
+            <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4>
         </div>
         <div class="row">
             <div #chatBody class="card-body" style="min-height:100%;">
                 <ul class="chat">
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div style="width: 70%;padding-left: 20px;">
                                 <span style="font-weight: bold; font-size: 14px;">
                                     <i style="color:#353535;" class="fa" [ngClass]="{'fa-microphone': meeting.callType === 'Audio' ,
                                     'fa-video-camera': meeting.callType === 'Video'}"></i>&nbsp;({{meeting.meetingCode}})<br>
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
                                     date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </div>
-                            <div style="float: right" >
-                                <a (click)="startMeeting(meeting,false);">
+                            <!-- <div> -->
+                                <a (click)="startMeeting(meeting,false);" style="float: right;width: 10%;text-align: center;">
                                     <i class="fa fa-play-circle actionIcon"  aria-hidden="true" style="color:green"
                                         placement="bottom" ngbTooltip="Start Meeting"></i>
                                 </a>
                                 <a>
-                                    <i class="fa fa-times-circle actionIcon"  (click)="cancelMeeting(meeting)"
+                                    <i class="fa fa-times-circle actionIcon" style="float: right;width: 10%;text-align: center;" (click)="cancelMeeting(meeting)"
                                         placement="bottom" ngbTooltip="Cancel Meeting" aria-hidden="true"></i>
                                 </a>
                                 <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
@@ -203,7 +250,7 @@
                                         <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,true)">Start</button>
                                     </div>
                                 </app-custom-modal>
-                            </div>
+                            <!-- </div> -->
                         </div>
                         <div class="col-md-12">
                             <strong style="color:#353535;">

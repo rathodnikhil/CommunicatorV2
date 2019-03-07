@@ -350,7 +350,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     selectedCcEmail() {
         if (this.ccAttendees.trim() !== '') {
-            this.selectedCcEmails += ',' + this.ccAttendees;
+            this.selectedCcEmails += ',' + this.ccAttendees.trim();
         }
         if (typeof this.selectedCcEmails.find === 'undefined') {
             this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
