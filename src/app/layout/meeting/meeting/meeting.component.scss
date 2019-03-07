@@ -267,12 +267,14 @@ div.scrollmenu a:hover {
 }
 
 .chat-output {
-    height: calc(100vh*0.60);
+    // height: calc(100vh*0.60);
+    height: calc(100vh*0.55);
     overflow-y: scroll;
 }
 
 .MomTextBox {
-    height: calc(100vh*0.60);
+    // height: calc(100vh*0.60);
+    height: calc(100vh*0.55);
 }
 
 #nested {
