@@ -178,7 +178,8 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please enter meeting subject', 'Warning');
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', 'Warning');
-        } else if (this.timezoneSelect === 'Select Timezone') {
+        // } else if (this.timezoneSelect === 'Select Timezone') {
+        } else if (this.timezoneSelect === undefined) {
             return this.alertService.warning('Please select timezone', 'Warning');
         } else if (date <= today) {
             return this.alertService.warning('Please select future meeting date or time', 'Warning');
@@ -354,7 +355,7 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     selectedCcEmail() {
         if (this.ccAttendees.trim() !== '') {
-            this.selectedCcEmails += ',' + this.ccAttendees;
+            this.selectedCcEmails += ',' + this.ccAttendees.trim();
         }
         if (typeof this.selectedCcEmails.find === 'undefined') {
             this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');

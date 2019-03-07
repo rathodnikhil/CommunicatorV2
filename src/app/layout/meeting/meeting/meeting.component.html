@@ -73,11 +73,11 @@
                             data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
-                        <button id="share-screen" class="pull-left btn-sec" style="display: none;  margin-top: 1px;" data-toggle="tooltip"
+                        <button id="share-screen" class="pull-left btn-sec" style="display: none; margin-top: 1px;" data-toggle="tooltip"
                             title="Share Screen" (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none;"
+                        <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none; margin-top: 1px;"
                             (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}" data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
@@ -157,14 +157,12 @@
                                 </div>
                             </div> -->
                             <div class="row">
-                                <div class="col-md-10">
-                                    <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:60px;overflow:auto;resize:none;"></textarea>
-                                </div>
-                                <i class="fa fa-paper-plane fa-3x col-md-2" id="alternate-send-chat"></i>
+                                <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;"></textarea>
+                                <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-left: 10px;"></i>
                             </div>
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
-                            <div class="row content-tab" style="text-align:center">
+                            <div class="row content-tab" style="text-align:center;">
                                 <textarea placeholder="Type MOM Here..." style="width: 100%;margin:4%; overflow:auto;resize:none"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn btn-primary momBtn" id="btn-save-mom" (click)="saveMom()">Generate
