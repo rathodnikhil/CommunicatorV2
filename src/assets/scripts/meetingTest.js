@@ -20,7 +20,7 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
     this.setAttribute('class', 'btn-share-on pull-left');
-    // this.disabled = true;
+     this.disabled = true;
 };
 
 document.getElementById('btn-mute').onclick = function () {
@@ -350,7 +350,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                //   alert("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+                   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -413,7 +413,7 @@ connection.onstream = function (event) {
     video.srcObject = event.stream;
     video.height = Math.round(window.innerHeight * 0.30) - 10;
     video.width = Math.round(window.innerHeight * 0.30) - 10;
-    video.setAttribute("style", 'float:left;margin-top');
+    video.setAttribute("style", 'float:left;');
     // video.style.padding = '5';
     var customDiv = document.createElement('div');
     customDiv.style.height = Math.round(window.innerHeight * 0.30);
@@ -431,12 +431,17 @@ connection.onstream = function (event) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
             + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
     }
-    heading.innerHTML = '<span style="font-size: 0.8vw; ">' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash pull-right" style="display:none; font-size: 1.1vw;"></i>';
+    // style="font-size: 0.8vw;"   font-size: 1.1vw;
+    heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash pull-right" style="display:none;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
     } else {
+        if (event.stream.isVideo == 0) {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+        } else {
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -25px;');
+        }
     }
     customDiv.appendChild(heading);
     if (event.stream.isVideo == 0) {
@@ -509,7 +514,8 @@ connection.onmute = function (event) {
     if (event.type !== "local") {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;font-size: 1.1vw;");
+        // font-size: 1.1vw;
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;");
     }
 };
 connection.onunmute = function (event) {

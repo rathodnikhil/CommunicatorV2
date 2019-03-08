@@ -37,6 +37,8 @@ export class ScheduleMeetingComponent implements OnInit {
     rememberEmailList = [];
     selectedEmails: any;
     selectedCcEmails: any;
+    timezoneSelect: any;
+    selectedTime: any;
     // public radioGroupForm: FormGroup;
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -176,7 +178,8 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please enter meeting subject', 'Warning');
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', 'Warning');
-        } else if (this.meeting.selectedTimeZone === 'Select Timezone') {
+        // } else if (this.timezoneSelect === 'Select Timezone') {
+        } else if (this.timezoneSelect === undefined) {
             return this.alertService.warning('Please select timezone', 'Warning');
         } else if (date <= today) {
             return this.alertService.warning('Please select future meeting date or time', 'Warning');
@@ -197,7 +200,7 @@ export class ScheduleMeetingComponent implements OnInit {
                 'duration': this.meeting.selectedDuration,
                 'recurringType': this.meeting.isRecurring,
                 'callType': this.meeting.callType,
-                'timeZone': this.meeting.selectedTimeZone,
+                'timeZone': this.timezoneSelect,
                 'timeType': this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM',
                 'meetingId': this.accessCode,
                 'createdBy': this.loggedInUser
@@ -300,7 +303,7 @@ export class ScheduleMeetingComponent implements OnInit {
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
             this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
-            hours + ':' + minutes + '  (' + this.meeting.selectedTimeZone + ')   for  '
+            hours + ':' + minutes + '  (' + this.timezoneSelect + ')   for  '
             + this.meeting.selectedDuration +
             newLine + ' Please join my meeting from your computer using chrome browser ' + newLine +
             'Register user use below url : ' + newLine
@@ -312,6 +315,9 @@ export class ScheduleMeetingComponent implements OnInit {
         if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
             return this.alertService.warning('Please enter attendee email id', 'Warning');
         } else {
+            if (this.ccAttendees !== '') {
+                this.selectedCcEmails =  this.ccAttendees;
+            }
             const payload = {
                 toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: this.outLookBodyJson, meeting: this.meetingObj
@@ -349,7 +355,7 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     selectedCcEmail() {
         if (this.ccAttendees.trim() !== '') {
-            this.selectedCcEmails += ',' + this.ccAttendees;
+            this.selectedCcEmails += ',' + this.ccAttendees.trim();
         }
         if (typeof this.selectedCcEmails.find === 'undefined') {
             this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
@@ -370,5 +376,11 @@ export class ScheduleMeetingComponent implements OnInit {
         this.ccAttendees = this.selectedCcEmails;
         this.selectedCcEmails = '';
         }
+    }
+
+    onTimezoneSelect() {
+        // if (this.timezoneSelect.trim() !== '') {
+            this.timezoneSelect = this.timezoneSelect.trim();
+        // }
     }
 }

@@ -33,7 +33,7 @@
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <app-custom-modal #addNewTeamModal [model]="newTeam">
+                    <app-custom-modal #addNewTeamModal [model]="newTeam" (CancelEvent)="closePopup('addNewTeam')">
                         <div class="modal-body row-label">
                             <div class="row">
                                 <div class="col-md-3">
@@ -98,8 +98,8 @@
                         <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
                         <td>{{userMemPermission.userId.email}}</td>
                         <td>{{userMemPermission.userId.status.status}} </td>
-                        <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.status.status === 'ACTIVE'"></i>
-                            <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.status.status === 'INACTIVE'"></i></td>
+                        <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
+                            <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
                         <td>
                             <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission , srNo);"></i>
                         </td>
@@ -116,7 +116,7 @@
                         (pageChange)="onPageChange($event)"></pagination-controls>
                 </div>
 
-                <app-custom-modal #addUpdateTeamModal [model]="updateTeam">
+                <app-custom-modal #addUpdateTeamModal [model]="updateTeam" (CancelEvent)="teamCloseDeletePopup()">
                     <div class="modal-body row-label">
                         <div class="row">
                             <div class="col-md-3">
@@ -132,7 +132,7 @@
                         <button type="button" class="btn btn-danger" (click)="teamCloseEditPopup()">Close</button>
                     </div>
                 </app-custom-modal>
-                <app-custom-modal #deleteTeamModal [model]="deleteTeam">
+                <app-custom-modal #deleteTeamModal [model]="deleteTeam" (CancelEvent)="teamCloseDeletePopup()">
                     <div>
                         <label style="padding: 10px; ">Are you sure you want to delete this team?</label>
                     </div>
@@ -142,7 +142,7 @@
                     </div>
                 </app-custom-modal>
 
-                <app-custom-modal #addNewMemberModal [model]="newMember">
+                <app-custom-modal #addNewMemberModal [model]="newMember" (CancelEvent)="closePopup('addNewMember')">
                     <div class="modal-body row-label">
                         <div class="row form-group">
                             <div class="col-md-3">
@@ -204,7 +204,7 @@
                         <button type="button" class="btn btn-danger" (click)="closePopup('addNewMember')">Close</button>
                     </div>
                 </app-custom-modal>
-                <app-custom-modal #UpdateMemberModal [model]="updateMember">
+                <app-custom-modal #UpdateMemberModal [model]="updateMember" (CancelEvent)="cancelEditPopup()">
                     <div class="modal-body row-label">
                         <div class="row form-group">
                             <div class="col-md-3">
@@ -253,13 +253,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer popFooter">
+                    <div class="modal-footer popFooter" >
                         <button type="button" class="btn btn-primary" (click)="updateMemberDetails()">Update
                             Member</button>
                         <button type="button" class="btn btn-danger" (click)="cancelEditPopup()">Close</button>
                     </div>
                 </app-custom-modal>
-                <app-custom-modal #deleteMemberModal [model]="deleteMember">
+                <app-custom-modal #deleteMemberModal [model]="deleteMember" (CancelEvent)="closeDeletePopup(2)">
                     <div>
                         <label style="padding: 10px; ">Are you sure you want to delete this member?</label>
                     </div>
@@ -272,7 +272,8 @@
 
             </div>
             <div id="footer" class="footer">
-                <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px;"><br><b>Copyright
+                <div class="cfsfooter">
+                    <img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px;"><br><b>Copyright
                         &copy; 2018 Coreflex
                         Solutions</b>
                 </div>

@@ -70,7 +70,9 @@ export class ManageGroupComponent implements OnInit {
     userName: any;
     email: any;
     password: any;
+    members: any;
     memObj: any = {};
+
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('groupNameField') groupNameField: ElementRef;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
@@ -294,7 +296,7 @@ export class ManageGroupComponent implements OnInit {
                                 , group: this.selectedGroupObj
                             };
                             this.groupMemberObjList.push(this.memObj);
-                        //    this.filterMemberList.push(this.memObj);
+                            // this.filterMemberList.push(this.memObj);
                             this.clearMemPopupField();
                             this.meetingPermissionStatus = false;
                             this.newMemberUserCode = res.userCode;
@@ -320,5 +322,8 @@ export class ManageGroupComponent implements OnInit {
         this.email = '';
         this.password = '';
         this.meetingPermissionStatus = false;
+    }
+    onMemberSelect() {
+           this.members = this.members.trim();
     }
 }

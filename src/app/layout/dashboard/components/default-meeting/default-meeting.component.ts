@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, 
 import { UserService } from '../../../../services/user.service';
 import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 @Component({
@@ -81,7 +80,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button2Content: '<i class="fa fa-copy"></i> Cancel'
     };
     constructor(userService: UserService, meetingService: MeetingService,
-        private router: Router, private toastr: ToastrService, public alertService: AlertService) {
+        private router: Router, public alertService: AlertService) {
         this._userService = userService;
         this._meetingService = meetingService;
     }
@@ -250,6 +249,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
+        debugger;
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
@@ -286,6 +286,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         } else {
             const newLineJson = '<br><br>';
             const outLookBodyJson = this.getMeetingDetails(newLineJson);
+            if (this.ccAttendees !== '') {
+                this.selectedCcEmails =  this.ccAttendees;
+            }
             const payload = {
                 toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
                 meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
@@ -346,7 +349,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     selectedCcEmail() {
         if (this.ccAttendees.trim() !== '') {
-            this.selectedCcEmails += ',' + this.ccAttendees;
+            this.selectedCcEmails += ',' + this.ccAttendees.trim();
         }
         if (typeof this.selectedCcEmails.find === 'undefined') {
             this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
