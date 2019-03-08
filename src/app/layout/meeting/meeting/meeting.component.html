@@ -163,7 +163,7 @@
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center;">
-                                <textarea placeholder="Type MOM Here..." style="width: 100%;margin:4%; overflow:auto;resize:none"
+                                <textarea placeholder="Type MOM Here..." style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn btn-primary momBtn" id="btn-save-mom" (click)="saveMom()">Generate
                                     Meeting Notes</button>

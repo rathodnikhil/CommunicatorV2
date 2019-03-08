@@ -427,4 +427,41 @@ $border-color: #e0e0e0;
     width: 12%; 
     text-align: center;
 }
+
+@media (max-width: 768px) {
+        .btn-responsive {
+        font-size:1.5vh;
+        //line-height: 1;
+        border-radius:3px;
+        overflow-wrap: break-word;
+        padding: 0.3rem 0.3rem;
+        }
+    }
+    
+    @media (min-width: 769px) and (max-width: 992px) {
+        .btn-responsive {
+        font-size:1.7vh;
+        //line-height: 1.2;
+        overflow-wrap: break-word;
+        padding: 0.3rem 0.3rem;
+        }
+    }
+
+.btn-meeting{
+    float: right;
+    width: 15%;
+    border-left: 1px solid #dadadc;
+    text-align: center;
+}
+.link-url{
+    text-decoration :underline;
+    font-weight: bold;
+    padding-top:10px;
+    word-break:break-all;
+}
+.btn-search{
+    background-color: #fecf71;
+    border-color: #fecf71;
+    color:black;
+ }
  

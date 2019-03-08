@@ -7,11 +7,11 @@
             <h6 class="style-links">Schedule upcoming Meetings</h6>
             </div>
 
-            <i class="fa fa-caret-square-o-right cursorPointer fa-2x" style="float: right; width: 15%; border-left: 1px solid #dadadc; text-align: center;" aria-hidden="true" (click)="joinMeetingNow()"
-                    placement="bottom" ngbTooltip="Meet Now"></i>
+            <i class="fa fa-caret-square-o-right cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="joinMeetingNow()"
+                placement="bottom" title="Meet Now" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
 
-            <i class="fa fa-calendar cursorPointer fa-2x" style="float: right; width: 15%; border-left: 1px solid #dadadc; text-align: center;" aria-hidden="true" (click)="switchRoute()" placement="bottom"
-                    ngbTooltip="Schedule Meeting"></i>
+            <i class="fa fa-calendar cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="switchRoute()" placement="bottom"
+                title="Schedule Meeting" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
 
             <!-- <div class="col-md-8">
                 <i class="fa fa-calendar-check-o"></i>
@@ -30,10 +30,10 @@
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
                         <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
-                            <label>For registered use this URL :<br><span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                            <label>For registered use this URL :<br><span class="link-url">
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
-                                <label>For guest use this URL :<span  style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
+                                <label>For guest use this URL :<span  class="link-url">
                                     <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                     https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
@@ -42,12 +42,12 @@
                         </h5>
                     </div>
                     <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-primary" (click)="copyToOutLook($event)" >Go
+                        <button type="button" class="btn btn-primary btn-responsive" (click)="copyToOutLook($event)" >Go
                             to Outlook</button>
-                        <button type="button" class="btn btn-primary" (click)="copyToClipboard()">Copy</button>
-                        <button type="button" class="btn btn-primary" (click)="startMeeting(meetNowMeeting,true)">Start
+                        <button type="button" class="btn btn-primary btn-responsive" (click)="copyToClipboard()">Copy</button>
+                        <button type="button" class="btn btn-primary btn-responsive" (click)="startMeeting(meetNowMeeting,true)">Start
                             Meeting</button>
-                        <button type="button" class="btn btn-danger" (click)="closePopup('meetNow')">Close</button>
+                        <button type="button" class="btn btn-danger btn-responsive" (click)="closePopup('meetNow')">Close</button>
                     </div>
 
                 </app-custom-modal>
@@ -158,7 +158,7 @@
             </label>
             <ul class="accordion-child">
                 <div class="row overall-padding" style="cursor: default;">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" style="margin-top: 10px;">
                         <div class="input-group datepicker-input">
                             <input class="form-control" name="fromDate"
                                 [(ngModel)]="selectedfromDate" placeholder="From Date" ngbDatepicker
@@ -170,7 +170,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" style="margin-top: 10px;">
                         <div class="input-group datepicker-input">
                             <input class="form-control" placeholder="To Date" name="toDate"
                                 [(ngModel)]="selectedtoDate"  ngbDatepicker
@@ -201,7 +201,7 @@
                     <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search"
                         [(ngModel)]="searchText">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-primary btn-search" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>

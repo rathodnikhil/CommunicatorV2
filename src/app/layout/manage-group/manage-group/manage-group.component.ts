@@ -72,6 +72,7 @@ export class ManageGroupComponent implements OnInit {
     password: any;
     members: any;
     memObj: any = {};
+
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('groupNameField') groupNameField: ElementRef;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
