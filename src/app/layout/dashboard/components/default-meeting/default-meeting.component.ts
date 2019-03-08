@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, 
 import { UserService } from '../../../../services/user.service';
 import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 @Component({
@@ -81,7 +80,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button2Content: '<i class="fa fa-copy"></i> Cancel'
     };
     constructor(userService: UserService, meetingService: MeetingService,
-        private router: Router, private toastr: ToastrService, public alertService: AlertService) {
+        private router: Router, public alertService: AlertService) {
         this._userService = userService;
         this._meetingService = meetingService;
     }

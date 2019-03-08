@@ -76,11 +76,11 @@
                             </div>
                         </div> -->
                         <div class="col-md-9"> 
-                            <input class="d-inline-block timzone-select" id="timezone_" placeholder="Select Timezone" style="padding: 5px;text-align: center;" 
+                            <input class="d-inline-block timzone-select" id="timezone_" placeholder="Select Timezone" style="padding: 5px;text-align: center;white-space: pre-wrap;" 
                             list="tomeZoneListEl" autofocus name="timezone_" autocomplete="on"
                             (change)="onTimezoneSelect()" [(ngModel)]="timezoneSelect"/>
-                            <datalist id="tomeZoneListEl" >
-                                <option *ngFor="let timezone of timeZoneArray" class="dropdown-item" 
+                            <datalist id="tomeZoneListEl" style="white-space: pre-wrap;border-bottom:1px solid #C4C4C4;">
+                                <option *ngFor="let timezone of timeZoneArray" style="white-space: pre-wrap;border-bottom:1px solid #C4C4C4;" class="dropdown-item" 
                                 (click)="changeTimeZone(timezone)" value="{{timezone}}">
                             </datalist>
                         </div>
@@ -103,12 +103,10 @@
                                 </p>
                                 <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
                                     <label>Registered Users use this URL for meeting :
-                                    <span
-                                        style="text-decoration :underline;  font-weight: bold; padding-top:10px;">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
+                                    <span class="link-url">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
                                     </span>     </label>
                                      <label>Guest Users use this URL for meeting :
-                                         <span
-                                              style="text-decoration :underline; font-weight: bold; padding-top:10px;">
+                                         <span class="link-url">
                                               https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{accessCode}}
                                     </span>  </label>
                                 </p>
@@ -117,9 +115,9 @@
                                 </h5>
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-primary" (click)="copyToOutLook($event)">Go to Outlook</button>
-                                <button type="button" class="btn btn-primary" (click)="copyToClipboard()">Copy</button>
-                                <button type="button" class="btn btn-danger" (click)="closeMeetingPopup('scheduleMeetings',true)">Close</button>
+                                <button type="button" class="btn btn-primary btn-responsive " (click)="copyToOutLook($event)">Go to Outlook</button>
+                                <button type="button" class="btn btn-primary btn-responsive " (click)="copyToClipboard()">Copy</button>
+                                <button type="button" class="btn btn-danger btn-responsive " (click)="closeMeetingPopup('scheduleMeetings',true)">Close</button>
                             </div>
                         </app-custom-modal>
 

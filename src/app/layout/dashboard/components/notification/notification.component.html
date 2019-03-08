@@ -3,7 +3,7 @@
     <div class="form-group input-group">
         <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
         <div class="input-group-append">
-            <button class="btn " type="button">
+            <button class="btn btn-search" type="button">
                 <i class="fa fa-search"></i>
             </button>
         </div>
@@ -23,7 +23,7 @@
             <h5>Group member list</h5>
         </div> -->
 
-        <div class="list-group">
+        <div class="list-group" style="margin-bottom: 15%;">
             <div style="color:#0000;" *ngFor="let user of userList | genericSearchAllProp : searchText">
                 <a *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
                     class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
