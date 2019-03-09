@@ -150,7 +150,36 @@ div.scrollmenu a:hover {
     height: 50px;
 }
 
-
+/*media queries added for buttons of meeting page(added by shruti)*/
+@media (max-width: 768px) {
+    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room{
+    font-size:8px;
+      width: 35px;
+      height: 35px;
+    }
+    }
+    
+    @media (min-width: 768px) {
+    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room{
+    font-size:9px;
+      width: 37px;
+      height:37px;  }
+    }
+   
+    @media (min-width: 992px) {
+    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
+    font-size:10px;
+      width:40px;
+      height:40px;
+    }
+    }
+    @media (min-width: 1224px) {
+        #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
+        font-size:12px;
+          width:50px;
+          height:50px;
+        }
+        }
 
 .meeting-bottom {
 
