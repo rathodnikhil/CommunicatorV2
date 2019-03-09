@@ -356,7 +356,6 @@ export class ManageTeamComponent implements OnInit {
         this.selectedMemIndex = index;
     }
     updateMemberDetails() {
-        debugger;
         const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
         if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '') {
             this.updatedUserCode = this.newMemberUserCode;

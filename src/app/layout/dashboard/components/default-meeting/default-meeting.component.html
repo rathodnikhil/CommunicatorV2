@@ -1,285 +1,266 @@
-<div>
-    <div class="container-fluid">
+<div #chatPanel class="chat-panel card card-default">
+    <div class="card-header meetingHeader">
         <div class="row">
-            <div class="col-sm-8 meeting-activity">
-                <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word; margin-left: 10%;"><b>Host:
-                                {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
-                            </h5>
-                            <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-left: 10%;"><b>{{meetingDetails.subject}}</b>
-                            </h6>
-                        </div>
-                        <div class="col-md-4">
-                            <div id="room-urls" style="display: none; float: right;">
-                                <button type="button" data-toggle="tooltip" title="Copy Meeting Link" class="btn btn-url"
-                                        id="copyGuestMeetingLink">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
-                                </button>
-                                <label style="margin-left: 10px;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+            <div style="width: 70%; float: left;">
+            <i class="fa fa-calendar-check-o"></i>
+                Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+            <h6 class="style-links">Schedule upcoming Meetings</h6>
+            </div>
+
+            <i class="fa fa-caret-square-o-right cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="joinMeetingNow()"
+                placement="bottom" title="Meet Now" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
+
+            <i class="fa fa-calendar cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="switchRoute()" placement="bottom"
+                title="Schedule Meeting" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
+
+            <!-- <div class="col-md-8">
+                <i class="fa fa-calendar-check-o"></i>
+                Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+                <h6 class="style-links">Schedule upcoming Meetings</h6>
+            </div> -->
+            <div *ngIf="showScheduleMeetingFl" style="text-align: center;">
+                <!-- <a href="javascript:void(0)" class="btn btn-sec">Meet Now</a> -->
+                <!-- <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
+                    placement="bottom" ngbTooltip="Meet Now"></i> -->
+                <app-custom-modal #MeetNowModal [model]="meetNowModel">
+                    <div style="padding: 10px; font-size:14px;" class="span-font">
+                        <span>Meet now: &nbsp;{{meetNowMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                        <p style="font-weight:bold;">Date : {{meetNowMeeting.meetingStartDateTime| date:'fullDate'}}
+                            for
+                            <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
+                        </p>
+                        <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
+                            <label>For registered use this URL :<br><span class="link-url">
+                                <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
+                                https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                                <label>For guest use this URL :<span  class="link-url">
+                                    <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
+                                    https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                        </p>
+                        <h5 style="margin-top: 40px;">Meeting Id     :
+                            <span>{{meetNowMeeting.meetingCode}}</span>
+                        </h5>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary btn-responsive" (click)="copyToOutLook($event)" >Go
+                            to Outlook</button>
+                        <button type="button" class="btn btn-primary btn-responsive" (click)="copyToClipboard()">Copy</button>
+                        <button type="button" class="btn btn-primary btn-responsive" (click)="startMeeting(meetNowMeeting,true)">Start
+                            Meeting</button>
+                        <button type="button" class="btn btn-danger btn-responsive" (click)="closePopup('meetNow')">Close</button>
+                    </div>
+
+                </app-custom-modal>
+                <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearOutlookField()">
+                    <div class="outlook-email-background">
+                        <!-- <div class="form-group row">
+                            <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
+                            <div class="col-lg-9"> 
+                                <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
+                                (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
+                                <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                </datalist>
                             </div>
+                            <div class="edit-icon"><i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
+                            <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"></label></div>
+                            <div class="col-lg-9" > 
+                                <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly></textarea>
+                            </div>  
+                        </div> -->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">To: </label>
+
+                                <input class="form-control" id="to" list="rememberEmailListEl" style="width: 68%;" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
+                                (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
+                                <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                </datalist>
+
+                                <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" style="width: 12%; text-align: center;" aria-hidden="true"></i>
+                            </div>
+                            <div class="row">
+                                <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly style="width: 68%; margin-left: 20%;"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">Cc: </label>
+    
+                                <input class="form-control" (change)="selectedCcEmail()" style="width: 68%;" id="to" (blur)="selectedCcEmail()"
+                                    list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                </datalist>
+    
+                                <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="row">
+                                <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group row">
+                        <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
+                        <div class="col-lg-9"> 
+                            <input class="form-control" (change)="selectedCcEmail()" id="to" (blur)="selectedCcEmail()"
+                             list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                <datalist id="rememberEmailListEl">
+                                    <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                </datalist>
+                        </div>
+                        <div class="edit-icon"><i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
+                        <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
+                        <div class="col-lg-9"> 
+                            <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
+                        </div>
+                        </div> -->
+
+                        <div class="form-group row">
+                        <div class="col-lg-2"> <label for="subject" class="outlook-email-label">Subject: </label>
+                        </div>
+                        <div class="col-lg-10"><textarea class="form-control" [(ngModel)]="outLookSubject" readonly  name="subject">
+                         </textarea>  </div>
+                        </div>
+                        </div>
+                        <div style="height: 100%">
+                             <textarea class="form-control" id="body" [(ngModel)]="outLookBody" name="body" rows="13"> 
+                            </textarea>
+                        </div>
+                        <div class="modal-footer popFooter">
+                            <button type="button" class="btn btn-primary" (click)="sendEmail($event)">Send</button>
+                            <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
+                        </div>
+                </app-custom-modal>
+            </div>
+            <!-- <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
+                <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
+                    ngbTooltip="Schedule Meeting"></i>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true"> -->
+        <div class="align-center hand-pointer" *ngIf="selectDateFlag === true" style="text-align: center;">
+            <a style="padding-right:10px; cursor: pointer;" (click)="filterMeetingByDate('all')">All</a>
+            <a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a>
+            <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a>
+        </div>
+    <!-- </div> -->
+    <ul class="accordion">
+        <li class="accordion-item">
+            <input id="s1" class="hide" type="checkbox">
+            <label for="s1" class="accordion-label" style="cursor: pointer;" (click)="selectMeetingFilterDate()">
+                <i class="fa fa-calendar-check-o"></i>&nbsp;Select Date
+                <i class="fa fa-angle-up" [ngClass]="{'fa-angle-down':!selectDateFlag}" aria-hidden="true" style="cursor: pointer; float: right; font-size: 19px;"></i>
+            </label>
+            <ul class="accordion-child">
+                <div class="row overall-padding" style="cursor: default;">
+                    <div class="col-sm-6" style="margin-top: 10px;">
+                        <div class="input-group datepicker-input">
+                            <input class="form-control" name="fromDate"
+                                [(ngModel)]="selectedfromDate" placeholder="From Date" ngbDatepicker
+                                #fromDate="ngbDatepicker">
+                            <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
+                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                <span class="fa fa-calendar" style="cursor: pointer;"></span>
+                            </button>
                         </div>
                     </div>
 
-                </div>
-                <div class="attendee-row">
-                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" #videos_container id="videos_container">
-                        <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
+                    <div class="col-sm-6" style="margin-top: 10px;">
+                        <div class="input-group datepicker-input">
+                            <input class="form-control" placeholder="To Date" name="toDate"
+                                [(ngModel)]="selectedtoDate"  ngbDatepicker
+                                #toDate="ngbDatepicker">
+                            <button class="input-group-addon" (click)="toDate.toggle()" type="button">
+                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                <span class="fa fa-calendar" style="cursor: pointer;"></span>
+                            </button>
+                        </div>
                     </div>
-                    <!-- <p  id="muteIcon"> </p>  -->
+                    <div style="text-align: center;margin:0 auto;padding: 10px;">
+                        <button class="btn btn-primary" (click)="filterMeetingByDate('range')" #serachDateField>Search</button>
+                        <button class="btn btn-primary" (click)="filterMeetingByDate('clear')" #clearDateField>Clear</button>
+                    </div>
                 </div>
-                <div class="row parent">
-                    <div id="shareScreen-container" style="width: 100%; overflow-y: auto;height: calc(100vh*0.38);"></div>
-                </div>
-                <div>
-                    <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
-                        <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
-                            autocapitalize=off size=10 style="display:none;">
-                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()"
-                            data-toggle="tooltip" title="Exit Meeting">
-                            <i class="fa fa-2x fa-power-off"></i>
-                        </button>
-                        <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
-                            <div>
-                                <label style="padding: 10px; ">Are you sure you want to completely exit meeting click
-                                    yes or to save MOM and other meeting
-                                    activity click No?</label>
-                            </div>
-                            <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-primary" (click)="completeExit()">Yes</button>
-                                <button type="button" class="btn btn-danger" (click)="exit()">No</button>
-                            </div>
-                        </app-custom-modal>
-                        <button id="btn-mute" class="btn-sec pull-left btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'"
-                            placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}" (click)='mute()'>
-                            <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
-                        </button>
-                        <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" style="display: none;"
-                            [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" (click)='startMeeting();'>
-                            <i class="fa fa-2x fa-play" aria-hidden="true"></i>
-                        </button>
-                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;">
-                            <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip" aria-hidden="true"
-                                id="rec_start"></i>
-                            <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
-                                style="color:#dc3545;display: none" id="rec_stop"></i>
-                        </button>
-                        <button id="btn-stop-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;"></button>
-                        <button id="join-room" class="btn default pull-left" style="display: none;">
-                            <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
-                        </button>
-                        <button id="share-file" class="btn-sec pull-left" title="Share File" style="display: none;"
-                            data-toggle="tooltip">
-                            <i class="fa fa-2x fa-file-text"></i>
-                        </button>
-                        <button id="share-screen" class="pull-left btn-sec" style="display: none; margin-top: 1px;" data-toggle="tooltip"
-                            title="Share Screen" (click)="shareScreen()">
-                            <i class="fa fa-2x fa-desktop"></i>
-                        </button>
-                        <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none; margin-top: 1px;"
-                            (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}" data-toggle="tooltip">
-                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
-                                class="fa fa-2x fa-ban"></i>
-                        </button>
-                        <span id="meeting-error" style="float: right;font-weight: bolder; color: rgb(13, 75, 36)"></span>
-                        <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
-                        <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
-                        <button id="recording_hidden" style="display:none;">HIdden stuff for recor</button>
-                        <div style="display: none;" id="isHost"></div>
-                        <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
-                        <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
-                            Meeting
+            </ul>
+        </li>
+    </ul>
+
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <i class="fa fa-calendar"></i>
+                <span style="font-weight: bold; font-size: 14px;">{{currentDate | date:'fullDate'}}</span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group input-group">
+                    <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search"
+                        [(ngModel)]="searchText">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary btn-search" type="button">
+                            <i class="fa fa-search"></i>
                         </button>
                     </div>
                 </div>
             </div>
+            <hr class="hr-partition" />
+            <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4>
+        </div>
+        <div class="row">
+            <div #chatBody class="card-body" style="min-height:100%;">
+                <ul class="chat">
+                    <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
+                        <div class="row">
+                            <div style="width: 70%;padding-left: 20px;">
+                                <span style="font-weight: bold; font-size: 14px;">
+                                    <i style="color:#353535;" class="fa" [ngClass]="{'fa-microphone': meeting.callType === 'Audio' ,
+                                    'fa-video-camera': meeting.callType === 'Video'}"></i>&nbsp;({{meeting.meetingCode}})<br>
+                                    <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
+                                    date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </div>
+                            <!-- <div> -->
+                                <a (click)="startMeeting(meeting,false);" style="float: right;width: 10%;text-align: center;">
+                                    <i class="fa fa-play-circle actionIcon"  aria-hidden="true" style="color:green"
+                                    title="Start Meeting" data-toggle="tooltip" ></i>
+                                </a>
+                                <a>
+                                    <i class="fa fa-times-circle actionIcon" style="float: right;width: 10%;text-align: center;" (click)="cancelMeeting(meeting)"
+                                    title="Cancel Meeting" aria-hidden="true" data-toggle="tooltip" ></i>
+                                </a>
+                                <app-custom-modal #confirmCancelMeetingModal [model]="cancelMeetConfirm">
+                                    <div>
+                                        <label style="padding: 10px; ">Are you sure you want to cancel or delete this meeting?</label>
+                                    </div>
+                                    <div class="modal-footer popFooter">
+                                        <button type="button" class="btn btn-primary" (click)="cancelMeetingNow()">Yes</button>
+                                        <button type="button" class="btn btn-danger" (click)="closePopup('cancel')">No</button>
+                                    </div>
+                                </app-custom-modal>
+                               
+                                <app-custom-modal #startMeetNowModal [model]="startMeetNow">
+                                    <div>
 
-            <div class="col-sm-4 meeting-activity">
-                <div class="card">
-                    <div class="card-header col-md-12" style="background: #efefef;">
-                        <div class="col-md-8" style="float: left;">
-                            <img src="assets/images/color-logo1.png" class="img-fluid" alt="Responsive image" />
+                                        <label style="padding: 10px; ">Press Start to meet now</label>
+                                    </div>
+                                    <div class="modal-footer popFooter">
+                                        <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,true)">Start</button>
+                                    </div>
+                                </app-custom-modal>
+                            <!-- </div> -->
                         </div>
-                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;color:#000;">
-                            <h4>
-                                <i class="fa fa-clock-o"></i>&nbsp;
-                                {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
-                            </h4>
+                        <div class="col-md-12">
+                            <strong style="color:#353535;">
+                                <br> Subject : {{meeting.subject}}
+                                <br>Duration : {{meeting.duration}}
+                            </strong>
                         </div>
-                    </div>
-                    <div class="card-body" style="padding-right:50px;">
-                        <div class="icon-bar">
-                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
-                                [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
-                            <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
-                                title="Notes"><i class="fa fa-sticky-note-o"></i></a>
-                            <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
-                                title="Viewers"><i class="fa fa-user-o"></i></a>
-                            <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
-                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i class="fa fa-file-text-o"></i></a>
-                            <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
-                            <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
-                        </div>
-                        <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-color: #fecf71;">
-                            <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
-                                    Chat<span id="messageCount" class="step"></span>
-                                </span>
-                            </li>
-                            <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
-                                    Notes
-                                </span>
-                            </li>
-                            <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
-                                    Viewers<span id="viewerCount" class="step"></span>
-                                </span>
-                            </li>
-                            <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='downloadedFiles'}">
-                                    Shared Files
-                                </span>
-                            </li>
-                        </ul>
-                        <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
-                            <div id="chat-container" class="chat-output">
-                            </div>
-                            <!-- <div class="col-md-12" style="padding-top: 5px;">
-                                <div class="row">
-                                    <span class="col-md-10">
-                                        <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%; height:60px;overflow:auto;resize:none"></textarea>
-                                    </span>
-                                    <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
-                                        <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
-                                    </span>
-                                </div>
-                            </div> -->
-                            <div class="row">
-                                <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;"></textarea>
-                                <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-left: 10px;"></i>
-                            </div>
-                        </div>
-                        <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
-                            <div class="row content-tab" style="text-align:center;">
-                                <textarea placeholder="Type MOM Here..." style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
-                                    [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn btn-primary momBtn" id="btn-save-mom" (click)="saveMom()">Generate
-                                    Meeting Notes</button>
-                            </div>
-                        </div>
-                        <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
-                            <div class="row content-tab">
-                                <div id="viewersList" class="col-md-12"></div>
-
-                            </div>
-                        </div>
-                        <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
-                            <div id="file-container" class="row content-tab">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
-<section class="make-center" style="display:none;">
-    <h1 style="display:none;"></h1>
-    <div id="chat-container">
-    </div>
-</section>
-<video id="screenRecordVideo" style="display: none;"></video>
-
-
-
-
-
-<section class="experiment recordrtc" style="display:none;">
-    <h2 class="header" style="margin: 0;">
-        <select class="recording-media">
-            <option value="record-audio-plus-video">Microphone+Camera</option>
-            <option value="record-audio">Microphone</option>
-            <option value="record-screen">Full Screen</option>
-            <option value="record-audio-plus-screen">Microphone+Screen</option>
-        </select>
-
-        <span style="font-size: 15px;">into</span>
-
-        <select class="media-container-format">
-            <option>default</option>
-            <option>vp8</option>
-            <option>vp9</option>
-            <option>h264</option>
-            <option>mkv</option>
-            <option>opus</option>
-            <option>ogg</option>
-            <option>pcm</option>
-            <option>gif</option>
-            <option>whammy</option>
-            <option>WebAssembly</option>
-        </select>
-
-        <input type="checkbox" id="chk-timeSlice" style="margin:0;width:auto;" title="Use intervals based recording">
-        <label for="chk-timeSlice" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;"
-            title="Use intervals based recording">Use timeSlice?</label>
-
-        <br>
-
-        <!-- <button id="btn-start-recording">Start Recording</button> -->
-        <button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>
-
-        <div style="display: inline-block;">
-            <input type="checkbox" id="chk-fixSeeking" style="margin:0;width:auto;" title="Fix video seeking issues?">
-            <label for="chk-fixSeeking" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;"
-                title="Fix video seeking issues?">Fix Seeking Issues?</label>
-        </div>
-
-        <hr style="border-top: 0;border-bottom: 1px solid rgb(189, 189, 189);margin: 4px -12px;margin-top: 8px;">
-        <select class="media-resolutions">
-            <option value="default">Default resolutions</option>
-            <option value="1920x1080">1080p</option>
-            <option value="1280x720">720p</option>
-            <option value="640x480">480p</option>
-            <option value="3840x2160">4K Ultra HD (3840x2160)</option>
-        </select>
-
-        <select class="media-framerates">
-            <option value="default">Default framerates</option>
-            <option value="5">5 fps</option>
-            <option value="15">15 fps</option>
-            <option value="24">24 fps</option>
-            <option value="30">30 fps</option>
-            <option value="60">60 fps</option>
-        </select>
-
-        <select class="media-bitrates">
-            <option value="default">Default bitrates</option>
-            <option value="8000000000">1 GB bps</option>
-            <option value="800000000">100 MB bps</option>
-            <option value="8000000">1 MB bps</option>
-            <option value="800000">100 KB bps</option>
-            <option value="8000">1 KB bps</option>
-            <option value="800">100 Bytes bps</option>
-        </select>
-    </h2>
-
-    <div style="text-align: center; display: none;">
-        <button id="save-to-disk">Save To Disk</button>
-        <button id="upload-to-php">Upload to PHP</button>
-        <button id="open-new-tab">Open New Tab</button>
-
-        <div style="margin-top: 10px;">
-            <span id="signinButton" class="pre-sign-in">
-                <span class="g-signin" data-callback="signinCallback" data-clientid="41556190767-115ifahd55lk4ln5pop4jus55cr4l7oh.apps.googleusercontent.com"
-                    data-cookiepolicy="single_host_origin" data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
-                </span>
-            </span>
-
-            <button id="upload-to-youtube" style="vertical-align:top;">Upload to YouTube</button>
-        </div>
-    </div>
-
-    <div style="margin-top: 10px;" id="recording-player"></div>
-</section>

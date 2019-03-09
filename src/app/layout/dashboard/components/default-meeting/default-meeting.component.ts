@@ -249,7 +249,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
-        debugger;
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
