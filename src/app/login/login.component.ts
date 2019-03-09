@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, Inject } from '@angular/core';
-import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
+import { Router, RouterStateSnapshot, ActivatedRoute, Params } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
@@ -35,8 +35,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     forgetPasswordFlag: boolean;
     Logintext = 'Login';
     loggedInUserObj: any;
+    meetingCode: string;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
-        public router: Router, loginService: LoginService,
+        public router: Router, loginService: LoginService, private activatedRoute: ActivatedRoute,
         userService: UserService, public alertService: AlertService, passwordService: PasswordService) {
         this._loginService = loginService;
         this._userService = userService;
@@ -47,6 +48,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.previousUrl = this._loginService.getPreviousUrl();
         this.isGuest = false;
         this.loginUiFlag = true;
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+            this.meetingCode = params['meetingCode'];
+          });
     }
     ngAfterViewInit(): void {
         (<any>window).customAlertService = this.alertService;
@@ -110,6 +114,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                                 const userNamePayload = { userName: loggedinUser.name };
                                 this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
                                     if (res.firstName !== undefined && res.firstName != null) {
+                                        if (this.meetingCode) {
+                                            this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+                                        }
                                         if (!this.previousUrl) {
                                             this.router.navigate(['/dashboard/default']);
                                         } else {
