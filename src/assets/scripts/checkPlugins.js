@@ -4,8 +4,8 @@ var ua = navigator.userAgent.toLowerCase();
 var isAndroid = ua.indexOf("android") > -1;
 var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
 var edge = ua.indexOf("edge") > -1;
-var safari = ua.indexOf("safari") > -1;
-var isFireFox = ua.indexOf("firefox");
+var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
+var isFireFox = ua.indexOf("firefox") > -1;
 if (!isAndroid && !iOS && !edge && !safari && !isFireFox) {
     if (typeof RecordRTC_Extension === 'undefined') {
 
