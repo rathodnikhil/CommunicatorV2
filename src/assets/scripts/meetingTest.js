@@ -9,6 +9,12 @@ document.getElementById('btn-leave-room').disabled = true;
 var alertService = window.customAlertService;
 var isMute = false;
 var isShareScreen = false;
+var ua = navigator.userAgent.toLowerCase();
+var isAndroid = ua.indexOf("android") > -1;
+var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
+var edge = ua.indexOf("edge") > -1;
+var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
+var isFireFox = ua.indexOf("firefox") > -1;
 document.getElementById('share-screen').onclick = function () {
     try {
         isShareScreen = true;
@@ -20,7 +26,7 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
     this.setAttribute('class', 'btn-share-on pull-left');
-     this.disabled = true;
+    this.disabled = true;
 };
 
 document.getElementById('btn-mute').onclick = function () {
@@ -350,7 +356,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+                alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -438,7 +444,7 @@ connection.onstream = function (event) {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
     } else {
         if (event.stream.isVideo == 0) {
-        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
         } else {
             heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -25px;');
         }
@@ -585,9 +591,12 @@ connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
-    document.getElementById('share-screen').style.display = 'block';
+    debugger;
+    if (!isAndroid && !iOS && !edge && !safari && !isFireFox) {
+        document.getElementById('share-screen').style.display = 'block';
+        document.getElementById('btn-start-recording').style.display = 'block';
+    }
     document.getElementById('disable-video').style.display = 'block';
-    document.getElementById('btn-start-recording').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
@@ -776,7 +785,8 @@ if (roomid && roomid.length) {
 /** Record screen functionality */
 var video = document.getElementById('screenRecordVideo');
 if (typeof RecordRTC_Extension === 'undefined') {
-    alert('RecordRTC chrome extension is either disabled or not installed.');
+    // alert('RecordRTC chrome extension is either disabled or not installed.');
+    document.getElementById("btn-start-recording").display = 'none';
 }
 
 // first step
@@ -787,17 +797,16 @@ var recorder = new RecordRTC_Extension();
 function stopRecordingCallback(blob) {
     video.src = video.srcObject = null;
     video.src = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.setAttribute('style', 'display: none');
-    a.setAttribute('href', URL.createObjectURL(blob));
-    // a.href = screenRecordVideo.src;
-    a.download = 'Rec-' + roomid + '-' + new Date() + '.webm';
-    a.click();
-    // window.URL.revokeObjectURL(url);
-    a.remove();
-    recorder.screen.stop();
-    recorder.destroy();    
+    var url = '/#/error/recordscreensteps';
+    var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+    try {
+        popup_window.focus();
+    } catch (e) {
+        alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+    }    
+    if (recorder.screen)
+        recorder.screen.stop();
+    recorder.destroy();
     recorder = null;
 }
 
@@ -819,10 +828,3 @@ document.getElementById('btn-start-recording').onclick = function () {
         document.getElementById('rec_stop').style.display = 'none';
     }
 };
-
-// document.getElementById('btn-stop-recording').onclick = function() {
-//     this.disabled = true;
-
-//     // third and last step
-//     recorder.stopRecording(stopRecordingCallback);
-// };

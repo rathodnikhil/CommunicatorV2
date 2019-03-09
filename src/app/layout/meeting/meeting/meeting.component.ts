@@ -87,10 +87,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         email: this.loggedInUser.email
                     };
                     if (!data.isGuest) {
-                          // payload.userCode = this.loggedInUser.userCode;
+                        // payload.userCode = this.loggedInUser.userCode;
                         this.isGuest = false;
                     } else if (data.isGuest) {
-                          // payload.userCode = this.loggedInUser.firstName;
+                        // payload.userCode = this.loggedInUser.firstName;
                         this.isGuest = true;
                     }
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
@@ -241,7 +241,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     exit() {
         this.exitMeetingConfirmModal.close();
-       // this.stopTimer();
+        // this.stopTimer();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         if (this.isGuest) {
             this.stopTimer();
@@ -261,7 +261,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         clearInterval(this.actualMeetingTime);
     }
     startTimer() {
-         this.actualMeetingTime =  setInterval(() => { this.calculateTimeSpan(); }, 1000);
+        this.actualMeetingTime = setInterval(() => { this.calculateTimeSpan(); }, 1000);
         setInterval(function () {
         }, 1000);
     }
@@ -285,12 +285,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
     calculateTimeSpan() {
-        // if (this.tick === this.timeLeft) {
-        //     this.onFinished();
-        // } else if (this.tick === (this.timeLeft - 300000)) {
-        //     this.onNotify();
-        // }
-
         if (this.second === 59) {
             if (this.minute === 59) {
                 this.hour += 1;
