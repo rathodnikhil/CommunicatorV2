@@ -305,9 +305,9 @@ export class ManageTeamComponent implements OnInit {
                     } else {
                         this.selectedTeamObj.teamName = this.updateTeamName;
                         this.selectedTeamName = this.updateTeamName;
-                        this.closePopup('updateTeam');
+                        this.addUpdateTeamModal.close();
                         // this.userPermissionList.push(team );
-                        this.userPermissionList.splice(this.selectedTeamIndex, 0, this.selectedUserPermissionObj);
+                        // this.userPermissionList.splice(this.selectedTeamIndex, 0, this.selectedUserPermissionObj);
                         return this.alertService.success('Team has updated successfully ', 'Success');
                     }
                 });
@@ -394,7 +394,7 @@ export class ManageTeamComponent implements OnInit {
                     }
                 };
                 this.UpdateMemberModal.close();
-                this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
+                // this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
                 for (let i = 0; i < this.userPermissionMemberList.length; i++) {
                     if (this.userPermissionMemberList[i].userId.userCode === data.userCode) {
                         this.userPermissionMemberList[i].userId = data;
@@ -486,20 +486,20 @@ export class ManageTeamComponent implements OnInit {
     closeDeletePopup(noFlag) {
         const memObj = this.selectedmemObj(this.selectedMember, this.deleteMemberFlag, noFlag);
         this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
-        this.deleteMemberModal.close();
+        // this.deleteMemberModal.close();
     }
     teamCloseEditPopup() {
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
-        this.addUpdateTeamModal.close();
+        // this.addUpdateTeamModal.close();
     }
     teamCloseDeletePopup() {
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
-        this.deleteTeamModal.close();
+        // this.deleteTeamModal.close();
     }
     cancelEditPopup() {
         const memObj = this.selectedmemObj(this.selectedMember, 1, 2);
         this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
-        this.UpdateMemberModal.close();
+        // this.UpdateMemberModal.close();
     }
     clearMemPopupField() {
         this.firstName = '';
