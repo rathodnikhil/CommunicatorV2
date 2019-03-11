@@ -14,7 +14,7 @@
 
 .searched-list{
     text-align: center; 
-    background-color: #fecf71; 
+    background-color: #05588f; 
    // background-image: linear-gradient(to right,#fd7a2a,orange);
   //  color: white;    
     margin-right: -1.25rem;
@@ -23,6 +23,7 @@
 
 .searched-title{
     padding:5px;
+    color: white;
 }
 
 .member-list{
@@ -126,6 +127,7 @@
  .btn-sec:hover{
     background-color:#bc151b;
     color:white;
+    border: 1px solid white;
  }
  .btn-search{
     background-color: #fecf71;

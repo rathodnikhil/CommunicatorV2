@@ -6,9 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedPipesModule } from '../../shared';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   imports: [
-    CommonModule, ManageGroupRoutingModule, DashboardModule, FormsModule , SharedPipesModule, NgxPaginationModule
+    CommonModule, ManageGroupRoutingModule, DashboardModule, FormsModule , SharedPipesModule, 
+    NgxPaginationModule, NgMultiSelectDropDownModule
   ],
   declarations: [ManageGroupComponent]
 })
