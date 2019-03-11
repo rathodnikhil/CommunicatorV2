@@ -39,7 +39,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     rememberEmailList = [];
     selectedEmails: any;
     selectedCcEmails: any;
-
+    isAdministrator = false;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -96,17 +96,18 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-                let userRoleArray = [];
-                userRoleArray = this.loggedInUser.roles;
-                const roleArray = [];
-                for (let i = 0; i < userRoleArray.length; i++) {
-                    roleArray.push(userRoleArray[i].role);
-                }
-                if (roleArray.indexOf('ADMINISTRATOR') === -1) {
-                    this.showScheduleMeetingFl = true;
-                } else {
-                    this.showScheduleMeetingFl = false;
-                }
+                // let userRoleArray = [];
+                // userRoleArray = this.loggedInUser.roles;
+                // const roleArray = [];
+                // for (let i = 0; i < userRoleArray.length; i++) {
+                //     roleArray.push(userRoleArray[i].role);
+                // }
+                // if (roleArray.indexOf('ADMINISTRATOR') === -1) {
+                //     this.showScheduleMeetingFl = true;
+                // } else {
+                //     this.showScheduleMeetingFl = false;
+                // }
+                this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 const payload = { userCode: this.loggedInUser.userCode };
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];

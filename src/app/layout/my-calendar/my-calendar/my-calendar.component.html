@@ -54,28 +54,28 @@
         </div>
         <div>
             <app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
-                <div class="col-md-12">
-                    <div class="row form-control">
-                        <div class="col-md-6">Meeting Id:</div>
-                        <div class="col-md-6">{{meetingDetails.meetingCode}}</div>
+                <div class="col-md-12 view-meeting-popup-body">
+                    <div class="row">
+                        <label class="view-meeting-title">Meeting Id:</label>
+                        <p class="view-meeting-details">{{meetingDetails.meetingCode}}</p>
                     </div>
-                    <div class="row form-control">
-                        <div class="col-md-6">Subject:</div>
-                        <div class="col-md-6">{{meetingDetails.subject}}</div>
+                    <div class="row">
+                        <label class="view-meeting-title">Subject:</label>
+                        <p class="view-meeting-details">{{meetingDetails.subject}}</p>
                     </div>
-                    <div class="row form-control">
-                        <div class="col-md-6">Date:</div>
-                        <div class="col-md-6">{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss a z'}}</div>
+                    <div class="row">
+                        <label class="view-meeting-title">Date:</label>
+                        <p class="view-meeting-details">{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss a z'}}</p>
                     </div>
-                    <div class="row form-control">
-                        <div class="col-md-6">Duration:</div>
-                        <div class="col-md-6">{{meetingDetails.duration}}</div>
+                    <div class="row">
+                        <label class="view-meeting-title">Duration:</label>
+                        <p class="view-meeting-details">{{meetingDetails.duration}}</p>
                     </div>
-                    <div class="row form-control">
-                        <div class="col-md-6">Host Name:</div>
-                        <div class="col-md-6">
+                    <div class="row">
+                        <label class="view-meeting-title">Host Name:</label>
+                        <p class="view-meeting-details">
                             {{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}
-                        </div>
+                        </p>
                     </div>
 
                 </div>

@@ -51,7 +51,7 @@
                     </div>
 
                     <fieldset id="actions">
-                        <input type="submit" id="submit" class="btn btn-primary" [(ngModel)]="Logintext" (click)="login()"
+                        <input type="submit" id="submit" class="btn btn-sec" [(ngModel)]="Logintext" (click)="login()"
                             style="margin-bottom: 1%;" />
                         <a (click)="forgetPassword()">Forgot your password?</a>
                     </fieldset>
@@ -61,18 +61,21 @@
 
         </div>
         <div *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fa fa-envelope fa-fw"></i>
-                    </span>
+            <div class="inner-border">
+                <h3 style="color: #3283b9;">Forgot Password</h3>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-envelope fa-fw"></i>
+                        </span>
+                    </div>
+                    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
+                        required />
                 </div>
-                <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
-                    required />
-            </div>
 
-            <button class="btn" (click)="sendEmailForgotPassword()">Submit</button>
-            <div class="alink"> <a (click)="backToLogin()">back to login</a></div>
+                <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
+                <div class="alink"> <a (click)="backToLogin()">Login</a></div>
+            </div>
         </div>
     </div>
     <div style="display: none;">
