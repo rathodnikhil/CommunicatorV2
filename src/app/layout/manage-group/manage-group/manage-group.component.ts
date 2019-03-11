@@ -39,6 +39,7 @@ export class ManageGroupComponent implements OnInit {
     limitSelection = false;
     cities: any[];
     selectedItems: any[];
+    dropdownList: any[];
     dropdownSettings: any = {};
     createGroupsVal = '';
     showtypeMessage = false;
@@ -61,7 +62,7 @@ export class ManageGroupComponent implements OnInit {
     searchGroupName: any;
     searchGroup: any;
     searchTextTable: any;
-    addMemPermission = 1;
+    // addMemPermission = 1;
     _passwordService: PasswordService;
     meetingPermissionStatus: any;
     newMemberUserCode: any;
@@ -113,7 +114,7 @@ export class ManageGroupComponent implements OnInit {
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this._groupService.setGroupList(payload);
                 this._userService.setUserList(payload);
-                // this._groupService.setGroupListObjByLoggedInUserId(payload);
+                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
                 this._groupService.getGroupList().subscribe(groupData => {
                     if (groupData[0] === undefined) {
@@ -127,27 +128,49 @@ export class ManageGroupComponent implements OnInit {
                         this.groupList = groupData;
                     }
                 });
-                this._groupService.getGroupMembersByGroup(payload).subscribe(memberData => {
-                    if (memberData[0].errorFl || memberData[0].warningFl) {
-                        this.groupMemberObjList = [];
-                    } else {
-                    this.groupMemberObjList = memberData;
-                    }
+                this._groupService.getGroupListObjByLoggedInUserId().subscribe(data1 => {
+                    this.groupMemberObjList = data1;
                 });
+                // this._groupService.getGroupMembersByGroup(payload).subscribe(memberData => {
+                //     if (memberData[0].errorFl || memberData[0].warningFl) {
+                //         this.groupMemberObjList = [];
+                //     } else {
+                //     this.groupMemberObjList = memberData;
+                //     this.dropdownList = [{item_id: 1, item_text: this.groupMemberObjList[0].userId.firstName}];
+                //     }
+                // });
             }
         });
-        // this._groupService.getGroupListObjByLoggedInUserId().subscribe(data => {
-        //     this.groupMemberObjList = data;
-        // });
         // this.selectedItems = [{ item_id: 4, item_text: 'Pune' }, { item_id: 6, item_text: 'Navsari' }];
-        this.selectedItems = [];
+        // this.selectedItems = [];
+        // this.dropdownSettings = {
+        //     singleSelection: false,
+        //     idField: 'item_id',
+        //     textField: 'item_text',
+        //     selectAllText: 'Select All',
+        //     unSelectAllText: 'UnSelect All',
+        //     itemsShowLimit: 5,
+        //     allowSearchFilter: true
+        // };
+        // this.dropdownList = [
+        //     { item_id: 1, item_text: 'Mumbai' },
+        //     { item_id: 2, item_text: 'Bangaluru' },
+        //     { item_id: 3, item_text: 'Pune' },
+        //     { item_id: 4, item_text: 'Navsari' },
+        //     { item_id: 5, item_text: 'New Delhi' }
+        //   ];
+        //   this.selectedItems = [
+        //     { item_id: 3, item_text: 'Pune' },
+        //     { item_id: 4, item_text: 'Navsari' }
+        //   ];
+
         this.dropdownSettings = {
             singleSelection: false,
             idField: 'item_id',
             textField: 'item_text',
             selectAllText: 'Select All',
             unSelectAllText: 'UnSelect All',
-            itemsShowLimit: 5,
+            itemsShowLimit: 3,
             allowSearchFilter: true
         };
     }
@@ -201,7 +224,7 @@ export class ManageGroupComponent implements OnInit {
         this.showSelectedGroup = true;
         this.selectedGroupName = group.groupId.groupName;
         this.filterMemberList = [];
-        console.log('SIZE: ' + this.groupMemberObjList.length);
+        // console.log('SIZE: ' + this.groupMemberObjList.length);
         for (this.i = 0; this.i < this.groupMemberObjList.length; this.i++) {
             // console.log('ID: ' + this.groupMemberObjList[this.i].team.id);
             if (this.groupMemberObjList[this.i].groupId.groupId === group.groupId.groupId) {
@@ -209,28 +232,28 @@ export class ManageGroupComponent implements OnInit {
             }
         }
         this.selectedGroupObjFromList = group;
-        if (this.selectedGroupObj.status.status === 'CANCEL') {
-            this.addMemPermission = 2;
-        } else {
-            this.addMemPermission = 1;
-        }
+        // if (this.selectedGroupObj.status.status === 'CANCEL') {
+        //     this.addMemPermission = 2;
+        // } else {
+        //     this.addMemPermission = 1;
+        // }
         this.selectedNewGroupObj = index;
     }
     // to open group popup
     openGroup() {
         this.addNewGroupModal.open();
     }
-    openMemberPopup() {
-        if (this.selectedGroupObj === '' || this.selectedGroupObj === null || typeof this.selectedGroupObj === 'undefined') {
-            return this.alertService.warning('Please Select Group', 'Warning');
-        } else {
-            if (this.addMemPermission !== 2) {
-                this.addNewMemberModal.open();
-            } else {
-                return this.alertService.warning('Selected group has deactivated , you can not add member in this group ', 'Warning');
-            }
-        }
-    }
+    // openMemberPopup() {
+    //     if (this.selectedGroupObj === '' || this.selectedGroupObj === null || typeof this.selectedGroupObj === 'undefined') {
+    //         return this.alertService.warning('Please Select Group', 'Warning');
+    //     } else {
+    //         if (this.addMemPermission !== 2) {
+    //             this.addNewMemberModal.open();
+    //         } else {
+    //             return this.alertService.warning('Selected group has deactivated , you can not add member in this group ', 'Warning');
+    //         }
+    //     }
+    // }
     onPageChange(number: number) {
         this.config.currentPage = number;
     }
@@ -241,10 +264,10 @@ export class ManageGroupComponent implements OnInit {
             case 'addNewGroup':
                 this.addNewGroupModal.close();
                 break;
-            case 'addNewMember':
-                this.addNewMemberModal.close();
-                this.clearMemPopupField();
-                break;
+            // case 'addNewMember':
+            //     this.addNewMemberModal.close();
+            //     this.clearMemPopupField();
+            //     break;
             // case 'updateTeam':
             //     this.addUpdateTeamModal.close();
             //     break;
@@ -295,6 +318,7 @@ export class ManageGroupComponent implements OnInit {
                                 }
                                 , group: this.selectedGroupObj
                             };
+                            this.memObj = [{ item_id: this.groupMemberObjList.length, item_text: this.firstName }];
                             this.groupMemberObjList.push(this.memObj);
                             // this.filterMemberList.push(this.memObj);
                             this.clearMemPopupField();
