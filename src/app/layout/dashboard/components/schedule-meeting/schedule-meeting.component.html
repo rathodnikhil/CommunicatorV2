@@ -76,11 +76,12 @@
                             </div>
                         </div> -->
                         <div class="col-md-9"> 
-                            <input class="d-inline-block timzone-select" id="timezone_" placeholder="Select Timezone" style="padding: 5px;text-align: center;white-space: pre-wrap;" 
+                            <input class="d-inline-block timzone-select" id="timezone_" placeholder="Select Timezone" 
+                            style="padding: 5px;text-align: center;white-space: pre-wrap;" 
                             list="tomeZoneListEl" autofocus name="timezone_" autocomplete="on"
                             (change)="onTimezoneSelect()" [(ngModel)]="timezoneSelect"/>
-                            <datalist id="tomeZoneListEl" style="white-space: pre-wrap;border-bottom:1px solid #C4C4C4;">
-                                <option *ngFor="let timezone of timeZoneArray" style="white-space: pre-wrap;border-bottom:1px solid #C4C4C4;" class="dropdown-item" 
+                            <datalist id="tomeZoneListEl" style="white-space: pre-wrap;border-bottom:1px solid #ff0606;">
+                                <option *ngFor="let timezone of timeZoneArray" class="dropdown-item" 
                                 (click)="changeTimeZone(timezone)" value="{{timezone}}">
                             </datalist>
                         </div>
@@ -105,7 +106,7 @@
                                     <label>Registered Users use this URL for meeting :
                                     <span class="link-url">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
                                     </span>     </label>
-                                     <label>Guest Users use this URL for meeting :
+                                     <label>Guest Users use this URL for meeting :<br/>
                                          <span class="link-url">
                                               https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{accessCode}}
                                     </span>  </label>

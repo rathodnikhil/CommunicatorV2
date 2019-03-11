@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
-    signUpflag: boolean;
+    // signUpflag: boolean;
     selectedUser: any;
     manageGroupFlag: boolean;
     errorFl: boolean;
@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.signUpflag = false;
+      //  this.signUpflag = false;
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
@@ -118,17 +118,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
         });
 
-        let userRoleArray = [];
-        userRoleArray = this.loggedInUserObj.roles;
-        const roleArray = [];
-        for (let i = 0; i < userRoleArray.length; i++) {
-            roleArray.push(userRoleArray[i].role);
-        }
-        if (roleArray.indexOf('ADMINISTRATOR') === -1) {
-            this.signUpflag = false;
-        } else {
-            this.signUpflag = true;
-        }
+        // let userRoleArray = [];
+        // userRoleArray = this.loggedInUserObj.roles;
+        // const roleArray = [];
+        // for (let i = 0; i < userRoleArray.length; i++) {
+        //     roleArray.push(userRoleArray[i].role);
+        // }
+        // if (roleArray.indexOf('ADMINISTRATOR') === -1) {
+        //     this.signUpflag = false;
+        // } else {
+        //     this.signUpflag = true;
+        // }
+        this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
     }
     ngAfterViewInit(): void {
         (<any>window).customAlertService = this.alertService;
