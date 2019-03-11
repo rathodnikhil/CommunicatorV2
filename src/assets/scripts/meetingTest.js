@@ -591,7 +591,6 @@ connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
-    // debugger;
     if (!isAndroid && !iOS && !edge && !safari && !isFireFox) {
         document.getElementById('share-screen').style.display = 'block';
         document.getElementById('btn-start-recording').style.display = 'block';
