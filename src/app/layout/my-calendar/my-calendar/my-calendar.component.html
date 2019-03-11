@@ -45,6 +45,16 @@
         <h3> Meeting Calendar </h3>
     </div>
     <div id="content" class="body-container">
+            <ngx-spinner
+            bdOpacity = 0.9
+            bdColor = "#333"
+            size = "medium"
+            color = "#fff"
+            type = "ball-8bits"
+            fullScreen = "true"
+            >
+            <p style="color: white" > Loading... </p>
+            </ngx-spinner>
         <div class="main1">
             <h3 style="padding-top: 8px;">My Calendar</h3>
             <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
