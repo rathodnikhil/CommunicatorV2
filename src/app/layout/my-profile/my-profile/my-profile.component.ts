@@ -78,7 +78,8 @@ export class MyProfileComponent implements OnInit {
             userCode: this.loggedInUserObj.userCode,
             profileImgPath:  this.loggedInUserObj.profileImgPath,
            status: {status : 'ACTIVE'},
-           team: this.loggedInUserObj.team
+           team: this.loggedInUserObj.team,
+           meetingPermissionStatus: {status : this.loggedInUserObj.meetingPermissionStatus.status}
         };
         this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {

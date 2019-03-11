@@ -356,7 +356,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+               // alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -797,11 +797,11 @@ function stopRecordingCallback(blob) {
     video.src = video.srcObject = null;
     video.src = URL.createObjectURL(blob);
     var url = '/#/error/recordscreensteps';
-    var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+    var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=1074, height=800");
     try {
         popup_window.focus();
     } catch (e) {
-        alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+       // alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
     }    
     if (recorder.screen)
         recorder.screen.stop();

@@ -76,7 +76,7 @@
                                 <input class="form-control" id="to" list="rememberEmailListEl" style="width: 68%;" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
                                 (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
                                 <datalist id="rememberEmailListEl">
-                                    <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                        <option *ngFor="let email of rememberEmailList" value="{{email}}"></option>
                                 </datalist>
 
                                 <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" style="width: 12%; text-align: center;" aria-hidden="true"></i>
@@ -91,9 +91,9 @@
                                 <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">Cc: </label>
     
                                 <input class="form-control" (change)="selectedCcEmail()" style="width: 68%;" id="to" (blur)="selectedCcEmail()"
-                                    list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
-                                <datalist id="rememberEmailListEl">
-                                    <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                    list="rememberCcEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                <datalist id="rememberCcEmailListEl">
+                                        <option *ngFor="let email of rememberEmailList" value="{{email}}" ></option>
                                 </datalist>
     
                                 <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>

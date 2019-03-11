@@ -10,10 +10,11 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
     selector: 'app-my-calendar',
     templateUrl: './my-calendar.component.html',
     styleUrls: ['./my-calendar.component.scss'],
-    providers: [AlertService]
+    providers: [AlertService ]
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
+    _spinnerService: any;
     allMeetingByLoggedInUserList = [];
     meetingList = [];
     meetingDetails = {
@@ -52,9 +53,10 @@ export class MyCalendarComponent implements OnInit {
     _userService: UserService;
     loggedInUser: any;
 
-    constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService) {
+    constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService ) {
         this._meetingService = meetingService;
         this._userService = userService;
+       // this._spinnerService = spinner;
     }
 
     ngOnInit() {
@@ -80,6 +82,7 @@ export class MyCalendarComponent implements OnInit {
                     // this.calendarOptions.events.render()
                 });
                 this.meetingList = data;
+             //   this._spinnerService.hide();
             }
         });
 
