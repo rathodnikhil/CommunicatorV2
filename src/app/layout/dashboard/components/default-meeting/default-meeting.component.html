@@ -18,7 +18,7 @@
                 Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
                 <h6 class="style-links">Schedule upcoming Meetings</h6>
             </div> -->
-            <div *ngIf="showScheduleMeetingFl" style="text-align: center;">
+            <!-- <div *ngIf="showScheduleMeetingFl" style="text-align: center;"> -->
                 <!-- <a href="javascript:void(0)" class="btn btn-sec">Meet Now</a> -->
                 <!-- <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
                     placement="bottom" ngbTooltip="Meet Now"></i> -->
@@ -33,7 +33,7 @@
                             <label>For registered use this URL :<br><span class="link-url">
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                 https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
-                                <label>For guest use this URL :<span  class="link-url">
+                                <label>For guest use this URL :<br/><span  class="link-url">
                                     <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
                                     https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
@@ -135,7 +135,7 @@
                             <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
                         </div>
                 </app-custom-modal>
-            </div>
+            <!-- </div> -->
             <!-- <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
                 <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
                     ngbTooltip="Schedule Meeting"></i>

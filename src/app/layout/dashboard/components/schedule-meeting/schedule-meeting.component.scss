@@ -58,6 +58,8 @@
 .dropdown-item{
     overflow-wrap: break-word;
     word-wrap: break-word;
+    white-space: pre-wrap;
+    border-bottom: 1px solid #000;
 }
 .popFooter{
     background-color: #e4e4e4; border-top:1px solid  #19191a;

@@ -6,14 +6,14 @@
                     <div class="card-header userlist-header col-md-4" style="text-align: center;">
                         <i class="fa fa-user-circle fa-fw cursorPointer" [routerLink]="['/myProfile']"></i>
                     </div>
-                    <div [ngClass]="{'userlist-header': signUpflag === true ,
-                    'card-header ': signUpflag === true ,'col-md-2': signUpflag === true}">
-                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="signUpflag" [routerLink]="['/RegisterAdmin']"></i>
+                    <div [ngClass]="{'userlist-header': isAdministrator === true ,
+                    'card-header ': isAdministrator === true ,'col-md-2': isAdministrator === true}">
+                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="isAdministrator" [routerLink]="['/RegisterAdmin']"></i>
                     </div>
-                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
+                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': isAdministrator === true , 'col-md-3': isAdministrator === false}">
                         <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>
                     </div>
-                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
+                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': isAdministrator === true , 'col-md-3': isAdministrator === false}">
                         <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="openMemberPopup()"></i>
                         <app-custom-modal #broadcastMsgModal [model]="broadcastMsgContent">
                             <div class="modal-body row-label">
