@@ -80,9 +80,11 @@
                             style="padding: 5px;text-align: center;white-space: pre-wrap;" 
                             list="tomeZoneListEl" autofocus name="timezone_" autocomplete="on"
                             (change)="onTimezoneSelect()" [(ngModel)]="timezoneSelect"/>
-                            <datalist id="tomeZoneListEl" style="white-space: pre-wrap;border-bottom:1px solid #ff0606;">
+                            <datalist id="tomeZoneListEl" >
+                                    <select style="white-space: pre-wrap;border-bottom:1px solid #ff0606;">
                                 <option *ngFor="let timezone of timeZoneArray" class="dropdown-item" 
                                 (click)="changeTimeZone(timezone)" value="{{timezone}}">
+                                    </select>
                             </datalist>
                         </div>
                     </div>
@@ -178,8 +180,8 @@
                                         <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">Cc: </label>
                 
                                         <input class="form-control" (change)="selectedCcEmail()" style="width: 68%;" id="to" (blur)="selectedCcEmail()"
-                                            list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
-                                        <datalist id="rememberEmailListEl">
+                                            list="rememberCcEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                        <datalist id="rememberCcEmailListEl">
                                             <option *ngFor="let email of rememberEmailList" value="{{email}}" >
                                         </datalist>
                 

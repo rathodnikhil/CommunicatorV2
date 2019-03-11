@@ -30,7 +30,7 @@ export class DefaultChatComponent implements OnInit {
                 this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
             }
         });
-        console.log('STATUS : ' + this.isAdministrator + '     ' + this.loggedInUserObj.meetingPermissionStatus.status);
+        // console.log('STATUS : ' + this.isAdministrator + '     ' + this.loggedInUserObj.meetingPermissionStatus.status);
     }
     switchRoute(newRoute) {
         this.currentRoute = newRoute;

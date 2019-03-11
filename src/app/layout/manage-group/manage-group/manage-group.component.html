@@ -57,7 +57,7 @@
             <div class="col-lg-10 col-md-10" style="padding-bottom: 100px;">
                 <div class="row" *ngIf="showSelectedGroup" style="padding: 5px;">
                     <h4 style="padding-top: 2px; padding-right: 30px;">{{selectedGroupName}}
-                        <span>&nbsp;[{{filterMemberList.length}} Members]</span>
+                        <span>&nbsp;[{{groupMemberObjList.length}} Members]</span>
                     </h4>
                     <button (click)="editGroup()" class="btn btn-edit" style="margin-right: 5px;" #editGroupField>
                         <i class="fa fa-pencil-square-o"></i>
@@ -71,7 +71,7 @@
                     <!-- <div class="col-md-1">
                         <button class="btn btn-sec" (click)="openMemberPopup()" #addMemField>+Member</button>
                     </div> -->
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <ng-multiselect-dropdown
                             placeholder="custom placeholder"
                             [data]="groupMemberObjList"
@@ -80,10 +80,12 @@
                             (onSelect)="onItemSelect($event)"
                             (onSelectAll)="onSelectAll($event)">
                         </ng-multiselect-dropdown>
+                        <!-- <ng-multiselect-dropdown [placeholder]="'Select Members'" class="col-md-8" [data]="groupMemberObjList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                        </ng-multiselect-dropdown> -->
                     </div>
                     <div class="align-center" class="col-md-3">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Name/Email/UserName/Status" [(ngModel)]="searchTableText">
+                            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTableText">
                             <div class="input-group-append">
                                 <button class="btn btn-search" type="button">
                                     <i class="fa fa-search"></i>
@@ -94,7 +96,7 @@
                 </div>
                 <hr>
 
-                <app-custom-modal #addNewMemberModal [model]="newMember">
+                <!-- <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body row-label">
                         <div class="row form-group">
                             <div class="col-md-3">
@@ -156,7 +158,7 @@
                         <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
                         <button type="button" class="btn btn-danger" (click)="closePopup('addNewMember')">Close</button>
                     </div>
-                </app-custom-modal>
+                </app-custom-modal> -->
 
                 <!-- <div class="col-lg-9"> 
                     <input class="form-control" id="memberOfGroup" list="memberListListEl" [(ngModel)]="members" autofocus name="memberOfGroup" autocomplete="on"

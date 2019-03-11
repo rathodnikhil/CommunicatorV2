@@ -133,3 +133,14 @@
     padding-top:10px;
     word-break:break-all;
 }
+
+input[list="tomeZoneListEl"] {
+    width: 12em;
+    border: none;
+    background: #eee;
+  }
+  select {
+    width: 12em;
+    margin: 0;
+    margin-left: -12.75em;
+  }
