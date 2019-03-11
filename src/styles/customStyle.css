@@ -23,6 +23,11 @@
     background-color: #fecf71;
     padding: 0.375rem 0.75rem;
 }
+.btn-sec:hover{
+    background-color:#bc151b;
+    color:white;
+    border: 1px solid white;
+ }
 
 .btn-cancel{
     color: rgb(248, 87, 87);

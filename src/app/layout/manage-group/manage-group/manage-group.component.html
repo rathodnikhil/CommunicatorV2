@@ -59,7 +59,7 @@
                     <h4 style="padding-top: 2px; padding-right: 30px;">{{selectedGroupName}}
                         <span>&nbsp;[{{filterMemberList.length}} Members]</span>
                     </h4>
-                    <button (click)="editGroup()" class="btn btn-primary" style="margin-right: 5px;" #editGroupField>
+                    <button (click)="editGroup()" class="btn btn-edit" style="margin-right: 5px;" #editGroupField>
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
                     <button (click)="deleteSelectedGroup()" class="btn btn-danger" #deleteGroupField>
@@ -68,11 +68,21 @@
                     <hr>
                 </div>
                 <div class="row" *ngIf="showSelectedGroup">
-                    <div class="col-md-9">
+                    <!-- <div class="col-md-1">
                         <button class="btn btn-sec" (click)="openMemberPopup()" #addMemField>+Member</button>
+                    </div> -->
+                    <div class="col-md-8">
+                        <ng-multiselect-dropdown
+                            placeholder="custom placeholder"
+                            [data]="groupMemberObjList"
+                            [(ngModel)]="selectedItems"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
                     </div>
                     <div class="align-center" class="col-md-3">
-                        <div class="form-group input-group" style="padding-top:5px;">
+                        <div class="form-group input-group">
                             <input type="text" class="form-control" placeholder="Name/Email/UserName/Status" [(ngModel)]="searchTableText">
                             <div class="input-group-append">
                                 <button class="btn btn-search" type="button">
