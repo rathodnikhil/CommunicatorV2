@@ -96,17 +96,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-                // let userRoleArray = [];
-                // userRoleArray = this.loggedInUser.roles;
-                // const roleArray = [];
-                // for (let i = 0; i < userRoleArray.length; i++) {
-                //     roleArray.push(userRoleArray[i].role);
-                // }
-                // if (roleArray.indexOf('ADMINISTRATOR') === -1) {
-                //     this.showScheduleMeetingFl = true;
-                // } else {
-                //     this.showScheduleMeetingFl = false;
-                // }
                 this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 const payload = { userCode: this.loggedInUser.userCode };
                 this._meetingService.setFutureMeetimgList(payload);
@@ -268,10 +257,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.meetNowMeeting = {};
                 return this.alertService.warning(data.message, 'Warning');
             } else {
+                debugger;
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
-                // this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
-                this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
+                 this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
+             //   this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });

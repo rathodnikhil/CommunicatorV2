@@ -1,60 +1,9 @@
-<!-- <div class="top">
-    <div class="col-md-12 header" style="text-align: center;">
-        <h3> Meeting Calendar </h3>
-    </div>
-</div>
-<div class="main">
-                    <h3 style="padding-top: 8px;">My Calendar</h3>
-    <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
-        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)" style="cursor: pointer;"></ng-fullcalendar>
-     
-</div>
-
-<app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
-    <div class="col-md-12">
-        <div class="row form-control">
-            <div class="col-md-6">Meeting Id:</div>
-            <div class="col-md-6">{{meetingDetails.meetingCode}}</div>
-        </div>
-        <div class="row form-control">
-            <div class="col-md-6">Subject:</div>
-            <div class="col-md-6">{{meetingDetails.subject}}</div>
-        </div>
-        <div class="row form-control">
-            <div class="col-md-6">Date:</div>
-            <div class="col-md-6">{{meetingDetails.meetingStartDateTime | date:'fullDate'}}</div>
-        </div>
-        <div class="row form-control">
-            <div class="col-md-6">Duration:</div>
-            <div class="col-md-6">{{meetingDetails.duration}}</div>
-        </div>
-        <div class="row form-control">
-            <div class="col-md-6">Host Name:</div>
-            <div class="col-md-6">{{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}</div>
-        </div>
-
-    </div>
-    <div class="modal-footer popFooter">        
-        <button type="button" class="btn btn-danger" (click)="exit()">Close</button>
-    </div>
-</app-custom-modal> -->
-
 
 <div class="main-container">
     <div class="header" style="text-align:center;">
         <h3> Meeting Calendar </h3>
     </div>
     <div id="content" class="body-container">
-            <ngx-spinner
-            bdOpacity = 0.9
-            bdColor = "#333"
-            size = "medium"
-            color = "#fff"
-            type = "ball-8bits"
-            fullScreen = "true"
-            >
-            <p style="color: white" > Loading... </p>
-            </ngx-spinner>
         <div class="main1">
             <h3 style="padding-top: 8px;">My Calendar</h3>
             <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
@@ -101,4 +50,4 @@
                 style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
         </div>
     </div>
-</div>
+</div>cd 

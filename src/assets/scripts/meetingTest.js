@@ -357,7 +357,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-               // alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+                alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -581,6 +581,7 @@ connection.onleave = function (event) {
             }
             viewerNameString = '<p>' + firstNameUpperCase + '</p>';
             var viewer = null;
+            debugger;
             viewer = displayViewerList(event, viewerNameString, 2);
             viewerListDiv.appendChild(viewer);
         }
@@ -802,7 +803,7 @@ function stopRecordingCallback(blob) {
     try {
         popup_window.focus();
     } catch (e) {
-       // alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+        alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
     }    
     if (recorder.screen)
         recorder.screen.stop();

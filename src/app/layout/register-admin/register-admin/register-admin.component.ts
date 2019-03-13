@@ -97,7 +97,7 @@ export class RegisterAdminComponent implements OnInit {
               name: this.userName,
               firstName: this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
               lastName: this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
-              'status.onlineStatus': true
+              'meetingPermissionStatus': { status: 'ACTIVE' }
           };
       this._userService.saveUserDetails(payload , this.newTeamName).subscribe(data => {
           duplicateUserNameFlag = data.json().warningFl;
