@@ -257,11 +257,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.meetNowMeeting = {};
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                debugger;
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
                  this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
-             //   this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
+              //  this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });

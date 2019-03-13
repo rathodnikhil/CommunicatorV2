@@ -327,7 +327,8 @@ export class ManageTeamComponent implements OnInit {
             if (res.errorFl === true || res.warningFl === true) {
                 return this.alertService.warning(res.message, 'Warning');
             } else {
-                this.closePopup('deleteTeam');
+                this.teamCloseDeletePopup();
+                this.deleteTeamModal.close();
                 // this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedTeamObj), 1);
                 this.filterMemberList = [];
                 this.showSelectedTeam = false;
@@ -484,24 +485,18 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     cancelDeletePopup(noFlag) {
-        debugger;
         if (noFlag === 1) {
-            // const memObj = this.selectedmemObj(this.selectedMember, this.deleteMemberFlag, noFlag);
-            // this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
             this.deleteMemberModal.close();
         } else {
             const memObj = this.selectedmemObj(this.selectedMember, this.deleteMemberFlag, noFlag);
             this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
         }
-        // this.deleteMemberModal.close();
     }
     teamCloseEditPopup() {
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
-        // this.addUpdateTeamModal.close();
     }
     teamCloseDeletePopup() {
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
-        // this.deleteTeamModal.close();
     }
     cancelEditPopup() {
         const memObj = this.selectedmemObj(this.selectedMember, 1, 2);
