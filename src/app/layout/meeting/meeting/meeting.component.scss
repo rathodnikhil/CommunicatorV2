@@ -127,7 +127,7 @@ div.scrollmenu a:hover {
 
 .attendee-row {
     left: 100px;
-    padding: 10px;
+    //padding: 10px;
     margin: 10px 2px 10px 2px;
     width: 100%;
     box-sizing: border-box;
@@ -174,6 +174,14 @@ div.scrollmenu a:hover {
           height:50px;
         }
         }
+/*added for laptop*/
+    @media (min-width: 1224px) and (max-height:768px) {
+            #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
+            font-size:8px;
+              width:30px;
+              height:30px;
+            }
+            }
 
 .meeting-bottom {
 
@@ -407,3 +415,20 @@ span.step {
     color: #fff;
     border: 1px solid #fd7a2a;
   }
+/*for scroll bar of meeting page*/
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f5f5f5;
+    height:6px;
+}
+  ::-webkit-scrollbar-thumb {
+    background-color: #808080;
+    background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.2) 75%,transparent 75%,transparent);
+}
+
+.meeting-id-color{
+    margin-left: 10px;
+    font-weight: bold;
+    color: #bc151b;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
