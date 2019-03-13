@@ -357,7 +357,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+             //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -445,9 +445,9 @@ connection.onstream = function (event) {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
     } else {
         if (event.stream.isVideo == 0) {
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -30px;');
         } else {
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -25px;');
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -25px;');
         }
     }
     customDiv.appendChild(heading);
@@ -465,7 +465,7 @@ connection.onstream = function (event) {
         if (initialsDiv.innerHTML === "You") {
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #fd7a2a;color:#fd7a2a ;margin-top: 30px;font-size: 4.0vw;');
         } else {
-            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#faf2ff;color:#a201ff;margin-top: 30px;font-size: 4.0vw;border: 1px solid #a201ff;');
         }
         customDiv.appendChild(initialsDiv);
     }
@@ -479,7 +479,7 @@ connection.onstream = function (event) {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
             heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;');
-            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:none;float:left;");
+            video.setAttribute("style", "background: #e0ecee;border: 1px solid #3283b9;border-top:none;float:left;");
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -581,7 +581,6 @@ connection.onleave = function (event) {
             }
             viewerNameString = '<p>' + firstNameUpperCase + '</p>';
             var viewer = null;
-            debugger;
             viewer = displayViewerList(event, viewerNameString, 2);
             viewerListDiv.appendChild(viewer);
         }
@@ -803,7 +802,7 @@ function stopRecordingCallback(blob) {
     try {
         popup_window.focus();
     } catch (e) {
-        alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+     //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
     }    
     if (recorder.screen)
         recorder.screen.stop();
