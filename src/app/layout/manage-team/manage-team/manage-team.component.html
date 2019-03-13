@@ -33,7 +33,7 @@
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <app-custom-modal #addNewTeamModal [model]="newTeam" (CancelEvent)="closePopup('addNewTeam')">
+                    <app-custom-modal #addNewTeamModal [model]="newTeam" (CancelEvent)="clearTeamPopupField()">
                         <div class="modal-body row-label">
                             <div class="row">
                                 <div class="col-md-3">
@@ -259,7 +259,7 @@
                         <button type="button" class="btn btn-danger" (click)="UpdateMemberModal.close()">Close</button>
                     </div>
                 </app-custom-modal>
-                <app-custom-modal #deleteMemberModal [model]="deleteMember" (CancelEvent)="closeDeletePopup(2)">
+                <app-custom-modal #deleteMemberModal [model]="deleteMember" (CancelEvent)="cancelDeletePopup(2)">
                     <div>
                         <label style="padding: 10px; ">Are you sure you want to delete this member?</label>
                     </div>

@@ -80,11 +80,9 @@
                             style="padding: 5px;text-align: center;white-space: pre-wrap;" 
                             list="tomeZoneListEl" autofocus name="timezone_" autocomplete="on"
                             (change)="onTimezoneSelect()" [(ngModel)]="timezoneSelect"/>
-                            <datalist id="tomeZoneListEl" >
-                                    <select style="white-space: pre-wrap;border-bottom:1px solid #ff0606;">
+                            <datalist id="tomeZoneListEl" style="white-space: pre-wrap;border-bottom:1px solid #ff0606;">
                                 <option *ngFor="let timezone of timeZoneArray" class="dropdown-item" 
                                 (click)="changeTimeZone(timezone)" value="{{timezone}}">
-                                    </select>
                             </datalist>
                         </div>
                     </div>
@@ -105,7 +103,7 @@
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>
                                 <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
-                                    <label>Registered Users use this URL for meeting :
+                                    <label>Registered Users use this URL for meeting :<br/>
                                     <span class="link-url">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
                                     </span>     </label>
                                      <label>Guest Users use this URL for meeting :<br/>

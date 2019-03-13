@@ -71,9 +71,9 @@
                     <!-- <div class="col-md-1">
                         <button class="btn btn-sec" (click)="openMemberPopup()" #addMemField>+Member</button>
                     </div> -->
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <ng-multiselect-dropdown
-                            placeholder="custom placeholder"
+                            placeholder="Select Members"
                             [data]="groupMemberObjList"
                             [(ngModel)]="selectedItems"
                             [settings]="dropdownSettings"
@@ -83,7 +83,7 @@
                         <!-- <ng-multiselect-dropdown [placeholder]="'Select Members'" class="col-md-8" [data]="groupMemberObjList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
                         </ng-multiselect-dropdown> -->
                     </div>
-                    <div class="align-center" class="col-md-3">
+                    <!-- <div class="align-center" class="col-md-3">
                         <div class="form-group input-group">
                             <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTableText">
 
@@ -93,9 +93,23 @@
                                 </button>
                             </div>
                         </div>
+                    </div> -->
+                </div>
+
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <div class="form-group input-group col-md-3" style="float: right;">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <!-- [(ngModel)]="searchTableText" -->
+
+                        <div class="input-group-append">
+                            <button class="btn btn-search" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <hr>
+
+                <!-- <hr> -->
 
                 <!-- <app-custom-modal #addNewMemberModal [model]="newMember">
                     <div class="modal-body row-label">
