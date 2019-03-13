@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , Output , EventEmitter, ElementRef} from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import { UserService } from '../../../services/user.service';
@@ -14,7 +14,6 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
-    _spinnerService: any;
     allMeetingByLoggedInUserList = [];
     meetingList = [];
     meetingDetails = {
@@ -56,7 +55,6 @@ export class MyCalendarComponent implements OnInit {
     constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService ) {
         this._meetingService = meetingService;
         this._userService = userService;
-       // this._spinnerService = spinner;
     }
 
     ngOnInit() {
@@ -64,7 +62,6 @@ export class MyCalendarComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
         });
-
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
@@ -85,11 +82,10 @@ export class MyCalendarComponent implements OnInit {
              //   this._spinnerService.hide();
             }
         });
-
         this.calendarOptions = {
             // theme: true,
-            editable: false,
-            eventLimit: false,
+            editable: true,
+            eventLimit: true,
             header: {
                 left: 'prev,next today',
                 center: 'title',
