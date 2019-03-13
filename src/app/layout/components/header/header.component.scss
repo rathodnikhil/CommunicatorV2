@@ -2,7 +2,7 @@
 #sidebar-wrapper {
     z-index: 1000;
     height: 100vh;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -34,6 +34,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    padding-bottom: 10%;
     li {
         position: relative;
         line-height: 2rem;
@@ -95,7 +96,7 @@
 
 .hamburger {
     position: absolute;
-    top: 5px;
+    top: 2%;
     left: 5px;
     z-index: 1099;
     display: block;

@@ -13,6 +13,7 @@ var ua = navigator.userAgent.toLowerCase();
 var isAndroid = ua.indexOf("android") > -1;
 var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
 var edge = ua.indexOf("edge") > -1;
+console.log('edge : '+ edge);
 var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
 var isFireFox = ua.indexOf("firefox") > -1;
 document.getElementById('share-screen').onclick = function () {
