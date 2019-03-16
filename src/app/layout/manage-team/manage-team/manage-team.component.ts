@@ -307,7 +307,7 @@ export class ManageTeamComponent implements OnInit {
                         this.selectedTeamName = this.updateTeamName;
                         this.addUpdateTeamModal.close();
                         // this.userPermissionList.push(team );
-                        // this.userPermissionList.splice(this.selectedTeamIndex, 0, this.selectedUserPermissionObj);
+                         this.userPermissionList.splice(this.selectedUserPermissionObj);
                         return this.alertService.success('Team has updated successfully ', 'Success');
                     }
                 });
@@ -327,9 +327,7 @@ export class ManageTeamComponent implements OnInit {
             if (res.errorFl === true || res.warningFl === true) {
                 return this.alertService.warning(res.message, 'Warning');
             } else {
-                this.teamCloseDeletePopup();
                 this.deleteTeamModal.close();
-                // this.userPermissionList.splice(this.userPermissionList.indexOf(this.selectedTeamObj), 1);
                 this.filterMemberList = [];
                 this.showSelectedTeam = false;
                 return this.alertService.success('Team has deleted successfully ', 'Success');

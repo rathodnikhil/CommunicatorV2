@@ -13,7 +13,7 @@ var ua = navigator.userAgent.toLowerCase();
 var isAndroid = ua.indexOf("android") > -1;
 var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
 var edge = ua.indexOf("edge") > -1;
-console.log('edge : '+ edge);
+console.log('edge : ' + edge);
 var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
 var isFireFox = ua.indexOf("firefox") > -1;
 document.getElementById('share-screen').onclick = function () {
@@ -357,7 +357,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-             //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+                //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -784,26 +784,16 @@ if (roomid && roomid.length) {
 
 /** Record screen functionality */
 var video = document.getElementById('screenRecordVideo');
-if (typeof RecordRTC_Extension === 'undefined') {
-    // alert('RecordRTC chrome extension is either disabled or not installed.');
+if (typeof RecordRTC_Extension === 'undefined') {    
     document.getElementById("btn-start-recording").display = 'none';
 }
 
 // first step
 var recorder = new RecordRTC_Extension();
 
-// var video = document.querySelector('video');
-
 function stopRecordingCallback(blob) {
     video.src = video.srcObject = null;
-    video.src = URL.createObjectURL(blob);
-    var url = '/#/error/recordscreensteps';
-    var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=1074, height=800");
-    try {
-        popup_window.focus();
-    } catch (e) {
-     //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
-    }    
+    video.src = URL.createObjectURL(blob);    
     if (recorder.screen)
         recorder.screen.stop();
     recorder.destroy();
@@ -816,12 +806,20 @@ document.getElementById('btn-start-recording').onclick = function () {
     // https://github.com/muaz-khan/Chrome-Extensions/tree/master/screen-recording#getsupoortedformats
     if (document.getElementById('rec_stop').style.display === 'none') {
         var options = recorder.getSupoortedFormats()[3];
-
+        ispermission = false;
         // second step
         recorder.startRecording(options, function () {
+            ispermission = true;
             document.getElementById('rec_start').style.display = 'none';
             document.getElementById('rec_stop').style.display = 'block';
         });
+        setTimeout(function () {
+            if (!this.ispermission) {
+                document.getElementById('btn-start-recording').style.display = 'none';
+                alertService.error('Permission denied for recording. Recording will be disabled for this session', "Recording Disabled!");
+            }
+        }, 5000);
+
     } else {
         recorder.stopRecording(stopRecordingCallback);
         document.getElementById('rec_start').style.display = 'block';
