@@ -100,10 +100,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            if (this.isHost === false && this.isGuest === true) {
+                            // if (this.isHost === false && this.isGuest === true) {
                                 this.startTimer();
-                            }
-                         //   this.startTimer();
+                           // }
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
                             }
@@ -114,9 +113,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
                             const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
                             this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            if (this.isHost === false || this.isGuest === true) {
+                            // if (this.isHost === false || this.isGuest === true) {
                                 this.startTimer();
-                            }
+                            // }
                            // this.startTimer();
                             if ((duration - delta) < 0) {
                                 this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
@@ -262,8 +261,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     startTimer() {
         this.actualMeetingTime = setInterval(() => { this.calculateTimeSpan(); }, 1000);
-        setInterval(function () {
-        }, 1000);
     }
     mute() {
         this.isMute = !this.isMute;
@@ -300,7 +297,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     startMeeting() {
         this.isMeetingStarted = !this.isMeetingStarted;
-        this.startTimer();
+       // this.startTimer();
     }
 }
 
