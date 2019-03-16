@@ -1,23 +1,24 @@
 
 #sidebar-wrapper {
     z-index: 1000;
-    height: 100%;
+    height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    position: absolute;
+    position: fixed;
     top: 0px;
     padding: 0px;
     ::-webkit-scrollbar {
         display: none;
     }
-    background-image: url("/assets/images/logobg.png");
+    background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
     background-position-x: center;
     background-repeat: no-repeat;
     background-size: cover;
+    color: #115c7d;
 }
 
 /*-------------------------------*/
@@ -33,6 +34,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    padding-bottom: 10%;
     li {
         position: relative;
         line-height: 2rem;
@@ -40,20 +42,19 @@
         width: 100%;
         :first-child a {
             color: #fff;
-            background-color: #1a1a1a;
+            background-color: #115c7d;
         }
         a {
             display: block;
-            color: #fff;
+            color: #ffffff;
+            font-weight: bold;
             text-decoration: none;
             padding: 10px 15px 10px 30px;
             &:hover,
             &:active,
             &:focus {
-                color:   #3277d3;
-                text-decoration: none;
+                color:   #115c7d;
                 background-color: transparent;
-                font-weight: bold;
             }
         }
         &:hover::before,
@@ -69,7 +70,7 @@
         &:focus {
             text-decoration: none;
             background-color: #e8f0fc  !important;
-            border : 1px solid #3277d3;
+            border : 1px solid #115c7d;
         
         }
     }
@@ -77,11 +78,12 @@
         height: auto;
         font-size: 20px;
         line-height: 44px;
-        background: #fff;
+        background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
         &:hover,
         &:active,
         &:focus {
-            background-color: #fff;
+         //  background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+            background-image: url(/assets/images/Coreflex-solutions-header.jpg);
         }
     }
 }
@@ -93,10 +95,10 @@
 /*-------------------------------*/
 
 .hamburger {
-    position: fixed;
-    top: 15px;
+    position: absolute;
+    top: 2%;
     left: 5px;
-    z-index: 999;
+    z-index: 1099;
     display: block;
     width: 22px;
     height: 22px;
@@ -167,51 +169,7 @@
 }
 
 .hamburger.is-open {
-    .hamb-top,
-    .hamb-middle,
-    .hamb-bottom {
-        background-color: white;
-    }
-    &:hover {
-        .hamb-top {
-            top: 16px;
-            -webkit-transition: all .35s ease-in-out;
-        }
-        &:before {
-            opacity: 1;
-            display: block;
-            -webkit-transform: translate3d(-100px, 0, 0);
-            -webkit-transition: all .35s ease-in-out;
-        }
-    }
-    .hamb-top,
-    .hamb-bottom {
-        top: 50%;
-        margin-top: -2px;
-    }
-    .hamb-top {
-        -webkit-transform: rotate(45deg);
-        -webkit-transition: -webkit-transform .2s cubic-bezier(.73, 1, .28, .08);
-    }
-    .hamb-middle {
-        display: none;
-    }
-    .hamb-bottom {
-        -webkit-transform: rotate(-45deg);
-        -webkit-transition: -webkit-transform .2s cubic-bezier(.73, 1, .28, .08);
-    }
-    &:before {
-        content: '';
-        display: block;
-        width: 100px;
-        font-size: 14px;
-        color: #fff;
-        line-height: 32px;
-        text-align: center;
-        opacity: 0;
-        -webkit-transform: translate3d(0, 0, 0);
-        -webkit-transition: all .35s ease-in-out;
-    }
+    display: none;
 }
 
 /*-------------------------------*/

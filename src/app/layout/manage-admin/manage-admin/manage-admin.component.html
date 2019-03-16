@@ -5,19 +5,18 @@
 </div>
 <div class="main">
   <div class="row">
-    <div class="col-md-8"><h4 class=" btn btn-sec remove-border" style="cursor: default;">Admin Details</h4> <br>
-        <a  [routerLink]="['/RegisterAdmin']" class="btn btn-primary"><i class="fa fa-user-plus"></i></a></div>
-       <div class="align-center" class="col-md-4" >
-           <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
-           <a style="padding-right:10px; cursor: pointer;">Name</a>
-           <a class="date-period-select">Email</a>
-           <a class="date-period-select">UserName</a>
-           <a class="date-period-select">Status</a>
-           </div>
+    <!-- <div class="col-md-8"><h4 class=" btn btn-sec remove-border" style="cursor: default;">Admin Details</h4> <br> -->
+      <div class="col-md-9">
+        <h3>Admin Details</h3>
+        <a  [routerLink]="['/RegisterAdmin']" class="btn btn-search" style="margin-bottom: 10px;"><i class="fa fa-user-plus"></i></a>
+      </div>
+      <!-- </div> -->
+       <div class="align-center" class="col-md-3" >
+          
            <div class="form-group input-group"style="padding-top:5px;">
-             <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+             <input type="text" class="form-control" placeholder="Name/Email/UserName/Status"  [(ngModel)]="searchText">
              <div class="input-group-append">
-                 <button class="btn btn-secondary" type="button">
+                 <button class="btn btn-search" type="button">
                      <i class="fa fa-search"></i>
                  </button>
              </div>
@@ -30,22 +29,86 @@
       <th>Full Name</th>
       <th>UserName</th>
       <th>Email</th>
+      <th>Team</th>
       <th>UserCode</th>
       <th>Status</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
      <tr *ngFor="let admin of allAdminList | genericSearchAllProp:searchText |  paginate: config ;let srNo = index">
-          <td>{{srNo+1}}</td>
+          <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
           <td>{{admin.firstName}} {{admin.lastName}}</td>
           <td>{{admin.name}}</td>
           <td>{{admin.email}}</td>
+          <td>{{admin.team.teamName}}</td>
           <td>{{admin.userCode}}</td>
           <td>{{admin.status.status}}</td>
-          <td><i class="fa fa-pencil-square-o" (click)="editAdmin(admin);" style="color: green;"></i></td>
-          <td><i class="fa fa-trash-o" (click)="deleteAdmin(admin);" style="color: red;"></i></td>
+          <td><i class="fa fa-pencil-square-o edit-icon" (click)="editAdmin(admin);"></i></td>
+          <td><i class="fa fa-trash-o delete-icon" (click)="deleteAdmin(admin);" ></i></td>
     </tr>
   </table>
+  <app-custom-modal #deleteMemberModal [model]="deleteAdminPop">
+    <div class="modal-body row-label">
+       <label>Are Sure you want to delete this admin?</label>
+    </div>
+    <div class="modal-footer popFooter">
+        <button type="button" class="btn btn-sec" (click)="deleteAdminNow()">Delete</button>
+        <button type="button" class="btn btn-danger" (click)="closeDeletePopup()">Close</button>
+    </div>
+</app-custom-modal>
+<app-custom-modal #editMemberModal [model]="editAdminPop">
+  <div class="modal-body row-label">
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>First Name</label>
+              </div>
+              <div>
+                  <input placeholder="FirstName" class="form-control"  type="text" [(ngModel)]="updatedFirstName" #updatedFirstNameField />
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>Last Name</label>
+              </div>
+              <div>
+                  <input placeholder="LastName" class="form-control" type="text"  [(ngModel)]="updatedLastName" #updatedLastNameField/>
+              </div>
+          </div>
+          <div class="row form-group">
+                  <div class="col-md-3">
+                      <label>Email</label>
+                  </div>
+                  <div>
+                      <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail"  #updatedEmailField/>
+                  </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-3">
+                    <label>Team</label>
+                </div>
+                <div>
+
+                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="selectedDefaultTeam" required #teamField readonly>
+                    <datalist id="teamObjList">
+                        <option *ngFor="let team of teamArray" value="{{team.teamName}}">
+                      </datalist>
+                </div>
+            </div>
+          <div class="row form-group">
+              <div class="col-md-3">
+                  <label>Status</label>
+              </div>
+              <div>
+            <input type="checkbox" id="statusChk" [(ngModel)]="updatedUserStaus">
+            <p id="text" style="display:none">Checkbox is CHECKED!</p>
+            </div>
+          </div>
+  </div>
+  <div class="modal-footer popFooter">
+      <button type="button" class="btn btn-sec" (click)="updateMember()">Update Admin</button>
+      <button type="button" class="btn btn-danger" (click)="closeEditPopup()">Close</button>
+  </div>
+</app-custom-modal>
   <div class="pageControl">
     <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
         [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"

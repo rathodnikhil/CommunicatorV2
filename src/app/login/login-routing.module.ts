@@ -1,10 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
+import { JoinMeetingComponent } from './join-meeting/join-meeting.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'Login',
+        component: LoginComponent
+    },
+    {
+        path: 'GuestUserWithMeeting',
+        component: JoinMeetingComponent
+    },
+    {
+        path: '**',
         component: LoginComponent
     }
 ];

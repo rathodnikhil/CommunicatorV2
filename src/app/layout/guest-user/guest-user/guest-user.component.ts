@@ -8,14 +8,14 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./guest-user.component.scss']
 })
 export class GuestUserComponent implements OnInit {
-  _userService : UserService;
-  public filter: string = '';
-  public maxSize: number = 7;
-  public directionLinks: boolean = true;
-  public autoHide: boolean = false;
-  public responsive: boolean = false;
+  _userService: UserService;
+  public filter: String = '';
+  public maxSize: Number = 7;
+  public directionLinks: Boolean = true;
+  public autoHide: Boolean = false;
+  public responsive: Boolean = false;
   public config: PaginationInstance = {
-      id: 'guestUsersCode',
+      id: 'userCode',
       itemsPerPage: 10,
       currentPage: 1
   };
@@ -28,7 +28,7 @@ export class GuestUserComponent implements OnInit {
   };
   guestUserList = [];
   loggedInUser: any;
-  searchText : string;
+  searchText: string;
   constructor(userService: UserService) {
     this._userService = userService;
    }
@@ -37,12 +37,10 @@ export class GuestUserComponent implements OnInit {
     this._userService.getLoggedInUserObj().subscribe(data => {
       this.loggedInUser = data;
       const payload = { userCode: this.loggedInUser.userCode };
-    this._userService.getGuestUsersByLoggedInUser(payload).subscribe(data => {
-      this.guestUserList = data;
+    this._userService.getGuestUsersByLoggedInUser(payload).subscribe(guestUserData => {
+      this.guestUserList = guestUserData;
   });
-  
   });
-   
   }
   onPageChange(number: number) {
     // console.log('change to page', number);

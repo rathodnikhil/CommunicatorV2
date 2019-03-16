@@ -8,7 +8,7 @@ export class AlertService {
     this.options = this.toastr.toastrConfig;
     this.options.closeButton = true;
     this.options.progressBar = true;
-    this.options.progressAnimation = "increasing";
+    this.options.progressAnimation = 'increasing';
   }
   showMessage(message, title, type) {
     this.toastr.show(

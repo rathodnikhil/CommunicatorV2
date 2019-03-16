@@ -1,93 +1,89 @@
 <div class="container-bg">
-    <div class="col-md-12" style="top: 20%;">
-        <div class="row h-100 d-flex justify-content-center fixed-header">
-            <!-- <img src="assets/images/C_4_white.png" alt="Responsive image" class="img-fluid" style="height:3.5rem; " /> -->
-          
-        </div>
-        <div class="row h-100 d-flex justify-content-center"  *ngIf="loginUiFlag">
-            <div id="login" class="col-md-4">
+    <div class="logo-background">
+        <img src="assets/images/color-logo1.png" class="center logo" alt="Responsive image" />
+    </div>
+    <div class="col-md-12 set-content">
+        <div class="row h-100 d-flex justify-content-center" *ngIf="loginUiFlag">
+            <div id="login" class="col-md-4" style=" top: 0; box-shadow:5px 10px 18px #888888;">
                 <div class="inner-border">
-                    <h1>Log In</h1> 
-                    <!-- <div style="margin-top: 20px;" *ngIf="authFlag== true;" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Authentication Token is null</div>
-                    <div style="margin-top: 20px;" *ngIf="userNameFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Enter Username.
+                    <h1 style="color: #3283b9;">Log In</h1>
+                    <div style=" border: 1px solid #3283b9;">
+                        <div id="register-user1">I am a Registered User:</div>
+                        <div class="input-group mb-3" style="padding:0px 15px 5px 15px;">
+
+                            <div class="input-group-prepend">
+
+                                <span class="input-group-text">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" autofocus type="text" placeholder="{{UserNameText}}"
+                                [(ngModel)]="userName" (keyup)="onKey($event)" required>
+                        </div>
+
+                        <div class="input-group mb-3" *ngIf="!isGuest" style="padding:0px 15px 5px 15px;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-unlock"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password"
+                                (keyup)="onKey($event)" required>
+                        </div>
                     </div>
-                    <div style="margin-top: 20px;" *ngIf="passwordFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Enter password.
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="passwordMacthFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>UserName and Password dose not match
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="isGuest&&!userNameFlag" class="alert alert-success alert-dismissable">
-                        Enter your name as UserName.
+                    <!-- <div class="unregister">
+                        <div class="input-group mb-3 " style="margin-left: 5px;">
+
+                            <input class="checkbox-style" type="checkbox" [(ngModel)]="isGuest" (change)="guestLogin()" />
+                            <div class="unregister-guest" style="margin-bottom: 3%;">
+                                <a (click)="guestLogin()"></a>If Unregistered, please continue as Guest
+                            </div>
+                        </div>
                     </div> -->
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-user"></i>
-                            </span>
-                        </div>
-                        <input class="form-control" type="text" placeholder="UserName" [(ngModel)]="userName" (keyup)="onKey($event)" required>
+
+                    <div class="join-meeting-id">
+                        <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
+                            role="button" style="font-size: 15px;word-wrap: break-word">
+                            <i class="fa fa-sign-in" aria-hidden="true" style="padding-right:5px;font-size:18px;"></i>
+                            Join with Meeting ID (Guest user)
+                        </a>
+
                     </div>
-                    <div class="input-group mb-3" *ngIf="isGuest">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-envelope"></i>
-                            </span>
-                        </div>
-                        <input class="form-control" type="email" placeholder="email" [(ngModel)]="email" (keyup)="onKey($event)" required>
-                    </div>
-                    <div class="input-group mb-3" *ngIf="!isGuest">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-unlock"></i>
-                            </span>
-                        </div>
-                        <input class="form-control" type="password" placeholder="password" [(ngModel)]="password" (keyup)="onKey($event)" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="checkbox" [(ngModel)]="isGuest" (change)="guestLogin()" />
-                        <label>continue as guest?</label>
-                    </div>
+
                     <fieldset id="actions">
-                        <!-- <input type="submit" id="submit" value="Log in" [routerLink]="['/dashboard/default']"> -->
-                        <input type="submit" id="submit" [(ngModel)]="Logintext" (click)="login()" 
-                        />
-                        <a  (click)="forgetPassword()">Forgot your password?</a>
-                        <!-- <a [routerLink]="['/signup']">Register</a> -->
+                        <input type="submit" id="submit" class="btn btn-sec" [(ngModel)]="Logintext" (click)="login()"
+                            style="margin-bottom: 1%;" />
+                        <a (click)="forgetPassword()">Forgot your password?</a>
                     </fieldset>
-                  
+                    <!-- <div class="registeruser-div"> <a  id="register-user" title=" Register User Here" href="#" (click)="backToLogin()" >Register Here</a></div> -->
                 </div>
             </div>
-          
+
         </div>
-        <div  *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
-                <div style="margin-top: 20px;" *ngIf="emailFailFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>There is some error while sending email.
-                    </div>
-                <div style="margin-top: 20px;" *ngIf="emailValidationFlag" class="alert alert-danger alert-dismissable">
-                        <strong>Error: </strong>Enter Registered Email.
-                    </div>
-                    <div style="margin-top: 20px;" *ngIf="emailSuccessFlag" class="alert alert-success alert-dismissable">
-                        Password reset link has been successfully sent to your email account ,check your email.
-                    </div>
+        <div *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
+            <div class="inner-border">
+                <h3 style="color: #3283b9;">Forgot Password</h3>
                 <div class="input-group mb-3">
-             <div class="input-group-prepend">
-                 <span class="input-group-text">
-                     <i class="fa fa-envelope fa-fw"></i>
-                 </span>
-             </div>
-             <input class="form-control" type="text" placeholder="Enter Email" 
-             [(ngModel)]="forgetEmail" (keyup)="onKey($event)" required/>
-         </div>
-         
-         <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
-         <div class="alink">  <a  (click)="backToLogin()">back to login</a></div>
-     </div>
-        <div class="row h-100 d-flex justify-content-center fixed-footer">
-            <div>Copyright &copy; 2018 Coreflex Solutions</div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-envelope fa-fw"></i>
+                        </span>
+                    </div>
+                    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
+                        required />
+                </div>
+
+                <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
+                <div class="alink"> <a (click)="backToLogin()">Login</a></div>
+            </div>
         </div>
     </div>
-
+    <div style="display: none;">
+        <label id="isScreenSharePopupClosed"></label>
+        <label id="isRecordScreenPopupClosed"></label>
+    </div>
+    <div class="cfsfooter">
+            <img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br>
+        <b>Copyright &copy; 2018 Coreflex Solutions</b>
+    </div>
 </div>

@@ -14,11 +14,11 @@ export class UserSettingsComponent implements OnInit {
   userSettings: any;
   user: any;
 
-  public filter: string = '';
-  public maxSize: number = 7;
-  public directionLinks: boolean = true;
-  public autoHide: boolean = false;
-  public responsive: boolean = false;
+  public filter: String = '';
+  public maxSize: Number = 7;
+  public directionLinks: Boolean = true;
+  public autoHide: Boolean = false;
+  public responsive: Boolean = false;
   public config: PaginationInstance = {
       id: 'meetingCode',
       itemsPerPage: 10,
@@ -36,22 +36,22 @@ export class UserSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    //loggedInuser Object webservice call
+    // loggedInuser Object webservice call
     this.loggedInUserId = {};
     this._userService.getLoggedInUserObj().subscribe(data => {
-      if(data.errorFl === true || data.warningFl === true){
+      if (data.errorFl === true || data.warningFl === true) {
         this.loggedInUserId = {};
-        return this.alertService.warning(data.message, "Warning"); 
-    }else{
+        return this.alertService.warning(data.message, 'Warning');
+    } else {
       this.loggedInUserId = data;
       const payload = { userCode: this.loggedInUserId.userCode };
       this.userSettings = {};
-      this._userService.getUserSettingsByLoggedInUser(payload).subscribe(data => {
-        if(data.errorFl === true || data.warningFl === true){
+      this._userService.getUserSettingsByLoggedInUser(payload).subscribe(settingData => {
+        if (settingData.errorFl === true || settingData.warningFl === true) {
           this.userSettings = {};
-          return this.alertService.warning(data.message, "Warning"); 
-      }else{
-        this.userSettings = data;
+          return this.alertService.warning(settingData.message, 'Warning');
+      } else {
+        this.userSettings = settingData;
        }
       });
     }
@@ -59,19 +59,16 @@ export class UserSettingsComponent implements OnInit {
   }
   saveUserSetting() {
     const payload = {
-      displayName: this.userSettings.displayName,
-      meetingCode: this.userSettings.meetingCode,
       user: this.loggedInUserId,
-      profileImgPath: this.userSettings.profileImgPath,
+     // profileImgPath: this.loggedInUserId.profileImgPath,
       chatNotification: this.userSettings.chatNotification,
       meetingReminder: this.userSettings.meetingReminder,
-     // downloadLocation: this.userSettings.downloadLocation
     };
     this._userService.saveUserSettings(payload).subscribe(data => {
-      if(data.errorFl === true || data.warningFl === true){
-        return this.alertService.warning(data.message, "Warning"); 
-    }else{
-      return this.alertService.success('User settings has been updated successfully', "Success"); 
+      if (data.errorFl === true || data.warningFl === true) {
+        return this.alertService.warning(data.message, 'Warning');
+    } else {
+      return this.alertService.success('User settings has been updated successfully', 'Success');
      }
     });
   }

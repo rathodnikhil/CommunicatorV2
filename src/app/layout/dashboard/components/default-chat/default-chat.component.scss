@@ -1,8 +1,117 @@
+@import "styles/customStyle.css";
 .label-h6 {
-    color: #999999;
-    margin-top: 7%;
+    // color:  #999999;
+    color:#3283b9;
+    padding-top:2%;
+    font-weight: bold;
+    font-size:15px;
+    padding-bottom: 25px;
+
+}
+.background{
+    color: #ffffff;
+    height:80px;
+    // background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+    background: #efefef;
 }
 
+.membername{
+    padding-top:4%;
+     font-weight: bold;
+     color: #111;
+      padding-bottom: 25px;
 
+    }
+    .describe{
+        padding-left:10px;
+        padding-right:10px;
+         padding-top:10px;
+    }
+    .header-img{
+        height:80px;
+        width:320px;
+        padding: 10px;
+        margin-left: 8px; 
+        float: left;
+    }
+    .header-label{
+        padding: 20px;
+    }
+    .responsive1
+    {
+    max-width: 80%; 
+    height: auto;
+    margin-bottom: 2%;
+    }
+    .footer{
+        width:100%;
+        position: relative;
+        left: 0;
+        bottom: 0;
+        top: 25%;
+    }
+    .setlogo{
+        margin-top: 2%;
+        padding-bottom: 2%; 
+        margin-left: 37%;
+    }
+    .profile-img-edit-icon
+    {
+        position: absolute;
+        margin-left: -2px;
+        color:#fff;
+        font-size: 24px;
+    }
 
+    .edit-icon{
+        margin-top: -160px; 
+        margin-right: -170px;
+    }
 
+    .edit-circle-icon-background {
+        // color: #b031fa;
+        color: #fd7e14;
+        margin-left: -2px;
+    }  
+    
+    .details-container{
+        text-align: center;
+        width:100%;
+        height:100%;
+    }
+    .colorgraph{
+        height: 5px;
+        border-top: 0;
+        background: #c4e17f;
+        border-radius: 5px;
+        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    }
+
+    //edit user profile circle
+    .edit-user-profile {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        border:1px solid #111;
+      }
+
+      .explore{
+        font-size:15px;
+        margin-top:2%;
+        font-weight:bold;
+        // background-color: #fecf71;
+        background-color:#bc151b;
+        border-color: #bc151b;
+        color:white;
+        font-weight:bold;
+        }
+        
+        .explore:hover{
+            background-color: #fecf71;
+            color:black;
+            border: 1px solid #e79a00;
+        }

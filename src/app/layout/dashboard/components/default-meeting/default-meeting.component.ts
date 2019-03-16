@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, 
 import { UserService } from '../../../../services/user.service';
 import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 @Component({
@@ -25,15 +24,22 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedDate: Date;
     selectedfromDate: any;
     selectedtoDate: any;
-    showActionIcon: boolean;
-    showCancelMeeting: boolean;
+    showScheduleMeetingFl: boolean;
     searchText: String;
     accessCode: any;
     meetNowMeeting: any;
-    showScheduleMeetingSuccess: boolean;
-    showCopyDetailsSuccess: boolean;
     selectedCriteria: any;
     selectedMeeting: any;
+    outLookBody: any;
+    outLookSubject: any;
+    toAttendees: any;
+    Product: any;
+    selectedAttendee: UserService;
+    ccAttendees: any;
+    rememberEmailList = [];
+    selectedEmails: any;
+    selectedCcEmails: any;
+    isAdministrator = false;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -54,15 +60,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button1Content: '<i class="fa fa - ban"></i>&nbsp;Cancel Meeting',
         Button2Content: ''
     };
-    @ViewChild('confirmDeleteMeetingModal') public confirmDeleteMeetingModal: CustomModalComponent;
-    deleteMeetConfirm: CustomModalModel = {
-        titleIcon: '<i class="fa fa - trash"></i>',
-        title: 'Delete',
-        smallHeading: 'You can delete selected meeting',
-        body: '',
-        Button1Content: '<i class="fa fa - trash"></i>&nbsp;Delete Meeting',
-        Button2Content: ''
-    };
+
     @ViewChild('startMeetNowModal') public startMeetNowModal: CustomModalComponent;
     startMeetNow: CustomModalModel = {
         titleIcon: '<i class="fa fa - trash"></i>',
@@ -72,19 +70,25 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         Button1Content: '<i class="fa fa - trash"></i>&nbsp;Meet Now',
         Button2Content: ''
     };
+    @ViewChild('meetNowOutlookModal') public meetNowOutlookModal: CustomModalComponent;
+    meetNowOutlookWindow: CustomModalModel = {
+        titleIcon: '<i class="fa fa-calendar-check-o"></i>',
+        title: 'Send Email',
+        smallHeading: 'Add attendees to your meeting here',
+        body: '',
+        Button1Content: '<i class="fa fa-envelope"></i>Send',
+        Button2Content: '<i class="fa fa-copy"></i> Cancel'
+    };
     constructor(userService: UserService, meetingService: MeetingService,
-        private router: Router, private toastr: ToastrService, public alertService: AlertService) {
+        private router: Router, public alertService: AlertService) {
         this._userService = userService;
         this._meetingService = meetingService;
     }
     ngOnInit() {
         this.selectDateFlag = true;
-        this.showActionIcon = true;
-        this.showCancelMeeting = false;
         this.meetNowMeeting = {};
-        this.showScheduleMeetingSuccess = false;
-        this.showCopyDetailsSuccess = false;
         this.selectedCriteria = 'All';
+        this.showScheduleMeetingFl = false;
         // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
@@ -92,36 +96,25 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-
+                this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 const payload = { userCode: this.loggedInUser.userCode };
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
-                this._meetingService.getFutureMeetingListByUser().subscribe(data => {
-                    if (data !== undefined && data.length > 0 && (data[0].errorFl || data[0].warningFl)) {
-                        this.futureMeetingList = [];
-                        return this.alertService.warning(data[0].message, 'Warning');
+                this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
+                    if (futureData !== undefined && futureData.length > 0) {
+                        this.futureMeetingList = futureData;
+                        this.filteredFutureMeetingList = futureData;
+
                     } else {
-                        this.futureMeetingList = data;
-                        this.filteredFutureMeetingList = data;
+                        this.futureMeetingList = [];
+                        this.filteredFutureMeetingList = [];
+                        if (data[0] !== undefined && data[0].message !== undefined) {
+                            return this.alertService.warning(data[0].message, 'Warning');
+                        }
                     }
                 });
             }
         });
-
-        // getAllFutureMeetingList webservice call
-
-
-
-        // const payload = { userCode: this.loggedInUser.userCode };
-        // this.recentMeeting = {};
-        // this._meetingService.getRecentMeetingByUser().subscribe(data => {
-        //     if(data.errorFl === true || data.warningFl === true){
-        //         this.recentMeeting = {};
-        //         return this.alertService.warning(data.message, 'Warning');
-        //     }else{
-        //     this.recentMeeting = data;
-        //     }
-        // });
     }
 
     ngAfterViewInit(): void {
@@ -149,7 +142,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'tomorrow':
-                this.selectedCriteria = 'tomorrow';
+                this.selectedCriteria = 'Tomorrow';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
                     const tomorrow = new Date();
@@ -162,73 +155,34 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
-                this.selectedCriteria = '';
-                this.futureMeetingList.forEach(meeting => {
-                    const meetingDate = new Date(meeting.meetingStartDateTime);
-
-                    if ((meetingDate.getDate() >= this.selectedfromDate.day
-                        && meetingDate.getMonth() + 1 >= this.selectedfromDate.month
-                        && meetingDate.getFullYear() >= this.selectedfromDate.year)
-                        && (meetingDate.getDate() <= this.selectedtoDate.day
-                            && meetingDate.getMonth() + 1 <= this.selectedtoDate.month
-                            && meetingDate.getFullYear() <= this.selectedtoDate.year)) {
-                        this.filteredFutureMeetingList.push(meeting);
-                    }
-                });
+                if (this.selectedfromDate === null || this.selectedfromDate === undefined
+                    || this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedfromDate === '') {
+                    this.alertService.warning('Select from date', 'Wanning');
+                    this.filteredFutureMeetingList = this.futureMeetingList;
+                    return false;
+                } else {
+                    this.selectedCriteria = 'Range';
+                    const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
+                    const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
+                    this.futureMeetingList.forEach(meeting => {
+                        const meetingDate = new Date(meeting.meetingStartDateTime);
+                        if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
+                            this.filteredFutureMeetingList.push(meeting);
+                        }
+                    });
+                }
                 break;
             default:
                 this.selectedCriteria = 'All';
                 this.filteredFutureMeetingList = this.futureMeetingList;
                 break;
         }
-
     }
     startMeeting(meeting, isfromPopup) {
         if (isfromPopup) {
-            alert('123');
             this.meetNowModal.close();
-            if (meeting.callType === 'Video') {
-                this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-            } else {
-                this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-            }
-            // }if(startMeetNowPopup){
-            //     this.startMeetNowModal.close();
-        } else {
-            if (meeting.meetingStartDateTime <= Date.now()) {
-                if (meeting.callType === 'Video') {
-                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
-                } else {
-                    this.router.navigate(['/meeting/audio'], { queryParams: { meetingCode: meeting.meetingCode } });
-                }
-            } else {
-                // const currentDate = new Date();
-                if ((new Date(meeting.meetingStartDateTime).getDate() - new Date().getDate()) > 0) {
-                    return this.alertService.warning('Meeting is set in future.', 'Warning');
-                } else if (((meeting.meetingStartDateTime - new Date().getTime()) / (3600000)) > 0) {
-                    const hours = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (3600000));
-                    const min = Math.round((meeting.meetingStartDateTime - new Date().getTime()) / (60000));
-                    return this.alertService
-                        .warning('Wait to reach meeting start time. Meeting will start in ' + hours + ':' + min + ' hours.', 'Warning');
-                }
-            }
         }
-    }
-    deleteMeetingNow() {
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.selectedMeeting.meetingCode };
-        this._meetingService.endMeeting(payload).subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
-                this.recentMeeting = {};
-                return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
-                this.closePopup('delete');
-            }
-        });
-    }
-    deleteMeeting(meeting) {
-        this.selectedMeeting = meeting;
-        this.confirmDeleteMeetingModal.open();
+        this.router.navigate(['/meeting'], { queryParams: { meetingCode: meeting.meetingCode } });
     }
     cancelMeeting(meeting) {
         this.selectedMeeting = meeting;
@@ -242,32 +196,47 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.closePopup('cancel');
-                this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
+                if (this.filteredFutureMeetingList.indexOf(this.selectedMeeting) !== -1) {
+                    this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
+                }
+                if (this.futureMeetingList.indexOf(this.selectedMeeting) !== -1) {
+                    this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
+                }
                 return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
             }
         });
     }
     copyToOutLook(event) {
-        const meetingDetails = encodeURIComponent(this.getMeetingDetails());
-        const a = document.createElement('a');
-        a.href = 'mailto:?subject=' + 'Meet now: ' + new Date().toDateString() + '&body=' + meetingDetails;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        this.showScheduleMeetingSuccess = false;
-        this.closePopup('meetNow');
-        this.startMeetNowModal.open();
+        const payload = { userCode: this.loggedInUser.userCode };
+        this._meetingService.getRemeberEmails(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                this.rememberEmailList = [];
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.rememberEmailList = data;
+                this.meetNowOutlookModal.open();
+                const newLine = '\r\n\r\n';
+                this.outLookBody = this.getMeetingDetails(newLine);
+                this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+                this.closePopup('meetNow');
+            }
+        });
     }
     // copy meeting content
     copyToClipboard() {
-        const meetingDetails = this.getMeetingDetails();
-        const tempInput = $('<input>').val(meetingDetails).appendTo('body').select();
+        const newLine = '\r\n\r\n';
+        const meetingDetails = 'Meet now: ' + new Date().toDateString() + newLine + this.getMeetingDetails(newLine);
+        const el = document.createElement('textarea');
+        el.value = meetingDetails;
+        document.body.appendChild(el);
+        el.select();
         document.execCommand('copy');
-        this.showScheduleMeetingSuccess = false;
-        this.showCopyDetailsSuccess = true;
+        document.body.removeChild(el);
+        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.',
+            'Copy Meeting Details');
     }
     joinMeetingNow() {
-        this.accessCode = new Date().getTime() + '_' + Math.floor(Math.random() * 900) + 100;
+        this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
         const payload = {
@@ -279,7 +248,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             'callType': 'Audio',
             'timeZone': timeZone,
             // 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
-            'meetingId': this.accessCode + "(MeetNowFl)",
+            'meetingId': this.accessCode,
             'createdBy': this.loggedInUser
         };
 
@@ -289,8 +258,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.meetNowMeeting = data;
-                this.showScheduleMeetingSuccess = true;
                 this.meetNowModal.open();
+                 this.filteredFutureMeetingList.push(this.meetNowMeeting);
+                this.futureMeetingList.push(this.meetNowMeeting);
+                return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });
     }
@@ -298,25 +269,51 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
-
-
-    // get meeting details
-    getMeetingDetails(): string {
-        let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting/audio?meetingCode=';
-
-        const meetingDetails = 'Dear Attendees,\r\n\r\n' + 'Date :  ' + this.GetFormattedDate() + '\r\n\r\n' +
-            '\r\n\r\n Please join my meeting from your computer,tablet or smartphone \r\n\r\n'
-            + meetingUrl + this.meetNowMeeting.meetingCode +
-            '\r\n\r\n' + '\r\n\r\n Access Code :  ' + this.meetNowMeeting.meetingCode;
-        return meetingDetails;
+    sendEmail(e) {
+        if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
+            return this.alertService.warning('Please enter attendee email id', 'Warning');
+        } else {
+            const newLineJson = '<br><br>';
+            const outLookBodyJson = this.getMeetingDetails(newLineJson);
+            if (this.ccAttendees !== '') {
+                this.selectedCcEmails =  this.ccAttendees;
+            }
+            const payload = {
+                toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
+                meetingDetailsBody: outLookBodyJson, meeting: this.meetNowMeeting
+            };
+            this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
+                if (data.errorFl === true || data.warningFl === true) {
+                    return this.alertService.warning(data.message, 'Warning');
+                } else {
+                    this.meetNowOutlookModal.close();
+                    this.clearOutlookField();
+                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
+                    return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
+                }
+            });
+        }
     }
-    GetFormattedDate(): String {
-        const todayTime = new Date();
-        const month = todayTime.getMonth() + 1;
-        const day = todayTime.getDate();
-        const year = todayTime.getFullYear();
-        return month + '/' + day + '/' + year;
+    clearOutlookField() {
+        this.outLookBody = '';
+        this.selectedEmails = '';
+        this.selectedCcEmails = '';
+    }
+    closeOutLookMailPopup() {
+        this.meetNowOutlookModal.close();
+        this.clearOutlookField();
+    }
+    // get meeting details
+    getMeetingDetails(newLine): string {
+        let meetingUrl = '';
+        meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
+        const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
+            ' Please join my meeting from your computer using chrome browser ' + newLine + ' for  '
+            + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
+            + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below url :  ' + newLine + guestMeetingUrl +
+            this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
+        return meetingDetails;
     }
     closePopup(popType) {
         switch (popType) {
@@ -326,9 +323,41 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             case 'cancel':
                 this.confirmCancelMeetingModal.close();
                 break;
-            case 'delete':
-                this.confirmDeleteMeetingModal.close();
-                break;
+        }
+    }
+
+    onEmailSelect() {
+        if (this.toAttendees.trim() !== '') {
+            this.selectedEmails += ',' + this.toAttendees.trim();
+        }
+        if (this.selectedEmails.find === undefined) {
+            this.selectedEmails = this.selectedEmails.replace('undefined', '');
+            this.selectedEmails = this.selectedEmails.replace(/^,/, '');
+        }
+        this.toAttendees = '';
+    }
+    selectedCcEmail() {
+        if (this.ccAttendees.trim() !== '') {
+            this.selectedCcEmails += ',' + this.ccAttendees.trim();
+        }
+        if (typeof this.selectedCcEmails.find === 'undefined') {
+            this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
+            this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
+        }
+        this.ccAttendees = '';
+    }
+    editToAttendees() {
+        if (this.selectedEmails === '' || this.selectedEmails === null || this.selectedEmails === undefined) {
+        } else {
+            this.toAttendees = this.selectedEmails;
+            this.selectedEmails = '';
+        }
+    }
+    editCcAttendees() {
+        if (this.selectedCcEmails === '' || this.selectedCcEmails === null || this.selectedCcEmails === undefined) {
+        } else {
+        this.ccAttendees = this.selectedCcEmails;
+        this.selectedCcEmails = '';
         }
     }
 }

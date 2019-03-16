@@ -1,125 +1,183 @@
-<div class="top">
-    <div class="col-md-12 header" style="text-align: center;">
-        <h3>Meeting</h3>
-        <span id="meeting-error"></span>
-    </div>
-
-</div>
-<div class="col-lg-12">
+<div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-8 meeting-activity" style="height: 90vh;">
-
+            <div class="col-sm-8 meeting-activity">
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
-                    <div class="row" style="justify-content: center;">
-                        <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
-                            autocapitalize=off size=20>
-                        <button id="open-room" class="btn btn-sec" style="margin:0px 10px 0px 10px" alt="ttt">
-                            <i class="fa fa-play" aria-hidden="true"></i>
-                        </button>
-                        <button id="join-room" class="btn btn-sec" style="margin:0px 10px 0px 10px">
-                            <i class="fa fa-sign-in" aria-hidden="true"></i>
-                        </button>
-                        <button id="share-file" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">
-                            <i class="fa fa-clipboard"></i>
-                        </button>
-                        <button id="share-screen" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">
-                            <i class="fa fa-desktop"></i>
-                        </button>
-                        <button id="resume-count" (click)="startTimer()" style="display: none;" class="btn btn-link btn-sm">resume</button>
-                        <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
-                        <div style="display: none;" id="isHost"></div>
-                        <button id="btn-leave-room" style="display:none;" class="btn btn-danger btn-lg">End Meeting</button>
-                        <h4 *ngIf="meetingDetails.createdBy!=undefined">Host :
-                            [{{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}]</h4>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word; margin-left: 10%;"><b>Host:
+                                {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
+                            </h5>
+                            <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-left: 10%;"><b>{{meetingDetails.subject}}</b>
+                            </h6>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="room-urls" style="display: none; float: right;">
+                                <button type="button" data-toggle="tooltip" title="Copy Meeting Link" class="btn btn-url"
+                                        id="copyGuestMeetingLink">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row" style="justify-content: center;">
-                        <div id="room-urls" style="text-align: center;display: none;"></div>
-                    </div>
+
                 </div>
                 <div class="attendee-row">
-                    <app-horizontal-scrolling>
-                        <div id="videos-container" style="width: 100%; overflow-y: -webkit-paged-x; height:250px;">
-                        </div>
-                    </app-horizontal-scrolling>
+                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" #videos_container id="videos_container">
+                        <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
+                    </div>
+                    <!-- <p  id="muteIcon"> </p>  -->
                 </div>
                 <div class="row parent">
-                    <div id="file-container" style="width: 100%; overflow-y: scroll;"></div>
+                    <div id="shareScreen-container" style="width: 100%; overflow-y: auto;height: calc(100vh*0.38);"></div>
                 </div>
-
-
-                <div class="row meeting-bottom">
-                    <div id="container">
-                        <div id="right">
-                            <button class="btn btn-danger btn-lg" (click)="exitMeeting();">
-                                <i class="fa fa-power-off"></i>
-                            </button>
-                        </div>
-
-                        <!-- <div id="right"></div> -->
-                        <!-- <div id="center">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-video-camera" aria-hidden="true"></i>
-                            </button>
-                            <button class="btn btn-primary">
-                                <i class="fa fa-microphone-slash" aria-hidden="true"></i>
-                            </button>
-                            <button class="btn btn-primary">
-                                <i class="fa fa-desktop" aria-hidden="true"></i>
-                            </button>
-                            <button class="btn btn-primary">
-                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                            </button>
-                        </div> -->
+                <div style="height: calc(100vh*.05);">
+                    <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
+                        <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
+                            autocapitalize=off size=10 style="display:none;">
+                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()"
+                            data-toggle="tooltip" title="Exit Meeting">
+                            <i class="fa fa-2x fa-power-off"></i>
+                        </button>
+                        <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
+                            <div>
+                                <label style="padding: 10px; ">Are you sure you want to completely exit meeting click
+                                    yes or to save MOM and other meeting
+                                    activity click No?</label>
+                            </div>
+                            <div class="modal-footer popFooter">
+                                <button type="button" class="btn btn-primary" (click)="completeExit()">Yes</button>
+                                <button type="button" class="btn btn-danger" (click)="exit()">No</button>
+                            </div>
+                        </app-custom-modal>
+                        <button id="btn-mute" class="btn-sec pull-left btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'"
+                            placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}" (click)='mute()'>
+                            <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
+                        </button>
+                        <button id="open-room" class="btn pull-left" data-toggle="tooltip" title="Start Meeting" style="display: none;"
+                            [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" (click)='startMeeting();'>
+                            <i class="fa fa-2x fa-play" aria-hidden="true"></i>
+                        </button>
+                        <button id="btn-start-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;">
+                            <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip" aria-hidden="true"
+                                id="rec_start"></i>
+                            <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
+                                style="color:#dc3545;display: none" id="rec_stop"></i>
+                        </button>
+                        <button id="btn-stop-recording" class="btn-sec pull-left" alt="Start Recording" style="display: none;"></button>
+                        <button id="join-room" class="btn default pull-left" style="display: none;">
+                            <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
+                        </button>
+                        <button id="share-file" class="btn-sec pull-left" title="Share File" style="display: none;"
+                            data-toggle="tooltip">
+                            <i class="fa fa-2x fa-file-text"></i>
+                        </button>
+                        <button id="share-screen" class="pull-left btn-sec" style="display: none; margin-top: 1px;" data-toggle="tooltip"
+                            title="Share Screen" (click)="shareScreen()">
+                            <i class="fa fa-2x fa-desktop"></i>
+                        </button>
+                        <button id="disable-video" class="btn-sec pull-left" alt="Disable video" style="display: none; margin-top: 1px;"
+                            (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}" data-toggle="tooltip">
+                            <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
+                                class="fa fa-2x fa-ban"></i>
+                        </button>
+                        <label  class="meeting-id-color">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                        <span id="meeting-error" style="float: right;font-weight: bolder; color: rgb(13, 75, 36)"></span>
+                        <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
+                        <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
+                        <button id="recording_hidden" style="display:none;">HIdden stuff for recor</button>
+                        <div style="display: none;" id="isHost"></div>
+                        <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
+                        <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
+                            Meeting
+                        </button>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
-                    <div class="card-header">
-                        <span *ngIf="meetingDetails.subject!=undefined">
-                            <h4>[{{meetingDetails.subject}}]</h4>
-                            <span>
+                    <div class="card-header col-md-12" style="background: #efefef;">
+                        <div class="col-md-8" style="float: left;">
+                            <img src="assets/images/color-logo1.png" class="img-fluid" alt="Responsive image" />
+                        </div>
+                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4" style="float: right;color:#000;">
+                            <h4>
                                 <i class="fa fa-clock-o"></i>&nbsp;
-                                <countdown  #countdown [config]="config" (finished)="onFinished()" (notify)="onNotify($event)">$!m!:$!s!</countdown>
-                            </span>
-
-                        </span>
+                                {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
+                            </h4>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <ul role="tablist" class="nav nav-tabs justify-content-start">
+                    <div class="card-body" style="padding-right:50px;">
+                        <div class="icon-bar">
+                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
+                                [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
+                            <a href="javascript:void(0)" (click)="switchTab('mom')" [ngClass]="{'selected': currentTab=='mom'}"
+                                title="Notes"><i class="fa fa-sticky-note-o"></i></a>
+                            <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}"
+                                title="Viewers"><i class="fa fa-user-o"></i></a>
+                            <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
+                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i class="fa fa-file-text-o"></i></a>
+                            <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
+                            <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a>
+                            <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="recording info"><img src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
+                        </div>
+                        <ul role="tablist" class="nav nav-tabs justify-content-start" style="background-color: #fecf71;">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
-                                    Chat
+                                    Chat<span id="messageCount" class="step"></span>
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
-                                    Minutes of Meeting
+                                    Notes
+                                </span>
+                            </li>
+                            <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
+                                <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
+                                    Viewers<span id="viewerCount" class="step"></span>
+                                </span>
+                            </li>
+                            <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
+                                <span class="nav-link" [ngClass]="{'active': currentTab=='downloadedFiles'}">
+                                    Shared Files
                                 </span>
                             </li>
                         </ul>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
-                            <div style="height: 60vh; overflow-y: scroll" id="chat-container" class="chat-output">
+                            <div id="chat-container" class="chat-output">
                             </div>
-                            <div class="col-md-12" style="padding-top: 20px;">
+                            <!-- <div class="col-md-12" style="padding-top: 5px;">
                                 <div class="row">
                                     <span class="col-md-10">
-                                        <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;"></textarea>
+                                        <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%; height:60px;overflow:auto;resize:none"></textarea>
                                     </span>
                                     <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
                                         <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i>
                                     </span>
                                 </div>
+                            </div> -->
+                            <div class="row">
+                                <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;"></textarea>
+                                <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-left: 10px;"></i>
                             </div>
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
-                            <div class="row content-tab" style="text-align:center">
-                                <textarea placeholder="Type MOM Here..." style="width: 100%; height: 60vh; margin: 10px;"
-                                    [(ngModel)]="momTxt" required></textarea>
-                                <button class="btn btn-sec momBtn" (click)="saveMom()">Save MOM</button>
+                            <div class="row content-tab" style="text-align:center;">
+                                <textarea placeholder="Type MOM Here..." style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
+                                    [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
+                                <button class="btn btn-primary momBtn" id="btn-save-mom" (click)="saveMom()">Generate
+                                    Meeting Notes</button>
+                            </div>
+                        </div>
+                        <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
+                            <div class="row content-tab">
+                                <div id="viewersList" class="col-md-12"></div>
+
+                            </div>
+                        </div>
+                        <div class="tab-content tab-content-srcoll" [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
+                            <div id="file-container" class="row content-tab">
                             </div>
                         </div>
                     </div>
@@ -127,25 +185,102 @@
             </div>
         </div>
     </div>
-
 </div>
 <section class="make-center" style="display:none;">
     <h1 style="display:none;"></h1>
-
-    <br>
-    <br>
-    <!-- <input type="text" id="input-text-chat" placeholder="Enter Text Chat" disabled> -->
-
-    <br>
-    <br>
-    <!-- <button id="btn-leave-room" disabled>Leave /or close the room</button> -->
-
-
-
     <div id="chat-container">
-        <!-- <div id="file-container"></div> -->
-        <!-- <div class="chat-output"></div> -->
     </div>
-    <!-- <div id="videos-container"></div> -->
 </section>
+<video id="screenRecordVideo" style="display: none;"></video>
 
+
+
+
+
+<section class="experiment recordrtc" style="display:none;">
+    <h2 class="header" style="margin: 0;">
+        <select class="recording-media">
+            <option value="record-audio-plus-video">Microphone+Camera</option>
+            <option value="record-audio">Microphone</option>
+            <option value="record-screen">Full Screen</option>
+            <option value="record-audio-plus-screen">Microphone+Screen</option>
+        </select>
+
+        <span style="font-size: 15px;">into</span>
+
+        <select class="media-container-format">
+            <option>default</option>
+            <option>vp8</option>
+            <option>vp9</option>
+            <option>h264</option>
+            <option>mkv</option>
+            <option>opus</option>
+            <option>ogg</option>
+            <option>pcm</option>
+            <option>gif</option>
+            <option>whammy</option>
+            <option>WebAssembly</option>
+        </select>
+
+        <input type="checkbox" id="chk-timeSlice" style="margin:0;width:auto;" title="Use intervals based recording">
+        <label for="chk-timeSlice" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;"
+            title="Use intervals based recording">Use timeSlice?</label>
+
+        <br>
+
+        <!-- <button id="btn-start-recording">Start Recording</button> -->
+        <button id="btn-pause-recording" style="display: none; font-size: 15px;">Pause</button>
+
+        <div style="display: inline-block;">
+            <input type="checkbox" id="chk-fixSeeking" style="margin:0;width:auto;" title="Fix video seeking issues?">
+            <label for="chk-fixSeeking" style="font-size: 15px;margin:0;width: auto;cursor: pointer;-webkit-user-select:none;user-select:none;"
+                title="Fix video seeking issues?">Fix Seeking Issues?</label>
+        </div>
+
+        <hr style="border-top: 0;border-bottom: 1px solid rgb(189, 189, 189);margin: 4px -12px;margin-top: 8px;">
+        <select class="media-resolutions">
+            <option value="default">Default resolutions</option>
+            <option value="1920x1080">1080p</option>
+            <option value="1280x720">720p</option>
+            <option value="640x480">480p</option>
+            <option value="3840x2160">4K Ultra HD (3840x2160)</option>
+        </select>
+
+        <select class="media-framerates">
+            <option value="default">Default framerates</option>
+            <option value="5">5 fps</option>
+            <option value="15">15 fps</option>
+            <option value="24">24 fps</option>
+            <option value="30">30 fps</option>
+            <option value="60">60 fps</option>
+        </select>
+
+        <select class="media-bitrates">
+            <option value="default">Default bitrates</option>
+            <option value="8000000000">1 GB bps</option>
+            <option value="800000000">100 MB bps</option>
+            <option value="8000000">1 MB bps</option>
+            <option value="800000">100 KB bps</option>
+            <option value="8000">1 KB bps</option>
+            <option value="800">100 Bytes bps</option>
+        </select>
+    </h2>
+
+    <div style="text-align: center; display: none;">
+        <button id="save-to-disk">Save To Disk</button>
+        <button id="upload-to-php">Upload to PHP</button>
+        <button id="open-new-tab">Open New Tab</button>
+
+        <div style="margin-top: 10px;">
+            <span id="signinButton" class="pre-sign-in">
+                <span class="g-signin" data-callback="signinCallback" data-clientid="41556190767-115ifahd55lk4ln5pop4jus55cr4l7oh.apps.googleusercontent.com"
+                    data-cookiepolicy="single_host_origin" data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
+                </span>
+            </span>
+
+            <button id="upload-to-youtube" style="vertical-align:top;">Upload to YouTube</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 10px;" id="recording-player"></div>
+</section>

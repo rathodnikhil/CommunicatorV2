@@ -1,20 +1,108 @@
-@import '../../user-rights/user-rights/user-rights.component.scss';
 @import "styles/customStyle.css";
+@import "app/layout/my-profile/my-profile/my-profile.component.scss";
 
 .main{
-    padding: 15px;
-    border: 1px solid #ccd1d4;
-    margin:2%;
-    box-shadow: 5px 10px 5px 5px #ccd1d4;
+    margin-top:2%;
+    margin-bottom: 20px;   
+    padding-top:0px; 
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: 1px solid #C0C0C0;
+    box-shadow: 10px 10px 10px 10px #c9cacc;
+    background: #fff;
 }
-.button-block{
-    text-align:center; padding-top: 15px;
+
+.header{
+    position:absolute; 
+    top:0px; left:0px; 
+    height:90px; 
+    right:0px;
+    padding-top: 20px;
+    color: white;
+    overflow:hidden;
+    text-align: center;
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
 }
-a{
-    color: #ffffff;
-    cursor: pointer;
+
+.body-container{
+    position:absolute; 
+    top:100px; 
+    bottom:100px; 
+    left:0px; 
+    right:0px; 
+    overflow:auto;
 }
-input[type="file"]
+
+.footer{
+    position:absolute; 
+    bottom:0px; 
+    height:100px; 
+    left:0px; 
+    right:0px; 
+    overflow:hidden;
+}
+
+.setting-headings
 {
-   color: transparent;
+    border-bottom: 1px solid #3283b9;
+    color: #3283b9;
+    padding: 10px; 
+    font-weight:bold; 
+    text-align: center;
+    background-color: #FFF9FB;
+}
+
+.setting-headings-icon
+{
+    margin-right:10px;
+    font-size: 16px;
+    color: #3283b9; 
+}
+
+.setting-details-footer
+{
+    text-align:center;
+    padding:20px;
+    background: #FFF9FB;
+    border-top:1px solid #3283b9;
+}
+
+.margin-top-20{
+    margin-top: 20px;
+}
+
+#leftPanel{
+    background-color:rgb(252, 223, 223);
+    color:#464646;
+    text-align: center;
+    border: 1px solid #db9ba1; 
+    border-right: none; 
+}
+
+#rightPanel{
+    min-height:415px;
+    border: 1px solid #db9ba1; 
+    border-left: none; 
+    padding: 8px; 
+    text-align: center;
+    // background-color: #e0e0e0;
+}
+
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+.profile-img{
+    width: 200px; 
+    height: 200px;
+    padding: 10px;
 }

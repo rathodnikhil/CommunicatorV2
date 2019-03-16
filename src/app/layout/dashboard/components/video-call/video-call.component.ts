@@ -16,11 +16,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         this._userService = userService;
     }
     ngAfterViewInit(): void {
-        // const s = document.createElement('script');
-        // s.type = 'text/javascript';
-        // s.innerHTML = 'console.log(\'done\');'; // inline script
-        // s.src = '../../../assets/scripts/meetingTest.js';
-
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingPeer.js';
@@ -32,8 +27,8 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     }
 
 
-    ngOnInit() {        
-        this._userService.getLoggedInUserObj().subscribe(data => {            
+    ngOnInit() {
+        this._userService.getLoggedInUserObj().subscribe(data => {
             if (Object.keys(data).length === 0) {
                 this.router.navigate(['/login']);
             } else {
@@ -48,12 +43,12 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
             }
         });
     }
-    afterScriptAdded() {        
+    afterScriptAdded() {
         const meetingName = this.document.getElementById('room-id');
 
         meetingName.value = 'p2p_' + this.loggedInUser.name + ' ' + this.loggedInUser.lastName + '_'
             + this.selectedUser.firstName + ' ' + this.selectedUser.lastName;
-        this.document.getElementById('open-room').click();       
+        this.document.getElementById('open-room').click();
     }
 
 }

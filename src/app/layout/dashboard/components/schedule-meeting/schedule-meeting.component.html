@@ -1,15 +1,16 @@
 <div class="chat-panel card card-default">
     <div class="card-header meetingHeader">
         <div class="row">
-            <div class="col-md-8">
+            <div style="width: 90%;">
                 <i class="fa fa-calendar-check-o"></i>
                 Schedule New Meeting
                 <h6 class="style-links">{{currentDate | date:'fullDate'}}</h6>
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-sec pull-right" type="button" (click)="switchRoute()">
+            <div style="width: 10%; text-align: center;">
+                <!-- <button class="btn btn-cancel pull-right" type="button" (click)="switchRoute()">
                    X
-                </button>
+                </button> -->
+                <button class="btn btn-danger pull-right" (click)="switchRoute(0)"><i class="fa fa-times" aria-hidden="true"></i> </button>
             </div>
         </div>
     </div>
@@ -21,7 +22,7 @@
                     <div class="row form-group">
 
                         <div class="col-sm-3">
-                            <label>Subject</label>
+                            <label>Subject<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="descField" placeholder="Meeting Subject" [(ngModel)]="subject" />
@@ -29,21 +30,21 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-3">
-                            <label>Date</label>
+                            <label>Date<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-sm-9">
                             <div class="input-group datepicker-input">
                                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="meeting.datePicker" ngbDatepicker #d="ngbDatepicker">
-                                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                                <button class="input-group-addon" (click)="d.toggle()" type="button" style="cursor: pointer;">
                                     <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
-                                    <span class="fa fa-calendar"></span>
+                                    <span class="fa fa-calendar" style="cursor: pointer;"></span>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-3">
-                            <label>Time</label>
+                            <label><br><br>Time<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
                             <ngb-timepicker class="customTimePicker" id="meeting.meridianTime" [(ngModel)]="meeting.meridianTime" [meridian]="meeting.meridian"></ngb-timepicker>
@@ -51,7 +52,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">
-                            <label>Meeting duration</label>
+                            <label>Meeting Duration<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
                         <div class="col-md-9">
                             <div ngbDropdown class="d-inline-block dropdown">
@@ -64,100 +65,146 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-3">
-                            <label >Timezone</label>
+                            <label >Timezone<span class="asterik-mark">&nbsp;*</span></label>
                         </div>
-                        <div class="col-md-9">
-                            <div ngbDropdown class="d-inline-block dropdown">
-                                <button class="btn btn-outline-primary" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
+                        <!-- <div class="col-md-9">
+                            <div ngbDropdown class="d-inline-block dropdown" >
+                                <button class="btn btn-outline-primary" style="white-space: pre-wrap;" ngbDropdownToggle>{{meeting.selectedTimeZone}}</button>
                                 <div ngbDropdownMenu>
-                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" (click)="changeTimeZone(timezone)">{{timezone}}</button>
+                                    <button *ngFor="let timezone of timeZoneArray" class="dropdown-item" style="white-space: pre-wrap; border-bottom: 1px solid #C4C4C4;" (click)="changeTimeZone(timezone)">{{timezone}}</button>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="col-md-9"> 
+                            <input class="d-inline-block timzone-select" id="timezone_" placeholder="Select Timezone" 
+                            style="padding: 5px;text-align: center;white-space: pre-wrap;" 
+                            list="tomeZoneListEl" autofocus name="timezone_" autocomplete="on"
+                            (change)="onTimezoneSelect()" [(ngModel)]="timezoneSelect"/>
+                            <datalist id="tomeZoneListEl" style="white-space: pre-wrap;border-bottom:1px solid #ff0606;">
+                                <option *ngFor="let timezone of timeZoneArray" class="dropdown-item" 
+                                (click)="changeTimeZone(timezone)" value="{{timezone}}">
+                            </datalist>
                         </div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-sm-3">
-                            <label>Recurring</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.isRecurring">
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" [value]="1"> No
-                                </label>
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" value="2"> Yes
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-3">
-                            <label>Call Type</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="btn-group btn-group-toggle mb-3" ngbRadioGroup name="radioBasic" [(ngModel)]="meeting.callType">
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" [value]="1"> Audio
-                                </label>
-                                <label ngbButtonLabel class="btn-outline-primary">
-                                    <input ngbButton type="radio" value="2"> Video
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="row form-group">
-                        <div class="col-sm-3">
-                            <label>MOM</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="mom-duty">By default mom duty is with you.
-                                <br> you can transfer MOM duty during the call
-                            </p>
-                        </div>
-                    </div> -->
                     <div class="row form-group">
                         <div class="col-sm-3">
 
                         </div>
                         <div class="col-sm-9">
-                            <a class="btn btn-sec" (click)="scheduleMeeting()" style="color: #8f5a0a;">Schedule Meeting & Send Invitation</a>
+                            <button class="btn btn-sec" (click)="scheduleMeeting()" >Schedule Meeting & Send Invitation</button>
                         </div>
-                        <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings">
-                            <div style="margin-top: 20px;" *ngIf="showScheduleMeetingSuccess === true" class="alert alert-success alert-dismissable"
-                                [(ngModel)]="showScheduleMeetingSuccess">
-                                <strong>Success:&nbsp; </strong>
-                                <span style="font-weight: bold;">meeting has been scheduled Successfully.</span>
-                            </div>
-                            <div style="margin-top: 20px;" *ngIf="showCopyDetailsSuccess === true" class="alert alert-success alert-dismissable" [(ngModel)]="showCopyDetailsSuccess">
-                                <strong>Success: </strong>Meeting Details has been Copied. Kindly share via your preferred Mail Id.
-                            </div>
-                            <div style="padding: 10px; font-size:14px;" class="span-font">
+                        <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings" (CancelEvent)="clearAllMeetingField()">
+                            <div style="padding: 10px; font-size:14px; " class="span-font">
                                 <span>{{this.subject}}</span>
-                                <p style="font-weight:bold;">Date : {{ meeting.datePicker.day }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.year}}
-                                    at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{meeting.meridianTime.minute}}
-                                    {{this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM'}} ( {{this.meeting.selectedTimeZone}}
+                                <p style="font-weight:bold;">Date : {{ meeting.datePicker.year }} / {{ meeting.datePicker.month }} / {{ meeting.datePicker.day}}
+                                    at {{(this.meeting.meridianTime.hour > 12 ? this.meeting.meridianTime.hour - 12 : this.meeting.meridianTime.hour)}}&nbsp;:{{ meeting.meridianTime.minute < 10 ? '0'+meeting.meridianTime.minute:meeting.meridianTime.minute}}
+                                    {{this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM'}} ( {{this.timezoneSelect}}
                                     ) for
                                     <span style="font-weight: bold;">{{meeting.selectedDuration}} </span>
                                 </p>
-                                <p style="padding-top: 20px;"> Please join my meeting from your computer,tablet or smartphone
-                                    <span *ngIf="vedioMeeting" style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
-                                        <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
-                                        https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}</span>
-                                        <span *ngIf="audioMeeting" style="text-decoration :underline;  font-weight: bold; padding-top:10px;">
-                                                <!-- http://localhost:4200/#/meeting/audio?meetingCode={{accessCode}}</span> -->
-                                                https://cfscommunicator.com/#/meeting/audio?meetingCode={{accessCode}}</span>
-                           
+                                <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
+                                    <label>Registered Users use this URL for meeting :<br/>
+                                    <span class="link-url">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
+                                    </span>     </label>
+                                     <label>Guest Users use this URL for meeting :<br/>
+                                         <span class="link-url">
+                                              https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{accessCode}}
+                                    </span>  </label>
                                 </p>
-                                <h5 style="margin-top: 40px;">Access Code :
+                                <h5 style="margin-top: 40px;">Meeting Id :
                                     <span>{{accessCode}}</span>
                                 </h5>
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToOutLook($event,subject)">Go to Outlook</button>
-                                <button type="button" class="btn btn-secondary btn-border-radius" (click)="copyToClipboard()">Copy</button>
-                                <button type="button" class="btn btn-danger  btn-border-radius" (click)="closeMeetingPopup('scheduleMeetings')">Close</button>
+                                <button type="button" class="btn btn-primary btn-responsive " (click)="copyToOutLook($event)">Go to Outlook</button>
+                                <button type="button" class="btn btn-primary btn-responsive " (click)="copyToClipboard()">Copy</button>
+                                <button type="button" class="btn btn-danger btn-responsive " (click)="closeMeetingPopup('scheduleMeetings',true)">Close</button>
                             </div>
+                        </app-custom-modal>
 
+                        <app-custom-modal #outlookModal [model]="scheduleOutlookWindow" (CancelEvent)="clearOutlookField()">
+                            <div class="outlook-email-background">
+                                <!-- <div class="form-group row">
+                                <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
+                                <div class="col-lg-9"> 
+                                    <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
+                                        (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
+                                    <datalist id="rememberEmailListEl">
+                                        <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                    </datalist>
+                                </div>
+                                <div class="edit-icon"><i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
+                                <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
+                                <div class="col-lg-9"> 
+                                    <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly></textarea>
+                                </div>  
+
+                                </div>
+                                <div class="form-group row">
+                                <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
+                                <div class="col-lg-9"> 
+                                    <input class="form-control" (change)="selectedCcEmail()" id="to" list="rememberEmailListEl" (blur)="selectedCcEmail()"
+                                    [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                        <datalist id="rememberEmailListEl">
+                                            <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                        </datalist>
+                                </div>
+                                <div class="edit-icon"><i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
+                                <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
+                                <div class="col-lg-9"> 
+                                    <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
+                                </div>
+                                </div> -->
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">To: </label>
+            
+                                        <input class="form-control" id="to" list="rememberEmailListEl" style="width: 68%;" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
+                                            (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
+                                        <datalist id="rememberEmailListEl">
+                                            <option *ngFor="let email of rememberEmailList" value="{{email}}">
+                                        </datalist>
+            
+                                        <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" style="width: 12%; text-align: center;" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="row">
+                                        <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly style="width: 68%; margin-left: 20%;"></textarea>
+                                    </div>
+                                </div>
+            
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">Cc: </label>
+                
+                                        <input class="form-control" (change)="selectedCcEmail()" style="width: 68%;" id="to" (blur)="selectedCcEmail()"
+                                            list="rememberCcEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
+                                        <datalist id="rememberCcEmailListEl">
+                                            <option *ngFor="let email of rememberEmailList" value="{{email}}" >
+                                        </datalist>
+                
+                                        <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="row">
+                                        <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                <div class="col-lg-2"> <label for="subject"  class="outlook-email-label">Subject: </label>
+                                </div>
+                                <div class="col-lg-10"><textarea class="form-control"  readonly [(ngModel)]="outLookSubject"   name="subject">
+                                 </textarea>  </div>
+                                </div>
+                                </div>
+                                <div style="height: 100%">
+                                     <textarea class="form-control"  [(ngModel)]="outLookBody" name="body" rows="13">
+                                    </textarea>
+                                </div>
+                                <div class="modal-footer popFooter">
+                                    <button type="button" class="btn btn-primary" (click)="sendEmail($event)">Send</button>
+                                    <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
+                                </div>
                         </app-custom-modal>
                     </div>
                     <!-- </form> -->

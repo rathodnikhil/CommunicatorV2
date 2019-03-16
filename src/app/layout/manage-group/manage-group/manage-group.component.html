@@ -1,107 +1,391 @@
-<div class="top">
-    <div class="col-md-12 header" style="text-align: center;">
+<div class="main-container">
+    <div class="header" style="text-align:center;">
         <h3>Manage Group</h3>
     </div>
-</div>
-
-<div class="left filter-list">
-    <h4 (click)="showGroupName()" style="cursor: pointer;">
-        New Group
-        <i class="fa fa-plus-circle pull-right" *ngIf="!showNewGroup"></i>
-        <i class="fa fa-times-circle pull-right"   *ngIf="showNewGroup" aria-hidden="true"></i>
-    </h4>
-    <div class="row" *ngIf="showGroupNameUiFlag">
-        <div class="align-center text-center">
-            <input type="text" placeholder="Type Name Here..." #createGroupsVal class="col-md-11 search-member" />
-            <button class="btn btn-sec" (click)="addGroup(createGroupsVal.value)">Add Group</button>
-        </div>
-    </div>
-
-    <hr>
-    <div class="form-group input-group">
-        <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
-        <div class="input-group-append">
-            <button class="btn btn-secondary" type="button">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-    </div>
-    <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroupName ; let groupCount = index">
-        <li>
-            <label (click)="displayGroupDetails(group.groupId)">{{groupCount+1}})&nbsp; {{group.groupId.groupName}}
-            </label>
-        </li>
-    </ul>
-</div>
-<div class="main">
-<div class="row" style="padding-top: 10px;">
-     <div class="col-md-9 under" ><h4 >Group Details</h4></div> 
-                           
-                <div class="align-center col-md-3" >
-                    <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
-                    <a style="padding-right:10px;">Name</a>
-                    <a class="date-period-select">Email</a>
-                    <a class="date-period-select">Team</a>
-                    <a class="date-period-select">Status</a>
+    <div id="content" class="body-container">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 left filter-list">
+                <div class="align-center text-center">
+                    <h4><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Groups</h4>
+                    <hr>
+                    <div class="form-group input-group" style="padding:5px;">
+                        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchGroup">
+                        <div class="input-group-append">
+                            <button class="btn btn-search" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-sec" style="align:align-center; margin-left: 5px;"
+                            (click)="openGroup()">+Group</button>
                     </div>
-                    <div class="form-group input-group"style="padding-top:5px;">
-                      <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
-                      <div class="input-group-append">
-                          <button class="btn btn-secondary" type="button">
-                              <i class="fa fa-search"></i>
-                          </button>
-                      </div>
-                  </div>
                 </div>
-           
-</div>
-<hr>
-
-    <div class="row">
-        <div class="col-md-5">
-            <h4 *ngIf="showSelectedGroup" class="selected-team">{{selectedGroupObj.groupName}}
-                <span *ngIf="countFlag">&nbsp;[{{groupMemberCount}}]</span>
-            </h4>
-            <div class="member-details">
-                <h5>
-                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Member Details</h5>
-                <hr>
-                <div class="row" style="padding: 15px;">
-                    <ng-multiselect-dropdown [placeholder]="'Select Members'" class="col-md-12" [data]="groupMemberObjList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
-                    </ng-multiselect-dropdown>
+                <div class="group-name-list">
+                    <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroup;let groupCount = index">
+                        <li>
+                            <!-- <label *ngIf="userPermission.group.status.status === 'ACTIVE'" style=" cursor: pointer;"
+                                (click)="displayGroupDetails(group , groupCount)"">
+                                {{group.groupId.groupName}}
+                            </label> -->
+                            <label style="cursor: pointer;" (click)="displayGroupDetails(group , groupCount)">
+                                {{group.groupId.groupName}}
+                            </label>
+                        </li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="align-center text-center">
-                        <button (click)="addMember()" class="btn btn-sec ">Add Member</button>
-                    </div>
-
+                <div style="text-align:center;">
+                    <app-custom-modal #addNewGroupModal [model]="newGroup">
+                        <div class="modal-body row-label">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Group Name</label>
+                                </div>
+                                <div>
+                                    <textarea placeholder="Group Name" [(ngModel)]="newGroupName" #groupNameField
+                                        value="{{newGroupName}}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer popFooter">
+                            <button type="button" class="btn btn-primary" (click)="addGroup()">Add Group</button>
+                            <button type="button" class="btn btn-danger"
+                                (click)="closePopup('addNewGroup')">Close</button>
+                        </div>
+                    </app-custom-modal>
                 </div>
-
             </div>
-        </div>
-        
-        <div class="col-md-7">
-            <table style="margin: 20px;">
-                <tr>
-                    <th>Sr. No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Team Name</th>
-                    <th>Status</th>
-                </tr>
-                <tr *ngFor="let user of selectedGroupUsers | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
-                    <td>{{srNo+1}}</td>
-                    <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.team.teamName}}</td>
-                    <td>{{user.status.status}} </td>
-                </tr>
-            </table>
-            <div class="pageControl">
-                <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
-                    [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                    [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                    (pageChange)="onPageChange($event)"></pagination-controls>
+            
+            <div class="col-lg-10 col-md-10" style="padding-bottom: 100px;">
+                <div class="row" *ngIf="showSelectedGroup" style="padding: 5px;">
+                    <h4 style="padding-top: 2px; padding-right: 30px;">{{selectedGroupName}}
+                        <span>&nbsp;[{{groupMemberObjList.length}} Members]</span>
+                    </h4>
+                    <button (click)="editGroup()" class="btn btn-edit" style="margin-right: 5px;" #editGroupField>
+                        <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                    <button (click)="deleteSelectedGroup()" class="btn btn-danger" #deleteGroupField>
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    <hr>
+                </div>
+                <div class="row" *ngIf="showSelectedGroup">
+                    <!-- <div class="col-md-1">
+                        <button class="btn btn-sec" (click)="openMemberPopup()" #addMemField>+Member</button>
+                    </div> -->
+                    <div class="col-md-12">
+                        <ng-multiselect-dropdown
+                            placeholder="Select Members"
+                            [data]="groupMemberObjList"
+                            [(ngModel)]="selectedItems"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                        <!-- <ng-multiselect-dropdown [placeholder]="'Select Members'" class="col-md-8" [data]="groupMemberObjList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                        </ng-multiselect-dropdown> -->
+                    </div>
+                    <!-- <div class="align-center" class="col-md-3">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTableText">
+
+                            <div class="input-group-append">
+                                <button class="btn btn-search" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <div class="form-group input-group col-md-3" style="float: right;">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <!-- [(ngModel)]="searchTableText" -->
+
+                        <div class="input-group-append">
+                            <button class="btn btn-search" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <hr> -->
+
+                <!-- <app-custom-modal #addNewMemberModal [model]="newMember">
+                    <div class="modal-body row-label">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>First Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="firstName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Last Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="lastName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Email</label>
+                            </div>
+                            <div>
+                                <input placeholder="Email" type="text" class="form-control" [(ngModel)]="email"
+                                    #emailField required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>UserName</label>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="userName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Password</label>
+                            </div>
+                            <div>
+                                <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password"
+                                    type="password" required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Meeting Permission</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="form-control" id="meetingStatusChk"
+                                    [(ngModel)]="meetingPermissionStatus">
+                                <p id="meetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
+                        <button type="button" class="btn btn-danger" (click)="closePopup('addNewMember')">Close</button>
+                    </div>
+                </app-custom-modal> -->
+
+                <!-- <div class="col-lg-9"> 
+                    <input class="form-control" id="memberOfGroup" list="memberListListEl" [(ngModel)]="members" autofocus name="memberOfGroup" autocomplete="on"
+                    (change)="onMemberSelect()" />
+                    <datalist id="memberListListEl">
+                        <option *ngFor="let member of filterMemberList" value="{{member}}">
+                    </datalist>
+                </div> -->
+
+                <!-- <table style="padding: 20px;">
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Meeting Permission</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr
+                        *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTableText | paginate: config ;let srNo = index">
+                        <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
+                        <td>{{userMemPermission.userId.firstName}}&nbsp;{{userMemPermission.userId.lastName}}</td>
+                        <td>{{userMemPermission.userId.email}}</td>
+                        <td>{{userMemPermission.userId.status.status}} </td>
+                        <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);"
+                                *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
+                            <i class="fa fa-times" aria-hidden="true" style="color: red"
+                                *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
+                        <td>
+                            <i class="fa fa-pencil-square-o edit-icon"
+                                (click)="editMember(userMemPermission , srNo);"></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-trash-o delete-icon"
+                                (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
+                        </td>
+                    </tr>
+                </table> -->
+                <!-- <div class="pageControl" style="text-align:center;">
+                    <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
+                        [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
+                        [nextLabel]="labels.nextLabel"
+                        [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                        [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                        [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                        (pageChange)="onPageChange($event)"></pagination-controls>
+                </div> -->
+
+                <!-- <app-custom-modal #addUpdateGroupModal [model]="updateGroup">
+                    <div class="modal-body row-label">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Group Name</label>
+                            </div>
+                            <div>
+                                <textarea placeholder="Group Name" [(ngModel)]="updateGroupName"
+                                    value="{{newGroupName}}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="updateGroupDetails()">Update Group</button>
+                        <button type="button" class="btn btn-danger" (click)="groupCloseEditPopup()">Close</button>
+                    </div>
+                </app-custom-modal>
+                <app-custom-modal #deleteGroupModal [model]="deleteGroup">
+                    <div>
+                        <label style="padding: 10px; ">Are you sure you want to delete this group?</label>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="deleteGroupDetails()">Yes</button>
+                        <button type="button" class="btn btn-danger" (click)="groupCloseDeletePopup()">No</button>
+                    </div>
+                </app-custom-modal>
+
+                <app-custom-modal #addNewMemberModal [model]="newMember">
+                    <div class="modal-body row-label">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>First Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="firstName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Last Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="lastName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Email</label>
+                            </div>
+                            <div>
+                                <input placeholder="Email" type="text" class="form-control" [(ngModel)]="email"
+                                    #emailField required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>UserName</label>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="userName"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Password</label>
+                            </div>
+                            <div>
+                                <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password"
+                                    type="password" required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Meeting Permission</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="form-control" id="meetingStatusChk"
+                                    [(ngModel)]="meetingPermissionStatus">
+                                <p id="meetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="addMember()">Add Member</button>
+                        <button type="button" class="btn btn-danger" (click)="closePopup('addNewMember')">Close</button>
+                    </div>
+                </app-custom-modal>
+                <app-custom-modal #UpdateMemberModal [model]="updateMember">
+                    <div class="modal-body row-label">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>First Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="First Name" type="text" class="form-control"
+                                    [(ngModel)]="updatedFirstName" required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Last Name</label>
+                            </div>
+                            <div>
+                                <input placeholder="Last Name" type="text" class="form-control"
+                                    [(ngModel)]="updatedLastName" required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Email</label>
+                            </div>
+                            <div>
+                                <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail"
+                                    #emailField required />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Status</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="form-control" id="statusChk"
+                                    [(ngModel)]="updatedUserStatus">
+                                <p id="text" style="display:none">Checkbox is CHECKED!</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label>Meeting Permission</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="form-control" id="updatedSeetingStatusChk"
+                                    [(ngModel)]="updatedMeetingPermissionStatus">
+                                <p id="updatedMeetingText" style="display:none">Meeting Permission Checkbox is CHECKED!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="updateMemberDetails()">Update
+                            Member</button>
+                        <button type="button" class="btn btn-danger" (click)="cancelEditPopup()">Close</button>
+                    </div>
+                </app-custom-modal>
+                <app-custom-modal #deleteMemberModal [model]="deleteMember">
+                    <div>
+                        <label style="padding: 10px; ">Are you sure you want to delete this member?</label>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="deleteMemberDetails()">Yes</button>
+                        <button type="button" class="btn btn-danger" (click)="closeDeletePopup(2)">No</button>
+                    </div>
+                </app-custom-modal> -->
+
+                <div id="footer" class="footer">
+                    <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png"
+                            style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex
+                            Solutions</b>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

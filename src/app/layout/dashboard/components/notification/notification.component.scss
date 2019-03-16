@@ -1,16 +1,36 @@
 @import "styles/customStyle.css";
 .card-body {
-    background: #3277d3;
-    background: -moz-linear-gradient(to right,#3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, #3277d3), color-stop(74%, #6aa8fc), color-stop(100%, #6aa8fc));
-    background: -webkit-linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: -o-linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: -ms-linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    background: linear-gradient(to right, #3277d3 0%, #6aa8fc 74%, #6aa8fc 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=' #3277d3', endColorstr=' #3277d3', GradientType=1);
+    // background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+    // border: 1px solid #be181e;
+    // color: #be181e;
+    // background-color: #eaeaea;
+    font-weight: bold;
     height: 93vh;
+    flex: 1 1 auto;
+    overflow-y: hidden;
+    background-image: url(/assets/images/Coreflex-solutions-popup.jpg);
+    background-size: cover;
 }
 
+.searched-list{
+    text-align: center; 
+    background-color: #05588f; 
+   // background-image: linear-gradient(to right,#fd7a2a,orange);
+  //  color: white;    
+    margin-right: -1.25rem;
+    margin-left:-5px;
+}
+
+.searched-title{
+    padding:5px;
+    color: white;
+}
+
+.member-list{
+    height:100%;  
+    overflow-y: auto;
+    padding-bottom: 20%; 
+}
 .circleMeetingJoin {
     position: relative;
     border-radius: 50%;
@@ -50,10 +70,11 @@
     border-radius: 50%;
     width: 13px;
     height: 13px;
-    background: rgb(118, 201, 18);
+    // background: rgb(118, 201, 18);
     float: left;
     left: 35px;
     top: -5px;
+    background:#00ff00;
 }
 .circleOfflineMem {
     position: relative;
@@ -66,9 +87,9 @@
     top: -5px;
 }
 .btn.btn-secondary {
-    background:  #3277d3;
-    /* color:  #3277d3; */
-    border-color:  #3277d3;
+    background:  #353535;
+    /* color:  #353535; */
+    border-color:  #353535;
     border-radius: 0px 5px 5px 0px;
 }
 
@@ -77,16 +98,39 @@
 }
 
 .list-group-partition {
-    border-top: 1px solid #ffff;
+    border-top: 1px solid #fff;
     width: 100%;
     margin-top: 8px;
     margin-bottom: 0px;
 }
 .hr-partition{
-    border-top: 2px solid #d3d3d3;
+    border-top: 2px solid #fff;
     width: 100%;
     margin-bottom: 0px;
     padding-left: 25px;
     margin-left: -5px;
 }
-
+.hr-partition1{
+    // border-top: 2px solid #fff;
+    width: 100%;
+    margin-bottom: 0px;
+    padding-left: 25px;
+    margin-left: -5px;
+}
+.add-member{
+    color: #ffffff; padding-left: 10px; padding-top: 12px; cursor: pointer;
+}
+.list-group-item span,a{
+    //color: #212529;
+    color:#fff;
+}
+ .btn-sec:hover{
+    background-color:#bc151b;
+    color:white;
+    border: 1px solid white;
+ }
+ .btn-search{
+    background-color: #fecf71;
+    border-color: #fecf71;
+    color:black;
+ }

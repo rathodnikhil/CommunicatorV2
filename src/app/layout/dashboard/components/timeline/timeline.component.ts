@@ -1,6 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, Inject, ElementRef, AfterViewInit } from '@angular/core';
-import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Inject, ElementRef, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
@@ -13,15 +11,7 @@ import { DOCUMENT } from '@angular/common';
     providers: [AlertService]
 })
 export class TimelineComponent implements OnInit, AfterViewInit {
-    @ViewChild('viewProfileModal') public viewProfileModal: CustomModalComponent;
-    viewProfile: CustomModalModel = {
-        titleIcon: '<i class="fa fa-user"></i>',
-        title: 'Profile Details',
-        smallHeading: 'User profile details',
-        body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Update Profile',
-        Button2Content: ''
-    };
+
     selectedUser: any;
     selectedGroup: any;
     loggedInUser: any;
@@ -33,6 +23,11 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
+    currentTab = 'chat';
+    isMute = false;
+    isMeetingStarted = false;
+    isScreenSharingStarted = false;
+    isVideoEnabled = false;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
@@ -42,8 +37,14 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.selectedUser = {};
         this._userService.getSelectedUser().subscribe(res => {
-            if (res) {
-                this.selectedUser = res;
+            if (res == null || res === undefined || res.length || res.length === 0) {
+                this.router.navigate(['/dashboard/default']);
+            } else {
+                if (res.userCode === undefined) {
+                    this.router.navigate(['/dashboard/default']);
+                } else {
+                    this.selectedUser = res;
+                }
             }
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
@@ -53,26 +54,26 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUser = data;
                 this.chattingHistoryList = [];
-                this._chatService.getChattingHistoryList().subscribe(data => {
-                    if (data.length > 0) {
-                        if (data[0].errorFl || data[0].warningFl) {
+                this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
+                    if (chatHistoryData.length > 0) {
+                        if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
                             this.chattingHistoryList = [];
-                            return this.alertService.warning(data[0].message, 'Warning');
+                            return this.alertService.warning(chatHistoryData[0].message, 'Warning');
                         } else {
-                            this.chattingHistoryList = data;
+                            this.chattingHistoryList = chatHistoryData;
                         }
                     } else {
                         this.chattingHistoryList = [];
                     }
                 });
                 this.broadcastMsgList = [];
-                this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(data => {
-                    if (data.length > 0) {
-                        if (data[0].errorFl || data[0].warningFl) {
+                this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(broadcastData => {
+                    if (broadcastData.length > 0) {
+                        if (broadcastData[0].errorFl || broadcastData[0].warningFl) {
                             this.broadcastMsgList = [];
-                            return this.alertService.warning(data[0].message, 'Warning');
+                            return this.alertService.warning(broadcastData[0].message, 'Warning');
                         } else {
-                            this.broadcastMsgList = data;
+                            this.broadcastMsgList = broadcastData;
                         }
                     } else {
                         this.broadcastMsgList = [];
@@ -80,7 +81,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 });
             }
         });
-     
     }
     ngAfterViewInit(): void {
         const s = this.document.createElement('script');
@@ -94,17 +94,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         // this.document.getElementById('setup-meeting').click();
+        this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
     }
-    open() {
-        this.viewProfileModal.open();
-    }
-    closeviewProfilePopup(popupType) {
-        switch (popupType) {
-            case 'profileDetails':
-                this.viewProfileModal.close();
-                break;
-        }
-    }
+
     sendMessage() {
         const payload = {
             userFrom: this.loggedInUser.userCode,
@@ -117,11 +109,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             this._chatService.saveChat(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
-                } else {
-                    this.chatMsg = '';
-                     this.chattingHistoryObj = data;
-                     alert(this.chattingHistoryObj.chatmsg);
-                     this.chattingHistoryList.push(this.chattingHistoryObj);
                 }
             });
 
@@ -130,11 +117,26 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     onKey(chatMessage) {
         this.sendMessage();
     }
-    closePopup(popupType) {
-        switch (popupType) {
-            case 'profileDetails':
-                this.viewProfileModal.close();
-                break;
-        }
+    onFinished() {
+        this.alertService.warning('Meeting time has lapsed.', 'Meeting time over!');
+        this.document.getElementById('btn-end-meeting').click();
+        this.alertService.warning('Your session will be over in 3 minutes.Kindly save the mom before that!', 'Session about to get over!');
+        setTimeout(() => {
+            this.router.navigate(['/login']);
+            window.location.reload();
+        }, 180000);
+    }
+    onNotify() {
+        this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
+    }
+
+    mute() {
+        this.isMute = !this.isMute;
+    }
+    shareScreen() {
+        this.isScreenSharingStarted = !this.isScreenSharingStarted;
+    }
+    viewVideo() {
+        this.isVideoEnabled = !this.isVideoEnabled;
     }
 }

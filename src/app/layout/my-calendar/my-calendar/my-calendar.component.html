@@ -1,11 +1,53 @@
-<div class="top">
-    <div class="col-md-12 header" style="text-align: center;">
+
+<div class="main-container">
+    <div class="header" style="text-align:center;">
         <h3> Meeting Calendar </h3>
     </div>
-</div>
-<div class="main">
-    <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" (eventDrop)="updateEvent($event.detail)"
-        (eventResize)="updateEvent($event.detail)" (clickButton)="clickButton($event.detail)"></ng-fullcalendar>
+    <div id="content" class="body-container">
+        <div class="main1">
+            <h3 style="padding-top: 8px;">My Calendar</h3>
+            <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
+                (eventDrop)="updateEvent($event.detail)" (eventResize)="updateEvent($event.detail)"
+                (clickButton)="clickButton($event.detail)" style="cursor: pointer;">
+            </ng-fullcalendar>
+        </div>
+        <div>
+            <app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
+                <div class="col-md-12 view-meeting-popup-body">
+                    <div class="row">
+                        <label class="view-meeting-title">Meeting Id:</label>
+                        <p class="view-meeting-details">{{meetingDetails.meetingCode}}</p>
+                    </div>
+                    <div class="row">
+                        <label class="view-meeting-title">Subject:</label>
+                        <p class="view-meeting-details">{{meetingDetails.subject}}</p>
+                    </div>
+                    <div class="row">
+                        <label class="view-meeting-title">Date:</label>
+                        <p class="view-meeting-details">{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss a z'}}</p>
+                    </div>
+                    <div class="row">
+                        <label class="view-meeting-title">Duration:</label>
+                        <p class="view-meeting-details">{{meetingDetails.duration}}</p>
+                    </div>
+                    <div class="row">
+                        <label class="view-meeting-title">Host Name:</label>
+                        <p class="view-meeting-details">
+                            {{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}
+                        </p>
+                    </div>
 
-</div>
+                </div>
+                <div class="modal-footer popFooter">
+                    <button type="button" class="btn btn-danger" (click)="exit()">Close</button>
+                </div>
+            </app-custom-modal>
+        </div>
+    </div>
 
+    <div id="footer" class="footer">
+        <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png"
+                style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
+        </div>
+    </div>
+</div>cd 

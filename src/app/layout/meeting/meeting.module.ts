@@ -6,11 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { NgbCarouselModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StatModule } from '../../shared';
 import { BsComponentModule } from '../bs-component/bs-component.module';
-import { AudioMeetingComponent } from './audio-meeting/audio-meeting.component';
 import { CustomModalComponent } from '../dashboard/components/custom-modal/custom-modal.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
-import { HorizontalScrollingComponent } from './horizontal-scrolling/horizontal-scrolling.component';
-import { CountdownModule } from 'ngx-countdown';
+
 @NgModule({
     imports: [
         CommonModule, MeetingRoutingModule,
@@ -22,10 +20,9 @@ import { CountdownModule } from 'ngx-countdown';
         BsComponentModule,
         NgbModule.forRoot(),
         DashboardModule,
-        FormsModule,
-        CountdownModule
+        FormsModule
     ],
 
-    declarations: [MeetingComponent, AudioMeetingComponent, HorizontalScrollingComponent]
+    declarations: [MeetingComponent]
 })
 export class MeetingModule { }

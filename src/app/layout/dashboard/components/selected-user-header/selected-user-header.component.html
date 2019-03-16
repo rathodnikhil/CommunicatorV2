@@ -1,0 +1,43 @@
+<div class="row" style="margin:0px;">
+        {{SelectedUser.firstName}} {{SelectedUser.lastName}}&nbsp;
+        <a id="view-profile" (click)="open()">(View Full Profile)</a>    
+</div>
+<app-custom-modal #viewProfileModal [model]="viewProfile">
+    <div class="modal-body row-label">
+        <div class="row">
+            <div class="col-md-4">
+                <label>FullName</label>
+            </div>
+            <div class="col-md-8"><label>{{SelectedUser.firstName}} &nbsp; {{SelectedUser.lastName}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>UserName</label>
+            </div>
+            <div class="col-md-8"><label>{{SelectedUser.name}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Email</label>
+            </div>
+            <div class="col-md-8"><label>{{SelectedUser.email}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Team Name</label>
+            </div>
+            <!-- <div class="col-md-8"><label>{{SelectedUser.team.teamName}}</label></div> -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Display Picture</label></div>
+            <div class="col-md-8">
+                <i class="fa fa-user" style="font-size:80px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer popFooter">
+        <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
+    </div>
+</app-custom-modal>

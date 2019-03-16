@@ -27,21 +27,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     groupList = [];
     groupArray = [];
     array = [];
+    isAdministrator = false;
     i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
-    signUpflag: boolean;
+    // signUpflag: boolean;
     selectedUser: any;
-
+    manageGroupFlag: boolean;
+    errorFl: boolean;
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
-    currentRoute = 0;
-
+    isUserSelected = false;
     @ViewChild('broadcastMsgModal') public broadcastMsgModal: CustomModalComponent;
     broadcastMsgContent: CustomModalModel = {
-        titleIcon: '<i class="fa fa-user"></i>',
-        title: 'New Member',
-        smallHeading: 'You can add new member details here',
+        titleIcon: '<i class="fa fa-bullhorn"></i>',
+        title: 'Broadcast Message',
+        smallHeading: 'You can send broadcast message from here.',
         body: '',
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Add Member',
         Button2Content: ''
@@ -95,7 +96,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.signUpflag = false;
+      //  this.signUpflag = false;
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
@@ -107,7 +108,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this._userService.setUserList(payload);
                 this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
-                
+                this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 // this._meetingService.setRecentMeetingByUser(payload);
                 this._userService.getSelectedUser().subscribe(res => {
                     if (res) {
@@ -117,19 +118,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
         });
 
-        let userRoleArray = [];
-        userRoleArray = this.loggedInUserObj.roles;
-        let roleArray = [];
-        for (let i = 0; i < userRoleArray.length; i++) {
-            roleArray.push(userRoleArray[i].role);
-        }
-        if (roleArray.indexOf('ADMINISTRATOR') === -1) {
-            this.signUpflag = false;
-        } else {
-            this.signUpflag = true;
-        }
+        // let userRoleArray = [];
+        // userRoleArray = this.loggedInUserObj.roles;
+        // const roleArray = [];
+        // for (let i = 0; i < userRoleArray.length; i++) {
+        //     roleArray.push(userRoleArray[i].role);
+        // }
+        // if (roleArray.indexOf('ADMINISTRATOR') === -1) {
+        //     this.signUpflag = false;
+        // } else {
+        //     this.signUpflag = true;
+        // }
+        this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
     }
     ngAfterViewInit(): void {
+        (<any>window).customAlertService = this.alertService;
         const s = this.document.createElement('script');
         s.type = 'text/javascript';
         s.src = '../../../assets/scripts/meetingPeer.js';
@@ -145,9 +148,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
-    }
-    switchRoute(newRoute) {
-        this.currentRoute = newRoute;
     }
 
     openMemberPopup() {
@@ -182,5 +182,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 break;
         }
     }
+    logout() {
+        const payload = { userCode: this.loggedInUserObj.userCode };
+        this._userService.logoutApplication(payload).subscribe(data => {
+            this.errorFl = data.errorFl;
+            if (this.errorFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.router.navigate(['/login']);
+                window.location.reload();
+            }
+        });
 
+    }
+    SetIsUserSelected(event) {
+        this.isUserSelected = event;
+    }
 }

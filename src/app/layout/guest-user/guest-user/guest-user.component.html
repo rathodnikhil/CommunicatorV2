@@ -1,22 +1,18 @@
 <div class="top">
   <div class="col-md-12 header" style="text-align: center;">
-      <h3>Guest User</h3>
+      <h3>Guest Users</h3>
   </div>
 
 </div>
 
 <div class="main">
         <div class="row">
-                <div class="col-md-9"><h4 class="under">Guest User Details</h4> </div>
+                <div class="col-md-9"><h3>Guest Users Details</h3></div>
                    <div class="align-center" class="col-md-3" >
-                       <div class="btn btn-sec remove-border"><span class="span-dec" style="cursor: default;">Filter By:&nbsp;</span>
-                       <a style="padding-right:10px; cursor: pointer;">Name</a>
-                       <a class="date-period-select">Email</a>
-                       </div>
                        <div class="form-group input-group"style="padding-top:5px;">
-                         <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
+                         <input type="text" class="form-control" placeholder="Name/MeetingCode"  [(ngModel)]="searchText">
                          <div class="input-group-append">
-                             <button class="btn btn-secondary" type="button">
+                             <button class="btn" style="background-color: #fecf71; color: black;" type="button">
                                  <i class="fa fa-search"></i>
                              </button>
                          </div>
@@ -27,12 +23,16 @@
       <tr>
           <th>Sr. No</th>
           <th>Name</th>
-          <th>Email</th>
+          <!-- <th>Email</th> -->
+          <th>MeetingCode</th>
+          <th>UserCode</th>
       </tr>
        <tr *ngFor="let guest of guestUserList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
-          <td>{{srNo+1}}</td>
-          <td>{{guest.firstName}}</td>
-          <td>{{guest.email}}</td>
+          <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
+          <td>{{guest.fullname}}</td>
+          <!-- <td>{{guest.email}}</td> -->
+          <td>{{guest.meetingCode}}</td>
+          <td>{{guest.userCode}}</td>
       </tr> 
   </table>
   <div class="pageControl">
@@ -40,5 +40,7 @@
           [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
           [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
           (pageChange)="onPageChange($event)"></pagination-controls>
+  </div>
+  <div class="cfsfooter "><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
   </div>
 </div>

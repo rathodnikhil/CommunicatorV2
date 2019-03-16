@@ -1,10 +1,84 @@
 @import "styles/customStyle.css";
 
-
-.main{
-    padding: 15px;
-    border: 1px solid #ccd1d4;
-    margin:2%;
-    box-shadow: 5px 10px 5px 5px #ccd1d4;
+#leftPanel{
+    background-color:rgb(252, 223, 223);
+    color:#464646;
+    text-align: center;
+    border: 1px solid #db9ba1; 
+    border-right: none; 
 }
 
+#rightPanel{
+    min-height:415px;
+    border: 1px solid #db9ba1; 
+    border-left: none; 
+    padding: 8px; 
+    // background-color: #e0e0e0;
+}
+
+.colorgraph {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+.header{
+    position:absolute; 
+    top:0px; left:0px; 
+    height:90px; 
+    right:0px;
+    padding-top: 20px;
+    color: white;
+    overflow:hidden;
+    text-align: center;
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+}
+
+.body-container{
+    position:absolute; 
+    top:100px; 
+    bottom:100px; 
+    left:0px; 
+    right:0px; 
+    overflow:auto;
+}
+
+.footer{
+    position:absolute; 
+    bottom:0px; 
+    height:100px; 
+    left:0px; 
+    right:0px; 
+    overflow:hidden;
+}
+
+.main-container{
+    width: 100%; 
+    height:100%;
+}
+
+.note{
+    color: orangered;
+    margin: 10px;
+    text-align: left;
+}
+
+.profile-img{
+    width: 200px; 
+    height: 200px;
+    padding: 10px;
+    border:1px solid #111;
+}
+
+.padding-top-20{
+    padding-top: 20px;
+}
+
+.margin-left-30{
+    margin-left: 30px;
+}

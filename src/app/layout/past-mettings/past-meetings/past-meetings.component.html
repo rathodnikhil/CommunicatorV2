@@ -1,58 +1,71 @@
 <div class="top">
     <div class="col-md-12 header" style="text-align: center;">
-        <h3>Past Meeting</h3>
+        <h3>Past Meetings</h3>
     </div>
 </div>
 
 <div class="main">
-        <div class="row">
-                <div class="col-md-9"><h4 class="btn btn-sec remove-border" style="cursor: default;">Past Meetings Details</h4></div>       
-                   <div class="align-center" class="col-md-3">
-                       <div class="btn btn-sec remove-border" style="cursor: default;"><span class="span-dec">Filter By:&nbsp;</span>
-                       <a style="padding-right:10px; cursor: pointer;">Day</a>
-                       <a class="date-period-select">Month</a>
-                       <a class="date-period-select">Year</a>
-                       </div>
-                       <div class="form-group input-group"style="padding-top:5px;">
-                         <input type="text" class="form-control" placeholder="Search"  [(ngModel)]="searchText">
-                         <div class="input-group-append">
-                             <button class="btn btn-secondary" type="button">
-                                 <i class="fa fa-search"></i>
-                             </button>
-                         </div>
-                     </div>
-                   </div>
-               </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Past Meetings Details</h3>
+        </div>
+        <div class="align-center" class="col-md-3">
+            <div class="form-group input-group" style="padding-top:5px;">
+                <input type="text" class="form-control" placeholder="Search"  placeholder="Date/Meeting Id/Status" [(ngModel)]="searchText">
+                <div class="input-group-append">
+                    <button class="btn" style="background-color: #fecf71; color: black;" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <table>
         <tr>
             <th>Sr. No</th>
-            <th>Date</th>
+            <th>Date & Time</th>
             <th>Meeting Id</th>
             <th>Subject</th>
             <th>Attendees</th>
             <th>Status</th>
             <th>MOM</th>
-            <th>Recording</th>
         </tr>
         <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
-            <td>{{srNo+1}}</td>
-            <td>{{meeting.meetingDate}}</td>
+            <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
+            <td>{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{meeting.meetingCode}}</td>
             <td>{{meeting.subject}}</td>
-            <td>{{meeting.attendee}}</td>
+            <td>
+                <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)" style="cursor: pointer; color: brown;"></i>   
+                <!-- 546e7a -->
+            </td>
             <td>{{meeting.status.status}}</td>
             <td>
+                <!-- <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i> -->
                 <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i>
-            </td>
-            <td>
-                <i (click)="downloadFile()" class="fa fa-file-audio-o download-file" aria-hidden="true"></i>
             </td>
         </tr>
     </table>
+    <app-custom-modal #viewAttendeeModal [model]="attendee">
+        <div class="modal-body row-label">
+            <h3>Attendee List</h3>
+            <div class="col-md-12">
+                <div class="row" *ngFor="let attendee of attendeeListByMeeting; let i = index">
+                    {{i+1}}. {{attendee}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer popFooter">
+            <!-- <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>-->
+            <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
+        </div>
+    </app-custom-modal>
     <div class="pageControl">
         <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
             [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
             [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
             (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
+    <div class="cfsfooter "><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
     </div>
 </div>

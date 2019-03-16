@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import * as urlConstants from './urlConstants';
+import { environment } from 'environments/environment';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 import { RequestOptions, ResponseContentType } from '@angular/http';
@@ -19,48 +19,39 @@ export class MeetingService {
         this._loginService = loginService;
     }
 
-    //schedule meeting webserce details
+    // schedule meeting webserce details
     scheduleMeeting(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'scheduleMeeting';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        const url = environment.baseUrl + 'scheduleMeeting';
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                //   alert("Error occured");
-                //   alert(err);
             });
 
         return resp;
     }
-        //meetNow webservice details
+        // meetNow webservice details
         meetNow(payload): Observable<any> {
-            const url = urlConstants.baseUrl + 'meetNow';
-            let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+            const url = environment.baseUrl + 'meetNow';
+            const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
             this.apiRequest.post(url, payload).subscribe(data => {
                 resp.next(data);
              });
-    
             return resp;
         }
-    
-    //future meeting list webservice details
+    // future meeting list webservice details
     setFutureMeetimgList(payload) {
-        const url = urlConstants.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.futureMeetingList$.next(data);
-        },
-            err => {
-                // alert(err);
             });
     }
     getFutureMeetingListByUser() {
         return this.futureMeetingList$;
     }
 
-    //recent meeting webservice
+    // recent meeting webservice
     setRecentMeetingByUser(payload) {
-        const url = urlConstants.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.recentMeeting$.next(data);
         },
@@ -71,48 +62,56 @@ export class MeetingService {
     getRecentMeetingByUser() {
         return this.recentMeeting$;
     }
-  
     getPastMeetingsByUser(payload) {
-        const url = urlConstants.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
- 
     getMeetingAttendee(payload) {
-        const url = urlConstants.baseUrl + 'getMeetingAttendee?meetingId=' + payload.meetingId;
-        return this.http.post(url, payload);
+        const url = environment.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
+        return this.apiRequest.post(url, payload);
     }
-  
     getAllMeetingsbyLoggedInUserId(payload) {
-        const url = urlConstants.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
 
     saveMomDetails(payload): Observable<any> {
-        const url = urlConstants.baseUrl + 'saveMomDetails';
-        let resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        const url = environment.baseUrl + 'saveMomDetails';
+        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         this.apiRequest.post(url, payload).subscribe(data => {
             resp.next(data);
-        },
-            err => {
-                //console.log(err);
-                //resp.next(err);
             });
 
         return resp;
     }
     verifyMeetingHost(payload) {
-        const url = urlConstants.baseUrl + 'startMeetingByHost';
-        return this.http.post(url, payload).map((resp: any) => {               
-            return resp.json()
+        const url = environment.baseUrl + 'startMeetingByHost';
+        return this.http.post(url, payload).map((resp: any) => {
+            return resp.json();
         });
     }
     endMeeting(payload) {
-        const url = urlConstants.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' +payload.meetingCode;
+        const url = environment.baseUrl + 'endMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     cancelMeeting(payload) {
-        const url = urlConstants.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' +payload.meetingCode;
+        const url = environment.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
-    
+    getRemeberEmails(payload) {
+        const url = environment.baseUrl + 'getRemeberEmails?userCode=' + payload.userCode;
+        return this.apiRequest.post(url, payload);
+    }
+    saveMeetingPermission(payload) {
+        const url = environment.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;
+        return this.apiRequest.post(url, payload).map((resp: any) => {
+            return resp.json();
+        });
+    }
+    sendMeetingInvitationMail(payload) {
+        const url = environment.baseUrl + 'sendMeetingInvitationMail';
+        return this.apiRequest.post(url, payload).map((resp: any) => {
+            return resp;
+        });
+    }
 }

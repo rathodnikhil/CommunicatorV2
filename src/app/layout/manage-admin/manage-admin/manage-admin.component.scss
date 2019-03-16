@@ -1,12 +1,11 @@
-@import '../../user-rights/user-rights/user-rights.component.scss';
 @import "styles/customStyle.css";
 .top {
     height: 92px;
     padding: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background: #3277d3;
+    background: #353535;
     color: #ffffff;
-    background-image: url(/assets/images/logobg.png);
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
     background-position-y: bottom;
 }
 .pageControl{
@@ -19,3 +18,8 @@
     margin:2%;
     box-shadow: 5px 10px 5px 5px #ccd1d4;
 }
+.btn-search{
+    background-color: #fecf71;
+    border-color: #fecf71;
+    color:black;
+ }

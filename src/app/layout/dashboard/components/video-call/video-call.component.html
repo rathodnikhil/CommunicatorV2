@@ -1,23 +1,5 @@
 <div class="card card-default">
-    <div class="row" style="margin:0px;">
-        <div class="col-md-8 card-header" id="timeline-icon">
-            {{loggedInUser.name}} {{loggedInUser.lastName}}&nbsp;
-            <a id="view-profile">(View Full Profile)</a>
-        </div>
-        <!-- <app-custom-modal #inviteAttendeesModal [model]="InviteAttendees"></app-custom-modal> -->
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-video-camera" [routerLink]="['/videoCall']"></i>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-phone"></i>
-        </div>
-        <div class="col-md-1 card-header" id="timeline-icon">
-            <i class="fa fa-desktop"></i>
-        </div>
-        <div class="col-md-1 card-header" id="cancelCall">
-            <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
-        </div>
-    </div>
+    <app-selected-user-header [SelectedUser]="selectedUser"></app-selected-user-header>
     <div class="card-body">
         <section class="experiment">
             <section style="display:none;">
@@ -45,10 +27,10 @@
     </div>
 </div>
 <div class="input-group">
-    <textarea class="form-control send-box" placeholder="Type message here" id="textInput">
+    <textarea class="form-control send-box" placeholder="Type message here" id="input-text-chat">
     </textarea>
     <div class="input-group-append">
-        <a class="btn" id="sendText">
+        <a class="btn" id="alternate-send-chat">
             <i class="fa fa-paper-plane" aria-hidden="true"></i>
         </a>
         <a class="btn" id="sendFile">

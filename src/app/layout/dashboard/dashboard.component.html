@@ -4,23 +4,23 @@
             <div class="card card-default">
                 <div class="row" style="margin:0px;">
                     <div class="card-header userlist-header col-md-4" style="text-align: center;">
-                        <i class="fa fa-user-circle fa-fw cursorPointer" [routerLink]="['/myProfile']" ></i>
+                        <i class="fa fa-user-circle fa-fw cursorPointer" [routerLink]="['/myProfile']"></i>
                     </div>
-                    <div [ngClass]="{'userlist-header': signUpflag === true ,
-                    'card-header ': signUpflag === true ,'col-md-2': signUpflag === true}">
-                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="signUpflag" [routerLink]="['/signup']"></i>
+                    <div [ngClass]="{'userlist-header': isAdministrator === true ,
+                    'card-header ': isAdministrator === true ,'col-md-2': isAdministrator === true}">
+                        <i class="fa fa-user-plus fa-fw cursorPointer" *ngIf="isAdministrator" [routerLink]="['/RegisterAdmin']"></i>
                     </div>
-                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
+                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': isAdministrator === true , 'col-md-3': isAdministrator === false}">
                         <i class="fa fa-users fa-fw cursorPointer" [routerLink]="['/ManageGroup']"></i>
                     </div>
-                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': signUpflag === true , 'col-md-3': signUpflag === false}">
+                    <div class=" card-header userlist-header" [ngClass]="{'col-md-2': isAdministrator === true , 'col-md-3': isAdministrator === false}">
                         <i class="fa fa-bullhorn fa-fw cursorPointer" (click)="openMemberPopup()"></i>
                         <app-custom-modal #broadcastMsgModal [model]="broadcastMsgContent">
                             <div class="modal-body row-label">
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label>Messgage</label>
+                                            <label>Message</label>
                                         </div>
                                         <div>
                                             <textarea placeholder="Type Message Here.." [(ngModel)]="broadcastMessage"></textarea>
@@ -30,63 +30,25 @@
 
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-sec" (click)="broadcastMessages()">Send Message</button>
-                                <button type="button" class="btn btn-cancel" (click)="closePopup('broadcastMessageModal')">Close</button>
+                                <button type="button" class="btn btn-primary" (click)="broadcastMessages()">Send Message</button>
+                                <button type="button" class="btn btn-danger" (click)="closePopup('broadcastMessageModal')">Close</button>
                             </div>
                         </app-custom-modal>
                     </div>
-                    <div   class=" card-header userlist-header-logout col-md-2">
-                        <i class="fa fa-power-off fa-fw fa-2x cursorPointer" [routerLink]="['/login']"></i>
+                    <div class=" card-header userlist-header col-md-2" (click)="logout()">
+                        <i class="fa fa fa-sign-out fa-fw cursorPointer"></i>
                     </div>
                 </div>
 
                 <!-- /.card-header -->
-                <app-notification></app-notification>
+                <app-notification (isUserSelected)="SetIsUserSelected($event)"></app-notification>
                 <!-- /.card-body -->
             </div>
         </div>
-        <div class="col-lg-5" style="padding:0px">
+        <div class="col-lg-9">
             <router-outlet></router-outlet>
         </div>
 
-        <div class="col-lg-4" style="padding:1rem;height: 100vh">
-            <div [ngSwitch]="currentRoute">
-                <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
-                <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
-            </div>
-        </div>
     </div>
 </div>
-<section class="make-center" style="display: none;">
-    <h1></h1>
-    <input type="text" id="room-id" [(ngModel)]="selectedUser.firstName+' '+selectedUser.lastName" autocorrect=off autocapitalize=off size=20>
-    <button id="open-room">Open Room</button>
-    <button id="join-room">Join Room</button>
-    <button id="open-or-join-room">Auto Open Or Join Room</button>
-    <button id="share-screen" class="btn btn-sec" style="display:none;margin:0px 10px 0px 10px;">Share Screen</button>
-    <br>
-    <br>
-    <input type="text" id="input-text-chat" placeholder="Enter Text Chat" disabled>
-    <button id="share-file" disabled>Share File</button>
-    <br>
-    <br>
-    <button id="btn-leave-room" disabled>Leave /or close the room</button>
 
-    <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
-
-    <div id="chat-container">
-        <div id="file-container"></div>
-        <div class="chat-output"></div>
-        <div class="col-md-12" style="padding-top: 20px;">
-            <div class="row">
-                <span class="col-md-10">
-                    <!-- <textarea placeholder="Type Message Here.." id="input-text-chat" style="width:100%;height:70px;"></textarea> -->
-                </span>
-                <span class="col-md-2" style="line-height: 80px; cursor: pointer;">
-                    <!-- <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"></i> -->
-                </span>
-            </div>
-        </div>
-    </div>
-    <!-- <div id="videos-container"></div> -->
-</section>

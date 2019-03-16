@@ -1,19 +1,16 @@
 @import "styles/customStyle.css";
 .userlist-header{
-    background: #3277d3;//#0044ce;//#1e9bc0;//#2980b9
-    // background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);
-    // background: linear-gradient(to right, #2B32B2, #1488CC);
+    //background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
     color:#ffffff;
     border-right: 1px solid #dadadc;
-    opacity: 0.85;
+   // opacity: 0.85;
     height:6vh;
     text-align: center;
     &:first-child{
         opacity: 1;
     }
-.cursorPointer{
-    cursor: pointer;
-}
+
 }
 .check-label {
     font-weight: bold; padding-left: 10px;
@@ -25,10 +22,9 @@
     border-color: #8f5a0a;
     cursor: pointer;
     color: #8f5a0a;
-  
     height:6vh;
     text-align: center;
     &:first-child{
-        opacity: 1;
+    opacity: 1;
     }
     }

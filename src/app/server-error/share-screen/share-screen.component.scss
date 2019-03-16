@@ -1,0 +1,40 @@
+.colorgraph {
+  width: 20%;
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+.logo-img{
+  text-align: center; 
+  margin: 10px;  
+  //margin-bottom:10px; 
+}
+
+.content{
+  padding: 10px; 
+  margin: 40px; 
+  border: 1px solid #c0c0c0; 
+  background-color: #fff7f7; 
+  text-align: center;
+}
+
+.content-font{
+    font-size: 16px;
+}
+
+.divider-center{
+  text-align: center;
+}
+
+.link{
+  font-weight: bold; 
+  color: #a201ff; 
+  font-size: 16px;
+}
+

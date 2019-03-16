@@ -16,7 +16,7 @@ export class CustomModalComponent {
     @Output() CancelEvent = new EventEmitter();
     constructor(private modalService: NgbModal, @Inject(DOCUMENT) private document) { }
 
-    open() {        
+    open() {
         this.modalService.open(this.content2).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
@@ -45,6 +45,7 @@ export class CustomModalComponent {
         closeBtn.click();
     }
 }
+
 export class CustomModalModel {
     title: string;
     titleIcon: string;

@@ -1,82 +1,84 @@
-<div class="top">
-      <div class="col-md-12 header" style="text-align: center;">
-            <h3>Settings</h3>
-      </div>
-</div>
-<div class="center">
-<div class="main ">
-            <h4 class="btn btn-sec remove-border" style="cursor: default;">Setting Details</h4>
-      <table >
-          
-            <tr>
-                  <td>Display Picture</td>
-                  <td>
-                        <img src="assets/images/default.png" alt="Responsive image" class="img-fluid" />
-                  </td>
-                  <td>
-                        <a>Change Picture</a>
-                  </td>
-                  <td>
-                        <a>Remove Picture</a>
-                  </td>
-            </tr>
-            <tr>
-                  <td>Display Name</td>
-                  <td>
-                        <input placeholder="Enter Name" type="text" value="{{userSettings.displayName}}" [(ngModel)]="userSettings.displayName" required/>
-                  </td>
-            </tr>
-            <tr>
-                  <h4>Meeting Settings</h4>
-            </tr>
-            <tr>
-                  <td>Meeting Code</td>
-                  <td>
-                        <input placeholder="Enter Meeting Code" value="{{userSettings.meetingCode}}" [(ngModel)]="userSettings.meetingCode" required />
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        <h4>General Settings</h4>
-                  </td>
+<div class="main-container">
+    <div class="header" style="text-align:center;">
+        <h3>Settings</h3>
+    </div>
+    <div id="content" class="body-container">
 
-            </tr>
-            <tr>
-                  <td>Chat Notification</td>
-                  <td>
-                        <input type="checkbox" id="chatChk" [(ngModel)]="userSettings.chatNotification">
-                        <p id="text" style="display:none">Checkbox is CHECKED!</p>
-                  </td>
-            </tr>
-            <tr>
-                  <td>Meeting Reminders</td>
-                  <td>
-                        <input type="checkbox" id="meetChk" [(ngModel)]="userSettings.meetingReminder">
-                        <p id="text" style="display:none">Checkbox is CHECKED!</p>
-                  </td>
-            </tr>
-            <!-- <tr>
-                  <td>File Download Location</td>
-                  <td colspan="2">
-                        <input placeholder="Enter Name" type="text" value="{{userSettings.downloadLocation}}" [(ngModel)]="downloadLocation" requiredclass="col-md-12"
-                        />
-                  </td>
-                  <td>
-                        <div id="hide" class="col-lg-8 col-xs-8">
-                              <label class="hand-cursor">
-                                    <input type="file" nv-file-select uploader="$ctrl.uploader" style="visibility:hidden;" />
-                                    <a>
-                                          <span class="fa fa-folder-open">change Location</span>
-                                    </a>
-                              </label>
+        <div class="container">
+            <br>
+            <br>
+            <div class="row" id="main">
+                <div class="col-md-4 well" id="leftPanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="padding-top-20">
+                                <div>
+                                    <img *ngIf='loggedInUserId.profileImgPath' [src]="loggedInUserId.profileImgPath"
+                                        alt="Responsive image" class="rounded-circle profile-img img-fluid" />
+                                    <img *ngIf="loggedInUserId.profileImgPath === null || loggedInUserId.profileImgPath === '' || loggedInUserId.profileImgPath === 'undefined'"
+                                        src="assets/images/default-profile.jpg" alt="Responsive image"
+                                        class="rounded-circle profile-img img-fluid" />
+                                </div>
+                       
+                                <h2 class="padding-top-20">
+                                    {{loggedInUserId.firstName}}&nbsp;{{loggedInUserId.lastName}}</h2>
+                                <b>{{loggedInUserId.team.teamName}}</b>
+                            </div>
                         </div>
-                  </td>
-            </tr> -->
-      </table>
-      <div class="button-block">
-            <button class="btn btn-sec" style="align:align-center" (click)="saveUserSetting()">Save Changes</button>
-            <a class="btn btn-secondary"  [routerLink]="['/dashboard/default']">Reset Changes</a>
-      </div>
+                    </div>
+                </div>
+                <div class="col-md-8 well" id="rightPanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form role="form">
+                                <h2>Setting Details</h2>
+                                <hr class="colorgraph">
 
-</div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            <label>Chat Notification</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <input type="checkbox" id="chatChk"
+                                                [(ngModel)]="userSettings.chatNotification">
+                                            <p id="text" style="display:none">Checkbox is CHECKED!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            <label>Meeting Reminders</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <input type="checkbox" id="meetChk"
+                                                [(ngModel)]="userSettings.meetingReminder">
+                                            <p id="text" style="display:none">Checkbox is CHECKED!</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="text-align: center;">
+                                        <button class="btn btn-primary" (click)="saveUserSetting()">Save</button>
+                                        <a class="btn btn-danger"
+                                            [routerLink]="['/dashboard/default']">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer" class="footer">
+        <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png"
+                style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
+        </div>
+    </div>
 </div>

@@ -1,13 +1,17 @@
 // https://rtcmulticonnection.herokuapp.com/demos/Call-By-UserName.html TBD
+
+// document.getElementsByClassName("drag-scroll-content")[0].setAttribute("id", "videos_container");
 window.enableAdapter = true; // enable adapter.js
+document.getElementById('btn-save-mom').disabled = true;
+document.getElementById('input-text-chat').disabled = true;
+document.getElementById('btn-leave-room').disabled = true;
 
 // ......................................................
 // .......................UI Code........................
 // ......................................................
-
+var alertService = window.customAlertService;
 document.getElementById('share-screen').onclick = function () {
     try {
-        this.disabled = true;
         connection.addStream({
             screen: true,
             oneway: true
@@ -16,33 +20,24 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
 
-    // const EXTENSION_ID = 'ajhifddimkapgcifgcodmmfdlknahffk';
-    // chrome.runtime.sendMessage(EXTENSION_ID, 'version', response => {
-    //     if (!response) {
-
-    //         if (confirm('You do not have chrome extension required for screen sharing. Do you wish to install the extension?')) {
-    //             url = 'https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk';
-    //             var popup_window=window.open(url,"myWindow","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
-    //             try {
-    //                 popup_window.focus();
-    //             } catch (e) {
-    //                 alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
-    //             }
-
-    //             // window.open(url, '_blank');
-    //         }
-    //         return;
-    //     }
-    //     else {
-    //         this.disabled = true;
-    //         connection.addStream({
-    //             screen: true,
-    //             oneway: true
-    //         });
-    //     }
-    // });
 };
 
+document.getElementById('btn-mute').onclick = function () {
+    try {
+        var streamid = connection.streamEvents.selectFirst().streamid;
+        if (document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0)
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.mute();
+        else
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.unmute();
+    } catch (error) {
+        console.log(error);
+    }
+
+};
 document.getElementById('open-room').onclick = function () {
     if (document.getElementById('room-id').value === 'Enter Meeting Id') {
         alert('Enter valid meeting Id');
@@ -51,7 +46,11 @@ document.getElementById('open-room').onclick = function () {
     disableInputButtons();
     connection.open(document.getElementById('room-id').value, function () {
         showRoomURL(connection.sessionid);
-        document.getElementById('meeting-error').innerText = 'Meeting has started.';
+        document.getElementById('meeting-error').display = none;
+        document.getElementById('resume-count').click();
+        document.getElementById('btn-save-mom').disabled = false;
+        document.getElementById('input-text-chat').disabled = false;
+        document.getElementById('btn-leave-room').disabled = false;
     });
 };
 
@@ -71,16 +70,12 @@ document.getElementById('open-or-join-room').onclick = function () {
 
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
-    if (connection.isInitiator) {
-        // use this method if you did NOT set "autoCloseEntireSession===true"
-        // for more info: https://github.com/muaz-khan/RTCMultiConnection#closeentiresession
-        connection.closeEntireSession(function () {
-            document.getElementById('meeting-error').innerText = 'Meeting has ended.';
-        });
-    } else {
-        connection.leave();
-        document.getElementById('meeting-error').innerText = 'You have left the meeting.';
-    }
+    connection.leave();
+    document.getElementById('meeting-error').innerText = 'You have left the meeting.';
+    document.getElementById('share-file').style.display = 'none';
+    document.getElementById('share-screen').style.display = 'none';
+    document.getElementById('input-text-chat').disabled = true;
+    document.getElementById('btn-mute').disabled = true;
 };
 
 // ......................................................
@@ -119,13 +114,14 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    div.className = 'chat-background';
     var message = event.data || event;
-    var user = event.extra || 'you';
+    var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
-    if (user === 'you') {
+    if (user === 'You') {
+        div.className = 'chat-background';
         html += '<span class="time-right">';
     } else {
+        div.className = 'chat-background-invitee';
         html += '<span class="time-left">';
     }
 
@@ -143,29 +139,35 @@ function appendDIV(event) {
 
 var connection = new RTCMultiConnection();
 connection.socketCustomEvent = "cfsCommunicator_internal_message";
+// to make sure file-saver dialog is not invoked.
+connection.autoSaveToDisk = false;
 var isHost = false;
 // Using getScreenId.js to capture screen from any domain
 connection.getScreenConstraints = function (callback) {
     getScreenConstraints(function (error, screen_constraints) {
-        debugger;
         if (!error) {
             screen_constraints = connection.modifyScreenConstraints(screen_constraints);
             callback(error, screen_constraints);
             return;
         } else if (screen_constraints.mandatory) {
-            console.log("extension not installed");
-            document.getElementById('share-file').disabled = false;
+            document.getElementById('share-screen').disabled = false;
+            var url = '/#/error/sharescreen';
+            var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
+            try {
+                popup_window.focus();
+            } catch (e) {
+                alert("Pop-up Blocker is enabled! Please add this site to your exception list. And click share screen again");
+            }
         } else
             throw error;
     });
 };
 
-
 // by default, socket.io server is assumed to be deployed on your own URL
 // connection.socketURL = '/';
 
 // comment-out below line if you do not have your own socket.io server
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.socketURL = 'https://cfscommunicatorsocket.herokuapp.com:443/';
 
 connection.socketMessageEvent = 'meeting';
 connection.extra = localStorage.getItem('loggedInuserName');
@@ -181,41 +183,62 @@ connection.mediaConstraints = {
     audio: true,
     video: false
 };
-
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: false
 };
 var screenshareCheck = {};
-connection.audiosContainer = document.getElementById('audios-container');
+connection.audiosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
-    var width = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
-    var height = parseInt(connection.audiosContainer.clientWidth / 2) - 20;
-    var mediaElement = getHTMLMediaElement(event.mediaElement, {
-        title: event.type === 'local' ? 'you' : event.extra,
-        buttons: [],
-        width: width,
-        showOnMouseEnter: false,
-        height: height
-    });
+    var mediaElement = event.mediaElement;
+    mediaElement.setAttribute("style", 'float:left;margin-top:200px;');
+
+    var customDiv = document.createElement('div');
+    customDiv.setAttribute("style", 'width:250px;height:260px;padding:5px;text-align: center; float:left;background-image: url("/assets/images/pic.png"); background-repeat: no-repeat;');
+    var heading = document.createElement('div');
+    heading.setAttribute("style", 'width:211px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.innerHTML = event.type === 'local' ? 'You' : event.extra;
+    customDiv.appendChild(heading);
+    customDiv.appendChild(mediaElement);
+    customDiv.setAttribute("drag-scroll-item", '');
+    customDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isScreen) {
-        if (screenshareCheck != event.stream.id) {
+        if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id
-            connection.filesContainer.appendChild(mediaElement);
+            connection.filesContainer.appendChild(customDiv);
         }
     } else {
-        connection.audiosContainer.appendChild(mediaElement);
+        // connection.audiosContainer.appendChild(button);
+        if (connection.audiosContainer.children.length > 0) {
+            var dummyPresent = false;
+            for (let index = 0; index < connection.audiosContainer.children.length; index++) {
+                var vid_element = connection.audiosContainer.children[index];
+                if (vid_element.className.indexOf('dummyVideoPlaceHolders') >= 0) {
+                    connection.audiosContainer.replaceChild(customDiv, vid_element);
+                    dummyPresent = true;
+                    break;
+                }
+            }
+            if (!dummyPresent)
+                connection.audiosContainer.appendChild(customDiv);
+        } else {
+            connection.audiosContainer.appendChild(customDiv);
+        }
     }
-
     setTimeout(function () {
-        mediaElement.media.play();
+        if (mediaElement.media == undefined)
+            mediaElement.play();
+        else
+            mediaElement.media.play();
     }, 5000);
-
     mediaElement.id = event.streamid;
 };
 
+connection.onmute = function (event) {
+    connection.streamEvents[event.streamid].stream.mute();
+};
 connection.onstreamended = function (event) {
-    var mediaElement = document.getElementById(event.streamid);
+    var mediaElement = document.getElementById(event.streamid + 'parent');
     if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
@@ -228,9 +251,12 @@ connection.onopen = function () {
     document.getElementById('share-file').style.display = 'block';
     document.getElementById('share-screen').style.display = 'block';
     document.getElementById('input-text-chat').disabled = false;
-    if (isHost)
+    if (isHost){
         document.getElementById('btn-leave-room').disabled = false;
     document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
+    }else{
+        document.getElementById('btn-leave-room').disabled = false;
+    }
 
 };
 
@@ -327,7 +353,7 @@ if (roomid && roomid.length) {
         if (isHost) {
             document.getElementById('open-room').disabled = false;
             document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
-            document.getElementById('btn-leave-room').disabled = false;
+
             return;
         } else if (!isHost) {
             // document.getElementById('btn-leave-room').disabled = true;
@@ -336,9 +362,12 @@ if (roomid && roomid.length) {
             if (isRoomExists) {
                 document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
+                document.getElementById('resume-count').click();
+                document.getElementById('btn-save-mom').disabled = false;
+                document.getElementById('input-text-chat').disabled = false;
                 return;
             }
-            document.getElementById('meeting-error').innerText = 'Wait for host to start meeting';
+            document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
