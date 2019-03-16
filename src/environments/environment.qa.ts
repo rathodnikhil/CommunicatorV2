@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-   baseUrl: 'http://localhost:8080/communicatorV2/'
-  // baseUrl : 'https://cfscommunicator.com:8443/prod_communicatorv2/'
+  production: true,
+  environmentName: 'qa',
+  baseUrl: 'https://cfscommunicator.com:8443/test_communicatorv2/'
 };
