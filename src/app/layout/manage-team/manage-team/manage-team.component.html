@@ -101,10 +101,10 @@
                         <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
                             <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
                         <td>
-                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission , srNo);"></i>
+                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);"></i>
                         </td>
                         <td>
-                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
+                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);"></i>
                         </td>
                     </tr>
                 </table>

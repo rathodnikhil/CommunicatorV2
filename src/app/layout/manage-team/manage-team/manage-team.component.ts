@@ -327,14 +327,15 @@ export class ManageTeamComponent implements OnInit {
             if (res.errorFl === true || res.warningFl === true) {
                 return this.alertService.warning(res.message, 'Warning');
             } else {
-                this.deleteTeamModal.close();
+                this.teamCloseDeletePopup(1);
                 this.filterMemberList = [];
                 this.showSelectedTeam = false;
                 return this.alertService.success('Team has deleted successfully ', 'Success');
             }
         });
     }
-    editMember(member, index) {
+    editMember(member) {
+        const index = this.filterMemberList.indexOf(member);
         if (member.userId.status.status === 'ACTIVE') {
             this.updatedUserStatus = true;
         } else {
@@ -345,7 +346,7 @@ export class ManageTeamComponent implements OnInit {
         } else {
             this.updatedMeetingPermissionStatus = false;
         }
-        this.filterMemberList.splice(this.filterMemberList.indexOf(member), 1);
+        this.filterMemberList.splice(index, 1);
         this.UpdateMemberModal.open();
         this.updatedFirstName = member.userId.firstName;
         this.updatedLastName = member.userId.lastName;
@@ -416,7 +417,7 @@ export class ManageTeamComponent implements OnInit {
         return currentDisplayStatus;
     }
 
-    deleteMemberPopup(member, index) {
+    deleteMemberPopup(member) {
         if (member.userId.status.status === 'ACTIVE') {
             this.deleteMemberModal.open();
             this.selectedMember = member;
@@ -425,7 +426,7 @@ export class ManageTeamComponent implements OnInit {
             return this.alertService.warning('Member ' + member.userId.firstName + ' ' + member.userId.lastName +
                 '  is already inactive', 'Inactive Member');
         }
-        this.selectedMemIndex = index;
+        this.selectedMemIndex = this.filterMemberList.indexOf(member);
         this.selectedMember = member;
         this.deleteMemberFlag = 1;
     }
@@ -493,8 +494,10 @@ export class ManageTeamComponent implements OnInit {
     teamCloseEditPopup() {
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
     }
-    teamCloseDeletePopup() {
-        this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
+    teamCloseDeletePopup(flag) {
+        if (flag === 2) {
+            this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
+        }
     }
     cancelEditPopup() {
         const memObj = this.selectedmemObj(this.selectedMember, 1, 2);
