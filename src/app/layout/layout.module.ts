@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 // import { ResetPasswordComponent } from './reset-password/reset-password/reset-password.component';
 import { ToastrModule } from 'ngx-toastr';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     imports: [
@@ -18,6 +19,6 @@ import { ToastrModule } from 'ngx-toastr';
         NgbDropdownModule.forRoot(),
         ToastrModule.forRoot()
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, FooterComponent]
 })
 export class LayoutModule { }
