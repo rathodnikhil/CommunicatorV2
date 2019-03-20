@@ -6,5 +6,4 @@
 export const environment = {
   production: false,
    baseUrl: 'http://localhost:8080/communicatorV2/'
-  // baseUrl : 'https://cfscommunicator.com:8443/prod_communicatorv2/'
 };

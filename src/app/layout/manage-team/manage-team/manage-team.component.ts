@@ -295,9 +295,9 @@ export class ManageTeamComponent implements OnInit {
         } else {
             const payload = {
                 'teamName': this.updateTeamName, 'userCode': this.loggedInUser.userCode,
-                'teamCode': this.selectedTeamObj.teamCode , status: this.loggedInUser.team.status
+                'teamCode': this.selectedTeamObj.teamCode , status: this.selectedTeamObj.status
             };
-            const team = { team: { teamName: this.updateTeamName } };
+           // const team = { team: { teamName: this.updateTeamName } };
             this._teamService.saveTeamDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {
@@ -306,8 +306,6 @@ export class ManageTeamComponent implements OnInit {
                         this.selectedTeamObj.teamName = this.updateTeamName;
                         this.selectedTeamName = this.updateTeamName;
                         this.addUpdateTeamModal.close();
-                        // this.userPermissionList.push(team );
-                         this.userPermissionList.splice(this.selectedUserPermissionObj);
                         return this.alertService.success('Team has updated successfully ', 'Success');
                     }
                 });
@@ -327,9 +325,10 @@ export class ManageTeamComponent implements OnInit {
             if (res.errorFl === true || res.warningFl === true) {
                 return this.alertService.warning(res.message, 'Warning');
             } else {
-                this.teamCloseDeletePopup(1);
+               // this.teamCloseDeletePopup(1);
                 this.filterMemberList = [];
                 this.showSelectedTeam = false;
+                this.deleteTeamModal.close();
                 return this.alertService.success('Team has deleted successfully ', 'Success');
             }
         });
@@ -402,7 +401,7 @@ export class ManageTeamComponent implements OnInit {
                     }
                 }
                 return this.alertService.success('Member ' + data.firstName + ' ' + data.lastName +
-                    ' has edited successfully', 'Update Member');
+                    ' has updated successfully', 'Update Member');
             }
         });
     }
@@ -428,7 +427,6 @@ export class ManageTeamComponent implements OnInit {
         }
         this.selectedMemIndex = this.filterMemberList.indexOf(member);
         this.selectedMember = member;
-        this.deleteMemberFlag = 1;
     }
     deleteMemberDetails() {
         if (this.selectedMember.userId.userCode === null || typeof this.selectedMember.userId.userCode === 'undefined'
@@ -492,17 +490,19 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     teamCloseEditPopup() {
+        debugger;
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
     }
     teamCloseDeletePopup(flag) {
-        if (flag === 2) {
+        if (flag === 2 && this.showSelectedTeam === true) {
             this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
+        } else {
+            this.deleteTeamModal.close();
         }
     }
     cancelEditPopup() {
         const memObj = this.selectedmemObj(this.selectedMember, 1, 2);
         this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
-       //  this.UpdateMemberModal.close();
     }
     clearTeamPopupField() {
         this.newTeamName = '';
