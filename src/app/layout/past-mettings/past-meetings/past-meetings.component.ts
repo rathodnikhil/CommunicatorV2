@@ -8,7 +8,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
     styleUrls: ['./past-meetings.component.scss'],
-    providers: [AlertService]
+    providers: [AlertService ]
 })
 export class PastMeetingsComponent implements OnInit {
     _meetingService: MeetingService;

@@ -502,10 +502,6 @@ connection.onstream = function (event) {
             }
         }
     }
-    var mediaElement = document.getElementById(event.stream.id);
-    if (mediaElement.muted === true){
-        document.getElementById(event.stream.id + 'muteIcon').setAttribute("style", "display:block;");
-    } 
     setTimeout(function () {
         video.play();
     }, 5000);
