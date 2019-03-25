@@ -13,30 +13,39 @@
         </div>
         <div>
             <app-custom-modal #meetingDetailsModal [model]="meetingModalDetails">
-                <div class="col-md-12 view-meeting-popup-body">
-                    <div class="row">
-                        <label class="view-meeting-title">Meeting Id:</label>
-                        <p class="view-meeting-details">{{meetingDetails.meetingCode}}</p>
+                <div class="row view-meeting-popup-body">
+                    <div class="col-md-12">
+                        <h3 class="title-meeting-details">Meeting Details</h3>
                     </div>
-                    <div class="row">
-                        <label class="view-meeting-title">Subject:</label>
-                        <p class="view-meeting-details">{{meetingDetails.subject}}</p>
+                    <hr class="col-md-9 colorgraph">
+                    <div class="col-md-3 pull-left" >
+                        <i class="fa fa-5x fa-calendar calender-img" aria-hidden="true"></i>
+                        <!-- <img src="/assets/images/ic_ckeck.png"/> -->
                     </div>
-                    <div class="row">
-                        <label class="view-meeting-title">Date:</label>
-                        <p class="view-meeting-details">{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss a z'}}</p>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <label class="view-meeting-title">Meeting Id:</label>
+                            <p class="view-meeting-details">{{meetingDetails.meetingCode}}</p>
+                        </div>
+                        <div class="row">
+                            <label class="view-meeting-title">Subject:</label>
+                            <p class="view-meeting-details">{{meetingDetails.subject}}</p>
+                        </div>
+                        <div class="row">
+                            <label class="view-meeting-title">Date:</label>
+                            <p class="view-meeting-details">{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss a z'}}</p>
+                        </div>
+                        <div class="row">
+                            <label class="view-meeting-title">Duration:</label>
+                            <p class="view-meeting-details">{{meetingDetails.duration}}</p>
+                        </div>
+                        <div class="row">
+                            <label class="view-meeting-title">Host Name:</label>
+                            <p class="view-meeting-details">
+                                {{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}
+                            </p>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label class="view-meeting-title">Duration:</label>
-                        <p class="view-meeting-details">{{meetingDetails.duration}}</p>
-                    </div>
-                    <div class="row">
-                        <label class="view-meeting-title">Host Name:</label>
-                        <p class="view-meeting-details">
-                            {{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}
-                        </p>
-                    </div>
-
                 </div>
                 <div class="modal-footer popFooter">
                     <button type="button" class="btn btn-danger" (click)="exit()">Close</button>
@@ -45,9 +54,21 @@
         </div>
     </div>
 
+    <!-- <div style="position: relative"> 
+        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+      </div> -->
+
+    <!-- <ngx-spinner
+        bdColor="rgba(51,51,51,0.8)"
+        size="medium"
+    color="#fff"
+        type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner> -->
+
     <div id="footer" class="footer">
         <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png"
                 style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
         </div>
     </div>
-</div>cd 
+</div>

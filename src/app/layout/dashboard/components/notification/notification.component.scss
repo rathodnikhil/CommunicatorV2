@@ -29,7 +29,7 @@
 .member-list{
     height:100%;  
     overflow-y: auto;
-    padding-bottom: 20%; 
+    padding-bottom: 40%; 
 }
 .circleMeetingJoin {
     position: relative;
@@ -133,4 +133,8 @@
     background-color: #fecf71;
     border-color: #fecf71;
     color:black;
+ }
+ .list-item-padding{
+    padding-left: 1%;
+    padding-right: 1%;
  }

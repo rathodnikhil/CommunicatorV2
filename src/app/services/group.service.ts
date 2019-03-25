@@ -81,7 +81,6 @@ export class GroupService {
     const url = environment.baseUrl + 'getGroupMembersByGroup?userCode=' + payload.userCode;
     return this.apiRequest.post(url, payload);
   }
-
   saveGroupMember(payload): Observable<any> {
     const url = environment.baseUrl + 'saveGroupMember';
     const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -89,5 +88,21 @@ export class GroupService {
       resp.next(data);
     });
     return resp;
+  }
+  deleteGroup(payload) {
+    const url = environment.baseUrl + 'deleteGroup?groupCode=' + payload.groupCode;
+    return this.apiRequest.post(url, payload);
+  }
+  deleteMember(payload): Observable<any> {
+    const url = environment.baseUrl + 'deleteMember';
+    const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+    this.apiRequest.post(url, payload).subscribe(data => {
+      resp.next(data);
+    });
+    return resp;
+  }
+  getMemberByLocalgroup(payload) {
+    const url = environment.baseUrl + 'getMemberByLocalgroup?groupId=' + payload.groupId;
+    return this.apiRequest.post(url, payload);
   }
 }

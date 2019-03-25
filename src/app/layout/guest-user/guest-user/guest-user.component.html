@@ -1,46 +1,51 @@
-<div class="top">
-  <div class="col-md-12 header" style="text-align: center;">
-      <h3>Guest Users</h3>
-  </div>
+<div class="main-container">
+    <div class="header" style="text-align:center;">
+        <h3>Guest Users</h3>
+    </div>
 
-</div>
+    <div id="content" class="body-container">
+        <div class="row main">
+            <div class="col-md-9"><h3>Guest Users Details</h3></div>
+                <div class="align-center" class="col-md-3" >
+                    <div class="form-group input-group"style="padding-top:5px;">
+                        <input type="text" class="form-control" placeholder="Name/Meeting Id"  [(ngModel)]="searchText">
+                        <div class="input-group-append">
+                            <button class="btn" style="background-color: #fecf71; color: black;" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-<div class="main">
-        <div class="row">
-                <div class="col-md-9"><h3>Guest Users Details</h3></div>
-                   <div class="align-center" class="col-md-3" >
-                       <div class="form-group input-group"style="padding-top:5px;">
-                         <input type="text" class="form-control" placeholder="Name/MeetingCode"  [(ngModel)]="searchText">
-                         <div class="input-group-append">
-                             <button class="btn" style="background-color: #fecf71; color: black;" type="button">
-                                 <i class="fa fa-search"></i>
-                             </button>
-                         </div>
-                     </div>
-                   </div>
-               </div>
-  <table>
-      <tr>
-          <th>Sr. No</th>
-          <th>Name</th>
-          <!-- <th>Email</th> -->
-          <th>MeetingCode</th>
-          <th>UserCode</th>
-      </tr>
-       <tr *ngFor="let guest of guestUserList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
-          <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
-          <td>{{guest.fullname}}</td>
-          <!-- <td>{{guest.email}}</td> -->
-          <td>{{guest.meetingCode}}</td>
-          <td>{{guest.userCode}}</td>
-      </tr> 
-  </table>
-  <div class="pageControl">
-      <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
-          [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-          [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-          (pageChange)="onPageChange($event)"></pagination-controls>
-  </div>
-  <div class="cfsfooter "><img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br><b>Copyright &copy; 2018 Coreflex Solutions</b>
-  </div>
+                <table>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Name</th>
+                        <!-- <th>Email</th> -->
+                        <th>Meeting Id</th>
+                        <th>UserCode</th>
+                    </tr>
+                    <tr *ngFor="let guest of guestUserList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
+                        <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
+                        <td>{{guest.fullname}}</td>
+                        <!-- <td>{{guest.email}}</td> -->
+                        <td>{{guest.meetingCode}}</td>
+                        <td>{{guest.userCode}}</td>
+                    </tr> 
+                </table>                                                  
+                <div class="col-md-12 pageControl">
+                    <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+                        [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                        [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                        (pageChange)="onPageChange($event)"></pagination-controls>
+                </div>
+                <div id="footer" class="footer">
+                    <div class="cfsfooter">
+                        <img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px;"><br><b>Copyright
+                            &copy; 2018 Coreflex
+                            Solutions</b>
+                    </div>
+                </div>
+        </div>
+    </div>
 </div>

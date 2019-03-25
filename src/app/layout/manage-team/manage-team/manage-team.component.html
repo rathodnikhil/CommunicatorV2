@@ -13,7 +13,7 @@
                         <div class="form-group input-group" style="padding-top:5px;">
                             <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTeam">
                             <div class="input-group-append">
-                                <button class="btn " type="button">
+                                <button class="btn btn-search" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -54,9 +54,9 @@
             <div class="col-lg-10 col-md-10" *ngIf="!showSelectedTeam">
                 <h3>Kindly select the team to view details</h3>
             </div>
-            <div class="col-lg-10 col-md-10" style="padding-bottom: 100px;" *ngIf="showSelectedTeam">
+            <div class="col-lg-10 col-md-10 team-container" *ngIf="showSelectedTeam">
                 <div class="row" style="padding: 5px;">
-                    <h4 style="padding-top: 2px; padding-right: 30px;">{{selectedTeamName}}
+                    <h4 class="team-name">{{selectedTeamName}}
                         <span>&nbsp;[{{filterMemberList.length}} Members]</span>
                     </h4>
                     <button (click)="editTeam()" class="btn btn-primary" style="margin-right: 5px;" #editTeamField>
@@ -73,9 +73,9 @@
                     </div>
                     <div class="align-center" class="col-md-3">
                         <div class="form-group input-group" style="padding-top:5px;">
-                            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTableText">
+                            <input type="text" class="form-control" placeholder="Name/Email/Status" [(ngModel)]="searchTableText">
                             <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button">
+                                <button class="btn btn-search" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>

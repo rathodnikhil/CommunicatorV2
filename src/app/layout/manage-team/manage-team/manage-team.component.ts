@@ -484,7 +484,6 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     cancelDeletePopup(noFlag) {
-        debugger;
         if (noFlag === 1) {
             // const memObj = this.selectedmemObj(this.selectedMember, this.deleteMemberFlag, noFlag);
             // this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);

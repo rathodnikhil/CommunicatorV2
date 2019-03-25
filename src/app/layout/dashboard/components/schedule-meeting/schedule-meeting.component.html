@@ -87,10 +87,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-sm-3">
-
-                        </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-12" style="text-align: center;">
                             <button class="btn btn-sec" (click)="scheduleMeeting()" >Schedule Meeting & Send Invitation</button>
                         </div>
                         <app-custom-modal #scheduleMeetingModal [model]="scheduleMeetings" (CancelEvent)="clearAllMeetingField()">

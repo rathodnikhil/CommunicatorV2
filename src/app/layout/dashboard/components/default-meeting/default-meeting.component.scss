@@ -3,11 +3,15 @@
     border-radius: 5px;
     border: 1px solid #d3d3d3;
     position: absolute;
-    bottom: 1rem;
-    top:1rem;
-    height: 100%;
-    left: 1rem;
-    right: 1rem;
+    // bottom: 1rem;
+    // top:1rem;
+    // height: 100%;
+    // left: 1rem;
+    // right: 1rem;
+    bottom: 0;
+    top:0;
+    left: 0;
+    right: 0;
     .chat-dropdown {
         margin-top: -3px;
     }
@@ -70,7 +74,7 @@
 }
 
 .align-center {
-    margin: auto;
+    margin: 2%;
     width: 100%;
 }
 
@@ -255,6 +259,7 @@
 
 .card-body {
     background-color:#eaeaea;
+    // margin: auto;
 }
 
 .meetingHeader{

@@ -6,6 +6,9 @@ import { MeetingService } from '../../../services/meeting-service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+// import { NgxSpinnerService } from 'ngx-spinner';
+// import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 @Component({
     selector: 'app-my-calendar',
     templateUrl: './my-calendar.component.html',
@@ -41,7 +44,7 @@ export class MyCalendarComponent implements OnInit {
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @ViewChild('meetingDetailsModal') public meetingDetailsModal: CustomModalComponent;
     meetingModalDetails: CustomModalModel = {
-        titleIcon: '<i class="fas fa-sign-out-alt"></i>',
+        titleIcon: '<i class="fa fa-calendar-check-o"></i>',
         title: 'View Meeting',
         smallHeading: 'You can view meeting details here',
         body: '',
@@ -52,12 +55,18 @@ export class MyCalendarComponent implements OnInit {
     _userService: UserService;
     loggedInUser: any;
 
-    constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService ) {
+    // private spinner: NgxSpinnerService,  private ngxService: NgxUiLoaderService
+    constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
 
     ngOnInit() {
+        // this.spinner.show();
+        // setTimeout(() => {
+        //     /** spinner ends after 5 seconds */
+        //     this.spinner.hide();
+        // }, 5000);
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
