@@ -439,7 +439,7 @@ connection.onstream = function (event) {
             + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
     }
     // style="font-size: 0.8vw;"   font-size: 1.1vw;
-    heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash pull-right" style="display:none;"></i>';
+    heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash fa-lg pull-right" style="display:none;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
@@ -522,7 +522,7 @@ connection.onmute = function (event) {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
         // font-size: 1.1vw;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;");
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:5px;");
     }
 };
 connection.onunmute = function (event) {

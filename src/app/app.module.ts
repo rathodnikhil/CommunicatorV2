@@ -19,6 +19,10 @@ import { ApiRequestService } from './services/api-request.service';
 import { GroupService } from './services/group.service';
 import { ChatService } from './services/chat.service';
 import { AlertService } from './services/alert.service';
+// import { NgxSpinnerModule } from 'ngx-spinner';
+// import { NgxUiLoaderModule } from 'ngx-ui-loader';
+// import { NgxLoadingModule } from 'ngx-loading';
+
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -33,6 +37,9 @@ export function createTranslateLoader(http: HttpClient) {
         BrowserAnimationsModule,
         HttpModule,
         FormsModule,
+        // NgxSpinnerModule,
+        // NgxUiLoaderModule,
+        // NgxLoadingModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {

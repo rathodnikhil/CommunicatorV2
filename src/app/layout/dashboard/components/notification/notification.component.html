@@ -44,11 +44,11 @@
         <!-- <div style="text-align: center;"> <button class="btn btn-primary"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div> -->
 
         <hr class="hr-partition" />
-        <div class="row" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText">
-            <a class="list-group-item clearfix d-block">
+        <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText">
+            <a class="col-md-10 list-group-item clearfix d-block">
                 <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
             </a>
-            <i class="add-member" class="fa fa-plus-circle" style="padding-top: 17px; color: green; cursor: pointer;"
+            <i class="fa fa-plus-circle add-member col-md-2" style="padding-top: 17px; color: green; cursor: pointer;"
                 (click)="addNewMembersInList(user)"></i> </div>
         <!-- /.list-group -->
     </div>

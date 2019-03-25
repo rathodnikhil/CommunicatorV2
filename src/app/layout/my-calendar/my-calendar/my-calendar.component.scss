@@ -27,13 +27,14 @@
 
 .main1 {
     // margin-left: 15%;
-    padding: 0px 15px 15px 15px;
+    padding: 0px 15px 0px 15px;
     border: 1px solid #ccd1d4;
     border-top: none;
-    height: 82vh;
+    border-bottom: none;
+    height: auto;
     overflow-y: scroll;
     top: 105px;
-    bottom: 100px;
+    bottom: 90px;
     position: fixed;
     width: 100%;
 }
@@ -127,8 +128,29 @@ a {
     width: 30%;
     padding-left: 10px;
     font-weight: bold;
+    color: #3283b9;
 }
 .view-meeting-details{
-    width: 70%;
+    width: 60%;
     border-bottom: 1px solid #C4C4C4;
 }
+.calender-img{
+    color: #ffa600f8; 
+    text-align: center;
+    // color: linear-gradient(to right,#fd7a2a,orange);
+    // font-size: 8vh;
+}
+.title-meeting-details{
+    text-align: center;
+    color: #000000;
+}
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #c4e17f;
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  }

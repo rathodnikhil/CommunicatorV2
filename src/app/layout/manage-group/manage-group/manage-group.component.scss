@@ -151,7 +151,7 @@
 
 .footer{
   position:absolute; 
-  bottom:0px; 
+  bottom:100px; 
   height:100px; 
   left:0px; 
   right:0px; 
@@ -171,4 +171,41 @@
   background-color:#5ebfff;
   color:white;
   border: 1px solid #3283b9;
+}
+.btn-update-member{
+  width: 100%; 
+  text-align:center; 
+  margin-top: 5px;
+}
+.selected-group{
+  padding-top: 2px; 
+  padding-right: 30px; 
+  padding-left: 10px;
+}
+.group-container{
+  padding-bottom: 100px;
+}
+.padding-5px{
+  padding: 5px;
+}
+.padding-10px{
+  padding: 10px;
+}
+.padding-20px{
+  padding: 20px;
+}
+.padding-top-5px{
+  padding-top:5px;
+}
+.margin-left-5px{
+  margin-left: 5px;
+}
+.margin-right-5px{
+  margin-right: 5px;
+}
+.margin-top-5px{
+  margin-top: 5px;
+}
+.margin-top-10px{
+  margin-top: 10px;
 }
