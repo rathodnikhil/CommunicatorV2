@@ -259,8 +259,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
-                 this.filteredFutureMeetingList.splice(0 , 0 , this.meetNowMeeting);
-             //   this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
+                 this.filteredFutureMeetingList.push(this.meetNowMeeting);
+                this.futureMeetingList.push(this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });

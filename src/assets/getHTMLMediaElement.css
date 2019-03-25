@@ -173,40 +173,40 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .chat-background {
-    border: 1px solid #bc151b;
+    /* border: 1px solid #bc151b; */
     background-color: #f1f0ea;
     /* opacity: 0.75; */
     border-radius: 5px;
     padding: 18px;    
     margin: 10px 10px;
     line-height: 1;
-    color : #000;
+    color : #fd7a2a;
     min-width:90%;
 }
 
 .chat-background-invitee {
-    border: 1px solid #3283b9;
-    background-color: #e4eff0;
+    /* border: 1px solid #3283b9; */
+    background-color: #faf2ff;
     /* opacity: 0.75; */
     border-radius: 5px;
     line-height: 1;
     padding: 18px 18px 30px 18px;
     margin: 10px 10px;
-    color : #000;
+    color : #741eaa;
     min-width:90%;
 }
 
 .time-left {
     float: right;
-    color: #3283b9;
+    color: #741eaa;
     font-weight: bold;
     /* font-size: 0.7vw; */
     /* font-size: calc(0.5vw + 0.5vh); */
 }
 
 .time-right {
-    float: left;
-    color:#bc151b;
+    float: right;
+    color:#fd7a2a;
     font-weight: bold;
     /* font-size: 0.7vw; */
     /* font-size: calc(0.5vw + 0.5vh); */

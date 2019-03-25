@@ -12,7 +12,7 @@ import { DOCUMENT } from '@angular/common';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     animations: [routerTransition()],
-    providers: [AlertService, PasswordService]
+    providers: [AlertService, PasswordService ]
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     UserNameText = 'UserName';

@@ -12,16 +12,6 @@
 
             <i class="fa fa-calendar cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="switchRoute()" placement="bottom"
                 title="Schedule Meeting" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
-
-            <!-- <div class="col-md-8">
-                <i class="fa fa-calendar-check-o"></i>
-                Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
-                <h6 class="style-links">Schedule upcoming Meetings</h6>
-            </div> -->
-            <!-- <div *ngIf="showScheduleMeetingFl" style="text-align: center;"> -->
-                <!-- <a href="javascript:void(0)" class="btn btn-sec">Meet Now</a> -->
-                <!-- <i class="fa fa-caret-square-o-right cursorPointer fa-2x" aria-hidden="true" (click)="joinMeetingNow()"
-                    placement="bottom" ngbTooltip="Meet Now"></i> -->
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
                     <div style="padding: 10px; font-size:14px;" class="span-font">
                         <span>Meet now: &nbsp;{{meetNowMeeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
@@ -53,22 +43,6 @@
                 </app-custom-modal>
                 <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearOutlookField()">
                     <div class="outlook-email-background">
-                        <!-- <div class="form-group row">
-                            <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
-                            <div class="col-lg-9"> 
-                                <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
-                                (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
-                                <datalist id="rememberEmailListEl">
-                                    <option *ngFor="let email of rememberEmailList" value="{{email}}">
-                                </datalist>
-                            </div>
-                            <div class="edit-icon"><i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
-                            <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"></label></div>
-                            <div class="col-lg-9" > 
-                                <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly></textarea>
-                            </div>  
-                        </div> -->
-
                         <div class="form-group">
                             <div class="row">
                                 <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">To: </label>
@@ -102,22 +76,6 @@
                                 <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
                             </div>
                         </div>
-
-                        <!-- <div class="form-group row">
-                        <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
-                        <div class="col-lg-9"> 
-                            <input class="form-control" (change)="selectedCcEmail()" id="to" (blur)="selectedCcEmail()"
-                             list="rememberEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
-                                <datalist id="rememberEmailListEl">
-                                    <option *ngFor="let email of rememberEmailList" value="{{email}}" >
-                                </datalist>
-                        </div>
-                        <div class="edit-icon"><i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
-                        <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
-                        <div class="col-lg-9"> 
-                            <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
-                        </div>
-                        </div> -->
 
                         <div class="form-group row">
                         <div class="col-lg-2"> <label for="subject" class="outlook-email-label">Subject: </label>

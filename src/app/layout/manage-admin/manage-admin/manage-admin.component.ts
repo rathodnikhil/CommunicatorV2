@@ -40,9 +40,12 @@ selectedAdmin: any;
 updatedUserCode: any;
 updatedUserStaus: boolean;
 updatedTeamName: any;
+updatedMeetingPermissionStatus: any;
 teamArray = [];
 newTeamName: any;
+selectedIndex: any;
 selectedDefaultTeam: any;
+deleteMemberFlag = 1;
   constructor(userService: UserService, public alertService: AlertService , teamService: TeamService) {
     this._userService = userService;
     this._teamService = teamService;
@@ -91,7 +94,9 @@ deleteAdmin(selectedAdmin) {
     if (selectedAdmin.status.status === 'ACTIVE') {
         this.deleteMemberModal.open();
         this.selectedAdmin = selectedAdmin;
-        this.allAdminList.splice(this.allAdminList.indexOf(selectedAdmin), 1);
+        const index = this.allAdminList.indexOf(selectedAdmin);
+        this.allAdminList.splice(index, 1);
+        this.selectedIndex = index;
     } else {
         return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
          '  is already inactive', 'Inactive Admin');
@@ -103,24 +108,26 @@ deleteAdminNow() {
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
-        this.deleteMemberModal.close();
-         const memObj = this.selectedAdminObj(this.selectedAdmin , 2);
-        this.allAdminList.push(memObj);
+     this.deleteMemberFlag = 2;
+     const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, 1);
+     this.allAdminList.splice(this.selectedIndex, 0, memObj);
+     this.deleteMemberModal.close();
         return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
     }
 });
 }
-    private selectedAdminObj(obj , flag) {
-        let statusVal = null;
-        if (flag === 2) {
+    private selectedAdminObj(obj , editDeletelag , flag) {
+        let statusVal ;
+        if (flag === 1 || (editDeletelag === 2 && flag === 2)) {
             statusVal = 'INACTIVE';
-        } else {
+        } else if (editDeletelag === 1) {
             statusVal = obj.status.status;
         }
         return {
-        firstName: obj.firstName, lastName: obj.lastName, email: obj.email,
-            name: obj.name, userCode: obj.userCode, status: { status: statusVal }, team: { teamName: obj.team.teamName }
-        };
+            firstName: obj.firstName, lastName: obj.lastName, email: obj.email,
+             meetingPermissionStatus: { status: obj.meetingPermissionStatus.status }, name: obj.name, userCode: obj.userCode,
+             status: { status: statusVal }, team: { teamName: obj.team.teamName }
+            };
     }
 
 editAdmin(user) {
@@ -128,6 +135,11 @@ editAdmin(user) {
         this.updatedUserStaus = true;
     } else {
         this.updatedUserStaus = false;
+    }
+    if (user.meetingPermissionStatus.status === 'ACTIVE') {
+        this.updatedMeetingPermissionStatus = true;
+    } else {
+        this.updatedMeetingPermissionStatus = false;
     }
     this.editMemberModal.open();
     this.allAdminList.splice(this.allAdminList.indexOf(user), 1);
@@ -139,21 +151,24 @@ editAdmin(user) {
     this.selectedDefaultTeam = user.team.teamName;
     this.selectedAdmin = user;
 }
-updateMember() {
+updateAdmin() {
     let duplicateUserNameFlag ;
     let exceptionFlag;
     const currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
+    const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
     const payload = {
         firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
         lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
         email: this.updatedEmail,
         status: {status: currentDisplayStatus},
         userCode: this.updatedUserCode,
-        team: {teamName : this.selectedDefaultTeam}
+        team: {teamName : this.selectedDefaultTeam},
+        meetingPermissionStatus: {status: currentDisplayMeetingStatus},
     };
     this._userService.updateUserDetails(payload).subscribe(data => {
         duplicateUserNameFlag = data.warningFl;
         exceptionFlag = data.errorFl;
+        const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
         if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
             this.updatedFirstNameField.nativeElement.focus();
              return this.alertService.warning('Please enter first name', 'Warning');
@@ -168,10 +183,13 @@ updateMember() {
           return this.alertService.warning('Username already exist', 'Warning');
         } else if (exceptionFlag === true) {
           this.updatedEmailField.nativeElement.focus();
-          return this.alertService.warning(data.json().message, 'Warning');
+          return this.alertService.warning(data.message, 'Warning');
+        }  else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
+            this.updatedEmailField.nativeElement.focus();
+            return this.alertService.warning('Please enter valid email', 'Warning');
         } else {
+            this.selectedAdmin = data;
           this.teamArray.push(data.team);
-          this.allAdminList.push(data);
           this.editMemberModal.close();
           return this.alertService.success('Admin has updated successfully', 'Success');
 
@@ -191,14 +209,15 @@ private getStatusByUser(updatedStaus) {
 
 
 closeEditPopup() {
-    this.deleteMemberModal.close();
-    const memObj = this.selectedAdminObj(this.selectedAdmin , 1);
-    this.allAdminList.push(memObj);
-}
-closeDeletePopup() {
-    this.editMemberModal.close();
-    const memObj = this.selectedAdminObj(this.selectedAdmin , 1);
-    this.allAdminList.push(memObj);
+    const memObj = this.selectedAdminObj(this.selectedAdmin , 1 , 2);
+    this.allAdminList.splice(this.selectedIndex , 0 , memObj);
 }
 
+closeDeletePopup(noFlag) {
+  //  debugger;
+        const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, noFlag);
+        if (noFlag === 2 && this.deleteMemberFlag === 1) {
+            this.allAdminList.splice(this.selectedIndex, 0, memObj);
+        }
+}
 }

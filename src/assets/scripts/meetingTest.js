@@ -13,7 +13,7 @@ var ua = navigator.userAgent.toLowerCase();
 var isAndroid = ua.indexOf("android") > -1;
 var iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
 var edge = ua.indexOf("edge") > -1;
-console.log('edge : '+ edge);
+console.log('edge : ' + edge);
 var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
 var isFireFox = ua.indexOf("firefox") > -1;
 document.getElementById('share-screen').onclick = function () {
@@ -357,7 +357,7 @@ connection.getScreenConstraints = function (callback) {
             try {
                 popup_window.focus();
             } catch (e) {
-                alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+                //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
             }
         } else
             throw error;
@@ -445,9 +445,9 @@ connection.onstream = function (event) {
         heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
     } else {
         if (event.stream.isVideo == 0) {
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -30px;');
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -30px;');
         } else {
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;margin-bottom: -25px;');
+            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -25px;');
         }
     }
     customDiv.appendChild(heading);
@@ -465,7 +465,7 @@ connection.onstream = function (event) {
         if (initialsDiv.innerHTML === "You") {
             initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #fd7a2a;color:#fd7a2a ;margin-top: 30px;font-size: 4.0vw;');
         } else {
-            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#e4eff0;color:#3283b9;margin-top: 30px;font-size: 4.0vw;border: 1px solid #3283b9;');
+            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#faf2ff;color:#a201ff;margin-top: 30px;font-size: 4.0vw;border: 1px solid #a201ff;');
         }
         customDiv.appendChild(initialsDiv);
     }
@@ -479,7 +479,7 @@ connection.onstream = function (event) {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
             heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#3283b9;color:#fff;');
-            video.setAttribute("style", "background: #f7fbff;border: 2px solid #3283b9;border-top:none;float:left;");
+            video.setAttribute("style", "background: #e0ecee;border: 1px solid #3283b9;border-top:none;float:left;");
             screenShareContainer.appendChild(customDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -784,26 +784,16 @@ if (roomid && roomid.length) {
 
 /** Record screen functionality */
 var video = document.getElementById('screenRecordVideo');
-if (typeof RecordRTC_Extension === 'undefined') {
-    // alert('RecordRTC chrome extension is either disabled or not installed.');
+if (typeof RecordRTC_Extension === 'undefined') {    
     document.getElementById("btn-start-recording").display = 'none';
 }
 
 // first step
 var recorder = new RecordRTC_Extension();
 
-// var video = document.querySelector('video');
-
 function stopRecordingCallback(blob) {
     video.src = video.srcObject = null;
-    video.src = URL.createObjectURL(blob);
-    var url = '/#/error/recordscreensteps';
-    var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=1074, height=800");
-    try {
-        popup_window.focus();
-    } catch (e) {
-        alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
-    }    
+    video.src = URL.createObjectURL(blob);    
     if (recorder.screen)
         recorder.screen.stop();
     recorder.destroy();
@@ -816,12 +806,20 @@ document.getElementById('btn-start-recording').onclick = function () {
     // https://github.com/muaz-khan/Chrome-Extensions/tree/master/screen-recording#getsupoortedformats
     if (document.getElementById('rec_stop').style.display === 'none') {
         var options = recorder.getSupoortedFormats()[3];
-
+        ispermission = false;
         // second step
         recorder.startRecording(options, function () {
+            ispermission = true;
             document.getElementById('rec_start').style.display = 'none';
             document.getElementById('rec_stop').style.display = 'block';
         });
+        setTimeout(function () {
+            if (!this.ispermission) {
+                document.getElementById('btn-start-recording').style.display = 'none';
+                alertService.error('Permission denied for recording. Recording will be disabled for this session', "Recording Disabled!");
+            }
+        }, 5000);
+
     } else {
         recorder.stopRecording(stopRecordingCallback);
         document.getElementById('rec_start').style.display = 'block';

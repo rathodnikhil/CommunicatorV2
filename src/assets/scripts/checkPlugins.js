@@ -14,7 +14,7 @@ if (!isAndroid && !iOS && !edge && !safari && !isFireFox) {
         try {
             popup_window.focus();
         } catch (e) {
-         //   alertService.error("Pop-up Blocker is enabled! Please add this site to your exception list, and refresh the page", "Popup blocked");
+            alertService.error("Pop-up Blocker is enabled! Please add this site to your exception list, and refresh the page", "Popup blocked");
         }
         var timer = setInterval(checkChild, 500);
         document.getElementById("isScreenSharePopupClosed").innerHTML = "true";
@@ -38,7 +38,7 @@ if (!isAndroid && !iOS && !edge && !safari && !isFireFox) {
         try {
             popup_window.focus();
         } catch (e) {
-         //   alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
+            alertService.warning("Pop-up Blocker is enabled! Please add this site to your exception list , and refresh the page");
         }
         var timer = setInterval(checkChild, 500);
         document.getElementById("isRecordScreenPopupClosed").innerHTML = "true";

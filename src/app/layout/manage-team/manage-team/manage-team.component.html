@@ -101,10 +101,10 @@
                         <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
                             <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
                         <td>
-                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission , srNo);"></i>
+                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);"></i>
                         </td>
                         <td>
-                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission , srNo);"></i>
+                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);"></i>
                         </td>
                     </tr>
                 </table>
@@ -132,7 +132,7 @@
                         <button type="button" class="btn btn-danger" (click)="addUpdateTeamModal.close()">Close</button>
                     </div>
                 </app-custom-modal>
-                <app-custom-modal #deleteTeamModal [model]="deleteTeam" (CancelEvent)="teamCloseDeletePopup()">
+                <app-custom-modal #deleteTeamModal [model]="deleteTeam" (CancelEvent)="teamCloseDeletePopup(2)">
                     <div>
                         <label style="padding: 10px; ">Are you sure you want to delete this team?</label>
                     </div>
@@ -268,8 +268,6 @@
                         <button type="button" class="btn btn-danger" (click)="deleteMemberModal.close()">No</button>
                     </div>
                 </app-custom-modal>
-
-
             </div>
             <div id="footer" class="footer">
                 <div class="cfsfooter">
