@@ -29,7 +29,7 @@
                     <th>Status</th>
                     <th>MOM</th>
                 </tr>
-                <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText | paginate: config ;let srNo = index">
+                <tr *ngFor="let meeting of pastMeetingList | genericSearchAllProp:searchText | paginate: config ;let srNo = index | orderBy : '-meeting.meetingStartDateTime'">
                     <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
                     <td>{{meeting.meetingStartDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>{{meeting.meetingCode}}</td>

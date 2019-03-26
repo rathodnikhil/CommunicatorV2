@@ -109,9 +109,10 @@ deleteAdminNow() {
         return this.alertService.warning(data.message, 'Warning');
     } else {
      this.deleteMemberFlag = 2;
-     const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, 1);
-     this.allAdminList.splice(this.selectedIndex, 0, memObj);
-     this.deleteMemberModal.close();
+     this.closeDeletePopup(1);
+  //   const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, 1);
+   //  this.allAdminList.splice(this.selectedIndex, 0, memObj);
+    // this.deleteMemberModal.close();
         return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
     }
 });
@@ -120,6 +121,7 @@ deleteAdminNow() {
         let statusVal ;
         if (flag === 1 || (editDeletelag === 2 && flag === 2)) {
             statusVal = 'INACTIVE';
+            this.deleteMemberFlag = 1;
         } else if (editDeletelag === 1) {
             statusVal = obj.status.status;
         }
@@ -213,11 +215,18 @@ closeEditPopup() {
     this.allAdminList.splice(this.selectedIndex , 0 , memObj);
 }
 
+// closeDeletePopup(noFlag) {
+//         const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, noFlag);
+//         if (noFlag === 2 && this.deleteMemberFlag === 1) {
+//             this.allAdminList.splice(this.selectedIndex, 0, memObj);
+//         }
+// }
 closeDeletePopup(noFlag) {
-  //  debugger;
+    if (noFlag === 1) {
+        this.deleteMemberModal.close();
+    } else {
         const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, noFlag);
-        if (noFlag === 2 && this.deleteMemberFlag === 1) {
-            this.allAdminList.splice(this.selectedIndex, 0, memObj);
-        }
+        this.allAdminList.splice(this.selectedIndex, 0, memObj);
+    }
 }
 }

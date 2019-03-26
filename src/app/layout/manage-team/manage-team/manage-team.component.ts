@@ -208,7 +208,7 @@ export class ManageTeamComponent implements OnInit {
             return this.alertService.warning('Please enter team name', 'Warning');
         } else {
             const payload = { 'teamName': this.newTeamName, 'userCode': this.loggedInUser.userCode };
-            const team = { team: { teamName: this.newTeamName, status: { status: 'ACTIVE' } } };
+           // const team = { team: { teamName: this.newTeamName, status: { status: 'ACTIVE' } } };
             this._teamService.saveTeamDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {
@@ -264,7 +264,7 @@ export class ManageTeamComponent implements OnInit {
                         } else {
                             const memObj = {
                                 userId: {
-                                    firstName: this.firstName, lastName: this.lastName, email: this.email, userCode: res.userCode ,
+                                    firstName: res.firstName, lastName: res.lastName, email: this.email, userCode: res.userCode ,
                                     status: { status: 'ACTIVE' }, meetingPermissionStatus: { status: meetingCurrentDisplayStatus }
                                 }
                                 , team: this.selectedTeamObj
@@ -297,7 +297,6 @@ export class ManageTeamComponent implements OnInit {
                 'teamName': this.updateTeamName, 'userCode': this.loggedInUser.userCode,
                 'teamCode': this.selectedTeamObj.teamCode , status: this.selectedTeamObj.status
             };
-           // const team = { team: { teamName: this.updateTeamName } };
             this._teamService.saveTeamDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {
@@ -305,6 +304,7 @@ export class ManageTeamComponent implements OnInit {
                     } else {
                         this.selectedTeamObj.teamName = this.updateTeamName;
                         this.selectedTeamName = this.updateTeamName;
+                        this.selectedUserPermissionObj.team.teamName = this.updateTeamName;
                         this.addUpdateTeamModal.close();
                         return this.alertService.success('Team has updated successfully ', 'Success');
                     }
@@ -455,6 +455,7 @@ export class ManageTeamComponent implements OnInit {
         let statusval ;
         if (noFlag === 1 || (editDeletelag === 2 && noFlag === 2)) {
             statusval = 'INACTIVE';
+            this.deleteMemberFlag = 1;
         } else if (editDeletelag === 1) {
             statusval = obj.userId.status.status;
         }
@@ -490,7 +491,6 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     teamCloseEditPopup() {
-        debugger;
         this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
     }
     teamCloseDeletePopup(flag) {

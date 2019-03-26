@@ -89,8 +89,6 @@ export class RegisterAdminComponent implements OnInit {
             this.confirmPasswordField.nativeElement.focus();
             return this.alertService.warning('Password and Confirm Password does not match.', 'Warning');
           } else {
-              let duplicateUserNameFlag ;
-              let exceptionFlag;
           const payload =  {
               email: this.email,
               password: this._passwordService.encrypted(this.password),
@@ -100,15 +98,16 @@ export class RegisterAdminComponent implements OnInit {
               'meetingPermissionStatus': { status: 'ACTIVE' }
           };
       this._userService.saveUserDetails(payload , this.newTeamName).subscribe(data => {
-          duplicateUserNameFlag = data.json().warningFl;
-          exceptionFlag = data.json().errorFl;
-          if (duplicateUserNameFlag === true) {
-            this.usernameField.nativeElement.focus();
-            return this.alertService.warning('Username already exist', 'Warning');
-          } else if (exceptionFlag === true) {
-            this.emailField.nativeElement.focus();
+          if (data.json().warningFl === true) {
+            if (data.json().message === 'UserName Already Exist') {
+              this.usernameField.nativeElement.focus();
+            } else if (data.json().message === 'Team is disable , kindly change team name') {
+              this.teamField.nativeElement.focus();
+            } else if (data.json().message === 'Email already exist') {
+              this.emailField.nativeElement.focus();
+            }
             return this.alertService.warning(data.json().message, 'Warning');
-          } else {
+           } else {
             this.clearAllField();
             this.teamArray.push(data.json().team);
             return this.alertService.success('Admin has registered successfully', 'Success');
