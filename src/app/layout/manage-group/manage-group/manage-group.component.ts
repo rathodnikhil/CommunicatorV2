@@ -407,9 +407,6 @@ export class ManageGroupComponent implements OnInit {
                         this.memObj = { userId: {firstName: memberData[i].userId.firstName, lastName : memberData[i].userId.lastName,
                                         userCode : memberData[i].userId.userCode} };
                         this.memberList.push(this.memObj);
-                        // if (JSON.stringify(memberData[i]).toLowerCase() === JSON.stringify(this.groupMemberObjList[i]).toLowerCase()) {
-                        //     console.log('EQUAL item is : ' + memberData[i].userId.userCode);
-                        // }
                         // this.groupMemberObjList.splice(memberData[i], 1);
                     }
                     this.selectedItems = [];
