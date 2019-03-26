@@ -77,9 +77,10 @@ export class ManageGroupComponent implements OnInit {
     password: any;
     members: any;
     memObj: any = {};
-    filterMemObj: any = {};
+    removeMemObj: any = {};
     updateGroupName: any;
     deleteMemberFlag = 1;
+    result: any;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('groupNameField') groupNameField: ElementRef;
     @ViewChild('deleteGroupField') deleteGroupField: ElementRef;
@@ -237,11 +238,6 @@ export class ManageGroupComponent implements OnInit {
         this.memberList = [];
         this.groupMemberObjList = [];
         this.selectedMemberIds = [];
-        const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
-        this._groupService.setGroupListObjByLoggedInUserId(groupObjPayload);
-        this._groupService.getGroupListObjByLoggedInUserId().subscribe(groupObjData => {
-            this.groupMemberObjList = groupObjData;
-        });
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
             if (memberData[0] === undefined) {
                 // this.memberList = [];
@@ -253,6 +249,11 @@ export class ManageGroupComponent implements OnInit {
             } else {
                 this.memberList = memberData;
             }
+        });
+        const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
+        this._groupService.setGroupListObjByLoggedInUserId(groupObjPayload);
+        this._groupService.getGroupListObjByLoggedInUserId().subscribe(groupObjData => {
+            this.groupMemberObjList = groupObjData;
         });
         this.selectedGroupObjFromList = group;
         if (this.selectedGroupObj.status.status === 'CANCEL') {
@@ -293,42 +294,41 @@ export class ManageGroupComponent implements OnInit {
                 return this.alertService.warning(res.message, 'Warning');
             } else {
                 this.showSelectedGroup = false;
-                this.groupList.splice(this.groupList.indexOf(this.selectedGroupObjFromList), 1);
-                // this.deleteGroupModal.close();
+                this.deleteGroupModal.close();
                 return this.alertService.success('Group has been deleted successfully', 'Success');
             }
         });
     }
     deleteMemberPopup(member, index) {
-        if (member.item_id !== null) {
-            this.deleteMemberModal.open();
-            this.selectedMember = member;
-        }
-        this.selectedMemIndex = index;
-        this.selectedMember = member;
-        this.deleteMemberFlag = 1;
+        // if (member.item_id !== null) {
+        //     this.deleteMemberModal.open();
+        //     this.selectedMember = member;
+        // }
+        // this.selectedMemIndex = index;
+        // this.selectedMember = member;
+        // this.deleteMemberFlag = 1;
     }
     deleteMemberDetails() {
-        if (this.selectedMember.item_id === null || typeof this.selectedMember.item_id === 'undefined'
-            || this.selectedMember.item_id.trim() === '') {
-            this.selectedMember.item_id = this.newMemberUserCode;
-        }
-        const payload = { 'groupCode': this.selectedGroupObj.groupId,
-                          'memberId': this.selectedMember.item_id };
-        this._groupService.deleteMember(payload).subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.deleteMemberFlag = 2;
-                for (let i = 0; i < this.groupMemberObjList.length; i++) {
-                    if (this.groupMemberObjList[i].item_id === data.item_id) {
-                        this.groupMemberObjList[i].item_id = data;
-                    }
-                }
-                return this.alertService.success('Member ' + data.item_name +
-                    ' has been deleted successfully', 'Delete Member');
-            }
-        });
+        // if (this.selectedMember.item_id === null || typeof this.selectedMember.item_id === 'undefined'
+        //     || this.selectedMember.item_id.trim() === '') {
+        //     this.selectedMember.item_id = this.newMemberUserCode;
+        // }
+        // const payload = { 'groupCode': this.selectedGroupObj.groupId,
+        //                   'memberId': this.selectedMember.item_id };
+        // this._groupService.deleteMember(payload).subscribe(data => {
+        //     if (data.errorFl === true || data.warningFl === true) {
+        //         return this.alertService.warning(data.message, 'Warning');
+        //     } else {
+        //         this.deleteMemberFlag = 2;
+        //         for (let i = 0; i < this.groupMemberObjList.length; i++) {
+        //             if (this.groupMemberObjList[i].item_id === data.item_id) {
+        //                 this.groupMemberObjList[i].item_id = data;
+        //             }
+        //         }
+        //         return this.alertService.success('Member ' + data.item_name +
+        //             ' has been deleted successfully', 'Delete Member');
+        //     }
+        // });
     }
     // cancelDeletePopup(noFlag) {
     //     if (noFlag === 1) {
@@ -401,13 +401,15 @@ export class ManageGroupComponent implements OnInit {
                     // this.memberList = [];
                     return this.alertService.warning(memberData[0].message, 'Warning');
                 } else {
+                    console.log('Before : ' + this.groupMemberObjList.length);
                     for (let i = 0; i < memberData.length; i++) {
-                        // this.memObj = { item_id: memberData[i].userId.userCode, item_text: memberData[i].userId.firstName
-                        //     + ' ' + memberData[i].userId.lastName };
                         this.memObj = { userId: {firstName: memberData[i].userId.firstName, lastName : memberData[i].userId.lastName,
                                         userCode : memberData[i].userId.userCode} };
                         this.memberList.push(this.memObj);
-                        // this.groupMemberObjList.splice(memberData[i], 1);
+                        // this.removeMemObj = { item_id: memberData[i].userId.userCode, item_name: memberData[i].userId.firstName
+                        //      + ' ' + memberData[i].userId.lastName };
+                        this.groupMemberObjList.splice(memberData[i], 1);
+                        console.log('After : ' + this.groupMemberObjList.length);
                     }
                     this.selectedItems = [];
                     this.selectedMemberIds = [];
@@ -419,8 +421,12 @@ export class ManageGroupComponent implements OnInit {
     groupCloseEditPopup() {
        this.groupList.splice(this.selectedNewGroupObj , 0 , this.selectedGroupObjFromList);
     }
-    groupCloseDeletePopup() {
-        this.groupList.splice(this.selectedNewGroupObj , 0 , this.selectedGroupObjFromList);
+    groupCloseDeletePopup(flag) {
+        if (flag === 2 && this.showSelectedGroup === true) {
+            this.groupList.splice(this.selectedNewGroupObj , 0 , this.selectedGroupObjFromList);
+        } else {
+            this.deleteGroupModal.close();
+        }
     }
     clearGroupPopupField() {
         this.newGroupName = '';
