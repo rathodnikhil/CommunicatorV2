@@ -4,13 +4,16 @@
             <div class="col-sm-8 meeting-activity">
                 <div class="card-header" style="border-radius: 8px 8px 0px 0px;margin-bottom: -2px;">
                     <div class="row">
-                        <div class="col-md-8">
+                            <div class="col-md-5">
                             <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word; margin-left: 10%;"><b>Host:
                                 {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
                             <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-left: 10%;"><b>{{meetingDetails.subject}}</b>
                             </h6>
                         </div>
+                        <div class="col-md-3">
+                                <label  class="meeting-id-color">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                            </div>
                         <div class="col-md-4">
                             <div id="room-urls" style="display: none; float: right;">
                                 <button type="button" data-toggle="tooltip" title="Copy Meeting Link" class="btn btn-url"
@@ -81,7 +84,6 @@
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
-                        <label  class="meeting-id-color">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                         <span id="meeting-error" style="float: right;font-weight: bolder; color: rgb(13, 75, 36)"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
@@ -166,7 +168,7 @@
                             <div class="row content-tab" style="text-align:center;">
                                 <textarea placeholder="Type MOM Here..." style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn btn-primary momBtn" id="btn-save-mom" (click)="saveMom()">Generate
+                                <button class="btn generate-mom-btn momBtn" id="btn-save-mom" (click)="saveMom()">Generate
                                     Meeting Notes</button>
                             </div>
                         </div>

@@ -432,3 +432,26 @@ span.step {
     color: #bc151b;
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
+.generate-mom-btn
+{
+    box-shadow: 0 0 1px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.3) inset;
+    cursor: pointer;
+    font: bold 13px Arial,Helvetica;
+    cursor:pointer;
+    border: 1px solid #e09600;
+    color: #000;
+    background-color: #fecf71;
+    padding: .375rem .75rem;
+}
+.generate-mom-btn:hover
+{
+    border: 1px solid #fff;
+    color: #fff;
+    background-color: #be181e;
+}
+.meeting-id-color{
+    margin-left: 10px;
+    font-weight: bold;
+    color: yellow;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
