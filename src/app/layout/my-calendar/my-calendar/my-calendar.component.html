@@ -22,26 +22,26 @@
                         <i class="fa fa-5x fa-calendar calender-img" aria-hidden="true"></i>
                         <!-- <img src="/assets/images/ic_ckeck.png"/> -->
                     </div>
-                    <div class="col-md-9">
-                        <div class="row">
-                            <label class="view-meeting-title">Meeting Id:</label>
-                            <p class="view-meeting-details">{{meetingDetails.meetingCode}}</p>
+                    <div class="col-md-9 meetingDetails">
+                        <div class="row ">
+                            <label>Meeting Id:</label>
+                            <p>{{meetingDetails.meetingCode}}</p>
                         </div>
                         <div class="row">
-                            <label class="view-meeting-title">Subject:</label>
-                            <p class="view-meeting-details">{{meetingDetails.subject}}</p>
+                            <label>Subject:</label>
+                            <p>{{meetingDetails.subject}}</p>
                         </div>
                         <div class="row">
-                            <label class="view-meeting-title">Date:</label>
-                            <p class="view-meeting-details">{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss a z'}}</p>
+                            <label>Date:</label>
+                            <p >{{meetingDetails.meetingStartDateTime | date:'dd-MMM-yy h:mm:ss'}} {{meetingDetails.timeZone}}</p>
                         </div>
                         <div class="row">
-                            <label class="view-meeting-title">Duration:</label>
-                            <p class="view-meeting-details">{{meetingDetails.duration}}</p>
+                            <label>Duration:</label>
+                            <p>{{meetingDetails.duration}}</p>
                         </div>
                         <div class="row">
-                            <label class="view-meeting-title">Host Name:</label>
-                            <p class="view-meeting-details">
+                            <label>Host Name:</label>
+                            <p>
                                 {{meetingDetails.createdBy.firstName+ ' '+meetingDetails.createdBy.lastName}}
                             </p>
                         </div>
