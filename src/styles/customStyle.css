@@ -227,3 +227,13 @@ color: red;
         outline:none !important;
         box-shadow: none;
 }
+
+.home-icon{
+    color: white; 
+    text-align:center; 
+    width: 6%;
+}
+.page-title{
+    text-align:center; 
+    width: 94%;
+}
