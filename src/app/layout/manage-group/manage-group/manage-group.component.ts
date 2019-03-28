@@ -178,20 +178,16 @@ export class ManageGroupComponent implements OnInit {
         };
     }
     onItemSelect(item: any) {
-        // this.selectedItems.push(item);
         this.selectedMemberIds.push(item.item_id);
     }
     onSelectAll(items: any) {
         this.selectedMemberIds.push(items.item_id);
-        // this.selectedItems.push(items);
     }
     OnItemDeSelect(item: any) {
         this.selectedMemberIds.splice(item.item_id, 1);
-        // this.selectedItems.splice(item.item_id, 1);
     }
     onDeSelectAll(items: any) {
         this.selectedMemberIds.splice(items.item_id, 1);
-        // this.selectedItems.splice(items.item_id, 1);
     }
     handleLimitSelection() {
         if (this.limitSelection) {
@@ -240,11 +236,9 @@ export class ManageGroupComponent implements OnInit {
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
             if (memberData[0] === undefined) {
-                // this.memberList = [];
                 return false;
             }
             if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
-                // this.memberList = [];
                 return this.alertService.warning(memberData[0].message, 'Warning');
             } else {
                 this.memberList = memberData;
@@ -386,35 +380,35 @@ export class ManageGroupComponent implements OnInit {
         if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
             return this.alertService.warning('Please select members', 'Warning');
         } else {
-            // this.filterMemberList = [];
-            // this.memberList = [];
             const payload = {
                 groupId: this.selectedGroupObj.groupId,
-                selectedMemberCodeList: this.selectedMemberIds
+                selectedMemberCodeList: this.selectedMemberIds,
+                userCode: this.loggedInUserObj.userCode
             };
             this._groupService.saveGroupMember(payload).subscribe(memberData => {
-                if (memberData[0] === undefined) {
-                    // this.memberList = [];
-                    return false;
-                }
-                if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
-                    // this.memberList = [];
-                    return this.alertService.warning(memberData[0].message, 'Warning');
-                } else {
-                    console.log('Before : ' + this.groupMemberObjList.length);
-                    for (let i = 0; i < memberData.length; i++) {
-                        this.memObj = { userId: {firstName: memberData[i].userId.firstName, lastName : memberData[i].userId.lastName,
-                                        userCode : memberData[i].userId.userCode} };
-                        this.memberList.push(this.memObj);
-                        // this.removeMemObj = { item_id: memberData[i].userId.userCode, item_name: memberData[i].userId.firstName
-                        //      + ' ' + memberData[i].userId.lastName };
-                        this.groupMemberObjList.splice(memberData[i], 1);
-                        console.log('After : ' + this.groupMemberObjList.length);
-                    }
+                // if (memberData[0] === undefined) {
+                //     return false;
+                // }
+                // if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
+                //     return this.alertService.warning(memberData[0].message, 'Warning');
+                // } else {
+                    let addedMemberList = [];
+                    Object.keys(memberData).map( key => {
+                        if (key === 'notAdded') {
+                            this.groupMemberObjList = memberData[key];
+                        }
+                        if (key === 'added') {
+                            addedMemberList = memberData[key];
+                        }
+                    });
+                      for (let i = 0; i < addedMemberList.length; i++) {
+                        this.memberList.push(memberData[i]);
+                   }
+               //    console.log('After : ' + this.groupMemberObjList.length);
                     this.selectedItems = [];
                     this.selectedMemberIds = [];
                     return this.alertService.success('Members has been updated successfully', 'Success');
-                }
+                // }
             });
         }
     }
