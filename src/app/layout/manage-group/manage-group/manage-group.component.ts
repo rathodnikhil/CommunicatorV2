@@ -181,14 +181,19 @@ export class ManageGroupComponent implements OnInit {
         this.selectedMemberIds.push(item.item_id);
     }
     onSelectAll(items: any) {
-        this.selectedMemberIds.push(items.item_id);
+        for (let index = 0; index < items.length; index++) {
+            this.selectedMemberIds.push(items[index].item_id);
+        }
     }
     OnItemDeSelect(item: any) {
-        this.selectedMemberIds.splice(item.item_id, 1);
+        this.selectedMemberIds.splice(this.selectedMemberIds.indexOf(item.item_id), 1);
     }
     onDeSelectAll(items: any) {
-        this.selectedMemberIds.splice(items.item_id, 1);
+        this.selectedMemberIds = [];
     }
+    // onFilterChange(items: any) {
+    //     this.groupMemberObjList.push(items);
+    // }
     handleLimitSelection() {
         if (this.limitSelection) {
             this.dropdownSettings = Object.assign({}, this.dropdownSettings, { limitSelection: 2 });
@@ -247,6 +252,9 @@ export class ManageGroupComponent implements OnInit {
         const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
         this._groupService.setGroupListObjByLoggedInUserId(groupObjPayload);
         this._groupService.getGroupListObjByLoggedInUserId().subscribe(groupObjData => {
+            if (groupObjData[0] === undefined) {
+                return false;
+            }
             this.groupMemberObjList = groupObjData;
         });
         this.selectedGroupObjFromList = group;
@@ -294,35 +302,37 @@ export class ManageGroupComponent implements OnInit {
         });
     }
     deleteMemberPopup(member, index) {
-        // if (member.item_id !== null) {
-        //     this.deleteMemberModal.open();
-        //     this.selectedMember = member;
-        // }
-        // this.selectedMemIndex = index;
-        // this.selectedMember = member;
-        // this.deleteMemberFlag = 1;
+        if (member.item_id !== null) {
+            this.deleteMemberModal.open();
+            this.selectedMember = member;
+        }
+        this.selectedMemIndex = index;
+        this.selectedMember = member;
+        this.deleteMemberFlag = 1;
     }
     deleteMemberDetails() {
-        // if (this.selectedMember.item_id === null || typeof this.selectedMember.item_id === 'undefined'
-        //     || this.selectedMember.item_id.trim() === '') {
-        //     this.selectedMember.item_id = this.newMemberUserCode;
-        // }
-        // const payload = { 'groupCode': this.selectedGroupObj.groupId,
-        //                   'memberId': this.selectedMember.item_id };
-        // this._groupService.deleteMember(payload).subscribe(data => {
-        //     if (data.errorFl === true || data.warningFl === true) {
-        //         return this.alertService.warning(data.message, 'Warning');
-        //     } else {
-        //         this.deleteMemberFlag = 2;
-        //         for (let i = 0; i < this.groupMemberObjList.length; i++) {
-        //             if (this.groupMemberObjList[i].item_id === data.item_id) {
-        //                 this.groupMemberObjList[i].item_id = data;
-        //             }
-        //         }
-        //         return this.alertService.success('Member ' + data.item_name +
-        //             ' has been deleted successfully', 'Delete Member');
-        //     }
-        // });
+        if (this.selectedMember.item_id === null || typeof this.selectedMember.item_id === 'undefined'
+            || this.selectedMember.item_id.trim() === '') {
+            this.selectedMember.item_id = this.newMemberUserCode;
+        }
+        const payload = { 'groupCode': this.selectedGroupObj.groupId,
+                          'memberId': this.selectedMember.item_id };
+        this._groupService.deleteMember(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.deleteMemberFlag = 2;
+
+                // this.groupMemberObjList.push();
+                // for (let i = 0; i < this.groupMemberObjList.length; i++) {
+                //     if (this.groupMemberObjList[i].item_id === data.item_id) {
+                //         this.groupMemberObjList[i].item_id = data;
+                //     }
+                // }
+                return this.alertService.success('Member ' + data.item_name +
+                    ' has been deleted successfully', 'Delete Member');
+            }
+        });
     }
     // cancelDeletePopup(noFlag) {
     //     if (noFlag === 1) {
@@ -359,10 +369,11 @@ export class ManageGroupComponent implements OnInit {
         if (this.updateGroupName === null || typeof this.updateGroupName === 'undefined' || this.updateGroupName.trim() === '') {
             return this.alertService.warning('Please enter group name', 'Warning');
         } else {
-            const payload = {
-                groupName: this.updateGroupName,
-                groupId: this.selectedGroupObj.groupId
-            };
+            // const payload = {
+            //     groupName: this.updateGroupName,
+            //     groupId: this.selectedGroupObj.groupId
+            // };
+            const payload = { 'groupName': this.updateGroupName, 'user': this.loggedInUserObj };
             this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {
@@ -386,29 +397,27 @@ export class ManageGroupComponent implements OnInit {
                 userCode: this.loggedInUserObj.userCode
             };
             this._groupService.saveGroupMember(payload).subscribe(memberData => {
-                // if (memberData[0] === undefined) {
-                //     return false;
-                // }
-                // if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
-                //     return this.alertService.warning(memberData[0].message, 'Warning');
-                // } else {
                     let addedMemberList = [];
-                    Object.keys(memberData).map( key => {
+                    let notAddedMemberList = [];
+                    Object.keys(memberData).map(key => {
                         if (key === 'notAdded') {
-                            this.groupMemberObjList = memberData[key];
+                            notAddedMemberList = memberData[key];
                         }
                         if (key === 'added') {
                             addedMemberList = memberData[key];
                         }
                     });
-                      for (let i = 0; i < addedMemberList.length; i++) {
-                        this.memberList.push(memberData[i]);
-                   }
-               //    console.log('After : ' + this.groupMemberObjList.length);
+                    this.memberList = [];
+                    this.memberList = addedMemberList;
+                    this.groupMemberObjList = [];
+                    for (let i = 0; i < notAddedMemberList.length; i++) {
+                        this.memObj = { item_id: notAddedMemberList[i].userCode, item_text: notAddedMemberList[i].firstName
+                        + ' ' + notAddedMemberList[i].lastName };
+                        this.groupMemberObjList.push(this.memObj);
+                    }
                     this.selectedItems = [];
                     this.selectedMemberIds = [];
                     return this.alertService.success('Members has been updated successfully', 'Success');
-                // }
             });
         }
     }

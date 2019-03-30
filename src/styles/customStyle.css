@@ -125,7 +125,7 @@
         border-radius: 0px 5px 5px 0px;
     }
     .form-control {
-        border-radius: 5px 0px 0px 5px;
+        border-radius: 5px 5px 5px 5px;
     }
     .under {
         -webkit-text-decoration: #353535 solid underline;

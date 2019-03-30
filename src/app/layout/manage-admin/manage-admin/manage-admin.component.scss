@@ -23,3 +23,21 @@
     border-color: #fecf71;
     color:black;
  }
+ .row-label{
+    padding-left: 15%; 
+    padding-right: 15%;
+  }
+  .row-label label{
+   font-weight: bold;
+  }
+  .row-label input{
+    margin: 8px;
+  }
+  .member-field-name{
+    width: 25%; 
+    padding-top: 4%; 
+    padding-left: 3%;
+  }
+  .member-field-value{
+    width: 70%;
+  }

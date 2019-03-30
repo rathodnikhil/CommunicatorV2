@@ -3,7 +3,7 @@
         <div class="row">
           <h3 class="page-title">Manage Admin</h3>
           <a [routerLink]="['/dashboard/default']">
-              <i class="fa fa-3x fa-home home-icon" aria-hidden="true"></i>
+              <i class="fa fa-3x fa-home home-icon" aria-hidden="true" title="Dashboard" data-toggle="tooltip"></i>
           </a>
         </div>
   </div>
@@ -67,60 +67,35 @@
 <app-custom-modal #editMemberModal [model]="editAdminPop" (CancelEvent)="closeEditPopup()">
   <div class="modal-body row-label">
           <div class="row form-group">
-              <div class="col-md-3">
-                  <label>First Name</label>
-              </div>
-              <div>
-                  <input placeholder="FirstName" class="form-control"  type="text" [(ngModel)]="updatedFirstName" #updatedFirstNameField />
-              </div>
+                  <label class="member-field-name">First Name</label>
+                  <input placeholder="FirstName" class="form-control member-field-value"  type="text" [(ngModel)]="updatedFirstName" #updatedFirstNameField />
           </div>
           <div class="row form-group">
-              <div class="col-md-3">
-                  <label>Last Name</label>
-              </div>
-              <div>
-                  <input placeholder="LastName" class="form-control" type="text"  [(ngModel)]="updatedLastName" #updatedLastNameField/>
-              </div>
+                  <label class="member-field-name">Last Name</label>
+                  <input placeholder="LastName" class="form-control member-field-value" type="text"  [(ngModel)]="updatedLastName" #updatedLastNameField/>
           </div>
           <div class="row form-group">
-                  <div class="col-md-3">
-                      <label>Email</label>
-                  </div>
-                  <div>
-                      <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail"  #updatedEmailField/>
-                  </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-3">
-                    <label>Team</label>
-                </div>
-                <div>
-
-                    <input type="text" list="teamObjList"class="form-control" placeholder="Team" [(ngModel)]="selectedDefaultTeam" required #teamField readonly>
-                    <datalist id="teamObjList">
-                        <option *ngFor="let team of teamArray" value="{{team.teamName}}">
-                      </datalist>
-                </div>
-            </div>
-          <div class="row form-group">
-              <div class="col-md-3">
-                  <label>Status</label>
-              </div>
-              <div>
-            <input type="checkbox" id="statusChk" [(ngModel)]="updatedUserStaus">
-            <p id="text" style="display:none">Checkbox is CHECKED!</p>
-            </div>
+                  <label class="member-field-name">Email</label>
+                  <input placeholder="Email" class="form-control member-field-value" type="text" [(ngModel)]="updatedEmail"  #updatedEmailField/>
           </div>
           <div class="row form-group">
-            <div class="col-md-3">
-                <label>Meeting Permission</label>
-            </div>
-            <div>
-                <input type="checkbox" id="updatedSeetingStatusChk" [(ngModel)]="updatedMeetingPermissionStatus">
-                <p id="updatedMeetingText" style="display:none">Meeting Permission Checkbox is CHECKED!
+                  <label class="member-field-name">Team</label>
+                  <input type="text" list="teamObjList"class="form-control member-field-value" placeholder="Team" [(ngModel)]="selectedDefaultTeam" required #teamField readonly>
+                  <datalist id="teamObjList">
+                      <option *ngFor="let team of teamArray" value="{{team.teamName}}">
+                  </datalist>
+          </div>
+          <div class="row form-group">
+                  <label class="member-field-name">Status</label>
+                  <input type="checkbox" style="width: 5%; margin-top: 5%;" id="statusChk" [(ngModel)]="updatedUserStaus">
+                  <p id="text" style="display:none" class="member-field-value">Checkbox is CHECKED!</p>
+          </div>
+          <div class="row form-group">
+                <label class="member-field-name">Meeting Permission</label>
+                <input type="checkbox" style="width: 5%; margin-top: 5%;" id="updatedSeetingStatusChk" [(ngModel)]="updatedMeetingPermissionStatus">
+                <p id="updatedMeetingText" style="display:none" class="member-field-value">Meeting Permission Checkbox is CHECKED!
                 </p>
-            </div>
-        </div>
+          </div>
   </div>
   <div class="modal-footer popFooter">
       <button type="button" class="btn btn-sec" (click)="updateAdmin()">Update Admin</button>
