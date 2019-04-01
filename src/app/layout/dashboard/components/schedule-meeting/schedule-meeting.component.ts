@@ -186,22 +186,23 @@ export class ScheduleMeetingComponent implements OnInit {
         } else {
             this.meridian = !this.meridian;
             this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
-            if (this.meeting.callType === 1) {
-                this.meeting.callType = 'Audio';
-            } else {
-                this.meeting.callType = 'Video';
-            }
+            // if (this.meeting.callType === 1) {
+            //     this.meeting.callType = 'Audio';
+            // } else {
+            //     this.meeting.callType = 'Video';
+            // }
+            const startDate =  new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
+                this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
+            const timeZoneOffset =  startDate.getTimezoneOffset().toLocaleString();
             const payload = {
-                'meetingDate': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
-                    this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
-                'meetingStartDateTime': new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
-                    this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute),
+                'meetingDate': startDate,
+                'meetingStartDateTime': startDate,
                 'subject': this.subject,
                 'duration': this.meeting.selectedDuration,
                 'recurringType': this.meeting.isRecurring,
                 'callType': this.meeting.callType,
                 'timeZone': this.timezoneSelect,
-                'timeType': this.meeting.meridianTime.hour >= 12 ? 'PM' : 'AM',
+                'timeType': timeZoneOffset,
                 'meetingId': this.accessCode,
                 'createdBy': this.loggedInUser
             };
