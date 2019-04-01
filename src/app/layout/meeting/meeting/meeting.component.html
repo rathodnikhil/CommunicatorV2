@@ -11,10 +11,10 @@
                             <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-left: 10%;"><b>{{meetingDetails.subject}}</b>
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                                 <label  class="meeting-id-color">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                             </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div id="room-urls" style="display: none; float: right;">
                                 <button type="button" data-toggle="tooltip" title="Copy Meeting Link" class="btn btn-url"
                                         id="copyGuestMeetingLink">
@@ -110,7 +110,7 @@
                             </h4>
                         </div>
                     </div>
-                    <div class="card-body" style="padding-right:50px;">
+                    <div class="card-body" style="padding-right:65px;">
                         <div class="icon-bar">
                             <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
                                 [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>

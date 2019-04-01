@@ -3,7 +3,7 @@
         <div class="row">
             <h3 class="page-title">Manage Team</h3>
             <a [routerLink]="['/dashboard/default']">
-                <i class="fa fa-3x fa-home home-icon" aria-hidden="true"></i>
+                <i class="fa fa-3x fa-home home-icon" aria-hidden="true" title="Dashboard" data-toggle="tooltip"></i>
             </a>
         </div>
     </div>
@@ -148,60 +148,36 @@
                 </app-custom-modal>
 
                 <app-custom-modal #addNewMemberModal [model]="newMember" (CancelEvent)="closePopup('addNewMember')">
-                    <div class="modal-body row-label">
+                    <div class="modal-body row-label" >
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>First Name</label>
-                            </div>
-                            <div>
-                                <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="firstName"
+                                <label class="member-field-name">First Name</label>
+                                <input placeholder="First Name" type="text" class="form-control member-field-value" [(ngModel)]="firstName"
                                     required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Last Name</label>
-                            </div>
-                            <div>
-                                <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="lastName"
+                                <label class="member-field-name">Last Name</label>
+                                <input placeholder="Last Name" type="text" class="form-control member-field-value" [(ngModel)]="lastName"
                                     required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Email</label>
-                            </div>
-                            <div>
-                                <input placeholder="Email" type="text" class="form-control" [(ngModel)]="email"
+                                <label class="member-field-name">Email</label>
+                                <input placeholder="Email" type="text" class="form-control member-field-value" [(ngModel)]="email"
                                     #emailField required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>UserName</label>
-                            </div>
-                            <div>
-                                <input type="text" placeholder="UserName" class="form-control" [(ngModel)]="userName"
+                                <label class="member-field-name">UserName</label>
+                                <input type="text" placeholder="UserName" class="form-control member-field-value" [(ngModel)]="userName"
                                     required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Password</label>
-                            </div>
-                            <div>
-                                <input placeholder="Password" class="form-control" type="text" [(ngModel)]="password"
+                                <label class="member-field-name">Password</label>
+                                <input placeholder="Password" class="form-control member-field-value" type="text" [(ngModel)]="password"
                                     type="password" required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Meeting Permission</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" class="form-control" id="meetingStatusChk" [(ngModel)]="meetingPermissionStatus">
-                                <p id="meetingText" style="display:none">Meeting Permission Checkbox is CHECKED!</p>
-                            </div>
+                                <label class="member-field-name">Meeting Permission</label>
+                                <input type="checkbox" style="width: 5%; margin-top: 6%;" class="form-control" id="meetingStatusChk" [(ngModel)]="meetingPermissionStatus">
+                                <p id="meetingText" style="display:none" class="member-field-value">Meeting Permission Checkbox is CHECKED!</p>
                         </div>
                     </div>
                     <div class="modal-footer popFooter">
@@ -212,40 +188,24 @@
                 <app-custom-modal #UpdateMemberModal [model]="updateMember" (CancelEvent)="cancelEditPopup()">
                     <div class="modal-body row-label">
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>First Name</label>
-                            </div>
-                            <div>
-                                <input placeholder="First Name" type="text" class="form-control" [(ngModel)]="updatedFirstName"
+                                <label class="member-field-name">First Name</label>
+                                <input placeholder="First Name" type="text" class="form-control member-field-value" [(ngModel)]="updatedFirstName"
                                     required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Last Name</label>
-                            </div>
-                            <div>
-                                <input placeholder="Last Name" type="text" class="form-control" [(ngModel)]="updatedLastName"
+                                <label class="member-field-name">Last Name</label>
+                                <input placeholder="Last Name" type="text" class="form-control member-field-value" [(ngModel)]="updatedLastName"
                                     required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Email</label>
-                            </div>
-                            <div>
-                                <input placeholder="Email" class="form-control" type="text" [(ngModel)]="updatedEmail"
+                                <label class="member-field-name">Email</label>
+                                <input placeholder="Email" class="form-control member-field-value" type="text" [(ngModel)]="updatedEmail"
                                     #emailField required />
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Status</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" class="form-control" id="statusChk" [(ngModel)]="updatedUserStatus">
-                                <p id="text" style="display:none">Checkbox is CHECKED!</p>
-                            </div>
+                                <label class="member-field-name">Status</label>
+                                <input type="checkbox"  style="width: 5%; margin-top: 6%;" class="form-control" id="statusChk" [(ngModel)]="updatedUserStatus">
+                                <p id="text" style="display:none" class="member-field-value">Checkbox is CHECKED!</p>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-3">
