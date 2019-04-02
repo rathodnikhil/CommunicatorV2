@@ -64,7 +64,6 @@ export class MyCalendarComponent implements OnInit {
     ngOnInit() {
         // this.spinner.show();
         // setTimeout(() => {
-        //     /** spinner ends after 5 seconds */
         //     this.spinner.hide();
         // }, 5000);
         // get loggedin user
