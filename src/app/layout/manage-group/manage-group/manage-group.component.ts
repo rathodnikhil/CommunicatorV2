@@ -79,7 +79,7 @@ export class ManageGroupComponent implements OnInit {
     memObj: any = {};
     removeMemObj: any = {};
     updateGroupName: any;
-    deleteMemberFlag = 1;
+    // deleteMemberFlag = 1;
     result: any;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('groupNameField') groupNameField: ElementRef;
@@ -301,47 +301,47 @@ export class ManageGroupComponent implements OnInit {
             }
         });
     }
-    deleteMemberPopup(member, index) {
-        if (member.item_id !== null) {
+    deleteMemberPopup(member) {
+        if (member.userCode !== null) {
             this.deleteMemberModal.open();
             this.selectedMember = member;
+            this.selectedMemIndex = this.memberList.indexOf(member);
+            this.memberList.splice(this.memberList.indexOf(member), 1);
+        } else {
+            return this.alertService.warning('Member ' + member.firstName + ' ' + member.lastName +
+                '  is already inactive', 'Inactive Member');
         }
-        this.selectedMemIndex = index;
-        this.selectedMember = member;
-        this.deleteMemberFlag = 1;
     }
     deleteMemberDetails() {
-        if (this.selectedMember.item_id === null || typeof this.selectedMember.item_id === 'undefined'
-            || this.selectedMember.item_id.trim() === '') {
-            this.selectedMember.item_id = this.newMemberUserCode;
+        if (this.selectedMember.userCode === null || typeof this.selectedMember.userCode === 'undefined'
+            || this.selectedMember.userCode.trim() === '') {
+            this.selectedMember.userCode = this.newMemberUserCode;
         }
         const payload = { 'groupCode': this.selectedGroupObj.groupId,
-                          'memberId': this.selectedMember.item_id };
+                          'memberId': this.selectedMember.userCode };
         this._groupService.deleteMember(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.deleteMemberFlag = 2;
-
-                // this.groupMemberObjList.push();
-                // for (let i = 0; i < this.groupMemberObjList.length; i++) {
-                //     if (this.groupMemberObjList[i].item_id === data.item_id) {
-                //         this.groupMemberObjList[i].item_id = data;
-                //     }
-                // }
-                return this.alertService.success('Member ' + data.item_name +
+                // this.deleteMemberFlag = 2;
+                this.cancelDeletePopup(1);
+                this.memObj = { item_id: this.selectedMember.item_id, item_text: this.selectedMember.firstName
+                    + ' ' + this.selectedMember.lastName };
+                this.groupMemberObjList.push(this.memObj);
+                return this.alertService.success('Member ' + this.selectedMember.firstName
+                + ' ' + this.selectedMember.lastName +
                     ' has been deleted successfully', 'Delete Member');
             }
         });
     }
-    // cancelDeletePopup(noFlag) {
-    //     if (noFlag === 1) {
-    //         this.deleteMemberModal.close();
-    //     } else {
-    //         const memObj = this.selectedmemObj(this.selectedMember, this.deleteMemberFlag, noFlag);
-    //         // this.filterMemberList.splice(this.selectedMemIndex, 0, memObj);
-    //     }
-    // }
+    cancelDeletePopup(noFlag) {
+        if (noFlag === 1) {
+            this.deleteMemberModal.close();
+        } else {
+            // const memObj = this.selectedMember(this.selectedMember, this.deleteMemberFlag, noFlag);
+            this.memberList.splice(this.selectedMemIndex, 0, this.selectedMember);
+        }
+    }
     // private selectedmemObj(obj, editDeletelag, noFlag) {
     //     let statusval ;
     //     if (noFlag === 1 || (editDeletelag === 2 && noFlag === 2)) {
@@ -369,11 +369,11 @@ export class ManageGroupComponent implements OnInit {
         if (this.updateGroupName === null || typeof this.updateGroupName === 'undefined' || this.updateGroupName.trim() === '') {
             return this.alertService.warning('Please enter group name', 'Warning');
         } else {
-            // const payload = {
-            //     groupName: this.updateGroupName,
-            //     groupId: this.selectedGroupObj.groupId
-            // };
-            const payload = { 'groupName': this.updateGroupName, 'user': this.loggedInUserObj };
+            const payload = {
+                groupName: this.updateGroupName,
+                groupId: this.selectedGroupObj.groupId
+            };
+            // const payload = { 'groupName': this.updateGroupName, 'user': this.loggedInUserObj };
             this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {

@@ -104,14 +104,18 @@ export class MyProfileComponent implements OnInit {
         }
         const pattern = /image-*/;
         const reader = new FileReader();
-        // console.log('FILE_DETAILS : ' + Math.round(file.size / 1024));
         this.fileSize = Math.round(file.size / 1024);
-        if (!file.type.match(pattern)) {
-            this.loggedInUserObj.profileImgPath = '';
-       return  this.alertService.warning('Invalid Image format', 'Image Format');
+        if ( this.fileSize >= 700 ) {
+            this.loggedInUserObj.profileImgPath = this.currentProfileImg;
+            return this.alertService.warning('File not supported, please select image below 700KB.', 'Warning');
         } else {
-            reader.onload = this._onProfilePicSelected.bind(this);
-            reader.readAsDataURL(file);
+            if (!file.type.match(pattern)) {
+                this.loggedInUserObj.profileImgPath = '';
+            return this.alertService.warning('Invalid Image format', 'Image Format');
+            } else {
+                reader.onload = this._onProfilePicSelected.bind(this);
+                reader.readAsDataURL(file);
+            }
         }
     }
     _onProfilePicSelected(e) {

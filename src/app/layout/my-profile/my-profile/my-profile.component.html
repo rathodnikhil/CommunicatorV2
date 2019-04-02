@@ -33,10 +33,10 @@
                                             aria-hidden="true">
                                             Change profile pic</i>
                                     </a>
-                                    <p><input #file type="file" name="imageUrl" accept="image/*"
-                                            [(ngModel)]="loggedInUserObj.profileImgPath"
+                                    <p><input #file type="file" name="imageUrl" accept="image/*" 
                                             (change)="onProfilePicSelected($event)" style="cursor: pointer;"
                                             accept=".jpg,.png,.jpeg" hidden /></p>
+                                            <!-- [(ngModel)]="loggedInUserObj.profileImgPath" -->
                                 </div>
 
                                 <h2 class="padding-top-20">

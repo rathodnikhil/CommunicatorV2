@@ -204,18 +204,13 @@
                         </div>
                         <div class="row form-group">
                                 <label class="member-field-name">Status</label>
-                                <input type="checkbox"  style="width: 5%; margin-top: 6%;" class="form-control" id="statusChk" [(ngModel)]="updatedUserStatus">
+                                <input type="checkbox"  style="width: 5%; margin-top: 4%;" class="form-control" id="statusChk" [(ngModel)]="updatedUserStatus">
                                 <p id="text" style="display:none" class="member-field-value">Checkbox is CHECKED!</p>
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-3">
-                                <label>Meeting Permission</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" class="form-control" id="updatedSeetingStatusChk" [(ngModel)]="updatedMeetingPermissionStatus">
-                                <p id="updatedMeetingText" style="display:none">Meeting Permission Checkbox is CHECKED!
-                                </p>
-                            </div>
+                            <label  class="member-field-name">Meeting Permission</label>
+                            <input type="checkbox" class="form-control" style="width: 5%; margin-top: 4%;" id="updatedSeetingStatusChk" [(ngModel)]="updatedMeetingPermissionStatus">
+                            <p id="updatedMeetingText" style="display:none" class="member-field-value">Meeting Permission Checkbox is CHECKED!</p>
                         </div>
                     </div>
                     <div class="modal-footer popFooter" >
