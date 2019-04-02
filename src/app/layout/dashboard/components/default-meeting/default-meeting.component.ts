@@ -239,6 +239,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
+        const timeZoneOffset =   new Date().getTimezoneOffset().toLocaleString();
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
@@ -247,7 +248,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             'recurringType': 2,
             'callType': 'Audio',
             'timeZone': timeZone,
-            // 'timeType': this.meeting.meridianTime.hour > 12 ? 'PM' : 'AM',
+            'timeType': timeZoneOffset,
             'meetingId': this.accessCode,
             'createdBy': this.loggedInUser
         };

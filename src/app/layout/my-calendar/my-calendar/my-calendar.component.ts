@@ -27,7 +27,8 @@ export class MyCalendarComponent implements OnInit {
         createdBy: {
             firstName : '',
             lastName : ''
-        }
+        },
+        timeZone: ''
     };
     calendarOptions: Options;
     displayEvent: any;
