@@ -83,7 +83,9 @@
                             (onDeSelect)="OnItemDeSelect($event)" 
                             (onDeSelectAll)="onDeSelectAll($event)">
                         </ng-multiselect-dropdown>
-                        <!-- (onFilterChange)="onFilterChange($event)" -->
+                        <!--  (onOpen)="onOpen($event)"
+                            (onClose)="onClose($event)"
+                            (onFilterChange)="onFilterChange($event)" -->
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-sec btn-update-member" (click)="updateMembers()">Update Members</button>
@@ -153,7 +155,7 @@
                         <button type="button" class="btn btn-danger" (click)="deleteGroupModal.close()">No</button>
                     </div>
                 </app-custom-modal>
-                <app-custom-modal #deleteMemberModal [model]="deleteMember" (CancelEvent)="cancelDeletePopup(2)">
+                <app-custom-modal #deleteMemberModal [model]="deleteMember">
                     <div>
                         <label class="padding-10px">Are you sure you want to delete this member?</label>
                     </div>
