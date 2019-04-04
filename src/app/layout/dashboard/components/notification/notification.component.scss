@@ -27,9 +27,13 @@
 }
 
 .member-list{
+    // height:100%;  
+    // overflow-y: auto;
+    // padding-bottom: 40%; 
     height:100%;  
     overflow-y: auto;
-    padding-bottom: 40%; 
+    overflow-x: hidden;
+    padding-bottom: 50%; 
 }
 .circleMeetingJoin {
     position: relative;

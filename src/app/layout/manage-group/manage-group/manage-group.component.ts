@@ -77,8 +77,9 @@ export class ManageGroupComponent implements OnInit {
     password: any;
     members: any;
     memObj: any = {};
-    removeMemObj: any = {};
+    newMemObj: any = {};
     updateGroupName: any;
+    lastIndex: number;
     // deleteMemberFlag = 1;
     result: any;
     @ViewChild('emailField') emailField: ElementRef;
@@ -192,7 +193,16 @@ export class ManageGroupComponent implements OnInit {
         this.selectedMemberIds = [];
     }
     // onFilterChange(items: any) {
-    //     this.groupMemberObjList.push(items);
+    //     console.log('onFilterChange');
+    // }
+    // onOpen(items: any) {
+    //     console.log('Open : ' + items);
+    // }
+    // onClose(items: any) {
+    //     console.log('Close : ' + items);
+    // }
+    // onFilterChange(items: any[]) {
+    //     console.log('onFilterChange : ' + items);
     // }
     handleLimitSelection() {
         if (this.limitSelection) {
@@ -306,7 +316,6 @@ export class ManageGroupComponent implements OnInit {
             this.deleteMemberModal.open();
             this.selectedMember = member;
             this.selectedMemIndex = this.memberList.indexOf(member);
-            this.memberList.splice(this.memberList.indexOf(member), 1);
         } else {
             return this.alertService.warning('Member ' + member.firstName + ' ' + member.lastName +
                 '  is already inactive', 'Inactive Member');
@@ -317,45 +326,23 @@ export class ManageGroupComponent implements OnInit {
             || this.selectedMember.userCode.trim() === '') {
             this.selectedMember.userCode = this.newMemberUserCode;
         }
-        const payload = { 'groupCode': this.selectedGroupObj.groupId,
-                          'memberId': this.selectedMember.userCode };
+        const payload = { 'groupId': this.selectedGroupObj.groupId,
+                          'userId': this.selectedMember.userCode };
         this._groupService.deleteMember(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                // this.deleteMemberFlag = 2;
-                this.cancelDeletePopup(1);
-                this.memObj = { item_id: this.selectedMember.item_id, item_text: this.selectedMember.firstName
-                    + ' ' + this.selectedMember.lastName };
-                this.groupMemberObjList.push(this.memObj);
-                return this.alertService.success('Member ' + this.selectedMember.firstName
-                + ' ' + this.selectedMember.lastName +
+                this.newMemObj = { item_id: data.userId.userCode, item_text: data.userId.firstName
+                    + ' ' + data.userId.lastName };
+                this.groupMemberObjList.push(this.newMemObj);
+                this.memberList.splice(this.memberList.indexOf(this.selectedMember), 1);
+                this.deleteMemberModal.close();
+                return this.alertService.success('Member ' + data.userId.firstName
+                    + ' ' + data.userId.lastName +
                     ' has been deleted successfully', 'Delete Member');
             }
         });
     }
-    cancelDeletePopup(noFlag) {
-        if (noFlag === 1) {
-            this.deleteMemberModal.close();
-        } else {
-            // const memObj = this.selectedMember(this.selectedMember, this.deleteMemberFlag, noFlag);
-            this.memberList.splice(this.selectedMemIndex, 0, this.selectedMember);
-        }
-    }
-    // private selectedmemObj(obj, editDeletelag, noFlag) {
-    //     let statusval ;
-    //     if (noFlag === 1 || (editDeletelag === 2 && noFlag === 2)) {
-    //         statusval = 'INACTIVE';
-    //     } else if (editDeletelag === 1) {
-    //         statusval = obj.userId.status.status;
-    //     }
-    //     return {
-    //         userId: {
-    //             firstName: obj.userId.firstName, lastName: obj.userId.lastName, email: obj.userId.email,
-    //             status: { status: statusval}, meetingPermissionStatus: { status: obj.userId.meetingPermissionStatus.status },
-    //             userCode: obj.userId.userCode}, group: this.selectedGroupObj
-    //     };
-    // }
     editGroup() {
         if (this.addMemPermission !== 2) {
             this.addUpdateGroupModal.open();
