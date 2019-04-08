@@ -18,6 +18,7 @@ export class PastMeetingsComponent implements OnInit {
     public directionLinks: Boolean = true;
     public autoHide: Boolean = false;
     public responsive: Boolean = false;
+    public loading: boolean;
     public config: PaginationInstance = {
         id: 'meetingCode',
         itemsPerPage: 10,
@@ -50,9 +51,11 @@ export class PastMeetingsComponent implements OnInit {
         Button2Content: ''
     };
     ngOnInit() {
+        this.loading = true;
         // loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
+                this.loading = false;
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
@@ -65,10 +68,12 @@ export class PastMeetingsComponent implements OnInit {
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
+                this.loading = false;
                 this.pastMeetingList = [];
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = data;
+                this.loading = false;
             }
         });
     }

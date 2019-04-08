@@ -1,3 +1,6 @@
+<div class="loader-background" *ngIf="loading">
+    <div class="loader"></div>
+</div>
 <div class="main-container">
     <div class="header">
         <div class="row">
@@ -8,6 +11,7 @@
         </div>
     </div>
     <div id="content" class="body-container">
+        <!-- <div class="loader" *ngIf="loading"></div> -->
         <div class="row">
             <div class="col-lg-2 col-md-2 left filter-list">
                 <div class="align-center text-center">
@@ -55,6 +59,7 @@
                     </app-custom-modal>
                 </div>
             </div>
+            <!-- <div class="loader" *ngIf="loading"></div> -->
             <div class="col-lg-10 col-md-10" *ngIf="!showSelectedGroup">
                 <h3>Kindly select the group to view details</h3>
             </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild , Output , EventEmitter, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild , Output , EventEmitter, ElementRef, TemplateRef} from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import { UserService } from '../../../services/user.service';
@@ -17,6 +17,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
+    public loading: boolean;
     allMeetingByLoggedInUserList = [];
     meetingList = [];
     meetingDetails = {
@@ -67,6 +68,7 @@ export class MyCalendarComponent implements OnInit {
         // setTimeout(() => {
         //     this.spinner.hide();
         // }, 5000);
+        this.loading = true;
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
@@ -74,10 +76,12 @@ export class MyCalendarComponent implements OnInit {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
+                this.loading = false;
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 data.forEach(element => {
-                    const endTime = new Date(new Date(element.meetingStartDateTime).getTime() + parseInt(element.duration.split(' Min')[0]) * 60000);
+                    const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
+                    + parseInt(element.duration.split(' Min')[0]) * 60000);
                     const meeting = {
                         title: element.subject + '(' + element.meetingCode + ')',
                         // url: '#/meeting?meetingCode=' + element.meetingCode,
@@ -87,6 +91,7 @@ export class MyCalendarComponent implements OnInit {
                     this.ucCalendar.fullCalendar('renderEvent', meeting, true);
                     // this.calendarOptions.events.render()
                 });
+                this.loading = false;
                 this.meetingList = data;
              //   this._spinnerService.hide();
             }
