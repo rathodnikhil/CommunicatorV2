@@ -14,6 +14,7 @@ export class GuestUserComponent implements OnInit {
   public directionLinks: Boolean = true;
   public autoHide: Boolean = false;
   public responsive: Boolean = false;
+  public loading: boolean;
   public config: PaginationInstance = {
       id: 'userCode',
       itemsPerPage: 10,
@@ -34,11 +35,13 @@ export class GuestUserComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.loading = true;
     this._userService.getLoggedInUserObj().subscribe(data => {
       this.loggedInUser = data;
       const payload = { userCode: this.loggedInUser.userCode };
     this._userService.getGuestUsersByLoggedInUser(payload).subscribe(guestUserData => {
       this.guestUserList = guestUserData;
+      this.loading = false;
   });
   });
   }

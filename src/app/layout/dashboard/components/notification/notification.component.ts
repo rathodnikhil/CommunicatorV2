@@ -25,6 +25,8 @@ export class NotificationComponent implements OnInit {
     userList = [];
     searchWholeMemberList = [];
     groupList = [];
+    membersList = [];
+    membersEmailList = [];
     loggedInUser: any;
     searchText: string;
     broadcastMsgList = [];
@@ -79,9 +81,29 @@ export class NotificationComponent implements OnInit {
 
     viewGroupDetails(group) {
         this.chattingHistoryList = [];
+        this.membersList = [];
+        this.membersEmailList = [];
         this._userService.setSelectedGroup(group);
         this.getChattingHistoryBySelectedGroup();
+        this.getMembersEmailList(group);
         this.isUserSelected.emit(true);
+    }
+
+    getMembersEmailList(group) {
+        const payload = { groupId: group.groupId};
+        this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
+            if (memberData[0] === undefined) {
+                return false;
+            }
+            if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
+                return this.alertService.warning(memberData[0].message, 'Warning');
+            } else {
+                this.membersList = memberData;
+                for (let index = 0; index < this.membersList.length; index++) {
+                    this.membersEmailList.push(this.membersList[index].email);
+                }
+            }
+        });
     }
     getChattingHistoryBySelectedUser() {
         this._userService.getSelectedUser().subscribe(data => {

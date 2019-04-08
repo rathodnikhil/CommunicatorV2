@@ -21,6 +21,7 @@ export class ManageGroupComponent implements OnInit {
     public autoHide = false;
     public responsive = false;
     public newGroupName: any;
+    public loading: boolean;
     i: number;
     public config: PaginationInstance = {
         id: 'userCode',
@@ -144,30 +145,6 @@ export class ManageGroupComponent implements OnInit {
         this.selectedGroupObj = null;
         this.selectedMemberIds = [];
         this.selectedMembers = [];
-        this._userService.getLoggedInUserObj().subscribe(data => {
-            this.loggedInUserObj = data;
-            if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
-            } else {
-                const payload = { userCode: this.loggedInUserObj.userCode };
-                this._groupService.setGroupList(payload);
-                // this._userService.setUserList(payload);
-                // this._groupService.setGroupListObjByLoggedInUserId(payload);
-                this._groupService.getGroupList().subscribe(groupData => {
-                    if (groupData[0] === undefined) {
-                        this.groupList = [];
-                        return false;
-                    }
-                    if (groupData[0].errorFl === true || groupData[0].warningFl === true) {
-                        this.groupList = [];
-                        return this.alertService.warning(groupData[0].message, 'Warning');
-                    } else {
-                        this.groupList = groupData;
-                    }
-                });
-            }
-        });
-
         this.dropdownSettings = {
             singleSelection: false,
             idField: 'item_id',
@@ -177,16 +154,49 @@ export class ManageGroupComponent implements OnInit {
             itemsShowLimit: 4,
             allowSearchFilter: true
         };
+        this.loading = true;
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            this.loggedInUserObj = data;
+            if (data.errorFl === true || data.warningFl === true) {
+                this.loading = false;
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                const payload = { userCode: this.loggedInUserObj.userCode };
+                this._groupService.setGroupList(payload);
+                // this._userService.setUserList(payload);
+                // this._groupService.setGroupListObjByLoggedInUserId(payload);
+                this._groupService.getGroupList().subscribe(groupData => {
+                    if (groupData[0] === undefined) {
+                        // this.loading = false;
+                        this.groupList = [];
+                        return false;
+                    } else {
+                        if (groupData[0].errorFl === true || groupData[0].warningFl === true) {
+                            this.groupList = [];
+                            this.loading = false;
+                            return this.alertService.warning(groupData[0].message, 'Warning');
+                        } else {
+                            this.groupList = groupData;
+                            this.loading = false;
+                        }
+                    }
+                });
+            }
+        });
     }
     onItemSelect(item: any) {
+        // console.log('onItemSelect : ' + item.item_id);
         this.selectedMemberIds.push(item.item_id);
     }
     onSelectAll(items: any) {
+        this.selectedMemberIds = [];
         for (let index = 0; index < items.length; index++) {
+            // console.log('onSelectAll : ' + items[index].item_id);
             this.selectedMemberIds.push(items[index].item_id);
         }
     }
     OnItemDeSelect(item: any) {
+        // console.log('OnItemDeSelect : ' + this.selectedMemberIds.indexOf(item.item_id));
         this.selectedMemberIds.splice(this.selectedMemberIds.indexOf(item.item_id), 1);
     }
     onDeSelectAll(items: any) {
@@ -237,6 +247,7 @@ export class ManageGroupComponent implements OnInit {
         }
     }
     displayGroupDetails(group, index) {
+        this.loading = true;
         if (group.groupId.groupId === '' || group.groupId.groupId === null ||
             typeof group.groupId.groupId === 'undefined') {
             this.selectedGroupObj = this.selectedNewGroupObj;
@@ -248,15 +259,18 @@ export class ManageGroupComponent implements OnInit {
         const payload = { groupId: this.selectedGroupObj.groupId};
         this.memberList = [];
         this.groupMemberObjList = [];
+        this.selectedItems = [];
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
             if (memberData[0] === undefined) {
                 return false;
             }
             if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
+                this.loading = false;
                 return this.alertService.warning(memberData[0].message, 'Warning');
             } else {
                 this.memberList = memberData;
+                this.loading = false;
             }
         });
         const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };

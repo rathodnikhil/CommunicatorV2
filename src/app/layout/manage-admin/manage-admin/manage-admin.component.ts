@@ -19,6 +19,7 @@ public maxSize: Number = 7;
 public directionLinks: Boolean = true;
 public autoHide: Boolean = false;
 public responsive: Boolean = false;
+public loading: boolean;
 public config: PaginationInstance = {
     id: 'usersCode',
     itemsPerPage: 10,
@@ -72,9 +73,11 @@ deleteMemberFlag = 1;
       Button2Content: ''
   };
   ngOnInit() {
+    this.loading = true;
   this._userService.getAllAdminList().subscribe(data => {
     if (!data.warningFl && !data.errorFl) {
         this.allAdminList = data;
+        this.loading = false;
     }
 });
 

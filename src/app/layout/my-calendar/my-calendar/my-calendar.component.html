@@ -1,4 +1,6 @@
-
+<div class="loader-background" *ngIf="loading">
+    <div class="loader"></div>
+</div>
 <div class="main-container">
     <div class="header">
         <div class="row">
@@ -8,6 +10,7 @@
             </a>
         </div>
     </div>
+    <!-- <ngx-spinner></ngx-spinner> -->
     <!-- <ngx-spinner
         bdColor="rgba(51,51,51,0.8)"
         size="medium"
@@ -16,6 +19,7 @@
         <p style="font-size: 20px; color: white">Loading...</p>
     </ngx-spinner> -->
     <div id="content" class="body-container">
+        <!-- <div class="loader" *ngIf="loading"></div> -->
         <div class="main1">
             <h3 style="padding-top: 8px;">My Calendar</h3>
             <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
