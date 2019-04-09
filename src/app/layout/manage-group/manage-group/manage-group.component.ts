@@ -167,7 +167,7 @@ export class ManageGroupComponent implements OnInit {
                 // this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._groupService.getGroupList().subscribe(groupData => {
                     if (groupData[0] === undefined) {
-                        // this.loading = false;
+                        this.loading = false;
                         this.groupList = [];
                         return false;
                     } else {

@@ -22,6 +22,7 @@ export class MyProfileComponent implements OnInit {
     currentLastName: any;
     currentEmail: any;
     currentProfileImg: any;
+    onLoadProfileImg: any;
     selectedProfilePictureName: any;
     fileSize: number;
     constructor( private router: Router, userService: UserService, meetingService: MeetingService,
@@ -39,6 +40,7 @@ export class MyProfileComponent implements OnInit {
                 this.currentLastName = data.lastName;
                 this.currentEmail = data.email;
                 this.currentProfileImg = data.profileImgPath;
+                this.onLoadProfileImg = data.profileImgPath;
                 // webservice to get total meeting count
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this.profileOtherDetails = {};
@@ -64,13 +66,14 @@ export class MyProfileComponent implements OnInit {
         } else if ( this.loggedInUserObj.email === null ||
             typeof this.loggedInUserObj.email === 'undefined' || this.loggedInUserObj.email.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
-        } else if ( this.fileSize >= 700 ) {
-            return this.alertService.warning('File not supported, please select image below 700KB.', 'Warning');
         } else {
             const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
             if (!EMAIL_REGEXP.test(this.loggedInUserObj.email)) {
               return this.alertService.warning('Please enter valid email', 'Warning');
-            }
+        }
+        // else if ( this.fileSize >= 700 ) {
+        //     return this.alertService.warning('File not supported, please select image below 700KB.', 'Warning');
+        // }
         const payload = {
             firstName: this.loggedInUserObj.firstName,
             lastName: this.loggedInUserObj.lastName,
@@ -94,7 +97,8 @@ export class MyProfileComponent implements OnInit {
         this.loggedInUserObj.firstName = this.currentFirstName;
         this.loggedInUserObj.lastName =  this.currentLastName;
         this.loggedInUserObj.email = this.currentEmail;
-        this.loggedInUserObj.profileImgPath = this.currentProfileImg;
+        // this.loggedInUserObj.profileImgPath = this.currentProfileImg;
+        this.loggedInUserObj.profileImgPath = this.onLoadProfileImg;
         this.router.navigate(['/dashboard']);
     }
     onProfilePicSelected(e) {
@@ -105,7 +109,7 @@ export class MyProfileComponent implements OnInit {
         const pattern = /image-*/;
         const reader = new FileReader();
         this.fileSize = Math.round(file.size / 1024);
-        if ( this.fileSize >= 700 ) {
+        if (this.fileSize >= 700 ) {
             this.loggedInUserObj.profileImgPath = this.currentProfileImg;
             return this.alertService.warning('File not supported, please select image below 700KB.', 'Warning');
         } else {
@@ -121,5 +125,6 @@ export class MyProfileComponent implements OnInit {
     _onProfilePicSelected(e) {
         const reader = e.target;
         this.loggedInUserObj.profileImgPath = reader.result;
+        this.currentProfileImg = reader.result;
     }
 }
