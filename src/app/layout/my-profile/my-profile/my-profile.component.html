@@ -22,7 +22,7 @@
                                         <img *ngIf='loggedInUserObj.profileImgPath'
                                             [src]="loggedInUserObj.profileImgPath" alt="Responsive image"
                                             class="rounded-circle profile-img img-fluid" style="padding:10px;" />
-                                        <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'"
+                                        <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'" 
                                             src="assets/images/default-profile.jpg" alt="Responsive image"
                                             class="rounded-circle profile-img img-fluid" style="padding:10px;" />
                                     </a>
