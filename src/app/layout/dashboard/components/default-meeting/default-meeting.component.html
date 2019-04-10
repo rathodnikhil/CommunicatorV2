@@ -174,13 +174,18 @@
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div style="width: 70%;padding-left: 20px;">
-                                <span style="font-weight: bold; font-size: 14px;">
+                                <!-- <span style="font-weight: bold; font-size: 14px;">
                                     <i style="color:#353535;" class="fa" [ngClass]="{'fa-microphone': meeting.callType === 'Audio' ,
                                     'fa-video-camera': meeting.callType === 'Video'}"></i>&nbsp;({{meeting.meetingCode}})<br>
                                     <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
-                                    date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                                    date:'yyyy-MM-dd HH:mm:ss'}}
+                                </span> -->
+                                <span style="font-weight: bold; font-size: 14px;">
+                                    <i style="color:#353535;" class="fa fa-microphone"></i>&nbsp;({{meeting.meetingCode}})<br>
+                                    <i class="fa fa-clock-o"></i>&nbsp;{{meeting.meetingStartDateTime |
+                                    date:'yyyy-MM-dd HH:mm:ss'}}
+                                </span>
                             </div>
-                            <!-- <div> -->
                                 <a (click)="startMeeting(meeting,false);" style="float: right;width: 10%;text-align: center;">
                                     <i class="fa fa-play-circle actionIcon"  aria-hidden="true" style="color:green"
                                     title="Start Meeting" data-toggle="tooltip" ></i>
@@ -208,7 +213,6 @@
                                         <button type="button" class="btn btn-sec" (click)="startMeeting(meeting,true)">Start</button>
                                     </div>
                                 </app-custom-modal>
-                            <!-- </div> -->
                         </div>
                         <div class="col-md-12">
                             <strong style="color:#353535;">

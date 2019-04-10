@@ -22,6 +22,7 @@ export class ManageGroupComponent implements OnInit {
     public responsive = false;
     public newGroupName: any;
     public loading: boolean;
+    // public isDoubleClick: boolean;
     i: number;
     public config: PaginationInstance = {
         id: 'userCode',
@@ -81,10 +82,9 @@ export class ManageGroupComponent implements OnInit {
     newMemObj: any = {};
     updateGroupName: any;
     lastIndex: number;
-    // deleteMemberFlag = 1;
     result: any;
     @ViewChild('emailField') emailField: ElementRef;
-    @ViewChild('groupNameField') groupNameField: ElementRef;
+    // @ViewChild('groupNameField') groupNameField: ElementRef;
     @ViewChild('deleteGroupField') deleteGroupField: ElementRef;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
     newGroup: CustomModalModel = {
@@ -138,6 +138,7 @@ export class ManageGroupComponent implements OnInit {
     }
 
     ngOnInit() {
+        // this.isDoubleClick = false;
         this.showGroupNameUiFlag = false;
         this.countFlag = false;
         this.showSelectedGroup = false;
@@ -163,18 +164,17 @@ export class ManageGroupComponent implements OnInit {
             } else {
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this._groupService.setGroupList(payload);
-                // this._userService.setUserList(payload);
-                // this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._groupService.getGroupList().subscribe(groupData => {
-                    if (groupData[0] === undefined) {
+                    if (groupData === undefined) {
                         this.loading = false;
                         this.groupList = [];
                         return false;
+                        // this.alertService.warning('There are no groups', 'Warning');
                     } else {
-                        if (groupData[0].errorFl === true || groupData[0].warningFl === true) {
+                        if (groupData.errorFl === true || groupData.warningFl === true) {
                             this.groupList = [];
                             this.loading = false;
-                            return this.alertService.warning(groupData[0].message, 'Warning');
+                            return this.alertService.warning(groupData.message, 'Warning');
                         } else {
                             this.groupList = groupData;
                             this.loading = false;
@@ -226,9 +226,13 @@ export class ManageGroupComponent implements OnInit {
         this.showGroupNameUiFlag = !this.showGroupNameUiFlag;
         this.showNewGroup = !this.showNewGroup;
     }
+    // to open group popup
+    openGroup() {
+        this.addNewGroupModal.open();
+    }
     addGroup() {
         if (this.newGroupName === null || typeof this.newGroupName === 'undefined' || this.newGroupName.trim() === '') {
-            return this.alertService.warning('Please Enter Group Name', 'Warning');
+            return this.alertService.warning('Please enter group name', 'Warning');
         } else {
            const payload = { 'groupName': this.newGroupName, 'user': this.loggedInUserObj };
             this._groupService.saveGroupDetails(payload).subscribe(
@@ -239,13 +243,17 @@ export class ManageGroupComponent implements OnInit {
                     } else {
                         this.groupList.push(res);
                         this.newGroupName = '';
-                        this.groupNameField.nativeElement.focus();
-                        this.selectedGroupObj = res.group;
+                        // this.groupNameField.nativeElement.focus();
+                        // this.selectedGroupObj = res.group;
                         return this.alertService.success('Group has been added successfully', 'Success');
                     }
                 });
         }
     }
+    // test(): boolean {
+    //     this.isDoubleClick = true;
+    //     return this.isDoubleClick;
+    // }
     displayGroupDetails(group, index) {
         this.loading = true;
         if (group.groupId.groupId === '' || group.groupId.groupId === null ||
@@ -262,12 +270,12 @@ export class ManageGroupComponent implements OnInit {
         this.selectedItems = [];
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
-            if (memberData[0] === undefined) {
+            if (memberData === undefined) {
                 return false;
             }
-            if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
+            if (memberData.errorFl === true || memberData.warningFl === true) {
                 this.loading = false;
-                return this.alertService.warning(memberData[0].message, 'Warning');
+                return this.alertService.warning(memberData.message, 'Warning');
             } else {
                 this.memberList = memberData;
                 this.loading = false;
@@ -288,10 +296,6 @@ export class ManageGroupComponent implements OnInit {
             this.addMemPermission = 1;
         }
         this.selectedNewGroupObj = index;
-    }
-    // to open group popup
-    openGroup() {
-        this.addNewGroupModal.open();
     }
     onPageChange(number: number) {
         this.config.currentPage = number;
@@ -389,38 +393,44 @@ export class ManageGroupComponent implements OnInit {
         }
     }
     updateMembers() {
-        if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
-            return this.alertService.warning('Please select members', 'Warning');
-        } else {
-            const payload = {
-                groupId: this.selectedGroupObj.groupId,
-                selectedMemberCodeList: this.selectedMemberIds,
-                userCode: this.loggedInUserObj.userCode
-            };
-            this._groupService.saveGroupMember(payload).subscribe(memberData => {
-                    let addedMemberList = [];
-                    let notAddedMemberList = [];
-                    Object.keys(memberData).map(key => {
-                        if (key === 'notAdded') {
-                            notAddedMemberList = memberData[key];
+        // console.log('Check : ' + this.isDoubleClick);
+        // if (this.isDoubleClick === true) {
+        //     this.alertService.warning('Please click only once.', 'Warning');
+        // } else {
+            if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
+                return this.alertService.warning('Please select members', 'Warning');
+            } else {
+                const payload = {
+                    groupId: this.selectedGroupObj.groupId,
+                    selectedMemberCodeList: this.selectedMemberIds,
+                    userCode: this.loggedInUserObj.userCode
+                };
+                this._groupService.saveGroupMember(payload).subscribe(memberData => {
+                        let addedMemberList = [];
+                        let notAddedMemberList = [];
+                        Object.keys(memberData).map(key => {
+                            if (key === 'notAdded') {
+                                notAddedMemberList = memberData[key];
+                            }
+                            if (key === 'added') {
+                                addedMemberList = memberData[key];
+                            }
+                        });
+                        this.memberList = [];
+                        this.memberList = addedMemberList;
+                        this.groupMemberObjList = [];
+                        for (let i = 0; i < notAddedMemberList.length; i++) {
+                            this.memObj = { item_id: notAddedMemberList[i].userCode, item_text: notAddedMemberList[i].firstName
+                            + ' ' + notAddedMemberList[i].lastName };
+                            this.groupMemberObjList.push(this.memObj);
                         }
-                        if (key === 'added') {
-                            addedMemberList = memberData[key];
-                        }
+                        this.selectedItems = [];
+                        this.selectedMemberIds = [];
+                        return this.alertService.success('Members has been updated successfully', 'Success');
                     });
-                    this.memberList = [];
-                    this.memberList = addedMemberList;
-                    this.groupMemberObjList = [];
-                    for (let i = 0; i < notAddedMemberList.length; i++) {
-                        this.memObj = { item_id: notAddedMemberList[i].userCode, item_text: notAddedMemberList[i].firstName
-                        + ' ' + notAddedMemberList[i].lastName };
-                        this.groupMemberObjList.push(this.memObj);
-                    }
-                    this.selectedItems = [];
-                    this.selectedMemberIds = [];
-                    return this.alertService.success('Members has been updated successfully', 'Success');
-            });
-        }
+                }
+                // this.isDoubleClick = false;
+            // }
     }
     groupCloseEditPopup() {
        this.groupList.splice(this.selectedNewGroupObj , 0 , this.selectedGroupObjFromList);
