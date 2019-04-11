@@ -6,8 +6,6 @@ import { MeetingService } from '../../../services/meeting-service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
-// import { NgxSpinnerService } from 'ngx-spinner';
-// import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
     selector: 'app-my-calendar',
@@ -57,17 +55,12 @@ export class MyCalendarComponent implements OnInit {
     _userService: UserService;
     loggedInUser: any;
 
-    // private spinner: NgxSpinnerService,  private ngxService: NgxUiLoaderService
     constructor(meetingService: MeetingService, userService: UserService, private router: Router, public alertService: AlertService) {
         this._meetingService = meetingService;
         this._userService = userService;
     }
 
     ngOnInit() {
-        // this.spinner.show();
-        // setTimeout(() => {
-        //     this.spinner.hide();
-        // }, 5000);
         this.loading = true;
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {

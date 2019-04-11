@@ -98,7 +98,11 @@ export class MyProfileComponent implements OnInit {
         this.loggedInUserObj.lastName =  this.currentLastName;
         this.loggedInUserObj.email = this.currentEmail;
         // this.loggedInUserObj.profileImgPath = this.currentProfileImg;
-        this.loggedInUserObj.profileImgPath = this.onLoadProfileImg;
+        if (this.fileSize >= 700 ) {
+            
+        } else {
+            this.loggedInUserObj.profileImgPath = this.onLoadProfileImg;
+        }
         this.router.navigate(['/dashboard']);
     }
     onProfilePicSelected(e) {

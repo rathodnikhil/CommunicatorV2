@@ -94,7 +94,7 @@
                             (onFilterChange)="onFilterChange($event)" -->
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-sec btn-update-member" (click)="updateMembers()">Update Members</button>
+                        <button class="btn btn-sec btn-update-member" (click)="updateMembers()" >Update Members</button>
                     </div>
                 </div>
                 <hr>
@@ -119,7 +119,16 @@
                     <tr
                         *ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index">
                         <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
-                        <td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
+                        <!-- <td *ngIf="memberObj.status.staus === 'INACTIVE'; else elseBlock">{{memberObj.firstName}} {{memberObj.lastName}} (InActive)</td> -->
+                        <!-- <ng-template #elseBlock><td *ngIf="memberObj.team.status.staus === 'ACTIVE'">{{memberObj.firstName}} {{memberObj.lastName}}</td></ng-template> -->
+                        <ng-template [ngIf]="memberObj.team.status.status === 'CANCEL'" [ngIfElse]="member">
+                            <td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
+                        </ng-template>
+                           
+                        <ng-template #member>
+                            <td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
+                        </ng-template>
+                        <!-- <td>{{memberObj.firstName}} {{memberObj.lastName}}</td> -->
                         <td>{{memberObj.userCode}}</td>
                         <td>
                             <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);"></i>
