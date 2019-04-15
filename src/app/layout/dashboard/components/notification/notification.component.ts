@@ -31,6 +31,7 @@ export class NotificationComponent implements OnInit {
     searchText: string;
     broadcastMsgList = [];
     chattingHistoryList = [];
+    public loading: boolean;
     @Output() isUserSelected = new EventEmitter();
     constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
         private router: Router, public alertService: AlertService) {
@@ -44,6 +45,7 @@ export class NotificationComponent implements OnInit {
         this.joinMeeting = true;
         this.meetingMember = true;
         this.chattingHistoryList = [];
+        this.loading = true;
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
@@ -53,6 +55,7 @@ export class NotificationComponent implements OnInit {
                 this._userService.getUserList().subscribe(userData => {
                     if (userData !== undefined && userData.length > 0) {
                         this.userList = userData;
+                        this.loading = false;
                         // alert('List size : ' + this.userList.length);
                     } else {
                         this.userList = [];
@@ -62,8 +65,10 @@ export class NotificationComponent implements OnInit {
                 this._groupService.getGroupList().subscribe(groupData => {
                     if (groupData !== undefined && groupData.length > 0) {
                         this.groupList = groupData;
+                        // this.loading = false;
                     } else {
                         this.groupList = [];
+                        // this.loading = false;
                         if (groupData[0] !== undefined && groupData[0].message !== undefined) {
                             return this.alertService.warning(data[0].message, 'Warning');
                         }

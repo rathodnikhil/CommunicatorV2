@@ -169,6 +169,7 @@
             <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4>
         </div>
         <div class="row">
+                <img id="loading-image" src="assets/images/loader.gif" class="loader-img" *ngIf="loading"/>
             <div #chatBody class="card-body">
                 <ul class="chat">
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
