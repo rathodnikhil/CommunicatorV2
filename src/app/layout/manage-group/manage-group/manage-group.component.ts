@@ -20,6 +20,7 @@ export class ManageGroupComponent implements OnInit {
     public responsive = false;
     public newGroupName: any;
     public loading: boolean;
+    // public isDoubleClick: boolean;
     i: number;
     public config: PaginationInstance = {
         id: 'userCode',
@@ -116,6 +117,7 @@ export class ManageGroupComponent implements OnInit {
     }
 
     ngOnInit() {
+        // this.isDoubleClick = false;
         this.showGroupNameUiFlag = false;
         this.showSelectedGroup = false;
         this.newGroupName = '';
@@ -145,6 +147,7 @@ export class ManageGroupComponent implements OnInit {
                         this.loading = false;
                         this.groupList = [];
                         return false;
+                        // this.alertService.warning('There are no groups', 'Warning');
                     } else {
                         if (groupData.errorFl === true || groupData.warningFl === true) {
                             this.groupList = [];
@@ -212,6 +215,10 @@ export class ManageGroupComponent implements OnInit {
                 });
         }
     }
+    // test(): boolean {
+    //     this.isDoubleClick = true;
+    //     return this.isDoubleClick;
+    // }
     displayGroupDetails(group, index) {
         this.loading = true;
         if (group.groupId.groupId === '' || group.groupId.groupId === null ||
