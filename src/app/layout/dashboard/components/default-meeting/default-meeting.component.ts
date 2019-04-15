@@ -40,6 +40,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedEmails: any;
     selectedCcEmails: any;
     isAdministrator = false;
+    loading: boolean;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -89,6 +90,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';
         this.showScheduleMeetingFl = false;
+        this.loading = true;
         // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
@@ -104,11 +106,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     if (futureData !== undefined && futureData.length > 0) {
                         this.futureMeetingList = futureData;
                         this.filteredFutureMeetingList = futureData;
-
+                        this.loading = false;
                     } else {
                         this.futureMeetingList = [];
                         this.filteredFutureMeetingList = [];
                         if (data[0] !== undefined && data[0].message !== undefined) {
+                            this.loading = false;
                             return this.alertService.warning(data[0].message, 'Warning');
                         }
                     }

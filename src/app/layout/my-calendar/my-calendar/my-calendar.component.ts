@@ -16,6 +16,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
     public loading: boolean;
+    lastMeetingStartTime: any;
     allMeetingByLoggedInUserList = [];
     meetingList = [];
     meetingDetails = {
@@ -72,6 +73,9 @@ export class MyCalendarComponent implements OnInit {
                 this.loading = false;
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
+                // this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
+                // this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
+                // console.log('CHECK : ' + this.lastMeetingStartTime);
                 data.forEach(element => {
                     const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
                     + parseInt(element.duration.split(' Min')[0]) * 60000);
@@ -86,7 +90,7 @@ export class MyCalendarComponent implements OnInit {
                 });
                 this.loading = false;
                 this.meetingList = data;
-             //   this._spinnerService.hide();
+                // this._spinnerService.hide();
             }
         });
         this.calendarOptions = {

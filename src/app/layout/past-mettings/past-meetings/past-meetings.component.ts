@@ -19,6 +19,7 @@ export class PastMeetingsComponent implements OnInit {
     public autoHide: Boolean = false;
     public responsive: Boolean = false;
     public loading: boolean;
+    lastMeetingStartTime: any;
     public config: PaginationInstance = {
         id: 'meetingCode',
         itemsPerPage: 10,
@@ -67,6 +68,9 @@ export class PastMeetingsComponent implements OnInit {
     getPastMeetingsByuser() {
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
+            // this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
+            // this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
+            // console.log('CHECK : ' + this.lastMeetingStartTime);
             if (data[0].errorFl || data[0].warningFl) {
                 this.loading = false;
                 this.pastMeetingList = [];
@@ -111,7 +115,6 @@ export class PastMeetingsComponent implements OnInit {
                 }
             });
         }
-
     }
     onPageChange(number: number) {
         this.config.currentPage = number;
