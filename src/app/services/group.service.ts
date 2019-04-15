@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { environment } from 'environments/environment';
-import { RequestOptions, ResponseContentType } from '@angular/http';
-import { Headers, Response } from '@angular/http';
 import { LoginService } from './login.service';
 import { ApiRequestService } from './api-request.service';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class GroupService {
   _loginService: LoginService;
@@ -21,7 +18,6 @@ export class GroupService {
   // get groups by loggedinuser
   setGroupList(payload) {
     const url = environment.baseUrl + 'getGroupByLoggedInUserId?userCode=' + payload.userCode;
-    // const resp = new BehaviorSubject<any>({});
     this.apiRequest.post(url, payload).subscribe(data => {
       this.GroupList$.next(data);
     });
@@ -57,25 +53,16 @@ export class GroupService {
 
   setSideBarMenuByLoggedInUSer(payload) {
     const url = environment.baseUrl + 'getSideBarMenuByLoggedInUSer?userCode=' + payload.userCode;
-    // const resp = new BehaviorSubject<any>({});
     this.apiRequest.post(url, payload).subscribe(data => {
       this.sideBarMenuList$.next(data);
     });
-    // return resp;
   }
   getSideBarMenuByLoggedInUSer() {
     return this.sideBarMenuList$;
   }
-  setGroupListObjByLoggedInUserId(payload) {
+  getGroupListObjByLoggedInUserId(payload) {
     const url = environment.baseUrl + 'getGroupListObjByLoggedInUserId?userCode=' + payload.userCode;
-    // const resp = new BehaviorSubject<any>({});
-    this.apiRequest.post(url, payload).subscribe(data => {
-      this.groupMemberList$.next(data);
-    });
-    // return resp;
-  }
-  getGroupListObjByLoggedInUserId() {
-    return this.groupMemberList$;
+    return this.apiRequest.post(url, payload);
   }
   getGroupMembersByGroup(payload) {
     const url = environment.baseUrl + 'getGroupMembersByGroup?userCode=' + payload.userCode;

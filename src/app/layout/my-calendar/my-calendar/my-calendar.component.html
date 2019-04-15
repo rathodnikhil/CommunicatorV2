@@ -11,16 +11,7 @@
             </a>
         </div>
     </div>
-    <!-- <ngx-spinner></ngx-spinner> -->
-    <!-- <ngx-spinner
-        bdColor="rgba(51,51,51,0.8)"
-        size="medium"
-        color="#fff"
-        type="ball-scale-multiple">
-        <p style="font-size: 20px; color: white">Loading...</p>
-    </ngx-spinner> -->
     <div id="content" class="body-container">
-        <!-- <div class="loader" *ngIf="loading"></div> -->
         <div class="main1">
             <h3 style="padding-top: 8px;">My Calendar</h3>
             <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
@@ -70,19 +61,6 @@
             </app-custom-modal>
         </div>
     </div>
-
-    <!-- <div style="position: relative"> 
-        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
-      </div> -->
-
-    <!-- <ngx-spinner
-        bdColor="rgba(51,51,51,0.8)"
-        size="medium"
-    color="#fff"
-        type="ball-scale-multiple">
-        <p style="font-size: 20px; color: white">Loading...</p>
-    </ngx-spinner> -->
-
     <div id="footer" class="footer">
         <div class="cfsfooter"><img class="card-img setlogo" src="assets/images/coreflex-logo.png"
                 style="height:28px;width:140px; margin:10px;"><br><b>Copyright &copy; 2018 Coreflex Solutions</b>

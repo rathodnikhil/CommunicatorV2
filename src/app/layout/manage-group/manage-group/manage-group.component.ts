@@ -4,14 +4,12 @@ import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
-import { PasswordService } from '../../../services/password.service';
-import { debug } from 'util';
 
 @Component({
     selector: 'app-manage-group',
     templateUrl: './manage-group.component.html',
     styleUrls: ['./manage-group.component.scss'],
-    providers: [AlertService, PasswordService]
+    providers: [AlertService]
 })
 export class ManageGroupComponent implements OnInit {
     public searchText: string;
@@ -22,7 +20,6 @@ export class ManageGroupComponent implements OnInit {
     public responsive = false;
     public newGroupName: any;
     public loading: boolean;
-    // public isDoubleClick: boolean;
     i: number;
     public config: PaginationInstance = {
         id: 'userCode',
@@ -38,17 +35,13 @@ export class ManageGroupComponent implements OnInit {
     };
     _groupService: GroupService;
     _userService: UserService;
-    disabled = false;
     limitSelection = false;
     selectedItems: any[];
     selectedMemberIds: any[];
     selectedMembers: any[];
     dropdownSettings: any = {};
-    createGroupsVal = '';
-    showtypeMessage = false;
     showGroupNameUiFlag: boolean;
     groupList = [];
-    groupArray = [];
     memberList = [];
     loggedInUserObj: any;
     selectedGroupObj: any;
@@ -57,34 +50,20 @@ export class ManageGroupComponent implements OnInit {
     selectedGroupObjFromList: any;
     selectedMember: any;
     selectedMemIndex: any;
-    groupMemberCount: any;
     groupMemberObjList = [];
     showSelectedGroup: boolean;
-    countFlag: boolean;
-    selectedGroupUsers: any[];
-    userList: any[];
     showNewGroup: boolean;
     searchMember: any;
     searchGroup: any;
-    searchTextTable: any;
     addMemPermission = 1;
-    _passwordService: PasswordService;
-    meetingPermissionStatus: any;
     newMemberUserCode: any;
     firstName: any;
     lastName: any;
     userCode: any;
-    userName: any;
-    email: any;
-    password: any;
-    members: any;
     memObj: any = {};
     newMemObj: any = {};
     updateGroupName: any;
-    lastIndex: number;
-    result: any;
     @ViewChild('emailField') emailField: ElementRef;
-    // @ViewChild('groupNameField') groupNameField: ElementRef;
     @ViewChild('deleteGroupField') deleteGroupField: ElementRef;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
     newGroup: CustomModalModel = {
@@ -131,16 +110,13 @@ export class ManageGroupComponent implements OnInit {
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete member',
         Button2Content: ''
     };
-    constructor(groupService: GroupService, userService: UserService, public alertService: AlertService, passwordService: PasswordService) {
+    constructor(groupService: GroupService, userService: UserService, public alertService: AlertService) {
         this._groupService = groupService;
         this._userService = userService;
-        this._passwordService = passwordService;
     }
 
     ngOnInit() {
-        // this.isDoubleClick = false;
         this.showGroupNameUiFlag = false;
-        this.countFlag = false;
         this.showSelectedGroup = false;
         this.newGroupName = '';
         this.selectedGroupObj = null;
@@ -169,13 +145,16 @@ export class ManageGroupComponent implements OnInit {
                         this.loading = false;
                         this.groupList = [];
                         return false;
-                        // this.alertService.warning('There are no groups', 'Warning');
                     } else {
                         if (groupData.errorFl === true || groupData.warningFl === true) {
                             this.groupList = [];
                             this.loading = false;
                             return this.alertService.warning(groupData.message, 'Warning');
                         } else {
+                            // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
+                            // for(let key in groupData) {
+                            //     this.groupList.push(groupData[key]);
+                            // }
                             this.groupList = groupData;
                             this.loading = false;
                         }
@@ -185,35 +164,20 @@ export class ManageGroupComponent implements OnInit {
         });
     }
     onItemSelect(item: any) {
-        // console.log('onItemSelect : ' + item.item_id);
         this.selectedMemberIds.push(item.item_id);
     }
     onSelectAll(items: any) {
         this.selectedMemberIds = [];
         for (let index = 0; index < items.length; index++) {
-            // console.log('onSelectAll : ' + items[index].item_id);
             this.selectedMemberIds.push(items[index].item_id);
         }
     }
     OnItemDeSelect(item: any) {
-        // console.log('OnItemDeSelect : ' + this.selectedMemberIds.indexOf(item.item_id));
         this.selectedMemberIds.splice(this.selectedMemberIds.indexOf(item.item_id), 1);
     }
     onDeSelectAll(items: any) {
         this.selectedMemberIds = [];
     }
-    // onFilterChange(items: any) {
-    //     console.log('onFilterChange');
-    // }
-    // onOpen(items: any) {
-    //     console.log('Open : ' + items);
-    // }
-    // onClose(items: any) {
-    //     console.log('Close : ' + items);
-    // }
-    // onFilterChange(items: any[]) {
-    //     console.log('onFilterChange : ' + items);
-    // }
     handleLimitSelection() {
         if (this.limitSelection) {
             this.dropdownSettings = Object.assign({}, this.dropdownSettings, { limitSelection: 2 });
@@ -243,17 +207,11 @@ export class ManageGroupComponent implements OnInit {
                     } else {
                         this.groupList.push(res);
                         this.newGroupName = '';
-                        // this.groupNameField.nativeElement.focus();
-                        // this.selectedGroupObj = res.group;
                         return this.alertService.success('Group has been added successfully', 'Success');
                     }
                 });
         }
     }
-    // test(): boolean {
-    //     this.isDoubleClick = true;
-    //     return this.isDoubleClick;
-    // }
     displayGroupDetails(group, index) {
         this.loading = true;
         if (group.groupId.groupId === '' || group.groupId.groupId === null ||
@@ -270,10 +228,7 @@ export class ManageGroupComponent implements OnInit {
         this.selectedItems = [];
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
-            if (memberData === undefined) {
-                return false;
-            }
-            if (memberData.errorFl === true || memberData.warningFl === true) {
+            if (memberData.errorFl === true || memberData.warningFl === true || memberData === undefined) {
                 this.loading = false;
                 return this.alertService.warning(memberData.message, 'Warning');
             } else {
@@ -282,12 +237,12 @@ export class ManageGroupComponent implements OnInit {
             }
         });
         const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
-        this._groupService.setGroupListObjByLoggedInUserId(groupObjPayload);
-        this._groupService.getGroupListObjByLoggedInUserId().subscribe(groupObjData => {
-            if (groupObjData[0] === undefined) {
-                return false;
+        this._groupService.getGroupListObjByLoggedInUserId(groupObjPayload).subscribe(groupObjData => {
+            if (groupObjData[0].warningFl === true || groupObjData[0].errorFl === true ) {
+                return this.alertService.warning(groupObjData[0].message, 'Warning');
+            } else {
+                this.groupMemberObjList = groupObjData;
             }
-            this.groupMemberObjList = groupObjData;
         });
         this.selectedGroupObjFromList = group;
         if (this.selectedGroupObj.status.status === 'CANCEL') {
@@ -378,7 +333,6 @@ export class ManageGroupComponent implements OnInit {
                 groupName: this.updateGroupName,
                 groupId: this.selectedGroupObj.groupId
             };
-            // const payload = { 'groupName': this.updateGroupName, 'user': this.loggedInUserObj };
             this._groupService.saveGroupDetails(payload).subscribe(
                 (res) => {
                     if (res.errorFl === true || res.warningFl === true) {
@@ -393,10 +347,6 @@ export class ManageGroupComponent implements OnInit {
         }
     }
     updateMembers() {
-        // console.log('Check : ' + this.isDoubleClick);
-        // if (this.isDoubleClick === true) {
-        //     this.alertService.warning('Please click only once.', 'Warning');
-        // } else {
             if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
                 return this.alertService.warning('Please select members', 'Warning');
             } else {
@@ -429,8 +379,6 @@ export class ManageGroupComponent implements OnInit {
                         return this.alertService.success('Members has been updated successfully', 'Success');
                     });
                 }
-                // this.isDoubleClick = false;
-            // }
     }
     groupCloseEditPopup() {
        this.groupList.splice(this.selectedNewGroupObj , 0 , this.selectedGroupObjFromList);

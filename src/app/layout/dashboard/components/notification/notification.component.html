@@ -24,6 +24,7 @@
         </div> -->
 
         <div class="list-group" style="margin-bottom: 15%;">
+            <img src="assets/images/loader.gif" class="loader-img" *ngIf="loading"/>
             <div style="color:#0000;" *ngFor="let user of userList | genericSearchAllProp : searchText">
                 <a *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
                     class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
@@ -40,6 +41,7 @@
             </div>
             <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
                 (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
+                <!-- *ngIf="group.groupId.status.status === 'ACTIVE'" -->
                 <i class="fa fa-users"></i>
                 <span style="padding-left: 1rem;">{{group.groupId.groupName}}&nbsp;</span>
                 <hr class="list-group-partition" />

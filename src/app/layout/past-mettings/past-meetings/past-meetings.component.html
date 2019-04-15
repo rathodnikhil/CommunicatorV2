@@ -59,7 +59,8 @@
                 <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
                     [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
                     [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                    (pageChange)="onPageChange($event)"></pagination-controls>
+                    (pageChange)="onPageChange($event)">
+                </pagination-controls>
             </div>
             <app-custom-modal #viewAttendeeModal [model]="attendee">
                 <div class="modal-body row-label">

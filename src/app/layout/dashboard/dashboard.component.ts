@@ -106,10 +106,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 const payload = { userCode: this.loggedInUserObj.userCode };
                 this._groupService.setGroupList(payload);
                 this._userService.setUserList(payload);
-                this._groupService.setGroupListObjByLoggedInUserId(payload);
                 this._userService.setUserList(payload);
                 this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
-                // this._meetingService.setRecentMeetingByUser(payload);
                 this._userService.getSelectedUser().subscribe(res => {
                     if (res) {
                         this.selectedUser = res;
@@ -117,18 +115,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 });
             }
         });
-
-        // let userRoleArray = [];
-        // userRoleArray = this.loggedInUserObj.roles;
-        // const roleArray = [];
-        // for (let i = 0; i < userRoleArray.length; i++) {
-        //     roleArray.push(userRoleArray[i].role);
-        // }
-        // if (roleArray.indexOf('ADMINISTRATOR') === -1) {
-        //     this.signUpflag = false;
-        // } else {
-        //     this.signUpflag = true;
-        // }
         this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
     }
     ngAfterViewInit(): void {
