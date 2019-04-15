@@ -186,11 +186,6 @@ export class ScheduleMeetingComponent implements OnInit {
         } else {
             this.meridian = !this.meridian;
             this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
-            // if (this.meeting.callType === 1) {
-            //     this.meeting.callType = 'Audio';
-            // } else {
-            //     this.meeting.callType = 'Video';
-            // }
             const startDate =  new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
                 this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
             const timeZoneOffset =  startDate.getTimezoneOffset().toLocaleString();
@@ -208,7 +203,6 @@ export class ScheduleMeetingComponent implements OnInit {
             };
             this._meetingService.scheduleMeeting(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
-                    this.meeting = {};
                     return this.alertService.warning(data.message, 'Warning');
                 } else {
                     if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
