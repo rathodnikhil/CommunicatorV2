@@ -63,6 +63,9 @@ export class NotificationComponent implements OnInit {
                 });
 
                 this._groupService.getGroupList().subscribe(groupData => {
+                    // if ( this.loading = false) {
+                    //     this.loading = true;
+                    // }
                     if (groupData !== undefined && groupData.length > 0) {
                         this.groupList = groupData;
                         // this.loading = false;

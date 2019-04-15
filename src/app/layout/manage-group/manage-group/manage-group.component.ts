@@ -144,21 +144,28 @@ export class ManageGroupComponent implements OnInit {
                 this._groupService.setGroupList(payload);
                 this._groupService.getGroupList().subscribe(groupData => {
                     if (groupData === undefined) {
-                        this.loading = false;
+                        // this.loading = false;
                         this.groupList = [];
                         return false;
                         // this.alertService.warning('There are no groups', 'Warning');
                     } else {
-                        if (groupData.errorFl === true || groupData.warningFl === true) {
+                        if (groupData.errorFl === true) {
                             this.groupList = [];
                             this.loading = false;
                             return this.alertService.warning(groupData.message, 'Warning');
+                        } else if (groupData.warningFl === true) {
+                            this.groupList = [];
+                            this.loading = false;
+                            return false;
                         } else {
                             // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
                             // for(let key in groupData) {
                             //     this.groupList.push(groupData[key]);
                             // }
                             this.groupList = groupData;
+                            // this.loading = false;
+                        }
+                        if (this.groupList.length > 0) {
                             this.loading = false;
                         }
                     }
@@ -354,6 +361,7 @@ export class ManageGroupComponent implements OnInit {
         }
     }
     updateMembers() {
+            this.loading = true;
             if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
                 return this.alertService.warning('Please select members', 'Warning');
             } else {
@@ -383,6 +391,7 @@ export class ManageGroupComponent implements OnInit {
                         }
                         this.selectedItems = [];
                         this.selectedMemberIds = [];
+                        this.loading = false;
                         return this.alertService.success('Members has been updated successfully', 'Success');
                     });
                 }
