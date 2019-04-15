@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
         this.sidebarMenuList = [];
         this.guestFlag = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
-            console.log(data.isGuest);
             if (data.firstName !== undefined && !data.isGuest) {
                 this.loggedInUserObj = data;
                 const payload = { userCode: this.loggedInUserObj.userCode };
