@@ -229,7 +229,7 @@ export class ManageGroupComponent implements OnInit {
         }
         this.showSelectedGroup = true;
         this.selectedGroupName = group.groupId.groupName;
-        const payload = { groupId: this.selectedGroupObj.groupId};
+        const payload = { groupId: this.selectedGroupObj.groupId , userCode: this.loggedInUserObj.userCode};
         this.memberList = [];
         this.groupMemberObjList = [];
         this.selectedItems = [];

@@ -89,7 +89,7 @@ export class GroupService {
     return resp;
   }
   getMemberByLocalgroup(payload) {
-    const url = environment.baseUrl + 'getMemberByLocalgroup?groupId=' + payload.groupId;
+    const url = environment.baseUrl + 'getMemberByLocalgroup?groupId=' + payload.groupId + '&userCode=' + payload.userCode;
     return this.apiRequest.post(url, payload);
   }
 }
