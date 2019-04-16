@@ -104,10 +104,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUserObj = data;
                 const payload = { userCode: this.loggedInUserObj.userCode };
-                this._meetingService.setFutureMeetimgList(payload);
                 this._groupService.setGroupList(payload);
                 this._userService.setUserList(payload);
-                this._userService.setUserList(payload);
+             //   this._userService.setUserList(payload);
                 this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
                 this._userService.getSelectedUser().subscribe(res => {
                     if (res) {

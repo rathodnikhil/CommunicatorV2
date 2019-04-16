@@ -57,11 +57,10 @@ afterScriptAdded() {
     || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
     return this.alertService.error('Close the popup to continue', 'Error');
 }
-    if (this.meetingCode == null || this.meetingCode === '') {
+    if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
       return this.alertService.error('Enter meeting code', 'Error');
     }
-    if (this.userName === undefined || this.userName
-      === '' || this.userName === null) {
+    if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
       return this.alertService.error('Enter full name', 'Error');
     }
     localStorage.setItem('loggedInuserName', this.userName);
