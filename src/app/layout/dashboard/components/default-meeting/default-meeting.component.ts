@@ -100,7 +100,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUser = data;
                 this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
-                // const payload = { userCode: this.loggedInUser.userCode };
+                const payload = { userCode: this.loggedInUser.userCode };
+                this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
                     this.loading = true;
@@ -111,12 +112,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     } else {
                         this.futureMeetingList = [];
                         this.filteredFutureMeetingList = [];
-                        // if (this.filteredFutureMeetingList.length === 0 ) {
-                        //     this.loading = false;
-                        // }
-                        // if (JSON.stringify(futureData) === '{}') {
-                            // this.loading = false;
-                        // }
                         if (data[0] !== undefined && data[0].message !== undefined) {
                             this.loading = false;
                             return this.alertService.warning(data[0].message, 'Warning');
