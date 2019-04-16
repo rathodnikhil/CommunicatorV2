@@ -242,9 +242,12 @@ export class ManageGroupComponent implements OnInit {
         this.selectedItems = [];
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
-            if (memberData.errorFl === true || memberData.warningFl === true || memberData === undefined) {
+            if (memberData.errorFl === true) {
                 this.loading = false;
                 return this.alertService.warning(memberData.message, 'Warning');
+            } else if (memberData.warningFl === true || memberData === undefined) {
+                this.loading = false;
+                return false;
             } else {
                 this.memberList = memberData;
                 this.loading = false;
@@ -252,8 +255,10 @@ export class ManageGroupComponent implements OnInit {
         });
         const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
         this._groupService.getGroupListObjByLoggedInUserId(groupObjPayload).subscribe(groupObjData => {
-            if (groupObjData[0].warningFl === true || groupObjData[0].errorFl === true ) {
+            if (groupObjData[0].errorFl === true ) {
                 return this.alertService.warning(groupObjData[0].message, 'Warning');
+            } else if (groupObjData[0].warningFl === true) {
+                return false;
             } else {
                 this.groupMemberObjList = groupObjData;
             }
@@ -361,10 +366,10 @@ export class ManageGroupComponent implements OnInit {
         }
     }
     updateMembers() {
-            this.loading = true;
             if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
                 return this.alertService.warning('Please select members', 'Warning');
             } else {
+                this.loading = true;
                 const payload = {
                     groupId: this.selectedGroupObj.groupId,
                     selectedMemberCodeList: this.selectedMemberIds,
