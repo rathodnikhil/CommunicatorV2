@@ -103,7 +103,7 @@
                                     <label>Registered Users use this URL for meeting :<br/>
                                     <span class="link-url">https://cfscommunicator.com/#/meeting?meetingCode={{accessCode}}
                                     </span>     </label>
-                                     <label>Guest Users use this URL for meeting :<br/>
+                                     <label>Guest user use below URL for meeting:<br/>
                                          <span class="link-url">
                                               https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{accessCode}}
                                     </span>  </label>
@@ -121,38 +121,6 @@
 
                         <app-custom-modal #outlookModal [model]="scheduleOutlookWindow" (CancelEvent)="clearOutlookField()">
                             <div class="outlook-email-background">
-                                <!-- <div class="form-group row">
-                                <div class="col-lg-2"> <label for="to" class="outlook-email-label">To: </label></div>
-                                <div class="col-lg-9"> 
-                                    <input class="form-control" id="to" list="rememberEmailListEl" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
-                                        (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
-                                    <datalist id="rememberEmailListEl">
-                                        <option *ngFor="let email of rememberEmailList" value="{{email}}">
-                                    </datalist>
-                                </div>
-                                <div class="edit-icon"><i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
-                                <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
-                                <div class="col-lg-9"> 
-                                    <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly></textarea>
-                                </div>  
-
-                                </div>
-                                <div class="form-group row">
-                                <div class="col-lg-2"><label for="cc" class="outlook-email-label">Cc: </label></div>
-                                <div class="col-lg-9"> 
-                                    <input class="form-control" (change)="selectedCcEmail()" id="to" list="rememberEmailListEl" (blur)="selectedCcEmail()"
-                                    [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
-                                        <datalist id="rememberEmailListEl">
-                                            <option *ngFor="let email of rememberEmailList" value="{{email}}" >
-                                        </datalist>
-                                </div>
-                                <div class="edit-icon"><i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o" aria-hidden="true"></i></div>
-                                <div class="col-lg-2" style="margin-top: 5px;"> <label for="to" class="outlook-email-label"> </label></div>
-                                <div class="col-lg-9"> 
-                                    <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
-                                </div>
-                                </div> -->
-
                                 <div class="form-group">
                                     <div class="row">
                                         <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">To: </label>
