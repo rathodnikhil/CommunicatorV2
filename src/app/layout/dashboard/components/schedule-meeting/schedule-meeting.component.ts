@@ -263,7 +263,7 @@ export class ScheduleMeetingComponent implements OnInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been Copied. Kindly share via your preferred Mail Id.'
+        return this.alertService.success('Meeting Details has been copied. Kindly share via your preferred Mail Id.'
         , 'Copy Meeting Details');
     }
     changeTimeZone(timezone) {
@@ -301,9 +301,9 @@ export class ScheduleMeetingComponent implements OnInit {
             hours + ':' + minutes + '  (' + this.timezoneSelect + ')   for  '
             + this.meeting.selectedDuration +
             newLine + ' Please join my meeting from your computer using chrome browser ' + newLine +
-            'Register user use below url : ' + newLine
-            + meetingUrl + this.accessCode + newLine + 'Guest user use below url :  ' + newLine + guestMeetingUrl + this.accessCode
-            + newLine + ' Meeting Id :    ' + this.accessCode;
+            'Guest user use below URL for meeting:' + newLine
+            + meetingUrl + this.accessCode + newLine + 'Registered user use below URL for meeting:'
+             + newLine + guestMeetingUrl + this.accessCode + newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }
     sendEmail(e) {

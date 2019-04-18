@@ -55,7 +55,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     @ViewChild('confirmCancelMeetingModal') public confirmCancelMeetingModal: CustomModalComponent;
     cancelMeetConfirm: CustomModalModel = {
         titleIcon: '<i class="fa fa - ban"></i>',
-        title: 'Cancel',
+        title: 'Cancel Meeting',
         smallHeading: 'You can cancel selected meeting',
         body: '',
         Button1Content: '<i class="fa fa - ban"></i>&nbsp;Cancel Meeting',
@@ -237,7 +237,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been Copied.Kindly share via your preferred Mail Id.',
+        return this.alertService.success('Meeting Details has been copied.Kindly share via your preferred Mail Id.',
             'Copy Meeting Details');
     }
     joinMeetingNow() {
@@ -316,8 +316,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
             ' Please join my meeting from your computer using chrome browser ' + newLine + ' for  '
-            + this.meetNowMeeting.duration + newLine + 'Register user use below url : ' + newLine
-            + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below url :  ' + newLine + guestMeetingUrl +
+            + this.meetNowMeeting.duration + newLine + 'Registered user use below URL for meeting :' + newLine
+            + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below URL for meeting:' + newLine + guestMeetingUrl +
             this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
     }
