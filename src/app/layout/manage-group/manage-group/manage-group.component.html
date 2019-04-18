@@ -120,7 +120,7 @@
                         <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
                         <!-- <td *ngIf="memberObj.status.staus === 'INACTIVE'; else elseBlock">{{memberObj.firstName}} {{memberObj.lastName}} (InActive)</td> -->
                         <!-- <ng-template #elseBlock><td *ngIf="memberObj.team.status.staus === 'ACTIVE'">{{memberObj.firstName}} {{memberObj.lastName}}</td></ng-template> -->
-                        <ng-template [ngIf]="memberObj.status.status === 'INACTIVE'" [ngIfElse]="member">
+                        <ng-template [ngIf]="memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL'" [ngIfElse]="member">
                             <td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
                         </ng-template>
                            

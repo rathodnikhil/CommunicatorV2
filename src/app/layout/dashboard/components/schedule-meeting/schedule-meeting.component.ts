@@ -179,7 +179,7 @@ export class ScheduleMeetingComponent implements OnInit {
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', 'Warning');
         // } else if (this.timezoneSelect === 'Select Timezone') {
-        } else if (this.timezoneSelect === undefined) {
+        } else if (this.timezoneSelect === undefined || this.timezoneSelect === '') {
             return this.alertService.warning('Please select timezone', 'Warning');
         } else if (date <= today) {
             return this.alertService.warning('Please select future meeting date or time', 'Warning');
