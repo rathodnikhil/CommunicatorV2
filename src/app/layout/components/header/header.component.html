@@ -30,8 +30,8 @@
             <a *ngIf="this.router.url.toString().indexOf('meeting')<0" routerLink="{{menu.menuLink}}" (click)="hamburger_cross()">
                 <i class="{{menu.menuIconClass}}" aria-hidden="true"></i>&nbsp;{{menu.menuName}}</a>
         </li>
-        <li style="cursor: pointer;" *ngIf="this.router.url.toString().indexOf('meeting')>0 || loggedInUserObj.meetingPermissionStatus.status ==='ACTIVE'">
-            <a routerLink="/myCalendar" (click)="hamburger_cross()">
+        <li style="cursor: pointer;"  *ngIf="!guestFlag && loggedInUserObj.meetingPermissionStatus.status ==='ACTIVE'">
+            <a routerLink="/myCalendar" (click)="hamburger_cross()" target="_blank">
                 <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;My Calendar</a>
         </li>
         <li style="cursor: pointer;">

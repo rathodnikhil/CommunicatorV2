@@ -72,7 +72,7 @@ document.getElementById('open-or-join-room').onclick = function () {
 
 document.getElementById('btn-end-meeting').onclick = function () {
     connection.closeEntireSession(function () {
-        document.querySelector('h1').innerHTML = 'Entire session has been closed.';
+       alertService.error('Entire session has been closed.');
     });
 }
 
