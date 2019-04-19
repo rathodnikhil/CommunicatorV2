@@ -195,6 +195,7 @@ updateAdmin() {
         } else {
             this.selectedAdmin = data;
           this.teamArray.push(data.team);
+        //   this.allAdminList.splice(this.allAdminList.indexOf(data.team), 1);
           this.editMemberModal.close();
           return this.alertService.success('Admin has updated successfully', 'Success');
 

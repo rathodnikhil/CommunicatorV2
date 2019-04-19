@@ -61,6 +61,8 @@
                     [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
                     (pageChange)="onPageChange($event)">
                 </pagination-controls>
+                <button class="btn btn-sec margin-left-5px" style="align:align-center;"
+                            (click)="loadMore()">Load more</button>
             </div>
             <app-custom-modal #viewAttendeeModal [model]="attendee">
                 <div class="modal-body row-label">
@@ -76,7 +78,7 @@
                     <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
                 </div>
             </app-custom-modal>
-    
+
             <div id="footer" class="footer">
                 <div class="cfsfooter">
                     <img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px;"><br><b>Copyright

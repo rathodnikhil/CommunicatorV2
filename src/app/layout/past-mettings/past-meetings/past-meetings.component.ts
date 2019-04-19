@@ -68,9 +68,8 @@ export class PastMeetingsComponent implements OnInit {
     getPastMeetingsByuser() {
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
-            // this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
-            // this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
-            // console.log('CHECK : ' + this.lastMeetingStartTime);
+            this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
+            this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
             if (data[0].errorFl || data[0].warningFl) {
                 this.loading = false;
                 this.pastMeetingList = [];
@@ -136,5 +135,23 @@ export class PastMeetingsComponent implements OnInit {
 
     closePopup() {
         this.viewAttendeeModal.close();
+    }
+
+    loadMore() {
+        // console.log('CHECK : ' + this.lastMeetingStartTime);
+        const payload = { userCode: this.loggedInUser.userCode, meetingDate: this.lastMeetingStartTime};
+        this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
+            this.loading = true;
+            this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
+            this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
+            if (data[0].errorFl || data[0].warningFl) {
+                this.loading = false;
+                this.pastMeetingList = [];
+                return this.alertService.warning(data[0].message, 'Warning');
+            } else {
+                this.pastMeetingList = data;
+                this.loading = false;
+            }
+        });
     }
 }
