@@ -48,7 +48,6 @@
             </a>
         </div>
         <!-- <div style="text-align: center;"> <button class="btn btn-primary"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div> -->
-
         <hr class="hr-partition" />
         <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText">
             <a class="col-md-10 list-group-item clearfix d-block">
@@ -56,6 +55,5 @@
             </a>
             <i class="fa fa-plus-circle add-member col-md-2" style="padding-top: 17px; color: green; cursor: pointer;"
                 (click)="addNewMembersInList(user)"></i> </div>
-        <!-- /.list-group -->
     </div>
 </div>
