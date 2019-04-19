@@ -66,6 +66,10 @@ export class MeetingService {
         const url = environment.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
+    getPastMeetingsByMonth(payload) {
+        const url = environment.baseUrl + 'getPastMeetingsByMonth?userCode=' + payload.userCode + '&meetingDate=' + payload.meetingDate;
+        return this.apiRequest.post(url, payload);
+    }
     getMeetingAttendee(payload) {
         const url = environment.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
