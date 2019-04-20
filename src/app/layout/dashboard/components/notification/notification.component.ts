@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { GroupService } from '../../../../services/group.service';
 import { LoginService } from '../../../../services/login.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
@@ -31,8 +32,8 @@ export class NotificationComponent implements OnInit {
     searchText: string;
     broadcastMsgList = [];
     chattingHistoryList = [];
-    public loading: boolean;
     @Output() isUserSelected = new EventEmitter();
+    @ViewChild('notificationSpinner') notificationSpinnerMod: SpinnerComponent;
     constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
         private router: Router, public alertService: AlertService) {
         this._userService = userService;
@@ -45,7 +46,6 @@ export class NotificationComponent implements OnInit {
         this.joinMeeting = true;
         this.meetingMember = true;
         this.chattingHistoryList = [];
-        this.loading = true;
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
@@ -55,7 +55,7 @@ export class NotificationComponent implements OnInit {
                 this._userService.getUserList().subscribe(userData => {
                     if (userData !== undefined && userData.length > 0) {
                         this.userList = userData;
-                        this.loading = false;
+                        this.notificationSpinnerMod.hideSpinner();
                         // alert('List size : ' + this.userList.length);
                     } else {
                         this.userList = [];

@@ -4,6 +4,7 @@ import { MeetingService } from '../../../../services/meeting-service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 @Component({
     selector: 'app-default-meeting',
     templateUrl: './default-meeting.component.html',
@@ -40,7 +41,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedEmails: any;
     selectedCcEmails: any;
     isAdministrator = false;
-    loading: boolean;
+    @ViewChild('defaultMeetingSpinner') defaultMeetingSpinnerMod: SpinnerComponent;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
     @ViewChild('MeetNowModal') public meetNowModal: CustomModalComponent;
@@ -90,12 +91,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';
         this.showScheduleMeetingFl = false;
-        this.loading = true;
         // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
                 this.loggedInUser = {};
-                // this.loading = false;
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
@@ -104,18 +103,21 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
-                    this.loading = true;
                     if (futureData !== undefined && futureData.length > 0) {
                         this.futureMeetingList = futureData;
                         this.filteredFutureMeetingList = futureData;
-                        this.loading = false;
+                        this.defaultMeetingSpinnerMod.hideSpinner();
                     } else {
                         this.futureMeetingList = [];
                         this.filteredFutureMeetingList = [];
-                        if (data[0] !== undefined && data[0].message !== undefined) {
-                            this.loading = false;
-                            return this.alertService.warning(data[0].message, 'Warning');
+                        if (futureData[0] !== undefined && futureData[0].message !== undefined) {
+                            this.defaultMeetingSpinnerMod.hideSpinner();
+                            return this.alertService.warning(futureData[0].message, 'Warning');
                         }
+                    }
+                    if (typeof (futureData) === 'object') {
+                        this.defaultMeetingSpinnerMod.hideSpinner();
+                        return this.alertService.warning(futureData['message'], 'Warning');
                     }
                 });
             }
@@ -244,7 +246,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
         const now = new Date().toString();
         const timeZone = now.replace(/.*[(](.*)[)].*/, '$1');
-        const timeZoneOffset =   new Date().getTimezoneOffset().toLocaleString();
+        const timeZoneOffset = new Date().getTimezoneOffset().toLocaleString();
         const payload = {
             'meetingDate': new Date(),
             'meetingStartDateTime': new Date(),
@@ -265,7 +267,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
-                 this.filteredFutureMeetingList.push(this.meetNowMeeting);
+                this.filteredFutureMeetingList.push(this.meetNowMeeting);
                 this.futureMeetingList.push(this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
@@ -282,7 +284,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             const newLineJson = '<br><br>';
             const outLookBodyJson = this.getMeetingDetails(newLineJson);
             if (this.ccAttendees !== '') {
-                this.selectedCcEmails =  this.ccAttendees;
+                this.selectedCcEmails = this.ccAttendees;
             }
             const payload = {
                 toAttendees: this.selectedEmails, ccAttendees: this.selectedCcEmails,
@@ -362,8 +364,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     editCcAttendees() {
         if (this.selectedCcEmails === '' || this.selectedCcEmails === null || this.selectedCcEmails === undefined) {
         } else {
-        this.ccAttendees = this.selectedCcEmails;
-        this.selectedCcEmails = '';
+            this.ccAttendees = this.selectedCcEmails;
+            this.selectedCcEmails = '';
         }
     }
 }

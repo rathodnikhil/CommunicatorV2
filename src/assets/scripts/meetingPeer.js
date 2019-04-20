@@ -76,12 +76,8 @@ connection.onMediaError = function (event) {
 }
 
 connection.connectSocket(function (socket) {
-    // listen custom messages from server
-
-    connection.socket.on(connection.socketCustomEvent, function (message) {
-        // debugger;
-        if (message.receiver == localStorage.getItem("loggedInuserName")) {
-            // alert(message.sender + ' shared custom message:\n\n' + message.customMessage);
+    connection.socket.on(connection.socketCustomEvent, function (message) {        
+        if (message.receiver == localStorage.getItem("loggedInuserName")) {            
             document.getElementById(message.sender).click();
             document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
         }
