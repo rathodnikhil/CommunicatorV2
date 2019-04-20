@@ -1,4 +1,4 @@
-import { Component, OnInit , ElementRef , Inject} from '@angular/core';
+import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'app/services/alert.service';
@@ -17,8 +17,9 @@ export class JoinMeetingComponent implements OnInit {
   meetingCode: string;
   _userService: UserService;
   readOnlyFlag = false;
+  isMeetingCodeInValid = false;
   constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef, public router: Router, userService: UserService,
-   private activatedRoute: ActivatedRoute, public alertService: AlertService) {
+    private activatedRoute: ActivatedRoute, public alertService: AlertService) {
     this._userService = userService;
   }
 
@@ -40,23 +41,23 @@ export class JoinMeetingComponent implements OnInit {
     // script.
     s.onload = function () { __this.afterScriptAdded(); };
     this.elementRef.nativeElement.appendChild(s);
-}
+  }
 
-afterScriptAdded() {
+  afterScriptAdded() {
     // this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
     const params = {
-        width: '350px',
-        height: '420px',
+      width: '350px',
+      height: '420px',
     };
     if (typeof (window['functionFromExternalScript']) === 'function') {
-        window['functionFromExternalScript'](params);
+      window['functionFromExternalScript'](params);
     }
-}
+  }
   guestLogin() {
     if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
-    || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-    return this.alertService.error('Close the popup to continue', 'Error');
-}
+      || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
+      return this.alertService.error('Close the popup to continue', 'Error');
+    }
     if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
       return this.alertService.error('Enter meeting code', 'Error');
     }
@@ -79,7 +80,8 @@ afterScriptAdded() {
       isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.meetingCode
     };
     this._userService.setLoggedInUserObj(payload).subscribe(res => {
-      if (res === 'invalid') {
+      if (res === 'invalid' && !this.isMeetingCodeInValid) {
+        this.isMeetingCodeInValid = true;
         this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
         return false;
       } else {
@@ -99,6 +101,7 @@ afterScriptAdded() {
     });
   }
   onKey(event) {
+    this.isMeetingCodeInValid = false;
     if (event.key === 'Enter') { this.guestLogin(); }
   }
   setAttendeeName(attendeeFullName) {

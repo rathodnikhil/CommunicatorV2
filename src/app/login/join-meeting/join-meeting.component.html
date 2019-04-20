@@ -35,7 +35,7 @@
           </div>
 
           <fieldset id="actions">
-            <input type="submit" id="submit" class="btn btn-sec" value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;" />
+            <input type="submit" id="submit" class="btn btn-sec" value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;"  [disabled]="isMeetingCodeInValid ? 'disabled' : null"/>
             <!-- <a href="/#/login/meeting?meetingCode={{meetingCode}}">I am a registered user</a> -->
             <a [routerLink]="['/login']">I am a registered user</a>
             
