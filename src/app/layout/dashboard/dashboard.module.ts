@@ -24,6 +24,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import { SearchFutureMeetingPipe } from './components/default-meeting/search-future-meeting.pipe';
 import { VideoCallComponent } from './components/video-call/video-call.component';
 import { SelectedUserHeaderComponent } from './components/selected-user-header/selected-user-header.component';
+import { CommonComponentsModule } from '../../shared/modules/common-components/common-components.module';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { SelectedUserHeaderComponent } from './components/selected-user-header/s
         StatModule,
         BsComponentModule,
         NgbModule.forRoot(),
-        SharedPipesModule
+        SharedPipesModule,
+        CommonComponentsModule
     ],
     declarations: [
         DashboardComponent,
