@@ -159,10 +159,10 @@ export class ManageGroupComponent implements OnInit {
                             return false;
                         } else {
                             // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
-                            // for(let key in groupData) {
-                            //     this.groupList.push(groupData[key]);
-                            // }
-                            this.groupList = groupData;
+                            for (let key in groupData) {
+                                this.groupList.push(groupData[key]);
+                            }
+                            // this.groupList = groupData;
                             // this.loading = false;
                         }
                         if (this.groupList.length > 0) {

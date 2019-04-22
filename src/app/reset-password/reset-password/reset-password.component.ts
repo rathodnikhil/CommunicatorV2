@@ -42,6 +42,8 @@ export class ResetPasswordComponent implements OnInit {
     } else if (this.confirmPassword === '' || this.confirmPassword === null || typeof this.confirmPassword === 'undefined') {
       return this.alertService.warning('Enter confirm password', 'Warning');
     } else if (this.confirmPassword !== this.password) {
+      this.password = '';
+      this.confirmPassword = '';
       return this.alertService.warning('Password and  confirm password does not match', 'Warning');
     } else {
       const payload = { passwordAuthToken: this.token, newPassword: this._passwordService.encrypted(this.password)};
