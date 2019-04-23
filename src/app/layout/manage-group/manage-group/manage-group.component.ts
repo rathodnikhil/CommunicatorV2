@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 
 @Component({
     selector: 'app-manage-group',
@@ -19,7 +20,7 @@ export class ManageGroupComponent implements OnInit {
     public autoHide = false;
     public responsive = false;
     public newGroupName: any;
-    public loading: boolean;
+    // public loading: boolean;
     // public isDoubleClick: boolean;
     i: number;
     public config: PaginationInstance = {
@@ -66,6 +67,7 @@ export class ManageGroupComponent implements OnInit {
     updateGroupName: any;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('deleteGroupField') deleteGroupField: ElementRef;
+    @ViewChild('manageGroupSpinner') manageGroupSpinnerMod: SpinnerComponent;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
     newGroup: CustomModalModel = {
         titleIcon: '<i class="fa fa-users"></i>',
@@ -133,11 +135,11 @@ export class ManageGroupComponent implements OnInit {
             itemsShowLimit: 4,
             allowSearchFilter: true
         };
-        this.loading = true;
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
             if (data.errorFl === true || data.warningFl === true) {
-                this.loading = false;
+                // this.loading = false;
+                // this.manageGroupSpinnerMod.hideSpinner();
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 const payload = { userCode: this.loggedInUserObj.userCode };
@@ -151,26 +153,27 @@ export class ManageGroupComponent implements OnInit {
                     } else {
                         if (groupData.errorFl === true) {
                             this.groupList = [];
-                            this.loading = false;
+                            // this.loading = false;
                             return this.alertService.warning(groupData.message, 'Warning');
                         } else if (groupData.warningFl === true) {
                             this.groupList = [];
-                            this.loading = false;
+                            // this.loading = false;
                             return false;
                         } else {
                             // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
-                            // for(let key in groupData) {
-                            //     this.groupList.push(groupData[key]);
-                            // }
-                            this.groupList = groupData;
+                            for (let key in groupData) {
+                                this.groupList.push(groupData[key]);
+                            }
+                            // this.groupList = groupData;
                             // this.loading = false;
                         }
-                        if (this.groupList.length > 0) {
-                            this.loading = false;
-                        }
+                        // if (this.groupList.length > 0) {
+                        //     this.manageGroupSpinnerMod.hideSpinner();
+                        // }
                     }
                 });
             }
+            this.manageGroupSpinnerMod.hideSpinner();
         });
     }
     onItemSelect(item: any) {
@@ -227,7 +230,7 @@ export class ManageGroupComponent implements OnInit {
     //     return this.isDoubleClick;
     // }
     displayGroupDetails(group, index) {
-        this.loading = true;
+        this.manageGroupSpinnerMod.showSpinner();
         if (group.groupId.groupId === '' || group.groupId.groupId === null ||
             typeof group.groupId.groupId === 'undefined') {
             this.selectedGroupObj = this.selectedNewGroupObj;
@@ -243,15 +246,16 @@ export class ManageGroupComponent implements OnInit {
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
             if (memberData.errorFl === true) {
-                this.loading = false;
+                // this.loading = false;
                 return this.alertService.warning(memberData.message, 'Warning');
             } else if (memberData.warningFl === true || memberData === undefined) {
-                this.loading = false;
+                // this.loading = false;
                 return false;
             } else {
                 this.memberList = memberData;
-                this.loading = false;
+                // this.loading = false;
             }
+            this.manageGroupSpinnerMod.hideSpinner();
         });
         const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
         this._groupService.getGroupListObjByLoggedInUserId(groupObjPayload).subscribe(groupObjData => {
@@ -369,7 +373,7 @@ export class ManageGroupComponent implements OnInit {
             if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
                 return this.alertService.warning('Please select members', 'Warning');
             } else {
-                this.loading = true;
+                this.manageGroupSpinnerMod.showSpinner();
                 const payload = {
                     groupId: this.selectedGroupObj.groupId,
                     selectedMemberCodeList: this.selectedMemberIds,
@@ -396,7 +400,7 @@ export class ManageGroupComponent implements OnInit {
                         }
                         this.selectedItems = [];
                         this.selectedMemberIds = [];
-                        this.loading = false;
+                        this.manageGroupSpinnerMod.hideSpinner();
                         return this.alertService.success('Members has been updated successfully', 'Success');
                     });
                 }

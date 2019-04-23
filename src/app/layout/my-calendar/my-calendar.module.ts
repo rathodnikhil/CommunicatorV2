@@ -4,9 +4,10 @@ import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 import { MyCalendarRoutingModule } from './my-calendar-routing.module';
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { CommonComponentsModule } from 'app/shared/modules/common-components/common-components.module';
 @NgModule({
   imports: [
-    CommonModule, MyCalendarRoutingModule, FullCalendarModule, DashboardModule
+    CommonModule, MyCalendarRoutingModule, FullCalendarModule, DashboardModule, CommonComponentsModule
   ],
   declarations: [MyCalendarComponent]
 })

@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 @Component({
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
@@ -18,7 +19,6 @@ export class PastMeetingsComponent implements OnInit {
     public directionLinks: Boolean = true;
     public autoHide: Boolean = false;
     public responsive: Boolean = false;
-    public loading: boolean;
     lastMeetingYear: any;
     lastMeetingMonth: any;
     public config: PaginationInstance = {
@@ -43,6 +43,7 @@ export class PastMeetingsComponent implements OnInit {
         this._meetingService = meetingService;
         this._userService = userService;
     }
+    @ViewChild('pastMeetingSpinner') pastMeetingSpinnerMod: SpinnerComponent;
     @ViewChild('viewAttendeeModal') public viewAttendeeModal: CustomModalComponent;
     attendee: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -53,11 +54,10 @@ export class PastMeetingsComponent implements OnInit {
         Button2Content: ''
     };
     ngOnInit() {
-        this.loading = true;
         // loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                this.loading = false;
+                this.pastMeetingSpinnerMod.hideSpinner();
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
@@ -67,6 +67,7 @@ export class PastMeetingsComponent implements OnInit {
             }
         });
     }
+
     downloadMom(data) {
         if (data.mom === '' || data.mom === null || typeof data.mom === 'undefined') {
             return this.alertService.warning('No MOM for this meeting has been added', 'Warning');
@@ -126,20 +127,19 @@ export class PastMeetingsComponent implements OnInit {
     loadMore() {
         const payload = { userCode: this.loggedInUser.userCode, lastMeetingYear: this.lastMeetingYear ,
              lastMeetingMonth: this.lastMeetingMonth};
+      this.pastMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            this.loading = true;
             this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
             if (this.lastMeetingMonth === 0) {
                 this.lastMeetingYear = this.lastMeetingYear - 1;
                 this.lastMeetingMonth = 12;
             }
             if (data[0].errorFl || data[0].warningFl) {
-                this.loading = false;
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = this.pastMeetingList.concat(data);
-                this.loading = false;
             }
+            this.pastMeetingSpinnerMod.hideSpinner();
         });
     }
 }
