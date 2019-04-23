@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     login() {
         if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
             || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-            return this.alertService.error('Close the popup to continue', 'Error');
+            return this.alertService.error('Please refresh page and continue', 'Error');
         }
         if (this.userName === undefined || this.userName
             === '' || this.userName === null) {
@@ -157,7 +157,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                     return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
                 } else {
                     return this.alertService
-                        .success('Password reset link has successfully sent to your email account ,check your email.', 'Email Send');
+                        .success('Password reset link has successfully sent to your email account, check your email.', 'Email Send');
                 }
             });
             this.forgetEmail = '';

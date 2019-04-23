@@ -62,12 +62,9 @@ export class MeetingService {
     getRecentMeetingByUser() {
         return this.recentMeeting$;
     }
-    getPastMeetingsByUser(payload) {
-        const url = environment.baseUrl + 'getPastMeetingsByUser?userCode=' + payload.userCode;
-        return this.apiRequest.post(url, payload);
-    }
     getPastMeetingsByMonth(payload) {
-        const url = environment.baseUrl + 'getPastMeetingsByMonth?userCode=' + payload.userCode + '&meetingDate=' + payload.meetingDate;
+        const url = environment.baseUrl + 'getPastMeetingsByMonth?userCode=' + payload.userCode + '&lastMeetingYear=' +
+         payload.lastMeetingYear + '&lastMeetingMonth=' + payload.lastMeetingMonth;
         return this.apiRequest.post(url, payload);
     }
     getMeetingAttendee(payload) {

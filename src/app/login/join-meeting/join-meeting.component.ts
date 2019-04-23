@@ -56,7 +56,7 @@ export class JoinMeetingComponent implements OnInit {
   guestLogin() {
     if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
       || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-      return this.alertService.error('Close the popup to continue', 'Error');
+      return this.alertService.error('Please refresh page and continue', 'Error');
     }
     if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
       return this.alertService.error('Enter meeting code', 'Error');

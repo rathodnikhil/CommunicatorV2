@@ -19,8 +19,8 @@ export class PastMeetingsComponent implements OnInit {
     public directionLinks: Boolean = true;
     public autoHide: Boolean = false;
     public responsive: Boolean = false;
-    // public loading: boolean;
-    lastMeetingStartTime: any;
+    lastMeetingYear: any;
+    lastMeetingMonth: any;
     public config: PaginationInstance = {
         id: 'meetingCode',
         itemsPerPage: 10,
@@ -61,26 +61,10 @@ export class PastMeetingsComponent implements OnInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-                this.getPastMeetingsByuser();
+                this.lastMeetingYear = new Date().getFullYear();
+                this.lastMeetingMonth = new Date().getUTCMonth() + 1;
+                this.loadMore();
             }
-        });
-    }
-
-    getPastMeetingsByuser() {
-        debugger;
-        const payload = { userCode: this.loggedInUser.userCode };
-        this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
-            this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
-            this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
-            if (data[0].errorFl || data[0].warningFl) {
-                // this.pastMeetingSpinnerMod.hideSpinner();
-                this.pastMeetingList = [];
-                return this.alertService.warning(data[0].message, 'Warning');
-            } else {
-                this.pastMeetingList = data;
-                // this.pastMeetingSpinnerMod.hideSpinner();
-            }
-            this.pastMeetingSpinnerMod.hideSpinner();
         });
     }
 
@@ -141,19 +125,19 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     loadMore() {
-        // console.log('CHECK : ' + this.lastMeetingStartTime);
-        const payload = { userCode: this.loggedInUser.userCode, meetingDate: this.lastMeetingStartTime};
+        const payload = { userCode: this.loggedInUser.userCode, lastMeetingYear: this.lastMeetingYear ,
+             lastMeetingMonth: this.lastMeetingMonth};
+      this.pastMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            this.pastMeetingSpinnerMod.showSpinner();
-            this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
-            this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
+            this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
+            if (this.lastMeetingMonth === 0) {
+                this.lastMeetingYear = this.lastMeetingYear - 1;
+                this.lastMeetingMonth = 12;
+            }
             if (data[0].errorFl || data[0].warningFl) {
-                // this.pastMeetingSpinnerMod.hideSpinner();
-                this.pastMeetingList = [];
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
-                this.pastMeetingList = data;
-                // this.pastMeetingSpinnerMod.hideSpinner();
+                this.pastMeetingList = this.pastMeetingList.concat(data);
             }
             this.pastMeetingSpinnerMod.hideSpinner();
         });

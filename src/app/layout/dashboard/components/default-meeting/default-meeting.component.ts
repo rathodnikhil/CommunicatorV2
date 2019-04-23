@@ -183,6 +183,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             default:
                 this.selectedCriteria = 'All';
                 this.filteredFutureMeetingList = this.futureMeetingList;
+                this.selectedfromDate = '';
+                this.selectedtoDate = '';
                 break;
         }
     }
@@ -240,7 +242,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been copied.Kindly share via your preferred Mail Id.',
+        return this.alertService.success('Meeting Details has been copied.Kindly share via your preferred email id.',
             'Copy Meeting Details');
     }
     joinMeetingNow() {
@@ -268,8 +270,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.meetNowMeeting = data;
                 this.meetNowModal.open();
-                this.filteredFutureMeetingList.push(this.meetNowMeeting);
-                this.futureMeetingList.push(this.meetNowMeeting);
+              //  this.futureMeetingList.push(this.meetNowMeeting);
+                this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
                 return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
             }
         });
@@ -298,7 +300,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     this.meetNowOutlookModal.close();
                     this.clearOutlookField();
                     this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
-                    return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
+                    return this.alertService.success('Meeting invitation has sent successfully', 'Meeting Invitation');
                 }
             });
         }

@@ -263,7 +263,7 @@ export class ScheduleMeetingComponent implements OnInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been copied. Kindly share via your preferred Mail Id.'
+        return this.alertService.success('Meeting Details has been copied. Kindly share via your preferred email id.'
         , 'Copy Meeting Details');
     }
     changeTimeZone(timezone) {
@@ -374,8 +374,6 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     onTimezoneSelect() {
-        // if (this.timezoneSelect.trim() !== '') {
             this.timezoneSelect = this.timezoneSelect.trim();
-        // }
     }
 }
