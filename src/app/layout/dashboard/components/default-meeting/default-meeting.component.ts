@@ -103,6 +103,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this._meetingService.setFutureMeetimgList(payload);
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
+                    // this.defaultMeetingSpinnerMod.showSpinner();
                     if (futureData !== undefined && futureData.length > 0) {
                         this.futureMeetingList = futureData;
                         this.filteredFutureMeetingList = futureData;

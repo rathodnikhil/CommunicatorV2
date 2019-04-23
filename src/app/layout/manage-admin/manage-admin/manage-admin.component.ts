@@ -4,6 +4,7 @@ import { AlertService } from '../../../services/alert.service';
 import { Component, OnInit, Output, ViewChild, ViewContainerRef , ElementRef } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 @Component({
   selector: 'app-manage-admin',
   templateUrl: './manage-admin.component.html',
@@ -19,7 +20,7 @@ public maxSize: Number = 7;
 public directionLinks: Boolean = true;
 public autoHide: Boolean = false;
 public responsive: Boolean = false;
-public loading: boolean;
+// public loading: boolean;
 public config: PaginationInstance = {
     id: 'usersCode',
     itemsPerPage: 10,
@@ -54,6 +55,7 @@ deleteMemberFlag = 1;
   @ViewChild('updatedEmailField') updatedEmailField: ElementRef;
   @ViewChild('updatedFirstNameField') updatedFirstNameField: ElementRef;
   @ViewChild('updatedLastNameField') updatedLastNameField: ElementRef;
+  @ViewChild('manageAdminSpinner') manageAdminSpinnerMod: SpinnerComponent;
   @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
   deleteAdminPop: CustomModalModel = {
       titleIcon: '<i class="fa fa-trash"></i>',
@@ -73,11 +75,11 @@ deleteMemberFlag = 1;
       Button2Content: ''
   };
   ngOnInit() {
-    this.loading = true;
+    // this.loading = true;
   this._userService.getAllAdminList().subscribe(data => {
     if (!data.warningFl && !data.errorFl) {
         this.allAdminList = data;
-        this.loading = false;
+        this.manageAdminSpinnerMod.hideSpinner();
     }
 });
 

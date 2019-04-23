@@ -7,10 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CustomModalComponent } from '../dashboard/components/custom-modal/custom-modal.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { CommonComponentsModule } from 'app/shared/modules/common-components/common-components.module';
 
 @NgModule({
   imports: [
-    CommonModule, PastMeetingsRoutingModule, SharedPipesModule, FormsModule, NgxPaginationModule,DashboardModule
+    CommonModule, PastMeetingsRoutingModule, SharedPipesModule, FormsModule, NgxPaginationModule, DashboardModule, CommonComponentsModule
   ],
   declarations: [PastMeetingsComponent]
 })
