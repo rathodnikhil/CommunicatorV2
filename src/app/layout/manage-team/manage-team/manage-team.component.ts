@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { AlertService } from '../../../services/alert.service';
 import { PasswordService } from '../../../services/password.service';
 import { PaginationInstance } from 'ngx-pagination';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 @Component({
     selector: 'app-manage-team',
     templateUrl: './manage-team.component.html',
@@ -18,7 +19,7 @@ export class ManageTeamComponent implements OnInit {
     public directionLinks = true;
     public autoHide = false;
     public responsive = false;
-    public loading: boolean;
+    // public loading: boolean;
     public config: PaginationInstance = {
         id: 'userCode',
         itemsPerPage: 10,
@@ -77,6 +78,7 @@ export class ManageTeamComponent implements OnInit {
     @ViewChild('addTeamField') addTeamField: ElementRef;
     @ViewChild('editTeamField') editTeamField: ElementRef;
     @ViewChild('deleteTeamField') deleteTeamField: ElementRef;
+    @ViewChild('manageTeamSpinner') manageTeamSpinnerMod: SpinnerComponent;
     @ViewChild('addNewTeamModal') public addNewTeamModal: CustomModalComponent;
     newTeam: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -141,10 +143,9 @@ export class ManageTeamComponent implements OnInit {
     ngOnInit() {
         this.showSelectedTeam = false;
         this.selectedTeamObj = null;
-        this.loading = true;
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                this.loading = false;
+                // this.loading = false;
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
@@ -152,11 +153,11 @@ export class ManageTeamComponent implements OnInit {
                 const payload = { userCode: this.loggedInUser.userCode };
                 this._teamService.getTeamsByLoggedInUserId(payload).subscribe(teamData => {
                     if (teamData[0].errorFl || teamData[0].warningFl) {
-                        this.loading = false;
+                        // this.loading = false;
                         this.userPermissionList = [];
                     } else {
                         this.userPermissionList = teamData;
-                        this.loading = false;
+                        // this.loading = false;
                     }
                 });
 
@@ -168,10 +169,11 @@ export class ManageTeamComponent implements OnInit {
                     }
                 });
             }
+            this.manageTeamSpinnerMod.hideSpinner();
         });
     }
     displayTeamDetails(userPermission, index) {
-        this.loading = true;
+        this.manageTeamSpinnerMod.showSpinner();
         if (userPermission.team.teamCode === '' || userPermission.team.teamCode === null ||
             typeof userPermission.team.teamCode === 'undefined') {
             this.selectedTeamObj = this.selectedNewTeamObj;
@@ -186,7 +188,7 @@ export class ManageTeamComponent implements OnInit {
                 this.filterMemberList.push(this.userPermissionMemberList[i]);
             }
         }
-        this.loading = false;
+        this.manageTeamSpinnerMod.hideSpinner();
         this.selectedUserPermissionObj = userPermission;
         if (this.selectedTeamObj.status.status === 'CANCEL') {
             this.addMemPermission = 2;

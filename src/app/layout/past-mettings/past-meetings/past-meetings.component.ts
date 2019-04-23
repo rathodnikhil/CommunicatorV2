@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 @Component({
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
@@ -18,7 +19,7 @@ export class PastMeetingsComponent implements OnInit {
     public directionLinks: Boolean = true;
     public autoHide: Boolean = false;
     public responsive: Boolean = false;
-    public loading: boolean;
+    // public loading: boolean;
     lastMeetingStartTime: any;
     public config: PaginationInstance = {
         id: 'meetingCode',
@@ -42,6 +43,7 @@ export class PastMeetingsComponent implements OnInit {
         this._meetingService = meetingService;
         this._userService = userService;
     }
+    @ViewChild('pastMeetingSpinner') pastMeetingSpinnerMod: SpinnerComponent;
     @ViewChild('viewAttendeeModal') public viewAttendeeModal: CustomModalComponent;
     attendee: CustomModalModel = {
         titleIcon: '<i class="fa fa-user"></i>',
@@ -52,11 +54,10 @@ export class PastMeetingsComponent implements OnInit {
         Button2Content: ''
     };
     ngOnInit() {
-        this.loading = true;
         // loggedInuser Object webservice call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                this.loading = false;
+                this.pastMeetingSpinnerMod.hideSpinner();
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
@@ -66,18 +67,20 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     getPastMeetingsByuser() {
+        debugger;
         const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getPastMeetingsByUser(payload).subscribe(data => {
             this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
             this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
             if (data[0].errorFl || data[0].warningFl) {
-                this.loading = false;
+                // this.pastMeetingSpinnerMod.hideSpinner();
                 this.pastMeetingList = [];
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = data;
-                this.loading = false;
+                // this.pastMeetingSpinnerMod.hideSpinner();
             }
+            this.pastMeetingSpinnerMod.hideSpinner();
         });
     }
 
@@ -141,17 +144,18 @@ export class PastMeetingsComponent implements OnInit {
         // console.log('CHECK : ' + this.lastMeetingStartTime);
         const payload = { userCode: this.loggedInUser.userCode, meetingDate: this.lastMeetingStartTime};
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            this.loading = true;
+            this.pastMeetingSpinnerMod.showSpinner();
             this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
             this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
             if (data[0].errorFl || data[0].warningFl) {
-                this.loading = false;
+                // this.pastMeetingSpinnerMod.hideSpinner();
                 this.pastMeetingList = [];
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = data;
-                this.loading = false;
+                // this.pastMeetingSpinnerMod.hideSpinner();
             }
+            this.pastMeetingSpinnerMod.hideSpinner();
         });
     }
 }
