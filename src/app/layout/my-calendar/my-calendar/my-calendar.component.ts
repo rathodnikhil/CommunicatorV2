@@ -6,6 +6,7 @@ import { MeetingService } from '../../../services/meeting-service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
+import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 
 @Component({
     selector: 'app-my-calendar',
@@ -15,7 +16,7 @@ import { CustomModalComponent, CustomModalModel } from '../../dashboard/componen
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
-    public loading: boolean;
+    // public loading: boolean;
     lastMeetingStartTime: any;
     allMeetingByLoggedInUserList = [];
     meetingList = [];
@@ -42,6 +43,7 @@ export class MyCalendarComponent implements OnInit {
             start: this.yearMonth + '-01'
         }
     ];
+    @ViewChild('calenderMeetingSpinner') calenderMeetingSpinnerMod: SpinnerComponent;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @ViewChild('meetingDetailsModal') public meetingDetailsModal: CustomModalComponent;
     meetingModalDetails: CustomModalModel = {
@@ -62,7 +64,6 @@ export class MyCalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loading = true;
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
@@ -70,7 +71,7 @@ export class MyCalendarComponent implements OnInit {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
-                this.loading = false;
+                // this.calenderMeetingSpinnerMod.hideSpinner();
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 // this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
@@ -88,7 +89,7 @@ export class MyCalendarComponent implements OnInit {
                     this.ucCalendar.fullCalendar('renderEvent', meeting, true);
                     // this.calendarOptions.events.render()
                 });
-                this.loading = false;
+                this.calenderMeetingSpinnerMod.hideSpinner();
                 this.meetingList = data;
                 // this._spinnerService.hide();
             }

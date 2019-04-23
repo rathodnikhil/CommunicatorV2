@@ -7,9 +7,10 @@ import { DashboardModule } from '../dashboard/dashboard.module';
 import { FormsModule } from '@angular/forms';
 import { SharedPipesModule } from '../../shared';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonComponentsModule } from 'app/shared/modules/common-components/common-components.module';
 @NgModule({
   imports: [
-    CommonModule, ManageTeamRoutingModule, DashboardModule, FormsModule , SharedPipesModule, NgxPaginationModule
+    CommonModule, ManageTeamRoutingModule, DashboardModule, FormsModule , SharedPipesModule, NgxPaginationModule, CommonComponentsModule
   ],
   declarations: [ManageTeamComponent]
 })
