@@ -127,7 +127,7 @@ export class PastMeetingsComponent implements OnInit {
     loadMore() {
         const payload = { userCode: this.loggedInUser.userCode, lastMeetingYear: this.lastMeetingYear ,
              lastMeetingMonth: this.lastMeetingMonth};
-      this.pastMeetingSpinnerMod.showSpinner();
+        this.pastMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
             this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
             if (this.lastMeetingMonth === 0) {
@@ -135,7 +135,7 @@ export class PastMeetingsComponent implements OnInit {
                 this.lastMeetingMonth = 12;
             }
             if (data[0].errorFl || data[0].warningFl) {
-                return this.alertService.warning(data[0].message, 'Warning');
+                this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = this.pastMeetingList.concat(data);
             }
