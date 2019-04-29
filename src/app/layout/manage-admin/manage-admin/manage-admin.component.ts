@@ -163,46 +163,47 @@ updateAdmin() {
     let exceptionFlag;
     const currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
     const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
-    const payload = {
-        firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
-        lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
-        email: this.updatedEmail,
-        status: {status: currentDisplayStatus},
-        userCode: this.updatedUserCode,
-        team: {teamName : this.selectedDefaultTeam},
-        meetingPermissionStatus: {status: currentDisplayMeetingStatus},
-    };
-    this._userService.updateUserDetails(payload).subscribe(data => {
-        duplicateUserNameFlag = data.warningFl;
-        exceptionFlag = data.errorFl;
-        const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-        if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
-            this.updatedFirstNameField.nativeElement.focus();
-             return this.alertService.warning('Please enter first name', 'Warning');
-          } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
-            this.updatedLastNameField.nativeElement.focus();
-            return this.alertService.warning('Please enter last name', 'Warning');
-          } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
-            this.updatedEmailField.nativeElement.focus();
-            return this.alertService.warning('Please enter email' , 'Warning');
-          } else if (duplicateUserNameFlag === true) {
-          this.updatedFirstNameField.nativeElement.focus();
-          return this.alertService.warning('Username already exist', 'Warning');
-        } else if (exceptionFlag === true) {
-          this.updatedEmailField.nativeElement.focus();
-          return this.alertService.warning(data.message, 'Warning');
-        }  else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
-            this.updatedEmailField.nativeElement.focus();
-            return this.alertService.warning('Please enter valid email', 'Warning');
-        } else {
-            this.selectedAdmin = data;
-          this.teamArray.push(data.team);
-        //   this.allAdminList.splice(this.allAdminList.indexOf(data.team), 1);
-          this.editMemberModal.close();
-          return this.alertService.success('Admin has updated successfully', 'Success');
+    const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
+        this.updatedFirstNameField.nativeElement.focus();
+         return this.alertService.warning('Please enter first name', 'Warning');
+      } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
+        this.updatedLastNameField.nativeElement.focus();
+        return this.alertService.warning('Please enter last name', 'Warning');
+      } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
+        this.updatedEmailField.nativeElement.focus();
+        return this.alertService.warning('Please enter email' , 'Warning');
+      } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
+        this.updatedEmailField.nativeElement.focus();
+        return this.alertService.warning('Please enter valid email', 'Warning');
+    } else {
+        const payload = {
+            firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
+            lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
+            email: this.updatedEmail,
+            status: {status: currentDisplayStatus},
+            userCode: this.updatedUserCode,
+            team: {teamName : this.selectedDefaultTeam},
+            meetingPermissionStatus: {status: currentDisplayMeetingStatus},
+        };
+        this._userService.updateUserDetails(payload).subscribe(data => {
+            if (duplicateUserNameFlag === true) {
+                this.updatedFirstNameField.nativeElement.focus();
+                return this.alertService.warning('Username already exist', 'Warning');
+              } else if (exceptionFlag === true) {
+                this.updatedEmailField.nativeElement.focus();
+                return this.alertService.warning(data.message, 'Warning');
+              } else {
+                duplicateUserNameFlag = data.warningFl;
+                exceptionFlag = data.errorFl;
+                this.selectedAdmin = data;
+                this.teamArray.push(data.team);
+              }
+        });
+      this.editMemberModal.close();
+      return this.alertService.success('Admin has updated successfully', 'Success');
 
-        }
-    });
+    }
 }
 private getStatusByUser(updatedStaus) {
     let currentDisplayStatus;

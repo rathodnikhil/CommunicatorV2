@@ -116,10 +116,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                             return this.alertService.warning(futureData[0].message, 'Warning');
                         }
                     }
-                    if (typeof (futureData) === 'object') {
-                        this.defaultMeetingSpinnerMod.hideSpinner();
-                        return this.alertService.warning(futureData['message'], 'Warning');
-                    }
+                    // To remove blank alert:
+                    // if (typeof (futureData) === 'object') {
+                    //     this.defaultMeetingSpinnerMod.hideSpinner();
+                    //     return this.alertService.warning(futureData['message'], 'Warning');
+                    // }
                 });
             }
         });
