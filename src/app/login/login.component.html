@@ -1,4 +1,4 @@
-<div class="logo-background">
+<!-- <div class="logo-background">
     <img src="assets/images/color-logo1.png" class="center logo" alt="Responsive image" />
 </div>
 <div class="container-bg">
@@ -32,15 +32,6 @@
                                 (keyup)="onKey($event)" required>
                         </div>
                     </div>
-                    <!-- <div class="unregister">
-                        <div class="input-group mb-3 " style="margin-left: 5px;">
-
-                            <input class="checkbox-style" type="checkbox" [(ngModel)]="isGuest" (change)="guestLogin()" />
-                            <div class="unregister-guest" style="margin-bottom: 3%;">
-                                <a (click)="guestLogin()"></a>If Unregistered, please continue as Guest
-                            </div>
-                        </div>
-                    </div> -->
 
                     <div class="join-meeting-id">
                         <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
@@ -56,7 +47,6 @@
                             style="margin-bottom: 1%;" />
                         <a (click)="forgetPassword()">Forgot your password?</a>
                     </fieldset>
-                    <!-- <div class="registeruser-div"> <a  id="register-user" title=" Register User Here" href="#" (click)="backToLogin()" >Register Here</a></div> -->
                 </div>
             </div>
 
@@ -88,4 +78,122 @@
 <div class="cfsfooter">
     <img class="setLogo"src="assets/images/coreflex-logo.png"><br>
 <b>Coreflex Solutions &copy; 2018. All rights reserved | Version 1.1.0</b>
-</div>
+</div> -->
+
+<div class="logo-background" style="position:relative;">
+    <img src="assets/images/header.png" alt="Responsive image"  height="50" width="100%">
+    <div class="col-md-12 ">
+        <div class="row">
+        <div class="col-md-9 col-sm-4 col-6">
+                <img src="assets/images/logo.png" class="logo imgr center" alt="Responsive image"/>
+        </div>
+        <div class="col-md-2 col-sm-5 col-4 about">
+          <b><a href="http://xanadutec.com/communicator.html"  target="_blank">ABOUT COMMUNICATOR</a> </b>
+        </div>
+        <div class="col-md-1 col-sm-3 col-2 faq">
+          <a href="http://xanadutec.com/faq.html" target="_blank"><b>FAQs</b> </a> 
+        </div>
+  </div>
+  </div>
+  </div> 
+  
+  <div class="row" style="margin-left:0px; margin-right:0px;">
+   
+    <div class="col-md-5" style="background-color:#f4f2f3;">
+  
+          <button *ngIf="loginUiFlag" type="button" (click)="guestLogin()" class="btn btn-success btn-responsive guest-user" >
+            <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
+        </i> Join with Meeting ID (Guest User) </button>
+          
+          <div class="main">
+          <div class="login-block">
+            <div *ngIf="loginUiFlag">
+          <h4 class="red-color"><b>{{loginHeader}}</b></h4> 
+          <h6>Kindly enter details</h6> 
+             <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
+              <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <img src="/assets/images/user1.png" alt="user img" height="15px" width="15px">
+                  </span>
+              </div>
+              <input type="text"  name="username" id="username"  autofocus type="text"
+              placeholder="{{UserNameText}}" class="form-control"
+              [(ngModel)]="userName" (keyup)="onKey($event)" required >
+          </div>
+          <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <img src="/assets/images/password.png" alt="password img" height="15px" width="15px">
+                </span>
+            </div>
+            <input type="password" class="form-control" name="loginPass" id="loginPass" (keyup)="onKey($event)" [(ngModel)]="password" placeholder="{{passwordText}}" required >
+        </div>
+            </div> 
+              <div *ngIf="forgetPasswordFlag">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-envelope fa-fw"></i>
+                        </span>
+                    </div>
+                    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
+                        required />
+                </div>
+                <!-- <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button> -->
+                <!-- <div class="alink"> <a (click)="backToLogin()">Login</a></div> -->
+        </div>
+            <div class="row" style="margin-top: 5%">
+            <div class="col-md-5">
+            <button id="login" type="button" class=" btn btn-default log-in" [(ngModel)]="Logintext" (click)="login()"><b>{{Logintext}}</b></button>
+          </div>
+            <div class="col-md-7">
+                    <h5 (click)="backToLogin()" class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a >Login</a></b></h5>
+            <h5  (click)="forgetPassword()" class="forgot" *ngIf="loginUiFlag && isGuest === false"><b><a>Forgot Password</a></b></h5> 
+          </div>
+          </div>
+        </div>
+            <div class="row feature">
+            <figure>
+                  <img src="/assets/images/schedule_meeting.png"  alt="my img" width="60" height="60"/>
+                <figcaption style="text-align: center;"> Schedule <br> Meeting </figcaption>
+              </figure>
+              <figure>
+                  <img src="/assets/images/video_audio_conferencing.png" alt="my img" width="60" height="60" style="margin-left: 10px"/>
+                <figcaption style="text-align: center;"> Video/Audio <br> Conferencing </figcaption>
+              </figure>
+              <figure>
+                  <img src="/assets/images/screen_sharing.png" alt="my img" width="60" height="60" style="margin-left: 15px"/>
+                <figcaption style="text-align: center;"> Screen Sharing <br> <b style="background-color:yellow;"> (Multiple) </b> </figcaption>
+              </figure>
+              <figure>
+                  <img src="/assets/images/file_sharing.png" alt="my img" width="60" height="60"/>
+                <figcaption style="text-align: center;"> File Sharing </figcaption>
+              </figure>
+              <figure>
+                  <img src="/assets/images/meeting_chat.png" alt="my img" width="60" height="60"/>
+                <figcaption style="text-align: center;"> Meeting <br> Chat </figcaption>
+              </figure>
+              <figure>
+                  <img src="/assets/images/meeting_recording.png" alt="my img" width="60" height="60"/>
+                <figcaption style="text-align: center;"> Meeting <br> Recording </figcaption>
+              </figure>
+              <figure>
+                  <img src="/assets/images/meeting_notes.png" alt="my img" width="60" height="60"/>
+                <figcaption style="text-align: center;"> Meeting <br> Notes </figcaption>
+              </figure>
+            </div>
+    </div>
+  </div>
+  
+  <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;">
+  
+      <img src="/assets/images/login.png" class="login-img" alt="my img" >
+    </div>
+    <div style="display: none;">
+        <label id="isScreenSharePopupClosed"></label>
+        <label id="isRecordScreenPopupClosed"></label>
+    </div>
+  </div>
+  
+  
+      <app-footer></app-footer> 

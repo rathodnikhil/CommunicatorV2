@@ -142,8 +142,8 @@ export class ManageGroupComponent implements OnInit {
                 // this.manageGroupSpinnerMod.hideSpinner();
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                const payload = { userCode: this.loggedInUserObj.userCode };
-                this._groupService.setGroupList(payload);
+                // const payload = { userCode: this.loggedInUserObj.userCode };
+                this._groupService.setGroupList();
                 this._groupService.getGroupList().subscribe(groupData => {
                     if (groupData === undefined) {
                         // this.loading = false;
@@ -239,7 +239,7 @@ export class ManageGroupComponent implements OnInit {
         }
         this.showSelectedGroup = true;
         this.selectedGroupName = group.groupId.groupName;
-        const payload = { groupId: this.selectedGroupObj.groupId , userCode: this.loggedInUserObj.userCode};
+        const payload = { groupId: this.selectedGroupObj.groupId};
         this.memberList = [];
         this.groupMemberObjList = [];
         this.selectedItems = [];
@@ -257,7 +257,7 @@ export class ManageGroupComponent implements OnInit {
             }
             this.manageGroupSpinnerMod.hideSpinner();
         });
-        const groupObjPayload = { userCode: this.loggedInUserObj.userCode + ',' + this.selectedGroupObj.groupId };
+        const groupObjPayload = { groupId: this.selectedGroupObj.groupId };
         this._groupService.getGroupListObjByLoggedInUserId(groupObjPayload).subscribe(groupObjData => {
             if (groupObjData[0].errorFl === true ) {
                 return this.alertService.warning(groupObjData[0].message, 'Warning');
@@ -377,7 +377,6 @@ export class ManageGroupComponent implements OnInit {
                 const payload = {
                     groupId: this.selectedGroupObj.groupId,
                     selectedMemberCodeList: this.selectedMemberIds,
-                    userCode: this.loggedInUserObj.userCode
                 };
                 this._groupService.saveGroupMember(payload).subscribe(memberData => {
                         let addedMemberList = [];

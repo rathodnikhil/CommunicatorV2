@@ -9,7 +9,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 // import { ResetPasswordComponent } from './reset-password/reset-password/reset-password.component';
 import { ToastrModule } from 'ngx-toastr';
-import { FooterComponent } from './components/footer/footer.component';
 import { CommonComponentsModule } from '../shared/modules/common-components/common-components.module';
 
 @NgModule({
@@ -21,6 +20,6 @@ import { CommonComponentsModule } from '../shared/modules/common-components/comm
         ToastrModule.forRoot(),
         CommonComponentsModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, FooterComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })
 export class LayoutModule { }

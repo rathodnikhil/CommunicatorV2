@@ -99,8 +99,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUser = data;
                 this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
-                const payload = { userCode: this.loggedInUser.userCode };
-                this._meetingService.setFutureMeetimgList(payload);
+              //  const payload = { userCode: this.loggedInUser.userCode };
+                this._meetingService.setFutureMeetimgList();
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
                     // this.defaultMeetingSpinnerMod.showSpinner();
@@ -165,7 +165,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             case 'range':
                 if (this.selectedfromDate === null || this.selectedfromDate === undefined
                     || this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedfromDate === '') {
-                    this.alertService.warning('Select from date', 'Wanning');
+                    this.alertService.warning('Please select date.', 'Wanning');
                     this.filteredFutureMeetingList = this.futureMeetingList;
                     return false;
                 } else {
@@ -199,7 +199,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.confirmCancelMeetingModal.open();
     }
     cancelMeetingNow() {
-        const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.selectedMeeting.meetingCode };
+        const payload = {  meetingCode: this.selectedMeeting.meetingCode };
         this._meetingService.cancelMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.recentMeeting = {};
@@ -242,7 +242,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been copied.Kindly share via your preferred email id.',
+        return this.alertService.success('Meeting Details has been copied. Kindly share via your preferred email id.',
             'Copy Meeting Details');
     }
     joinMeetingNow() {

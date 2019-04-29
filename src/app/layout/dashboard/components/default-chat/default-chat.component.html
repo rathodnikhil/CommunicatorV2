@@ -4,11 +4,11 @@
                 <div class="details-container">
                     <div class="background">
                             <ng-template [ngIf]="loggedInUserObj.meetingPermissionStatus.status === 'INACTIVE'" [ngIfElse]="notAdmin">
-                                <img class="header-img" src="assets\images\color-logo1.png">
+                                <img class="header-img" src="assets\images\logo.png">
                             </ng-template>
                                   
                             <ng-template #notAdmin>
-                                <img style="float:left;" class="header-img" src="assets\images\color-logo1.png">
+                                <img style="float:left;" class="header-img" src="assets\images\logo.png">
                             </ng-template>
                     </div>
                     <div class="colorgraph"></div>

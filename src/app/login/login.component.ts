@@ -16,6 +16,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     UserNameText = 'UserName';
+    passwordText = 'Password';
     _loginService: LoginService;
     _userService: UserService;
     _passwordService: PasswordService;
@@ -32,10 +33,12 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     previousUrl: string;
     passwordMacthFlag: boolean;
     isGuest: boolean;
-    forgetPasswordFlag: boolean;
+    forgetPasswordFlag = false;
     Logintext = 'Login';
     loggedInUserObj: any;
     meetingCode: string;
+    isMeetingCodeInValid = false;
+    loginHeader = 'Log In';
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         public router: Router, loginService: LoginService, private activatedRoute: ActivatedRoute,
         userService: UserService, public alertService: AlertService, passwordService: PasswordService) {
@@ -79,26 +82,75 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         //  this._loginService.dest
     }
     guestLogin() {
+        debugger;
+        this.isGuest = true;
+        this.changePlaceHolderText();
+    }
+    private changePlaceHolderText() {
         this.Logintext = this.isGuest ? 'Continue' : 'Login';
+        this.loginHeader = this.isGuest ? 'Join Meeting' : 'Log In';
         this.UserNameText = this.isGuest ? 'Name' : 'UserName';
+        this.passwordText = this.isGuest ? 'Meeting ID' : 'Password';
     }
-    onKey(event) {
-        if (event.key === 'Enter') { this.login(); }
-    }
+
+    // onKey(event) {
+    //     if (event.key === 'Enter') { this.login(); }
+    // }
     login() {
+      if (this.forgetPasswordFlag === true) {
+         this.sendEmailForgotPassword();
+      } else {
         if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
             || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-            return this.alertService.error('Please refresh page and continue', 'Error');
-        }
-        if (this.userName === undefined || this.userName
-            === '' || this.userName === null) {
-            return this.alertService.error('Enter Username', 'Error');
-        } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
-            return this.alertService.error('Enter Password', 'Error');
-
+            return this.alertService.error('Please close popup to continue', 'Error');
         } else {
             if (this.isGuest) {
+                debugger;
+                if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
+                || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
+                return this.alertService.error('Please close popup to continue', 'Error');
+              }
+              if (this.password === null || typeof this.password === 'undefined' || this.password.trim() === '') {
+                return this.alertService.error('Enter meeting code', 'Error');
+              }
+              if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
+                return this.alertService.error('Enter full name', 'Error');
+              }
+              localStorage.setItem('loggedInuserName', this.userName);
+              const currentDate = new Date();
+              const guestUserCode = 'guest' + (+currentDate);
+              const firstNameUpperCase = this.makeFirstLetterInCapital(this.userName);
+              const payload = {
+                firstName: firstNameUpperCase,
+                isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.password
+              };
+              this._userService.setLoggedInUserObj(payload).subscribe(res => {
+                if (res === 'invalid' && !this.isMeetingCodeInValid) {
+                  this.isMeetingCodeInValid = true;
+                  this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
+                  return false;
+                } else {
+                  if (res.firstName !== undefined) {
+                    if (!this.previousUrl) {
+                      // this.router.navigate(['meeting' + this.meetingCode]);
+                      this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+                    } else {
+                      if (this.previousUrl.indexOf('meeting') > 0) {
+                        this.router.navigateByUrl(this.previousUrl);
+                      } else {
+                        this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+                      }
+                    }
+                  }
+                }
+              });
             } else {
+                if (this.userName === undefined || this.userName
+                    === '' || this.userName === null) {
+                    return this.alertService.error('Enter Username', 'Error');
+                } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
+                    return this.alertService.error('Enter Password', 'Error');
+                }
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 let loginWarningFlag;
                 this._userService.verifyUser(payload).subscribe(resp => {
@@ -135,14 +187,35 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 );
             }
         }
+        }
     }
+  private makeFirstLetterInCapital(userName): String {
+    const senderNameArray = this.setAttendeeName(this.userName);
+    let firstNameUpperCase = null;
+    if (senderNameArray.length < 3) {
+      firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
+    } else {
+      firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
+        + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
+    }
+    return firstNameUpperCase;
+  }
+
     forgetPassword() {
+        this.Logintext = 'Reset Password';
+        this.loginHeader = 'Join Meeting';
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
     }
     backToLogin() {
+        debugger;
         this.forgetPasswordFlag = false;
         this.loginUiFlag = true;
+        this.isGuest = false;
+        this.changePlaceHolderText();
+    }
+    onKey(event) {
+            if (event.key === 'Enter') { this.login(); }
     }
     onKeyUp(event) {
         if (event.key === 'Enter') { this.sendEmailForgotPassword(); }
@@ -163,4 +236,15 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             this.forgetEmail = '';
         }
     }
+      setAttendeeName(attendeeFullName) {
+        attendeeFullName = attendeeFullName.split(' ');
+        const attendeeFullNameArray = new Array();
+        for (let i = 0; i < attendeeFullName.length; i++) {
+          attendeeFullNameArray.push(attendeeFullName[i]);
+          if (i !== attendeeFullName.length - 1) {
+            attendeeFullNameArray.push(' ');
+          }
+        }
+        return attendeeFullNameArray;
+      }
 }

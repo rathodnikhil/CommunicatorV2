@@ -42,9 +42,9 @@ export class MyProfileComponent implements OnInit {
                 this.currentProfileImg = data.profileImgPath;
                 this.onLoadProfileImg = data.profileImgPath;
                 // webservice to get total meeting count
-                const payload = { userCode: this.loggedInUserObj.userCode };
+                // const payload = { userCode: this.loggedInUserObj.userCode };
                 this.profileOtherDetails = {};
-                this._groupService.profileOtherDetails(payload).subscribe(profileData => {
+                this._groupService.profileOtherDetails().subscribe(profileData => {
                     if (profileData.errorFl === true || profileData.warningFl === true) {
                         this.profileOtherDetails = {};
                         return this.alertService.warning(profileData.message, 'Warning');

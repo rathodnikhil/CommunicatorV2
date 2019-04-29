@@ -150,8 +150,8 @@ export class ManageTeamComponent implements OnInit {
             } else {
                 this.loggedInUser = data;
                 // getTeamsByLoggedInUserId webservice call
-                const payload = { userCode: this.loggedInUser.userCode };
-                this._teamService.getTeamsByLoggedInUserId(payload).subscribe(teamData => {
+            //    const payload = { userCode: this.loggedInUser.userCode };
+                this._teamService.getTeamsByLoggedInUserId().subscribe(teamData => {
                     if (teamData[0].errorFl || teamData[0].warningFl) {
                         // this.loading = false;
                         this.userPermissionList = [];
@@ -161,7 +161,7 @@ export class ManageTeamComponent implements OnInit {
                     }
                 });
 
-                this._teamService.getMemberListByLoggedInUserId(payload).subscribe(memberData => {
+                this._teamService.getMemberListByLoggedInUserId().subscribe(memberData => {
                     if (memberData[0].errorFl || memberData[0].warningFl) {
                         this.userPermissionMemberList = [];
                     } else {

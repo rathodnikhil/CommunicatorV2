@@ -16,24 +16,19 @@ export class GroupService {
     this._loginService = loginService;
   }
   // get groups by loggedinuser
-  setGroupList(payload) {
-    const url = environment.baseUrl + 'getGroupByLoggedInUserId?userCode=' + payload.userCode;
-    this.apiRequest.post(url, payload).subscribe(data => {
+  setGroupList() {
+    const url = environment.baseUrl + 'getGroupByLoggedInUserId';
+    this.apiRequest.post(url, null).subscribe(data => {
       this.GroupList$.next(data);
     });
   }
   getGroupList() {
     return this.GroupList$;
   }
-  profileOtherDetails(payload) {
-    const url = environment.baseUrl + 'profileOtherDetails?userCode=' + payload.userCode;
-    return this.apiRequest.post(url, payload);
+  profileOtherDetails() {
+    const url = environment.baseUrl + 'profileOtherDetails';
+    return this.apiRequest.post(url, null);
   }
-  getTeamsByLoggedInUserId(payload) {
-    const url = environment.baseUrl + 'getTeamsByLoggedInUserId?loggedInUserId=' + payload.loggedInUserId;
-    return this.http.post(url, payload);
-  }
-
   saveGroupDetails(payload): Observable<any> {
     const url = environment.baseUrl + 'saveGroupDetails';
     const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -61,13 +56,10 @@ export class GroupService {
     return this.sideBarMenuList$;
   }
   getGroupListObjByLoggedInUserId(payload) {
-    const url = environment.baseUrl + 'getGroupListObjByLoggedInUserId?userCode=' + payload.userCode;
+    const url = environment.baseUrl + 'getGroupListObjByLoggedInUserId?groupId=' + payload.groupId;
     return this.apiRequest.post(url, payload);
   }
-  getGroupMembersByGroup(payload) {
-    const url = environment.baseUrl + 'getGroupMembersByGroup?userCode=' + payload.userCode;
-    return this.apiRequest.post(url, payload);
-  }
+
   saveGroupMember(payload): Observable<any> {
     const url = environment.baseUrl + 'saveGroupMember';
     const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -89,7 +81,7 @@ export class GroupService {
     return resp;
   }
   getMemberByLocalgroup(payload) {
-    const url = environment.baseUrl + 'getMemberByLocalgroup?groupId=' + payload.groupId + '&userCode=' + payload.userCode;
+    const url = environment.baseUrl + 'getMemberByLocalgroup?groupId=' + payload.groupId ;
     return this.apiRequest.post(url, payload);
   }
 }
