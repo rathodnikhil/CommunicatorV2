@@ -146,7 +146,7 @@ export class NotificationComponent implements OnInit {
         if (this.searchText === '' || this.searchText === null || typeof this.searchText === 'undefined') {
 
         } else {
-            const payload = { searchText: this.searchText, userCode: this.loggedInUser.userCode };
+            const payload = { searchText: this.searchText};
             this._userService.searchWholememberList(payload).subscribe(data => {
                 if (data[0].errorFl || data[0].warningFl) {
                     this.searchWholeMemberList = [];

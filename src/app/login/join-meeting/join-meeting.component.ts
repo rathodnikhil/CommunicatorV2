@@ -3,7 +3,6 @@ import { UserService } from 'app/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'app/services/alert.service';
 import { DOCUMENT } from '@angular/common';
-import { Injectable } from '@angular/core';
 @Component({
   selector: 'app-join-meeting',
   templateUrl: './join-meeting.component.html',
@@ -56,7 +55,7 @@ export class JoinMeetingComponent implements OnInit {
   guestLogin() {
     if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
       || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-      return this.alertService.error('Please refresh page and continue', 'Error');
+      return this.alertService.error('Please close popup to continue', 'Error');
     }
     if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
       return this.alertService.error('Enter meeting code', 'Error');

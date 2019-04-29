@@ -301,8 +301,8 @@ export class ScheduleMeetingComponent implements OnInit {
             hours + ':' + minutes + '  (' + this.timezoneSelect + ')   for  '
             + this.meeting.selectedDuration +
             newLine + ' Please join my meeting from your computer using chrome browser ' + newLine +
-            'Guest user use below URL for meeting:' + newLine
-            + meetingUrl + this.accessCode + newLine + 'Registered user use below URL for meeting:'
+            'Registered user use below URL for meeting:' + newLine
+            + meetingUrl + this.accessCode + newLine + 'Guest user use below URL for meeting:'
              + newLine + guestMeetingUrl + this.accessCode + newLine + ' Meeting Id :    ' + this.accessCode;
         return meetingDetails;
     }

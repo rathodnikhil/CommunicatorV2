@@ -39,8 +39,8 @@ export class GuestUserComponent implements OnInit {
     // this.loading = true;
     this._userService.getLoggedInUserObj().subscribe(data => {
       this.loggedInUser = data;
-      const payload = { userCode: this.loggedInUser.userCode };
-    this._userService.getGuestUsersByLoggedInUser(payload).subscribe(guestUserData => {
+    //  const payload = { userCode: this.loggedInUser.userCode };
+    this._userService.getGuestUsersByLoggedInUser().subscribe(guestUserData => {
       this.guestUserList = guestUserData;
       this.guestUserSpinnerMod.hideSpinner();
   });

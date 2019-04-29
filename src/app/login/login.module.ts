@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JoinMeetingComponent } from './join-meeting/join-meeting.component';
-
+import { CommonComponentsModule } from '../shared/modules/common-components/common-components.module';
 @NgModule({
-    imports: [CommonModule, LoginRoutingModule, FormsModule, ToastrModule.forRoot()],
+    imports: [CommonModule, LoginRoutingModule, CommonComponentsModule, FormsModule, ToastrModule.forRoot()],
     declarations: [LoginComponent, JoinMeetingComponent]
 })
 export class LoginModule { }

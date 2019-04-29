@@ -1,371 +1,175 @@
-@import "styles/customStyle.css";
-.container-bg {
-    background-position: center;
-    background-size: cover;
-    background-image: url(/assets/images/Coreflex-solutions-login-id.jpg);
-    background-repeat: no-repeat;
-    width: 100%;
-    height:100vh;
-}
-.fixed-header,
-.fixed-footer {
-    width: 100%;
-    position: relative;
-    background: transparent;
-    padding: 20px;
-    color: #fff;
-}
-
-.fixed-footer {
-    font-weight: bolder;
-}
-
-#login {
-    background-color: #fff;
- //   background-image: linear-gradient(to bottom, #fff, #eee);
-    height: auto;
-    /* width: auto; */
-    padding: 5px;
-    position: relative;
-    z-index: 0;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2), 0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, 0.2), 0 6px 0 #fff, 0 7px 0 rgba(0, 0, 0, 0.2);
-}
-
-.inner-border {
-    border: 1px dashed #ccc;
-    top: 5px;
-    bottom: 5px;
-    left: 5px;
-    right: 5px;
-    box-shadow: 0 0 0 1px #fff;
-    padding: 20px;
-}
-
-/*--------------------*/
-
-h1 {
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
-    text-transform: uppercase;
-    text-align: center;
-    color: #353535;
-    margin: 0 0 30px 0;
-    letter-spacing: 4px;
-    font: normal 26px/1 Verdana, Helvetica;
-    position: relative;
-}
-
-h1:after,
-h1:before {
-    background-color:#353535;
-    content: "";
-    height: 1px;
-    position: absolute;
-    top: 15px;
-    width: 30%;
-}
-
-h1:after {
-    background-image: -webkit-gradient(linear, left top, right top, from(#3283b9), to(#fff));
-    background-image: -webkit-linear-gradient(to left, #3283b9, #fff);
-    background-image: -moz-linear-gradient(to left, #3283b9, #fff);
-    background-image: -ms-linear-gradient(to left, #3283b9, #fff);
-    background-image: -o-linear-gradient(to left,#3283b9, #fff);
-    background-image: linear-gradient(to left, #3283b9, #fff);
-    right: 0;
-}
-
-h1:before {
-    background-image: -webkit-gradient(linear, left top, right top, from(#3283b9), to(#fff));
-    background-image: -webkit-linear-gradient(to right, #3283b9, #fff);
-    background-image: -moz-linear-gradient(to right, #3283b9, #fff);
-    background-image: -ms-linear-gradient(to right, #3283b9, #fff);
-    background-image: -o-linear-gradient(to right,#3283b9, #fff);
-    background-image: linear-gradient(to right, #3283b9, #fff);
-    left: 0;
-}
-
-h1 {
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
-    text-transform: uppercase;
-    text-align: center;
-    color: #353535;
-    margin: 0 0 30px 0;
-    letter-spacing: 4px;
-    font: normal 26px/1 Verdana, Helvetica;
-    position: relative;
-}
-
-/*--------------------*/
-
-fieldset {
-    border: 0;
-    padding: 0;
-    margin: 0;
-}
-
-/*--------------------*/
-
-#inputs input {
-    background: #f1f1f1 url(https://catalin.red/dist/uploads/2011/09/login-sprite.png) no-repeat;
-    padding: 15px 15px 15px 30px;
-    margin: 0 0 10px 0;
-    width: 353px;
-    /* 353 + 2 + 45 = 400 */
-    border: 1px solid #ccc;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
-    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
-    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
-}
-
-#username {
-    background-position: 5px -2px !important;
-}
-
-#password {
-    background-position: 5px -52px !important;
-}
-
-#inputs input:focus {
-    background-color: #fff;
-    border-color: #e8c291;
-    outline: none;
-    -moz-box-shadow: 0 0 0 1px #e8c291 inset;
-    -webkit-box-shadow: 0 0 0 1px #e8c291 inset;
-    box-shadow: 0 0 0 1px #e8c291 inset;
-}
-
-/*--------------------*/
-
-#actions {
-    margin: 40px 0 10px 0;
-}
-
-#submit {    
-    cursor: pointer;
-    font: bold 13px Arial, Helvetica;
-    // color: #ffffff;
-    float: left;
-    height: 35px;
-    padding: 0;
-    width: 120px;
-    cursor: pointer;
-    font: bold 15px Arial, Helvetica;
-}
-
-#submit:active {
-    outline: none;
-    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-}
-
-#submit::-moz-focus-inner {
-    border: none;
-}
-
-#actions a {
-    color: #353535;
-    float: right;
-    line-height: 35px;
-    margin-left: 10px;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-
-.communication-logo{
-    text-align: center;padding-bottom:15px;
-}
-.centerForgotPassword {
-    margin: auto;
-    width: 50%;
-    padding: 3%;
-    border: 1px solid rgb(199, 200, 201);
-    text-align: center;
-
-    background-color: #fff;
-    height: auto;
-    position: relative;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2), 0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, 0.2), 0 6px 0 #fff, 0 7px 0 rgba(0, 0, 0, 0.2);
-}
-.alink {
-    color: #353535;
-    float: right;
-    line-height: 35px;
-    margin-left: 10px;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-/*** CSS added by shruti*********/
-
-
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    margin-top:10px; 
-    margin-bottom: 18px;
-    padding: 3px;
-  }
-
-
- 
-#meeting-id{
-   
-        font-size: 15px;
-        background-color: #4CAF50;
-        margin-left: 0%;
-      
-     
-  
-}
-
-#meeting-id:hover{
-   text-decoration: underline;
-}
-
-  
-.checkbox-style{
-    margin-top: 3px; 
-    //  outline: 1px solid #ac0d02 ;
-    box-shadow:inset 1px 1px 0 #fff, 0 0 4px rgba(0,0,0,0.3);
-    margin-left: 3px;
-    height: 1.3em;
-    width: 1.3em;
-
-}
-/* input checked border color */
-input[type="radio"]:checked,
-input[type="checkbox"]:checked {
-    border-color:#cc0000;
-}
-
-
-/* checkbox checked */
-input[type="checkbox"]:checked:before {
-font-weight: bold;
-color: #cc0000;
-content: '\2713';
--webkit-margin-start: 0;
-margin-left: 2px;
-font-size: 0.9em;
-}
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+    }
 
 
 .logo-background{
-    background-size: cover;
-    background: #f0f0f0;
-    background-repeat: no-repeat;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    margin:0 auto;
-    width:auto;
-    background-color: #efefef;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  margin:0 auto;
+  width:auto;
+  background-color: #fff;
 }
 
-// #guest-div{
-//     background-color:#fae9e9;
-//     margin-left: 12px;
-//     display: inline;
-  
-// }
-// #guest-user{
-//     font-size: 16px;
-//      font-family: "Calibri";
-//      padding:10px;
-//      color:#ac0d02;
-// }
-
-// #register-user{
-//     color:#3283b9;
-//      font-weight: bold; 
-//      font-size: 13px;
-     
-// }
-
-// .registeruser-div{
-//    text-align: right;
-//    margin-left:70%;
-// }
 .logo{
-    height: 60px;
-    width: 260px;
-}
+  height: 35px;
+  width: 235px;
+  margin:10px;
+}    
+  figure{
+  margin-right: 3%;   
+  }
+  figcaption
+  {
+  padding-top:10px;
+  }
 
-.cfsfooter{
-background-size: cover;
-background-color: 	#F0F0F0;
-background-repeat: no-repeat;
-/*set position of div*/
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-margin:0 auto;
-width:auto;
-text-align: center;
-height:auto;
-color:#111;
-padding-top: 5px;
-// opacity: 0.7;
-padding-bottom: 5px;
-    
-}
-#register-user1
-{
-    background-color: #3283b9;
-    
-    padding-bottom:10px;
-    color: #F0F1F1;
-     top:0;
-      margin-left: 0;
-      margin-right:0;
-       margin-bottom: 15px;
-       padding-top: 7px;
-        padding-left: 10px;
-        font-size:15px;
-}
-.unregister{
-    margin-top: 2%;
-    border:1px solid  #3283b9;
-    font-size:15px;
-     background-color:#3283b9 ;
-     color:#fff;
-     padding-top: 10px;
-}
-.unregister-guest{
-    position:absolute;
-    margin-left:7%;
-    overflow-wrap: break-word; 
-}
+.login-img{
+      max-width: 100%;
+      height: 100%;
+      }
 
-.join-meeting-id{
-    border:1px solid #f1343a;
-    background-color: #be181e;
-     margin-top:2%;
-     color:#fff;
-     
-}
-.set-content{
-    position:absolute;
-  top:50%;
-   left:50%;
-   -ms-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-}
-
-.setLogo{
-    height:28px;
-    width:138px;
-     margin:10px; 
+.imgr{
+      max-width: 100%;
+      height:auto;
     }
+
+ @media (max-width: 768px) {
+ .btn-responsive {
+   border-radius:3px;
+  overflow-wrap: break-word;
+  padding: 2px;
+      }
+  }
+              
+  @media (min-width: 769px) and (max-width: 992px) {
+    .btn-responsive {
+    overflow-wrap: break-word;
+    padding:3px;      
+    }
+}
+
+@media (min-width: 992px){
+    .btn-responsive {
+    overflow-wrap: break-word;
+    padding:5px;        
+    }
+}            
+
+@media (max-width: 768px) {
+  #login {
+    border-radius:3px;
+   overflow-wrap: break-word;
+   padding:4px 22px 4px 22px;
+   font-size:1.3vh;
+       }
+   }
+               
+   @media (min-width: 769px) and (max-width: 992px) {
+     #login {
+     overflow-wrap: break-word;
+     padding:6px 25px 6px 25px;
+     font-size:1.4vh; 
+     }
+ }
+
+ @media (min-width: 992px){
+     #login{
+     overflow-wrap: break-word;
+     padding:8px 40px 8px 40px; 
+      
+     }
+ }            
+
+.about{
+  text-align:right;
+  margin-top: 20px;
+ 
+}
+
+.about a{
+  color:#008cba;
+  text-decoration: none;
+}
+
+.faq{
+  text-align:left;
+  margin-top: 20px;
+
+}
+.faq a{
+  color:#008cba;
+  text-decoration: none;
+}
+.guest-user{
+  float: right;
+  border-radius: 5px;
+  margin-top:4%;
+  margin-right: 15px;
+}
+.main{
+  margin-left: 3%;
+   margin-top:20%;
+}
+
+.main h6{
+  margin-top:3%;
+  margin-bottom:2%; 
+}
+
+.username-password{
+  width:90%;
+  margin-bottom: 2%;
+  height:50px;
+}
+
+.log-in
+{
+  border-radius: 5px;
+  padding:8px 40px 8px 40px;
+  font-size: 15px;
+  background-color: #008cba;
+  color:#fff;
+}
+.forgot{
+  margin:7px 10px 0px 20px;
+  text-align: right;
+ 
+}
+.forgot a{
+  color:#008cba;
+  text-decoration: underline;
+  font-size:1.4vh;
+}
+
+.feature{
+  margin-top: 18%;
+  margin-left:1%;
+}
+
+.red-color{
+color:#bd081c;
+}
+
+figcaption{
+font-weight: bold;
+}
+
+.login-block{
+  padding: 40px;
+    margin-bottom: 40px;
+    border: 1px solid #c9c4c5;
+    box-shadow: 10px 10px 10px 10px #c9cacc;
+    background-color: #fff;
+    margin-right:15%;       
+    transition: 0.4s;
+}
+
+
+

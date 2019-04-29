@@ -3,9 +3,10 @@
     <div class="card-header meetingHeader">
         <div class="row">
             <div style="width: 70%; float: left;">
-            <i class="fa fa-calendar-check-o"></i>
+                    <h5><b>Schedule Upcoming Meetings</b></h5>
+            <!-- <h6><i class="fa fa-calendar-check-o"></i>
                 Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
-            <h6 class="style-links">Schedule upcoming meetings</h6>
+            </h6> -->
             </div>
 
             <i class="fa fa-caret-square-o-right cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="joinMeetingNow()"
@@ -102,10 +103,10 @@
         </div>
     </div>
     <!-- <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true"> -->
-        <div class="align-center hand-pointer" *ngIf="selectDateFlag === true" style="text-align: center;">
-            <a style="padding-right:10px; cursor: pointer;" (click)="filterMeetingByDate('all')">All</a>
-            <a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a>
-            <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a>
+        <div class="hand-pointer row align-center" *ngIf="selectDateFlag === true">
+           <div class="col-md-4" > <a style=" cursor: pointer;" (click)="filterMeetingByDate('all')">All</a></div>
+           <div class="col-md-4" ><a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a></div>
+           <div class="col-md-4" > <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a></div>
         </div>
     <!-- </div> -->
     <ul class="accordion">

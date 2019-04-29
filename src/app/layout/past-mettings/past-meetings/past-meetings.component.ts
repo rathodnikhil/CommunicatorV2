@@ -67,7 +67,6 @@ export class PastMeetingsComponent implements OnInit {
             }
         });
     }
-
     downloadMom(data) {
         if (data.mom === '' || data.mom === null || typeof data.mom === 'undefined') {
             return this.alertService.warning('No MOM for this meeting has been added', 'Warning');
@@ -125,7 +124,7 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     loadMore() {
-        const payload = { userCode: this.loggedInUser.userCode, lastMeetingYear: this.lastMeetingYear ,
+        const payload = { lastMeetingYear: this.lastMeetingYear ,
              lastMeetingMonth: this.lastMeetingMonth};
         this.pastMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {

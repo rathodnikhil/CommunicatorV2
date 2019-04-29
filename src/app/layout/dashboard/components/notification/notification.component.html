@@ -15,19 +15,12 @@
     </div>
     <hr class="hr-partition1" />
     <div class="searched-list">
-        <h5 class="searched-title"><b>Recent contacts</b></h5>
+        <h5 class="searched-title"><b>Team Members</b></h5>
     </div>
-
     <div class="member-list">
-
-        <!-- <div style="text-align: center; background-color: #565658; color: white;">
-            <h5>Group member list</h5>
-        </div> -->
-
-        <div class="list-group" style="margin-bottom: 15%;">
-            <!-- <img src="assets/images/loader.gif" class="loader-img" *ngIf="loading"/> -->
-            <div style="color:#0000;" *ngFor="let user of userList | genericSearchAllProp : searchText">
-                <a *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
+        <div  style="margin-bottom: 15%;">
+            <div style="background-color:#ffffff;margin-bottom: 5px;" *ngFor="let user of userList | genericSearchAllProp : searchText">
+                <a style="color: gray;" *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
                     class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
                     <img *ngIf='user.profileImgPath'
                         [src]="user.profileImgPath" alt="Responsive image"
@@ -35,9 +28,9 @@
                     <i class="fa fa-user-circle fa-2x" 
                     *ngIf="user.profileImgPath === null || user.profileImgPath === '' || user.profileImgPath === 'undefined'"></i>
                     <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
-                    <span style="padding-left: 1rem;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
+                    <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
                     </span>
-                    <hr class="list-group-partition" />
+                    <!-- <hr class="list-group-partition" /> -->
                 </a>
             </div>
             <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"

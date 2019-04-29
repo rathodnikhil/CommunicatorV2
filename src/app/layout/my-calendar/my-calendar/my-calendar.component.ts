@@ -18,7 +18,7 @@ export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
     // public loading: boolean;
     lastMeetingStartTime: any;
-    allMeetingByLoggedInUserList = [];
+    // allMeetingByLoggedInUserList = [];
     meetingList = [];
     meetingDetails = {
         meetingCode : '',
@@ -43,6 +43,8 @@ export class MyCalendarComponent implements OnInit {
             start: this.yearMonth + '-01'
         }
     ];
+    lastMeetingMonth: any;
+    lastMeetingYear: any;
     @ViewChild('calenderMeetingSpinner') calenderMeetingSpinnerMod: SpinnerComponent;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @ViewChild('meetingDetailsModal') public meetingDetailsModal: CustomModalComponent;
@@ -67,33 +69,34 @@ export class MyCalendarComponent implements OnInit {
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
+            this.loadMore();
         });
-        const payload = { userCode: this.loggedInUserObj.userCode };
-        this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
-            if (data[0].errorFl || data[0].warningFl) {
-                // this.calenderMeetingSpinnerMod.hideSpinner();
-                return this.alertService.warning(data[0].message, 'Warning');
-            } else {
-                // this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
-                // this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
-                // console.log('CHECK : ' + this.lastMeetingStartTime);
-                data.forEach(element => {
-                    const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
-                    + parseInt(element.duration.split(' Min')[0]) * 60000);
-                    const meeting = {
-                        title: element.subject + '(' + element.meetingCode + ')',
-                        // url: '#/meeting?meetingCode=' + element.meetingCode,
-                        start: new Date(element.meetingStartDateTime),
-                        end: endTime
-                    };
-                    this.ucCalendar.fullCalendar('renderEvent', meeting, true);
-                    // this.calendarOptions.events.render()
-                });
-                this.calenderMeetingSpinnerMod.hideSpinner();
-                this.meetingList = data;
-                // this._spinnerService.hide();
-            }
-        });
+        // const payload = { userCode: this.loggedInUserObj.userCode };
+        // this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
+        //     if (data[0].errorFl || data[0].warningFl) {
+        //         // this.calenderMeetingSpinnerMod.hideSpinner();
+        //         return this.alertService.warning(data[0].message, 'Warning');
+        //     } else {
+        //         // this.lastMeetingStartTime = data[data.length - 1].meetingStartDateTime;
+        //         // this.lastMeetingStartTime = new Date(this.lastMeetingStartTime);
+        //         // console.log('CHECK : ' + this.lastMeetingStartTime);
+        //         data.forEach(element => {
+        //             const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
+        //             + parseInt(element.duration.split(' Min')[0]) * 60000);
+        //             const meeting = {
+        //                 title: element.subject + '(' + element.meetingCode + ')',
+        //                 // url: '#/meeting?meetingCode=' + element.meetingCode,
+        //                 start: new Date(element.meetingStartDateTime),
+        //                 end: endTime
+        //             };
+        //             this.ucCalendar.fullCalendar('renderEvent', meeting, true);
+        //             // this.calendarOptions.events.render()
+        //         });
+        //         this.calenderMeetingSpinnerMod.hideSpinner();
+        //         this.meetingList = data;
+        //         // this._spinnerService.hide();
+        //     }
+        // });
         this.calendarOptions = {
             // theme: true,
             editable: true,
@@ -143,5 +146,36 @@ export class MyCalendarComponent implements OnInit {
     }
     exit() {
         this.meetingDetailsModal.close();
+    }
+    loadMore() {
+        const payload = { lastMeetingYear: this.lastMeetingYear ,
+             lastMeetingMonth: this.lastMeetingMonth};
+      this.calenderMeetingSpinnerMod.showSpinner();
+        this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
+            this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
+            if (this.lastMeetingMonth === 0) {
+                this.lastMeetingYear = this.lastMeetingYear - 1;
+                this.lastMeetingMonth = 12;
+            }
+            if (data[0].errorFl || data[0].warningFl) {
+                return this.alertService.warning(data[0].message, 'Warning');
+            } else {
+                data.forEach(element => {
+                    const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
+                    + parseInt(element.duration.split(' Min')[0]) * 60000);
+                    const meeting = {
+                        title: element.subject + '(' + element.meetingCode + ')',
+                        // url: '#/meeting?meetingCode=' + element.meetingCode,
+                        start: new Date(element.meetingStartDateTime),
+                        end: endTime
+                    };
+                    this.ucCalendar.fullCalendar('renderEvent', meeting, true);
+                    // this.calendarOptions.events.render()
+                });
+                this.calenderMeetingSpinnerMod.hideSpinner();
+                this.meetingList = data;
+            }
+            this.calenderMeetingSpinnerMod.hideSpinner();
+        });
     }
 }

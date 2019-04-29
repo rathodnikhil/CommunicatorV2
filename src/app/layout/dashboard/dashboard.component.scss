@@ -1,7 +1,7 @@
 @import "styles/customStyle.css";
 .userlist-header{
     //background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
-    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+   // background-image: url(/assets/images/header-small.png);
     color:#ffffff;
     border-right: 1px solid #dadadc;
    // opacity: 0.85;
@@ -10,7 +10,7 @@
     &:first-child{
         opacity: 1;
     }
-
+    background-color: #980e06;
 }
 .check-label {
     font-weight: bold; padding-left: 10px;

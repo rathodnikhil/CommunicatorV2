@@ -22,14 +22,14 @@ export class TeamService {
     constructor(private http: Http , loginService: LoginService , private apiRequest: ApiRequestService) {
       this._loginService = loginService;
      }
-    getTeamsByLoggedInUserId(payload) {
-          const url = environment.baseUrl + 'getTeamsByLoggedInUserId?userCode=' + payload.userCode;
-          return this.apiRequest.post(url, payload);
+    getTeamsByLoggedInUserId() {
+          const url = environment.baseUrl + 'getTeamsByLoggedInUserId';
+          return this.apiRequest.post(url, null);
 
     }
-      getMemberListByLoggedInUserId(payload) {
-        const url = environment.baseUrl + 'getMembersByLoggedInUserId?userCode=' + payload.userCode;
-        return this.apiRequest.post(url, payload);
+      getMemberListByLoggedInUserId() {
+        const url = environment.baseUrl + 'getMembersByLoggedInUserId';
+        return this.apiRequest.post(url, null);
       }
        getAllEnableTeams() {
         const url = environment.baseUrl + 'getAllEnableTeams';

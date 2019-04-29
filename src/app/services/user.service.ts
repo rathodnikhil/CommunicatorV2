@@ -58,9 +58,9 @@ export class UserService {
         const url = environment.baseUrl + 'verifyUser';
         return this.http.post(url, payload);
     }
-    setUserList(payload) {
-        const url = environment.baseUrl + 'memberListByUser?userCode=' + payload.userCode;
-        this.apiRequest.post(url, payload).subscribe(data => {
+    setUserList() {
+        const url = environment.baseUrl + 'memberListByUser';
+        this.apiRequest.post(url , null).subscribe(data => {
             this.UserList$.next(data);
         });
     }
@@ -96,6 +96,7 @@ export class UserService {
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
+        debugger;
         if (payload.isGuest) {
             // save guest user
             const url = environment.baseUrl + 'saveGuestUserDetails';
@@ -137,7 +138,7 @@ export class UserService {
         return this.apiRequest.post(url, payload);
     }
     searchWholememberList(payload) {
-        const url = environment.baseUrl + 'searchWholememberList?searchText=' + payload.searchText + '&userCode=' + payload.userCode;
+        const url = environment.baseUrl + 'searchWholememberList?searchText=' + payload.searchText ;
         return this.apiRequest.post(url, payload);
     }
     SaveUserPermission(payload) {
@@ -148,9 +149,9 @@ export class UserService {
         const url = environment.baseUrl + 'addNewMemberFromWholeList';
         return this.apiRequest.post(url, payload);
     }
-    getGuestUsersByLoggedInUser(payload) {
-        const url = environment.baseUrl + 'getGuestUsersByLoggedInUser?userCode=' + payload.userCode;
-        return this.apiRequest.post(url, payload);
+    getGuestUsersByLoggedInUser() {
+        const url = environment.baseUrl + 'getGuestUsersByLoggedInUser';
+        return this.apiRequest.post(url, null);
     }
     deleteUser(payload) {
         const url = environment.baseUrl + 'deleteUser?userCode=' + payload.userCode;

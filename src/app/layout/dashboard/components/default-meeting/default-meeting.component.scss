@@ -66,13 +66,19 @@
 }
 
 .date-period-select {
-    border-left: 2px solid #353535;;
-    padding-left: 10px;
-    padding-right: 10px;
+    // border-left: 2px solid #353535;;
+    // padding-left: 10px;
+    // padding-right: 10px;
    // height: 25%;
+  // padding: 10px;
+  //margin: 10px;
     cursor: pointer;
 }
-
+.date-period-select a:active
+{
+    text-decoration: underline;
+    color: red;
+}
 .align-center {
     // margin: 2%;
     margin: auto;
@@ -259,7 +265,7 @@
 }
 
 .card-body {
-    background-color:#eaeaea;
+    background-color:#f9e0e2;
     // margin: auto;
 }
 
@@ -270,7 +276,7 @@
     height: auto;
    // opacity: 0.85;
     //background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
-    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+    background-image: url(/assets/images/header-small.png);
 
 }
 
@@ -403,6 +409,9 @@ $border-color: #e0e0e0;
 }
 .hand-pointer a{
     cursor: pointer;
+}
+.hand-pointer div{
+    text-align: center;
 }
 .outlook-email-background
     {

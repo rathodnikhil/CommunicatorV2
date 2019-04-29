@@ -39,9 +39,9 @@ export class MeetingService {
             return resp;
         }
     // future meeting list webservice details
-    setFutureMeetimgList(payload) {
-        const url = environment.baseUrl + 'getFutureMeetingByUser?userCode=' + payload.userCode;
-        this.apiRequest.post(url, payload).subscribe(data => {
+    setFutureMeetimgList() {
+        const url = environment.baseUrl + 'getFutureMeetingByUser';
+        this.apiRequest.post(url, null).subscribe(data => {
             this.futureMeetingList$.next(data);
             });
     }
@@ -63,8 +63,8 @@ export class MeetingService {
         return this.recentMeeting$;
     }
     getPastMeetingsByMonth(payload) {
-        const url = environment.baseUrl + 'getPastMeetingsByMonth?userCode=' + payload.userCode + '&lastMeetingYear=' +
-         payload.lastMeetingYear + '&lastMeetingMonth=' + payload.lastMeetingMonth;
+        const url = environment.baseUrl + 'getPastMeetingsByMonth?lastMeetingYear=' +
+        payload.lastMeetingYear + '&lastMeetingMonth=' + payload.lastMeetingMonth;
         return this.apiRequest.post(url, payload);
     }
     getMeetingAttendee(payload) {
@@ -96,7 +96,7 @@ export class MeetingService {
         return this.apiRequest.post(url, payload);
     }
     cancelMeeting(payload) {
-        const url = environment.baseUrl + 'cancelMeeting?userCode=' + payload.userCode + '&meetingCode=' + payload.meetingCode;
+        const url = environment.baseUrl + 'cancelMeeting?meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
     getRemeberEmails(payload) {

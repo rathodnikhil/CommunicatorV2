@@ -1,4 +1,4 @@
-<div class="container-bg">
+<!-- <div class="container-bg">
   <div class="logo-background">
     <img src="assets/images/color-logo1.png" class="center logo" alt="Responsive image" />
   </div>
@@ -35,8 +35,9 @@
           </div>
 
           <fieldset id="actions">
-            <input type="submit" id="submit" class="btn btn-sec" value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;"  [disabled]="isMeetingCodeInValid ? 'disabled' : null"/>
-            <!-- <a href="/#/login/meeting?meetingCode={{meetingCode}}">I am a registered user</a> -->
+            <input type="submit" id="submit" class="btn btn-sec" value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;" 
+             [disabled]="isMeetingCodeInValid ? 'disabled' : null"/>
+            <a href="/#/login/meeting?meetingCode={{meetingCode}}">I am a registered user</a> 
             <a [routerLink]="['/login']">I am a registered user</a>
             
           </fieldset>
@@ -52,4 +53,66 @@
     <img class="card-img setlogo" src="assets/images/coreflex-logo.png" style="height:28px;width:140px; margin:10px; "><br>
 <b>Copyright &copy; 2018 Coreflex Solutions</b>
 </div>
+</div> -->
+
+
+
+
+<div class="container-bg">  
+  <div class="logo-background" style="position:relative;">
+      <img src="assets/images/header.png" alt="Responsive image"  height="50" width="100%">
+      <div class="col-md-12 ">
+          <div class="row">
+          <div class="col-md-9 col-sm-4 col-6">
+                  <img src="assets/images/logo.png" class="logo imgr center" alt="Responsive image"/>
+          </div>
+          <div class="col-md-2 col-sm-5 col-4 about">
+            <b><a href="http://xanadutec.com/communicator.html"  target="_blank">ABOUT COMMUNICATOR</a> </b>
+          </div>
+          <div class="col-md-1 col-sm-3 col-2 faq">
+            <a href="http://xanadutec.com/faq.html" target="_blank"><b>FAQs</b> </a> 
+          </div>
+    </div> 
+    </div>
+    </div> 
+
+  <div class="d-flex justify-content-center">
+    <div id="login" class="col-lg-4 col-col-md-6 col-sm-7 col-10 guest-user-login " style="margin-top:10%;">
+        <h4 class="red-color guest"><b> Guest User Log In</b></h4> 
+          <div class="enter-name">Kindly enter your name:</div>
+          <div class="input-group mb-3" style="padding:0px 15px 5px 15px;">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-user"></i> 
+              </span>
+            </div>
+            <input class="form-control" autofocus type="text" placeholder="Full Name" [(ngModel)]="userName" (keyup)="onKey($event)"
+            required>
+          </div>
+          <div class="input-group mb-3" style="padding:0px 15px 5px 15px;">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-id-card-o"></i>
+              </span>
+            </div>
+            <input class="form-control"  type="text" placeholder="Meeting Id" [(ngModel)]="meetingCode"  
+            (keyup)="onKey($event)" required>
+          </div>
+          <div class="row" style="margin-top: 5%;margin-bottom:5%;">
+              <div class="col-md-5">
+              <button  value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;" [disabled]="isMeetingCodeInValid ? 'disabled' : null"
+              id="continue" type="button" class=" btn btn-default continue"><b>Continue</b></button>
+            </div>
+              <div class="col-md-7">
+              <h5 class="forgot"><b><a [routerLink]="['/login']">I am a registered user</a></b></h5> 
+            </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: none;">
+    <label id="isScreenSharePopupClosed"></label>
+    <label id="isRecordScreenPopupClosed"></label>
 </div>
+</div>
+<app-footer></app-footer> 
+
