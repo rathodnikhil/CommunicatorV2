@@ -9,8 +9,10 @@
     flex: 1 1 auto;
     overflow-y: hidden;
   //  background-image: url(/assets/images/Coreflex-solutions-popup.jpg);
-  background-color: #f9e0e2;
+    background-color: #fff;
     background-size: cover;
+    padding: 1.25rem 0 1.25rem 1rem;
+    overflow-x: hidden;
 }
 
 .searched-list{
@@ -35,6 +37,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 50%; 
+    padding-right: 10px;
+    padding-left:7px;
+    background-color:#f9e0e2;
 }
 .circleMeetingJoin {
     position: relative;
@@ -141,9 +146,9 @@
     padding-right: 1%;
  }
  .profile-img{
-    width: 35px; 
-    height: 35px;
-    padding: 2px;
+    width: 30px; 
+    height: 30px;
+    // padding: 2px;
     border:1px solid #fff;
 }
 .loader-img{
@@ -151,4 +156,13 @@
     height: 100px; 
     position: absolute;
     left: 30%;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f5f5f5;
+}
+.team-member{
+    color: #008cba;
+    font-weight: bold;
 }
