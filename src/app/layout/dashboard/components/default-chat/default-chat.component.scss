@@ -1,7 +1,7 @@
 @import "styles/customStyle.css";
 .label-h6 {
     // color:  #999999;
-    color:#3283b9;
+    color:#008cba;
     padding-top:2%;
     font-weight: bold;
     font-size:15px;
@@ -64,13 +64,13 @@
     }
 
     .edit-icon{
-        margin-top: -160px; 
-        margin-right: -170px;
+        margin-top: -110px; 
+        margin-right: -140px;
     }
 
     .edit-circle-icon-background {
         // color: #b031fa;
-        color: #fd7e14;
+        color: #28a745;
         margin-left: -2px;
     }  
     
@@ -84,7 +84,7 @@
         border-top: 0;
         background: #c4e17f;
         border-radius: 5px;
-        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #28a745 25%, #28a745 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
     }
 
     //edit user profile circle
@@ -103,7 +103,7 @@
         font-size:15px;
         margin-top:2%;
         font-weight:bold;
-        // background-color: #fecf71;
+        // background-color: #28a745;
         background-color:#bc151b;
         border-color: #bc151b;
         color:white;
@@ -111,7 +111,7 @@
         }
         
         .explore:hover{
-            background-color: #fecf71;
+            background-color: #28a745;
             color:black;
             border: 1px solid #e79a00;
         }
@@ -123,13 +123,13 @@
 {
 	// width:350px;height:200px;
 	border: solid 1px #fff;
-	background-color: #eff9ff;
+	background-color: #ffffff;
 	// box-shadow: 10px -10px 5px  rgba(184, 183, 183, 0.6);
 	// -moz-box-shadow: 10px -10px 5px  rgba(184, 183, 183, 0.6);
 	// -webkit-box-shadow: 10px -10px 5px  rgba(184, 183, 183, 0.6);
 	// -o-box-shadow: 10px -10px 5px  rgba(184, 183, 183, 0.6);
     border-radius:10px;
-    margin: 5px;
+    margin: 8px;
 
     text-align: center;
     // width:100%;

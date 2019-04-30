@@ -8,7 +8,7 @@
     /* color: #ffffff; */
     border: 1px solid #e09600;
     color: #000;
-    background-color: #fecf71;
+    background-color: #28a745;
     padding: 0.375rem 0.75rem;
 }
 .btn-sec:hover{
@@ -54,7 +54,7 @@
         width: 15%;
         float:left;
         padding: 15px;
-        background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+        background: linear-gradient(to left, #008cba 32%, #115c7d 100%);
         color: #ffffff;
         font-weight: bold;
     }
@@ -78,7 +78,7 @@
         border: 1px solid #bdb9b9;
         text-align: left;
         padding: 8px;
-        background: #3283b9;
+        background: #585858;
         opacity: 0.85;
         color: #ffffff;
     }
@@ -107,7 +107,7 @@
     cursor: pointer;
     }
     .btn.btn-secondary {
-        background:  #3283b9;
+        background:  #008cba;
         /* color:  #353535; */
         border-color:  #1d7bb9;
         border-radius: 0px 5px 5px 0px;

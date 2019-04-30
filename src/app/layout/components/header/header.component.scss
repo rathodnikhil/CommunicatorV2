@@ -78,11 +78,11 @@
         height: auto;
         font-size: 20px;
         line-height: 44px;
-        background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+        background: linear-gradient(to left, #008cba 32%, #115c7d 100%);
         &:hover,
         &:active,
         &:focus {
-         //  background: linear-gradient(to left, #3283b9 32%, #115c7d 100%);
+         //  background: linear-gradient(to left, #008cba 32%, #115c7d 100%);
             background-image: url(/assets/images/Coreflex-solutions-header.jpg);
         }
     }

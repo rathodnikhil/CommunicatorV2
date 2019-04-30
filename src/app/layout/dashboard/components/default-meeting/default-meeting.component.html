@@ -1,6 +1,6 @@
 <app-spinner #defaultMeetingSpinner></app-spinner>
 <div #chatPanel class="chat-panel card card-default">
-    <div class="card-header meetingHeader">
+    <div class="card-header meetingHeader" style="   background-color: #980e06;">
         <div class="row">
             <div style="width: 70%; float: left;">
                     <h5><b>Schedule Upcoming Meetings</b></h5>
@@ -103,7 +103,7 @@
         </div>
     </div>
     <!-- <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true"> -->
-        <div style="background-color: rgba(0, 0, 0, 0.03);">
+        <div>
                 <h5 class="text-color" style="padding:1%;">Filter Meetings</h5>
         <div class="filter-meeting">
         <div class="hand-pointer row align-center"  *ngIf="selectDateFlag === true">
@@ -146,7 +146,7 @@
                     </div>
                     <div style="text-align: center;margin:0 auto;padding: 10px;">
                         <button class="btn btn-primary" (click)="filterMeetingByDate('range')" #serachDateField>Search</button>
-                        <button class="btn btn-primary" (click)="filterMeetingByDate('clear')" #clearDateField>Clear</button>
+                        <button class="btn btn-danger" (click)="filterMeetingByDate('clear')" #clearDateField>Clear</button>
                     </div>
                 </div>
             </ul>
@@ -156,28 +156,29 @@
  </div>
 
     <div class="card-header">
-        <div class="row">
-            <div class="col-md-6">
-                <i class="fa fa-calendar"></i>
-                <span style="font-weight: bold; font-size: 14px;">{{currentDate | date:'fullDate'}}</span>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group input-group">
-                    <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search"
-                        [(ngModel)]="searchText">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary btn-search" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!-- <hr class="hr-partition" /> -->
-            <!-- <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4> -->
-             <h5 class="text-color">Future Meetings</h5>
-        </div>
-        <div class="row">                
+            <h5 class="text-color">Upcoming Meetings</h5>
+        <div class="row">   
             <div #chatBody class="card-body">
+                    <h4 style="color: #bd081c; font-weight:bold;">{{selectedCriteria}}</h4>
+                    <div class="row">
+                            <div class="col-md-6">
+                                <i class="fa fa-calendar"></i>
+                                <span style="font-weight: bold; font-size: 14px;">{{currentDate | date:'fullDate'}}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group input-group">
+                                    <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search"
+                                        [(ngModel)]="searchText">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary btn-search" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <hr class="hr-partition" /> -->
+                            <!-- <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4> -->
+                        </div>             
                 <ul class="chat">
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText"    class="left clearfix">
                         <div class="row">

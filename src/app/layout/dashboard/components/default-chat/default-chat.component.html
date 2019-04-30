@@ -1,5 +1,5 @@
 <div class="row">
-        <div [ngClass]="loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE'?'col-lg-7':'col-lg-12'" style="padding:0px; background-color: white;">
+        <div [ngClass]="loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE'?'col-lg-7':'col-lg-12'" style="padding:0px; background-color: #f4f2f3;">
                 <div class="background">
                         <ng-template [ngIf]="loggedInUserObj.meetingPermissionStatus.status === 'INACTIVE'" [ngIfElse]="notAdmin">
                             <img class="header-img" src="assets\images\logo.png">

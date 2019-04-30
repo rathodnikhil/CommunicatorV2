@@ -283,8 +283,8 @@
     height: 6vh;
    // opacity: 0.85;
     //background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
-    background-image: url(/assets/images/header-small.png);
-
+   // background-image: url(/assets/images/footer.png);
+ 
 }
 
 .btn-sec {
@@ -374,6 +374,8 @@ $border-color: #e0e0e0;
 	width: 100%;
     display: block;
     font-size: 14px;
+    background-color: #eff9ff;
+    padding: 10px;
    // color: #999;
 
 }
@@ -485,8 +487,8 @@ $border-color: #e0e0e0;
     word-break:break-all;
 }
 .btn-search{
-    background-color: #fecf71;
-    border-color: #fecf71;
+    background-color: #28a745;
+    border-color: #28a745;
     color:black;
  }
 
@@ -518,7 +520,7 @@ $border-color: #e0e0e0;
     padding: 0.75rem 1.25rem;
     margin-bottom: 0;
     /* background-color: rgba(0, 0, 0, 0.03); */
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: #ffffff;
      border-bottom:none;
 }
 .filter-meeting{
@@ -532,3 +534,17 @@ $border-color: #e0e0e0;
     color:#008cba;
     font-weight:bold;
 }
+.inner-addon { 
+    position: relative; 
+}
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+
+.right-addon .glyphicon { right: 0px;}
+
+.right-addon input { padding-right: 30px; }
