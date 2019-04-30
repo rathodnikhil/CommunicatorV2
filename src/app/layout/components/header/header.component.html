@@ -15,7 +15,6 @@
             <a style="float:right;width:20%"><i class="fa fa-close" (click)="hamburger_cross()" style="float:right; color: white;"></i></a>
         </li>
         <li>
-            <!-- <a *ngIf="this.router.url.toString().indexOf('meeting')>0">asdapidja</a> -->
             <a *ngIf="this.router.url.toString().indexOf('meeting')>0" target="_blank" [routerLink]="['/dashboard/default']"
                 (click)="hamburger_cross()">
                 <i class="fa fa-home" aria-hidden="true"></i> Dashboard</a>
