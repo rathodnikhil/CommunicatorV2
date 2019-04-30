@@ -66,22 +66,22 @@ h1:before {
 }
 
 h1:after {
-    background-image: -webkit-gradient(linear, left top, right top, from(#3283b9), to(#fff));
-    background-image: -webkit-linear-gradient(to left, #3283b9, #fff);
-    background-image: -moz-linear-gradient(to left, #3283b9, #fff);
-    background-image: -ms-linear-gradient(to left, #3283b9, #fff);
-    background-image: -o-linear-gradient(to left,#3283b9, #fff);
-    background-image: linear-gradient(to left, #3283b9, #fff);
+    background-image: -webkit-gradient(linear, left top, right top, from(#008cba), to(#fff));
+    background-image: -webkit-linear-gradient(to left, #008cba, #fff);
+    background-image: -moz-linear-gradient(to left, #008cba, #fff);
+    background-image: -ms-linear-gradient(to left, #008cba, #fff);
+    background-image: -o-linear-gradient(to left,#008cba, #fff);
+    background-image: linear-gradient(to left, #008cba, #fff);
     right: 0;
 }
 
 h1:before {
-    background-image: -webkit-gradient(linear, left top, right top, from(#3283b9), to(#fff));
-    background-image: -webkit-linear-gradient(to right, #3283b9, #fff);
-    background-image: -moz-linear-gradient(to right, #3283b9, #fff);
-    background-image: -ms-linear-gradient(to right, #3283b9, #fff);
-    background-image: -o-linear-gradient(to right,#3283b9, #fff);
-    background-image: linear-gradient(to right, #3283b9, #fff);
+    background-image: -webkit-gradient(linear, left top, right top, from(#008cba), to(#fff));
+    background-image: -webkit-linear-gradient(to right, #008cba, #fff);
+    background-image: -moz-linear-gradient(to right, #008cba, #fff);
+    background-image: -ms-linear-gradient(to right, #008cba, #fff);
+    background-image: -o-linear-gradient(to right,#008cba, #fff);
+    background-image: linear-gradient(to right, #008cba, #fff);
     left: 0;
 }
 
@@ -286,7 +286,7 @@ font-size: 0.9em;
 // }
 
 // #register-user{
-//     color:#3283b9;
+//     color:#008cba;
 //      font-weight: bold; 
 //      font-size: 13px;
      
@@ -322,7 +322,7 @@ padding-bottom: 5px;
 }
 #register-user1
 {
-    background-color: #3283b9;
+    background-color: #008cba;
     
     padding-bottom:10px;
     color: #F0F1F1;
@@ -336,9 +336,9 @@ padding-bottom: 5px;
 }
 .unregister{
     margin-top: 2%;
-    border:1px solid  #3283b9;
+    border:1px solid  #008cba;
     font-size:15px;
-     background-color:#3283b9 ;
+     background-color:#008cba ;
      color:#fff;
      padding-top: 10px;
 }
