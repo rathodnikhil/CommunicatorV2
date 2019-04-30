@@ -1,4 +1,7 @@
 <app-spinner #pastMeetingSpinner></app-spinner>
+<div id="loading" *ngIf="loading">
+    <img id="loading-image" src="assets/images/loading.gif" />
+</div>
 <div class="main-container">
     <div class="header">
         <div class="row">
@@ -16,10 +19,10 @@
                 <h3>Past Meetings Details</h3>
             </div>
             <div class="align-center" class="col-md-3">
-                <div class="form-group input-group" style="padding-top:5px;">
+                <div class="form-group input-group padding-top-5">
                     <input type="text" class="form-control" placeholder="Search"  placeholder="Date/Meeting Id/Status" [(ngModel)]="searchText">
                     <div class="input-group-append">
-                        <button class="btn" style="background-color: #fecf71; color: black;" type="button">
+                        <button class="btn search-past-meetings" type="button">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -42,25 +45,28 @@
                     <td>{{meeting.meetingCode}}</td>
                     <td>{{meeting.subject}}</td>
                     <td>
-                        <i class="fa fa-users" aria-hidden="true" (click)="viewAttendee(meeting)" style="cursor: pointer; color: brown;"></i>   
+                        <i class="fa fa-users view-attendee-icon" aria-hidden="true" (click)="viewAttendee(meeting)"></i>   
                         <!-- 546e7a -->
                     </td>
                     <td>{{meeting.status.status}}</td>
                     <td>
-                        <!-- <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i> -->
                         <i (click)="downloadMom(meeting)" class="fa fa-file-text-o download-file"></i>
                     </td>
                 </tr>
             </table>
-            <div class="col-md-12 pageControl">
-                <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
-                    [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                    [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                    (pageChange)="onPageChange($event)">
-                </pagination-controls>
-                <button class="btn btn-sec margin-left-5px" style="align:align-center;"
-                            (click)="loadMore()">Load more</button>
-            </div>
+                <div class="row col-md-12">
+                        <div class="col-md-11 pageControl">
+                                <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+                                [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                                [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                                (pageChange)="onPageChange($event)">
+                            </pagination-controls>
+                        </div>
+                        <div class="col-md-1 padding-top-10">
+                         <button type="button" class="btn btn-success btn-responsive btn-loadMore-border-radius"
+                                    (click)="loadMore()">Load more</button>
+                                    </div>
+                </div>
             <app-custom-modal #viewAttendeeModal [model]="attendee">
                 <div class="modal-body row-label">
                     <h3>Attendee List</h3>
