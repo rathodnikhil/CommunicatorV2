@@ -1,48 +1,57 @@
 <app-spinner #notificationSpinner></app-spinner>
 <div class="card-body">
-        <h5 class="searched-title" class="team-member"><b>Team Members</b></h5>
-<div style="background-color:#f9e0e2;border-radius:3px;">
+        <h5 class="searched-title" class="team-member"><b>Filter Members</b></h5>
+<div style="background-color: #f9e0e2;
+padding: 15px 15px 2px 15px;
+margin: 0.3rem;
+border-radius: 3px;">
     <div class="form-group input-group" style="padding-top:10px;">
-        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+        <!-- <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
         <div class="input-group-append">
             <button class="btn btn-search" type="button">
                 <i class="fa fa-search"></i>
             </button>
-        </div>
+        </div> -->
+        <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
     </div>
     <div style="text-align: center; padding-bottom: 15px;">
-        <button class="btn btn-sec"(click)="searchInWholeMemberList()">Search in all members</button>
+        <button class="btn btn-search"(click)="searchInWholeMemberList()">Search in all members</button>
         <!-- Try to search in whole memberlist -->
     </div>  
-</div>  
+</div>   
   
-    <div class="member-list">
-            <div  style="margin-bottom: 15%;">
+    <div class="member-list" style="background-color: #ffffff;margin-top: 10px;">
+        <div><h5 class="searched-title" class="team-member"><b>Team Members</b></h5></div>
+        <div  style="margin-bottom: 5%; background-color: #f9e0e2; padding: 10px;">
             <div style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px;" *ngFor="let user of userList | genericSearchAllProp : searchText">
                 <a style="color: gray;" *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
                     class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
-                    <img *ngIf='user.profileImgPath'
+                    <!-- <img *ngIf='user.profileImgPath'
                         [src]="user.profileImgPath" alt="Responsive image"
-                        class="rounded-circle profile-img img-fluid" />
-                    <i class="fa fa-user-circle fa-2x" 
-                    *ngIf="user.profileImgPath === null || user.profileImgPath === '' || user.profileImgPath === 'undefined'"></i>
+                        class="rounded-circle profile-img img-fluid" /> -->
+                        <img src="/assets/images/member-icon.png" style="width: 30px; height: 30px;"/>
+                    <!-- <i class="fa fa-user-circle fa-2x" 
+                    *ngIf="user.profileImgPath === null || user.profileImgPath === '' || user.profileImgPath === 'undefined'"></i> -->
                     <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
                     <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
                     </span>
                     <!-- <hr class="list-group-partition" /> -->
                 </a>
             </div>
-            <div style="background-color: #eff9ff;padding: 10px;">
-            <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
-                style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;"
-                (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
-                <!-- *ngIf="group.groupId.status.status === 'ACTIVE'" -->
-                <i class="fa fa-users"></i>
-                <span style="padding-left: 1rem; color:#000;">{{group.groupId.groupName}}&nbsp;</span>
-                <!-- <hr class="list-group-partition" /> -->
-            </a>
         </div>
-        </div>
+        <div><h5 class="searched-title" class="team-member"><b>Groups</b></h5></div>
+            <div style="background-color: #f9e0e2;padding: 10px;">
+                <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
+                    style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;"
+                    (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
+                    <!-- *ngIf="group.groupId.status.status === 'ACTIVE'" -->
+                    <!-- <i class="fa fa-users"></i> -->
+                    <img src="/assets/images/group-icon.png" style="width: 30px; height: 30px;"/>
+                    <span style="padding-left: 1rem; color:#000;">{{group.groupId.groupName}}&nbsp;</span>
+                    <!-- <hr class="list-group-partition" /> -->
+                </a>
+            </div>
+        
         <!-- <div style="text-align: center;"> <button class="btn btn-primary"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div> -->
         <hr class="hr-partition" />
         <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText">
