@@ -41,6 +41,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     selectedEmails: any;
     selectedCcEmails: any;
     isAdministrator = false;
+    activeAll = true;
+    activeToday = false;
+    activeTomorrow = false;
     @ViewChild('defaultMeetingSpinner') defaultMeetingSpinnerMod: SpinnerComponent;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
@@ -140,6 +143,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.filteredFutureMeetingList = [];
         switch (mode) {
             case 'today':
+                this.activeToday = true;
+                this.activeAll = false;
+                this.activeTomorrow = false;
                 this.selectedCriteria = 'Today';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
@@ -151,6 +157,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'tomorrow':
+            this.activeToday = false;
+            this.activeAll = false ;
+            this.activeTomorrow = true;
                 this.selectedCriteria = 'Tomorrow';
                 this.futureMeetingList.forEach(meeting => {
                     const meetingDate = new Date(meeting.meetingStartDateTime);
@@ -182,6 +191,9 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 }
                 break;
             default:
+                this.activeToday = false;
+                this.activeAll = true ;
+                this.activeTomorrow = false;
                 this.selectedCriteria = 'All';
                 this.filteredFutureMeetingList = this.futureMeetingList;
                 this.selectedfromDate = '';

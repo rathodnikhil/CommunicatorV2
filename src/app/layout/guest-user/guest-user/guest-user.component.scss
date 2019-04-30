@@ -22,13 +22,13 @@
 .header{
     position:absolute; 
     top:0px; left:0px; 
-    height:90px; 
+    height:70px; 
     right:0px;
     padding-top: 20px;
     color: white;
     overflow:hidden;
     text-align: center;
-    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+    background-image: url(/assets/images/Coreflex-solutions-header.png);
 }
 
 .body-container{
@@ -50,3 +50,8 @@
     overflow:hidden;
 }
 
+.search-guest-users
+{
+    background-color: #008cba;
+     color: #ffff;
+}
