@@ -27,14 +27,15 @@
             }
         } // height: 75vh;
         overflow-y: hidden;
+        overflow-x: hidden;
         margin: 0;
         padding: 0;
         list-style: none;
         li {
-            margin-bottom: 10px;
-            margin-right: 15px;
+            margin-bottom: 5px;
+            // margin-right: 15px;
             padding-bottom: 5px;
-            border-bottom: 1px dotted #999;       
+            // border-bottom: 1px dotted #999;       
         }
     }
     .card-footer {
@@ -195,9 +196,13 @@
 }
 
 .chat li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     padding-bottom: 5px;
-    border-bottom: 1px dotted #B3A9A9;
+   
+    background-color: #fff;
+    padding: 10px;
+    border-radius:5px;
+
 }
 
 .chat li.left .chat-body {
@@ -266,6 +271,7 @@
 
 .card-body {
     background-color:#f9e0e2;
+    padding:0.5rem;
     // margin: auto;
 }
 
@@ -335,18 +341,19 @@ $border-color: #e0e0e0;
 }
 
 .accordion{
-    background-image: url(/assets/images/Coreflex-solutions-login-id.jpg);
+    //*background-image: url(/assets/images/Coreflex-solutions-login-id.jpg);
     cursor: pointer;
     text-align: center;
     font: Arial, Helvetica;
     font-weight: bold;    
     color: #111;
      list-style-type: none;
-  border: 1px solid $border-color;
+  //*border: 1px solid $border-color;
   width: 100%;
   text-align: center;
   padding-right: 35px;
   font-weight: bold;
+  margin-top:4%;
 
 }
 
@@ -362,10 +369,11 @@ $border-color: #e0e0e0;
 }
 
 .accordion-label{
-    padding: 10px;
+   //* padding: 10px;
     padding-left: 0px;
 	width: 100%;
     display: block;
+    font-size: 14px;
    // color: #999;
 
 }
@@ -488,3 +496,39 @@ $border-color: #e0e0e0;
     position: absolute;
     left: 40%;
  }
+
+/*new ui changes*/
+.underline a {
+ padding-bottom: 3px;
+  border-bottom: 3px solid #bd081c;
+}
+
+.chat-panel{
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    // background-color: rgba(0, 0, 0, 0.03);
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    /* background-color: rgba(0, 0, 0, 0.03); */
+    background-color: rgba(0, 0, 0, 0.03);
+     border-bottom:none;
+}
+.filter-meeting{
+    background-color: #f9e0e2;
+    padding: 15px 15px 2px 15px;
+    margin: 0.3rem;
+    border-radius: 3px;
+}
+
+.text-color{
+    color:#008cba;
+    font-weight:bold;
+}

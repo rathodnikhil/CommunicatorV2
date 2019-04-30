@@ -103,10 +103,13 @@
         </div>
     </div>
     <!-- <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true"> -->
-        <div class="hand-pointer row align-center" *ngIf="selectDateFlag === true">
-           <div class="col-md-4" > <a style=" cursor: pointer;" (click)="filterMeetingByDate('all')">All</a></div>
-           <div class="col-md-4" ><a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a></div>
-           <div class="col-md-4" > <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a></div>
+        <div style="background-color: rgba(0, 0, 0, 0.03);">
+                <h5 class="text-color" style="padding:1%;">Filter Meetings</h5>
+        <div class="filter-meeting">
+        <div class="hand-pointer row align-center"  *ngIf="selectDateFlag === true">
+           <div class="col-md-4" [ngClass]="{'underline':activeAll}" > <a style=" cursor: pointer;" (click)="filterMeetingByDate('all')">All</a></div>
+           <div class="col-md-4" [ngClass]="{'underline':activeToday}" ><a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a></div>
+           <div class="col-md-4" [ngClass]="{'underline':activeTomorrow}"> <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a></div>
         </div>
     <!-- </div> -->
     <ul class="accordion">
@@ -149,6 +152,8 @@
             </ul>
         </li>
     </ul>
+</div>
+ </div>
 
     <div class="card-header">
         <div class="row">
@@ -167,8 +172,9 @@
                     </div>
                 </div>
             </div>
-            <hr class="hr-partition" />
-            <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4>
+            <!-- <hr class="hr-partition" /> -->
+            <!-- <h4 style="color:#2d75a6;font-weight:bold;">{{selectedCriteria}}</h4> -->
+             <h5 class="text-color">Future Meetings</h5>
         </div>
         <div class="row">                
             <div #chatBody class="card-body">
