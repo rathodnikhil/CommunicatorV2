@@ -1,18 +1,19 @@
 <div class="row">
-        <div [ngClass]="loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE'?'col-lg-7':'col-lg-12'" style="padding:0px;">
-            <div class="card-default" style="overflow: auto;">
-                <div class="details-container">
-                    <div class="background">
-                            <ng-template [ngIf]="loggedInUserObj.meetingPermissionStatus.status === 'INACTIVE'" [ngIfElse]="notAdmin">
-                                <img class="header-img" src="assets\images\logo.png">
-                            </ng-template>
-                                  
-                            <ng-template #notAdmin>
-                                <img style="float:left;" class="header-img" src="assets\images\logo.png">
-                            </ng-template>
-                    </div>
-                    <div class="colorgraph"></div>
+        <div [ngClass]="loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE'?'col-lg-7':'col-lg-12'" style="padding:0px; background-color: white;">
+                <div class="background">
+                        <ng-template [ngIf]="loggedInUserObj.meetingPermissionStatus.status === 'INACTIVE'" [ngIfElse]="notAdmin">
+                            <img class="header-img" src="assets\images\logo.png">
+                        </ng-template>
+                              
+                        <ng-template #notAdmin>
+                            <img style="float:left;" class="header-img" src="assets\images\logo.png">
+                        </ng-template>
+                </div>
+            <!-- <div style="overflow: auto;"> -->
+                <div class="roundedCorner">
                     
+                    <!-- <div class="colorgraph"></div> -->
+                    <!-- <div class="roundedCorner"> -->
                     <h3 class="header-label" style="margin-top:7%;"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
                     </h3>
                     <p><img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath" alt="Responsive image"
@@ -55,14 +56,14 @@
                                     CoreFlex Communicator</a>
                             </div>
                         </div>-->
-                        <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary explore"
+                        <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary"
                         role="button">Explore
                         CoreFlex Communicator</a>
                          <!-- <h6 class="membername text-center">To easily log in later, save this URL:
                             <span style="color: #be181e;" >https://cfscommunicator.com</span></h6>  -->
                     </div>
                     <!-- </div> -->
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     

@@ -87,11 +87,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._meetingService = meetingService;
     }
     ngOnInit() {
+
         this.selectDateFlag = true;
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';
         this.showScheduleMeetingFl = false;
-        // loggedInUser web service call
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
                 this.loggedInUser = {};
@@ -99,12 +99,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             } else {
                 this.loggedInUser = data;
                 this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
-              //  const payload = { userCode: this.loggedInUser.userCode };
                 this._meetingService.setFutureMeetimgList();
                 this.futureMeetingList = [];
                 this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
-                    // this.defaultMeetingSpinnerMod.showSpinner();
-                    if (futureData !== undefined && futureData.length > 0) {
+                    if (futureData !== undefined && futureData.length > 0 && futureData[0].warningFl !== true) {
                         this.futureMeetingList = futureData;
                         this.filteredFutureMeetingList = futureData;
                         this.defaultMeetingSpinnerMod.hideSpinner();
@@ -116,11 +114,6 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                             return this.alertService.warning(futureData[0].message, 'Warning');
                         }
                     }
-                    // To remove blank alert:
-                    // if (typeof (futureData) === 'object') {
-                    //     this.defaultMeetingSpinnerMod.hideSpinner();
-                    //     return this.alertService.warning(futureData['message'], 'Warning');
-                    // }
                 });
             }
         });
