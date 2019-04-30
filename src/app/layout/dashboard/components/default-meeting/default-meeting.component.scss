@@ -271,7 +271,7 @@
 
 .card-body {
     background-color:#f9e0e2;
-    padding:0.5rem;
+    // padding:0.5rem;
     // margin: auto;
 }
 
@@ -544,7 +544,40 @@ $border-color: #e0e0e0;
   pointer-events: none;
 }
 
+.tBox{  
+    background-position:right;   
+    background-repeat:no-repeat;   
+    border-radius: 5px;
+    margin: 0 3% 0 3%;
+    }
 
-.right-addon .glyphicon { right: 0px;}
+    ::-webkit-input-placeholder {
+        text-align: left;
+        padding-left: 2%;
+     }
+     
+     :-moz-placeholder {
+        text-align: left;
+        padding-left: 2%; 
+     }
+     
+     ::-moz-placeholder {
+        text-align: left;  
+        padding-left: 2%;
+     }
+     
+     :-ms-input-placeholder {  
+        text-align: left; 
+        padding-left: 2%;
+     }
 
-.right-addon input { padding-right: 30px; }
+     .username-password{
+        width:90%;
+        margin-bottom: 1%;
+        height:40px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+        background-color: #f5f5f5;
+    }

@@ -96,7 +96,6 @@ export class UserService {
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
-        debugger;
         if (payload.isGuest) {
             // save guest user
             const url = environment.baseUrl + 'saveGuestUserDetails';
