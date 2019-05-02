@@ -128,7 +128,9 @@
     margin-left: -5px;
 }
 .add-member{
-    color: #ffffff; padding-left: 10px; padding-top: 12px; cursor: pointer;
+    color: #ffffff; 
+    padding-left: 10px;
+     padding-top: 12px; cursor: pointer;
 }
 
 //  .btn-sec:hover{
@@ -144,6 +146,8 @@
  .list-item-padding{
     padding-left: 1%;
     padding-right: 1%;
+    background-color: #eff9ff;
+    border-bottom:1px solid gray;
  }
  .profile-img{
     width: 30px; 
@@ -166,6 +170,7 @@
     color: #008cba;
     font-weight: bold;
     padding-left: 3%; 
+    padding-top: 2px;
 }
 
 .tBox{  
@@ -215,10 +220,33 @@
         margin-right:1em;
         color:white;
         }
+
+        .notification-div{
+        background-color: #f9e0e2;
+        padding: 15px 15px 2px 15px;
+        margin: 0.3rem;
+        border-radius: 3px;
+        }
+        .serarch-in-all-member{
+        text-align: center; 
+        padding-bottom: 15px;
+        }
+
+        .user-list{
+            background-color:#ffffff;
+            margin-bottom: 5px;
+            border-radius:3px;
+        }
+
         .dot {
             height: 25px;
             width: 25px;
             background-color: #bbb;
             border-radius: 50%;
             display: inline-block;
+<<<<<<< HEAD
           }
+=======
+          }
+
+>>>>>>> dev
