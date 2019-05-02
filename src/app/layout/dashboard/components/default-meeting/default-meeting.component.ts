@@ -92,7 +92,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._meetingService = meetingService;
     }
     ngOnInit() {
-        this.baseurl = environment.baseUrl;
+        this.baseurl = environment.meetingUrl;
         this.selectDateFlag = true;
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';

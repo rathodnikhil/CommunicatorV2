@@ -6,5 +6,6 @@
 export const environment = {
   production: true,
   environmentName: 'qa',
-  baseUrl: 'https://cfscommunicator.com:8443/test_communicatorv2/'
+  baseUrl: 'https://cfscommunicator.com:8443/test_communicatorv2/',
+  meetingUrl: 'https://coreflextest.com/'
 };

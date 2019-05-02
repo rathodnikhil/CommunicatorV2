@@ -143,7 +143,7 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.baseUrl = environment.baseUrl;
+        this.baseUrl = environment.meetingUrl;
         this.audioMeeting = false;
         this.vedioMeeting = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
