@@ -32,6 +32,7 @@ export class NotificationComponent implements OnInit {
     searchText: string;
     broadcastMsgList = [];
     chattingHistoryList = [];
+    viewAllMemFl = false;
     @Output() isUserSelected = new EventEmitter();
     @ViewChild('notificationSpinner') notificationSpinnerMod: SpinnerComponent;
     constructor(userService: UserService, groupService: GroupService, chatService: ChatService, loginService: LoginService,
@@ -96,7 +97,6 @@ export class NotificationComponent implements OnInit {
         this.getMembersEmailList(group);
         this.isUserSelected.emit(true);
     }
-
     getMembersEmailList(group) {
         const payload = { groupId: group.groupId};
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
@@ -152,11 +152,21 @@ export class NotificationComponent implements OnInit {
                     this.searchWholeMemberList = [];
                     return this.alertService.warning(data[0].message, 'Warning');
                 } else {
+                   // this.allMemFl = true;
                     this.searchWholeMemberList = data;
+                    this.viewAllMemFl = true;
                 }
             });
         }
     }
+    onKeyUp(event) {
+        if (this.searchText === '' || this. searchText === null) {
+            this.viewAllMemFl = false;
+       }
+    }
+    onKeyUpBackspace(event) {
+        this.onKeyUp(event);
+      }
     addNewMembersInList(user) {
         const payload = {
             teamCode: this.loggedInUser.team.teamCode,

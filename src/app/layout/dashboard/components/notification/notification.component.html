@@ -1,10 +1,7 @@
 <app-spinner #notificationSpinner></app-spinner>
 <div class="card-body">
         <h5 class="searched-title" class="team-member"><b>Filter Members</b></h5>
-<div style="background-color: #f9e0e2;
-padding: 15px 15px 2px 15px;
-margin: 0.3rem;
-border-radius: 3px;">
+<div class="notification-div">
     <div class="form-group input-group" style="padding-top:10px;">
         <!-- <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
         <div class="input-group-append">
@@ -12,20 +9,20 @@ border-radius: 3px;">
                 <i class="fa fa-search"></i>
             </button>
         </div> -->
-        <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
+        <input class="tBox username-password form-control" placeholder="&#xF002;  Search" 
+        style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" (keydown.backspace)="onKeyUpBackspace($event)" (keypress)="onKeyUp($event)">
     </div>
-    <div style="text-align: center; padding-bottom: 15px;">
+    <div class="serarch-in-all-member">
         <button class="btn btn-search"(click)="searchInWholeMemberList()">Search in all members</button>
         <!-- Try to search in whole memberlist -->
     </div>  
 </div>   
-  
-    <div class="member-list" style="background-color: #ffffff;margin-top: 10px;">
-        <div><h5 class="searched-title" class="team-member"><b>Team Members</b></h5></div>
-        <div  style="margin-bottom: 5%; background-color: #f9e0e2; padding: 10px;">
-            <div style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px;" *ngFor="let user of userList | genericSearchAllProp : searchText">
+    <div><h5 class="searched-title" class="team-member" ><b>Team Members</b></h5></div>
+    <div class="member-list" style="background-color: #ffffff;margin-top: 10px;border-top: 1px  solid #F9E0FF;border-width:80%;">
+               <div  style="margin-bottom: 2%; background-color: #f9e0e2; padding: 10px;">
+            <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchText">
                 <a style="color: gray;" *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
-                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}'>
+                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left: 0.75rem;">
                     <!-- <img *ngIf='user.profileImgPath'
                         [src]="user.profileImgPath" alt="Responsive image"
                         class="rounded-circle profile-img img-fluid" /> -->
@@ -54,15 +51,16 @@ border-radius: 3px;">
                     <!-- <hr class="list-group-partition" /> -->
                 </a>
             </div>
-        
         <!-- <div style="text-align: center;"> <button class="btn btn-primary"  (click)="searchInWholeMemberList()">Try to search in whole memberlist</button></div> -->
         <hr class="hr-partition" />
+        <div *ngIf="viewAllMemFl" style="padding:3.5%;">
+                <div><h5 class="searched-title" class="team-member" ><b>All Members List</b></h5></div>     
         <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText">
             <a class="col-md-10 list-group-item clearfix d-block">
-                <span>{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
+                <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
             </a>
-            <i class="fa fa-plus-circle add-member col-md-2" style="padding-top: 17px; color: green; cursor: pointer;"
-                (click)="addNewMembersInList(user)"></i> </div>
+            <i class="fa fa-plus-circle add-member col-md-2" style="padding-top: 17px; color: #980e06; cursor: pointer;"
+                (click)="addNewMembersInList(user)"></i> </div></div>
     </div>
 </div>
 
