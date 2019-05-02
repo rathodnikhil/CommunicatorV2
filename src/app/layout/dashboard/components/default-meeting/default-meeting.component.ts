@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { environment } from 'environments/environment';
 @Component({
     selector: 'app-default-meeting',
     templateUrl: './default-meeting.component.html',
@@ -44,6 +45,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     activeAll = true;
     activeToday = false;
     activeTomorrow = false;
+    baseurl: any;
     @ViewChild('defaultMeetingSpinner') defaultMeetingSpinnerMod: SpinnerComponent;
     @ViewChild('chatPanel') chatPanel: ElementRef;
     @ViewChild('chatBody') chatBody: ElementRef;
@@ -90,7 +92,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._meetingService = meetingService;
     }
     ngOnInit() {
-
+        this.baseurl = environment.baseUrl;
         this.selectDateFlag = true;
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';
@@ -323,8 +325,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // get meeting details
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
-        meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-        const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+        meetingUrl = this.baseurl + '#/meeting?meetingCode=';
+        const guestMeetingUrl =  this.baseurl + '#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
             ' Please join my meeting from your computer using chrome browser ' + newLine + ' for  '
             + this.meetNowMeeting.duration + newLine + 'Registered user use below URL for meeting :' + newLine
