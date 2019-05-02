@@ -24,10 +24,10 @@
                         <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
                             <label>Registered user use below URL for meeting:<br><span class="link-url">
                                 <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
-                                https://cfscommunicator.com/#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                            {{baseurl}}#/meeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                                 <label>Guest user use below URL for meeting:<br/><span  class="link-url">
                                     <!-- http://localhost:4200/#/meeting?meetingCode={{accessCode}}</span> -->
-                                    https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
+                                    {{baseurl}}#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
                         <h5 style="margin-top: 40px;">Meeting Id     :
                             <span>{{meetNowMeeting.meetingCode}}</span>

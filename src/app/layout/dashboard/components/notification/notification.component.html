@@ -26,9 +26,12 @@
                     <!-- <img *ngIf='user.profileImgPath'
                         [src]="user.profileImgPath" alt="Responsive image"
                         class="rounded-circle profile-img img-fluid" /> -->
-                        <img src="/assets/images/member-icon.png" style="width: 30px; height: 30px;"/>
+                        <!-- <img src="/assets/images/member-icon.png" style="width: 30px; height: 30px;"/> -->
                     <!-- <i class="fa fa-user-circle fa-2x" 
                     *ngIf="user.profileImgPath === null || user.profileImgPath === '' || user.profileImgPath === 'undefined'"></i> -->
+                    <div style="text-align:center">
+                        <span class="dot">{{user.firstLetter}}</span>
+                      </div>
                     <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
                     <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
                     </span>

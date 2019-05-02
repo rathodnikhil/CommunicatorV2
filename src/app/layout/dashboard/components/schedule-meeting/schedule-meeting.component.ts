@@ -1,13 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup } from '@angular/forms';
 import { MeetingService } from '../../../../services/meeting-service';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
-import { DOCUMENT } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { environment } from 'environments/environment';
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
@@ -39,6 +37,7 @@ export class ScheduleMeetingComponent implements OnInit {
     selectedCcEmails: any;
     timezoneSelect: any;
     selectedTime: any;
+    baseUrl: any;
     // public radioGroupForm: FormGroup;
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -144,6 +143,7 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.baseUrl = environment.baseUrl;
         this.audioMeeting = false;
         this.vedioMeeting = false;
         this._userService.getLoggedInUserObj().subscribe(data => {
@@ -293,8 +293,8 @@ export class ScheduleMeetingComponent implements OnInit {
             + parseInt(this.meeting.meridianTime.hour, 10);
         const minutes = parseInt(this.meeting.meridianTime.minute, 10) < 10 ? '0' + parseInt(this.meeting.meridianTime.minute, 10) :
             '' + parseInt(this.meeting.meridianTime.minute, 10);
-        const meetingUrl = 'https://cfscommunicator.com/#/meeting?meetingCode=';
-        const guestMeetingUrl = 'https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=';
+        const meetingUrl = this.baseUrl + '#/meeting?meetingCode=';
+        const guestMeetingUrl = this.baseUrl + '#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
             this.meeting.datePicker.month + '/'
             + this.meeting.datePicker.day + '  at  ' +
