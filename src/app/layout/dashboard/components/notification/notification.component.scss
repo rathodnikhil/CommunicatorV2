@@ -71,9 +71,10 @@
     height: 13px;
     // background: #a5a7a8;
     background: transparent;
-    float: left;
-    left: 35px;
-    top: -5px;
+    float: right;
+    margin-top: 2%;
+    // left: 35px;
+    // top: -5px;
 }
 .circleOnline {
     position: relative;
@@ -81,10 +82,11 @@
     width: 13px;
     height: 13px;
     // background: rgb(118, 201, 18);
-    float: left;
-    left: 35px;
-    top: -5px;
-    background:#00ff00;
+    float: right;
+    // left: 35px;
+    // top: -5px;
+    background:#28a745;
+    margin-top: 2%;
 }
 .circleOfflineMem {
     position: relative;
@@ -206,8 +208,7 @@
         height:40px;
       }
 
-      [data-letters]:before {
-        content:attr(data-letters);
+      .first-letter {
         display:inline-block;
         font-size:1em;
         width:2.5em;
@@ -215,7 +216,7 @@
         line-height:2.5em;
         text-align:center;
         border-radius:50%;
-        background:plum;
+        background-color: mediumpurple;
         vertical-align:middle;
         margin-right:1em;
         color:white;
@@ -239,14 +240,14 @@
         }
 
         .dot {
-            height: 25px;
-            width: 25px;
-            background-color: #bbb;
+            height: 30px;
+            width: 30px;
+            background-color:mediumpurple;
             border-radius: 50%;
-            display: inline-block;
-<<<<<<< HEAD
+            display: block;
+            text-align: center;
+            position:relative;
+           
           }
-=======
-          }
+          
 
->>>>>>> dev
