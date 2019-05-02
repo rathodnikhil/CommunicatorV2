@@ -22,17 +22,16 @@
                <div  style="margin-bottom: 2%; background-color: #f9e0e2; padding: 10px;">
             <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchText">
                 <a style="color: gray;" *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
-                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left: 0.75rem;">
+                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left:1.25rem;">
                     <!-- <img *ngIf='user.profileImgPath'
                         [src]="user.profileImgPath" alt="Responsive image"
                         class="rounded-circle profile-img img-fluid" /> -->
                         <!-- <img src="/assets/images/member-icon.png" style="width: 30px; height: 30px;"/> -->
                     <!-- <i class="fa fa-user-circle fa-2x" 
                     *ngIf="user.profileImgPath === null || user.profileImgPath === '' || user.profileImgPath === 'undefined'"></i> -->
-                    <div style="text-align:center">
-                        <span class="dot">{{user.firstLetter}}</span>
-                      </div>
-                    <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
+                    <span class="first-letter"> {{user.firstLetter}}</span><!-- or whatever structure you used -->
+                        <!-- <span class="dot"></span> -->
+                      <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null && user.onlineStatus != '1'}"></div>
                     <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
                     </span>
                     <!-- <hr class="list-group-partition" /> -->
@@ -46,7 +45,7 @@
                     (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
                     <!-- *ngIf="group.groupId.status.status === 'ACTIVE'" -->
                     <!-- <i class="fa fa-users"></i> -->
-                    <img src="/assets/images/group-icon.png" style="width: 30px; height: 30px;"/>
+                    <img src="/assets/images/group.png" style="width: 30px; height: 30px;"/>
                     <span style="padding-left: 1rem; color:#000;">{{group.groupId.groupName}}&nbsp;</span>
                     <!-- <hr class="list-group-partition" /> -->
                 </a>
