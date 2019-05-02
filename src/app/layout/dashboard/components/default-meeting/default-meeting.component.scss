@@ -224,7 +224,7 @@
 }
 
 .panel-body {
-    overflow-y: scroll;
+overflow-y: scroll;
     height: 250px;
 }
 
@@ -271,6 +271,8 @@
 
 .card-body {
     background-color:#f9e0e2;
+    border-bottom: 1px  solid #F9E0FF; 
+   
     // padding:0.5rem;
     // margin: auto;
 }
@@ -517,11 +519,12 @@ $border-color: #e0e0e0;
 }
 
 .card-header {
-    padding: 0.75rem 1.25rem;
+    //padding: 0.75rem 1.25rem;
     margin-bottom: 0;
     /* background-color: rgba(0, 0, 0, 0.03); */
     background-color: #ffffff;
      border-bottom:none;
+     padding-top: 0px;
 }
 .filter-meeting{
     background-color: #f9e0e2;
@@ -581,3 +584,16 @@ $border-color: #e0e0e0;
         width: 6px;
         background-color: #f5f5f5;
     }
+
+    .selected-criteria-div{
+        background-color: #f9e0e2;
+        padding-left: 3%;
+    }
+
+    .selected-criteria{
+    color: #bd081c;
+     font-weight:bold;
+     padding-top:2%;
+    
+    }
+    
