@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { ɵELEMENT_PROBE_PROVIDERS, ɵDomEventsPlugin } from '@angular/platform-browser';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
@@ -160,12 +161,18 @@ export class NotificationComponent implements OnInit {
         }
     }
     onKeyUp(event) {
-        if (this.searchText === '' || this. searchText === null) {
-            this.viewAllMemFl = false;
-       }
+        if (event.key === 'Delete') {
+            this.clearSerchList();
+        }
+    }
+    clearSerchList() {
+    if (this.searchText.length === 1 || this.searchText === '' || this.searchText === null) {
+        this.searchText = '';
+        this.viewAllMemFl = false;
+   }
     }
     onKeyUpBackspace(event) {
-        this.onKeyUp(event);
+        this.clearSerchList();
       }
     addNewMembersInList(user) {
         const payload = {
