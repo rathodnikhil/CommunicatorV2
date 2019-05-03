@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, Inject , Output , EventEmitter} from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute, Params } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
@@ -34,11 +34,12 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     passwordMacthFlag: boolean;
     isGuest: boolean;
     forgetPasswordFlag = false;
-    Logintext = 'Login';
+    Logintext = 'Log In';
     loggedInUserObj: any;
     meetingCode: string;
     isMeetingCodeInValid = false;
     loginHeader = 'Log In';
+    @Output() meetingCodeVal = new EventEmitter<String>();
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         public router: Router, loginService: LoginService, private activatedRoute: ActivatedRoute,
         userService: UserService, public alertService: AlertService, passwordService: PasswordService) {
@@ -97,6 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     //     if (event.key === 'Enter') { this.login(); }
     // }
     login() {
+      debugger;
       if (this.forgetPasswordFlag === true) {
          this.sendEmailForgotPassword();
       } else {
@@ -105,7 +107,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             return this.alertService.error('Please close popup to continue', 'Error');
         } else {
             if (this.isGuest) {
-                debugger;
                 if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
                 || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
                 return this.alertService.error('Please close popup to continue', 'Error');
@@ -124,6 +125,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 firstName: firstNameUpperCase,
                 isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.password
               };
+              this.meetingCodeVal.emit(this.meetingCode);
               this._userService.setLoggedInUserObj(payload).subscribe(res => {
                 if (res === 'invalid' && !this.isMeetingCodeInValid) {
                   this.isMeetingCodeInValid = true;

@@ -147,6 +147,7 @@ export class NotificationComponent implements OnInit {
     }
     searchInWholeMemberList() {
         if (this.searchAllText === '' || this.searchAllText === null || typeof this.searchAllText === 'undefined') {
+            this.viewAllMemFl = false;
 
         } else {
             const payload = { searchText: this.searchAllText};

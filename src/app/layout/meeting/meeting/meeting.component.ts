@@ -81,19 +81,22 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && this.loggedInUser === undefined) {
                 this.loggedInUser = data;
-                if (this.meetingCode !== '' && this.meetingCode !== undefined) {
-                    const payload = {
-                        userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode,
-                        email: this.loggedInUser.email
-                    };
+          //     let userCodeVal = null;
                     if (!data.isGuest) {
-                        // payload.userCode = this.loggedInUser.userCode;
+                   //     userCodeVal = this.loggedInUser.userCode;
                         this.isGuest = false;
                     } else if (data.isGuest) {
-                        // payload.userCode = this.loggedInUser.firstName;
+                      //  userCodeVal = this.loggedInUser.firstName;
                         this.isGuest = true;
+                        this.meetingCode = data.meetingCode;
                     }
+                    if (this.meetingCode !== '' && this.meetingCode !== undefined) {
+                        const payload = {
+                            userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode,
+                            email: this.loggedInUser.email
+                        };
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
+                        debugger;
                         if (!data2.warningFl && !data2.errorFl && data2.message !== null
                             && data2.message.toLowerCase().indexOf('success') > -1) {
                             this.meetingDetails = data2;
