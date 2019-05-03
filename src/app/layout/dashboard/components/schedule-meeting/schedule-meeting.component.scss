@@ -1,6 +1,6 @@
 @import "styles/customStyle.css";
 .meetingHeader {
-    background: linear-gradient(to left, #008cba 32%, #115c7d 100%);
+    background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
     color: #FFFFFF;
     border-radius: 5px 5px 0px 0px;
 }
@@ -95,12 +95,12 @@
     text-align: center;
 }
 .timzone-select{
-    border: 1px solid #008cba;
-    color: #008cba;
+    border: 1px solid #01baac;
+    color: #01baac;
     background: transparent; 
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #008cba;
+    color: #01baac;
     opacity: 1; /* Firefox */
   }
 .timzone-select:hover{

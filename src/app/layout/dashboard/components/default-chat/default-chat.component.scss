@@ -1,7 +1,7 @@
 @import "styles/customStyle.css";
 .label-h6 {
     // color:  #999999;
-    color:#008cba;
+    color:#00877c;
     padding-top:2%;
     font-weight: bold;
     font-size:15px;
@@ -70,7 +70,7 @@
 
     .edit-circle-icon-background {
         // color: #b031fa;
-        color: #28a745;
+        color: #0aa396;
         margin-left: -2px;
     }  
     
@@ -84,7 +84,7 @@
         border-top: 0;
         background: #c4e17f;
         border-radius: 5px;
-        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #28a745 25%, #28a745 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #01baac 25%, #01baac 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
     }
 
     //edit user profile circle
@@ -103,7 +103,7 @@
         font-size:15px;
         margin-top:2%;
         font-weight:bold;
-        // background-color: #28a745;
+        // background-color: #01baac;
         background-color:#bc151b;
         border-color: #bc151b;
         color:white;
@@ -111,7 +111,7 @@
         }
         
         .explore:hover{
-            background-color: #28a745;
+            background-color: #01baac;
             color:black;
             border: 1px solid #e79a00;
         }

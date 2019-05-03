@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { ɵELEMENT_PROBE_PROVIDERS, ɵDomEventsPlugin } from '@angular/platform-browser';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
@@ -29,7 +30,9 @@ export class NotificationComponent implements OnInit {
     membersList = [];
     membersEmailList = [];
     loggedInUser: any;
-    searchText: string;
+    searchGroupText: string;
+    searchMemText: string;
+    searchAllText: string;
     broadcastMsgList = [];
     chattingHistoryList = [];
     viewAllMemFl = false;
@@ -143,10 +146,11 @@ export class NotificationComponent implements OnInit {
 
     }
     searchInWholeMemberList() {
-        if (this.searchText === '' || this.searchText === null || typeof this.searchText === 'undefined') {
+        if (this.searchAllText === '' || this.searchAllText === null || typeof this.searchAllText === 'undefined') {
+            this.viewAllMemFl = false;
 
         } else {
-            const payload = { searchText: this.searchText};
+            const payload = { searchText: this.searchAllText};
             this._userService.searchWholememberList(payload).subscribe(data => {
                 if (data[0].errorFl || data[0].warningFl) {
                     this.searchWholeMemberList = [];
@@ -159,14 +163,6 @@ export class NotificationComponent implements OnInit {
             });
         }
     }
-    onKeyUp(event) {
-        if (this.searchText === '' || this. searchText === null) {
-            this.viewAllMemFl = false;
-       }
-    }
-    onKeyUpBackspace(event) {
-        this.onKeyUp(event);
-      }
     addNewMembersInList(user) {
         const payload = {
             teamCode: this.loggedInUser.team.teamCode,
@@ -179,7 +175,7 @@ export class NotificationComponent implements OnInit {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.searchText = '';
+                this.searchAllText = '';
                 this.userList.push(user);
                 this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
                 return this.alertService.success('User has been added successfully', 'Success');
