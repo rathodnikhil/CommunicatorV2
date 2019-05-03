@@ -83,7 +83,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         //  this._loginService.dest
     }
     guestLogin() {
-        debugger;
         this.isGuest = true;
         this.changePlaceHolderText();
     }
@@ -93,12 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.UserNameText = this.isGuest ? 'Name' : 'UserName';
         this.passwordText = this.isGuest ? 'Meeting ID' : 'Password';
     }
-
-    // onKey(event) {
-    //     if (event.key === 'Enter') { this.login(); }
-    // }
     login() {
-      debugger;
       if (this.forgetPasswordFlag === true) {
          this.sendEmailForgotPassword();
       } else {
@@ -154,11 +148,9 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                     return this.alertService.error('Enter Password', 'Error');
                 }
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
-                let loginWarningFlag;
                 this._userService.verifyUser(payload).subscribe(resp => {
                     const loggedinUser = resp.json();
-                    loginWarningFlag = loggedinUser.warningFl;
-                    if (loginWarningFlag === false) {
+                    if (loggedinUser.warningFl === false || loggedinUser.errorFl === false) {
                         this._loginService.getAuthenticationToken(payload).subscribe(data => {
                             this.jwtToken = this._loginService.getJwtToken();
                             if (this.jwtToken === undefined ||
@@ -181,9 +173,20 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                             }
                         });
                     } else {
+                      if (loggedinUser.warningFl === true) {
+                        this.userName = '';
+                        return this.alertService.warning('Username is invalid', 'Account Authentication');
+                      }
+                      if (loggedinUser.warningFl === true) {
+                        this.password = '';
+                        return this.alertService.warning('Password is invalid', 'Account Authentication');
+                      }
+                      if (resp.json() === 'deactivate') {
                         this.userName = '';
                         this.password = '';
-                        return this.alertService.warning(loggedinUser.message, 'Account Authentication');
+                        return this.alertService.warning('Your account has deactivated , please contact to your administrator',
+                         'Account Authentication');
+                      }
                     }
                 }
                 );
@@ -210,7 +213,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loginUiFlag = false;
     }
     backToLogin() {
-        debugger;
         this.forgetPasswordFlag = false;
         this.loginUiFlag = true;
         this.isGuest = false;
