@@ -54,7 +54,7 @@
     .left {
         width: auto;
         float:left;
-        background: linear-gradient(to left, #008cba 32%, #115c7d 100%);
+        background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
         color: #ffffff;
         font-weight: bold;
         // overflow: hidden;
@@ -81,19 +81,19 @@
         padding-bottom: 100px;
       }
       .btn-search{
-        background-color: #28a745;
-        border-color: #28a745;
+        background-color: #01baac;
+        border-color: #01baac;
         color:black;
       }
       .btn-edit{
         color: #fff;
-        background-color: #28a745;
-        border-color: #28a745;
+        background-color: #01baac;
+        border-color: #01baac;
       }
       .btn-edit:hover{
         background-color:#5ebfff;
         color:white;
-        border: 1px solid #008cba;
+        border: 1px solid #01baac;
       }
       .update-mem{
         width: 100%;
