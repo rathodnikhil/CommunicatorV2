@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
-import { ɵELEMENT_PROBE_PROVIDERS, ɵDomEventsPlugin } from '@angular/platform-browser';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
@@ -60,22 +59,16 @@ export class NotificationComponent implements OnInit {
                     if (userData !== undefined && userData.length > 0) {
                         this.userList = userData;
                         this.notificationSpinnerMod.hideSpinner();
-                        // alert('List size : ' + this.userList.length);
                     } else {
                         this.userList = [];
                     }
                 });
 
                 this._groupService.getGroupList().subscribe(groupData => {
-                    // if ( this.loading = false) {
-                    //     this.loading = true;
-                    // }
                     if (groupData !== undefined && groupData.length > 0) {
                         this.groupList = groupData;
-                        // this.loading = false;
                     } else {
                         this.groupList = [];
-                        // this.loading = false;
                         if (groupData[0] !== undefined && groupData[0].message !== undefined) {
                             return this.alertService.warning(data[0].message, 'Warning');
                         }
@@ -148,7 +141,6 @@ export class NotificationComponent implements OnInit {
     searchInWholeMemberList() {
         if (this.searchAllText === '' || this.searchAllText === null || typeof this.searchAllText === 'undefined') {
             this.viewAllMemFl = false;
-
         } else {
             const payload = { searchText: this.searchAllText};
             this._userService.searchWholememberList(payload).subscribe(data => {
@@ -156,12 +148,15 @@ export class NotificationComponent implements OnInit {
                     this.searchWholeMemberList = [];
                     return this.alertService.warning(data[0].message, 'Warning');
                 } else {
-                   // this.allMemFl = true;
                     this.searchWholeMemberList = data;
                     this.viewAllMemFl = true;
                 }
             });
         }
+    }
+    closeWholeMemList() {
+        this.viewAllMemFl = false;
+        this.searchAllText = '';
     }
     addNewMembersInList(user) {
         const payload = {
