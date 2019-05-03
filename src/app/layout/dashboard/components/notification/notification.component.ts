@@ -162,20 +162,6 @@ export class NotificationComponent implements OnInit {
             });
         }
     }
-    onKeyUp(event) {
-        if (event.key === 'Delete') {
-            this.clearSerchList();
-        }
-    }
-    clearSerchList() {
-    if (this.searchAllText.length === 1 || this.searchAllText === '' || this.searchAllText === null) {
-        this.searchAllText = '';
-        this.viewAllMemFl = false;
-   }
-    }
-    onKeyUpBackspace(event) {
-        this.clearSerchList();
-      }
     addNewMembersInList(user) {
         const payload = {
             teamCode: this.loggedInUser.team.teamCode,
