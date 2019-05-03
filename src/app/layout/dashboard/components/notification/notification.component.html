@@ -19,16 +19,31 @@
     <div *ngIf="viewAllMemFl" style="padding:3.5%;">
         <div><h5 class="searched-title" class="team-member" ><b>All Members List</b></h5></div>     
         <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchAllText">
+        <div class="row" style="padding: 0px;margin:0px;">
+        <div class="col-md-8">
+        <div style="color: #bd081c;"><h5 class="searched-title" class="team-member" ><b>All Members List</b></h5></div>
+    </div>
+    <div class="col-md-4">
+       <i class="fa fa-window-close close-list" aria-hidden="true"></i>
+    </div>
+ </div>
+        <div style="overflow-y: scroll;height: 70vh;overflow-x: hidden;"> 
+        <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchAllText" >
             <a class="col-md-10 list-group-item clearfix d-block">
             <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
             </a>
             <i class="fa fa-plus-circle add-member col-md-2" style="padding-top: 22px; color: #0aa396; cursor: pointer;"
             (click)="addNewMembersInList(user)"></i> 
         </div>
+<<<<<<< HEAD
+=======
+    </div>  
+>>>>>>> dev
     </div>
 </div>   
     <div><h5 class="searched-title" class="team-member" ><b>Team Members</b></h5></div>
     <div class="member-list" style="background-color: #ffffff;border-top: 1px  solid #F9E0FF;border-width:80%;">
+<<<<<<< HEAD
         <div style="margin-bottom: 2%; background-color: #fff1f2; padding: 10px;">
             <div style="margin-left: 0.3rem;margin-right: 0.3rem;">
                 <div class="selected-criteria-div">
@@ -45,6 +60,25 @@
                     </div> 
                 </div> 
             </div> 
+=======
+        <div>
+            <div class="selected-criteria-div">
+                <h4 class="selected-criteria">Total Members ({{userList.length}})</h4>             
+                <div class="row">
+                    <div class="col-md-5">
+                    
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group input-group">
+                            <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchMemText" >
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+        <div style="margin-bottom: 2%; background-color: #fff1f2; padding: 10px;">
+           
+>>>>>>> dev
 
             <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchMemText">
                 <a style="color: gray;" *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
@@ -57,6 +91,7 @@
             </div>
         </div>
         <div><h5 class="searched-title" class="team-member"><b>Groups</b></h5></div>
+<<<<<<< HEAD
             <div style="background-color: #b6eae6;padding: 10px;">
                     <div style="margin-left: 0.3rem;margin-right: 0.3rem;">
                             <div class="group-criteria-div">
@@ -74,6 +109,25 @@
                             </div> 
                         </div> 
                 <a *ngFor="let group of groupList | genericSearchAllProp : searchGroupText" href="#" [routerLink]="['chat']"
+=======
+        <div >
+            <div class="group-criteria-div">
+                <h4 class="group-criteria">Total Group ({{groupList.length}})</h4>             
+                <div class="row">
+                    <div class="col-md-5">
+                    
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group input-group">
+                            <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchGroupText" >
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+            <div style="background-color: #b6eae6;padding: 10px;">
+                    <a *ngFor="let group of groupList | genericSearchAllProp : searchGroupText" href="#" [routerLink]="['chat']"
+>>>>>>> dev
                     style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;"
                     (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
                     <!-- *ngIf="group.groupId.status.status === 'ACTIVE'" -->

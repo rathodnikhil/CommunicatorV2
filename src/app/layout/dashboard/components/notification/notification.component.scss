@@ -85,7 +85,11 @@
     float: right;
     // left: 35px;
     // top: -5px;
+<<<<<<< HEAD
     background:green;
+=======
+    background:#05c305;
+>>>>>>> dev
     margin-top: 2%;
 }
 .circleOfflineMem {
@@ -240,8 +244,31 @@
         }
           .selected-criteria-div{
             background-color: #f9e0e2;
+            // margin-bottom: 2.5%;
+            // border-radius: 3px;
          //   padding-left: 3%;
         }
           .group-criteria-div {
-            background-color: #a0dbd6
+            background-color: #a0dbd6;
+            // margin-bottom: 2.5%;
+            // border-radius: 3px;
+          }
+          .group-criteria {
+            color:#037b72;
+            margin-left: 3%;
+            font-weight: bold;
+            padding-top: 2%;
+          }
+         
+          .selected-criteria{
+              margin-left: 3%;
+              color: #bd081c;
+              font-weight: bold;
+              padding-top: 2%;
+          }
+
+          .close-list{
+            font-size:20px;
+            float:right;
+            color: #bd081c;
           }
