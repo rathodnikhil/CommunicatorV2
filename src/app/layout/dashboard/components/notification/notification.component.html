@@ -10,7 +10,7 @@
             </button>
         </div> -->
         <input class="tBox username-password form-control" placeholder="&#xF002;  Search" 
-        style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" (keydown.backspace)="onKeyUpBackspace($event)" (keydown.delete)="onKeyUp($event)">
+        style="font-family:Arial, FontAwesome" [(ngModel)]="searchAllText" (keydown.backspace)="onKeyUpBackspace($event)" (keydown.delete)="onKeyUp($event)">
     </div>
     <div class="serarch-in-all-member">
         <button class="btn btn-search"(click)="searchInWholeMemberList()">Search in all members</button>
@@ -18,7 +18,7 @@
     </div>  
     <div *ngIf="viewAllMemFl" style="padding:3.5%;">
         <div><h5 class="searched-title" class="team-member" ><b>All Members List</b></h5></div>     
-        <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchText">
+        <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchAllText">
             <a class="col-md-10 list-group-item clearfix d-block">
             <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
             </a>
@@ -39,14 +39,14 @@
                         </div>
                         <div class="col-md-7">
                             <div class="form-group input-group">
-                                <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
+                                <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchMemText" >
                             </div>
                         </div>
                     </div> 
                 </div> 
             </div> 
 
-            <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchText">
+            <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchMemText">
                 <a style="color: gray;" *ngIf="user.team.status.status === 'ACTIVE'" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
                     class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left:1.25rem;">
                     <span class="first-letter"> {{user.firstLetter}}</span><!-- or whatever structure you used -->
@@ -67,13 +67,13 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group input-group">
-                                            <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
+                                            <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchGroupText" >
                                         </div>
                                     </div>
                                 </div> 
                             </div> 
                         </div> 
-                <a *ngFor="let group of groupList | genericSearchAllProp : searchText" href="#" [routerLink]="['chat']"
+                <a *ngFor="let group of groupList | genericSearchAllProp : searchGroupText" href="#" [routerLink]="['chat']"
                     style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;"
                     (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
                     <!-- *ngIf="group.groupId.status.status === 'ACTIVE'" -->

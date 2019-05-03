@@ -30,7 +30,9 @@ export class NotificationComponent implements OnInit {
     membersList = [];
     membersEmailList = [];
     loggedInUser: any;
-    searchText: string;
+    searchGroupText: string;
+    searchMemText: string;
+    searchAllText: string;
     broadcastMsgList = [];
     chattingHistoryList = [];
     viewAllMemFl = false;
@@ -144,10 +146,10 @@ export class NotificationComponent implements OnInit {
 
     }
     searchInWholeMemberList() {
-        if (this.searchText === '' || this.searchText === null || typeof this.searchText === 'undefined') {
+        if (this.searchAllText === '' || this.searchAllText === null || typeof this.searchAllText === 'undefined') {
 
         } else {
-            const payload = { searchText: this.searchText};
+            const payload = { searchText: this.searchAllText};
             this._userService.searchWholememberList(payload).subscribe(data => {
                 if (data[0].errorFl || data[0].warningFl) {
                     this.searchWholeMemberList = [];
@@ -166,8 +168,8 @@ export class NotificationComponent implements OnInit {
         }
     }
     clearSerchList() {
-    if (this.searchText.length === 1 || this.searchText === '' || this.searchText === null) {
-        this.searchText = '';
+    if (this.searchAllText.length === 1 || this.searchAllText === '' || this.searchAllText === null) {
+        this.searchAllText = '';
         this.viewAllMemFl = false;
    }
     }
@@ -186,7 +188,7 @@ export class NotificationComponent implements OnInit {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.searchText = '';
+                this.searchAllText = '';
                 this.userList.push(user);
                 this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
                 return this.alertService.success('User has been added successfully', 'Success');
