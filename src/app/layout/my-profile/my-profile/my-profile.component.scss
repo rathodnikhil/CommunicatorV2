@@ -4,16 +4,15 @@
     background-color:rgb(252, 223, 223);
     color:#464646;
     text-align: center;
-    border: 1px solid #db9ba1; 
+    border: 1px solid #bd081c; 
     border-right: none; 
 }
 
 #rightPanel{
     min-height:415px;
-    border: 1px solid #db9ba1; 
+    border: 1px solid #bd081c; 
     border-left: none; 
     padding: 8px; 
-    // background-color: #e0e0e0;
 }
 
 .colorgraph {
@@ -25,18 +24,6 @@
   background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #01baac 25%, #01baac 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
   background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #01baac 25%, #01baac 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #01baac 25%, #01baac 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-}
-
-.header{
-    position:absolute; 
-    top:0px; left:0px; 
-    height:90px; 
-    right:0px;
-    padding-top: 20px;
-    color: white;
-    overflow:hidden;
-    text-align: center;
-    background-image: url(/assets/images/header.png);
 }
 
 .body-container{
@@ -87,4 +74,26 @@ img{
 .padding-bottom{
     padding-bottom: 5%;
 }
-   
+
+.padding-10
+{
+    padding:10px;
+}
+.edit-profile-icon
+{
+    color: #000000; font-size: medium;
+}
+.wrap-text
+{
+    overflow-wrap: break-word;
+}
+
+.btn-cancel-color
+{
+    color: #ffff;
+}
+
+.cursor-pointer
+{
+    cursor: pointer;
+}

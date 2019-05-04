@@ -10,19 +10,16 @@
     </div>
 
     <div id="content" class="body-container">
-            <!-- <div class="loader" *ngIf="loading"></div> -->
         <div class="row main">
             <div class="col-md-9">
                 <h3>Past Meetings Details</h3>
             </div>
             <div class="align-center" class="col-md-3">
                 <div class="form-group input-group padding-top-5">
-                    <input type="text" class="form-control" placeholder="Search"  placeholder="Date/Meeting Id/Status" [(ngModel)]="searchText">
-                    <div class="input-group-append">
-                        <button class="btn search-past-meetings" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
+                        <div class="form-group input-group padding-top-10">
+                                <input class="tBox username-password form-control search-in-datatable" placeholder="&#xF002;  Date/Meeting Id/Status" 
+                                 [(ngModel)]="searchText">
+                            </div>
                 </div>
             </div>
 
@@ -43,7 +40,6 @@
                     <td>{{meeting.subject}}</td>
                     <td>
                         <i class="fa fa-users view-attendee-icon" aria-hidden="true" (click)="viewAttendee(meeting)"></i>   
-                        <!-- 546e7a -->
                     </td>
                     <td>{{meeting.status.status}}</td>
                     <td>
@@ -60,7 +56,7 @@
                             </pagination-controls>
                         </div>
                         <div class="col-md-1 padding-top-10">
-                         <button type="button" class="btn btn-success btn-responsive btn-loadMore-border-radius"
+                         <button type="button" class="btn btn-primary btn-responsive"
                                     (click)="loadMore()">Load more</button>
                                     </div>
                 </div>
@@ -74,7 +70,6 @@
                     </div>
                 </div>
                 <div class="modal-footer popFooter">
-                    <!-- <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>-->
                     <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
                 </div>
             </app-custom-modal>
