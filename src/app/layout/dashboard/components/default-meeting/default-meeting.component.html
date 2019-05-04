@@ -4,14 +4,9 @@
         <div class="row">
             <div style="width: 70%; float: left;padding-left: 3%;">
                     <h5><b>Schedule Upcoming Meetings</b></h5>
-            <!-- <h6><i class="fa fa-calendar-check-o"></i>
-                Hello, {{loggedInUser.firstName}} {{loggedInUser.lastName}}
-            </h6> -->
             </div>
-
             <i class="fa fa-caret-square-o-right cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="joinMeetingNow()"
                 placement="bottom" title="Meet Now" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
- 
             <i class="fa fa-calendar cursorPointer fa-2x btn-meeting" aria-hidden="true" (click)="switchRoute()" placement="bottom"
                 title="Schedule Meeting" *ngIf="loggedInUser.meetingPermissionStatus.status === 'ACTIVE'"></i>
                 <app-custom-modal #MeetNowModal [model]="meetNowModel">
@@ -41,14 +36,12 @@
                             Meeting</button>
                         <button type="button" class="btn btn-danger btn-responsive" (click)="closePopup('meetNow')">Close</button>
                     </div>
-
                 </app-custom-modal>
                 <app-custom-modal #meetNowOutlookModal [model]="meetNowOutlookWindow" (CancelEvent)="clearOutlookField()">
                     <div class="outlook-email-background">
                         <div class="form-group">
                             <div class="row">
                                 <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">To: </label>
-
                                 <input class="form-control" id="to" list="rememberEmailListEl" style="width: 68%;" [(ngModel)]="toAttendees" autofocus name="to" autocomplete="on"
                                 (change)="onEmailSelect()" (blur)="onEmailSelect()"/>
                                 <datalist id="rememberEmailListEl">
@@ -61,17 +54,14 @@
                                 <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly style="width: 68%; margin-left: 20%;"></textarea>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="row">
                                 <label for="to" class="outlook-email-label" style="width: 17%;margin-left: 3%;">Cc: </label>
-    
                                 <input class="form-control" (change)="selectedCcEmail()" style="width: 68%;" id="to" (blur)="selectedCcEmail()"
                                     list="rememberCcEmailListEl" [(ngModel)]="ccAttendees" autofocus name="to" autocomplete="on" />
                                 <datalist id="rememberCcEmailListEl">
                                         <option *ngFor="let email of rememberEmailList" value="{{email}}" ></option>
                                 </datalist>
-    
                                 <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>
                             </div>
                             <div class="row">
@@ -95,14 +85,8 @@
                             <button type="button" class="btn btn-danger" (click)="closeOutLookMailPopup()">Close</button>
                         </div>
                 </app-custom-modal>
-            <!-- </div> -->
-            <!-- <div *ngIf="showScheduleMeetingFl" class="col-md-2" style="border-left: 1px solid #dadadc;text-align: center;">
-                <i class="fa fa-calendar cursorPointer fa-2x" aria-hidden="true" (click)="switchRoute()" placement="bottom"
-                    ngbTooltip="Schedule Meeting"></i>
-            </div> -->
         </div>
     </div>
-    <!-- <div class="card-header row defaultMeetSelect" *ngIf="selectDateFlag === true"> -->
         <div>
                 <h5 class="text-color" style="padding:1.5% 3% 0 3.5%;">Filter Meetings</h5>
         <div class="filter-meeting">
@@ -111,7 +95,6 @@
            <div class="col-md-4" [ngClass]="{'underline':activeToday}" ><a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a></div>
            <div class="col-md-4" [ngClass]="{'underline':activeTomorrow}"> <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a></div>
         </div>
-    <!-- </div> -->
     <ul class="accordion">
         <li class="accordion-item">
             <input id="s1" class="hide" type="checkbox">
@@ -127,7 +110,6 @@
                                 [(ngModel)]="selectedfromDate" placeholder="From Date" ngbDatepicker
                                 #fromDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="fromDate.toggle()" type="button">
-                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar" style="cursor: pointer;"></span>
                             </button>
                         </div>
@@ -139,7 +121,6 @@
                                 [(ngModel)]="selectedtoDate"  ngbDatepicker
                                 #toDate="ngbDatepicker">
                             <button class="input-group-addon" (click)="toDate.toggle()" type="button">
-                                <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
                                 <span class="fa fa-calendar" style="cursor: pointer;"></span>
                             </button>
                         </div>
@@ -166,25 +147,17 @@
         </div>
         <div class="col-md-6">
             <div class="form-group input-group">
-                <!-- <input type="text" id="searchMeeting" value="sdasd" class="form-control" placeholder="Search"
-                    [(ngModel)]="searchText">
-                <div class="input-group-append">
-                    <button class="btn btn-primary btn-search" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div> -->
                 <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
             </div>
         </div>
 </div> 
 </div> 
 </div>       
-    <div class="card-header">
-      
+    <div class="card-header">    
         <div class="row">   
             <div #chatBody class="card-body">
-               
-                <ul class="chat">
+                <h4 *ngIf="filteredFutureMeetingList.length === 0">No Upcoming Meetings</h4>
+                <ul class="chat" *ngIf="filteredFutureMeetingList.length > 0">
                     <li *ngFor="let meeting of filteredFutureMeetingList | genericSearchAllProp : searchText" class="left clearfix">
                         <div class="row">
                             <div style="width: 70%;padding-left: 20px;">
@@ -211,7 +184,6 @@
                                         <button type="button" class="btn btn-danger" (click)="closePopup('cancel')">No</button>
                                     </div>
                                 </app-custom-modal>
-                               
                                 <app-custom-modal #startMeetNowModal [model]="startMeetNow">
                                     <div>
 
