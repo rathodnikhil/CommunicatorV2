@@ -14,7 +14,8 @@
     ::-webkit-scrollbar {
         display: none;
     }
-    background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
+    //background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
+    background: linear-gradient(to bottom, #980e06 -6%, #f9e0e2 100%);
     background-position-x: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -57,7 +58,7 @@
                 background-color: transparent;
             }
         }
-        &:hover::before,
+        &:hover::before
             {
             width: 100%;
             -webkit-transition: width .2s ease-in;
@@ -69,7 +70,8 @@
         &:active,
         &:focus {
             text-decoration: none;
-            background-color: #e8f0fc  !important;
+            //background-color: #e8f0fc  !important;
+            background-color: #fff;
             border : 1px solid #115c7d;
         
         }
@@ -78,12 +80,14 @@
         height: auto;
         font-size: 20px;
         line-height: 44px;
-        background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
+        //background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
+        background-color: #fff;
         &:hover,
         &:active,
         &:focus {
+            background-color: #fff;
          //  background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
-            background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+            //background-image: url(/assets/images/Coreflex-solutions-header.jpg);
         }
     }
 }

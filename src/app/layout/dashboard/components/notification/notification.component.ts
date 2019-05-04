@@ -78,6 +78,11 @@ export class NotificationComponent implements OnInit {
         });
 
     }
+
+    onKey(event) {
+        if (event.key === 'Enter') { this.searchInWholeMemberList(); }
+    }
+
     viewMemeberDetails(user) {
         this._userService.setSelectedUser(user);
         this.getChattingHistoryBySelectedUser();

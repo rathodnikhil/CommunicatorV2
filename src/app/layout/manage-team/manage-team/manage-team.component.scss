@@ -23,18 +23,18 @@
      .header{
         position:absolute; 
         top:0px; left:0px; 
-        height:90px; 
+        height:70px; 
         right:0px;
         padding-top: 20px;
         color: white;
         overflow:hidden;
         text-align: center;
-        background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+        background-image: url(/assets/images/header.png);
     }
     
     .body-container{
         position:absolute; 
-        top:90px; 
+        top:70px; 
         bottom:75px; 
         left:0px; 
         right:0px; 
@@ -54,29 +54,32 @@
     .left {
         width: auto;
         float:left;
-        background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
-        color: #ffffff;
         font-weight: bold;
+        padding-top:0px;
         // overflow: hidden;
     }
 
     .filter-list{
         border-right: 1px solid rgba(0, 0, 0, 0.125);
         height: 100%;
-        padding-left: 1.5%;
+        //padding-left: 1.5%;
+        padding-right: 0px;
         // margin-top:0.3%;
         // margin-bottom: 10%;
+        overflow-x: hidden;
     }
     
        .filter-list ul{
            list-style-type: none;
+           margin: 5px;
+           background-color: #fff;
        }
        .filter-list ul li input{
        cursor: pointer;
        }
 
        .team-name-list{
-        height:70vh; 
+        height: 77vh;
         overflow: auto;
         padding-bottom: 100px;
       }
@@ -120,3 +123,33 @@
         width: 5%; 
         margin-top: 6%;
       }
+      
+      label{
+        margin-top: .5rem;
+      }
+
+      .tBox{  
+        background-position:right;   
+        background-repeat:no-repeat;   
+        border-radius: 5px;
+        margin: 0 3% 0 3%;
+        }
+        .username-password{
+            width:90%;
+            margin-bottom: 1%;
+            height:35px;
+          }
+
+        .view-details{
+          text-align: center;
+          padding-top: 1%;
+          color: orangered;
+        }
+        .team-div{
+          background-color: #f9e0e2;
+          padding:8px 8px 0;
+          color: #bd081c;
+          overflow-x: auto;
+        }
+
+          
