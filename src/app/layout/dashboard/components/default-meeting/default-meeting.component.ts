@@ -168,9 +168,12 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 });
                 break;
             case 'range':
-                if (this.selectedfromDate === null || this.selectedfromDate === undefined
-                    || this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedfromDate === '') {
-                    this.alertService.warning('Please select date.', 'Wanning');
+                if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate === '' ) {
+                    this.alertService.warning('Please select from date.', 'Wanning');
+                    this.filteredFutureMeetingList = this.futureMeetingList;
+                    return false;
+                } else if (this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedtoDate === undefined) {
+                    this.alertService.warning('Please select to date.', 'Wanning');
                     this.filteredFutureMeetingList = this.futureMeetingList;
                     return false;
                 } else {
