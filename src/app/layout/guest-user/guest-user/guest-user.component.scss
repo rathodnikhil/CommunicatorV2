@@ -19,18 +19,6 @@
     max-width: 978px;
 }
 
-.header{
-    position:absolute; 
-    top:0px; left:0px; 
-    height:70px; 
-    right:0px;
-    padding-top: 20px;
-    color: white;
-    overflow:hidden;
-    text-align: center;
-    background-image: url(/assets/images/header.png);
-}
-
 .body-container{
     position:absolute; 
     top:90px; 
@@ -48,10 +36,4 @@
     left:0px; 
     right:0px; 
     overflow:hidden;
-}
-
-.search-guest-users
-{
-    background-color: #01baac;
-     color: #ffff;
 }

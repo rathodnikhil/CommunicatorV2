@@ -78,7 +78,7 @@
         border: 1px solid #bdb9b9;
         text-align: left;
         padding: 8px;
-        background: #585858;
+        background: #626262;
         opacity: 0.85;
         color: #ffffff;
     }
@@ -246,4 +246,43 @@ color: red;
     width: 250px;
     height: 250px;
     z-index: 100;
+}
+.guest-user{
+    float: right;
+    border-radius: 5px;
+    margin-top:4%;
+    margin-right: 15px;
+    color: #fff;
+    background-color: #f26359;
+    border: 1px solid #e25247;
+  }
+  .team-name
+{
+    color:#01baac;
+}
+
+.logged-in-username
+{
+    color:#bd081c;
+}
+
+.search-in-datatable
+{
+    font-family:Arial, FontAwesome;
+}
+
+.header{
+    position:absolute; 
+    top:0px; left:0px; 
+    height:70px; 
+    right:0px;
+    padding-top: 20px;
+    color: white;
+    overflow:hidden;
+    text-align: center;
+    background-image: url(/assets/images/header.png);
+}
+.text-center
+{
+    text-align: center;
 }

@@ -26,9 +26,9 @@
                                         class="rounded-circle profile-img img-fluid" />
                                 </div>
                        
-                                <h2 class="padding-top-20">
+                                <h2 class="padding-top-20 logged-in-username">
                                     {{loggedInUserId.firstName}}&nbsp;{{loggedInUserId.lastName}}</h2>
-                                <b>{{loggedInUserId.team.teamName}}</b>
+                                <b class="team-name">{{loggedInUserId.team.teamName}}</b>
                             </div>
                         </div>
                     </div>
@@ -69,9 +69,9 @@
                                     </div>
                                 </div>
 
-                                <div style="text-align: center;">
-                                        <button class="btn btn-primary" style="border-radius: 7px;" (click)="saveUserSetting()">Save</button>
-                                        <a class="btn btn-danger" style="border-radius: 7px;"
+                                <div class="text-center">
+                                        <button class="btn btn-primary" (click)="saveUserSetting()">Save</button>
+                                        <a class="btn btn-danger"
                                             [routerLink]="['/dashboard/default']">Cancel</a>
                                 </div>
                             </form>
