@@ -144,6 +144,7 @@
     background-color: #01baac;
     border-color: #01baac;
     color:white;
+    font-weight: bold;
  }
  .list-item-padding{
     padding-left: 1%;
@@ -169,7 +170,8 @@
     background-color: #f5f5f5;
 }
 .team-member{
-    color: #03a094;
+    // color: #03a094;
+    color: #02736a;
     font-weight: bold;
     padding-left: 3%; 
     padding-top: 2px;
@@ -245,12 +247,13 @@
          //   padding-left: 3%;
         }
           .group-criteria-div {
-            background-color: #a0dbd6;
+            background-color: #f9e0e2;
+            // background-color: #a0dbd6;
             // margin-bottom: 2.5%;
             // border-radius: 3px;
           }
           .group-criteria {
-            color:#037b72;
+            color:#bd081c;
             margin-left: 3%;
             font-weight: bold;
             padding-top: 2%;

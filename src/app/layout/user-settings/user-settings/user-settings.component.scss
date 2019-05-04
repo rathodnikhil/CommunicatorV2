@@ -13,18 +13,6 @@
     background: #fff;
 }
 
-.header{
-    position:absolute; 
-    top:0px; left:0px; 
-    height:70px; 
-    right:0px;
-    padding-top: 20px;
-    color: white;
-    overflow:hidden;
-    text-align: center;
-    background-image: url(/assets/images/header.png);
-}
-
 .body-container{
     position:absolute; 
     top:100px; 
@@ -75,13 +63,13 @@
     background-color:rgb(252, 223, 223);
     color:#464646;
     text-align: center;
-    border: 1px solid #db9ba1; 
+    border: 1px solid #bd081c; 
     border-right: none; 
 }
 
 #rightPanel{
     min-height:415px;
-    border: 1px solid #db9ba1; 
+    border: 1px solid #bd081c; 
     border-left: none; 
     padding: 8px; 
     text-align: center;
@@ -105,3 +93,4 @@
     height: 200px;
     padding: 10px;
 }
+

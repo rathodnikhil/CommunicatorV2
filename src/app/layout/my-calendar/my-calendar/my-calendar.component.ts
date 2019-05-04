@@ -69,6 +69,8 @@ export class MyCalendarComponent implements OnInit {
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
+            this.lastMeetingYear = new Date().getFullYear();
+            this.lastMeetingMonth = new Date().getUTCMonth() + 1;
             this.loadMore();
         });
         // const payload = { userCode: this.loggedInUserObj.userCode };
@@ -110,6 +112,8 @@ export class MyCalendarComponent implements OnInit {
         };
     }
     clickButton(model: any) {
+        debugger;
+        console.log('model : ' + model);
         this.displayEvent = model;
     }
     eventClick(model: any) {
@@ -148,7 +152,7 @@ export class MyCalendarComponent implements OnInit {
         this.meetingDetailsModal.close();
     }
     loadMore() {
-        const payload = { lastMeetingYear: this.lastMeetingYear ,
+        const payload = { lastMeetingYear: this.lastMeetingYear,
              lastMeetingMonth: this.lastMeetingMonth};
       this.calenderMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
