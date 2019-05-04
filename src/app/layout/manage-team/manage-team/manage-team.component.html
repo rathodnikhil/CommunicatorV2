@@ -27,7 +27,7 @@
                             </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group input-group" style="padding-top: 8px;">
+                                <div class="form-group input-group" style="padding-top: 6px;">
                                     <button class="btn btn-primary" style="margin-left: 5px;" (click)="open()"
                                     #addTeamField>+Team</button>
                                 </div>
@@ -119,7 +119,7 @@
                         <th>Status</th>
                         <th>Meeting Permission</th>
                         <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Delete</th> 
                     </tr>
                     <tr *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTableText | paginate: config ;let srNo = index">
                         <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
