@@ -112,9 +112,8 @@ export class MyCalendarComponent implements OnInit {
         };
     }
     clickButton(model: any) {
-        debugger;
-        console.log('model : ' + model);
         this.displayEvent = model;
+        this.loadMore();
     }
     eventClick(model: any) {
         model = {
@@ -152,6 +151,7 @@ export class MyCalendarComponent implements OnInit {
         this.meetingDetailsModal.close();
     }
     loadMore() {
+        debugger;
         const payload = { lastMeetingYear: this.lastMeetingYear,
              lastMeetingMonth: this.lastMeetingMonth};
       this.calenderMeetingSpinnerMod.showSpinner();
@@ -162,6 +162,7 @@ export class MyCalendarComponent implements OnInit {
                 this.lastMeetingMonth = 12;
             }
             if (data[0].errorFl || data[0].warningFl) {
+                this.calenderMeetingSpinnerMod.hideSpinner();
                 return this.alertService.warning(data[0].message, 'Warning');
             } else {
                 data.forEach(element => {
