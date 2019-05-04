@@ -1,84 +1,3 @@
-<!-- <div class="logo-background">
-    <img src="assets/images/color-logo1.png" class="center logo" alt="Responsive image" />
-</div>
-<div class="container-bg">
-   
-    <div class="col-md-12 set-content" style="position:fixed;">
-        <div class="row h-100 d-flex justify-content-center" *ngIf="loginUiFlag">
-            <div id="login" class="col-md-4" style=" top: 0; box-shadow:5px 10px 18px #888888;">
-                <div class="inner-border">
-                    <h1 style="color: #01baac;">Log In</h1>
-                    <div style=" border: 1px solid #01baac;">
-                        <div id="register-user1">I am a Registered User:</div>
-                        <div class="input-group mb-3" style="padding:0px 15px 5px 15px;">
-
-                            <div class="input-group-prepend">
-
-                                <span class="input-group-text">
-                                    <i class="fa fa-user"></i>
-                                </span>
-                            </div>
-                            <input class="form-control" autofocus type="text" placeholder="{{UserNameText}}"
-                                [(ngModel)]="userName" (keyup)="onKey($event)" required>
-                        </div>
-
-                        <div class="input-group mb-3" *ngIf="!isGuest" style="padding:0px 15px 5px 15px;">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-unlock"></i>
-                                </span>
-                            </div>
-                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password"
-                                (keyup)="onKey($event)" required>
-                        </div>
-                    </div>
-
-                    <div class="join-meeting-id">
-                        <a [routerLink]="['GuestUserWithMeeting']" title="Join a meeting through Meeting Code" class="btn btn-default "
-                            role="button" style="font-size: 15px;word-wrap: break-word">
-                            <i class="fa fa-sign-in" aria-hidden="true" style="padding-right:5px;font-size:18px;"></i>
-                            Join with Meeting ID (Guest user)
-                        </a>
-
-                    </div>
-
-                    <fieldset id="actions">
-                        <input type="submit" id="submit" class="btn btn-sec" [(ngModel)]="Logintext" (click)="login()"
-                            style="margin-bottom: 1%;" />
-                        <a (click)="forgetPassword()">Forgot your password?</a>
-                    </fieldset>
-                </div>
-            </div>
-
-        </div>
-        <div *ngIf="forgetPasswordFlag" class="centerForgotPassword col-md-4">
-            <div class="inner-border">
-                <h3 style="color: #01baac;">Forgot Password</h3>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fa fa-envelope fa-fw"></i>
-                        </span>
-                    </div>
-                    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
-                        required />
-                </div>
-
-                <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button>
-                <div class="alink"> <a (click)="backToLogin()">Login</a></div>
-            </div>
-        </div>
-    </div>
-    <div style="display: none;">
-        <label id="isScreenSharePopupClosed"></label>
-        <label id="isRecordScreenPopupClosed"></label>
-    </div>
-    
-</div>
-<div class="cfsfooter">
-    <img class="setLogo"src="assets/images/coreflex-logo.png"><br>
-<b>Coreflex Solutions &copy; 2018. All rights reserved | Version 1.1.0</b>
-</div> -->
 
 <div class="logo-background" style="position:relative;">
     <img src="assets/images/header.png" alt="Responsive image"  height="50" width="100%">
@@ -98,13 +17,10 @@
   </div> 
   
   <div class="row" style="margin-left:0px; margin-right:0px;">
-   
     <div class="col-md-5" style="background-color:#f4f2f3;">
-  
           <button *ngIf="loginUiFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
             <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
         </i> Join with Meeting ID (Guest User) </button>
-          
           <div class="main">
           <div class="login-block">
             <div *ngIf="loginUiFlag">
@@ -126,7 +42,8 @@
                   <img src="/assets/images/password.png" alt="password img" height="15px" width="15px">
                 </span>
             </div>
-            <input type="password" class="form-control" name="password" id="loginPass" (keyup)="onKey($event)" [(ngModel)]="password" placeholder="{{passwordText}}" required >
+            <input type="password" class="form-control" name="password" id="loginPass" (keyup)="onKey($event)" 
+            [(ngModel)]="password" placeholder="{{passwordText}}" required >
         </div>
             </div> 
               <div *ngIf="forgetPasswordFlag">
@@ -137,14 +54,12 @@
                         </span>
                     </div>
                     <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
-                        required />
+                        name="forgetEmail" required />
                 </div>
-                <!-- <button class="btn btn-sec" (click)="sendEmailForgotPassword()">Submit</button> -->
-                <!-- <div class="alink"> <a (click)="backToLogin()">Login</a></div> -->
         </div>
             <div class="row" style="margin-top: 5%">
             <div class="col-md-5">
-            <button id="login" type="button" class=" btn btn-default log-in" [(ngModel)]="Logintext" (click)="login()"><b>{{Logintext}}</b></button>
+            <button id="login" type="button" class=" btn btn-default log-in" name="Logintext" [(ngModel)]="Logintext" (click)="login()"><b>{{Logintext}}</b></button>
           </div>
             <div class="col-md-7">
                     <h5 (click)="backToLogin()" class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a >Login</a></b></h5>
@@ -194,6 +109,4 @@
         <label id="isRecordScreenPopupClosed"></label>
     </div>
   </div>
-  
-  
       <app-footer></app-footer> 
