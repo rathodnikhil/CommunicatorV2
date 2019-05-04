@@ -21,27 +21,26 @@
                                     <a (click)="file.click()">
                                         <img *ngIf='loggedInUserObj.profileImgPath'
                                             [src]="loggedInUserObj.profileImgPath" alt="Responsive image"
-                                            class="rounded-circle profile-img img-fluid" style="padding:10px;" />
+                                            class="rounded-circle profile-img img-fluid padding-10" />
                                         <img *ngIf="loggedInUserObj.profileImgPath === null || loggedInUserObj.profileImgPath === '' || loggedInUserObj.profileImgPath === 'undefined'" 
                                             src="assets/images/default-profile.jpg" alt="Responsive image"
-                                            class="rounded-circle profile-img img-fluid" style="padding:10px;" />
+                                            class="rounded-circle profile-img img-fluid padding-10" />
                                     </a>
                                 </div>
                                 <div class="btn-group">
                                     <a (click)="file.click()">
-                                        <i class="fa fa-pencil-square-o" style="color: brown; font-size: medium;"
+                                        <i class="fa fa-pencil-square-o edit-profile-icon"
                                             aria-hidden="true">
                                             Change profile picture</i>
                                     </a>
                                     <p><input #file type="file" name="imageUrl" accept="image/*" 
-                                            (change)="onProfilePicSelected($event)" style="cursor: pointer;"
+                                            (change)="onProfilePicSelected($event)" class="cursor-pointer"
                                             accept=".jpg,.png,.jpeg" hidden /></p>
-                                            <!-- [(ngModel)]="loggedInUserObj.profileImgPath" -->
                                 </div>
 
-                                <h2 class="padding-top-20">
+                                <h2 class="padding-top-20 logged-in-username">
                                     {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</h2>
-                                <b>{{loggedInUserObj.team.teamName}}</b>
+                                <b class="team-name">{{loggedInUserObj.team.teamName}}</b>
                             </div>
                         </div>
                     </div>
@@ -104,7 +103,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <b style="overflow-wrap: break-word; color: black;">
+                                            <b class="logged-in-username wrap-text">
                                                 {{loggedInUserObj.name}}</b>
                                         </div>
                                     </div>
@@ -118,7 +117,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <b style="overflow-wrap: break-word; color: black;">
+                                            <b class="team-name wrap-text">
                                                 {{loggedInUserObj.team.teamName}}</b>
                                         </div>
                                     </div>
@@ -135,7 +134,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <b style="overflow-wrap: break-word; color: black;">
+                                            <b class="logged-in-username wrap-text">
                                                 {{profileOtherDetails.meetingCount}}</b>
                                         </div>
                                     </div>
@@ -149,15 +148,14 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <b style="overflow-wrap: break-word; color: black;">
+                                            <b class = "logged-in-username wrap-text">
                                                 {{profileOtherDetails.groupCount}}</b>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="text-align: center;">
+                                <div class="text-center">
                                     <button class="btn btn-primary" (click)="updateProfile()">Save</button>
-                                    <button class="btn btn-danger" (click)="cancelUpdate()"
-                                        style="color: #ffff;">Cancel</button>
+                                    <button class="btn btn-danger btn-cancel-color" (click)="cancelUpdate()">Cancel</button>
                                 </div>
                             </form>
                         </div>
