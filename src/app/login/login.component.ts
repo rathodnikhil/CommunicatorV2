@@ -141,6 +141,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               });
             } else {
+              
                 if (this.userName === undefined || this.userName
                     === '' || this.userName === null) {
                     return this.alertService.error('Enter Username', 'Error');
@@ -150,7 +151,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                 this._userService.verifyUser(payload).subscribe(resp => {
                     const loggedinUser = resp.json();
-                    if (loggedinUser.warningFl === false || loggedinUser.errorFl === false) {
+                    if (loggedinUser.warningFl === false) {
                         this._loginService.getAuthenticationToken(payload).subscribe(data => {
                             this.jwtToken = this._loginService.getJwtToken();
                             if (this.jwtToken === undefined ||
@@ -173,11 +174,11 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                             }
                         });
                     } else {
-                      if (loggedinUser.warningFl === true) {
+                      if (resp.json() ===  'invalidUsername') {
                         this.userName = '';
                         return this.alertService.warning('Username is invalid', 'Account Authentication');
                       }
-                      if (loggedinUser.warningFl === true) {
+                      if (resp.json() ===  'invalidPassword') {
                         this.password = '';
                         return this.alertService.warning('Password is invalid', 'Account Authentication');
                       }
