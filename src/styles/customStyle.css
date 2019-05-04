@@ -161,7 +161,7 @@
     min-height: 35px;
 }
 .asterik-mark{
-color: red;
+color: red;  
 }
 .cursorPointer{
     cursor: pointer;
@@ -303,4 +303,12 @@ color: red;
 .text-center
 {
     text-align: center;
+}
+.btn-primary{
+    font-weight: bold;
+
+}
+
+.fa-3x{
+    font-size: 2.5em;
 }

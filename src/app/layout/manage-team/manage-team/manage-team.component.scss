@@ -60,7 +60,7 @@
     }
 
     .filter-list{
-        border-right: 1px solid rgba(0, 0, 0, 0.125);
+        //border-right: 1px solid rgba(0, 0, 0, 0.125);
         height: 100%;
         //padding-left: 1.5%;
         padding-right: 0px;
@@ -71,12 +71,13 @@
     
        .filter-list ul{
            list-style-type: none;
-           margin: 5px;
+           margin: 6px;
            background-color: #fff;
+           border-radius:2px;
        }
        .filter-list ul li input{
        cursor: pointer;
-       }
+       } 
 
        .team-name-list{
         height: 77vh;
@@ -90,13 +91,13 @@
       }
       .btn-edit{
         color: #fff;
-        background-color: #01baac;
-        border-color: #01baac;
+        background-color: green;
+        border-color: green;
       }
       .btn-edit:hover{
-        background-color:#5ebfff;
+        background-color:green;
         color:white;
-        border: 1px solid #01baac;
+        border: 1px solid green;
       }
       .update-mem{
         width: 100%;
@@ -107,6 +108,7 @@
         padding-top: 2px;
         padding-right: 30px;
         padding-left: 10px;
+        color:#000;
       }
       .team-container{
         padding-bottom: 100px;
@@ -150,6 +152,10 @@
           padding:8px 8px 0;
           color: #bd081c;
           overflow-x: auto;
+        }
+
+        .pageControl{
+          padding-top: 10px;
         }
 
           
