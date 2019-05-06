@@ -11,7 +11,7 @@
 
 <div class="main"style="text-align: center;">
           <div id="login" class="col-md-4 center" >
-              <h4>Register Admin</h4>
+              <h4 style="font-weight: bold;">Register Admin</h4>
                       <div class="form-style-9">
                        
                         <ul>
@@ -93,8 +93,10 @@
                         </ul>
                      
                         <input class="btn btn-primary" type="submit" id="submit" value="Register"  (click)="registerUser();">
+                        <div class="view-admin"> <a  [routerLink]="['/ManageAdmin']" style="color:#980e06;">View Admin Details</a></div>
+                       
                       </div>
-                      <a  [routerLink]="['/ManageAdmin']" class="btn btn-primary">View Admin Details</a>
+                     
           </div>
           </div>
           <app-footer></app-footer>
