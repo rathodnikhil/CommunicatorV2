@@ -96,7 +96,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                             email: this.loggedInUser.email
                         };
                     this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
-                        debugger;
                         if (!data2.warningFl && !data2.errorFl && data2.message !== null
                             && data2.message.toLowerCase().indexOf('success') > -1) {
                             this.meetingDetails = data2;
@@ -233,6 +232,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     completeExit() {
         this.exit();
+        debugger;
         if (this.isGuest === true) {
             this.router.navigate(['/login']);
             window.location.reload();
