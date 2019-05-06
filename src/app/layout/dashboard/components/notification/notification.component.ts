@@ -58,7 +58,7 @@ export class NotificationComponent implements OnInit {
                 this._userService.getUserList().subscribe(userData => {
                     if (userData !== undefined && userData.length > 0) {
                         this.userList = userData;
-                        this.notificationSpinnerMod.hideSpinner();
+                        // this.notificationSpinnerMod.hideSpinner();
                     } else {
                         this.userList = [];
                     }
@@ -68,12 +68,14 @@ export class NotificationComponent implements OnInit {
                     if (groupData !== undefined && groupData.length > 0) {
                         this.groupList = groupData;
                     } else {
+                        // this.notificationSpinnerMod.hideSpinner();
                         this.groupList = [];
                         if (groupData[0] !== undefined && groupData[0].message !== undefined) {
                             return this.alertService.warning(data[0].message, 'Warning');
                         }
                     }
                 });
+                this.notificationSpinnerMod.hideSpinner();
             }
         });
 

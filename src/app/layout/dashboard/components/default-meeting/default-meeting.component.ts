@@ -181,8 +181,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                     const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
                     const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
                     this.futureMeetingList.forEach(meeting => {
-                        const meetingDate = new Date(meeting.meetingStartDateTime);
-                        if (toDate >= meetingDate && fromDate <= meetingDate && meeting.status.status === 'ACTIVE') {
+                        const meetingDate = new Date(meeting.meetingDate);
+                        if (meetingDate <= toDate   && meetingDate >= fromDate && meeting.status.status === 'ACTIVE') {
                             this.filteredFutureMeetingList.push(meeting);
                         }
                     });
