@@ -11,10 +11,23 @@
     <div id="content" class="body-container">
         <div class="row">
             <div class="col-lg-2 col-md-2 left filter-list">
-                <div class="align-center">
-                    <h4><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Groups</h4>
-                    <hr>
-                    <div class="align-center">
+                <div class="team-div">
+                    <h4 class="selected-criteria" style="font-weight: bold;">Groups</h4>  
+                    
+                    <div class="row" style="margin-right:0px;">
+                        <div class="col-md-8 align-center text-center">
+                            <div class="form-group input-group" style="padding-top:5px;">
+                                <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchGroup" >
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group input-group" style="padding-top: 6px;">
+                                <button class="btn btn-primary" style="margin-left: 5px;" (click)="openGroup()">+Group</button>
+                            </div>
+                        </div>
+                </div> 
+                    
+                    <!-- <div class="align-center">
                         <div class="form-group input-group padding-top-5px">
                             <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchGroup">
                             <div class="input-group-append">
@@ -25,7 +38,7 @@
                             <button class="btn btn-sec margin-left-5px" style="align:align-center;"
                             (click)="openGroup()">+Group</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="group-name-list">
                     <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroup;let groupCount = index">
@@ -57,11 +70,11 @@
                 </div>
             </div>
             <!-- <div class="loader" *ngIf="loading"></div> -->
-            <div class="col-lg-10 col-md-10" *ngIf="!showSelectedGroup">
+            <div class="col-lg-10 col-md-10 view-details" *ngIf="!showSelectedGroup">
                 <h3>Kindly select the group to view details</h3>
             </div>
             <div class="col-lg-10 col-md-10 group-container" *ngIf="showSelectedGroup">
-                <div class="row padding-5px">
+                <div class="row padding-5px" style="padding: 5px;">
                     <h4 class="selected-group">{{selectedGroupName}}
                         <span>&nbsp;[{{memberList.length}} Members]</span>
                     </h4>
@@ -81,7 +94,7 @@
                             [(ngModel)]="selectedItems"
                             [settings]="dropdownSettings"
                             (onSelect)="onItemSelect($event)"
-                            (onSelectAll)="onSelectAll($event)"
+                            (onSelectAll)="onSelectAll($event)"  
                             (onDeSelect)="OnItemDeSelect($event)" 
                             (onDeSelectAll)="onDeSelectAll($event)">
                         </ng-multiselect-dropdown>
@@ -90,19 +103,14 @@
                             (onFilterChange)="onFilterChange($event)" -->
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-sec btn-update-member" (click)="updateMembers()" >Update Members</button>
+                        <button class="btn btn-primary btn-update-member" (click)="updateMembers()" >Update Members</button>
                     </div>
                 </div>
                 <hr>
                 <div class="col-md-12 margin-top-10px" *ngIf="showSelectedGroup">
                     <div class="form-group input-group col-md-3" style="float: right;">
-                        <input type="text" class="form-control" placeholder="Member Name/Member Id" [(ngModel)]="searchMember">
-
-                        <div class="input-group-append">
-                            <button class="btn btn-search" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
+                        <!-- <input type="text" class="form-control" placeholder="Member Name/Member Id" [(ngModel)]="searchMember"> -->
+                        <input class="tBox username-password form-control" placeholder="&#xF002;  Member Name/Member Id" style="font-family:Arial, FontAwesome" [(ngModel)]="searchMember" >
                     </div>
                 </div>
                 <table class="padding-20px" *ngIf="showSelectedGroup">
@@ -179,5 +187,5 @@
             </div>
             <app-footer></app-footer>
         </div>
-    </div>
+    </div>  
 </div>
