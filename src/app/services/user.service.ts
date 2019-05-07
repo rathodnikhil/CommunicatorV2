@@ -148,9 +148,12 @@ export class UserService {
         const url = environment.baseUrl + 'addNewMemberFromWholeList';
         return this.apiRequest.post(url, payload);
     }
-    getGuestUsersByLoggedInUser() {
-        const url = environment.baseUrl + 'getGuestUsersByLoggedInUser';
-        return this.apiRequest.post(url, null);
+    getGuestUsersByLoggedInUser(payload) {
+        const url = environment.baseUrl + 'getGuestUsersByLoggedInUser?year=' +
+        payload.year + '&month=' + payload.month;
+        return this.apiRequest.post(url, payload);
+        // const url = environment.baseUrl + 'getGuestUsersByLoggedInUser';
+        // return this.apiRequest.post(url, null);
     }
     deleteUser(payload) {
         const url = environment.baseUrl + 'deleteUser?userCode=' + payload.userCode;

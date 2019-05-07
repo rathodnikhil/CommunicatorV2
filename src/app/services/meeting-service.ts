@@ -64,7 +64,7 @@ export class MeetingService {
     }
     getPastMeetingsByMonth(payload) {
         const url = environment.baseUrl + 'getPastMeetingsByMonth?lastMeetingYear=' +
-        payload.lastMeetingYear + '&lastMeetingMonth=' + payload.lastMeetingMonth;
+        payload.lastMeetingYear + '&lastMeetingMonth=' + payload.lastMeetingMonth + '&calendarFl=' + payload.calendarFl;
         return this.apiRequest.post(url, payload);
     }
     getMeetingAttendee(payload) {
