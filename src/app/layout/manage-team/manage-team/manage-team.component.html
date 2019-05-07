@@ -9,7 +9,6 @@
         </div>
     </div>
     <div id="content" class="body-container">
-            <!-- <div class="loader" *ngIf="loading"></div> -->
         <div class="row">
             <div class="col-lg-2 col-md-2 left filter-list">
                 <div class="team-div">
@@ -17,13 +16,7 @@
                         <div class="row" style="margin-right:0px;">
                             <div class="col-md-8 align-center text-center">
                                 <div class="form-group input-group" style="padding-top:5px;">
-                                    <!-- <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTeam"> -->
                                     <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchTeam" >
-                                    <!-- <div class="input-group-append">
-                                        <button class="btn btn-search" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div> -->
                             </div>
                             </div>
                             <div class="col-md-4">
@@ -33,26 +26,12 @@
                                 </div>
                             </div>
                     </div> 
-                    <!-- <h4>
-                        <i class="fa fa-users" aria-hidden="true"></i>&nbsp;Teams</h4>
-                    <div class="align-center text-center">
-                        <div class="form-group input-group" style="padding-top:5px;">
-                            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTeam">
-                            <div class="input-group-append">
-                                <button class="btn btn-search" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                            <button class="btn btn-sec" style="align:align-center; margin-left: 5px;" (click)="open()"
-                                #addTeamField>+Team</button>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="team-name-list">
                     <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamIndex = index">
                         <li>
-                            <label *ngIf="userPermission.team.status.status === 'ACTIVE'" style=" cursor: pointer;"
-                                (click)="displayTeamDetails(userPermission , teamIndex)">
+                            <div class="first-letter"><i class="fa fa-users" aria-hidden="true" ></i> </div>
+                            <label style=" cursor: pointer;"  (click)="displayTeamDetails(userPermission , teamIndex)">
                                 {{userPermission.team.teamName}}
                             </label>
                         </li>
@@ -77,7 +56,6 @@
                     </app-custom-modal>
                 </div>
             </div>
-            <!-- <div class="loader" *ngIf="loading"></div> -->
             <div class="col-lg-10 col-md-10 view-details" *ngIf="!showSelectedTeam">
                 <h3>Kindly select the team to view details</h3>
             </div>
@@ -101,16 +79,11 @@
                     <div class="align-center" class="col-md-3">
                         <div class="form-group input-group" style="padding-top:5px;">
                             <input class="tBox username-password form-control" placeholder="&#xF002;  Name/Email/Status" style="font-family:Arial, FontAwesome" [(ngModel)]="searchTableText" >
-                            <!-- <input type="text" class="form-control" placeholder="Name/Email/Status" [(ngModel)]="searchTableText">
-                            <div class="input-group-append">
-                                <button class="btn btn-search" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div> -->
                         </div>
                     </div>
                 </div>
                 <hr>
+                <h5 class="team-member"><b>Team Members</b></h5>
                 <table style="padding: 20px;">
                     <tr>
                         <th>Sr. No</th>
