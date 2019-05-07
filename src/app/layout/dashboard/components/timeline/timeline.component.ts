@@ -107,11 +107,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             this.alertService.warning('Enter Message', 'Warning');
         } else {
             this._chatService.saveChat(payload).subscribe(data => {
-                if (data.errorFl === true || data.warningFl === true) {
+                if (data[0].errorFl === true || data[0].warningFl === true) {
                     return this.alertService.warning(data.message, 'Warning');
                 }
             });
-
         }
     }
     onKey(chatMessage) {

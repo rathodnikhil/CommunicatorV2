@@ -9,11 +9,7 @@
                             <img style="float:left;" class="header-img" src="assets\images\logo.png">
                         </ng-template>
                 </div>
-            <!-- <div style="overflow: auto;"> -->
                 <div class="roundedCorner">
-                    
-                    <!-- <div class="colorgraph"></div> -->
-                    <!-- <div class="roundedCorner"> -->
                     <h3 class="header-label" style="margin-top:7%;"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
                     </h3>
                     <p><img *ngIf='loggedInUserObj.profileImgPath' [src]="loggedInUserObj.profileImgPath" alt="Responsive image"
@@ -27,43 +23,11 @@
                             <i class="fa fa-pencil fa-stack-1x profile-img-edit-icon"></i>
                         </a>
                     </span>
-    
-                    <!-- <a [routerLink]="['/myProfile']"><i class="fa fa-pencil-square-o" style="color: green; font-size: 1.7vh;" aria-hidden="true">
-                                        Edit profile pic</i></a> -->
-    
                     <h6  style="font-size: 14px;"><b>{{loggedInUserObj.team.teamName}}</b></h6>
                     <h5 class="label-h6 ">Click on a member's name
                         <br>and start a new conversation</h5>
-                        <!-- <div class="colorgraph" style="width:40%;text-align:center; margin-left:30%;"></div>
-                       <h5 class="label-h5 " style="color:#fd7a2a;">Communicator : Corporate Communication Solution</h5> -->
-                    <!-- <div class=" mt-5"> -->
                     <div class="footer">
-                        <!-- <div class="card mx-auto">
-                            <div class="card bg-light text-dark">
-                                <img class="card-img setlogo" src="assets\images\coreflex-logo.png"
-                                    style="height:60px;width:200px; ">
-                                <p class="describe text-center"><strong>"</strong>Communicator is an online meeting,
-                                    desktop
-                                    sharing, and video conferencing software solution <br>that enables the user to meet
-                                    with
-                                    clients or colleagues via Internet anywhere anytime<b>"</b>.</p>
-                                <p class="describe text-center">It makes online meetings easy with its features <br>like
-                                    screen
-                                    share, file share, audio/video conference, meeting chat and recording.</p>
-    
-                                <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary"
-                                    role="button" style="font-size:15px;">Explore
-                                    CoreFlex Communicator</a>
-                            </div>
-                        </div>-->
-                        <!-- <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary"
-                        role="button">Explore
-                        CoreFlex Communicator</a> -->
-                         <!-- <h6 class="membername text-center">To easily log in later, save this URL:
-                            <span style="color: #be181e;" >https://cfscommunicator.com</span></h6>  -->
                     </div>
-                    <!-- </div> -->
-                <!-- </div> -->
             </div>
         </div>
     
@@ -73,10 +37,6 @@
                 <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
             </div>
         </div>
-    
-        <!-- <a href="http://xanadutec.com/communicator.html" target="_blank" class="btn btn-primary"
-                                    role="button" style="font-size:15px; bottom: 0;">Explore
-                                    CoreFlex Communicator</a> -->
     </div>
     
     
