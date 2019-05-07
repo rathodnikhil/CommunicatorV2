@@ -35,11 +35,17 @@
                         <td>{{guest.userCode}}</td>
                     </tr> 
                 </table>                                                  
-                <div class="col-md-12 pageControl">
-                    <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
-                        [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                        [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                        (pageChange)="onPageChange($event)"></pagination-controls>
+                <div class="row col-md-12">
+                    <div class="col-md-11 pageControl">
+                        <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide" [responsive]="responsive"
+                            [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel" [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                            [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                            (pageChange)="onPageChange($event)"></pagination-controls>
+                    </div>
+                    <div class="col-md-1 padding-top-10">
+                        <button type="button" class="btn btn-primary btn-responsive"
+                                (click)="loadMore(prevYear, prevMonth)">Load more</button>
+                        </div>
                 </div>
                 <app-footer></app-footer>
         </div>

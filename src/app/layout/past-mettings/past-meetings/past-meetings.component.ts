@@ -124,8 +124,8 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     loadMore() {
-        const payload = { lastMeetingYear: this.lastMeetingYear ,
-             lastMeetingMonth: this.lastMeetingMonth};
+        const payload = { lastMeetingYear: this.lastMeetingYear,
+             lastMeetingMonth: this.lastMeetingMonth, calendarFl: false};
         this.pastMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
             this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
