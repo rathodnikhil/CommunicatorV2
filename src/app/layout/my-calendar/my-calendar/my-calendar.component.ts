@@ -16,10 +16,11 @@ import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/s
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
-    // public loading: boolean;
+    public clickedType: any;
     lastMeetingStartTime: any;
     // allMeetingByLoggedInUserList = [];
     meetingList = [];
+    hovertext: any;
     meetingDetails = {
         meetingCode : '',
         subject : '',
@@ -43,8 +44,8 @@ export class MyCalendarComponent implements OnInit {
             start: this.yearMonth + '-01'
         }
     ];
-    lastMeetingMonth: any;
-    lastMeetingYear: any;
+    meetingMonth: any;
+    meetingYear: any;
     @ViewChild('calenderMeetingSpinner') calenderMeetingSpinnerMod: SpinnerComponent;
     @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
     @ViewChild('meetingDetailsModal') public meetingDetailsModal: CustomModalComponent;
@@ -69,9 +70,9 @@ export class MyCalendarComponent implements OnInit {
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
-            this.lastMeetingYear = new Date().getFullYear();
-            this.lastMeetingMonth = new Date().getUTCMonth() + 1;
-            this.loadMore();
+            // this.meetingYear = new Date().getFullYear();
+            // this.meetingMonth = new Date().getUTCMonth() + 1;
+            this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
         });
         // const payload = { userCode: this.loggedInUserObj.userCode };
         // this._meetingService.getAllMeetingsbyLoggedInUserId(payload).subscribe(data => {
@@ -113,7 +114,10 @@ export class MyCalendarComponent implements OnInit {
     }
     clickButton(model: any) {
         this.displayEvent = model;
-        this.loadMore();
+        if (model.buttonType === 'prev' || model.buttonType === 'next') {
+            this.clickedType = model.buttonType;
+            this.loadMore(this.meetingYear, this.meetingMonth);
+        }
     }
     eventClick(model: any) {
         model = {
@@ -131,7 +135,24 @@ export class MyCalendarComponent implements OnInit {
         this.meetingDetails = this.meetingList.find(x => x.meetingCode === id);
         this.displayEvent = model;
         this.meetingDetailsModal.open();
+        // this.hovertext = model.event.title;
     }
+
+    hover(model: any) {
+        model = {
+            event: {
+                id: model.event.id,
+                start: model.event.start,
+                end: model.event.end,
+                title: model.event.title,
+                allDay: model.event.allDay
+                // other params
+            },
+            duration: {}
+        };
+        this.hovertext = model.event.title;
+    }
+
     updateEvent(model: any) {
         model = {
             event: {
@@ -146,21 +167,34 @@ export class MyCalendarComponent implements OnInit {
             }
         };
         this.displayEvent = model;
+        this.hovertext = model.title;
     }
     exit() {
         this.meetingDetailsModal.close();
     }
-    loadMore() {
-        debugger;
-        const payload = { lastMeetingYear: this.lastMeetingYear,
-             lastMeetingMonth: this.lastMeetingMonth};
-      this.calenderMeetingSpinnerMod.showSpinner();
-        this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
-            if (this.lastMeetingMonth === 0) {
-                this.lastMeetingYear = this.lastMeetingYear - 1;
-                this.lastMeetingMonth = 12;
+    loadMore(year, month) {
+        if (this.clickedType !== undefined) {
+            if (this.clickedType === 'prev') {
+                if (month === 1) {
+                    year = year - 1;
+                    month = 12;
+                } else {
+                    month = month - 1;
+                }
+            } else if (this.clickedType === 'next') {
+                if (month === 12) {
+                    month = 1;
+                    year = year + 1;
+                } else {
+                    month = month + 1;
+                }
             }
+        }
+        const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true};
+        this.calenderMeetingSpinnerMod.showSpinner();
+        this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
+            this.meetingYear = year;
+            this.meetingMonth = month;
             if (data[0].errorFl || data[0].warningFl) {
                 this.calenderMeetingSpinnerMod.hideSpinner();
                 return this.alertService.warning(data[0].message, 'Warning');
@@ -175,9 +209,10 @@ export class MyCalendarComponent implements OnInit {
                         end: endTime
                     };
                     this.ucCalendar.fullCalendar('renderEvent', meeting, true);
-                    // this.calendarOptions.events.render()
+                    console.log('Check : ' + this.ucCalendar);
                 });
                 this.calenderMeetingSpinnerMod.hideSpinner();
+                this.meetingList = [];
                 this.meetingList = data;
             }
             this.calenderMeetingSpinnerMod.hideSpinner();
