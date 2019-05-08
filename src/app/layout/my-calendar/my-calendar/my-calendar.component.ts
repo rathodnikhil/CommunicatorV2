@@ -20,6 +20,7 @@ export class MyCalendarComponent implements OnInit {
     lastMeetingStartTime: any;
     // allMeetingByLoggedInUserList = [];
     meetingList = [];
+    hovertext: any;
     meetingDetails = {
         meetingCode : '',
         subject : '',
@@ -134,7 +135,24 @@ export class MyCalendarComponent implements OnInit {
         this.meetingDetails = this.meetingList.find(x => x.meetingCode === id);
         this.displayEvent = model;
         this.meetingDetailsModal.open();
+        // this.hovertext = model.event.title;
     }
+
+    hover(model: any) {
+        model = {
+            event: {
+                id: model.event.id,
+                start: model.event.start,
+                end: model.event.end,
+                title: model.event.title,
+                allDay: model.event.allDay
+                // other params
+            },
+            duration: {}
+        };
+        this.hovertext = model.event.title;
+    }
+
     updateEvent(model: any) {
         model = {
             event: {
@@ -149,6 +167,7 @@ export class MyCalendarComponent implements OnInit {
             }
         };
         this.displayEvent = model;
+        this.hovertext = model.title;
     }
     exit() {
         this.meetingDetailsModal.close();
@@ -190,6 +209,7 @@ export class MyCalendarComponent implements OnInit {
                         end: endTime
                     };
                     this.ucCalendar.fullCalendar('renderEvent', meeting, true);
+                    console.log('Check : ' + this.ucCalendar);
                 });
                 this.calenderMeetingSpinnerMod.hideSpinner();
                 this.meetingList = [];
