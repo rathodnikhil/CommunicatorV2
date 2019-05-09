@@ -17,7 +17,6 @@ export class UserService {
     selectedUser$: Subject<any> = new BehaviorSubject<any>({});
     selectedGroup$: Subject<any> = new BehaviorSubject<any>({});
     UserList$: Subject<any[]> = new BehaviorSubject<any>({});
-    loggedInUserRole$: Subject<any[]> = new BehaviorSubject<any>({});
     isGuest$: Subject<any> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
@@ -67,12 +66,12 @@ export class UserService {
     getUserList() {
         return this.UserList$;
     }
-    setIsGuest(flag) {
-        this.isGuest$.next(flag);
-    }
-    getIsGuest(flag) {
-        return this.isGuest$;
-    }
+    // setIsGuest(flag) {
+    //     this.isGuest$.next(flag);
+    // }
+    // getIsGuest(flag) {
+    //     return this.isGuest$;
+    // }
     getUserSettingsByLoggedInUser(payload) {
         const url = environment.baseUrl + 'getUserSettingsByLoggedInUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
