@@ -1,6 +1,6 @@
 <app-spinner #manageGroupSpinner></app-spinner>
 <div id="header" style="position:absolute; top:0px; left:0px; height:70px; right:0px;overflow:hidden;"> 
-<div class="header" style="position: fixed;" >
+<div class="header">
 <div class="row">
 <h3 class="page-title">Manage Group</h3>
 <a [routerLink]="['/dashboard/default']">
@@ -95,7 +95,7 @@ placeholder="Select Members"
 </div>
 </div>
 <hr>
-<div>
+
         <div class="row"> 
                 <div class="col-md-3">
                 <h5 class="group-member"><b>Group Members</b></h5></div>
@@ -177,7 +177,7 @@ placeholder="Select Members"
 <button type="button" class="btn btn-danger" (click)="deleteMemberModal.close()">No</button>
 </div>
 </app-custom-modal>
-
+</div>
 </div>
 </div>
 
