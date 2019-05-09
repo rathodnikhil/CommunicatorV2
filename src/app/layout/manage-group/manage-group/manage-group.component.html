@@ -1,191 +1,186 @@
 <app-spinner #manageGroupSpinner></app-spinner>
-<div class="main-container">
-    <div class="header">
-        <div class="row">
-            <h3 class="page-title">Manage Group</h3>
-            <a [routerLink]="['/dashboard/default']">
-                <i class="fa fa-3x fa-home home-icon" aria-hidden="true" title="Dashboard" data-toggle="tooltip"></i>
-            </a>
+<div id="header" style="position:absolute; top:0px; left:0px; height:70px; right:0px;overflow:hidden;"> 
+<div class="header" style="position: fixed;" >
+<div class="row">
+<h3 class="page-title">Manage Group</h3>
+<a [routerLink]="['/dashboard/default']">
+<i class="fa fa-3x fa-home home-icon" aria-hidden="true" title="Dashboard" data-toggle="tooltip"></i>
+</a>
+</div>
+</div>
+</div> 
+<div id="content" style="position:absolute; top:70px; bottom:5%; left:0px; right:0px; overflow:auto;overflow-x: hidden;"> 
+<div class="sidenav filter-list">
+<div class="team-div">
+<h4 class="selected-criteria" style="font-weight: bold;">Groups</h4> 
+
+<div class="row" style="margin-right:0px;">
+        <div class="col-lg-8 col-md-9 align-center text-center">
+            <div class="form-group input-group" style="padding-top:5px;">
+                <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchGroup" >
         </div>
+        </div>
+        <div class=" col-lg-4 col-md-3">
+            <div class="form-group input-group" style="padding-top: 6px;">
+                <button class="btn btn-primary" style="margin-left: 5px;" (click)="openGroup()">+Group</button>
+            </div>
+        </div>
+</div> 
+</div>
+<div class="group-name-list">
+        <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroup;let groupCount = index">
+            <li>
+                <img _ngcontent-c10="" src="/assets/images/group.png" style="width: 20px; height:20px;margin-right: 6%;">
+                <label *ngIf="group.groupId.status.status === 'ACTIVE'" style="cursor: pointer;"
+                 (click)="displayGroupDetails(group, groupCount)">
+                    {{group.groupId.groupName}}
+                </label>
+            </li>
+        </ul>
     </div>
-    <div id="content" class="body-container">
-        <div class="row">
-            <div class="col-lg-2 col-md-2 left filter-list">
-                <div class="team-div">
-                    <h4 class="selected-criteria" style="font-weight: bold;">Groups</h4>  
-                    
-                    <div class="row" style="margin-right:0px;">
-                        <div class="col-md-8 align-center text-center">
-                            <div class="form-group input-group" style="padding-top:5px;">
-                                <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchGroup" >
-                        </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group input-group" style="padding-top: 6px;">
-                                <button class="btn btn-primary" style="margin-left: 5px;" (click)="openGroup()">+Group</button>
-                            </div>
-                        </div>
-                </div> 
-                    
-                    <!-- <div class="align-center">
-                        <div class="form-group input-group padding-top-5px">
-                            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchGroup">
-                            <div class="input-group-append">
-                                <button class="btn btn-search" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                            <button class="btn btn-sec margin-left-5px" style="align:align-center;"
-                            (click)="openGroup()">+Group</button>
-                        </div>
-                    </div> -->
-                </div>
-                <div class="group-name-list">
-                    <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroup;let groupCount = index">
-                        <li>
-                            <label *ngIf="group.groupId.status.status === 'ACTIVE'" style="cursor: pointer;"
-                             (click)="displayGroupDetails(group, groupCount)">
-                                {{group.groupId.groupName}}
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <div style="text-align:center;">
-                    <app-custom-modal #addNewGroupModal [model]="newGroup" (CancelEvent)="clearGroupPopupField()">
-                        <div class="modal-body row-label">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label>Group Name</label>
-                                </div>
-                                <div>
-                                    <textarea placeholder="Group Name" [(ngModel)]="newGroupName" #groupNameField value="{{newGroupName}}"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer popFooter">
-                            <button type="button" class="btn btn-primary" (click)="addGroup()">Add Group</button>
-                            <button type="button" class="btn btn-danger" (click)="closePopup('addNewGroup')">Close</button>
-                        </div>
-                    </app-custom-modal>
-                </div>
-            </div>
-            <!-- <div class="loader" *ngIf="loading"></div> -->
-            <div class="col-lg-10 col-md-10 view-details" *ngIf="!showSelectedGroup">
-                <h3>Kindly select the group to view details</h3>
-            </div>
-            <div class="col-lg-10 col-md-10 group-container" *ngIf="showSelectedGroup">
-                <div class="row padding-5px" style="padding: 5px;">
-                    <h4 class="selected-group">{{selectedGroupName}}
-                        <span>&nbsp;[{{memberList.length}} Members]</span>
-                    </h4>
-                    <button (click)="editGroup()" class="btn btn-edit margin-right-5px" #editGroupField>
-                        <i class="fa fa-pencil-square-o"></i>
-                    </button>
-                    <button (click)="deleteSelectedGroup()" class="btn btn-danger" #deleteGroupField>
-                        <i class="fa fa-trash-o"></i>
-                    </button>
-                    <hr>
-                </div>
-                <div class="row" *ngIf="showSelectedGroup">
-                    <div class="col-md-10 margin-top-5px">
-                        <ng-multiselect-dropdown
-                            placeholder="Select Members"
-                            [data]="groupMemberObjList"
-                            [(ngModel)]="selectedItems"
-                            [settings]="dropdownSettings"
-                            (onSelect)="onItemSelect($event)"
-                            (onSelectAll)="onSelectAll($event)"  
-                            (onDeSelect)="OnItemDeSelect($event)" 
-                            (onDeSelectAll)="onDeSelectAll($event)">
-                        </ng-multiselect-dropdown>
-                        <!--  (onOpen)="onOpen($event)"
-                            (onClose)="onClose($event)"
-                            (onFilterChange)="onFilterChange($event)" -->
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-update-member" (click)="updateMembers()" >Update Members</button>
-                    </div>
-                </div>
-                <hr>
-                <div class="col-md-12 margin-top-10px" *ngIf="showSelectedGroup">
-                    <div class="form-group input-group col-md-3" style="float: right;">
+</div>
+<div class="main">
+<div style="text-align:center;">
+<app-custom-modal #addNewGroupModal [model]="newGroup" (CancelEvent)="clearGroupPopupField()">
+<div class="modal-body row-label">
+<div class="row">
+<div class="col-md-3">
+<label>Group Name</label>
+</div>
+<div>
+<textarea placeholder="Group Name" [(ngModel)]="newGroupName" #groupNameField value="{{newGroupName}}"></textarea>
+</div>
+</div>
+</div>
+<div class="modal-footer popFooter">
+<button type="button" class="btn btn-primary" (click)="addGroup()">Add Group</button>
+<button type="button" class="btn btn-danger" (click)="closePopup('addNewGroup')">Close</button>
+</div>
+</app-custom-modal>
+</div>
+<div class=" view-details" *ngIf="!showSelectedGroup">
+<h3>Kindly select the group to view details</h3>
+</div>
+<div class=" group-container" *ngIf="showSelectedGroup">
+<div class="row padding-5px" style="padding: 5px;">
+<h4 class="selected-group">{{selectedGroupName}}
+<span>&nbsp;[{{memberList.length}} Members]</span>
+</h4>
+<button (click)="editGroup()" class="btn btn-edit margin-right-5px" #editGroupField>
+<i class="fa fa-pencil-square-o"></i>
+</button>
+<button (click)="deleteSelectedGroup()" class="btn btn-danger" #deleteGroupField>
+<i class="fa fa-trash-o"></i>
+</button>
+<hr>
+</div>
+<div class="row" *ngIf="showSelectedGroup">
+<div class="col-md-10 margin-top-5px">
+<ng-multiselect-dropdown
+placeholder="Select Members"
+[data]="groupMemberObjList"
+[(ngModel)]="selectedItems"
+[settings]="dropdownSettings"
+(onSelect)="onItemSelect($event)"
+(onSelectAll)="onSelectAll($event)" 
+(onDeSelect)="OnItemDeSelect($event)" 
+(onDeSelectAll)="onDeSelectAll($event)">
+</ng-multiselect-dropdown>
+<!-- (onOpen)="onOpen($event)"
+(onClose)="onClose($event)"
+(onFilterChange)="onFilterChange($event)" -->
+</div> 
+<div class="col-md-2">
+<button class="btn btn-primary btn-update-member" (click)="updateMembers()" >Update Members</button>
+</div>
+</div>
+<hr>
+<div>
+        <div class="row"> 
+                <div class="col-md-3">
+                <h5 class="group-member"><b>Group Members</b></h5></div>
+                <div class="col-md-9" *ngIf="showSelectedGroup" style="padding-right:0px;">
+                                        <div class="form-group input-group col-md-4" style="float: right;padding-right:5px;">
                         <!-- <input type="text" class="form-control" placeholder="Member Name/Member Id" [(ngModel)]="searchMember"> -->
                         <input class="tBox username-password form-control" placeholder="&#xF002;  Member Name/Member Id" style="font-family:Arial, FontAwesome" [(ngModel)]="searchMember" >
                     </div>
                 </div>
-                <table class="padding-20px" *ngIf="showSelectedGroup">
-                    <tr>
-                        <th>Sr. No</th>
-                        <th>Member Name</th>
-                        <th>Member Id</th>
-                        <th>Delete</th>
-                    </tr>
-                    <tr
-                        *ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index">
-                        <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
-                        <!-- <td *ngIf="memberObj.status.staus === 'INACTIVE'; else elseBlock">{{memberObj.firstName}} {{memberObj.lastName}} (InActive)</td> -->
-                        <!-- <ng-template #elseBlock><td *ngIf="memberObj.team.status.staus === 'ACTIVE'">{{memberObj.firstName}} {{memberObj.lastName}}</td></ng-template> -->
-                        <ng-template [ngIf]="memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL'" [ngIfElse]="member">
-                            <td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
-                        </ng-template>
-                           
-                        <ng-template #member>
-                            <td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
-                        </ng-template>
-                        <!-- <td>{{memberObj.firstName}} {{memberObj.lastName}}</td> -->
-                        <td>{{memberObj.userCode}}</td>
-                        <td>
-                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);"></i>
-                        </td>
-                    </tr>
-                </table>
-                <div class="pageControl" style="text-align:center;" *ngIf="showSelectedGroup">
-                    <pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
-                        [autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
-                        [nextLabel]="labels.nextLabel"
-                        [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                        [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                        [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                        (pageChange)="onPageChange($event)"></pagination-controls>
-                </div>
-
-                <app-custom-modal #addUpdateGroupModal [model]="updateGroup" (CancelEvent)="groupCloseEditPopup()">
-                    <div class="modal-body row-label">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Group Name</label>
-                            </div>
-                            <div>
-                                <textarea placeholder="Group Name" [(ngModel)]="updateGroupName" value="{{updateGroupName}}"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-primary" (click)="updateGroupDetails()">Update Group</button>
-                        <button type="button" class="btn btn-danger" (click)="addUpdateGroupModal.close()">Close</button>
-                    </div>
-                </app-custom-modal>
-                <app-custom-modal #deleteGroupModal [model]="deleteGroup" (CancelEvent)="groupCloseDeletePopup(2)">
-                    <div>
-                        <label class="padding-10px">Are you sure you want to delete this group?</label>
-                    </div>
-                    <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-primary" (click)="deleteGroupDetails()">Yes</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteGroupModal.close()">No</button>
-                    </div>
-                </app-custom-modal>
-                <app-custom-modal #deleteMemberModal [model]="deleteMember">
-                    <div>
-                        <label class="padding-10px">Are you sure you want to delete this member?</label>
-                    </div>
-                    <div class="modal-footer popFooter">
-                        <button type="button" class="btn btn-primary" (click)="deleteMemberDetails()">Yes</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteMemberModal.close()">No</button>
-                    </div>
-                </app-custom-modal>
-                
             </div>
-            <app-footer></app-footer>
-        </div>
-    </div>  
+<div *ngIf="viewMsg" ><h5 style="color:red;">Kindly refresh the page to again add the deleted member in the group.</h5></div>
+<table class="padding-20px" *ngIf="showSelectedGroup">
+<tr>
+<th>Sr. No</th>
+<th>Member Name</th>
+<th>Member Id</th>
+<th>Delete</th>
+</tr>
+<tr
+*ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index">
+<td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
+<!-- <td *ngIf="memberObj.status.staus === 'INACTIVE'; else elseBlock">{{memberObj.firstName}} {{memberObj.lastName}} (InActive)</td> -->
+<!-- <ng-template #elseBlock><td *ngIf="memberObj.team.status.staus === 'ACTIVE'">{{memberObj.firstName}} {{memberObj.lastName}}</td></ng-template> -->
+<ng-template [ngIf]="memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL'" [ngIfElse]="member">
+<td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
+</ng-template>
+
+<ng-template #member>
+<td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
+</ng-template>
+<!-- <td>{{memberObj.firstName}} {{memberObj.lastName}}</td> -->
+<td>{{memberObj.userCode}}</td>
+<td>
+<i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);"></i>
+</td>
+</tr>
+</table>
+<div class="pageControl" style="text-align:center;" *ngIf="showSelectedGroup">
+<pagination-controls [id]="config.id" [maxSize]="maxSize" [directionLinks]="directionLinks"
+[autoHide]="autoHide" [responsive]="responsive" [previousLabel]="labels.previousLabel"
+[nextLabel]="labels.nextLabel"
+[screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+[screenReaderPageLabel]="labels.screenReaderPageLabel"
+[screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+(pageChange)="onPageChange($event)"></pagination-controls>
+</div>
+
+<app-custom-modal #addUpdateGroupModal [model]="updateGroup" (CancelEvent)="groupCloseEditPopup()">
+<div class="modal-body row-label">
+<div class="row">
+<div class="col-md-3">
+<label>Group Name</label>
+</div>
+<div>
+<textarea placeholder="Group Name" [(ngModel)]="updateGroupName" value="{{updateGroupName}}"></textarea>
+</div>
+</div>
+</div>
+<div class="modal-footer popFooter">
+<button type="button" class="btn btn-primary" (click)="updateGroupDetails()">Update Group</button>
+<button type="button" class="btn btn-danger" (click)="addUpdateGroupModal.close()">Close</button>
+</div>
+</app-custom-modal>
+<app-custom-modal #deleteGroupModal [model]="deleteGroup" (CancelEvent)="groupCloseDeletePopup(2)">
+<div>
+<label class="padding-10px">Are you sure you want to delete this group?</label>
+</div>
+<div class="modal-footer popFooter">
+<button type="button" class="btn btn-primary" (click)="deleteGroupDetails()">Yes</button>
+<button type="button" class="btn btn-danger" (click)="deleteGroupModal.close()">No</button>
+</div>
+</app-custom-modal>
+<app-custom-modal #deleteMemberModal [model]="deleteMember">
+<div>
+<label class="padding-10px">Are you sure you want to delete this member?</label>
+</div>
+<div class="modal-footer popFooter">
+<button type="button" class="btn btn-primary" (click)="deleteMemberDetails()">Yes</button>
+<button type="button" class="btn btn-danger" (click)="deleteMemberModal.close()">No</button>
+</div>
+</app-custom-modal>
+
+</div>
+</div>
+
+<div id="footer" style="position:absolute; bottom:0px; height:5%; left:0px; right:0px; overflow:hidden;"> 
+<app-footer></app-footer> 
 </div>
