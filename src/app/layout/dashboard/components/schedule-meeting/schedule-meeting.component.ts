@@ -330,7 +330,6 @@ export class ScheduleMeetingComponent implements OnInit {
     closeOutLookMailPopup() {
         this.outlookModal.close();
         this.clearOutlookField();
-     //   this.switchRoute(0);
     }
     clearOutlookField() {
         this.outLookBody = '';
