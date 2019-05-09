@@ -1,153 +1,252 @@
 @import "styles/customStyle.css";
 
-body, html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-    }
-
+// body, html {
+// width: 100%;
+// height: 100%;
+// margin: 0;
+// }
 
 .logo-background{
-  background-size: cover;
-  background-repeat: no-repeat;
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  margin:0 auto;
-  width:auto;
-  background-color: #fff;
+background-size: cover;
+background-repeat: no-repeat;
+position:fixed;
+top:0;
+left:0;
+right:0;
+margin:0 auto;
+width:auto;
+background-color: #fff;
 }
 
 .logo{
-  height: 35px;
-  width: 235px;
-  margin:10px;
-}    
-  figure{
-  margin-right: 3%;   
-  }
-  figcaption
-  {
-  padding-top:10px;
-  }
+height: 35px;
+width: 235px;
+margin:10px;
+} 
+figure{
+//margin-right: 1%; 
+}
+figcaption
+{
+padding-top:10px;
+}
 
 .login-img{
-      max-width: 100%;
-      height: 100%;
-      }
+max-width: 100%;
+height: 100%;
+}
 
 .imgr{
-      max-width: 100%;
-      height:auto;
+max-width: 100%;
+height:auto;
+}
+
+/* media queries for features which are shown on login page*/
+@media (min-width: 1281px) {
+  #feature1{
+  margin-top:0%;
+  }
+  #calendar, #calendar1, #calendar2, #calendar3, #calendar4, #calendar5, #calendar6,#calendar figcaption, #calendar1 figcaption, #calendar2 figcaption, #calendar3 figcaption, #calendar4 figcaption, #calendar5 figcaption, #calendar6 figcaption{
+  font-size:18px;
+  width: 35px;
+  height:35px;
+  line-height: 35px;
+  margin-left: 10px; 
+  }
+  figure{
+  margin-right:0%;
+  }
+  .login-block{
+  margin-top: 15%;
+  }
+  }
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+  #feature1{
+  margin-top:0%;
+  }
+  #calendar, #calendar1, #calendar2, #calendar3, #calendar4, #calendar5, #calendar6,#calendar figcaption, #calendar1 figcaption, #calendar2 figcaption, #calendar3 figcaption, #calendar4 figcaption, #calendar5 figcaption, #calendar6 figcaption{
+  font-size:18px;
+  width: 35px;
+  height:35px;
+  line-height: 35px;
+  margin-left: 10px; 
+  }
+  figure{
+  margin-right:0%;
+  }
+  .login-block{
+  margin-top: 15%;
+  }
+  }
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+  #feature1{
+  margin-top:0%;
+  }
+  #calendar, #calendar1, #calendar2, #calendar3, #calendar4, #calendar5, #calendar6,#calendar figcaption, #calendar1 figcaption, #calendar2 figcaption, #calendar3 figcaption, #calendar4 figcaption, #calendar5 figcaption, #calendar6 figcaption{
+  font-size:15px;
+  width: 35px;
+  height:35px;
+  line-height: 35px;
+  margin-left: 10px; 
+  }
+  figure{
+  margin-right:0%;
+  }
+  .login-block{
+  margin-top: 15%;
+  }
+  }
+  
+  @media (min-width : 1370px) and (min-width : 1605px){
+  #feature1{
+  margin-top:18%;
+  }
+  #calendar figcaption, #calendar1 figcaption, #calendar2 figcaption, #calendar3 figcaption, #calendar4 figcaption, #calendar5 figcaption, #calendar6 figcaption,#calendar, #calendar1, #calendar2, #calendar3, #calendar4, #calendar5, #calendar6{
+  font-size:20px;
+  width: 55px;
+  height:55px;
+  line-height: 55px;
+  margin-left:18px;
+  }
+  figure{
+  margin-right:0%;
+  }
+  .login-block{
+  margin-top: 20%;
+  }
+  }
+
+  @media (max-width: 768px) {
+    #feature1{
+    margin-top:0%;
+    }
+    #calendar, #calendar1, #calendar2, #calendar3, #calendar4, #calendar5, #calendar6,#calendar figcaption, #calendar1 figcaption, #calendar2 figcaption, #calendar3 figcaption, #calendar4 figcaption, #calendar5 figcaption, #calendar6 figcaption{
+    font-size:15px;
+    width: 30px;
+    height:30px;
+    line-height: 30px;
+    // margin-left: 5px; 
+    }
+    figure{
+    margin-right:0%;
+    }
+    .login-block{
+    margin-top: 15%;
+    }
     }
 
- @media (max-width: 768px) {
- .btn-responsive {
-   border-radius:3px;
-  overflow-wrap: break-word;
-  padding: 2px;
-      }
-  }
-              
-  @media (min-width: 769px) and (max-width: 992px) {
-    .btn-responsive {
-    overflow-wrap: break-word;
-    padding:3px;      
-    }
+/*media queries for join with meeting id button*/
+@media (max-width: 768px) {
+.btn-responsive {
+border-radius:3px;
+overflow-wrap: break-word;
+padding: 2px;
+}
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+.btn-responsive {
+overflow-wrap: break-word;
+padding:3px; 
+}
 }
 
 @media (min-width: 992px){
-    .btn-responsive {
-    overflow-wrap: break-word;
-    padding:5px;        
-    }
-}            
+.btn-responsive {
+overflow-wrap: break-word;
+padding:5px; 
+}
+} 
+
+/*media queries for login button*/
 
 @media (max-width: 768px) {
-  #login {
-    border-radius:3px;
-   overflow-wrap: break-word;
-   padding:4px 22px 4px 22px;
-   font-size:1.3vh;
-       }
-   }
-               
-   @media (min-width: 769px) and (max-width: 992px) {
-     #login {
-     overflow-wrap: break-word;
-     padding:6px 25px 6px 25px;
-     font-size:1.4vh; 
-     }
- }
+#login {
+border-radius:3px;
+overflow-wrap: break-word;
+padding:4px 22px 4px 22px;
+font-size:1.3vh;
+}
+}
 
- @media (min-width: 992px){
-     #login{
-     overflow-wrap: break-word;
-     padding:8px 40px 8px 40px; 
-      
-     }
- }            
+@media (min-width: 769px) and (max-width: 992px) {
+#login {
+overflow-wrap: break-word;
+padding:6px 25px 6px 25px;
+font-size:1.4vh; 
+}
+}
+
+@media (min-width: 992px){
+#login{
+overflow-wrap: break-word;
+padding:8px 40px 8px 40px; 
+
+}
+} 
+
 
 .about{
-  text-align:right;
-  margin-top: 20px;
- 
+text-align:right;
+margin-top: 15px;
+
 }
 
 .about a{
-  color:#01baac;
-  text-decoration: none;
+color:darkslategrey;
+//text-decoration: none;
 }
 
 .faq{
-  text-align:left;
-  margin-top: 20px;
+text-align:left;
+margin-top: 15px;
 
 }
 .faq a{
-  color:#01baac;
-  text-decoration: none;
+color:darkslategrey;
+//text-decoration: none;
 }
 
-.main{
-  margin-left: 3%;
-   margin-top:20%;
+.main1{
+margin-left: 5%;
+//margin-top:20%;
 }
 
-.main h6{
-  margin-top:3%;
-  margin-bottom:2%; 
+.main1 h6{
+margin-top:3%;
+margin-bottom:2%; 
 }
 
 .username-password{
-  width:90%;
-  margin-bottom: 2%;
-  height:50px;
+width:90%;
+margin-bottom: 2%;
+height:50px;
 }
 
 .log-in
 {
-  border-radius: 5px;
-  padding:8px 40px 8px 40px;
-  font-size: 15px;
-  background-color: #01baac;
-  color:#fff;
+border-radius: 5px;
+padding:8px 40px 8px 40px;
+font-size: 15px;
+background-color: #01baac;
+color:#fff;
 }
 .forgot{
-  margin:7px 10px 0px 20px;
-  text-align: right;
- 
+margin:7px 10px 0px 20px;
+text-align: right;
+
 }
 .forgot a{
-  color:#01baac;
-  text-decoration: underline;
-  font-size:1.4vh;
+color:darkslategrey;
+text-decoration: underline;
+font-size:15px;
 }
 
 .feature{
-  margin-top: 18%;
-  margin-left:1%;
+margin-top: 18%;
+//margin-left:1%;
 }
 
 .red-color{
@@ -156,37 +255,63 @@ color:#bd081c;
 
 figcaption{
 font-weight: bold;
+text-align: center;
+color: #111;
 }
 
 .login-block{
-  padding: 40px;
-    margin-bottom: 40px;
-    border: 1px solid #c9c4c5;
-    box-shadow: 10px 10px 10px 10px #c9cacc;
-    background-color: #fff;
-    margin-right:15%;       
-    transition: 0.4s;
+padding: 40px;
+margin-bottom: 40px;
+border: 1px solid #c9c4c5;
+box-shadow: 10px 10px 10px 10px #c9cacc;
+background-color: #fff;
+margin-right:15%; 
+transition: 0.4s;
+margin-top:15%;
 }
 
 
 
 .feature-wrap i {
-  font-size: 25px;
-  height: 55px;
-  width: 55px;
-  margin: 3px;
-  border-radius: 100%;
-  line-height: 55px;
-  text-align: center;
-  // background: #f26359;
-  background: linear-gradient(to bottom right, #f91606 0%, #f78982 100%);
-  color: #fff;
-  //border: 3px solid #ffffff;
-  //box-shadow: inset 0 0 0 5px #f2f2f2;
-  //-webkit-box-shadow: inset 0 0 0 5px #f2f2f2;
-  -webkit-transition: 500ms;
-  -moz-transition: 500ms;
-  -o-transition: 500ms;
-  transition: 500ms;
-  float: left;
+font-size: 25px;
+height: 55px;
+width: 55px;
+margin: 3px;
+border-radius: 100%;
+line-height: 55px;
+text-align: center;
+// background: #f26359;
+background: linear-gradient(to bottom right, #f91606 0%, #f78982 100%);
+color: #fff;
+//border: 3px solid #ffffff;
+//box-shadow: inset 0 0 0 5px #f2f2f2;
+//-webkit-box-shadow: inset 0 0 0 5px #f2f2f2;
+-webkit-transition: 500ms;
+-moz-transition: 500ms;
+-o-transition: 500ms;
+transition: 500ms;
+float: left;
+margin-left: 18px;
+}
+
+html, body { 
+height: 100%
+}
+
+body {
+color: #FFF;
+padding: 0;
+margin: 0;
+}
+
+header { 
+background-color: #000;
+height: 100px; 
+}
+
+main { 
+background-color: #AAA;
+height: calc(100% - 150px); 
+position:fixed; 
+width:100%;
 }
