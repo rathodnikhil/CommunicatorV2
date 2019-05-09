@@ -75,6 +75,11 @@
            background-color: #fff;
            border-radius:2px;
        }
+        
+      .filter-list ul:hover{
+       background-color: #d5f2fd;
+       }
+               
        .filter-list ul li input{
        cursor: pointer;
        } 
@@ -175,3 +180,31 @@
   margin-right: 1em;
   color: white;
 }
+
+.sidenav {
+  height: 100%;
+  width: 25%;
+  position: fixed;
+  //z-index: 1;
+  top: 70px;
+  left: 0;
+  background-color: #fff1f2;
+  //overflow-x: hidden;
+  //padding-top: 20px;
+  bottom:5%;
+  }
+  .group-member{
+    color: #02736a;
+    padding: 2px 0px;
+  }
+  
+  .main {
+  margin-left: 25%; 
+  padding: 5px 10px;
+  }
+  
+  @media screen and (max-height: 450px) {
+  .sidenav {//padding-top: 15px;
+  }
+  .sidenav a {font-size: 18px;}
+  }
