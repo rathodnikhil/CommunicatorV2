@@ -116,11 +116,8 @@ border-radius: 2px;
 }
 
 .filter-list ul:hover{
-  list-style-type: none;
-  margin: 6px;
-  background-color: #d5f2fd;
-  border-radius: 2px;
-  }
+   background-color: #d5f2fd;
+    }
 .filter-list ul li input{
 cursor: pointer;
 }
@@ -268,7 +265,7 @@ bottom:5%;
 
 .main {
 margin-left: 25%; 
-padding: 0px 10px;
+padding: 5px 10px;
 }
 
 @media screen and (max-height: 450px) {
