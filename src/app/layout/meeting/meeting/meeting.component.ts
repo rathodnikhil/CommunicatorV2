@@ -76,7 +76,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.meetingDetails = {};
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
-
         });
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && this.loggedInUser === undefined) {

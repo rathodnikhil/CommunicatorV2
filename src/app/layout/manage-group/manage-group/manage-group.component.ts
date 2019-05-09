@@ -65,6 +65,7 @@ export class ManageGroupComponent implements OnInit {
     memObj: any = {};
     newMemObj: any = {};
     updateGroupName: any;
+    viewMsg = false;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('deleteGroupField') deleteGroupField: ElementRef;
     @ViewChild('manageGroupSpinner') manageGroupSpinnerMod: SpinnerComponent;
@@ -107,7 +108,7 @@ export class ManageGroupComponent implements OnInit {
     @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
     deleteMember: CustomModalModel = {
         titleIcon: '<i class="fas fa-trash-alt"></i>',
-        title: 'Delete member',
+        title: 'Delete member',  
         smallHeading: 'You can delete member details here',
         body: '',
         Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete member',
@@ -313,6 +314,7 @@ export class ManageGroupComponent implements OnInit {
             this.selectedMember = member;
             this.selectedMemIndex = this.memberList.indexOf(member);
         } else {
+            this.viewMsg = false;
             return this.alertService.warning('Member ' + member.firstName + ' ' + member.lastName +
                 '  is already inactive', 'Inactive Member');
         }
@@ -321,13 +323,20 @@ export class ManageGroupComponent implements OnInit {
         if (this.selectedMember.userCode === null || typeof this.selectedMember.userCode === 'undefined'
             || this.selectedMember.userCode.trim() === '') {
             this.selectedMember.userCode = this.newMemberUserCode;
+            this.viewMsg = false;
         }
         const payload = { 'groupId': this.selectedGroupObj.groupId,
                           'userId': this.selectedMember.userCode };
         this._groupService.deleteMember(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
+                this.viewMsg = false;
                 return this.alertService.warning(data.message, 'Warning');
+                
             } else {
+                this.viewMsg = true;
+                setTimeout(function() {
+                    this.viewMsg = false;
+                }.bind(this), 5000);
                 this.newMemObj = { item_id: data.userId.userCode, item_text: data.userId.firstName
                     + ' ' + data.userId.lastName };
                 this.groupMemberObjList.push(this.newMemObj);
@@ -336,6 +345,7 @@ export class ManageGroupComponent implements OnInit {
                 return this.alertService.success('Member ' + data.userId.firstName
                     + ' ' + data.userId.lastName +
                     ' has been deleted successfully', 'Delete Member');
+                    
             }
         });
     }
