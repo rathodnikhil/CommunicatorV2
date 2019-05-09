@@ -29,7 +29,7 @@
                 </div>
                 <div class="team-name-list">
                     <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamIndex = index">
-                        <li>
+                        <li *ngIf="userPermission.team.status.status === 'ACTIVE' && userPermission.userId.status.status === 'ACTIVE'">
                             <div class="first-letter"><i class="fa fa-users" aria-hidden="true" ></i> </div>
                             <label style=" cursor: pointer;"  (click)="displayTeamDetails(userPermission , teamIndex)">
                                 {{userPermission.team.teamName}}

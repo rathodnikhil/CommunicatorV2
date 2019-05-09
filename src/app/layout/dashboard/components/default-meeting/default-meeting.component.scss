@@ -1,4 +1,4 @@
-
+$border-color: #e0e0e0;
 .chat-panel {
     border-radius: 5px;
     border: 1px solid #d3d3d3;
@@ -41,12 +41,6 @@
 }
 
 
-
-
-
-.date-period-select {
-    cursor: pointer;
-}
 .date-period-select a:active
 {
     text-decoration: underline;
@@ -55,15 +49,13 @@
 .align-center {
     margin: auto;
     width: 100%;
+    text-align: center;
 }
 
 .align-center a {
    color: #353535;
     font-weight: bold;
 }
-
-
-
 
 .chat {
     list-style: none;
@@ -127,21 +119,12 @@
 .card-body {
     background-color:#fff1f2;
     border-bottom: 1px  solid #F9E0FF; 
-   
-    // padding:0.5rem;
-    // margin: auto;
 }
 
 .meetingHeader{
-    //background:#353535;
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
-    // height: auto;
     height: 6vh;
-   // opacity: 0.85;
-    //background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
-   // background-image: url(/assets/images/footer.png);
- 
 }
 
 .btn-sec {
@@ -177,7 +160,7 @@
 
 
 ////////////
-$border-color: #e0e0e0;
+
 
 *,*:before,*:after{
   box-sizing: border-box;
@@ -270,15 +253,15 @@ $border-color: #e0e0e0;
     font: Arial, Helvetica;
     font-weight: bold;
 }
-.cursorPointer{
-    cursor: pointer;
-}
-.hand-pointer a{
-    cursor: pointer;
-}
-.hand-pointer div{
-    text-align: center;
-}
+// .cursorPointer{
+//     cursor: pointer;
+// }
+// .hand-pointer a{
+//     cursor: pointer;
+// }
+// .hand-pointer div{
+//     text-align: center;
+// }
 .outlook-email-background
     {
     padding: 20px;

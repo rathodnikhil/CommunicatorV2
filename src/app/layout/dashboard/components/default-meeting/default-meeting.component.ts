@@ -116,6 +116,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                         this.filteredFutureMeetingList = [];
                         if (futureData[0] !== undefined && futureData[0].message !== undefined) {
                             this.defaultMeetingSpinnerMod.hideSpinner();
+                          //  return this.alertService.warning(futureData[0].message, 'Wanning');
                         }
                     }
                 });
