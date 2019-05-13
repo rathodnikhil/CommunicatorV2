@@ -1,14 +1,9 @@
 @import "styles/customStyle.css";
 .card-body {
-    // background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
-    // border: 1px solid #be181e;
-    // color: #be181e;
-    // background-color: #eaeaea;
     font-weight: bold;
     height: 91.8vh;
     flex: 1 1 auto;
     overflow-y: hidden;
-  //  background-image: url(/assets/images/Coreflex-solutions-popup.jpg);
     background-color: #fff;
     background-size: cover;
     padding: 0.3rem 0 2.0rem 1rem;
@@ -18,8 +13,6 @@
 .searched-list{
     text-align: center; 
     background-color: #05588f; 
-   // background-image: linear-gradient(to right,#fd7a2a,orange);
-  //  color: white;    
     margin-right: -1.25rem;
     margin-left:-5px;
 }
@@ -30,116 +23,45 @@
 }
 
 .member-list{
-    // height:100%;  
-    // overflow-y: auto;
-    // padding-bottom: 40%; 
     height:100%;  
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 50%; 
-    // padding-right: 10px;
     padding-left:7px;
     background-color:#fff1f2;
-}
-.circleMeetingJoin {
-    position: relative;
-    border-radius: 50%;
-    width: 13px;
-    height: 13px;
-    // background: #7EE203;
-    background: #f9a159;
-    float: left;
-    left: 35px;
-    top: -5px;
-}
-.circleMeetingNotJoinOnline {
-    position: relative;
-    border-radius: 50%;
-    width: 13px;
-    height: 13px;
-    // background: #7EE203;
-    background: #e2d041;
-
-    float: left;
-    left: 35px;
-    top: -5px;
 }
 .circleOffline {
     position: relative;
     border-radius: 50%;
     width: 13px;
     height: 13px;
-    // background: #a5a7a8;
     background: transparent;
     float: right;
     margin-top: 2%;
-    // left: 35px;
-    // top: -5px;
 }
 .circleOnline {
     position: relative;
     border-radius: 50%;
     width: 13px;
     height: 13px;
-    // background: rgb(118, 201, 18);
     float: right;
-    // left: 35px;
-    // top: -5px;
     background:#05c305;
     margin-top: 2%;
 }
-.circleOfflineMem {
-    position: relative;
-    border-radius: 50%;
-    width: 13px;
-    height: 13px;
-    background: #57c4d8;
-    float: left;
-    left: 35px;
-    top: -5px;
-}
-.btn.btn-secondary {
-    background:  #353535;
-    /* color:  #353535; */
-    border-color:  #353535;
-    border-radius: 0px 5px 5px 0px;
-}
-
 .form-control {
     border-radius: 5px 0px 0px 5px;
 }
 
 .list-group-partition {
-   // border-top: 1px solid #fff;
     width: 100%;
     margin-top: 8px;
     margin-bottom: 0px;
-}
-.hr-partition{
-    border-top: 2px solid #fff;
-    width: 100%;
-    margin-bottom: 0px;
-    padding-left: 25px;
-    margin-left: -5px;
-}
-.hr-partition1{
-    // border-top: 2px solid #fff;
-    width: 100%;
-    margin-bottom: 0px;
-    padding-left: 25px;
-    margin-left: -5px;
 }
 .add-member{
     color: #ffffff; 
     padding-left: 10px;
      padding-top: 12px; cursor: pointer;
 }
-
-//  .btn-sec:hover{
-//     background-color:#bc151b;
-//     color:white;
-//     border: 1px solid white;
-//  }
  .btn-search{
     background-color: #01baac;
     border-color: #01baac;
@@ -152,25 +74,11 @@
     background-color: #fff1f2;
     border-bottom:1px solid #f8c8cb;
  }
- .profile-img{
-    width: 30px; 
-    height: 30px;
-    // padding: 2px;
-    border:1px solid #fff;
-}
-.loader-img{
-    width: 100px; 
-    height: 100px; 
-    position: absolute;
-    left: 30%;
-}
-
 ::-webkit-scrollbar {
     width: 6px;
     background-color: #f5f5f5;
 }
 .team-member{
-    // color: #03a094;
     color: #02736a;
     font-weight: bold;
     padding-left: 3.5%; 
@@ -245,15 +153,9 @@
         }
           .selected-criteria-div{
             background-color: #f9e0e2;
-            // margin-bottom: 2.5%;
-            // border-radius: 3px;
-         //   padding-left: 3%;
         }
           .group-criteria-div {
             background-color: #f9e0e2;
-            // background-color: #a0dbd6;
-            // margin-bottom: 2.5%;
-            // border-radius: 3px;
           }
           .group-criteria {
             color:#bd081c;
