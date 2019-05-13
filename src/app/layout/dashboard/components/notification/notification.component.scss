@@ -1,7 +1,7 @@
 @import "styles/customStyle.css";
 .card-body {
     font-weight: bold;
-    height: 93vh;
+    height: 91.8vh;
     flex: 1 1 auto;
     overflow-y: hidden;
     background-color: #fff;
@@ -18,7 +18,7 @@
 }
 
 .searched-title{
-    padding:5px;
+    //padding:5px;
     color: white;
 }
 
@@ -81,7 +81,7 @@
 .team-member{
     color: #02736a;
     font-weight: bold;
-    padding-left: 3%; 
+    padding-left: 3.5%; 
     padding-top: 2px;
 }
 
@@ -176,3 +176,5 @@
             float:right;
             color: #bd081c;
           }
+
+          
