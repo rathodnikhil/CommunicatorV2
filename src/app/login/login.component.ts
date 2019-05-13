@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, Inject , Output , EventEmitter} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, Inject, Output, EventEmitter } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute, Params } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
@@ -12,7 +12,7 @@ import { DOCUMENT } from '@angular/common';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     animations: [routerTransition()],
-    providers: [AlertService, PasswordService ]
+    providers: [AlertService, PasswordService]
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     UserNameText = 'UserName';
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loginUiFlag = true;
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
-          });
+        });
     }
     ngAfterViewInit(): void {
         (<any>window).customAlertService = this.alertService;
@@ -93,119 +93,118 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.passwordText = this.isGuest ? 'Meeting ID' : 'Password';
     }
     login() {
-      if (this.forgetPasswordFlag === true) {
-         this.sendEmailForgotPassword();
-      } else {
-        if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
-            || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-            return this.alertService.error('Please close popup to continue', 'Error');
+        if (this.forgetPasswordFlag === true) {
+            this.sendEmailForgotPassword();
         } else {
-            if (this.isGuest) {
-                if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
+            if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
                 || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
                 return this.alertService.error('Please close popup to continue', 'Error');
-              }
-              if (this.password === null || typeof this.password === 'undefined' || this.password.trim() === '') {
-                return this.alertService.error('Enter meeting code', 'Error');
-              }
-              if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-                return this.alertService.error('Enter full name', 'Error');
-              }
-              localStorage.setItem('loggedInuserName', this.userName);
-              const currentDate = new Date();
-              const guestUserCode = 'guest' + (+currentDate);
-              const firstNameUpperCase = this.makeFirstLetterInCapital(this.userName);
-              const payload = {
-                firstName: firstNameUpperCase,
-                isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.password
-              };
-              this.meetingCodeVal.emit(this.meetingCode);
-              this._userService.setLoggedInUserObj(payload).subscribe(res => {
-                if (res === 'invalid' && !this.isMeetingCodeInValid) {
-                  this.isMeetingCodeInValid = true;
-                  this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
-                  return false;
-                } else {
-                  if (res.firstName !== undefined) {
-                    if (!this.previousUrl) {
-                      // this.router.navigate(['meeting' + this.meetingCode]);
-                      this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-                    } else {
-                      if (this.previousUrl.indexOf('meeting') > 0) {
-                        this.router.navigateByUrl(this.previousUrl);
-                      } else {
-                        this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-                      }
-                    }
-                  }
-                }
-              });
             } else {
-              
-                if (this.userName === undefined || this.userName
-                    === '' || this.userName === null) {
-                    return this.alertService.error('Enter Username', 'Error');
-                } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
-                    return this.alertService.error('Enter Password', 'Error');
-                }
-                const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
-                this._userService.verifyUser(payload).subscribe(resp => {
-                    const loggedinUser = resp.json();
-                    if (loggedinUser.warningFl === false) {
-                        this._loginService.getAuthenticationToken(payload).subscribe(data => {
-                            this.jwtToken = this._loginService.getJwtToken();
-                            if (this.jwtToken === undefined ||
-                                this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
-                                return this.alertService.error('Authentication Token failed', 'Error');
-                            } else {
-                                const userNamePayload = { userName: loggedinUser.name };
-                                this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
-                                    if (res.firstName !== undefined && res.firstName != null) {
-                                        if (this.meetingCode) {
-                                            this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-                                        }
-                                        if (!this.previousUrl) {
-                                            this.router.navigate(['/dashboard/default']);
-                                        } else {
-                                            this.router.navigateByUrl(this.previousUrl);
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                      if (resp.json() ===  'invalidUsername') {
-                        this.userName = '';
-                        return this.alertService.warning('Username is invalid', 'Account Authentication');
-                      }
-                      if (resp.json() ===  'invalidPassword') {
-                        this.password = '';
-                        return this.alertService.warning('Password is invalid', 'Account Authentication');
-                      }
-                      if (resp.json() === 'deactivate') {
-                        this.userName = '';
-                        this.password = '';
-                        return this.alertService.warning('Your account has deactivated , please contact to your administrator',
-                         'Account Authentication');
-                      }
+                if (this.isGuest) {
+                    if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
+                        || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
+                        return this.alertService.error('Please close popup to continue', 'Error');
                     }
+                    if (this.password === null || typeof this.password === 'undefined' || this.password.trim() === '') {
+                        return this.alertService.error('Enter meeting code', 'Error');
+                    }
+                    if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
+                        return this.alertService.error('Enter full name', 'Error');
+                    }
+                    localStorage.setItem('loggedInuserName', this.userName);
+                    const currentDate = new Date();
+                    const guestUserCode = 'guest' + (+currentDate);
+                    const firstNameUpperCase = this.makeFirstLetterInCapital(this.userName);
+                    const payload = {
+                        firstName: firstNameUpperCase,
+                        isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.password
+                    };
+                    this.meetingCodeVal.emit(this.meetingCode);
+                    this._userService.setLoggedInUserObj(payload).subscribe(res => {
+                        if (res === 'invalid' && !this.isMeetingCodeInValid) {
+                            this.isMeetingCodeInValid = true;
+                            this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
+                            return false;
+                        } else {
+                            if (res.firstName !== undefined) {
+                                if (!this.previousUrl) {
+                                    // this.router.navigate(['meeting' + this.meetingCode]);
+                                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+                                } else {
+                                    if (this.previousUrl.indexOf('meeting') > 0) {
+                                        this.router.navigateByUrl(this.previousUrl);
+                                    } else {
+                                        this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+
+                    if (this.userName === undefined || this.userName
+                        === '' || this.userName === null) {
+                        return this.alertService.error('Enter Username', 'Error');
+                    } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
+                        return this.alertService.error('Enter Password', 'Error');
+                    }
+                    const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
+                    this._userService.verifyUser(payload).subscribe(resp => {
+                        const loggedinUser = resp.json();
+                        if (loggedinUser.warningFl === false) {
+                            this._loginService.getAuthenticationToken(payload).subscribe(data => {
+                                this.jwtToken = this._loginService.getJwtToken();
+                                if (this.jwtToken === undefined ||
+                                    this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
+                                    return this.alertService.error('Authentication Token failed', 'Error');
+                                } else {
+                                    const userNamePayload = { userName: loggedinUser.name };
+                                    this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
+                                        if (res.firstName !== undefined && res.firstName != null) {
+                                            if (this.meetingCode) {
+                                                this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+                                            } else if (!this.previousUrl) {
+                                                this.router.navigate(['/dashboard/default']);
+                                            } else {
+                                                this.router.navigateByUrl(this.previousUrl);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            if (resp.json() === 'invalidUsername') {
+                                this.userName = '';
+                                return this.alertService.warning('Username is invalid', 'Account Authentication');
+                            }
+                            if (resp.json() === 'invalidPassword') {
+                                this.password = '';
+                                return this.alertService.warning('Password is invalid', 'Account Authentication');
+                            }
+                            if (resp.json() === 'deactivate') {
+                                this.userName = '';
+                                this.password = '';
+                                return this.alertService.warning('Your account has deactivated , please contact to your administrator',
+                                    'Account Authentication');
+                            }
+                        }
+                    }
+                    );
                 }
-                );
             }
         }
+    }
+    private makeFirstLetterInCapital(userName): String {
+        const senderNameArray = this.setAttendeeName(this.userName);
+        let firstNameUpperCase = null;
+        if (senderNameArray.length < 3) {
+            firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
+        } else {
+            firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
+                + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
         }
+        return firstNameUpperCase;
     }
-  private makeFirstLetterInCapital(userName): String {
-    const senderNameArray = this.setAttendeeName(this.userName);
-    let firstNameUpperCase = null;
-    if (senderNameArray.length < 3) {
-      firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
-    } else {
-      firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
-        + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
-    }
-    return firstNameUpperCase;
-  }
 
     forgetPassword() {
         this.loginText = 'Reset Password';
@@ -220,7 +219,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.changePlaceHolderText();
     }
     onKey(event) {
-            if (event.key === 'Enter') { this.login(); }
+        if (event.key === 'Enter') { this.login(); }
     }
     onKeyUp(event) {
         if (event.key === 'Enter') { this.sendEmailForgotPassword(); }
@@ -241,15 +240,15 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             this.forgetEmail = '';
         }
     }
-      setAttendeeName(attendeeFullName) {
+    setAttendeeName(attendeeFullName) {
         attendeeFullName = attendeeFullName.split(' ');
         const attendeeFullNameArray = new Array();
         for (let i = 0; i < attendeeFullName.length; i++) {
-          attendeeFullNameArray.push(attendeeFullName[i]);
-          if (i !== attendeeFullName.length - 1) {
-            attendeeFullNameArray.push(' ');
-          }
+            attendeeFullNameArray.push(attendeeFullName[i]);
+            if (i !== attendeeFullName.length - 1) {
+                attendeeFullNameArray.push(' ');
+            }
         }
         return attendeeFullNameArray;
-      }
+    }
 }
