@@ -167,7 +167,7 @@ color: red;
     cursor: pointer;
 }
 .edit-icon{
-    color: green;cursor: pointer;
+    color: green;cursor: pointer; 
 }
 .delete-icon{
     color: red; cursor: pointer;
@@ -223,8 +223,10 @@ color: red;
     width: 6%;
 }
 .page-title{
-    text-align:center; 
-    width: 94%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #loading {
@@ -263,7 +265,19 @@ color: red;
 
      ::-webkit-scrollbar {
         width: 6px;
+        height:6px;
         background-color: #f5f5f5;
+    }
+
+    /* ::-webkit-scrollbar:hover {
+        width: 40px;
+        height:40px;
+        background-color: #f5f5f5;
+    }
+ */
+    ::-webkit-scrollbar-thumb {
+        height: 200px;
+        /* background-color: #555; */
     }
 .guest-user{
     float: right;

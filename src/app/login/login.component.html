@@ -35,12 +35,12 @@
     <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
     <div class="input-group-prepend">
     <span class="input-group-text">
-    <img src="/assets/images/user1.png" alt="user img" height="15px" width="15px">
+    <img src="/assets/images/user-img.png" alt="user img" height="15px" width="15px">
     </span>
     </div>
     <input type="text" id="username" autofocus type="text"
     placeholder="{{UserNameText}}" class="form-control"
-    [(ngModel)]="userName" (keyup)="onKey($event)" required >
+    [(ngModel)]="userName" ngDefaultControl (keyup)="onKey($event)" required >
     </div>
     <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
     <div class="input-group-prepend">
@@ -49,7 +49,7 @@
     </span>
     </div>
     <input type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" 
-    [(ngModel)]="password" placeholder="{{passwordText}}" required >
+    [(ngModel)]="password" ngDefaultControl placeholder="{{passwordText}}" required >
     </div>
     </div> 
     <div *ngIf="forgetPasswordFlag">
@@ -59,13 +59,13 @@
     <i class="fa fa-envelope fa-fw"></i>
     </span>
     </div>
-    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" (keyup)="onKeyUp($event)"
+    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" ngDefaultControl (keyup)="onKeyUp($event)"
     required />
     </div>
     </div>
     <div class="row" style="margin-top: 5%">
     <div class="col-md-5">
-    <button id="login" type="button" class=" btn btn-default log-in" [(ngModel)]="Logintext" (click)="login()"><b>{{Logintext}}</b></button>
+    <button id="login" type="button" class=" btn btn-default log-in" [(ngModel)]="Logintext" ngDefaultControl (click)="login()"><b>{{Logintext}}</b></button>
     </div>
     <div class="col-md-7">
     <h5 (click)="backToLogin()" class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a >Login</a></b></h5>
