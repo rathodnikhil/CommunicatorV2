@@ -85,7 +85,7 @@ div.scrollmenu a:hover {
 }
 
 .card-header {  
-    background-image: url(/assets/images/Coreflex-solutions-header.jpg);
+    background-color: #980e06;
     color: #ffffff;
     font-weight: bold;
     opacity: 0.85;
@@ -366,16 +366,16 @@ span.step {
     margin-left: 6px;
   }
   .btn-url:hover{
-    border: 1px solid #bc151b;
-    background: #efefef;
-    font-weight: bold;
-    color: #bc151b;
-  }
-  .btn-url{
     color: #ffffff;
     background-color: #bc151b;
     font-weight: bold;
     border-color: #fff;
+  }
+  .btn-url{
+    border: 1px solid #bc151b;
+    background: #efefef;
+    font-weight: bold;
+    color: #bc151b;
   }
     .btn-sec {
     -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;

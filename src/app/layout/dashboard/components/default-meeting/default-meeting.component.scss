@@ -125,6 +125,11 @@ $border-color: #e0e0e0;
 .meetingHeader{
     color:#FFFFFF;
     border-radius:5px 5px 0px 0px;
+    // height: auto;
+    //height: 6vh;
+   // opacity: 0.85;
+    //background: linear-gradient(to right, #3283b9 32%, #115c7d 100%);
+   // background-image: url(/assets/images/footer.png);
     height: 6vh;
 }
 
@@ -213,6 +218,7 @@ $border-color: #e0e0e0;
     background-color: #01baac;
     padding: 10px;
     color: #fff;
+   // color: #999;
 }
 
 .accordion-child{
@@ -404,5 +410,9 @@ $border-color: #e0e0e0;
      font-weight:bold;
      padding-top:2%;
     
+    }
+
+    .fa-2x{
+        font-size:1.8em;
     }
     

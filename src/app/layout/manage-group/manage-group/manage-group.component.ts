@@ -139,42 +139,38 @@ export class ManageGroupComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
             if (data.errorFl === true || data.warningFl === true) {
-                // this.loading = false;
-                // this.manageGroupSpinnerMod.hideSpinner();
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                // const payload = { userCode: this.loggedInUserObj.userCode };
-                this._groupService.setGroupList();
+               this._groupService.setGroupList();
                 this._groupService.getGroupList().subscribe(groupData => {
                     if (groupData === undefined) {
-                        // this.loading = false;
                         this.groupList = [];
                         return false;
-                        // this.alertService.warning('There are no groups', 'Warning');
                     } else {
-                        if (groupData.errorFl === true) {
+                        debugger;
+                        if (groupData.warningFl === true) {
                             this.groupList = [];
-                            // this.loading = false;
+                            this.manageGroupSpinnerMod.hideSpinner();
                             return this.alertService.warning(groupData.message, 'Warning');
-                        } else if (groupData.warningFl === true) {
-                            this.groupList = [];
-                            // this.loading = false;
-                            return false;
                         } else {
                             // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
                             for (let key in groupData) {
                                 this.groupList.push(groupData[key]);
                             }
                             // this.groupList = groupData;
-                            // this.loading = false;
+                            this.manageGroupSpinnerMod.hideSpinner();
                         }
+                        // else if (groupData.warningFl === true) {
+                        //     this.groupList = [];
+                        //     this.manageGroupSpinnerMod.hideSpinner();
+                        //     return false;
+                        // }
                         // if (this.groupList.length > 0) {
                         //     this.manageGroupSpinnerMod.hideSpinner();
                         // }
                     }
                 });
             }
-            this.manageGroupSpinnerMod.hideSpinner();
         });
     }
     onItemSelect(item: any) {
@@ -246,15 +242,12 @@ export class ManageGroupComponent implements OnInit {
         this.selectedItems = [];
         this.selectedMemberIds = [];
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
-            if (memberData.errorFl === true) {
-                // this.loading = false;
+            if (memberData[0].errorFl === true) {
                 return this.alertService.warning(memberData.message, 'Warning');
-            } else if (memberData.warningFl === true || memberData === undefined) {
-                // this.loading = false;
+            } else if (memberData[0].warningFl === true || memberData === undefined) {
                 return false;
             } else {
                 this.memberList = memberData;
-                // this.loading = false;
             }
             this.manageGroupSpinnerMod.hideSpinner();
         });

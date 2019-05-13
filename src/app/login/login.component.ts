@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     passwordMacthFlag: boolean;
     isGuest: boolean;
     forgetPasswordFlag = false;
-    Logintext = 'Log In';
+    loginText = 'Log In';
     loggedInUserObj: any;
     meetingCode: string;
     isMeetingCodeInValid = false;
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.changePlaceHolderText();
     }
     private changePlaceHolderText() {
-        this.Logintext = this.isGuest ? 'Continue' : 'Login';
+        this.loginText = this.isGuest ? 'Continue' : 'Login';
         this.loginHeader = this.isGuest ? 'Join Meeting' : 'Log In';
         this.UserNameText = this.isGuest ? 'Name' : 'UserName';
         this.passwordText = this.isGuest ? 'Meeting ID' : 'Password';
@@ -208,7 +208,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
     forgetPassword() {
-        this.Logintext = 'Reset Password';
+        this.loginText = 'Reset Password';
         this.loginHeader = 'Join Meeting';
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;

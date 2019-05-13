@@ -3,7 +3,7 @@
     <div class="header" style="position:absolute; top:0px; left:0px; height:70px; right:0px;overflow:hidden;">
         <div class="row">
             <h3 class="page-title">Manage Team</h3>
-            <a [routerLink]="['/dashboard/default']">
+            <a [routerLink]="['/dashboard/default']" style="position: absolute;right:3%;">
                 <i class="fa fa-3x fa-home home-icon" aria-hidden="true" title="Dashboard" data-toggle="tooltip"></i>
             </a>
         </div>
@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group input-group" style="padding-top: 6px;">
-                                    <button class="btn btn-primary" style="margin-left: 5px;" (click)="open()"
+                                    <button class="btn btn-primary" style="margin-left: 5px;" (click)="open()" title="Add new team"
                                     #addTeamField>+Team</button>
                                 </div>
                             </div>
@@ -66,26 +66,38 @@
                     <h4 class="team-name">{{selectedTeamName}}
                         <span>&nbsp;[{{filterMemberList.length}} Members]</span>
                     </h4>
-                    <button (click)="editTeam()" class="btn btn-edit" style="margin-right: 5px;" #editTeamField>
+                    <button (click)="editTeam()" class="btn btn-edit" style="margin-right: 5px;" title="Edit team name" #editTeamField>
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button (click)="deleteSelectedTeam()" class="btn btn-danger" #deleteTeamField>
+                    <button (click)="deleteSelectedTeam()" class="btn btn-danger" title="Delete team" #deleteTeamField>
                         <i class="fa fa-trash-o"></i>
                     </button>
+                    
+                    <button class="btn btn-primary" style="margin-top:4px;position: absolute; right: 10px;" (click)="openMemberPopup()" #addMemField title="Add Member">+Member</button>
                     <hr>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-9">
                         <button class="btn btn-primary" style="margin-top:4px;" (click)="openMemberPopup()" #addMemField>+Member</button>
-                    </div>
-                    <div class="align-center" class="col-md-3">
+                    </div> 
+                    
+                     <div class="align-center" class="col-md-3">
                         <div class="form-group input-group" style="padding-top:5px;">
                             <input class="tBox username-password form-control" placeholder="&#xF002;  Name/Email/Status" style="font-family:Arial, FontAwesome" [(ngModel)]="searchTableText" >
                         </div>
                     </div>
-                </div>
+                </div> --> 
                 <hr>
-                <h5 class="team-member"><b>Team Members</b></h5>
+                <div class="row">
+                        <div class="col-md-9">
+                        <h5 class="team-member"><b>Team Members</b></h5></div>
+                        <div class="align-center" class="col-md-3">
+                            <div class="form-group input-group" style="padding-top:5px;">
+                                <input class="tBox username-password form-control" placeholder="&#xF002;  Name/Email/Status" style="font-family:Arial, FontAwesome" [(ngModel)]="searchTableText" >
+                            </div>
+                        </div>
+                    </div>
+             
                 <table style="padding: 20px;">
                     <tr>
                         <th>Sr. No</th>
@@ -104,10 +116,10 @@
                         <td><i class="fa fa-check" aria-hidden="true" style="color: rgb(4, 165, 4);" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'ACTIVE'"></i>
                             <i class="fa fa-times" aria-hidden="true" style="color: red" *ngIf="userMemPermission.userId.meetingPermissionStatus.status === 'INACTIVE'"></i></td>
                         <td>
-                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);"></i>
+                            <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);" title="Edit member"></i>
                         </td>
                         <td>
-                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);"></i>
+                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);" title="Delete member"></i>
                         </td>
                     </tr>
                 </table>
