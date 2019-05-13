@@ -721,7 +721,7 @@ TODO: more distinction between this file and common.css
 }
 
 .fc-unthemed td.fc-today {
-	background: #7fe4db;  
+	background: #bdf5f0;  
 }
 
 .fc-unthemed .fc-disabled-day {
@@ -943,6 +943,7 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc-toolbar .fc-left {
 	float: left;
+	
 }
 
 .fc-toolbar .fc-right {
@@ -1513,3 +1514,5 @@ be a descendant of the grid when it is being dragged.
 .fc-unthemed .fc-list-empty { /* theme will provide own background */
 	background-color: #eee;
 }
+
+

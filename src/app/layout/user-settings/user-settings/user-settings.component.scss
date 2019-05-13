@@ -15,8 +15,8 @@
 
 .body-container{
     position:absolute; 
-    top:100px; 
-    bottom:75px; 
+    top:70px; 
+    bottom:5%; 
     left:0px; 
     right:0px; 
     overflow:auto;
@@ -72,13 +72,13 @@
     border: 1px solid #bd081c; 
     border-left: none; 
     padding: 8px; 
-    text-align: center;
-    // background-color: #e0e0e0;
+   // text-align: center;
+   background-color: #f8f8f8;
 }
 
 /* Credit to bootsnipp.com for the css for the color graph */
 .colorgraph {
-  height: 5px;
+  height: 3px;
   border-top: 0;
   background: #c4e17f;
   border-radius: 5px;
@@ -94,3 +94,25 @@
     padding: 10px;
 }
 
+.bBox{
+    padding: 40px 40px;
+    margin-bottom: 40px;
+    /* border: 1px solid #0f73a7; */
+    /* box-shadow: 3px 10px 10px 5px #c9cacc; */
+    background: #fff;
+    transition: 0.4s;
+}
+
+.button-div{
+    margin-top: 4%;
+    margin-left: 3%;
+}
+.meetReminder{
+    margin-left: 6%; 
+    font-size: 13px;
+}
+.setting-div{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 7%;
+}

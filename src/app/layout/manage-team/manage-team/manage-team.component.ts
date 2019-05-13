@@ -145,31 +145,30 @@ export class ManageTeamComponent implements OnInit {
         this.selectedTeamObj = null;
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                // this.loading = false;
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-                // getTeamsByLoggedInUserId webservice call
-            //    const payload = { userCode: this.loggedInUser.userCode };
                 this._teamService.getTeamsByLoggedInUserId().subscribe(teamData => {
                     if (teamData[0].errorFl || teamData[0].warningFl) {
-                        // this.loading = false;
                         this.userPermissionList = [];
+                        this.manageTeamSpinnerMod.hideSpinner();
                     } else {
                         this.userPermissionList = teamData;
-                        // this.loading = false;
+                        this.manageTeamSpinnerMod.hideSpinner();
                     }
                 });
 
                 this._teamService.getMemberListByLoggedInUserId().subscribe(memberData => {
+                    // this.manageTeamSpinnerMod.showSpinner();
                     if (memberData[0].errorFl || memberData[0].warningFl) {
                         this.userPermissionMemberList = [];
+                        // this.manageTeamSpinnerMod.hideSpinner();
                     } else {
                         this.userPermissionMemberList = memberData;
+                        // this.manageTeamSpinnerMod.hideSpinner();
                     }
                 });
             }
-            this.manageTeamSpinnerMod.hideSpinner();
         });
     }
     displayTeamDetails(userPermission, index) {

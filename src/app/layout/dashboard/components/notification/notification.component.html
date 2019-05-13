@@ -1,6 +1,6 @@
 <app-spinner #notificationSpinner></app-spinner>
 <div class="card-body" >
-        <h5 class="searched-title" class="team-member"><b>Filter Members</b></h5>
+        <h5 class="searched-title team-member"><b>Filter Members</b></h5>
 <div class="notification-div">
     <div class="form-group input-group" style="padding-top:10px;">
         <input class="tBox username-password form-control" placeholder="&#xF002;  Search" (keyup)="onKey($event)"
@@ -13,10 +13,10 @@
     <div *ngIf="viewAllMemFl" style="background-color: #ffffff;">
         <div class="row" style="padding: 0px;margin:0px;">
         <div class="col-md-8">
-        <div style="color: #bd081c;padding:3.5%;"><h5 class="searched-title" class="team-member" ><b>All Members List</b></h5></div>
+        <div style="color: #bd081c;padding:3.5%;"><h5 class="searched-title team-member" ><b>All Members List</b></h5></div>
     </div>
     <div class="col-md-4" style="padding-top:2.5%;">
-       <i class="fa fa-window-close close-list" aria-hidden="true" (click)="closeWholeMemList()"></i>
+       <i class="fa fa-window-close close-list" aria-hidden="true" (click)="closeWholeMemList()" title="Close search"></i>
     </div>
  </div>
         <div style="overflow-y: scroll;height: 70vh;overflow-x: hidden;"> 
@@ -30,7 +30,7 @@
     </div>  
     </div>
 </div>   
-    <div><h5 class="searched-title" class="team-member" ><b>Team Members</b></h5></div>
+    <div><h5 class="searched-title team-member" ><b>Team Members</b></h5></div>
     <div class="member-list" style="background-color: #ffffff;border-top: 1px  solid #F9E0FF;border-width:80%;">
         <div>
             <div class="selected-criteria-div">
@@ -57,7 +57,7 @@
                 </a>
             </div>
         </div>
-        <div><h5 class="searched-title" class="team-member"><b>Groups</b></h5></div>
+        <div><h5 class="searched-title team-member"><b>Groups</b></h5></div>
         <div>
             <div class="group-criteria-div">
                 <h4 class="group-criteria">Total Group ({{groupList.length}})</h4>             

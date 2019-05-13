@@ -3,7 +3,7 @@
 <div class="header">
 <div class="row">
 <h3 class="page-title">Manage Group</h3>
-<a [routerLink]="['/dashboard/default']">
+<a [routerLink]="['/dashboard/default']" style="position: absolute;right:3%;">
 <i class="fa fa-3x fa-home home-icon" aria-hidden="true" title="Dashboard" data-toggle="tooltip"></i>
 </a>
 </div>
@@ -22,7 +22,7 @@
         </div>
         <div class=" col-lg-4 col-md-3">
             <div class="form-group input-group" style="padding-top: 6px;">
-                <button class="btn btn-primary" style="margin-left: 5px;" (click)="openGroup()">+Group</button>
+                <button class="btn btn-primary" style="margin-left: 5px;" (click)="openGroup()" title="Add new group">+Group</button>
             </div>
         </div>
 </div> 
@@ -66,11 +66,11 @@
 <h4 class="selected-group">{{selectedGroupName}}
 <span>&nbsp;[{{memberList.length}} Members]</span>
 </h4>
-<button (click)="editGroup()" class="btn btn-edit margin-right-5px" #editGroupField>
-<i class="fa fa-pencil-square-o"></i>
+<button (click)="editGroup()" class="btn btn-edit margin-right-5px" title="Edit group name" #editGroupField>
+<i class="fa fa-pencil-square-o" ></i>
 </button>
-<button (click)="deleteSelectedGroup()" class="btn btn-danger" #deleteGroupField>
-<i class="fa fa-trash-o"></i>
+<button (click)="deleteSelectedGroup()" class="btn btn-danger" title="Delete group" #deleteGroupField>
+<i class="fa fa-trash-o" ></i>
 </button>
 <hr>
 </div>
@@ -129,7 +129,7 @@ placeholder="Select Members"
 <!-- <td>{{memberObj.firstName}} {{memberObj.lastName}}</td> -->
 <td>{{memberObj.userCode}}</td>
 <td>
-<i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);"></i>
+<i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);" title="Delete member"></i>
 </td>
 </tr>
 </table>
