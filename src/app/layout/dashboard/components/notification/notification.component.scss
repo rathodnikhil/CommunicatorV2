@@ -28,7 +28,7 @@
     overflow-x: hidden;
     padding-bottom: 50%; 
     padding-left:7px;
-    background-color:#fff1f2;
+    background-color:#fbf3f4;
 }
 .circleOffline {
     position: relative;
@@ -68,10 +68,16 @@
     color:white;
     font-weight: bold;
  }
+
+ .btn-search:hover{
+    background-color:#e5f8f6;
+    color:#02736a;
+    border:1px solid #02736a;
+ }
  .list-item-padding{
     padding-left: 1%;
     padding-right: 1%;
-    background-color: #fff1f2;
+    background-color: #fbf3f4;
     border-bottom:1px solid #f8c8cb;
  }
 ::-webkit-scrollbar {
