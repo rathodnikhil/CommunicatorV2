@@ -46,7 +46,7 @@
                 </div> 
             </div> 
         </div> 
-        <div style="margin-bottom: 2%; background-color: #fff1f2; padding: 7px;">
+        <div style="margin-bottom: 2%; background-color: #fbf3f4; padding: 7px;">
             <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchMemText">
                 <a style="color: gray;" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
                     class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left:1.25rem;">
@@ -72,7 +72,7 @@
                 </div> 
             </div> 
         </div> 
-            <div style="background-color: #fff1f2;padding: 7px;">
+            <div style="background-color: #fbf3f4;padding: 7px;">
                     <a *ngFor="let group of groupList | genericSearchAllProp : searchGroupText" href="#" [routerLink]="['chat']"
                     style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;"
                     (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">

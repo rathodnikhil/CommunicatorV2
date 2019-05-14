@@ -118,7 +118,7 @@ $border-color: #e0e0e0;
 }
 
 .card-body {
-    background-color:#fff1f2;
+    background-color:#fbf3f4;
     border-bottom: 1px  solid #F9E0FF; 
 }
 
@@ -221,6 +221,12 @@ $border-color: #e0e0e0;
    // color: #999;
 }
 
+.accordion-label:hover{
+    background-color:#e5f8f6;
+    color:#02736a;
+    border:1px solid #02736a;
+}
+
 .accordion-child{
   transition: all 0.8s ;
   opacity: 0;
@@ -309,6 +315,7 @@ $border-color: #e0e0e0;
     width: 15%;
     border-left: 1px solid #dadadc;
     text-align: center;
+    cursor: pointer;
 }
 .link-url{
     text-decoration :underline;
@@ -346,6 +353,10 @@ $border-color: #e0e0e0;
     padding: 15px 15px 2px 15px;
     margin: 0.3rem;
     border-radius: 3px;
+}
+
+.filter-meeting a{
+    cursor: pointer;
 }
 
 .text-color{
