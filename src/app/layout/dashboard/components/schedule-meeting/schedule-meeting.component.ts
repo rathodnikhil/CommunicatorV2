@@ -5,7 +5,7 @@ import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { DatePipe } from '@angular/common';
-import { environment } from 'environments/environment';
+import { Utils } from '../../../../shared/utilis';
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
@@ -22,8 +22,6 @@ export class ScheduleMeetingComponent implements OnInit {
     today: any;
     accessCode: any;
     loggedInUser: any;
-    audioMeeting: boolean;
-    vedioMeeting: boolean;
     futureMeetingList: any[];
     filteredFutureMeetingList: any[];
     outLookBody: any;
@@ -38,7 +36,6 @@ export class ScheduleMeetingComponent implements OnInit {
     timezoneSelect: any;
     selectedTime: any;
     baseUrl: any;
-    // public radioGroupForm: FormGroup;
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('closeBtn') closeBtn: ElementRef;
     @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
@@ -59,82 +56,8 @@ export class ScheduleMeetingComponent implements OnInit {
         Button1Content: '<i class="fa fa-envelope"></i>Send',
         Button2Content: '<i class="fa fa-copy"></i> Csncel'
     };
-    durationArray = ['15 Min', '30 Min', '45 Min', '60 Min (1 Hour)', '90 Min (1.5 Hour)', '120 Min (2 Hour)', '150 Min (2.5 Hour)',
-        '180 Min (3 Hour)', '240 Min (4 Hour)', '300 Min (5 Hour)', '360 Min (6 Hour)', '420 Min (7 Hour)', '480 Min (8 Hour)'];
-    timeZoneArray = [
-        'Pacific/Tongatapu (GMT+13:00) Nukualofa',
-        'Pacific/Fiji (GMT+12:00) Fiji, Kamchatka, Marshall Is/',
-        'Pacific/Auckland (GMT+12:00) Auckland, Wellington',
-        'Asia/Magadan (GMT+11:00) Magadan, Solomon Is/, New Caledonia',
-        'Australia/Currie (GMT+11:00) Currie',
-        'Asia/Vladivostok (GMT+10:00) Vladivostok',
-        'Australia/Hobart (GMT+10:00) Hobart',
-        'Pacific/Guam (GMT+10:00) Guam, Port Moresby',
-        'Australia/Sydney (GMT+10:00) Canberra, Melbourne, Sydney',
-        'Australia/Brisbane (GMT+10:00) Brisbane',
-        'Australia/Darwin (GMT+09:30) Darwin',
-        'Australia/Adelaide (GMT+09:30) Adelaide',
-        'Asia/Yakutsk (GMT+09:00) Yakutsk',
-        'Asia/Seoul (GMT+09:00) Seoul',
-        'Asia/Tokyo (GMT+09:00) Osaka, Sapporo, Tokyo',
-        'Asia/Taipei (GMT+08:00) Taipei',
-        'Australia/Perth (GMT+08:00) Perth',
-        'Asia/Singapore (GMT+08:00) Kuala Lumpur, Singapore',
-        'Asia/Irkutsk (GMT+08:00) Irkutsk, Ulaan Bataar',
-        'Asia/Shanghai (GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi',
-        'Asia/Krasnoyarsk (GMT+07:00) Krasnoyarsk',
-        'Asia/Bangkok GMT+07:00) Bangkok',
-        'Asia/Jakarta (GMT+07:00) Hanoi, Jakarta',
-        'Asia/Rangoon (GMT+06:30) Rangoon',
-        'Asia/Colombo (GMT+06:00) Sri Jayawardenepura',
-        'Asia/Dhaka (GMT+06:00) Astana, Dhaka',
-        'Asia/Novosibirsk (GMT+06:00) Almaty, Novosibirsk',
-        'Asia/Katmandu (GMT+05:45) Kathmandu',
-        'Asia/Calcutta (GMT+05:30) Calcutta, Chennai, Mumbai, New Delhi',
-        'Asia/Karachi (GMT+05:00) Islamabad, Karachi, Tashkent',
-        'Asia/Yekaterinburg (GMT+05:00) Ekaterinburg',
-        'Asia/Kabul (GMT+04:30) Kabul',
-        'Asia/Tbilisi (GMT+04:00) Baku, Tbilisi, Yerevan',
-        'Asia/Muscat (GMT+04:00) Abu Dhabi, Muscat',
-        'Asia/Tehran (GMT+03:30) Tehran',
-        'Africa/Nairobi (GMT+13:00) Nukualofa',
-        'Europe/Moscow (GMT+03:00) Moscow, St/ Petersburg, Volgograd',
-        'Asia/Kuwait (GMT+03:00) Kuwait, Riyadh',
-        'Asia/Baghdad (GMT+03:00) Baghdad',
-        'Asia/Jerusalem (GMT+02:00) Jerusalem',
-        'Europe/Helsinki (GMT+02:00) Helsinki, Riga, Tallinn',
-        'Africa/Harare (GMT+02:00) Harare, Pretoria',
-        'Africa/Cairo (GMT+02:00) Cairo',
-        'Europe/Bucharest (GMT+02:00) Bucharest',
-        'Europe/Athens (GMT+02:00) Athens, Istanbul, Minsk, Vilnius',
-        'Africa/Malabo (GMT+01:00) West Central Africa',
-        'Europe/Warsaw (GMT+01:00) Sarajevo, Skopje, Sofija, Warsaw, Zagreb',
-        'Europe/Brussels (GMT+01:00) Brussels, Copenhagen, Madrid, Paris',
-        'Europe/Prague (GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague',
-        'Europe/Amsterdam (GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna',
-        'GMT (GMT) Greenwich Mean Time',
-        'Africa/Casablanca (GMT) Casablanca, Monrovia',
-        'Atlantic/Cape_Verde (GMT-01:00) Cape Verde Is/',
-        'Atlantic/Azores (GMT-01:00) Azores',
-        'America/Buenos_Aires (GMT-03:00) Buenos Aires, Georgetown',
-        'America/Sao_Paulo (GMT-03:00) Brasilia',
-        'America/St_Johns (GMT-03:30) Newfoundland',
-        'America/Santiago (GMT-04:00) Santiago',
-        'America/Caracas (GMT-04:00) Caracas, La Paz',
-        'America/Halifax (GMT-04:00) Atlantic Time (Canada)',
-        'America/Indianapolis (GMT-05:00) Indiana (East)',
-        'America/New_York (GMT-05:00) Eastern Time (US and Canada)',
-        'America/Bogota (GMT-05:00) Bogota, Lima, Quito',
-        'America/Mexico_City (GMT-06:00) Mexico City',
-        'America/Guatemala (GMT-06:00) Guatemala',
-        'America/Chicago (GMT-06:00) Central Time (US and Canada)',
-        'America/Denver (GMT-07:00) Mountain Time (US and Canada)',
-        'America/Phoenix (GMT-07:00) Arizona',
-        'America/Los_Angeles (GMT-08:00) Pacific Time (US and Canada); Tijuana',
-        'America/Anchorage (GMT-09:00) Alaska',
-        'Pacific/Honolulu (GMT-10:00) Hawaii',
-        'Pacific/Midway (GMT-11:00) Midway Island, Samoa',
-        'Europe/London (GMT) Dublin, Edinburgh, Lisbon, London'];
+    durationArray =  Utils.getDurationArray();
+    timeZoneArray =  Utils.getTimezoneArray();
 
     constructor(private viewContainerRef: ViewContainerRef, meetingService: MeetingService, userService: UserService,
         private router: Router, public alertService: AlertService , private datePipe: DatePipe) {
@@ -143,12 +66,15 @@ export class ScheduleMeetingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.baseUrl = environment.meetingUrl;
-        this.audioMeeting = false;
-        this.vedioMeeting = false;
+        this.baseUrl = Utils.getAbsoluteDomainUrl();
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUser = data;
         });
+        this.setDefaultValueForScheduleMeetingFields();
+        // current date and time
+        this.currentDate = Date.now();
+    }
+    private setDefaultValueForScheduleMeetingFields() {
         this.today = new Date();
         this.meeting = {
             meridianTime: { hour: this.today.getHours(), minute: this.today.getMinutes() },
@@ -164,9 +90,8 @@ export class ScheduleMeetingComponent implements OnInit {
             selectedDuration: 'Select Duration',
             subject: this.subject
         };
-        // current date and time
-        this.currentDate = Date.now();
     }
+
     switchRoute(value) {
         this.CurrentRoute.emit(value);
     }
@@ -178,47 +103,54 @@ export class ScheduleMeetingComponent implements OnInit {
             return this.alertService.warning('Please enter meeting subject', 'Warning');
         } else if (this.meeting.selectedDuration === 'Select Duration') {
             return this.alertService.warning('Please select meeting duration', 'Warning');
-        // } else if (this.timezoneSelect === 'Select Timezone') {
         } else if (this.timezoneSelect === undefined || this.timezoneSelect === '') {
             return this.alertService.warning('Please select timezone', 'Warning');
         } else if (date <= today) {
             return this.alertService.warning('Please select future meeting date or time', 'Warning');
         } else {
-            this.meridian = !this.meridian;
-            this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
-            const startDate =  new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
-                this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
-            const timeZoneOffset =  startDate.getTimezoneOffset().toLocaleString();
-            const payload = {
-                'meetingDate': startDate,
-                'meetingStartDateTime': startDate,
-                'subject': this.subject,
-                'duration': this.meeting.selectedDuration,
-                'recurringType': this.meeting.isRecurring,
-                'callType': this.meeting.callType,
-                'timeZone': this.timezoneSelect,
-                'timeType': timeZoneOffset,
-                'meetingId': this.accessCode,
-                'createdBy': this.loggedInUser
-            };
-            this._meetingService.scheduleMeeting(payload).subscribe(data => {
-                if (data.errorFl === true || data.warningFl === true) {
-                    return this.alertService.warning(data.message, 'Warning');
-                } else {
-                    if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
-                        this.futureMeetingList = [];
-                    }
-                    this.futureMeetingList.splice(0, 0, data);
-                    if (this.filteredFutureMeetingList === undefined || this.filteredFutureMeetingList.length <= 0) {
-                        this.filteredFutureMeetingList = [];
-                    }
-                    this.filteredFutureMeetingList.splice(0, 0, data);
-                    this.meetingObj = data;
-                    this.scheduleMeetingModal.open();
-                    return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
-                }
-            });
+            const payload = this.createNewMeetingPayload();
+            this.scheduleMeetingApiCall(payload);
         }
+    }
+    private scheduleMeetingApiCall(payload: { 'meetingDate': Date; 'meetingStartDateTime': Date; 'subject': any; 'duration': any;
+     'recurringType': any;  'timeZone': any; 'timeType': string; 'meetingId': any; 'createdBy': any; }) {
+        this._meetingService.scheduleMeeting(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
+                    this.futureMeetingList = [];
+                }
+                this.futureMeetingList.splice(0, 0, data);
+                if (this.filteredFutureMeetingList === undefined || this.filteredFutureMeetingList.length <= 0) {
+                    this.filteredFutureMeetingList = [];
+                }
+                this.filteredFutureMeetingList.splice(0, 0, data);
+                this.meetingObj = data;
+                this.scheduleMeetingModal.open();
+                return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
+            }
+        });
+    }
+
+    private createNewMeetingPayload() {
+        this.meridian = !this.meridian;
+        this.accessCode = Math.floor(100000000 + Math.random() * 900000000);
+        const startDate = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1, this.meeting.datePicker.day,
+            this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
+        const timeZoneOffset = startDate.getTimezoneOffset().toLocaleString();
+        const payload = {
+            'meetingDate': startDate,
+            'meetingStartDateTime': startDate,
+            'subject': this.subject,
+            'duration': this.meeting.selectedDuration,
+            'recurringType': this.meeting.isRecurring,
+            'timeZone': this.timezoneSelect,
+            'timeType': timeZoneOffset,
+            'meetingId': this.accessCode,
+            'createdBy': this.loggedInUser
+        };
+        return payload;
     }
     clearAllMeetingField() {
         this.subject = '';

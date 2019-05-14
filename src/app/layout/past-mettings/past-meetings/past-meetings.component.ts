@@ -61,9 +61,10 @@ export class PastMeetingsComponent implements OnInit {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.loggedInUser = data;
-                this.lastMeetingYear = new Date().getFullYear();
-                this.lastMeetingMonth = new Date().getUTCMonth() + 1;
-                this.loadMore();
+                // this.lastMeetingYear = new Date().getFullYear();
+                // this.lastMeetingMonth = new Date().getUTCMonth() + 1;
+                // this.loadMore();
+                this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
             }
         });
     }
@@ -123,16 +124,23 @@ export class PastMeetingsComponent implements OnInit {
         this.viewAttendeeModal.close();
     }
 
-    loadMore() {
-        const payload = { lastMeetingYear: this.lastMeetingYear,
-             lastMeetingMonth: this.lastMeetingMonth, calendarFl: false};
+    loadMore(year, month) {
+        debugger;
+        const payload = { lastMeetingYear: year,
+             lastMeetingMonth: month, calendarFl: false};
         this.pastMeetingSpinnerMod.showSpinner();
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
-            if (this.lastMeetingMonth === 0) {
-                this.lastMeetingYear = this.lastMeetingYear - 1;
-                this.lastMeetingMonth = 12;
-            }
+            debugger;
+            // this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
+            // if ((data[data.length - 1].meetingStartDateTime) !== null) {
+                if (month === 1) {
+                    this.lastMeetingYear = year - 1;
+                    this.lastMeetingMonth = 12;
+                } else {
+                    this.lastMeetingYear = year;
+                    this.lastMeetingMonth = month - 1;
+                }
+            // }
             if (data[0].errorFl || data[0].warningFl) {
                 this.alertService.warning(data[0].message, 'Warning');
             } else {
