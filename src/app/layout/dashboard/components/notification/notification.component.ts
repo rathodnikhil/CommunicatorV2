@@ -65,7 +65,7 @@ export class NotificationComponent implements OnInit {
                 });
 
                 this._groupService.getGroupList().subscribe(groupData => {
-                    if (groupData !== undefined && groupData.length > 0) {
+                    if (groupData.warningFl !== true && groupData.length > 0) {
                         this.groupList = groupData;
                     } else {
                         // this.notificationSpinnerMod.hideSpinner();
