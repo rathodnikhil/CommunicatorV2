@@ -55,7 +55,7 @@
         float:left;
         padding: 15px;
         /* background: linear-gradient(to left, #01baac 32%, #115c7d 100%); */
-        background-color: #fff1f2;
+        background-color: #fbf3f4;
         color: #000;
         font-weight: bold;
     }
@@ -319,8 +319,16 @@ color: red;
     text-align: center;
 }
 .btn-primary{
+    color: #fff;
+    background-color: #01baac;
+    border-color: #01baac;
     font-weight: bold;
+}
 
+.btn-primary:hover{
+    background-color:#e5f8f6;
+    color:#02736a;
+    border:1px solid #02736a;
 }
 
 .fa-3x{

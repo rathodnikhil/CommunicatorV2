@@ -89,7 +89,7 @@
                 <h5 class="text-color" style="padding:1.5% 3% 0 3.5%;">Filter Meetings</h5>
         <div class="filter-meeting">
         <div class="row align-center"  *ngIf="selectDateFlag === true">
-           <div class="col-md-4" style="margin-bottom: 1%;" [ngClass]="{'underline':activeAll}" > <a style=" cursor: pointer;" (click)="filterMeetingByDate('all')">All</a></div>
+           <div class="col-md-4" style="margin-bottom: 1%;" [ngClass]="{'underline':activeAll}" > <a (click)="filterMeetingByDate('all')">All</a></div>
            <div class="col-md-4" style="margin-bottom: 1%;"  [ngClass]="{'underline':activeToday}" ><a class="date-period-select" (click)="filterMeetingByDate('today')">Today</a></div>
            <div class="col-md-4" style="margin-bottom: 1%;"  [ngClass]="{'underline':activeTomorrow}"> <a class="date-period-select" (click)="filterMeetingByDate('tomorrow')">Tomorrow</a></div>
         </div>

@@ -88,7 +88,7 @@ div.scrollmenu a:hover {
     background-color: #980e06;
     color: #ffffff;
     font-weight: bold;
-    opacity: 0.85;
+    //opacity: 0.85;
     border-radius: 3px;
     // height: calc(100vh*0.09);
     height: auto;
@@ -158,6 +158,10 @@ div.scrollmenu a:hover {
     font-size:9px;
       width: 37px;
       height:37px;  }
+      .img-fluid{
+        max-width: 100%;
+        height:auto;
+    }
     }
    
     @media (min-width: 992px) {
@@ -166,12 +170,20 @@ div.scrollmenu a:hover {
       width:40px;
       height:40px;
     }
+    .img-fluid{
+        max-width: 100%;
+        height:auto;
+    }
     }
     @media (min-width: 1224px) {
         #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
         font-size:12px;
           width:50px;
           height:50px;
+        }
+        .img-fluid{
+            max-width: 70%;
+            height:auto;
         }
         }
 /*added for laptop*/
@@ -180,6 +192,10 @@ div.scrollmenu a:hover {
             font-size:8px;
               width:30px;
               height:30px;
+            }
+            .img-fluid{
+                max-width: 100%;
+                height:auto;
             }
             }
 
@@ -321,38 +337,56 @@ div.scrollmenu a:hover {
     right: 0;
     bottom: auto;
     height: 87.7%;
-    background: rgb(50, 131, 185);
-    background: -moz-linear-gradient(top, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
-    background: -webkit-linear-gradient(top, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
-    background: linear-gradient(to bottom, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#01baac', endColorstr='#0b72b7', GradientType=0)
+    background-color: #01baac;
+    width:65px;
+    // background: rgb(50, 131, 185);
+    // background: -moz-linear-gradient(top, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
+    // background: -webkit-linear-gradient(top, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
+    // background: linear-gradient(to bottom, rgba(50, 131, 185, 1) 0%, rgba(11, 114, 183, 1) 100%);
+    //filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#01baac', endColorstr='#0b72b7', GradientType=0)
 }
 
 .icon-bar a {
     display: block;
     text-align: center;
-    padding: 16px;
+    padding:16px 10px 16px 10px;
     transition: all 0.3s ease;
     color: white;
     font-size: 20px;
-    border-bottom: 1px solid #fff;
+    //border-bottom: 1px solid #fff;
 }
 
 .icon-bar a:hover {
-    background-color: #be2419;
+    //background-color: #be2419;
+   
 }
 
-.selected {
-    background-color: #be2419;
+// .selected  {
+//     background-color: #be2419;
+// }
+
+.selected i {
+    padding: 8px 10px 8px 15px;
+    background-color: #33c7bc;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: 2px solid #fff;
 }
+// .icon-bar i:active{
+//     padding: 8px 15px 8px 20px;
+//     background-color: #33c7bc;
+//     border-top-left-radius: 10px;
+//     border-bottom-left-radius: 10px;
+//     border-right: 2px solid #fff;
+// }
 .tab-content-srcoll{
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
     padding: 8px;
     padding-bottom: 50px;
 }
 span.step {
-    background: #a201ff;
+    background: #be181e;
     border-radius: 0.8em;
     -moz-border-radius: 0.8em;
     -webkit-border-radius: 0.8em;
@@ -454,4 +488,51 @@ span.step {
     font-weight: bold;
     color: yellow;
     font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #000;
+    font-weight: bold;
+    background-color: #fff;
+    /* border-color: #dee2e6 #dee2e6 #fff; */
+    border-bottom: 3px solid #980e06;
+    cursor: pointer;
+}
+
+.nav-tabs .nav-link {
+    /* border: 1px solid transparent; */
+   border:none;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+.nav-tabs {
+    border:none;
+    /* border-bottom: 1px solid #dee2e6; */
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #000;
+    background-color: #fff;
+    //border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 1.5rem;
+}
+
+/*media queries for meeting page logo*/
+@media (min-width: 768px) and (max-width:1366px){
+    .img-fluid{
+            max-width: 100%;
+          height: auto;
+         }
+}
+
+@media (min-width: 1370px){
+    .img-fluid{
+            max-width: 70%;
+          height: auto;
+         }
 }
