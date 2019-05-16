@@ -20,7 +20,6 @@ public maxSize: Number = 7;
 public directionLinks: Boolean = true;
 public autoHide: Boolean = false;
 public responsive: Boolean = false;
-// public loading: boolean;
 public config: PaginationInstance = {
     id: 'usersCode',
     itemsPerPage: 10,
@@ -75,61 +74,65 @@ deleteMemberFlag = 1;
       Button2Content: ''
   };
   ngOnInit() {
-    // this.loading = true;
-  this._userService.getAllAdminList().subscribe(data => {
-    if (!data.warningFl && !data.errorFl) {
-        this.allAdminList = data;
-        this.manageAdminSpinnerMod.hideSpinner();
-    }
-});
-
-this._teamService.getAllEnableTeams().subscribe(data => {
-    if (data.warningFl) {
-     return this.alertService.warning(data.json().message, 'Warning');
-    } else {
-      this.teamArray = data;
-     }
-  });
+        this.getAllAdminApiCall();
+        this.getAllEnableTeamCall();
   }
+    private getAllEnableTeamCall() {
+        this._teamService.getAllEnableTeams().subscribe(data => {
+            if (data.warningFl) {
+                return this.alertService.warning(data.json().message, 'Warning');
+            } else {
+                this.teamArray = data;
+            }
+        });
+    }
+
+    private getAllAdminApiCall() {
+        this._userService.getAllAdminList().subscribe(data => {
+            if (!data.warningFl && !data.errorFl) {
+                this.allAdminList = data;
+                this.manageAdminSpinnerMod.hideSpinner();
+            }
+        });
+    }
+
   onPageChange(number: number) {
-    // console.log('change to page', number);
     this.config.currentPage = number;
 }
 deleteAdmin(selectedAdmin) {
     if (selectedAdmin.status.status === 'ACTIVE') {
-        this.deleteMemberModal.open();
-        this.selectedAdmin = selectedAdmin;
-        const index = this.allAdminList.indexOf(selectedAdmin);
-        this.allAdminList.splice(index, 1);
-        this.selectedIndex = index;
+        this.deleteAdminActiveStatusAction(selectedAdmin);
     } else {
         return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
          '  is already inactive', 'Inactive Admin');
     }
 }
+    private deleteAdminActiveStatusAction(selectedAdmin: any) {
+        this.deleteMemberModal.open();
+        this.selectedAdmin = selectedAdmin;
+        const index = this.allAdminList.indexOf(selectedAdmin);
+        this.allAdminList.splice(index, 1);
+        this.selectedIndex = index;
+    }
+
 deleteAdminNow() {
    const payload = {userCode: this.selectedAdmin.userCode};
-  this._userService.deleteUser(payload).subscribe(data => {
+    this._userService.deleteUser(payload).subscribe(data => {
     if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
     } else {
-     this.deleteMemberFlag = 2;
-     this.closeDeletePopup(1);
-  //   const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, 1);
-   //  this.allAdminList.splice(this.selectedIndex, 0, memObj);
-    // this.deleteMemberModal.close();
-        return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
+     return this.deleteAdminSuccessAction(data);
     }
 });
 }
+    private deleteAdminSuccessAction(data: any) {
+        this.deleteMemberFlag = 2;
+        this.closeDeletePopup(1);
+        return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
+    }
+
     private selectedAdminObj(obj , editDeletelag , flag) {
-        let statusVal ;
-        if (flag === 1 || (editDeletelag === 2 && flag === 2)) {
-            statusVal = 'INACTIVE';
-            this.deleteMemberFlag = 1;
-        } else if (editDeletelag === 1) {
-            statusVal = obj.status.status;
-        }
+        const statusVal = this.setAdminStatusValue(flag, editDeletelag, obj);
         return {
             firstName: obj.firstName, lastName: obj.lastName, email: obj.email,
              meetingPermissionStatus: { status: obj.meetingPermissionStatus.status }, name: obj.name, userCode: obj.userCode,
@@ -137,74 +140,109 @@ deleteAdminNow() {
             };
     }
 
+    private setAdminStatusValue(flag: any, editDeletelag: any, obj: any) {
+        let statusVal;
+        if (flag === 1 || (editDeletelag === 2 && flag === 2)) {
+            statusVal = 'INACTIVE';
+            this.deleteMemberFlag = 1;
+        } else if (editDeletelag === 1) {
+            statusVal = obj.status.status;
+        }
+        return statusVal;
+    }
+
 editAdmin(user) {
-    if (user.status.status === 'ACTIVE') {
-        this.updatedUserStaus = true;
-    } else {
-        this.updatedUserStaus = false;
-    }
-    if (user.meetingPermissionStatus.status === 'ACTIVE') {
-        this.updatedMeetingPermissionStatus = true;
-    } else {
-        this.updatedMeetingPermissionStatus = false;
-    }
+    this.setStatusAndMeetingStatus(user);
     this.editMemberModal.open();
     this.allAdminList.splice(this.allAdminList.indexOf(user), 1);
-    this.updatedFirstName = user.firstName;
-    this.updatedLastName = user.lastName;
-    this.updatedEmail = user.email;
-    this.updatedTeamName = user.team;
-    this.updatedUserCode = user.userCode;
-    this.selectedDefaultTeam = user.team.teamName;
-    this.selectedAdmin = user;
+    this.setUpdatedValueToModel(user);
 }
+    private setUpdatedValueToModel(user: any) {
+        this.updatedFirstName = user.firstName;
+        this.updatedLastName = user.lastName;
+        this.updatedEmail = user.email;
+        this.updatedTeamName = user.team;
+        this.updatedUserCode = user.userCode;
+        this.selectedDefaultTeam = user.team.teamName;
+        this.selectedAdmin = user;
+    }
+
+    private setStatusAndMeetingStatus(user: any) {
+        if (user.status.status === 'ACTIVE') {
+            this.updatedUserStaus = true;
+        } else {
+            this.updatedUserStaus = false;
+        }
+        if (user.meetingPermissionStatus.status === 'ACTIVE') {
+            this.updatedMeetingPermissionStatus = true;
+        } else {
+            this.updatedMeetingPermissionStatus = false;
+        }
+    }
+
 updateAdmin() {
-    let duplicateUserNameFlag ;
-    let exceptionFlag;
-    const currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
-    const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
     const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    const NAME_REGEXP = /^[a-zA-Z]+$/i;
     if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
-        this.updatedFirstNameField.nativeElement.focus();
-         return this.alertService.warning('Please enter first name', 'Warning');
-      } else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
-        this.updatedLastNameField.nativeElement.focus();
-        return this.alertService.warning('Please enter last name', 'Warning');
+        return this.validationMsgAndField(this.updatedFirstNameField , 'Please enter first name', 'Warning');
+      } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
+        this.validationMsgAndField(this.updatedFirstNameField , 'Please enter alphabates only' , 'Warning');
+      }   else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
+        return this.validationMsgAndField(this.updatedLastNameField , 'Please enter last name', 'Warning');
+      } else if (!NAME_REGEXP.test(this.updatedLastName)) {
+        this.validationMsgAndField(this.updatedLastNameField , 'Please enter alphabates only' , 'Warning');
       } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
-        this.updatedEmailField.nativeElement.focus();
-        return this.alertService.warning('Please enter email' , 'Warning');
+        return this.validationMsgAndField(this.updatedEmailField , 'Please enter email' , 'Warning');
       } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
-        this.updatedEmailField.nativeElement.focus();
-        return this.alertService.warning('Please enter valid email', 'Warning');
+        return this.validationMsgAndField( this.updatedEmailField , 'Please enter valid email', 'Warning');
     } else {
-        const payload = {
+        return this.updateAdminSuccessAction();
+    }
+}
+    private validationMsgAndField(elementFocus: ElementRef , validationMsg: String , flag: String) {
+        elementFocus.nativeElement.focus();
+        return this.alertService.warning(validationMsg , flag);
+    }
+
+    private updateAdminSuccessAction() {
+        const currentDisplayStatus = this.getStatusByUser(this.updatedUserStaus);
+        const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
+        const payload = this.createUpdateUserPayload(currentDisplayStatus, currentDisplayMeetingStatus);
+        this.updateUserDetailsApiCall(payload);
+        this.editMemberModal.close();
+        return this.alertService.success('Admin has updated successfully', 'Success');
+    }
+
+    private updateUserDetailsApiCall(payload: { firstName: any; lastName: any; email: any; status: { status: any; };
+         userCode: any; team: { teamName: any; }; meetingPermissionStatus: { status: any; }; }) {
+        this._userService.updateUserDetails(payload).subscribe(data => {
+            if (data.warningFl === true) {
+                return this.validationMsgAndField(this.updatedFirstNameField, 'Username already exist', 'Warning');
+            } else if (data.errorFl === true) {
+                return this.validationMsgAndField(this.updatedEmailField , data.message, 'Warning');
+            } else {
+                this.updateUserDetailsSuccessResponse(data);
+            }
+        });
+    }
+
+    private updateUserDetailsSuccessResponse( data: any) {
+        this.selectedAdmin = data;
+        this.teamArray.push(data.team);
+    }
+
+    private createUpdateUserPayload(currentDisplayStatus: any, currentDisplayMeetingStatus: any) {
+        return {
             firstName: this.updatedFirstName.substring(0, 1).toUpperCase() + this.updatedFirstName.substring(1),
             lastName: this.updatedLastName.substring(0, 1).toUpperCase() + this.updatedLastName.substring(1),
             email: this.updatedEmail,
-            status: {status: currentDisplayStatus},
+            status: { status: currentDisplayStatus },
             userCode: this.updatedUserCode,
-            team: {teamName : this.selectedDefaultTeam},
-            meetingPermissionStatus: {status: currentDisplayMeetingStatus},
+            team: { teamName: this.selectedDefaultTeam },
+            meetingPermissionStatus: { status: currentDisplayMeetingStatus },
         };
-        this._userService.updateUserDetails(payload).subscribe(data => {
-            if (duplicateUserNameFlag === true) {
-                this.updatedFirstNameField.nativeElement.focus();
-                return this.alertService.warning('Username already exist', 'Warning');
-              } else if (exceptionFlag === true) {
-                this.updatedEmailField.nativeElement.focus();
-                return this.alertService.warning(data.message, 'Warning');
-              } else {
-                duplicateUserNameFlag = data.warningFl;
-                exceptionFlag = data.errorFl;
-                this.selectedAdmin = data;
-                this.teamArray.push(data.team);
-              }
-        });
-      this.editMemberModal.close();
-      return this.alertService.success('Admin has updated successfully', 'Success');
-
     }
-}
+
 private getStatusByUser(updatedStaus) {
     let currentDisplayStatus;
     if (updatedStaus === true) {
@@ -221,13 +259,6 @@ closeEditPopup() {
     const memObj = this.selectedAdminObj(this.selectedAdmin , 1 , 2);
     this.allAdminList.splice(this.selectedIndex , 0 , memObj);
 }
-
-// closeDeletePopup(noFlag) {
-//         const memObj = this.selectedAdminObj(this.selectedAdmin, this.deleteMemberFlag, noFlag);
-//         if (noFlag === 2 && this.deleteMemberFlag === 1) {
-//             this.allAdminList.splice(this.selectedIndex, 0, memObj);
-//         }
-// }
 closeDeletePopup(noFlag) {
     if (noFlag === 1) {
         this.deleteMemberModal.close();

@@ -35,7 +35,7 @@ export class ChatService {
     }
 
     setBroadcastMsgByLoggedInuserId(payload) {
-        const url = environment.baseUrl + 'getBroadcastMsgByLoggedInuserId?userFrom=' + payload.userFrom + '&userTo=' + payload.userTo;
+        const url = environment.baseUrl + 'getBroadcastMsgByLoggedInuserId?userTo=' + payload.userTo;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.broadcastMsgHistoryList$.next(data);
         });

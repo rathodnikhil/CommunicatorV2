@@ -55,53 +55,67 @@ export class PastMeetingsComponent implements OnInit {
     };
     ngOnInit() {
         // loggedInuser Object webservice call
+        this.getLoggedInUserApiCall();
+    }
+    private getLoggedInUserApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.pastMeetingSpinnerMod.hideSpinner();
                 return this.alertService.warning(data.message, 'Warning');
-            } else {
+            }  else {
                 this.loggedInUser = data;
-                // this.lastMeetingYear = new Date().getFullYear();
-                // this.lastMeetingMonth = new Date().getUTCMonth() + 1;
-                // this.loadMore();
                 this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
             }
         });
     }
+
     downloadMom(data) {
         if (data.mom === '' || data.mom === null || typeof data.mom === 'undefined') {
             return this.alertService.warning('No MOM for this meeting has been added', 'Warning');
         } else {
             const payload = { meetingCode: data.meetingCode };
-            this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
-                if (resp.errorFl) {
-                    this.alertService.warning(resp.message, 'Warning');
-                } else {
-                    this.attendeeListByMeeting = resp;
-                      //   let attendeeList = this.getAttendeeList(data);
-            data.mom.momDescription = data.mom.momDescription.split('\n');
-            data.mom.momDescription = data.mom.momDescription.join('\r\n ');
-            const meetingDate = new Date();
-            meetingDate.setTime(data.meetingStartDateTime);
-            const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + data.subject +
-                '\r\n\r\n' + 'Attendees: ' + this.attendeeListByMeeting;
-            const fileType = 'text/json';
-
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.setAttribute('style', 'display: none');
-            a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + '\r\n\r\n' +
-             'Meetings Notes:' + '\r\n\r\n' + data.mom.momDescription)}`);
-            // a.href = url;
-            a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
-            a.click();
-            // window.URL.revokeObjectURL(url);
-            a.remove(); // remove the element
-            this.alertService.success('File has been downloaded.', 'MOM Download');
-                }
-            });
+            this.getAttendeeApiCall(payload, data);
         }
     }
+    private getAttendeeApiCall(payload: { meetingCode: any; }, data: any) {
+        this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+            if (resp.errorFl) {
+                this.alertService.warning(resp.message, 'Warning');
+            } else {
+                this.displayMomDetailsAction(resp, data);
+            }
+        });
+    }
+
+    private displayMomDetailsAction(resp: any, data: any) {
+        const { momHeader, meetingDate } = this.setMomFileContent(resp, data);
+        this.generateTxtFile(momHeader, data, meetingDate);
+        this.alertService.success('File has been downloaded.', 'MOM Download');
+    }
+
+    private setMomFileContent(resp: any, data: any) {
+        this.attendeeListByMeeting = resp;
+        data.mom.momDescription = data.mom.momDescription.split('\n');
+        data.mom.momDescription = data.mom.momDescription.join('\r\n ');
+        const meetingDate = new Date();
+        meetingDate.setTime(data.meetingStartDateTime);
+        const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + data.subject +
+            '\r\n\r\n' + 'Attendees: ' + this.attendeeListByMeeting;
+        return { momHeader, meetingDate };
+    }
+
+    private generateTxtFile(momHeader: string, data: any, meetingDate: Date) {
+        const fileType = 'text/json';
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + '\r\n\r\n' +
+            'Meetings Notes:' + '\r\n\r\n' + data.mom.momDescription)}`);
+        a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
+        a.click();
+        a.remove();
+    }
+
     onPageChange(number: number) {
         this.config.currentPage = number;
     }
@@ -125,28 +139,35 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     loadMore(year, month) {
-        debugger;
         const payload = { lastMeetingYear: year,
              lastMeetingMonth: month, calendarFl: false};
-        this.pastMeetingSpinnerMod.showSpinner();
+             this.hideSpinner();
+        this.pastmeetingApiCall(payload, month, year);
+    }
+
+    private pastmeetingApiCall(payload: { lastMeetingYear: any; lastMeetingMonth: any; calendarFl: boolean; }, month: any, year: any) {
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            debugger;
-            // this.lastMeetingMonth = new Date((data[data.length - 1].meetingStartDateTime)).getUTCMonth();
-            // if ((data[data.length - 1].meetingStartDateTime) !== null) {
-                if (month === 1) {
-                    this.lastMeetingYear = year - 1;
-                    this.lastMeetingMonth = 12;
-                } else {
-                    this.lastMeetingYear = year;
-                    this.lastMeetingMonth = month - 1;
-                }
-            // }
+            this.setMonthAndYear(month, year);
             if (data[0].errorFl || data[0].warningFl) {
                 this.alertService.warning(data[0].message, 'Warning');
             } else {
                 this.pastMeetingList = this.pastMeetingList.concat(data);
             }
-            this.pastMeetingSpinnerMod.hideSpinner();
+            this.hideSpinner();
         });
+    }
+
+    private hideSpinner() {
+        this.pastMeetingSpinnerMod.hideSpinner();
+    }
+
+    private setMonthAndYear(month: any, year: any) {
+        if (month === 1) {
+            this.lastMeetingYear = year - 1;
+            this.lastMeetingMonth = 12;
+        } else {
+            this.lastMeetingYear = year;
+            this.lastMeetingMonth = month - 1;
+        }
     }
 }

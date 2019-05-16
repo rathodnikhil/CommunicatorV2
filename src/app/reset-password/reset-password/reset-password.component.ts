@@ -28,6 +28,9 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activateroute();
+  }
+  private activateroute() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.token = params['token'];
       if (!this.token) {
@@ -36,30 +39,42 @@ export class ResetPasswordComponent implements OnInit {
       }
     });
   }
+
   resetPassword() {
     if ( this.password === null || typeof this.password === 'undefined' || this.password.trim() === '') {
         return this.alertService.warning('Enter password', 'Warning');
     } else if (this.confirmPassword === '' || this.confirmPassword === null || typeof this.confirmPassword === 'undefined') {
       return this.alertService.warning('Enter confirm password', 'Warning');
     } else if (this.confirmPassword !== this.password) {
-      this.password = '';
-      this.confirmPassword = '';
-      return this.alertService.warning('Password and  confirm password does not match', 'Warning');
+      return this.passwordValidation();
     } else {
       const payload = { passwordAuthToken: this.token, newPassword: this._passwordService.encrypted(this.password)};
-      this._userService.resetpassword(payload).subscribe(res => {
-        const data = res.json();
-        if (data.warningFl || data.errorFl) {
-          return this.alertService.warning(data.message, 'Warning');
-        } else {
-          this.password = '';
-          this.confirmPassword = '';
-          this.alertService.success('Password reset successfully', 'Reset Success');
-          this.router.navigate(['/login']);
-          // window.location.reload();
-        }
-      });
+      this.resetPasswordApiCall(payload);
     }
   }
 
+  private passwordValidation() {
+    this.password = '';
+    this.confirmPassword = '';
+    return this.alertService.warning('Password and  confirm password does not match', 'Warning');
+  }
+
+  private resetPasswordApiCall(payload: { passwordAuthToken: any; newPassword: string; }) {
+    this._userService.resetpassword(payload).subscribe(res => {
+      const data = res.json();
+      if (data.warningFl || data.errorFl) {
+        return this.alertService.warning(data.message, 'Warning');
+      }  else {
+        this.resetPasswordSuccessAction();
+        // window.location.reload();
+      }
+    });
+  }
+
+  private resetPasswordSuccessAction() {
+    this.password = '';
+    this.confirmPassword = '';
+    this.alertService.success('Password reset successfully', 'Reset Success');
+    this.router.navigate(['/login']);
+  }
 }

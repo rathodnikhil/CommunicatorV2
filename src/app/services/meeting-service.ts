@@ -54,10 +54,7 @@ export class MeetingService {
         const url = environment.baseUrl + 'getRecentMeetingByUser?userCode=' + payload.userCode;
         this.apiRequest.post(url, payload).subscribe(data => {
             this.recentMeeting$.next(data);
-        },
-            err => {
-                //   alert(err);
-            });
+        });
     }
     getRecentMeetingByUser() {
         return this.recentMeeting$;
@@ -71,11 +68,6 @@ export class MeetingService {
         const url = environment.baseUrl + 'getMeetingAttendee?meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
-    getAllMeetingsbyLoggedInUserId(payload) {
-        const url = environment.baseUrl + 'getAllMeetingsByLoggedInUserId?userCode=' + payload.userCode;
-        return this.apiRequest.post(url, payload);
-    }
-
     saveMomDetails(payload): Observable<any> {
         const url = environment.baseUrl + 'saveMomDetails';
         const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
@@ -99,9 +91,9 @@ export class MeetingService {
         const url = environment.baseUrl + 'cancelMeeting?meetingCode=' + payload.meetingCode;
         return this.apiRequest.post(url, payload);
     }
-    getRemeberEmails(payload) {
-        const url = environment.baseUrl + 'getRemeberEmails?userCode=' + payload.userCode;
-        return this.apiRequest.post(url, payload);
+    getRemeberEmails() {
+        const url = environment.baseUrl + 'getRemeberEmails';
+        return this.apiRequest.post(url, null);
     }
     saveMeetingPermission(payload) {
         const url = environment.baseUrl + 'saveMeetingPermission?meetingPermissionList=' + payload;

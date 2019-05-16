@@ -77,71 +77,90 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.activatedRoute.queryParams.subscribe((params: Params) => {
             this.meetingCode = params['meetingCode'];
         });
+        this.getLoggedInUserObjApiCall();
+    }
+    private getLoggedInUserObjApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && this.loggedInUser === undefined) {
                 this.loggedInUser = data;
-          //     let userCodeVal = null;
-                    if (!data.isGuest) {
-                   //     userCodeVal = this.loggedInUser.userCode;
-                        this.isGuest = false;
-                    } else if (data.isGuest) {
-                      //  userCodeVal = this.loggedInUser.firstName;
-                        this.isGuest = true;
-                        this.meetingCode = data.meetingCode;
-                    }
-                    if (this.meetingCode !== '' && this.meetingCode !== undefined) {
-                        const payload = {
-                            userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode,
-                            email: this.loggedInUser.email
-                        };
-                    this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
-                        if (!data2.warningFl && !data2.errorFl && data2.message !== null
-                            && data2.message.toLowerCase().indexOf('success') > -1) {
-                            this.meetingDetails = data2;
-                            const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
-                            const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
-                            this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            // if (this.isHost === false && this.isGuest === true) {
-                                this.startTimer();
-                           // }
-                            if ((duration - delta) < 0) {
-                                this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
-                            }
-                            this.isHost = true;
-                            this.document.getElementById('isHost').innerHTML = 'true';
-                        } else if (data2.warningFl && data2.message !== null) {
-                            this.meetingDetails = data2;
-                            const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
-                            const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
-                            this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
-                            // if (this.isHost === false || this.isGuest === true) {
-                                this.startTimer();
-                            // }
-                           // this.startTimer();
-                            if ((duration - delta) < 0) {
-                                this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
-                            }
-                            this.isHost = false;
-                            this.document.getElementById('isHost').innerHTML = 'false';
-                        } else {
-                            this.isHost = false;
-                            this.document.getElementById('isHost').innerHTML = 'false';
-                        }
-                    });
-                } else {
-                    this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.',
-                        'Invalid meeting code');
-                    if (data.isGuest === true) {
-                        this.router.navigate(['/login']);
-                        // window.location.reload();
-                    } else {
-                        this.router.navigate(['/dashboard']);
-                        // window.location.reload();
-                    }
+                //     let userCodeVal = null;
+                if (!data.isGuest) {
+                    //     userCodeVal = this.loggedInUser.userCode;
+                    this.isGuest = false;
+                } else if (data.isGuest) {
+                    //  userCodeVal = this.loggedInUser.firstName;
+                    this.isGuest = true;
+                    this.meetingCode = data.meetingCode;
+                }
+                if (this.meetingCode !== '' && this.meetingCode !== undefined) {
+                    const payload = {
+                        userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode,
+                        email: this.loggedInUser.email
+                    };
+                    this.verifyUserApiCall(payload);
+                }  else {
+                    this.setAuthenticateUserValidation(data);
                 }
             }
         });
     }
+
+    private setAuthenticateUserValidation(data: any) {
+        this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.', 'Invalid meeting code');
+        if (data.isGuest === true) {
+            this.router.navigate(['/login']);
+            // window.location.reload();
+        } else {
+            this.router.navigate(['/dashboard']);
+            // window.location.reload();
+        }
+    }
+
+    private verifyUserApiCall(payload: { userCode: any; meetingCode: string; email: any; }) {
+        this._meetingService.verifyMeetingHost(payload).subscribe(data2 => {
+            if (!data2.warningFl && !data2.errorFl && data2.message !== null
+                && data2.message.toLowerCase().indexOf('success') > -1) {
+                this.onMeetingAlreadyOverOnSuccess(data2);
+            } else if (data2.warningFl && data2.message !== null) {
+                this.onMeetingAlreadyOver(data2);
+            } else {
+                this.isHost = false;
+                this.document.getElementById('isHost').innerHTML = 'false';
+            }
+        });
+    }
+
+    private onMeetingAlreadyOverOnSuccess(data2: any) {
+        this.meetingDetails = data2;
+        const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
+        const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
+        this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
+        // if (this.isHost === false && this.isGuest === true) {
+        this.startTimer();
+        // }
+        if ((duration - delta) < 0) {
+            this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
+        }
+        this.isHost = true;
+        this.document.getElementById('isHost').innerHTML = 'true';
+    }
+
+    private onMeetingAlreadyOver(data2: any) {
+        this.meetingDetails = data2;
+        const duration = (parseInt(this.meetingDetails.duration.split(' ')[0], 10) * 60);
+        const delta = Math.round((new Date().getTime() - new Date(data2.meetingStartDateTime).getTime()) / 1000);
+        this.timeLeft = (duration - delta) > 0 ? (duration - delta) : 0;
+        // if (this.isHost === false || this.isGuest === true) {
+        this.startTimer();
+        // }
+        // this.startTimer();
+        if ((duration - delta) < 0) {
+            this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
+        }
+        this.isHost = false;
+        this.document.getElementById('isHost').innerHTML = 'false';
+    }
+
     ngAfterViewInit(): void {
         (<any>window).customAlertService = this.alertService;
         const s = this.document.createElement('script');
@@ -171,37 +190,49 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-
         if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === 'undefined') {
             return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
         } else {
             if (!this.isHost) {
-                if (this.isGuest) {
-                    this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendees');
-                } else {
-                    const payload = { meetingCode: this.meetingDetails.meetingCode };
-                    this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
-                        this.downloadFile(this.momTxt, this.meetingDetails, resp);
-                    });
-                }
+                this.momForHostAndRegisterUser();
             } else {
                 const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
-                this._meetingService.saveMomDetails(payload).subscribe(resp => {
-                    this.errorFl = resp.errorFl;
-                    if (this.errorFl === true) {
-                        return this.alertService.warning(resp.message, 'Warning');
-                    } else {
-                        const attendeePayload = { meetingCode: this.meetingDetails.meetingCode };
-                        let attendeeList;
-                        this._meetingService.getMeetingAttendee(attendeePayload).subscribe(attendeeData => {
-                            attendeeList = attendeeData;
-                            this.downloadFile(this.momTxt, this.meetingDetails, attendeeList);
-                        });
-                    }
-                });
+                this.saveMomApiCall(payload);
             }
         }
     }
+    private saveMomApiCall(payload: { meetingCode: string; momDescription: any; userCode: any; }) {
+        this._meetingService.saveMomDetails(payload).subscribe(resp => {
+            this.errorFl = resp.errorFl;
+            if (this.errorFl === true) {
+                return this.alertService.warning(resp.message, 'Warning');
+            } else {
+                const attendeePayload = { meetingCode: this.meetingDetails.meetingCode };
+                let attendeeList;
+                attendeeList = this.meetingAttendeeApiCall(attendeePayload, attendeeList);
+            }
+        });
+    }
+
+    private meetingAttendeeApiCall(attendeePayload: { meetingCode: any; }, attendeeList: any) {
+        this._meetingService.getMeetingAttendee(attendeePayload).subscribe(attendeeData => {
+            attendeeList = attendeeData;
+            this.downloadFile(this.momTxt, this.meetingDetails, attendeeList);
+        });
+        return attendeeList;
+    }
+
+    private momForHostAndRegisterUser() {
+        if (this.isGuest) {
+            this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendees');
+        } else {
+            const payload = { meetingCode: this.meetingDetails.meetingCode };
+            this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
+                this.downloadFile(this.momTxt, this.meetingDetails, resp);
+            });
+        }
+    }
+
     downloadFile(data, meetingDetails, attendeeList) {
         const meetingDate = new Date();
         meetingDate.setTime(meetingDetails.meetingStartDateTime);
@@ -231,7 +262,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     completeExit() {
         this.exit();
-        debugger;
         if (this.isGuest === true) {
             this.router.navigate(['/login']);
             window.location.reload();
@@ -248,6 +278,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.stopTimer();
             payload.userCode = this.loggedInUser.firstName;
         }
+        this.endMeetingApiCall(payload);
+    }
+    private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, 'Warning');
@@ -258,6 +291,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             }
         });
     }
+
     stopTimer() {
         clearInterval(this.actualMeetingTime);
     }

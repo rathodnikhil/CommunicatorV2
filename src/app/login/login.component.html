@@ -20,7 +20,7 @@
   <div class=" row" style="margin-left:0px;margin-right:0px;">
      <div class=" col-lg-5 col-md-6" style="background-color:#f4f2f3;padding-right: 0px;
         padding-left: 0px;">
-        <button *ngIf="loginUiFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
+        <button *ngIf="!isGuest" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
         <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
         </i> Join with Meeting ID (Guest User) </button>
         <div class="main1">
@@ -44,8 +44,10 @@
                        <img src="/assets/images/password.png" alt="password img" height="15px" width="15px">
                        </span>
                     </div>
-                    <input type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" 
-                    [(ngModel)]="password" name="password" placeholder="{{passwordText}}" required >
+                    <input *ngIf="!isGuest" type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" 
+                    [(ngModel)]="password" name="password" placeholder="Password" required >
+                    <input *ngIf="isGuest" type="text" class="form-control" id="loginMeetingCode" (keyup)="onKey($event)" 
+                    [(ngModel)]="loginMeetingCode" name="loginMeetingCode" placeholder="Meeting Id" required >
                  </div>
               </div>
               <div *ngIf="forgetPasswordFlag">

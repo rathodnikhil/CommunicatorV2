@@ -94,38 +94,58 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.baseurl = Utils.getAbsoluteDomainUrl();
+        this.setDefaultValue();
+        this.loggedInUserApiCall();
+    }
+
+    private setDefaultValue() {
         this.selectDateFlag = true;
         this.meetNowMeeting = {};
         this.selectedCriteria = 'All';
         this.showScheduleMeetingFl = false;
+    }
+
+    private loggedInUserApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
                 this.loggedInUser = {};
                 return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.loggedInUser = data;
-                this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
-                this._meetingService.setFutureMeetimgList();
-                this.futureMeetingList = [];
-                this.getUpcomingMeetings();
+            }  else {
+                this.loggedInUserSuccessAction(data);
             }
         });
+    }
+
+    private loggedInUserSuccessAction(data: any) {
+        this.loggedInUser = data;
+        this.isAdministrator = this.loggedInUser.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
+        this._meetingService.setFutureMeetimgList();
+        this.futureMeetingList = [];
+        this.getUpcomingMeetings();
     }
 
     private getUpcomingMeetings() {
         this._meetingService.getFutureMeetingListByUser().subscribe(futureData => {
             if (futureData !== undefined && futureData.length > 0 && futureData[0].warningFl !== true) {
-                this.futureMeetingList = futureData;
-                this.filteredFutureMeetingList = futureData;
-                this.defaultMeetingSpinnerMod.hideSpinner();
+                this.futureMeetingSuccessAction(futureData);
             } else {
-                this.futureMeetingList = [];
-                this.filteredFutureMeetingList = [];
-                if (futureData[0] !== undefined && futureData[0].message !== undefined) {
-                    this.defaultMeetingSpinnerMod.hideSpinner();
-                }
+                this.futureMeetingFailResponseAction(futureData);
             }
         });
+    }
+
+    private futureMeetingFailResponseAction(futureData: any[]) {
+        this.futureMeetingList = [];
+        this.filteredFutureMeetingList = [];
+        if (futureData[0] !== undefined && futureData[0].message !== undefined) {
+            this.defaultMeetingSpinnerMod.hideSpinner();
+        }
+    }
+
+    private futureMeetingSuccessAction(futureData: any[]) {
+        this.futureMeetingList = futureData;
+        this.filteredFutureMeetingList = futureData;
+        this.defaultMeetingSpinnerMod.hideSpinner();
     }
 
     ngAfterViewInit(): void {
@@ -181,6 +201,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.selectedCriteria = 'Range';
         const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
         const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
+        this.iterateMeetingsbyDatePeriod(toDate, fromDate);
+    }
+
+    private iterateMeetingsbyDatePeriod(toDate: Date, fromDate: Date) {
         this.futureMeetingList.forEach(meeting => {
             const meetingDate = new Date(meeting.meetingDate);
             if (meetingDate <= toDate && meetingDate >= fromDate && meeting.status.status === 'ACTIVE') {
@@ -194,6 +218,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.activeAll = false;
         this.activeTomorrow = true;
         this.selectedCriteria = 'Tomorrow';
+        this.filterTomorrowMeetings();
+    }
+
+    private filterTomorrowMeetings() {
         this.futureMeetingList.forEach(meeting => {
             const meetingDate = new Date(meeting.meetingStartDateTime);
             const tomorrow = new Date();
@@ -211,6 +239,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.activeAll = false;
         this.activeTomorrow = false;
         this.selectedCriteria = 'Today';
+        this.iterateMeetingsByToday();
+    }
+
+    private iterateMeetingsByToday() {
         this.futureMeetingList.forEach(meeting => {
             const meetingDate = new Date(meeting.meetingStartDateTime);
             if (meetingDate.getDate() === this.currentDate.getDate()
@@ -238,20 +270,24 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.recentMeeting = {};
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.closePopup('cancel');
-                if (this.filteredFutureMeetingList.indexOf(this.selectedMeeting) !== -1) {
-                    this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
-                }
-                if (this.futureMeetingList.indexOf(this.selectedMeeting) !== -1) {
-                    this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
-                }
-                return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
+                return this.setCancelMeetingSuccessAction();
             }
         });
     }
+    private setCancelMeetingSuccessAction() {
+        this.closePopup('cancel');
+        if (this.filteredFutureMeetingList.indexOf(this.selectedMeeting) !== -1) {
+            this.filteredFutureMeetingList.splice(this.filteredFutureMeetingList.indexOf(this.selectedMeeting), 1);
+        }
+        if (this.futureMeetingList.indexOf(this.selectedMeeting) !== -1) {
+            this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
+        }
+        return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
+    }
+
     copyToOutLook(event) {
-        const payload = { userCode: this.loggedInUser.userCode };
-        this._meetingService.getRemeberEmails(payload).subscribe(data => {
+     //   const payload = { userCode: this.loggedInUser.userCode };
+        this._meetingService.getRemeberEmails().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.rememberEmailList = [];
                 return this.alertService.warning(data.message, 'Warning');
@@ -294,13 +330,17 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
                 this.meetNowMeeting = {};
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.meetNowMeeting = data;
-                this.meetNowModal.open();
-                //  this.futureMeetingList.push(this.meetNowMeeting);
-                this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
-                return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
+                return this.meetNowSuccessAction(data);
             }
         });
+    }
+
+    private meetNowSuccessAction(data: any) {
+        this.meetNowMeeting = data;
+        this.meetNowModal.open();
+        //  this.futureMeetingList.push(this.meetNowMeeting);
+        this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
+        return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
     }
 
     private setMeetNowPayload() {
@@ -339,12 +379,16 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.meetNowOutlookModal.close();
-                this.clearOutlookField();
-                this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
-                return this.alertService.success('Meeting invitation has sent successfully', 'Meeting Invitation');
+                return this.setMeetingInvitationSuccessAction();
             }
         });
+    }
+
+    private setMeetingInvitationSuccessAction() {
+        this.meetNowOutlookModal.close();
+        this.clearOutlookField();
+        this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
+        return this.alertService.success('Meeting invitation has sent successfully', 'Meeting Invitation');
     }
 
     private setSendEmailPaylod() {

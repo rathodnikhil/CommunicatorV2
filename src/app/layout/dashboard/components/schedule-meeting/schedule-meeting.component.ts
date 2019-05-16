@@ -167,8 +167,8 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.meridianTime = { hour: today.getHours(), minute: today.getMinutes() };
     }
     copyToOutLook(event) {
-        const payload = {userCode: this.loggedInUser.userCode};
-        this._meetingService.getRemeberEmails(payload).subscribe(data => {
+    //    const payload = {userCode: this.loggedInUser.userCode};
+        this._meetingService.getRemeberEmails().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
               this.rememberEmailList = [];
                 return this.alertService.warning(data.message, 'Warning');
