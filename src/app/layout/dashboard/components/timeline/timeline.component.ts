@@ -36,52 +36,72 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.selectedUser = {};
+        this.getSelecteduserApiCall();
+        this.setLoggedInUserApiCall();
+    }
+    private setLoggedInUserApiCall() {
+        this._userService.getLoggedInUserObj().subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                this.loggedInUser = {};
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                this.getLoggedInUserSuccessAction(data);
+            }
+        });
+    }
+
+    private getLoggedInUserSuccessAction(data: any) {
+        this.loggedInUser = data;
+        this.chattingHistoryList = [];
+        this.setChattingHistoryApiCall();
+        this.broadcastMsgList = [];
+        this.broadcastmsgByloggedInUserApiCall();
+    }
+
+    private broadcastmsgByloggedInUserApiCall() {
+        this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(broadcastData => {
+            if (broadcastData.length > 0) {
+                if (broadcastData[0].errorFl || broadcastData[0].warningFl) {
+                    this.broadcastMsgList = [];
+                    return this.alertService.warning(broadcastData[0].message, 'Warning');
+                }  else {
+                    this.broadcastMsgList = broadcastData;
+                }
+            }  else {
+                this.broadcastMsgList = [];
+            }
+        });
+    }
+
+    private setChattingHistoryApiCall() {
+        this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
+            if (chatHistoryData.length > 0) {
+                if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
+                    this.chattingHistoryList = [];
+                    return this.alertService.warning(chatHistoryData[0].message, 'Warning');
+                }  else {
+                    this.chattingHistoryList = chatHistoryData;
+                }
+            } else {
+                this.chattingHistoryList = [];
+            }
+        });
+    }
+
+    private getSelecteduserApiCall() {
         this._userService.getSelectedUser().subscribe(res => {
             if (res == null || res === undefined || res.length || res.length === 0) {
                 this.router.navigate(['/dashboard/default']);
             } else {
                 if (res.userCode === undefined) {
                     this.router.navigate(['/dashboard/default']);
-                } else {
+                }  else {
                     this.selectedUser = res;
                 }
             }
         });
-        this._userService.getLoggedInUserObj().subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
-                this.loggedInUser = {};
-                return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.loggedInUser = data;
-                this.chattingHistoryList = [];
-                this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
-                    if (chatHistoryData.length > 0) {
-                        if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
-                            this.chattingHistoryList = [];
-                            return this.alertService.warning(chatHistoryData[0].message, 'Warning');
-                        } else {
-                            this.chattingHistoryList = chatHistoryData;
-                        }
-                    } else {
-                        this.chattingHistoryList = [];
-                    }
-                });
-                this.broadcastMsgList = [];
-                this._chatService.getBroadcastMsgByLoggedInuserId().subscribe(broadcastData => {
-                    if (broadcastData.length > 0) {
-                        if (broadcastData[0].errorFl || broadcastData[0].warningFl) {
-                            this.broadcastMsgList = [];
-                            return this.alertService.warning(broadcastData[0].message, 'Warning');
-                        } else {
-                            this.broadcastMsgList = broadcastData;
-                        }
-                    } else {
-                        this.broadcastMsgList = [];
-                    }
-                });
-            }
-        });
     }
+
     ngAfterViewInit(): void {
         const s = this.document.createElement('script');
         s.type = 'text/javascript';

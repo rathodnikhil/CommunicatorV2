@@ -1,9 +1,7 @@
 
 import { routerTransition } from '../../router.animations';
-import { AlertComponent } from 'app/layout/bs-component/components';
-import { Component, OnInit, EventEmitter, Output, ViewChild, ViewContainerRef, AfterViewInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit , ViewChild, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { CustomModalComponent, CustomModalModel } from './components/custom-modal/custom-modal.component';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { GroupService } from '../../services/group.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -31,10 +29,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     i = 0;
     loggedInUserObj: any;
     loggedInUserRole: any;
-    // signUpflag: boolean;
     selectedUser: any;
     manageGroupFlag: boolean;
-    errorFl: boolean;
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     isUserSelected = false;
@@ -59,25 +55,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         // get loggedin user
+        this.loggedInUserObjApiCall();
+        this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
+    }
+    private loggedInUserObjApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
-            } else {
-                this.loggedInUserObj = data;
-             //   const payload = { userCode: this.loggedInUserObj.userCode };
-                this._groupService.setGroupList();
-                this._userService.setUserList();
-             //   this._userService.setUserList(payload);
-                this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
-                this._userService.getSelectedUser().subscribe(res => {
-                    if (res) {
-                        this.selectedUser = res;
-                    }
-                });
+            }  else {
+                this.setLoggedInUserobjSuccessAction(data);
             }
         });
-        this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
     }
+
+    private setLoggedInUserobjSuccessAction(data: any) {
+        this.loggedInUserObj = data;
+        this._groupService.setGroupList();
+        this._userService.setUserList();
+        this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
+        this.setSelectedUserApiCall();
+    }
+
+    private setSelectedUserApiCall() {
+        this._userService.getSelectedUser().subscribe(res => {
+            if (res) {
+                this.selectedUser = res;
+            }
+        });
+    }
+
     ngAfterViewInit(): void {
         (<any>window).customAlertService = this.alertService;
         const s = this.document.createElement('script');
@@ -106,15 +112,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             return this.alertService.warning('Please enter message', 'Warning');
         } else {
             const payload = { 'broadcastMessage': this.broadcastMessage, generatedBy: this.loggedInUserObj };
-            this._groupService.saveBroadcastMessage(payload).subscribe(data => {
-                if (data.errorFl === true || data.warningFl === true) {
-                    return this.alertService.warning(data.message, 'Warning');
-                } else {
-                    return this.alertService.success('Message has been broadcast successfully', 'Success');
-                }
-            });
+            this.saveBroadcastMsgApiCall(payload);
         }
         this.broadcastMessage = ' ';
+    }
+
+    private saveBroadcastMsgApiCall(payload: { 'broadcastMessage': string; generatedBy: any; }) {
+        this._groupService.saveBroadcastMessage(payload).subscribe(data => {
+            if (data.errorFl === true || data.warningFl === true) {
+                return this.alertService.warning(data.message, 'Warning');
+            } else {
+                return this.alertService.success('Message has been broadcast successfully', 'Success');
+            }
+        });
     }
 
     resetMsg(event) {
@@ -132,15 +142,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     logout() {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
-            this.errorFl = data.errorFl;
-            if (this.errorFl === true) {
+            if (data.errorFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-                this.router.navigate(['/login']);
-                window.location.reload();
+                this.reloadPage();
             }
         });
     }
+    private reloadPage() {
+        this.router.navigate(['/login']);
+        window.location.reload();
+    }
+
     SetIsUserSelected(event) {
         this.isUserSelected = event;
     }

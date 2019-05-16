@@ -19,7 +19,6 @@ export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
     public clickedType: any;
     lastMeetingStartTime: any;
-    // allMeetingByLoggedInUserList = [];
     meetingList = [];
     hovertext: any;
     meetingDetails = {
@@ -37,8 +36,7 @@ export class MyCalendarComponent implements OnInit {
     displayEvent: any;
     dateObj = new Date();
     yearMonth = this.dateObj.getUTCFullYear() +
-        '-' +
-        (this.dateObj.getUTCMonth() + 1);
+        '-' + (this.dateObj.getUTCMonth() + 1);
     MeetingData: any = [
         {
             title: 'All Day Event',
@@ -71,10 +69,11 @@ export class MyCalendarComponent implements OnInit {
         // get loggedin user
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
-            // this.meetingYear = new Date().getFullYear();
-            // this.meetingMonth = new Date().getUTCMonth() + 1;
             this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
         });
+        this.setCalendarOptions();
+    }
+    private setCalendarOptions() {
         this.calendarOptions = {
             // theme: true,
             editable: true,
@@ -87,6 +86,7 @@ export class MyCalendarComponent implements OnInit {
             events: this.MeetingData
         };
     }
+
     clickButton(model: any) {
         this.displayEvent = model;
         if (model.buttonType === 'prev' || model.buttonType === 'next') {
@@ -95,24 +95,14 @@ export class MyCalendarComponent implements OnInit {
         }
     }
     eventClick(model: any) {
-        model = {
-            event: {
-                id: model.event.id,
-                start: model.event.start,
-                end: model.event.end,
-                title: model.event.title,
-                allDay: model.event.allDay
-                // other params
-            },
-            duration: {}
-        };
+        model = this.createModelObj(model , {});
         const id = model.event.title.split('(')[1].split(')')[0];
         this.meetingDetails = this.meetingList.find(x => x.meetingCode === id);
         this.displayEvent = model;
         this.meetingDetailsModal.open();
     }
 
-    hover(model: any) {
+    private createModelObj(model: any , duration: {}) {
         model = {
             event: {
                 id: model.event.id,
@@ -122,30 +112,72 @@ export class MyCalendarComponent implements OnInit {
                 allDay: model.event.allDay
                 // other params
             },
-            duration: {}
+            duration: {_data: duration}
         };
+        return model;
+    }
+
+    hover(model: any) {
+        model = this.createModelObj(model , {});
         this.hovertext = model.event.title;
     }
 
     updateEvent(model: any) {
-        model = {
-            event: {
-                id: model.event.id,
-                start: model.event.start,
-                end: model.event.end,
-                title: model.event.title
-                // other params
-            },
-            duration: {
-                _data: model.duration._data
-            }
-        };
+        model = this.createModelObj(model ,  model.duration._data);
         this.displayEvent = model;
     }
     exit() {
         this.meetingDetailsModal.close();
     }
     loadMore(year, month) {
+        ({ month, year } = this.setMonthAndYearValues(month, year));
+        const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true};
+        this.calenderMeetingSpinnerMod.showSpinner();
+        this.getmeetingsByMonthAndYearApiCall(payload, year, month);
+    }
+
+    private getmeetingsByMonthAndYearApiCall(payload: { lastMeetingYear: any; lastMeetingMonth: any; calendarFl: boolean; },
+         year: any, month: any) {
+        this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
+            this.meetingYear = year;
+            this.meetingMonth = month;
+            if (data[0].errorFl || data[0].warningFl) {
+                this.hideSpineer();
+                return this.alertService.warning('There are no meetings', 'Warning');
+            } else {
+                this.setMeetingsSuccessResponse(data);
+            }
+            this.hideSpineer();
+        });
+    }
+
+    private hideSpineer() {
+        this.calenderMeetingSpinnerMod.hideSpinner();
+    }
+
+    private setMeetingsSuccessResponse(data: any) {
+        this.iterateUcCalendarValues(data);
+        this.calenderMeetingSpinnerMod.hideSpinner();
+        this.meetingList = [];
+        this.meetingList = data;
+    }
+
+    private iterateUcCalendarValues(data: any) {
+        data.forEach(element => {
+            const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
+                + parseInt(element.duration.split(' Min')[0]) * 60000);
+            const meeting = {
+                title: element.subject + '(' + element.meetingCode + ')',
+                // url: '#/meeting?meetingCode=' + element.meetingCode,
+                start: new Date(element.meetingStartDateTime),
+                end: endTime
+            };
+            this.ucCalendar.fullCalendar('renderEvent', meeting, true);
+            console.log('Check : ' + this.ucCalendar);
+        });
+    }
+
+    private setMonthAndYearValues(month: any, year: any) {
         if (this.clickedType !== undefined) {
             if (this.clickedType === 'prev') {
                 if (month === 1) {
@@ -158,39 +190,11 @@ export class MyCalendarComponent implements OnInit {
                 if (month === 12) {
                     month = 1;
                     year = year + 1;
-                } else {
+                }   else {
                     month = month + 1;
                 }
             }
         }
-
-        const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true};
-        this.calenderMeetingSpinnerMod.showSpinner();
-
-        this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            this.meetingYear = year;
-            this.meetingMonth = month;
-            if (data[0].errorFl || data[0].warningFl) {
-                this.calenderMeetingSpinnerMod.hideSpinner();
-                return this.alertService.warning(data[0].message, 'Warning');
-            } else {
-                data.forEach(element => {
-                    const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
-                    + parseInt(element.duration.split(' Min')[0]) * 60000);
-                    const meeting = {
-                        title: element.subject + '(' + element.meetingCode + ')',
-                        // url: '#/meeting?meetingCode=' + element.meetingCode,
-                        start: new Date(element.meetingStartDateTime),
-                        end: endTime
-                    };
-                    this.ucCalendar.fullCalendar('renderEvent', meeting, true);
-                    console.log('Check : ' + this.ucCalendar);
-                });
-                this.calenderMeetingSpinnerMod.hideSpinner();
-                this.meetingList = [];
-                this.meetingList = data;
-            }
-            this.calenderMeetingSpinnerMod.hideSpinner();
-        });
+        return { month, year };
     }
 }
