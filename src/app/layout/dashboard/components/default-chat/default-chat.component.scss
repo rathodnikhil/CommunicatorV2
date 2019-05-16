@@ -8,7 +8,7 @@
 
 }
 .background{
-    height:6%;
+    height:6vh;
     // background-image: url(/assets/images/Coreflex-solutions-header.jpg);
     // background: #efefef;
 }
@@ -63,5 +63,13 @@
     margin: 8px;
     text-align: center;
     // width:100%;
-    height:92%;
+    height:90vh;
+}
+
+.header-img-notAdmin{
+    height:auto;
+    width:25%;
+    padding: 10px;
+    margin-left: 8px; 
+    float: left;
 }

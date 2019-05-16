@@ -26,19 +26,61 @@
 
                 </div>
                 <div class="attendee-row">
-                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" #videos_container id="videos_container">
+                        <div ><h4 style="margin-bottom:0px;margin-left:1%;">Meeting Attendees</h4></div>
+                    <div class="demo-one" drag-scroll-y-disabled="true" scrollbar-hidden="true" >
+                            
                         <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
+                        <div class="grid-container" >
+                              
+                                <div class="grid-item"><div class="attendee-name">YOU</div>
+                                </div>
+                                <div class="grid-item" style=" background-color: #01baac;background-image: none;">
+                                    <div class="attendee-name" style=" background-color:#f4f3f4; color:#000;">Martina Makasrae</div >
+                                        <div class="initial-letter-attendee">MM</div> 
+                                </div>
+                                <div class="grid-item"><div class="attendee-name">YOU</div>
+                               </div>
+                            <div class="grid-item" style=" background-color: #01baac;background-image: none;">
+                                <div class="attendee-name" style=" background-color:#f4f3f4;color:#000;">Martina Makasrae</div >
+                                    <div class="initial-letter-attendee">MM</div>
+                            </div>
+
+                            <div class="grid-item"><div class="attendee-name">YOU</div>
+                           </div>
+
+                        <div class="grid-item" style=" background-color: #01baac;background-image: none;">
+                            <div class="attendee-name" style=" background-color:#f4f3f4; color:#000;">Martina Makasrae</div >
+                                <div class="initial-letter-attendee">MM</div> 
+                       </div>
+                        <div class="grid-item"><div class="attendee-name">YOU</div>
                     </div>
+
+                    <div class="grid-item" style=" background-color: #01baac;background-image: none;">
+                        <div class="attendee-name" style=" background-color:#f4f3f4; color:#000;">Martina Makasrae</div >
+                            <div class="initial-letter-attendee">MM</div>
+                    </div>
+                    <div class="grid-item"><div class="attendee-name">YOU</div>
+                </div>
+
+                <div class="grid-item" style=" background-color: #01baac;background-image: none;">
+                    <div class="attendee-name" style=" background-color:#f4f3f4; color:#000;">Martina Makasrae</div >
+                        <div class="initial-letter-attendee">MM</div> 
+                </div>
+                <div class="grid-item"><div class="attendee-name">YOU</div>
+            </div>
+            </div>
+         </div>
                     <!-- <p  id="muteIcon"> </p>  -->
                 </div>
                 <div class="row parent">
-                    <div id="shareScreen-container" style="width: 100%; overflow-y: auto;height: calc(100vh*0.38);"></div>
+                    <div ><h4 style="margin-bottom:0px;">Shared Screen</h4></div>
+                    <div id="shareScreen-container" style="width: 100%; overflow-y: auto;height: calc(100vh*0.23);"></div>
                 </div>
                 <div style="height: calc(100vh*.05);">
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button id="btn-leave-room" class="btn pull-left btn-danger" (click)="exitMeeting()"
+                        <button id="btn-leave-room" class="btn pull-left btn-danger btn-exit" (click)="exitMeeting()"
                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
@@ -99,7 +141,7 @@
 
             <div class="col-sm-4 meeting-activity">
                 <div class="card">
-                    <div class="card-header col-md-12" style="background: #f4f2f3;">
+                    <div class="card-header col-md-12 meeting-activity-header">
                         <div class="col-md-8" style="float: left;">
                             <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" />
                         </div>
@@ -123,7 +165,7 @@
                             <!-- <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
                             <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> -->
                             <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
-                        </div>
+                        </div> 
                         <ul role="tablist" class="nav nav-tabs justify-content-start">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">

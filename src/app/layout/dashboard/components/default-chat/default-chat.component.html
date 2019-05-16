@@ -3,13 +3,13 @@
                 
             <div class="background">
                     <ng-template [ngIf]="loggedInUserObj.meetingPermissionStatus.status === 'INACTIVE'" [ngIfElse]="notAdmin">
-                            <img class="header-img" src="assets\images\logo.png">
+                            <img class="header-img-notAdmin" src="assets\images\logo.png">
                         </ng-template>
-                              
-                        <ng-template #notAdmin>
+                    </div>
+                            <ng-template #notAdmin>
                             <img style="float:left;" class="header-img" src="assets\images\logo.png">
                         </ng-template>        
-                </div>
+                    
                 <div class="roundedCorner">
                     <h3 class="header-label" style="margin-top:7%;"><b>Hello, {{loggedInUserObj.firstName}}&nbsp;{{loggedInUserObj.lastName}}</b>
                     </h3>
