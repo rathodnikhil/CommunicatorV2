@@ -131,11 +131,7 @@ export class ManageGroupComponent implements OnInit {
     }
     private groupListApiCall() {
         this._groupService.getGroupList().subscribe(groupData => {
-            if (groupData === undefined) {
-                this.groupList = [];
-                return false;
-            } else {
-                if (groupData.warningFl === true) {
+                if (groupData.warningFl === true || groupData.errorFl === true || groupData === undefined) {
                     this.groupList = [];
                     this.manageGroupSpinnerMod.hideSpinner();
                     return this.alertService.warning(groupData.message, 'Warning');
@@ -147,15 +143,6 @@ export class ManageGroupComponent implements OnInit {
                     // this.groupList = groupData;
                     this.manageGroupSpinnerMod.hideSpinner();
                 }
-                // else if (groupData.warningFl === true) {
-                //     this.groupList = [];
-                //     this.manageGroupSpinnerMod.hideSpinner();
-                //     return false;
-                // }
-                // if (this.groupList.length > 0) {
-                //     this.manageGroupSpinnerMod.hideSpinner();
-                // }
-            }
         });
     }
 

@@ -3,7 +3,6 @@ import { Router, RouterStateSnapshot, ActivatedRoute, Params } from '@angular/ro
 import { routerTransition } from '../router.animations';
 import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
-import { Injectable } from '@angular/core';
 import { AlertService } from '../services/alert.service';
 import { PasswordService } from '../services/password.service';
 import { DOCUMENT } from '@angular/common';
@@ -16,7 +15,6 @@ import { DOCUMENT } from '@angular/common';
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     UserNameText = 'UserName';
-    passwordText = 'Password';
     _loginService: LoginService;
     _userService: UserService;
     _passwordService: PasswordService;
@@ -38,6 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     loggedInUserObj: any;
     meetingCode: string;
     isMeetingCodeInValid = false;
+    loginMeetingCode: any;
     loginHeader = 'Log In';
     @Output() meetingCodeVal = new EventEmitter<String>();
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
@@ -90,7 +89,8 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loginText = this.isGuest ? 'Continue' : 'Login';
         this.loginHeader = this.isGuest ? 'Join Meeting' : 'Log In';
         this.UserNameText = this.isGuest ? 'Name' : 'UserName';
-        this.passwordText = this.isGuest ? 'Meeting ID' : 'Password';
+        this.userName = '';
+        this.password = '';
     }
     login() {
         if (this.forgetPasswordFlag === true) {
@@ -98,50 +98,23 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
             if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
                 || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-                return this.alertService.error('Please close popup to continue', 'Error');
+                return this.alertService.error('Please close popup to continue', 'Warning');
             } else {
                 if (this.isGuest) {
+                    const NAME_REGEXP = /^[a-zA-Z]+$/i;
                     if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
                         || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-                        return this.alertService.error('Please close popup to continue', 'Error');
-                    }
-                    if (this.password === null || typeof this.password === 'undefined' || this.password.trim() === '') {
-                        return this.alertService.error('Enter meeting code', 'Error');
-                    }
-                    if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-                        return this.alertService.error('Enter full name', 'Error');
-                    }
-                    localStorage.setItem('loggedInuserName', this.userName);
-                    const currentDate = new Date();
-                    const guestUserCode = 'guest' + (+currentDate);
-                    const firstNameUpperCase = this.makeFirstLetterInCapital(this.userName);
-                    const payload = {
-                        firstName: firstNameUpperCase,
-                        isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.password
-                    };
-                    this.meetingCodeVal.emit(this.meetingCode);
-                    this._userService.setLoggedInUserObj(payload).subscribe(res => {
-                        if (res === 'invalid' && !this.isMeetingCodeInValid) {
-                            this.isMeetingCodeInValid = true;
-                            this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
-                            return false;
-                        } else {
-                            if (res.firstName !== undefined) {
-                                if (!this.previousUrl) {
-                                    // this.router.navigate(['meeting' + this.meetingCode]);
-                                    this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-                                } else {
-                                    if (this.previousUrl.indexOf('meeting') > 0) {
-                                        this.router.navigateByUrl(this.previousUrl);
-                                    } else {
-                                        this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-                                    }
-                                }
-                            }
-                        }
-                    });
+                        return this.alertService.error('Please close popup to continue', 'Warning');
+                    } else if (this.loginMeetingCode === null || typeof this.loginMeetingCode === 'undefined'
+                    || this.loginMeetingCode.trim() === '') {
+                        return this.alertService.error('Enter meeting code', 'Warning');
+                    } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
+                        return this.alertService.error('Enter full name', 'Warning');
+                    } else if (!NAME_REGEXP.test(this.userName)) {
+                        return this.alertService.warning('Please enter alphabates only ', 'Warning');
+                      }
+                    this.guestLoggedInActions();
                 } else {
-
                     if (this.userName === undefined || this.userName
                         === '' || this.userName === null) {
                         return this.alertService.error('Enter Username', 'Error');
@@ -149,51 +122,126 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                         return this.alertService.error('Enter Password', 'Error');
                     }
                     const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
-                    this._userService.verifyUser(payload).subscribe(resp => {
-                        const loggedinUser = resp.json();
-                        if (loggedinUser.warningFl === false) {
-                            this._loginService.getAuthenticationToken(payload).subscribe(data => {
-                                this.jwtToken = this._loginService.getJwtToken();
-                                if (this.jwtToken === undefined ||
-                                    this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
-                                    return this.alertService.error('Authentication Token failed', 'Error');
-                                } else {
-                                    const userNamePayload = { userName: loggedinUser.name };
-                                    this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
-                                        if (res.firstName !== undefined && res.firstName != null) {
-                                            if (this.meetingCode) {
-                                                this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-                                            } else if (!this.previousUrl) {
-                                                this.router.navigate(['/dashboard/default']);
-                                            } else {
-                                                this.router.navigateByUrl(this.previousUrl);
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        } else {
-                            if (resp.json() === 'invalidUsername') {
-                                this.userName = '';
-                                return this.alertService.warning('Username is invalid', 'Account Authentication');
-                            }
-                            if (resp.json() === 'invalidPassword') {
-                                this.password = '';
-                                return this.alertService.warning('Password is invalid', 'Account Authentication');
-                            }
-                            if (resp.json() === 'deactivate') {
-                                this.userName = '';
-                                this.password = '';
-                                return this.alertService.warning('Your account has deactivated , please contact to your administrator',
-                                    'Account Authentication');
-                            }
-                        }
-                    }
-                    );
+                    this.verifyUserApiCall(payload);
                 }
             }
         }
     }
+    private verifyUserApiCall(payload: { 'name': any; 'password': string; }) {
+        this._userService.verifyUser(payload).subscribe(resp => {
+            const loggedinUser = resp.json();
+            if (loggedinUser.warningFl === false) {
+                this.getAuthenticationJwtToken(payload, loggedinUser);
+            } else {
+                switch (resp.json()) {
+                    case 'invalidUsername':
+                          this.setValidationMsgAndForAuthentication(true , false , 'Account Authentication');
+                        break;
+                    case 'invalidPassword':
+                         this.setValidationMsgAndForAuthentication(false , true , 'Account Authentication');
+                        break;
+                    case 'deactivate':
+                          this.setValidationMsgAndForAuthentication(true , true ,
+                            'Your account has deactivated , please contact to your administrator');
+                      break;
+                }
+            }
+        });
+    }
+
+    private setValidationMsgAndForAuthentication(userNameFl: boolean , passwordFl: boolean , message: String) {
+        if (userNameFl) {
+            this.userName = '';
+        } if (passwordFl) {
+            this.password = '';
+        }
+        this.alertService.warning(message, 'Account Authentication');
+    }
+
+    private getAuthenticationJwtToken(payload: { 'name': any; 'password': string; }, loggedinUser: any) {
+        this._loginService.getAuthenticationToken(payload).subscribe(data => {
+            this.jwtToken = this._loginService.getJwtToken();
+            if (this.jwtToken === undefined ||
+                this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
+                return this.alertService.error('Authentication Token failed', 'Error');
+            } else {
+                const userNamePayload = { userName: loggedinUser.name };
+                this.registerUserLoggedInUserApiCall(userNamePayload);
+            }
+        });
+    }
+
+    private registerUserLoggedInUserApiCall(userNamePayload: { userName: any; }) {
+        this._userService.setLoggedInUserObj(userNamePayload).subscribe(res => {
+            if (res.firstName !== undefined && res.firstName != null) {
+                this.registeruserMeetingurlActions();
+            }
+        });
+    }
+
+    private registeruserMeetingurlActions() {
+        if (this.meetingCode) {
+            this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+        } else if (!this.previousUrl) {
+            this.router.navigate(['/dashboard/default']);
+        } else {
+            this.router.navigateByUrl(this.previousUrl);
+        }
+    }
+
+    private guestLoggedInActions() {
+        const { firstNameUpperCase, guestUserCode } = this.setDefaultGuestValues();
+        const payload = {
+            firstName: firstNameUpperCase,
+            isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.loginMeetingCode
+        };
+        this.meetingCodeVal.emit(this.meetingCode);
+        this.loggedInUserApiCall(payload);
+    }
+
+    private setDefaultGuestValues() {
+        localStorage.setItem('loggedInuserName', this.userName);
+        const currentDate = new Date();
+        const guestUserCode = 'guest' + (+currentDate);
+        const firstNameUpperCase = this.makeFirstLetterInCapital(this.userName);
+        return { firstNameUpperCase, guestUserCode };
+    }
+
+    private loggedInUserApiCall(payload: { firstName: String; isGuest: boolean; userCode: string; email: string; meetingCode: any; }) {
+        this._userService.setLoggedInUserObj(payload).subscribe(res => {
+            if (res === 'invalid' && !this.isMeetingCodeInValid) {
+                return this.meetingCodeValidation();
+            } else {
+                if (res.firstName !== undefined) {
+                    this.meetingUrlRoutingAction();
+                }
+            }
+        });
+    }
+
+    private meetingCodeValidation() {
+        this.isMeetingCodeInValid = true;
+        this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
+        return false;
+    }
+
+    private meetingUrlRoutingAction() {
+        if (!this.previousUrl) {
+            // this.router.navigate(['meeting' + this.meetingCode]);
+            this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+        } else {
+            this.routingUrlActions();
+        }
+    }
+
+    private routingUrlActions() {
+        if (this.previousUrl.indexOf('meeting') > 0) {
+            this.router.navigateByUrl(this.previousUrl);
+        }  else {
+            this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+        }
+    }
+
     private makeFirstLetterInCapital(userName): String {
         const senderNameArray = this.setAttendeeName(this.userName);
         let firstNameUpperCase = null;
@@ -228,27 +276,39 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
             return this.alertService.error('Please enter email', 'Error');
         } else {
-            const payload = { email: this.forgetEmail };
-            this._userService.forgotPasswordSendMail(payload).subscribe(res => {
-                if (res.json().errorFl === true || res.json().warningFl === true) {
-                    return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
-                } else {
-                    return this.alertService
-                        .success('Password reset link has successfully sent to your email account, check your email.', 'Email Send');
-                }
-            });
-            this.forgetEmail = '';
+            this.forgotEmailSuccessAction();
         }
     }
+    private forgotEmailSuccessAction() {
+        const payload = { email: this.forgetEmail };
+        this.forgotPasswordEmailApiCall(payload);
+        this.forgetEmail = '';
+    }
+
+    private forgotPasswordEmailApiCall(payload: { email: any; }) {
+        this._userService.forgotPasswordSendMail(payload).subscribe(res => {
+            if (res.json().errorFl === true || res.json().warningFl === true) {
+                return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
+            } else {
+                return this.alertService
+                    .success('Password reset link has successfully sent to your email account, check your email.', 'Email Send');
+            }
+        });
+    }
+
     setAttendeeName(attendeeFullName) {
         attendeeFullName = attendeeFullName.split(' ');
         const attendeeFullNameArray = new Array();
+        this.iterateAttendeeFullNameArray(attendeeFullName, attendeeFullNameArray);
+        return attendeeFullNameArray;
+    }
+
+    private iterateAttendeeFullNameArray(attendeeFullName: any, attendeeFullNameArray: any[]) {
         for (let i = 0; i < attendeeFullName.length; i++) {
             attendeeFullNameArray.push(attendeeFullName[i]);
             if (i !== attendeeFullName.length - 1) {
                 attendeeFullNameArray.push(' ');
             }
         }
-        return attendeeFullNameArray;
     }
 }

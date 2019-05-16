@@ -16,27 +16,29 @@ export class HeaderComponent implements OnInit {
     _groupService: GroupService;
     pushRightClass = 'push-right';
     isClosed = true;
-    errorFl: boolean;
-    nullCheckFlag: boolean;
     loggedInUserObj: any;
     sidebarMenuList = [];
     guestFlag: boolean;
     constructor(private translate: TranslateService, public router: Router,
         userService: UserService, groupService: GroupService, public alertService: AlertService) {
-
         this._userService = userService;
         this._groupService = groupService;
+        this.setBrowserActivities();
+        this.routerAction();
+    }
+
+    private setBrowserActivities() {
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
         this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de|zh-CHS/) ? browserLang : 'en');
+    }
 
+    private routerAction() {
         this.router.events.subscribe(val => {
-            if (
-                val instanceof NavigationEnd &&
+            if (val instanceof NavigationEnd &&
                 window.innerWidth <= 992 &&
-                this.isToggled()
-            ) {
+                this.isToggled()) {
                 this.toggleSidebar();
             }
         });
@@ -45,19 +47,30 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.sidebarMenuList = [];
         this.guestFlag = false;
+        this.loggedInUserObjApiCall();
+    }
+
+    private loggedInUserObjApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && !data.isGuest) {
-                this.loggedInUserObj = data;
-                const payload = { userCode: this.loggedInUserObj.userCode };
-                this._groupService.setSideBarMenuByLoggedInUSer(payload);
-                this._groupService.getSideBarMenuByLoggedInUSer().subscribe(sideMenuData => {
-                    if (sideMenuData.length > 0) {
-                        this.sidebarMenuList = sideMenuData;
-                    }
-                });
-            } else {
+                this.setLoggedInUserSuccessAction(data);
+            }  else {
                 this.sidebarMenuList = [];
                 this.guestFlag = true;
+            }
+        });
+    }
+
+    private setLoggedInUserSuccessAction(data: any) {
+        this.loggedInUserObj = data;
+        this._userService.setSideBarMenuByLoggedInUSer();
+        this.getSiderMenuListApiCall();
+    }
+
+    private getSiderMenuListApiCall() {
+        this._userService.getSideBarMenuByLoggedInUSer().subscribe(sideMenuData => {
+            if (sideMenuData.length > 0) {
+                this.sidebarMenuList = sideMenuData;
             }
         });
     }
@@ -91,8 +104,7 @@ export class HeaderComponent implements OnInit {
     logout() {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
-            this.errorFl = data.errorFl;
-            if (this.errorFl === true) {
+            if (data.errorFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
                 this.router.navigate(['/login']);

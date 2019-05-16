@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestMethod } from '@angular/http';
+import { Http } from '@angular/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs/Rx';
 import { LoginService } from './login.service';
-import { Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/catch';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiRequestService } from './api-request.service';
 @Injectable()
 export class UserService {
@@ -18,6 +16,7 @@ export class UserService {
     selectedGroup$: Subject<any> = new BehaviorSubject<any>({});
     UserList$: Subject<any[]> = new BehaviorSubject<any>({});
     isGuest$: Subject<any> = new BehaviorSubject<any>({});
+    sideBarMenuList$: Subject<any[]> = new BehaviorSubject<any>({});
     constructor(private http: Http, loginService: LoginService, private apiRequest: ApiRequestService) {
         this._loginService = loginService;
     }
@@ -158,4 +157,13 @@ export class UserService {
         const url = environment.baseUrl + 'deleteUser?userCode=' + payload.userCode;
         return this.apiRequest.post(url, payload);
     }
+    setSideBarMenuByLoggedInUSer() {
+        const url = environment.baseUrl + 'getSideBarMenuByLoggedInUSer';
+        this.apiRequest.post(url, null).subscribe(data => {
+          this.sideBarMenuList$.next(data);
+        });
+      }
+      getSideBarMenuByLoggedInUSer() {
+        return this.sideBarMenuList$;
+      }
 }

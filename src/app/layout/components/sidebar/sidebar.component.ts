@@ -8,22 +8,27 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-    isActive: boolean = false;
-    showMenu: string = '';
+    isActive: Boolean = false;
+    showMenu: String = '';
     pushRightClass: string = 'push-right';
 
     constructor(private translate: TranslateService, public router: Router) {
+        this.setBrowserActivities();
+        this.routerAction();
+    }
+
+    private setBrowserActivities() {
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
         this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de/) ? browserLang : 'en');
+    }
 
+    private routerAction() {
         this.router.events.subscribe(val => {
-            if (
-                val instanceof NavigationEnd &&
+            if (val instanceof NavigationEnd &&
                 window.innerWidth <= 992 &&
-                this.isToggled()
-            ) {
+                this.isToggled()) {
                 this.toggleSidebar();
             }
         });

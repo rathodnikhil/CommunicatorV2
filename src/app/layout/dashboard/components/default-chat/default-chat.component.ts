@@ -21,17 +21,20 @@ export class DefaultChatComponent implements OnInit {
         this._loginService = loginService;
     }
     ngOnInit() {
+        this.getLoggedInUserObjApiCall();
+    }
+    private getLoggedInUserObjApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUserObj = {};
                 return this.alertService.warning(data.message, 'Warning');
-            } else {
+            }  else {
                 this.loggedInUserObj = data;
                 this.isAdministrator = this.loggedInUserObj.roles.find(x => x.role === 'ADMINISTRATOR') !== undefined;
             }
         });
-        // console.log('STATUS : ' + this.isAdministrator + '     ' + this.loggedInUserObj.meetingPermissionStatus.status);
     }
+
     switchRoute(newRoute) {
         this.currentRoute = newRoute;
     }

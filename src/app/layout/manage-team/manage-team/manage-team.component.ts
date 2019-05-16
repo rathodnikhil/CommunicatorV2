@@ -47,9 +47,9 @@ export class ManageTeamComponent implements OnInit {
     user: any = {};
     firstName: any;
     lastName: any;
-    userName: any;
+    userName =  '';
     email: any;
-    password: any;
+    password = '';
     loggedInUser: any;
     selectedTeamObj: any;
     searchTeam: any;
@@ -261,11 +261,16 @@ export class ManageTeamComponent implements OnInit {
 
     // add new member
     addMember() {
+        const NAME_REGEXP = /^[a-zA-Z]+$/i;
         if (this.firstName === null || typeof this.firstName === 'undefined' || this.firstName.trim() === '') {
             return this.alertService.warning('Please enter first name ', 'Warning');
-        } else if (this.lastName === null || typeof this.lastName === 'undefined' || this.lastName.trim() === '') {
+        } else if (!NAME_REGEXP.test(this.firstName)) {
+            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+         }  else if (this.lastName === null || typeof this.lastName === 'undefined' || this.lastName.trim() === '') {
             return this.alertService.warning('Please enter last name ', 'Warning');
-        } else if (this.email === null || typeof this.email === 'undefined' || this.email.trim() === '') {
+        } else if (!NAME_REGEXP.test(this.lastName)) {
+            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+         } else if (this.email === null || typeof this.email === 'undefined' || this.email.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
         } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
             return this.alertService.warning('Please enter username ', 'Warning');
@@ -429,14 +434,19 @@ export class ManageTeamComponent implements OnInit {
 
     updateMemberDetails() {
         const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+        const NAME_REGEXP = /^[a-zA-Z]+$/i;
         if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '') {
             this.updatedUserCode = this.newMemberUserCode;
         } else if (this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||
             this.updatedFirstName.trim() === '') {
             return this.alertService.warning('Please enter first name ', 'Warning');
-        } else if (this.updatedLastName === null || typeof this.updatedLastName === 'undefined' ||
+        } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
+            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+         } else if (this.updatedLastName === null || typeof this.updatedLastName === 'undefined' ||
             this.updatedLastName.trim() === '') {
             return this.alertService.warning('Please enter last name ', 'Warning');
+        } else if (!NAME_REGEXP.test(this.updatedLastName)) {
+            return this.alertService.warning('Please enter alphabates only ', 'Warning');
         } else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
         } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {

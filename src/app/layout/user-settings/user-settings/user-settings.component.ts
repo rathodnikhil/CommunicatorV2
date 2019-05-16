@@ -38,32 +38,44 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit() {
     // loggedInuser Object webservice call
     this.loggedInUserId = {};
+    this.getLoggedInUserApiCall();
+  }
+  private getLoggedInUserApiCall() {
     this._userService.getLoggedInUserObj().subscribe(data => {
       if (data.errorFl === true || data.warningFl === true) {
-        this.loggedInUserId = {};
-        return this.alertService.warning(data.message, 'Warning');
-    } else {
-      this.loggedInUserId = data;
-      const payload = { userCode: this.loggedInUserId.userCode };
-      this.userSettings = {};
-      this._userService.getUserSettingsByLoggedInUser(payload).subscribe(settingData => {
-        if (settingData.errorFl === true || settingData.warningFl === true) {
-          this.userSettings = {};
-          return this.alertService.warning(settingData.message, 'Warning');
+        return this.getLoggedInUserValidationAction(data);
       } else {
-        this.userSettings = settingData;
-       }
-      });
-    }
+        const payload = this.createPayloadAndSetDefaultValues(data);
+        this.setUserSettingApiCall(payload);
+      }
     });
   }
+
+  private getLoggedInUserValidationAction(data: any) {
+    this.loggedInUserId = {};
+    return this.alertService.warning(data.message, 'Warning');
+  }
+
+  private createPayloadAndSetDefaultValues(data: any) {
+    this.loggedInUserId = data;
+    const payload = { userCode: this.loggedInUserId.userCode };
+    this.userSettings = {};
+    return payload;
+  }
+
+  private setUserSettingApiCall(payload: { userCode: any; }) {
+    this._userService.getUserSettingsByLoggedInUser(payload).subscribe(settingData => {
+      if (settingData.errorFl === true || settingData.warningFl === true) {
+        this.userSettings = {};
+        return this.alertService.warning(settingData.message, 'Warning');
+      }  else {
+        this.userSettings = settingData;
+      }
+    });
+  }
+
   saveUserSetting() {
-    const payload = {
-      user: this.loggedInUserId,
-     // profileImgPath: this.loggedInUserId.profileImgPath,
-      chatNotification: this.userSettings.chatNotification,
-      meetingReminder: this.userSettings.meetingReminder,
-    };
+    const payload = this.createuserSettingPayload();
     this._userService.saveUserSettings(payload).subscribe(data => {
       if (data.errorFl === true || data.warningFl === true) {
         return this.alertService.warning(data.message, 'Warning');
@@ -72,6 +84,14 @@ export class UserSettingsComponent implements OnInit {
      }
     });
   }
+  private createuserSettingPayload() {
+    return {
+      user: this.loggedInUserId,
+      chatNotification: this.userSettings.chatNotification,
+      meetingReminder: this.userSettings.meetingReminder,
+    };
+  }
+
   onPageChange(number: number) {
     this.config.currentPage = number;
 }
