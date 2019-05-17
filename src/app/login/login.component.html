@@ -20,7 +20,7 @@
   <div class=" row" style="margin-left:0px;margin-right:0px;">
      <div class=" col-lg-5 col-md-6" style="background-color:#f4f2f3;padding-right: 0px;
         padding-left: 0px;">
-        <button *ngIf="loginUiFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
+        <button *ngIf="!isGuest && !forgetPasswordFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
         <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
         </i> Join with Meeting ID (Guest User) </button>
         <div class="main1">
@@ -35,17 +35,20 @@
                        </span>
                     </div>
                     <input type="text" id="username" autofocus type="text"
-                    placeholder="{{UserNameText}}" class="form-control"
+                    placeholder="{{UserNameText}}" class="form-control" #usernameField
                     [(ngModel)]="userName" name="userName" (keyup)="onKey($event)" required >
                  </div>
                  <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
                     <div class="input-group-prepend">
                        <span class="input-group-text">
-                       <img src="/assets/images/password.png" alt="password img" height="15px" width="15px">
+                       <img *ngIf="!isGuest" src="/assets/images/password.png" alt="password img" height="15px" width="15px">
+                       <img *ngIf="isGuest" src="/assets/images/meetingId.png" alt="password img" height="15px" width="15px">
                        </span>
                     </div>
-                    <input type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" 
-                    [(ngModel)]="password" name="password" placeholder="{{passwordText}}" required >
+                    <input *ngIf="!isGuest" type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" #passwordField
+                    [(ngModel)]="password" name="password" placeholder="Password" required >
+                    <input *ngIf="isGuest" type="text" class="form-control" id="loginMeetingCode" (keyup)="onKey($event)" #meetingCodeField
+                    [(ngModel)]="loginMeetingCode" name="loginMeetingCode" placeholder="Meeting Id" required >
                  </div>
               </div>
               <div *ngIf="forgetPasswordFlag">
@@ -55,7 +58,7 @@
                        <i class="fa fa-envelope fa-fw"></i>
                        </span>
                     </div>
-                    <input class="form-control" type="text" placeholder="Enter Email" [(ngModel)]="forgetEmail" name="forgetEmail" (keyup)="onKeyUp($event)"
+                    <input class="form-control" type="text" placeholder="Enter Email" #forgotEmailField [(ngModel)]="forgetEmail" name="forgetEmail" (keyup)="onKeyUp($event)"
                     required />
                  </div>
               </div>

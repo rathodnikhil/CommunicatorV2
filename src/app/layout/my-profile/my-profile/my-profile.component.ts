@@ -35,26 +35,32 @@ export class MyProfileComponent implements OnInit {
         this.loggedInUserObj = {};
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && !data.isGuest) {
-                this.loggedInUserObj = data;
-                this.currentFirstName = data.firstName;
-                this.currentLastName = data.lastName;
-                this.currentEmail = data.email;
-                this.currentProfileImg = data.profileImgPath;
-                this.onLoadProfileImg = data.profileImgPath;
-                // webservice to get total meeting count
-                // const payload = { userCode: this.loggedInUserObj.userCode };
+                this.setCurrentValueDetails(data);
                 this.profileOtherDetails = {};
-                this._groupService.profileOtherDetails().subscribe(profileData => {
-                    if (profileData.errorFl === true || profileData.warningFl === true) {
-                        this.profileOtherDetails = {};
-                        return this.alertService.warning(profileData.message, 'Warning');
-                    } else {
-                    this.profileOtherDetails = profileData;
-                    }
-                });
+                this.profileDetailsApiCall();
             }
         });
     }
+    private profileDetailsApiCall() {
+        this._groupService.profileOtherDetails().subscribe(profileData => {
+            if (profileData.errorFl === true || profileData.warningFl === true) {
+                this.profileOtherDetails = {};
+                return this.alertService.warning(profileData.message, 'Warning');
+            } else {
+                this.profileOtherDetails = profileData;
+            }
+        });
+    }
+
+    private setCurrentValueDetails(data: any) {
+        this.loggedInUserObj = data;
+        this.currentFirstName = data.firstName;
+        this.currentLastName = data.lastName;
+        this.currentEmail = data.email;
+        this.currentProfileImg = data.profileImgPath;
+        this.onLoadProfileImg = data.profileImgPath;
+    }
+
     updateProfile() {
         // console.log('UPDATE_FILE_Size : ' + this.fileSize);
         if (this.loggedInUserObj.firstName === null ||
@@ -74,32 +80,39 @@ export class MyProfileComponent implements OnInit {
         // else if ( this.fileSize >= 700 ) {
         //     return this.alertService.warning('File not supported, please select image below 700KB.', 'Warning');
         // }
-        const payload = {
-            firstName: this.loggedInUserObj.firstName,
-            lastName: this.loggedInUserObj.lastName,
-            email: this.loggedInUserObj.email,
-            userCode: this.loggedInUserObj.userCode,
-            profileImgPath:  this.loggedInUserObj.profileImgPath,
-           status: {status : 'ACTIVE'},
-           team: this.loggedInUserObj.team,
-           meetingPermissionStatus: {status : this.loggedInUserObj.meetingPermissionStatus.status}
-        };
+        const payload = this.createUpdateUserpayload();
+        this.updateUserApiCall(payload);
+         }
+    }
+    private updateUserApiCall(payload: { firstName: any; lastName: any; email: any; userCode: any; profileImgPath: any;
+         status: { status: string; }; team: any; meetingPermissionStatus: { status: any; }; }) {
         this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
-            return this.alertService.success('User profile has been updated successfully', 'Success');
+                return this.alertService.success('User profile has been updated successfully', 'Success');
             }
         });
     }
+
+    private createUpdateUserpayload() {
+        return {
+            firstName: this.loggedInUserObj.firstName,
+            lastName: this.loggedInUserObj.lastName,
+            email: this.loggedInUserObj.email,
+            userCode: this.loggedInUserObj.userCode,
+            profileImgPath: this.loggedInUserObj.profileImgPath,
+            status: { status: 'ACTIVE' },
+            team: this.loggedInUserObj.team,
+            meetingPermissionStatus: { status: this.loggedInUserObj.meetingPermissionStatus.status }
+        };
     }
+
     cancelUpdate() {
         this.loggedInUserObj.firstName = this.currentFirstName;
         this.loggedInUserObj.lastName =  this.currentLastName;
         this.loggedInUserObj.email = this.currentEmail;
-        // this.loggedInUserObj.profileImgPath = this.currentProfileImg;
         if (this.fileSize >= 700 ) {
-            
         } else {
             this.loggedInUserObj.profileImgPath = this.onLoadProfileImg;
         }

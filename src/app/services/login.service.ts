@@ -15,11 +15,7 @@ export class LoginService {
         this.http.post(url, payload).subscribe(data => {
             this.jwtToken = data.json().token;
             this.caseDaSubject.next(this.jwtToken);
-        },
-            err => {
-                // console.log("Error occured");
-                // alert(err);
-            });
+        });
         return this.caseDaSubject;
     }
     getJwtToken() {

@@ -49,14 +49,18 @@ export class RegisterAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-       this._teamService.getAllEnableTeams().subscribe(data => {
-         if (data.warningFl) {
-          return this.alertService.warning(data.json().message, 'Warning');
-         } else {
-           this.teamArray = data;
-          }
-       });
+       this.allEnableTeamApiCall();
   }
+  private allEnableTeamApiCall() {
+    this._teamService.getAllEnableTeams().subscribe(data => {
+      if (data.warningFl) {
+        return this.alertService.warning(data.json().message, 'Warning');
+      } else {
+        this.teamArray = data;
+      }
+    });
+  }
+
   registerUser() {
       if ( this.firstName === null || typeof this.firstName === 'undefined' || this.firstName.trim() === '' ) {
         this.firstNameField.nativeElement.focus();
@@ -82,40 +86,65 @@ export class RegisterAdminComponent implements OnInit {
       } else {
           const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
           if (!EMAIL_REGEXP.test(this.email)) {
-            this.emailField.nativeElement.focus();
-            return this.alertService.warning('Please enter valid email' , 'Warning');
+            return this.emailValidation();
           } else if (this.password !== this.confirmPassword) {
-            this.passwordField.nativeElement.focus();
-            this.confirmPasswordField.nativeElement.focus();
-            return this.alertService.warning('Password and Confirm Password does not match.', 'Warning');
+             return this.passwordvalidation();
           } else {
-          const payload =  {
-              email: this.email,
-              password: this._passwordService.encrypted(this.password),
-              name: this.userName,
-              firstName: this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
-              lastName: this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
-              'meetingPermissionStatus': { status: 'ACTIVE' }
-          };
-      this._userService.saveUserDetails(payload , this.newTeamName).subscribe(data => {
-          if (data.json().warningFl === true) {
-            if (data.json().message === 'UserName Already Exist') {
-              this.usernameField.nativeElement.focus();
-            } else if (data.json().message === 'Team is disable , kindly change team name') {
-              this.teamField.nativeElement.focus();
-            } else if (data.json().message === 'Email already exist') {
-              this.emailField.nativeElement.focus();
-            }
-            return this.alertService.warning(data.json().message, 'Warning');
-           } else {
-            this.clearAllField();
-            this.teamArray.push(data.json().team);
-            return this.alertService.success('Admin has registered successfully', 'Success');
+             const payload =  this.createSaveUserPayload();
+             this.saveuserApiCall(payload);
+           }
+       }
+  }
 
-          }
-      });
+  private saveuserApiCall(payload: { email: any; password: string; name: any; firstName: any; lastName: any;
+     'meetingPermissionStatus': { status: string; }; }) {
+    this._userService.saveUserDetails(payload, this.newTeamName).subscribe(data => {
+      if (data.json()[0].warningFl === true) {
+        return this.userValidationAction(data);
+      } else {
+        return this.saveUserSuccessAction(data);
+      }
+    });
   }
+
+  private emailValidation() {
+    this.emailField.nativeElement.focus();
+    return this.alertService.warning('Please enter valid email', 'Warning');
   }
+
+  private passwordvalidation() {
+    this.passwordField.nativeElement.focus();
+    this.confirmPasswordField.nativeElement.focus();
+    return this.alertService.warning('Password and Confirm Password does not match.', 'Warning');
+  }
+
+  private saveUserSuccessAction(data: any) {
+    this.clearAllField();
+    this.teamArray.push(data.json().team);
+    return this.alertService.success('Admin has registered successfully', 'Success');
+  }
+
+  private userValidationAction(data: any) {
+    if (data.json()[0].message === 'UserName Already Exist') {
+      this.usernameField.nativeElement.focus();
+    } else if (data.json()[0].message === 'Team is disable , kindly change team name') {
+      this.teamField.nativeElement.focus();
+      return this.alertService.warning(data.json().message, 'Warning');
+    } else if (data.json()[0].message === 'Email already exist') {
+      this.emailField.nativeElement.focus();
+    }
+    return this.alertService.warning(data.json()[0].message, 'Warning');
+  }
+
+  private createSaveUserPayload() {
+    return {
+      email: this.email,
+      password: this._passwordService.encrypted(this.password),
+      name: this.userName,
+      firstName: this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1),
+      lastName: this.lastName.substring(0, 1).toUpperCase() + this.lastName.substring(1),
+      'meetingPermissionStatus': { status: 'ACTIVE' }
+    };
   }
 
  clearAllField() {

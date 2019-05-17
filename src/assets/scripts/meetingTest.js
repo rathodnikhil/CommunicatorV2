@@ -418,15 +418,18 @@ connection.onstream = function (event) {
         }
     }
     video.srcObject = event.stream;
-    video.height = Math.round(window.innerHeight * 0.30) - 10;
-    video.width = Math.round(window.innerHeight * 0.30) - 10;
-    video.setAttribute("style", 'float:left;');
+    // video.height = Math.round(window.innerHeight * 0.30) - 10;
+    // video.width = Math.round(window.innerHeight * 0.30) - 10;
+    video.setAttribute("style", 'float:left;height:18vh;width:100%');
     // video.style.padding = '5';
+    var outerCustomDiv = document.createElement('div');
+    outerCustomDiv.setAttribute("class" , "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
     var customDiv = document.createElement('div');
-    customDiv.style.height = Math.round(window.innerHeight * 0.30);
-    customDiv.style.width = Math.round(window.innerHeight * 0.30);
-    customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + (Math.round(window.innerHeight * 0.30) + 40) + 'px;padding:8px;text-align: center; float:left;');
+    // customDiv.setAttribute("style" , "background-color: #DC143C;  background-position: center center; border: 1px solid rgba(0, 0, 0, 0.8);max-width: 100%;");
+    // customDiv.style.height = Math.round(window.innerHeight * 0.30);
+    // customDiv.style.width = Math.round(window.innerHeight * 0.30);
+    // customDiv.style.padding = '5';
+    // customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + (Math.round(window.innerHeight * 0.30) + 40) + 'px;padding:8px;text-align: center; float:left;');
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
     var viewerNameString = null;
@@ -442,12 +445,17 @@ connection.onstream = function (event) {
     heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash fa-lg pull-right" style="display:none;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
-        heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
+     //   heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
+        customDiv.setAttribute("style" , "  background-color: #f9e0e2; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #980e06; ");
+        heading.setAttribute("style", " background-color:#980e06;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
         if (event.stream.isVideo == 0) {
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -30px;');
+            // heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -30px;');
+            customDiv.setAttribute("style" , "background-color: #e5f8f6; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #02736a;");
+            heading.setAttribute("style", "background-color:#02736a;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -25px;');
+            // heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -25px;');
+            heading.setAttribute("style", ' padding: 1.3%;  text-align: center;');
         }
     }
     customDiv.appendChild(heading);
@@ -463,24 +471,27 @@ connection.onstream = function (event) {
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if (initialsDiv.innerHTML === "You") {
-            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #fd7a2a;color:#fd7a2a ;margin-top: 30px;font-size: 4.0vw;');
+            // initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #fd7a2a;color:#fd7a2a ;margin-top: 30px;font-size: 4.0vw;');
+            initialsDiv.setAttribute("style" , "  text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
         } else {
-            initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#faf2ff;color:#a201ff;margin-top: 30px;font-size: 4.0vw;border: 1px solid #a201ff;');
+            // initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#faf2ff;color:#a201ff;margin-top: 30px;font-size: 4.0vw;border: 1px solid #a201ff;');
+            initialsDiv.setAttribute("style" , " text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
         }
         customDiv.appendChild(initialsDiv);
     }
 
 
     customDiv.appendChild(video);
-    customDiv.setAttribute("drag-scroll-item", '');
-    customDiv.setAttribute("id", event.streamid + 'parent');
+    outerCustomDiv.appendChild(customDiv);
+    outerCustomDiv.setAttribute("drag-scroll-item", '');
+    outerCustomDiv.setAttribute("id", event.streamid + 'parent');
     if (event.stream.isScreen) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#01baac;color:#fff;');
-            video.setAttribute("style", "background: #e0ecee;border: 1px solid #01baac;border-top:none;float:left;");
-            screenShareContainer.appendChild(customDiv);
+            heading.setAttribute("style", 'background-color:#02736a;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
+            video.setAttribute("style", "background: #e0ecee;border: 1px solid #01baac;border-top:none;float:left;height:18vh;width:100%");
+            screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
                 var viewer = displayViewerList(event, viewerNameString, 1);
@@ -489,7 +500,7 @@ connection.onstream = function (event) {
         }
     } else {
         if (document.getElementById(event.streamid + 'parent') == null) {
-            connection.videosContainer.appendChild(customDiv);
+            connection.videosContainer.appendChild(outerCustomDiv);
             if (event.type !== 'local') {
                 if (document.getElementById(event.userid + 'viewer') == undefined && document.getElementById(event.userid + 'viewer') == null) {
                     viewerCounter++;

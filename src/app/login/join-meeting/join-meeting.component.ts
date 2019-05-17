@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, Inject , ViewChild } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'app/services/alert.service';
@@ -17,6 +17,8 @@ export class JoinMeetingComponent implements OnInit {
   _userService: UserService;
   readOnlyFlag = false;
   isMeetingCodeInValid = false;
+  @ViewChild('usernameField') usernameField: ElementRef;
+  @ViewChild('meetingCodeField') meetingCodeField: ElementRef;
   constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef, public router: Router, userService: UserService,
     private activatedRoute: ActivatedRoute, public alertService: AlertService) {
     this._userService = userService;
@@ -53,19 +55,68 @@ export class JoinMeetingComponent implements OnInit {
     }
   }
   guestLogin() {
+    const NAME_REGEXP = /^[a-zA-Z]+$/i;
     if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
       || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
       return this.alertService.error('Please close popup to continue', 'Error');
+    } else if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
+      return this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id', 'Warning');
+    } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
+      return this.validationMsgAndField(this.usernameField , 'Enter Full Name', 'Warning');
+    } else if (!NAME_REGEXP.test(this.userName)) {
+      return this.validationMsgAndField(this.usernameField , 'Please enter alphabates only ', 'Warning');
     }
-    if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
-      return this.alertService.error('Enter meeting code', 'Error');
+    const payload = this.setDefaultGuestValuesAndCreatePayload();
+    this.getLoggedInUserApiCall(payload);
+  }
+  private validationMsgAndField(elementFocus: ElementRef , validationMsg: String , flag: String) {
+    elementFocus.nativeElement.focus();
+    return this.alertService.warning(validationMsg , flag);
+}
+  private getLoggedInUserApiCall(payload: { firstName: any; isGuest: boolean; userCode: string; email: string; meetingCode: string; }) {
+    this._userService.setLoggedInUserObj(payload).subscribe(res => {
+      if (res === 'invalid' && !this.isMeetingCodeInValid) {
+        return this.setMeetingCodeValidation();
+      } else {
+        this.setLoggedUserSuccessRespAction(res);
+      }
+    });
+  }
+
+  private setMeetingCodeValidation() {
+    this.isMeetingCodeInValid = true;
+    this.alertService.warning('Please enter valid Meeting Id', 'Invalid Meeting Id');
+    return false;
+  }
+
+  private setLoggedUserSuccessRespAction(res: any) {
+    if (res.firstName !== undefined) {
+      if (!this.previousUrl) {
+        // this.router.navigate(['meeting' + this.meetingCode]);
+        this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+      } else {
+        if (this.previousUrl.indexOf('meeting') > 0) {
+          this.router.navigateByUrl(this.previousUrl);
+        } else {
+          this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
+        }
+      }
     }
-    if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-      return this.alertService.error('Enter full name', 'Error');
-    }
+  }
+
+  private setDefaultGuestValuesAndCreatePayload() {
     localStorage.setItem('loggedInuserName', this.userName);
     const currentDate = new Date();
     const guestUserCode = 'guest' + (+currentDate);
+    const firstNameUpperCase = this.setUpperCase();
+    const payload = {
+      firstName: firstNameUpperCase,
+      isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.meetingCode
+    };
+    return payload;
+  }
+
+  private setUpperCase() {
     const senderNameArray = this.setAttendeeName(this.userName);
     let firstNameUpperCase = null;
     if (senderNameArray.length < 3) {
@@ -74,31 +125,9 @@ export class JoinMeetingComponent implements OnInit {
       firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
         + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
     }
-    const payload = {
-      firstName: firstNameUpperCase,
-      isGuest: this.isGuest, userCode: guestUserCode, email: guestUserCode + '@guest.com', meetingCode: this.meetingCode
-    };
-    this._userService.setLoggedInUserObj(payload).subscribe(res => {
-      if (res === 'invalid' && !this.isMeetingCodeInValid) {
-        this.isMeetingCodeInValid = true;
-        this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
-        return false;
-      } else {
-        if (res.firstName !== undefined) {
-          if (!this.previousUrl) {
-            // this.router.navigate(['meeting' + this.meetingCode]);
-            this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-          } else {
-            if (this.previousUrl.indexOf('meeting') > 0) {
-              this.router.navigateByUrl(this.previousUrl);
-            } else {
-              this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
-            }
-          }
-        }
-      }
-    });
+    return firstNameUpperCase;
   }
+
   onKey(event) {
     this.isMeetingCodeInValid = false;
     if (event.key === 'Enter') { this.guestLogin(); }
@@ -106,13 +135,17 @@ export class JoinMeetingComponent implements OnInit {
   setAttendeeName(attendeeFullName) {
     attendeeFullName = attendeeFullName.split(' ');
     const attendeeFullNameArray = new Array();
+    this.iterateAttendeeFullNameArray(attendeeFullName, attendeeFullNameArray);
+    return attendeeFullNameArray;
+  }
+
+
+  private iterateAttendeeFullNameArray(attendeeFullName: any, attendeeFullNameArray: any[]) {
     for (let i = 0; i < attendeeFullName.length; i++) {
       attendeeFullNameArray.push(attendeeFullName[i]);
       if (i !== attendeeFullName.length - 1) {
         attendeeFullNameArray.push(' ');
       }
     }
-    return attendeeFullNameArray;
   }
-
 }
