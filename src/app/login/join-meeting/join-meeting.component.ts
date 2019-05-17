@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, Inject , ViewChild } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'app/services/alert.service';
@@ -17,6 +17,8 @@ export class JoinMeetingComponent implements OnInit {
   _userService: UserService;
   readOnlyFlag = false;
   isMeetingCodeInValid = false;
+  @ViewChild('usernameField') usernameField: ElementRef;
+  @ViewChild('meetingCodeField') meetingCodeField: ElementRef;
   constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef, public router: Router, userService: UserService,
     private activatedRoute: ActivatedRoute, public alertService: AlertService) {
     this._userService = userService;
@@ -58,15 +60,19 @@ export class JoinMeetingComponent implements OnInit {
       || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
       return this.alertService.error('Please close popup to continue', 'Error');
     } else if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
-      return this.alertService.error('Enter meeting code', 'Error');
+      return this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id', 'Warning');
     } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-      return this.alertService.error('Enter full name', 'Error');
+      return this.validationMsgAndField(this.usernameField , 'Enter Full Name', 'Warning');
     } else if (!NAME_REGEXP.test(this.userName)) {
-      return this.alertService.warning('Please enter alphabates only ', 'Warning');
+      return this.validationMsgAndField(this.usernameField , 'Please enter alphabates only ', 'Warning');
     }
     const payload = this.setDefaultGuestValuesAndCreatePayload();
     this.getLoggedInUserApiCall(payload);
   }
+  private validationMsgAndField(elementFocus: ElementRef , validationMsg: String , flag: String) {
+    elementFocus.nativeElement.focus();
+    return this.alertService.warning(validationMsg , flag);
+}
   private getLoggedInUserApiCall(payload: { firstName: any; isGuest: boolean; userCode: string; email: string; meetingCode: string; }) {
     this._userService.setLoggedInUserObj(payload).subscribe(res => {
       if (res === 'invalid' && !this.isMeetingCodeInValid) {
@@ -79,7 +85,7 @@ export class JoinMeetingComponent implements OnInit {
 
   private setMeetingCodeValidation() {
     this.isMeetingCodeInValid = true;
-    this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
+    this.alertService.warning('Please enter valid Meeting Id', 'Invalid Meeting Id');
     return false;
   }
 
