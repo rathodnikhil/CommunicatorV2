@@ -77,7 +77,7 @@ export class NotificationComponent implements OnInit {
             }  else {
                 this.groupList = [];
                 if (groupData !== undefined && groupData.message !== undefined) {
-                    return this.alertService.warning(groupData.message, 'Warning');
+                  //  return this.alertService.warning(groupData.message, 'Warning');
                 }
             }
         });

@@ -137,6 +137,7 @@ export class ManageGroupComponent implements OnInit {
                     return this.alertService.warning(groupData.message, 'Warning');
                 } else {
                    // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
+                   this.groupList = [];
                     for (let key in groupData) {
                         this.groupList.push(groupData[key]);
                     }
@@ -254,23 +255,18 @@ export class ManageGroupComponent implements OnInit {
 
     private groupsByLoggedInUserIdApiCall(groupObjPayload: { groupId: any; }) {
         this._groupService.getGroupListObjByLoggedInUserId(groupObjPayload).subscribe(groupObjData => {
-            if (groupObjData[0].errorFl === true) {
+            if (groupObjData[0].errorFl === true || groupObjData[0].warningFl === true) {
                 return this.alertService.warning(groupObjData[0].message, 'Warning');
-            } else if (groupObjData[0].warningFl === true) {
-                return false;
-            } else {
+             } else {
                 this.groupMemberObjList = groupObjData;
             }
+            this.manageGroupSpinnerMod.hideSpinner();
         });
     }
 
     private groupMemberByLocalGroupApiCall(payload: { groupId: any; }) {
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
-            if (memberData[0].errorFl === true) {
-                return this.alertService.warning(memberData.message, 'Warning');
-            } else if (memberData[0].warningFl === true || memberData === undefined) {
-                return false;
-            } else {
+             if (memberData[0].warningFl !== true || memberData !== undefined || memberData[0].errorFl !== true) {
                 this.memberList = memberData;
             }
             this.manageGroupSpinnerMod.hideSpinner();
