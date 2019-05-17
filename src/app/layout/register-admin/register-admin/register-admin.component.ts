@@ -99,7 +99,7 @@ export class RegisterAdminComponent implements OnInit {
   private saveuserApiCall(payload: { email: any; password: string; name: any; firstName: any; lastName: any;
      'meetingPermissionStatus': { status: string; }; }) {
     this._userService.saveUserDetails(payload, this.newTeamName).subscribe(data => {
-      if (data.json().warningFl === true) {
+      if (data.json()[0].warningFl === true) {
         return this.userValidationAction(data);
       } else {
         return this.saveUserSuccessAction(data);
@@ -125,14 +125,15 @@ export class RegisterAdminComponent implements OnInit {
   }
 
   private userValidationAction(data: any) {
-    if (data.json().message === 'UserName Already Exist') {
+    if (data.json()[0].message === 'UserName Already Exist') {
       this.usernameField.nativeElement.focus();
-    } else if (data.json().message === 'Team is disable , kindly change team name') {
+    } else if (data.json()[0].message === 'Team is disable , kindly change team name') {
       this.teamField.nativeElement.focus();
-    } else if (data.json().message === 'Email already exist') {
+      return this.alertService.warning(data.json().message, 'Warning');
+    } else if (data.json()[0].message === 'Email already exist') {
       this.emailField.nativeElement.focus();
     }
-    return this.alertService.warning(data.json().message, 'Warning');
+    return this.alertService.warning(data.json()[0].message, 'Warning');
   }
 
   private createSaveUserPayload() {

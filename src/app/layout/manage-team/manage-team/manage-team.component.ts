@@ -140,6 +140,7 @@ export class ManageTeamComponent implements OnInit {
     }
 
     ngOnInit() {
+        document.cookie = 'cookiename= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
         this.showSelectedTeam = false;
         this.selectedTeamObj = null;
         this.loggedInUserIdApiCall();

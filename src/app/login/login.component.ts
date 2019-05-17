@@ -21,8 +21,6 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     user = {};
     jwtToken: any;
     authFlag: boolean;
-    userNameFlag: boolean;
-    passwordFlag: boolean;
     loginUiFlag: boolean;
     userName: any;
     password: any;
@@ -38,6 +36,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     isMeetingCodeInValid = false;
     loginMeetingCode: any;
     loginHeader = 'Log In';
+    @ViewChild('usernameField') usernameField: ElementRef;
+    @ViewChild('passwordField') passwordField: ElementRef;
+    @ViewChild('forgotEmailField') forgotEmailField: ElementRef;
+    @ViewChild('meetingCodeField') meetingCodeField: ElementRef;
     @Output() meetingCodeVal = new EventEmitter<String>();
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         public router: Router, loginService: LoginService, private activatedRoute: ActivatedRoute,
@@ -107,19 +109,19 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                         return this.alertService.error('Please close popup to continue', 'Warning');
                     } else if (this.loginMeetingCode === null || typeof this.loginMeetingCode === 'undefined'
                     || this.loginMeetingCode.trim() === '') {
-                        return this.alertService.error('Enter meeting code', 'Warning');
+                        this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id' , 'Warning');
                     } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-                        return this.alertService.error('Enter full name', 'Warning');
+                        return this.validationMsgAndField(this.usernameField , 'Please enter Full Name ', 'Warning');
                     } else if (!NAME_REGEXP.test(this.userName)) {
-                        return this.alertService.warning('Please enter alphabates only ', 'Warning');
+                        return this.validationMsgAndField(this.usernameField , 'Please enter alphabates only ', 'Warning');
                       }
                     this.guestLoggedInActions();
                 } else {
                     if (this.userName === undefined || this.userName
                         === '' || this.userName === null) {
-                        return this.alertService.error('Enter Username', 'Error');
+                            return this.validationMsgAndField(this.usernameField , 'Please enter username ', 'Warning');
                     } else if (!this.isGuest && (this.password === undefined || this.password === '' || this.password === null)) {
-                        return this.alertService.error('Enter Password', 'Error');
+                        return this.validationMsgAndField(this.passwordField , 'Enter Password', 'Warning');
                     }
                     const payload = { 'name': this.userName, 'password': this._passwordService.encrypted(this.password) };
                     this.verifyUserApiCall(payload);
@@ -135,10 +137,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
                 switch (resp.json()) {
                     case 'invalidUsername':
-                          this.setValidationMsgAndForAuthentication(true , false , 'Account Authentication');
+                          this.setValidationMsgAndForAuthentication(true , false , 'Please enter valid username');
                         break;
                     case 'invalidPassword':
-                         this.setValidationMsgAndForAuthentication(false , true , 'Account Authentication');
+                         this.setValidationMsgAndForAuthentication(false , true , 'Please enter valid password');
                         break;
                     case 'deactivate':
                           this.setValidationMsgAndForAuthentication(true , true ,
@@ -152,12 +154,16 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     private setValidationMsgAndForAuthentication(userNameFl: boolean , passwordFl: boolean , message: String) {
         if (userNameFl) {
             this.userName = '';
+            this.validationMsgAndField(this.usernameField , message , 'Account Authentication');
         } if (passwordFl) {
             this.password = '';
+            this.validationMsgAndField(this.passwordField , message , 'Account Authentication');
         }
-        this.alertService.warning(message, 'Account Authentication');
     }
-
+    private validationMsgAndField(elementFocus: ElementRef , validationMsg: String , flag: String) {
+        elementFocus.nativeElement.focus();
+        return this.alertService.warning(validationMsg , flag);
+    }
     private getAuthenticationJwtToken(payload: { 'name': any; 'password': string; }, loggedinUser: any) {
         this._loginService.getAuthenticationToken(payload).subscribe(data => {
             this.jwtToken = this._loginService.getJwtToken();
@@ -226,6 +232,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private meetingUrlRoutingAction() {
+        this.isMeetingCodeInValid = false;
         if (!this.previousUrl) {
             // this.router.navigate(['meeting' + this.meetingCode]);
             this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetingCode } });
@@ -259,14 +266,17 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loginHeader = 'Join Meeting';
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
+        this.clearInputBoxes();
     }
     backToLogin() {
         this.forgetPasswordFlag = false;
         this.loginUiFlag = true;
         this.isGuest = false;
+        this.clearInputBoxes();
         this.changePlaceHolderText();
     }
     onKey(event) {
+        this.isMeetingCodeInValid = false;
         if (event.key === 'Enter') { this.login(); }
     }
     onKeyUp(event) {
@@ -288,7 +298,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     private forgotPasswordEmailApiCall(payload: { email: any; }) {
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
             if (res.json().errorFl === true || res.json().warningFl === true) {
-                return this.alertService.error('Email id is not registered, enter registered email id', 'Error');
+                return this.validationMsgAndField(this.forgotEmailField , 'Email id is not registered, enter registered email id', 'Error');
             } else {
                 return this.alertService
                     .success('Password reset link has successfully sent to your email account, check your email.', 'Email Send');
@@ -310,5 +320,11 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 attendeeFullNameArray.push(' ');
             }
         }
+    }
+    private clearInputBoxes() {
+        this.userName = '';
+        this.password = '';
+        this.loginMeetingCode = '';
+        this.forgetEmail = '';
     }
 }
