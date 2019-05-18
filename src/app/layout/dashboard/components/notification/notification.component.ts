@@ -72,7 +72,7 @@ export class NotificationComponent implements OnInit {
 
     private groupListApiCall() {
         this._groupService.getGroupList().subscribe(groupData => {
-            if (groupData.warningFl !== true && groupData.length > 1) {
+            if (groupData.warningFl !== true && groupData.length > 0) {
                 this.groupList = groupData;
             }  else {
                 this.groupList = [];

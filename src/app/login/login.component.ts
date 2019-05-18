@@ -284,7 +284,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     sendEmailForgotPassword() {
         if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
-            return this.alertService.error('Please enter email', 'Error');
+            return this.validationMsgAndField(this.forgotEmailField , 'Please enter email', 'Error');
         } else {
             this.forgotEmailSuccessAction();
         }
