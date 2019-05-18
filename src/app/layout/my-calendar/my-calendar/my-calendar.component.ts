@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild , Output , EventEmitter, ElementRef, TemplateRef} from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, TemplateRef } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import { UserService } from '../../../services/user.service';
@@ -13,7 +13,7 @@ import { Title } from '@angular/platform-browser';
     selector: 'app-my-calendar',
     templateUrl: './my-calendar.component.html',
     styleUrls: ['./my-calendar.component.scss'],
-    providers: [AlertService ]
+    providers: [AlertService]
 })
 export class MyCalendarComponent implements OnInit {
     loggedInUserObj: any;
@@ -22,13 +22,13 @@ export class MyCalendarComponent implements OnInit {
     meetingList = [];
     hovertext: any;
     meetingDetails = {
-        meetingCode : '',
-        subject : '',
-        meetingStartDateTime : '',
+        meetingCode: '',
+        subject: '',
+        meetingStartDateTime: '',
         duration: '',
         createdBy: {
-            firstName : '',
-            lastName : ''
+            firstName: '',
+            lastName: ''
         },
         timeZone: ''
     };
@@ -83,7 +83,7 @@ export class MyCalendarComponent implements OnInit {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay,listMonth'
             },
-            events: this.MeetingData
+            // events: this.MeetingData
         };
     }
 
@@ -95,14 +95,14 @@ export class MyCalendarComponent implements OnInit {
         }
     }
     eventClick(model: any) {
-        model = this.createModelObj(model , {});
+        model = this.createModelObj(model, {});
         const id = model.event.title.split('(')[1].split(')')[0];
         this.meetingDetails = this.meetingList.find(x => x.meetingCode === id);
         this.displayEvent = model;
         this.meetingDetailsModal.open();
     }
 
-    private createModelObj(model: any , duration: {}) {
+    private createModelObj(model: any, duration: {}) {
         model = {
             event: {
                 id: model.event.id,
@@ -112,18 +112,18 @@ export class MyCalendarComponent implements OnInit {
                 allDay: model.event.allDay
                 // other params
             },
-            duration: {_data: duration}
+            duration: { _data: duration }
         };
         return model;
     }
 
     hover(model: any) {
-        model = this.createModelObj(model , {});
+        model = this.createModelObj(model, {});
         this.hovertext = model.event.title;
     }
 
     updateEvent(model: any) {
-        model = this.createModelObj(model ,  model.duration._data);
+        model = this.createModelObj(model, model.duration._data);
         this.displayEvent = model;
     }
     exit() {
@@ -131,13 +131,13 @@ export class MyCalendarComponent implements OnInit {
     }
     loadMore(year, month) {
         ({ month, year } = this.setMonthAndYearValues(month, year));
-        const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true};
+        const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true };
         this.calenderMeetingSpinnerMod.showSpinner();
         this.getmeetingsByMonthAndYearApiCall(payload, year, month);
     }
 
     private getmeetingsByMonthAndYearApiCall(payload: { lastMeetingYear: any; lastMeetingMonth: any; calendarFl: boolean; },
-         year: any, month: any) {
+        year: any, month: any) {
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
             this.meetingYear = year;
             this.meetingMonth = month;
@@ -156,13 +156,15 @@ export class MyCalendarComponent implements OnInit {
     }
 
     private setMeetingsSuccessResponse(data: any) {
-        this.iterateUcCalendarValues(data);
+        // ;
         this.calenderMeetingSpinnerMod.hideSpinner();
         this.meetingList = [];
         this.meetingList = data;
+        this.MeetingData = this.iterateUcCalendarValues(data);
     }
 
     private iterateUcCalendarValues(data: any) {
+        let meetingListForcalendar = [];
         data.forEach(element => {
             const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
                 + parseInt(element.duration.split(' Min')[0]) * 60000);
@@ -172,9 +174,11 @@ export class MyCalendarComponent implements OnInit {
                 start: new Date(element.meetingStartDateTime),
                 end: endTime
             };
-            this.ucCalendar.fullCalendar('renderEvent', meeting, true);
-            console.log('Check : ' + this.ucCalendar);
+            // this.ucCalendar.fullCalendar('renderEvent', meeting, true);
+            // console.log('Check : ' + this.ucCalendar);
+            meetingListForcalendar.push(meeting);
         });
+        return meetingListForcalendar;
     }
 
     private setMonthAndYearValues(month: any, year: any) {
@@ -190,7 +194,7 @@ export class MyCalendarComponent implements OnInit {
                 if (month === 12) {
                     month = 1;
                     year = year + 1;
-                }   else {
+                } else {
                     month = month + 1;
                 }
             }
