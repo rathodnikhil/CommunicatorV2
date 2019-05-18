@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     isMeetingCodeInValid = false;
     loginMeetingCode: any;
     loginHeader = 'Log In';
+    previousResponseValue: any;
     @ViewChild('usernameField') usernameField: ElementRef;
     @ViewChild('passwordField') passwordField: ElementRef;
     @ViewChild('forgotEmailField') forgotEmailField: ElementRef;
@@ -216,11 +217,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     private loggedInUserApiCall(payload: { firstName: String; isGuest: boolean; userCode: string; email: string; meetingCode: any; }) {
         this._userService.setLoggedInUserObj(payload).subscribe(res => {
-            if (res === 'invalid' && !this.isMeetingCodeInValid) {
-                return this.meetingCodeValidation();
-            } else {
-                if (res.firstName !== undefined) {
-                    this.meetingUrlRoutingAction();
+            if (typeof (this.previousResponseValue) !== typeof (res)) {
+                if (res === 'invalid' && !this.isMeetingCodeInValid) {
+                    this.previousResponseValue = res;
+                    return this.meetingCodeValidation();
+                } else {
+                    if (res.firstName !== undefined) {
+                        this.meetingUrlRoutingAction();
+                    }
                 }
             }
         });

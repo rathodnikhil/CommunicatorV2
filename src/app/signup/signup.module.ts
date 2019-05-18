@@ -5,7 +5,6 @@ import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup.component';
 import { FormsModule } from '@angular/forms';
 import { NgbCarouselModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { StatModule } from '../shared';
 import { BsComponentModule } from '../layout/bs-component/bs-component.module';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { BsComponentModule } from '../layout/bs-component/bs-component.module';
     CommonModule,
     NgbCarouselModule.forRoot(),
     NgbAlertModule.forRoot(),
-    StatModule,
     BsComponentModule,
     NgbModule.forRoot()
   ],
