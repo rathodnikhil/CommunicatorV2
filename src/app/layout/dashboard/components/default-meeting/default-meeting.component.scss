@@ -217,9 +217,9 @@ $border-color: #e0e0e0;
 }
 
 .accordion-label:hover{
-    background-color:#e5f8f6;
-    color:#02736a;
-    border:1px solid #02736a;
+    background-color: #f5b6b6;
+    color: #000;
+    border: 1px solid #814340;
 }
 
 .accordion-child{
@@ -421,4 +421,9 @@ $border-color: #e0e0e0;
     .fa-2x{
         font-size:1.8em;
     }
+    .text-center{
+        position: relative;
+        top: 50%;
+        transform: translateY(-25%);
     
+    }
