@@ -159,7 +159,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (userNameFl) {
             this.userName = '';
             this.validationMsgAndField(this.usernameField, message, 'Account Authentication');
-        } if (passwordFl) {
+        } else if (passwordFl) {
             this.password = '';
             this.validationMsgAndField(this.passwordField, message, 'Account Authentication');
         }
@@ -279,7 +279,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
     sendEmailForgotPassword() {
         if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
-            return this.validationMsgAndField(this.forgotEmailField, 'Please enter email', 'Error');
+            return this.validationMsgAndField(this.forgotEmailField, 'Please enter email', 'Warning');
         } else {
             this.forgotEmailSuccessAction();
         }

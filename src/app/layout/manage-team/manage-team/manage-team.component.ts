@@ -71,6 +71,7 @@ export class ManageTeamComponent implements OnInit {
     meetingPermissionStatus: any;
     selectedMemIndex: any;
     selectedTeamIndex: any;
+    updateProfileImgPath: any;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('teamNameField') teamNameField: ElementRef;
     @ViewChild('addMemField') addMemField: ElementRef;
@@ -140,7 +141,6 @@ export class ManageTeamComponent implements OnInit {
     }
 
     ngOnInit() {
-        document.cookie = 'cookiename= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
         this.showSelectedTeam = false;
         this.selectedTeamObj = null;
         this.loggedInUserIdApiCall();
@@ -266,11 +266,11 @@ export class ManageTeamComponent implements OnInit {
         if (this.firstName === null || typeof this.firstName === 'undefined' || this.firstName.trim() === '') {
             return this.alertService.warning('Please enter first name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.firstName)) {
-            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+            return this.alertService.warning('Please enter alphabatss only ', 'Warning');
          }  else if (this.lastName === null || typeof this.lastName === 'undefined' || this.lastName.trim() === '') {
             return this.alertService.warning('Please enter last name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.lastName)) {
-            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+            return this.alertService.warning('Please enter alphabatss only ', 'Warning');
          } else if (this.email === null || typeof this.email === 'undefined' || this.email.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
         } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
@@ -416,6 +416,7 @@ export class ManageTeamComponent implements OnInit {
         this.updatedLastName = member.userId.lastName;
         this.updatedEmail = member.userId.email;
         this.updatedUserCode = member.userId.userCode;
+        this.updateProfileImgPath = member.userId.profileImgPath;
         this.selectedMember = member;
         this.selectedMemIndex = index;
     }
@@ -442,12 +443,12 @@ export class ManageTeamComponent implements OnInit {
             this.updatedFirstName.trim() === '') {
             return this.alertService.warning('Please enter first name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
-            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+            return this.alertService.warning('Please enter alphabats only ', 'Warning');
          } else if (this.updatedLastName === null || typeof this.updatedLastName === 'undefined' ||
             this.updatedLastName.trim() === '') {
             return this.alertService.warning('Please enter last name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.updatedLastName)) {
-            return this.alertService.warning('Please enter alphabates only ', 'Warning');
+            return this.alertService.warning('Please enter alphabats only ', 'Warning');
         } else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
         } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
@@ -499,6 +500,7 @@ export class ManageTeamComponent implements OnInit {
     }
 
     private setUpdateUserPayload() {
+        debugger;
         const currentDisplayStatus = this.getStatusByUser(this.updatedUserStatus);
         const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
         const payload = {
@@ -508,6 +510,7 @@ export class ManageTeamComponent implements OnInit {
             userCode: this.updatedUserCode,
             status: { status: currentDisplayStatus },
             team: this.selectedTeamObj,
+            profileImgPath: this.selectedMember.userId.profileImgPath,
             meetingPermissionStatus: { status: currentDisplayMeetingStatus }
         };
         return payload;

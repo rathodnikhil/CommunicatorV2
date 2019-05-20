@@ -197,6 +197,14 @@
                 </app-custom-modal>
                 <app-custom-modal #UpdateMemberModal [model]="updateMember" (CancelEvent)="cancelEditPopup()">
                     <div class="modal-body row-label">
+                        <!-- <div class="row form-group">
+                                <img *ngIf='updateProfileImgPath'
+                                [src]="updateProfileImgPath" alt="Responsive image"
+                                class="rounded-circle profile-img img-fluid padding-10" />
+                            <img *ngIf="updateProfileImgPath === null ||updateProfileImgPath === '' || updateProfileImgPath === 'undefined'" 
+                                src="assets/images/default-profile.jpg" alt="Responsive image"
+                                class="rounded-circle profile-img img-fluid padding-10" />
+                        </div> -->
                         <div class="row form-group">
                                 <label class="member-field-name">First Name</label>
                                 <input placeholder="First Name" type="text" class="form-control member-field-value" [(ngModel)]="updatedFirstName"
