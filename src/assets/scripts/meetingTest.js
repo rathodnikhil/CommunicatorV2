@@ -567,7 +567,7 @@ connection.onstreamended = function (event) {
     else {
         if (event.stream.isScreen) {
             document.getElementById("share-screen").disabled = false;
-            document.getElementById("share-screen").setAttribute('class', 'btn-sec pull-left');
+            document.getElementById("share-screen").setAttribute('class', 'btn-sec');
         }
     }
 };
@@ -602,12 +602,12 @@ connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
-    document.getElementById('share-file').style.display = 'block';
+    document.getElementById('share-file').style.display = 'inline-block';
     if (!isAndroid && !iOS && !edge && !safari && !isFireFox) {
-        document.getElementById('share-screen').style.display = 'block';
-        document.getElementById('btn-start-recording').style.display = 'block';
+        document.getElementById('share-screen').style.display = 'inline-block';
+        document.getElementById('btn-start-recording').style.display = 'inline-block';
     }
-    document.getElementById('disable-video').style.display = 'block';
+    document.getElementById('disable-video').style.display = 'inline-block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
@@ -822,7 +822,7 @@ document.getElementById('btn-start-recording').onclick = function () {
         recorder.startRecording(options, function () {
             ispermission = true;
             document.getElementById('rec_start').style.display = 'none';
-            document.getElementById('rec_stop').style.display = 'block';
+            document.getElementById('rec_stop').style.display = 'inline-block';
         });
         setTimeout(function () {
             if (!this.ispermission) {
@@ -833,7 +833,7 @@ document.getElementById('btn-start-recording').onclick = function () {
 
     } else {
         recorder.stopRecording(stopRecordingCallback);
-        document.getElementById('rec_start').style.display = 'block';
+        document.getElementById('rec_start').style.display = 'inline-block';
         document.getElementById('rec_stop').style.display = 'none';
     }
 };
