@@ -25,6 +25,7 @@ export class MyProfileComponent implements OnInit {
     onLoadProfileImg: any;
     selectedProfilePictureName: any;
     fileSize: number;
+    isUpdateProfile: boolean;
     constructor( private router: Router, userService: UserService, meetingService: MeetingService,
         groupService: GroupService, public alertService: AlertService) {
         this._userService = userService;
@@ -32,6 +33,7 @@ export class MyProfileComponent implements OnInit {
         this._groupService = groupService;
     }
     ngOnInit() {
+        this.isUpdateProfile = false;
         this.loggedInUserObj = {};
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.firstName !== undefined && !data.isGuest) {
@@ -88,6 +90,7 @@ export class MyProfileComponent implements OnInit {
     private updateUserApiCall(payload: { firstName: any; lastName: any; email: any; userCode: any; profileImgPath: any;
          status: { status: string; }; team: any; meetingPermissionStatus: { status: any; }; }) {
         this._userService.updateUserDetails(payload).subscribe(data => {
+            this.isUpdateProfile = true;
             if (data.errorFl === true || data.warningFl === true) {
                 return this.alertService.warning(data.message, 'Warning');
             } else {
@@ -144,5 +147,13 @@ export class MyProfileComponent implements OnInit {
         const reader = e.target;
         this.loggedInUserObj.profileImgPath = reader.result;
         this.currentProfileImg = reader.result;
+    }
+    onDashboardClick() {
+        if (this.isUpdateProfile === false) {
+            this.loggedInUserObj.profileImgPath = this.onLoadProfileImg;
+            this.loggedInUserObj.firstName = this.currentFirstName;
+            this.loggedInUserObj.lastName = this.currentLastName;
+            this.loggedInUserObj.email = this.currentEmail;
+        }
     }
 }
