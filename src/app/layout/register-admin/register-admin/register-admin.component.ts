@@ -120,7 +120,7 @@ export class RegisterAdminComponent implements OnInit {
 
   private saveUserSuccessAction(data: any) {
     this.clearAllField();
-    this.teamArray.push(data.json().team);
+    this.teamArray.push(data.json()[0].team);
     return this.alertService.success('Admin has registered successfully', 'Success');
   }
 
