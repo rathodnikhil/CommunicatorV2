@@ -53,8 +53,8 @@ export class RegisterAdminComponent implements OnInit {
   }
   private allEnableTeamApiCall() {
     this._teamService.getAllEnableTeams().subscribe(data => {
-      if (data.warningFl) {
-        return this.alertService.warning(data.json().message, 'Warning');
+      if (data[0].warningFl) {
+        return this.alertService.warning(data[0].message, 'Warning');
       } else {
         this.teamArray = data;
       }

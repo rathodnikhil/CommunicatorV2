@@ -9,20 +9,17 @@ import {
     NotificationComponent,
     ChatComponent
 } from './components';
-import { StatModule, SharedPipesModule } from '../../shared';
+import { SharedPipesModule } from '../../shared';
 import { DefaultChatComponent } from './components/default-chat/default-chat.component';
 import { DefaultMeetingComponent } from './components/default-meeting/default-meeting.component';
 import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule-meeting.component';
 import { BsComponentModule } from '../bs-component/bs-component.module';
-import { MeetingVideoCallComponent } from './components/meeting-video-call/meeting-video-call.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
 import { SearchMemberPipe } from './components/notification/search-member.pipe';
 import { BroadcastMessageComponent } from './broadcast-message/broadcast-message.component';
-import { CreateGroupComponent } from './create-group/create-group.component';
 import { SearchFutureMeetingPipe } from './components/default-meeting/search-future-meeting.pipe';
-import { VideoCallComponent } from './components/video-call/video-call.component';
 import { SelectedUserHeaderComponent } from './components/selected-user-header/selected-user-header.component';
 import { CommonComponentsModule } from '../../shared/modules/common-components/common-components.module';
 
@@ -33,7 +30,6 @@ import { CommonComponentsModule } from '../../shared/modules/common-components/c
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
-        StatModule,
         BsComponentModule,
         NgbModule.forRoot(),
         SharedPipesModule,
@@ -47,13 +43,10 @@ import { CommonComponentsModule } from '../../shared/modules/common-components/c
         DefaultChatComponent,
         DefaultMeetingComponent,
         ScheduleMeetingComponent,
-        MeetingVideoCallComponent,
         CustomModalComponent,
         SearchMemberPipe,
         BroadcastMessageComponent,
-        CreateGroupComponent,
         SearchFutureMeetingPipe,
-        VideoCallComponent,
         SelectedUserHeaderComponent
     ],
     exports: [CustomModalComponent]

@@ -12,7 +12,7 @@
         <div class="main1">
             <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" data-toggle="tooltip" title="{{hovertext}}"
                 (eventDrop)="updateEvent($event.detail)" (eventResize)="updateEvent($event.detail)" (eventMouseOver) ="hover($event.detail)"
-                (clickButton)="clickButton($event.detail)" style="cursor: pointer;">
+                (clickButton)="clickButton($event.detail)" style="cursor: pointer;" [eventsModel]="MeetingData">
             </ng-fullcalendar>
         </div>
         <div>
