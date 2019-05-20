@@ -300,10 +300,10 @@ function appendDIV(event) {
             + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
     }
     if (firstNameUpperCase === 'You') {
-        div.className = 'chat-background';
+        div.className = 'chat-background-attendee';
         html += '<span class="time-right">';
     } else {
-        div.className = 'chat-background-invitee';
+        div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
     }
     var messageCounter = document.getElementById('messageCount').innerHTML;

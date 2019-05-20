@@ -171,8 +171,24 @@ input[type="range"]::-webkit-slider-thumb {
     width: 10px;
     height: 26px;
 }
-
+/*css for share file,viewers*/
 .chat-background {
+    margin: 10px 10px;
+    display: inline-block;
+    /* position: relative; */
+    /* height: auto; */
+    background-color: #fbf3f4;
+    border-radius: 5px;
+    padding: 10px;   
+    line-height: normal;
+    color : #000;
+    font-weight: bold;
+    min-width:90%; 
+    box-shadow: -5px 5px 5px #e4dadb;
+}
+
+/*css for chat background*/
+.chat-background-attendee {
     margin: 10px 10px 10px 40px;
     display: inline-block;
     position: relative;
@@ -180,12 +196,14 @@ input[type="range"]::-webkit-slider-thumb {
     background-color: #fbf3f4;
     border-radius: 5px;
     padding: 10px;   
-    line-height: 1;
+    line-height: normal;
     color : #000;
     font-weight: bold;
     min-width:80%; 
+    max-width:80%;
+    box-shadow: -5px 5px 5px #e4dadb;
 }
-.chat-background::after{ 
+.chat-background-attendee::after{ 
     content: ' ';
     position: absolute;
     width: 0;
@@ -199,8 +217,25 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 
-
+/*css for share file,viewers*/
 .chat-background-invitee {
+    /* border: 1px solid #01baac; */
+    background-color: #e5f8f6;
+    margin: 10px 10px;
+    /* display: inline-block; */
+    /* position: relative; */
+    /* height: auto; */
+    border-radius: 5px;
+    padding: 10px;   
+    line-height:normal;
+    color : #000;
+    font-weight: bold;
+    min-width:90%; 
+    max-width: 90%;
+    box-shadow: 5px 5px 5px #cee2e1;
+}
+/*css for chat background*/
+.chat-background-invitee-attendee {
     /* border: 1px solid #01baac; */
     background-color: #e5f8f6;
     margin: 10px 10px;
@@ -209,13 +244,15 @@ input[type="range"]::-webkit-slider-thumb {
     height: auto;
     border-radius: 5px;
     padding: 10px;   
-    line-height: 1;
+    line-height:normal;
     color : #000;
     font-weight: bold;
     min-width:80%; 
+    max-width: 80%;
+    box-shadow: 5px 5px 5px #cee2e1;
 }
 
-.chat-background-invitee::after{ 
+.chat-background-invitee-attendee::after{ 
     content: ' ';
     position: absolute;
     width: 0;
