@@ -1,5 +1,5 @@
 <app-spinner #manageGroupSpinner></app-spinner>
-<div id="header" style="position:absolute; top:0px; left:0px; height:70px; right:0px;overflow:hidden;"> 
+<div id="header" style="position:absolute; top:0px; left:0px; height:70px; right:0px;overflow:hidden;">
 <div class="header">
 <div class="row">
 <h3 class="page-title">Manage Group</h3>
@@ -8,11 +8,11 @@
 </a>
 </div>
 </div>
-</div> 
-<div id="content" style="position:absolute; top:70px; bottom:5%; left:0px; right:0px; overflow:auto;overflow-x: hidden;"> 
+</div>
+<div id="content" style="position:absolute; top:70px; bottom:5%; left:0px; right:0px; overflow:auto;overflow-x: hidden;">
 <div class="sidenav filter-list">
 <div class="team-div">
-<h4 class="selected-criteria" style="font-weight: bold;">Groups</h4> 
+<h4 class="selected-criteria" style="font-weight: bold;">Groups</h4>
 
 <div class="row" style="margin-right:0px;">
         <div class="col-lg-8 col-md-9 align-center text-center">
@@ -25,7 +25,7 @@
                 <button class="btn btn-primary" style="margin-left: 5px;" (click)="openGroup()" title="Add new group">+Group</button>
             </div>
         </div>
-</div> 
+</div>
 </div>
 <div class="group-name-list">
         <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroup;let groupCount = index">
@@ -82,21 +82,21 @@ placeholder="Select Members"
 [(ngModel)]="selectedItems"
 [settings]="dropdownSettings"
 (onSelect)="onItemSelect($event)"
-(onSelectAll)="onSelectAll($event)" 
-(onDeSelect)="OnItemDeSelect($event)" 
+(onSelectAll)="onSelectAll($event)"
+(onDeSelect)="OnItemDeSelect($event)"
 (onDeSelectAll)="onDeSelectAll($event)">
 </ng-multiselect-dropdown>
 <!-- (onOpen)="onOpen($event)"
 (onClose)="onClose($event)"
 (onFilterChange)="onFilterChange($event)" -->
-</div> 
+</div>
 <div class="col-md-2">
 <button class="btn btn-primary btn-update-member" (click)="updateMembers()" >Update Members</button>
 </div>
 </div>
 <hr>
 
-        <div class="row"> 
+        <div class="row">
                 <div class="col-md-3">
                 <h5 class="group-member"><b>Group Members</b></h5></div>
                 <div class="col-md-9" *ngIf="showSelectedGroup" style="padding-right:0px;">
@@ -115,15 +115,15 @@ placeholder="Select Members"
 <th>Delete</th>
 </tr>
 <tr
-*ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index">
+*ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index" [ngIf]="memberObj.status!=null">
 <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
 <!-- <td *ngIf="memberObj.status.staus === 'INACTIVE'; else elseBlock">{{memberObj.firstName}} {{memberObj.lastName}} (InActive)</td> -->
 <!-- <ng-template #elseBlock><td *ngIf="memberObj.team.status.staus === 'ACTIVE'">{{memberObj.firstName}} {{memberObj.lastName}}</td></ng-template> -->
-<ng-template [ngIf]="memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL'" [ngIfElse]="member">
+<ng-template [ngIf]="memberObj.status!=null && (memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL')" [ngIfElse]="member">
 <td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
 </ng-template>
 
-<ng-template #member>
+<ng-template #member [ngIf]="memberObj.status!=null">
 <td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
 </ng-template>
 <!-- <td>{{memberObj.firstName}} {{memberObj.lastName}}</td> -->
@@ -181,6 +181,6 @@ placeholder="Select Members"
 </div>
 </div>
 
-<div id="footer" style="position:absolute; bottom:0px; height:5%; left:0px; right:0px; overflow:hidden;"> 
-<app-footer></app-footer> 
+<div id="footer" style="position:absolute; bottom:0px; height:5%; left:0px; right:0px; overflow:hidden;">
+<app-footer></app-footer>
 </div>

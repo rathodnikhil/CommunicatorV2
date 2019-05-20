@@ -49,6 +49,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isMeetingStarted = false;
     isScreenSharingStarted = false;
     isVideoEnabled = false;
+    toggleMeeting = false;
     actualMeetingTime: any;
     muteBtnTitle = 'Mute';
     videoBtnTitle = 'Video On';

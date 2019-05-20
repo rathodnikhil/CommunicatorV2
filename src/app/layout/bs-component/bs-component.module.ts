@@ -20,7 +20,7 @@ import {
     TooltipComponent,
     TimepickerComponent
 } from './components';
-import { PageHeaderModule } from '../../shared';
+
 
 @NgModule({
     imports: [
@@ -28,8 +28,7 @@ import { PageHeaderModule } from '../../shared';
         BsComponentRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        NgbModule.forRoot(),
-        PageHeaderModule
+        NgbModule.forRoot()
     ],
     declarations: [
         BsComponentComponent,
