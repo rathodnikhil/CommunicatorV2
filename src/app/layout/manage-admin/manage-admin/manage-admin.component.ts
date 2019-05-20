@@ -186,11 +186,11 @@ updateAdmin() {
     if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
         return this.validationMsgAndField(this.updatedFirstNameField , 'Please enter first name', 'Warning');
       } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
-        this.validationMsgAndField(this.updatedFirstNameField , 'Please enter alphabates only' , 'Warning');
+        this.validationMsgAndField(this.updatedFirstNameField , 'Please enter alphabatss only' , 'Warning');
       }   else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
         return this.validationMsgAndField(this.updatedLastNameField , 'Please enter last name', 'Warning');
       } else if (!NAME_REGEXP.test(this.updatedLastName)) {
-        this.validationMsgAndField(this.updatedLastNameField , 'Please enter alphabates only' , 'Warning');
+        this.validationMsgAndField(this.updatedLastNameField , 'Please enter alphabatss only' , 'Warning');
       } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
         return this.validationMsgAndField(this.updatedEmailField , 'Please enter email' , 'Warning');
       } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {

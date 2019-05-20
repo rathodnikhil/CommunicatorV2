@@ -62,9 +62,9 @@ export class JoinMeetingComponent implements OnInit {
     } else if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
       return this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id', 'Warning');
     } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-      return this.validationMsgAndField(this.usernameField , 'Enter Full Name', 'Warning');
+      return this.validationMsgAndField(this.usernameField , 'Enter Full name', 'Warning');
     } else if (!NAME_REGEXP.test(this.userName)) {
-      return this.validationMsgAndField(this.usernameField , 'Please enter alphabates only ', 'Warning');
+      return this.validationMsgAndField(this.usernameField , 'Please enter alphabats only ', 'Warning');
     }
     const payload = this.setDefaultGuestValuesAndCreatePayload();
     this.getLoggedInUserApiCall(payload);
@@ -85,7 +85,7 @@ export class JoinMeetingComponent implements OnInit {
 
   private setMeetingCodeValidation() {
     this.isMeetingCodeInValid = true;
-    this.alertService.warning('Please enter valid Meeting Id', 'Invalid Meeting Id');
+    this.validationMsgAndField(this.meetingCodeField , 'Please enter valid Meeting Id', 'Invalid Data');
     return false;
   }
 

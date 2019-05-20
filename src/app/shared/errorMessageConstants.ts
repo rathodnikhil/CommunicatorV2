@@ -3,7 +3,7 @@ export class ErrorMessageConstants {
     public static ClosePopup = 'Please close popup to continue';
     public static EnterMeetingId = 'Please enter Meeting Id';
     public static EnterFullName = 'Please enter Full Name ';
-    public static EnterAlphabatesOnly = 'Please enter alphabates only ';
+    public static EnterAlphabatesOnly = 'Please enter alphabatss only ';
     public static EnterPassword = 'Enter Password';
 }
 export class TypeOfError {
