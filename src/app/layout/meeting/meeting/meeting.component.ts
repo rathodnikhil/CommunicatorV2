@@ -71,7 +71,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     };
     ngOnInit() {
         if (!localStorage.getItem('loggedInuserName')) {
-            this._loginService.setPreviousUrl(this.router.url);
+            // this._loginService.setPreviousUrl(this.router.url);
             this.router.navigate(['/login']);
         }
         this.meetingDetails = {};

@@ -21,12 +21,4 @@ export class LoginService {
     getJwtToken() {
         return 'Bearer ' + this.jwtToken;
     }
-    setPreviousUrl(url) {
-        this.previousUrl = url;
-    }
-    getPreviousUrl() {
-        return this.previousUrl;
-    }
-
-
 }

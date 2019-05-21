@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { SuccessMessage, TypeOfError } from 'app/shared/errorMessageConstants';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
@@ -60,7 +61,7 @@ export class NotificationComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             }  else {
                 this.loggedInUser = data;
                 this.userListApiCall();
@@ -77,7 +78,7 @@ export class NotificationComponent implements OnInit {
             }  else {
                 this.groupList = [];
                 if (groupData !== undefined && groupData.message !== undefined) {
-                  //  return this.alertService.warning(groupData.message, 'Warning');
+                  //  return this.alertService.warning(groupData.message, TypeOfError.Warning);
                 }
             }
         });
@@ -119,7 +120,7 @@ export class NotificationComponent implements OnInit {
                 return false;
             }
             if (memberData[0].errorFl === true || memberData[0].warningFl === true) {
-                return this.alertService.warning(memberData[0].message, 'Warning');
+                return this.alertService.warning(memberData[0].message, TypeOfError.Warning);
             } else {
                 this.membersList = memberData;
                 for (let index = 0; index < this.membersList.length; index++) {
@@ -175,7 +176,7 @@ export class NotificationComponent implements OnInit {
         this._userService.searchWholememberList(payload).subscribe(data => {
             if (data[0].errorFl || data[0].warningFl) {
                 this.searchWholeMemberList = [];
-                return this.alertService.warning(data[0].message, 'Warning');
+                return this.alertService.warning(data[0].message, TypeOfError.Warning);
             } else {
                 this.searchWholeMemberList = data;
                 this.viewAllMemFl = true;
@@ -191,7 +192,7 @@ export class NotificationComponent implements OnInit {
         const payload = this.createNewMemberPayload(user);
         this._userService.addNewMemberFromWholeList(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 return this.addNewMemberSuccessAction(user);
             }
@@ -211,6 +212,6 @@ export class NotificationComponent implements OnInit {
         this.searchAllText = '';
         this.userList.push(user);
         this.searchWholeMemberList.splice(this.searchWholeMemberList.indexOf(user), 1);
-        return this.alertService.success('User has been added successfully', 'Success');
+        return this.alertService.success(SuccessMessage.AddUser, SuccessMessage.SuccessHeader);
     }
 }

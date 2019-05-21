@@ -12,10 +12,10 @@ export class AuthGuard implements CanActivate {
         //  // debugger;
         return this.authService.getLoggedInUserObj().map((auth) => {
             // // debugger;
-            this._loginService.setPreviousUrl(state.url);
+            // this._loginService.setPreviousUrl(state.url);
             if (!(auth.firstName === undefined)) {
                 console.log('authenticated');
-                // this.router.navigateByUrl(state.url);                
+                // this.router.navigateByUrl(state.url);
                 return true;
             }
             console.log('not authenticated');

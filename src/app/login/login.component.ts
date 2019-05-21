@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 import { AlertService } from '../services/alert.service';
 import { PasswordService } from '../services/password.service';
 import { DOCUMENT } from '@angular/common';
-import { ErrorMessageConstants, TypeOfError } from '../shared/errorMessageConstants';
+import { ErrorMessageConstants, TypeOfError , StaticLabels, SuccessMessage} from '../shared/errorMessageConstants';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private changePlaceHolderText() {
         this.loginText = this.isGuest ? 'Continue' : 'Login';
         this.loginHeader = this.isGuest ? 'Join Meeting' : 'Log In';
-        this.UserNameText = this.isGuest ? 'Name' : 'UserName';
+        this.UserNameText = this.isGuest ? 'Full Name' : 'UserName';
         this.userName = '';
         this.password = '';
     }
@@ -122,10 +122,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
     private verifyGuest() {
         const NAME_REGEXP = /^[a-zA-Z]+$/i;
-        if (this.loginMeetingCode === null || typeof this.loginMeetingCode === 'undefined'
+        if (this.loginMeetingCode === null || typeof this.loginMeetingCode === StaticLabels.Undefined
             || this.loginMeetingCode.trim() === '') {
             this.validationMsgAndField(this.meetingCodeField, ErrorMessageConstants.EnterMeetingId, TypeOfError.Warning);
-        } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
+        } else if (this.userName === null || typeof this.userName === StaticLabels.Undefined || this.userName.trim() === '') {
             return this.validationMsgAndField(this.usernameField, ErrorMessageConstants.EnterFullName, TypeOfError.Warning);
         } else if (!NAME_REGEXP.test(this.userName)) {
             return this.validationMsgAndField(this.usernameField, ErrorMessageConstants.EnterAlphabatesOnly, TypeOfError.Warning);
@@ -141,14 +141,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
             } else {
                 switch (resp.json()) {
                     case 'invalidUsername':
-                        this.setValidationMsgAndForAuthentication(true, false, 'Please enter valid username');
+                        this.setValidationMsgAndForAuthentication(true, false, ErrorMessageConstants.ValidUserName);
                         break;
                     case 'invalidPassword':
-                        this.setValidationMsgAndForAuthentication(false, true, 'Please enter valid password');
+                        this.setValidationMsgAndForAuthentication(false, true, ErrorMessageConstants.ValidPassword);
                         break;
                     case 'deactivate':
-                        this.setValidationMsgAndForAuthentication(true, true,
-                            'Your account has deactivated , please contact to your administrator');
+                        this.setValidationMsgAndForAuthentication(true, true, ErrorMessageConstants.DeactivateAccount);
                         break;
                 }
             }
@@ -158,10 +157,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private setValidationMsgAndForAuthentication(userNameFl: boolean, passwordFl: boolean, message: String) {
         if (userNameFl) {
             this.userName = '';
-            this.validationMsgAndField(this.usernameField, message, 'Account Authentication');
+            this.validationMsgAndField(this.usernameField, message, StaticLabels.AccountAuth);
         } else if (passwordFl) {
             this.password = '';
-            this.validationMsgAndField(this.passwordField, message, 'Account Authentication');
+            this.validationMsgAndField(this.passwordField, message, StaticLabels.AccountAuth);
         }
     }
     private validationMsgAndField(elementFocus: ElementRef, validationMsg: String, flag: String) {
@@ -172,8 +171,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this._loginService.getAuthenticationToken(payload).subscribe(data => {
             this.jwtToken = this._loginService.getJwtToken();
             if (this.jwtToken === undefined ||
-                this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === 'undefined') {
-                return this.alertService.error('Authentication Token failed', 'Error');
+                this.jwtToken === '' || this.jwtToken === null || typeof this.jwtToken === StaticLabels.Undefined) {
+                return this.alertService.error(ErrorMessageConstants.TokenFailure, TypeOfError.Error);
             } else {
                 const userNamePayload = { userName: loggedinUser.name };
                 this.registerUserLoggedInUserApiCall(userNamePayload);
@@ -217,6 +216,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     private loggedInUserApiCall(payload: { firstName: String; isGuest: boolean; userCode: string; email: string; meetingCode: any; }) {
         this._userService.setLoggedInUserObj(payload).subscribe(res => {
+            debugger;
             if (typeof (this.previousResponseValue) !== typeof (res)) {
                 if (res === 'invalid' && !this.isMeetingCodeInValid) {
                     this.previousResponseValue = res;
@@ -232,7 +232,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     private meetingCodeValidation() {
         this.isMeetingCodeInValid = true;
-        this.alertService.warning('Please enter valid Meeting Id', 'Invalid Data');
+        this.validationMsgAndField(this.meetingCodeField , ErrorMessageConstants.ValidMeetingId, StaticLabels.InvalidData);
+        this.meetingCode = '';
         return false;
     }
 
@@ -278,8 +279,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (event.key === 'Enter') { this.sendEmailForgotPassword(); }
     }
     sendEmailForgotPassword() {
-        if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === 'undefined') {
-            return this.validationMsgAndField(this.forgotEmailField, 'Please enter email', 'Warning');
+        if (this.forgetEmail === '' || this.forgetEmail === null || typeof this.forgetEmail === StaticLabels.Undefined) {
+            return this.validationMsgAndField(this.forgotEmailField, ErrorMessageConstants.Email, TypeOfError.Warning);
         } else {
             this.forgotEmailSuccessAction();
         }
@@ -293,10 +294,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private forgotPasswordEmailApiCall(payload: { email: any; }) {
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
             if (res.json().errorFl === true || res.json().warningFl === true) {
-                return this.validationMsgAndField(this.forgotEmailField, 'Email id is not registered, enter registered email id', 'Error');
+                return this.validationMsgAndField(this.forgotEmailField, ErrorMessageConstants.RegisterEmail, TypeOfError.Error);
             } else {
                 return this.alertService
-                    .success('Password reset link has successfully sent to your email account, check your email.', 'Email Send');
+                    .success(SuccessMessage.ForgotPasswordEmail, SuccessMessage.SuccessHeader);
             }
         });
     }
@@ -320,6 +321,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.userName = '';
         this.password = '';
         this.loginMeetingCode = '';
+        this.meetingCode = '';
         this.forgetEmail = '';
     }
 }

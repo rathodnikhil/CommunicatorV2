@@ -1,10 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers, Response, Request, RequestOptions, URLSearchParams, RequestMethod , QueryEncoder} from '@angular/http';
 import { Router} from '@angular/router';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { LoginComponent } from '../login/login.component';
+import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Injectable()

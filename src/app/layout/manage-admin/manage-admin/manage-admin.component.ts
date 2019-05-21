@@ -5,6 +5,7 @@ import { Component, OnInit, Output, ViewChild, ViewContainerRef , ElementRef } f
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage } from '../../../shared/errorMessageConstants';
 @Component({
   selector: 'app-manage-admin',
   templateUrl: './manage-admin.component.html',
@@ -80,7 +81,7 @@ deleteMemberFlag = 1;
     private getAllEnableTeamCall() {
         this._teamService.getAllEnableTeams().subscribe(data => {
             if (data.warningFl) {
-                return this.alertService.warning(data.json().message, 'Warning');
+                return this.alertService.warning(data.json().message, TypeOfError.Warning);
             } else {
                 this.teamArray = data;
             }
@@ -104,7 +105,7 @@ deleteAdmin(selectedAdmin) {
         this.deleteAdminActiveStatusAction(selectedAdmin);
     } else {
         return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
-         '  is already inactive', 'Inactive Admin');
+         '  is already inactive', TypeOfError.Warning);
     }
 }
     private deleteAdminActiveStatusAction(selectedAdmin: any) {
@@ -119,7 +120,7 @@ deleteAdminNow() {
    const payload = {userCode: this.selectedAdmin.userCode};
     this._userService.deleteUser(payload).subscribe(data => {
     if (data.errorFl === true || data.warningFl === true) {
-        return this.alertService.warning(data.message, 'Warning');
+        return this.alertService.warning(data.message, TypeOfError.Warning);
     } else {
      return this.deleteAdminSuccessAction(data);
     }
@@ -128,7 +129,8 @@ deleteAdminNow() {
     private deleteAdminSuccessAction(data: any) {
         this.deleteMemberFlag = 2;
         this.closeDeletePopup(1);
-        return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully', 'Delete Admin');
+        return this.alertService.success('Admin ' + data.firstName + ' ' + data.lastName + ' has deleted successfully',
+         SuccessMessage.SuccessHeader);
     }
 
     private selectedAdminObj(obj , editDeletelag , flag) {
@@ -184,17 +186,17 @@ updateAdmin() {
     const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
     const NAME_REGEXP = /^[a-zA-Z]+$/i;
     if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
-        return this.validationMsgAndField(this.updatedFirstNameField , 'Please enter first name', 'Warning');
+        return this.validationMsgAndField(this.updatedFirstNameField , 'Please enter first name', TypeOfError.Warning);
       } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
-        this.validationMsgAndField(this.updatedFirstNameField , 'Please enter alphabatss only' , 'Warning');
+        this.validationMsgAndField(this.updatedFirstNameField , 'Please enter alphabatss only' , TypeOfError.Warning);
       }   else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
-        return this.validationMsgAndField(this.updatedLastNameField , 'Please enter last name', 'Warning');
+        return this.validationMsgAndField(this.updatedLastNameField , 'Please enter last name', TypeOfError.Warning);
       } else if (!NAME_REGEXP.test(this.updatedLastName)) {
-        this.validationMsgAndField(this.updatedLastNameField , 'Please enter alphabatss only' , 'Warning');
+        this.validationMsgAndField(this.updatedLastNameField , 'Please enter alphabatss only' , TypeOfError.Warning);
       } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
-        return this.validationMsgAndField(this.updatedEmailField , 'Please enter email' , 'Warning');
+        return this.validationMsgAndField(this.updatedEmailField , 'Please enter email' , TypeOfError.Warning);
       } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
-        return this.validationMsgAndField( this.updatedEmailField , 'Please enter valid email', 'Warning');
+        return this.validationMsgAndField( this.updatedEmailField , 'Please enter valid email', TypeOfError.Warning);
     } else {
         return this.updateAdminSuccessAction();
     }
@@ -217,9 +219,9 @@ updateAdmin() {
          userCode: any; team: { teamName: any; }; meetingPermissionStatus: { status: any; }; }) {
         this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.warningFl === true) {
-                return this.validationMsgAndField(this.updatedFirstNameField, 'Username already exist', 'Warning');
+                return this.validationMsgAndField(this.updatedFirstNameField, 'Username already exist', TypeOfError.Warning);
             } else if (data.errorFl === true) {
-                return this.validationMsgAndField(this.updatedEmailField , data.message, 'Warning');
+                return this.validationMsgAndField(this.updatedEmailField , data.message, TypeOfError.Warning);
             } else {
                 this.updateUserDetailsSuccessResponse(data);
             }
