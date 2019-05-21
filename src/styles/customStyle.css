@@ -8,7 +8,7 @@
     /* color: #ffffff; */
     border: 1px solid #e09600;
     color: #000;
-    background-color: #01baac;
+    background-color: #AF2127;
     padding: 0.375rem 0.75rem;
 }
 .btn-sec:hover{
@@ -54,8 +54,8 @@
         width: 15%;
         float:left;
         padding: 15px;
-        /* background: linear-gradient(to left, #01baac 32%, #115c7d 100%); */
-        background-color: #fbf3f4;
+        /* background: linear-gradient(to left, #AF2127 32%, #115c7d 100%); */
+        background-color: #f6f6f6;
         color: #000;
         font-weight: bold;
     }
@@ -108,7 +108,7 @@
     cursor: pointer;
     }
     .btn.btn-secondary {
-        background:  #01baac;
+        background:  #AF2127;
         /* color:  #353535; */
         border-color:  #1d7bb9;
         border-radius: 0px 5px 5px 0px;
@@ -290,7 +290,7 @@ color: red;
   }
   .team-name
 {
-    color:#01baac;
+    color:#AF2127;
 }
 
 .logged-in-username
@@ -320,15 +320,15 @@ color: red;
 }
 .btn-primary{
     color: #fff;
-    background-color: #01baac;
-    border-color: #01baac;
+    background-color: #AF2127;
+    border-color: #AF2127;
     font-weight: bold;
 }
 
 .btn-primary:hover{
     background-color:#e5f8f6;
-    color:#02736a;
-    border:1px solid #02736a;
+    color:#131313;
+    border:1px solid #131313;
 }
 
 .fa-3x{
