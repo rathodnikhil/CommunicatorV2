@@ -26,7 +26,7 @@ document.getElementById('share-screen').onclick = function () {
     } catch (error) {
         console.log(error);
     }
-    this.setAttribute('class', 'btn-share-on pull-left');
+    this.setAttribute('class', 'btn-share-on');
     this.disabled = true;
 };
 
@@ -446,13 +446,13 @@ connection.onstream = function (event) {
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
      //   heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
-        customDiv.setAttribute("style" , "  background-color: #f9e0e2; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #980e06; ");
-        heading.setAttribute("style", " background-color:#980e06;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
+        customDiv.setAttribute("style" , "  background-color: #eeedee; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #AF2127; ");
+        heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
         if (event.stream.isVideo == 0) {
             // heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -30px;');
-            customDiv.setAttribute("style" , "background-color: #e5f8f6; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #02736a;");
-            heading.setAttribute("style", "background-color:#02736a;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
+            customDiv.setAttribute("style" , "background-color: #e5f8f6; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #131313;");
+            heading.setAttribute("style", "background-color:#131313;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
             // heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -25px;');
             heading.setAttribute("style", ' padding: 1.3%;  text-align: center;');
@@ -489,8 +489,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'background-color:#02736a;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
-            video.setAttribute("style", "background: #e0ecee;border: 1px solid #01baac;border-top:none;float:left;height:18vh;width:100%");
+            heading.setAttribute("style", 'background-color:#131313;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
+            video.setAttribute("style", "background: #e0ecee;border: 1px solid #AF2127;border-top:none;float:left;height:18vh;width:100%");
             screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');

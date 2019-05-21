@@ -28,7 +28,7 @@
     overflow-x: hidden;
     padding-bottom: 50%; 
     padding-left:7px;
-    background-color:#fbf3f4;
+    background-color:#f6f6f6;
 }
 .circleOffline {
     position: relative;
@@ -63,21 +63,21 @@
      padding-top: 12px; cursor: pointer;
 }
  .btn-search{
-    background-color: #01baac;
-    border-color: #01baac;
+    background-color: #AF2127;
+    border-color: #AF2127;
     color:white;
     font-weight: bold;
  }
 
  .btn-search:hover{
     background-color:#e5f8f6;
-    color:#02736a;
-    border:1px solid #02736a;
+    color:#131313;
+    border:1px solid #131313;
  }
  .list-item-padding{
     padding-left: 1%;
     padding-right: 1%;
-    background-color: #fbf3f4;
+    background-color: #f6f6f6;
     border-bottom:1px solid #f8c8cb;
  }
 ::-webkit-scrollbar {
@@ -85,7 +85,7 @@
     background-color: #f5f5f5;
 }
 .team-member{
-    color: #02736a;
+    color: #131313;
     font-weight: bold;
     padding-left: 3.5%; 
     padding-top: 2px;
@@ -139,7 +139,7 @@
         }
 
         .notification-div{
-        background-color: #f9e0e2;
+        background-color: #eeedee;
         padding: 15px 15px 2px 15px;
         margin: 0.3rem;
         border-radius: 3px;
@@ -158,10 +158,10 @@
             background-color:#d5f2fd;
         }
           .selected-criteria-div{
-            background-color: #f9e0e2;
+            background-color: #eeedee;
         }
           .group-criteria-div {
-            background-color: #f9e0e2;
+            background-color: #eeedee;
           }
           .group-criteria {
             color:#bd081c;
