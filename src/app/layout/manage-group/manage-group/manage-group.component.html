@@ -115,18 +115,15 @@ placeholder="Select Members"
 <th>Delete</th>
 </tr>
 <tr
-*ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index" [ngIf]="memberObj.status!=null">
+*ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index" >
 <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
-<!-- <td *ngIf="memberObj.status.staus === 'INACTIVE'; else elseBlock">{{memberObj.firstName}} {{memberObj.lastName}} (InActive)</td> -->
-<!-- <ng-template #elseBlock><td *ngIf="memberObj.team.status.staus === 'ACTIVE'">{{memberObj.firstName}} {{memberObj.lastName}}</td></ng-template> -->
-<ng-template [ngIf]="memberObj.status!=null && (memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL')" [ngIfElse]="member">
+<ng-template [ngIf]="memberObj.status!=null && (memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL')">
 <td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
 </ng-template>
 
 <ng-template #member [ngIf]="memberObj.status!=null">
 <td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
 </ng-template>
-<!-- <td>{{memberObj.firstName}} {{memberObj.lastName}}</td> -->
 <td>{{memberObj.userCode}}</td>
 <td>
 <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);" title="Delete member"></i>

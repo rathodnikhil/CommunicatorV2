@@ -49,10 +49,13 @@ div.scrollmenu a:hover {
     position: relative;
     height: calc(100vh*0.28);
     border: 1px solid #dedede;
-    border-radius: 8px;
+    //border-radius: 8px;
     background: rgb(238, 235, 235);
     padding: 5px;
-    margin: 2px;
+   // margin: 2px;
+   margin: 1px;
+   margin-top: 0px;
+   overflow-y:auto;
 }
 
 .child {
@@ -85,21 +88,22 @@ div.scrollmenu a:hover {
 }
 
 .card-header {
-    background-color: #f4f2f3;
+    background-color: #ffffff;
     color: #ffffff;
     font-weight: bold;
     //opacity: 0.85;
     border-radius: 3px;
     // height: calc(100vh*0.09);
     height: auto;
+      
 }
 
 
 
 .meeting-activity {
     //border: 1px solid #dedede;
-    border-radius: 8px;
-    padding: 5px;
+   // border-radius: 8px;
+    padding: 0px;
 }
 
 .card-body {
@@ -128,12 +132,12 @@ div.scrollmenu a:hover {
 .attendee-row {
     left: 100px;
     //padding: 10px;
-    margin: 10px 2px 10px 2px;
+    //margin: 10px 2px 10px 2px;
     width: 100%;
     box-sizing: border-box;
     border: 1px solid;
     border-color: #CFCFCF;
-    border-radius: 8px;
+    //border-radius: 8px;
 }
 
 .customIp {
@@ -182,7 +186,7 @@ div.scrollmenu a:hover {
           height:50px;
         }
         .img-fluid{
-            max-width: 70%;
+            max-width: 60%;
             height:auto;
         }
         }
@@ -339,11 +343,11 @@ div.scrollmenu a:hover {
 
 .icon-bar {
     position: absolute;
-    top: auto;
+    top: 51px;
     right: 0;
     bottom: auto;
-    height: 87.7%;
-    background-color: #965552;
+    height: 94.4%;
+    background-color: #4b6584;
     width:65px;
 }
 
@@ -366,7 +370,7 @@ div.scrollmenu a:hover {
 
 .selected i {
     padding: 8px 10px 8px 15px;
-    background-color: #ff9f9b;
+    background-color: #a1b0c1;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-right: 2px solid #fff;
@@ -379,7 +383,7 @@ div.scrollmenu a:hover {
     padding-bottom: 50px;
 }
 span.step {
-    background: #01baac;
+    background: #AF2127;
     border-radius: 0.8em;
     -moz-border-radius: 0.8em;
     -webkit-border-radius: 0.8em;
@@ -394,15 +398,15 @@ span.step {
   }
   .btn-url:hover{
     color: #ffffff;
-    background-color: #bc151b;
+    background-color: #AF2127;
     font-weight: bold;
-    border-color: #fff;
+    border-color: rgb(201, 9, 19);
   }
   .btn-url{
-    border: 1px solid #bc151b;
-    background: #efefef;
+    border: 1px solid #039085 ;
+    background: #0fb9b1;
     font-weight: bold;
-    color: #bc151b;
+    color: #fff;
   }
     .btn-sec {
     cursor: pointer;
@@ -410,13 +414,13 @@ span.step {
     color: #ffffff;
     padding: 0.375rem 0.75rem;
     border-radius: 28px;
-    border: 1px solid #039085;
-    background-color: #03a99c;
+    border: 1px solid #0fb9b1;
+    background-color: #0fb9b1;
 }
 .btn-sec:hover{
 
-    box-shadow: 0px 0px 17px -2px #01baac;
-   color:#03a99c;
+    box-shadow: 0px 0px 17px -2px #AF2127;
+   color:#0fb9b1;
    background-color: #fff;
  }
 
@@ -435,12 +439,12 @@ span.step {
     box-shadow: 0px 0px 17px -2px #9c4141;
  }
   .btn-unmute{
-    background-color: #03a99c;
+    background-color: #0fb9b1;
       color: #fff;
       border: 1px solid #039085;
   }
   .btn-mute{
-    background-color: #03a99c;
+    background-color: #0fb9b1;
     color: #fff;
     border: 1px solid #039085;
 
@@ -448,8 +452,8 @@ span.step {
 
   .btn-mute:hover{
     border-radius: 28px;
-    box-shadow: 0px 0px 17px -2px #01baac;
-    color:#03a99c;
+    box-shadow: 0px 0px 17px -2px #AF2127;
+    color:#0fb9b1;
    background-color: #fff;
   }
   .subject-line{
@@ -488,16 +492,16 @@ span.step {
     cursor: pointer;
     font: bold 13px Arial,Helvetica;
     cursor:pointer;
-    border: 1px solid #01baac;
+    border: 1px solid #039085;
     color: #FFF;
-    background-color: #01baac;
+    background-color: #0fb9b1;
     padding: .375rem .75rem;
 }
 .generate-mom-btn:hover
 {
-    background-color:#e5f8f6;
-    color:#02736a;
-    border:1px solid #02736a;
+    background-color:#AF2127;
+    color:#fff;
+    border:1px solid rgb(201, 9, 19);
 }
 .meeting-id-color{
     margin-left: 10px;
@@ -511,7 +515,7 @@ span.step {
     font-weight: bold;
     background-color: #fff;
     /* border-color: #dee2e6 #dee2e6 #fff; */
-    border-bottom: 3px solid #980e06;
+    border-bottom: 3px solid #AF2127;
     cursor: pointer;
 }
 
@@ -528,7 +532,7 @@ span.step {
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-    color: #000;
+    color: #AF2127;
     background-color: #fff;
     //border-color: #dee2e6 #dee2e6 #fff;
 }
@@ -538,26 +542,26 @@ span.step {
     padding: 0.5rem 1.5rem;
 }
 
-/*media queries for meeting page logo*/
-@media (min-width: 768px) and (max-width:1366px){
-    .img-fluid{
-            max-width: 100%;
-          height: auto;
-         }
-}
+// /*media queries for meeting page logo*/
+// @media (min-width: 768px) and (max-width:1366px){
+//     .img-fluid{
+//             max-width: 100%;
+//           height: auto;
+//          }
+// }
 
-@media (min-width: 1370px){
-    .img-fluid{
-            max-width: 70%;
-          height: auto;
-         }
-}
+// @media (min-width: 1370px){
+//     .img-fluid{
+//             max-width: 60%;
+//           height: auto;
+//          }
+// }
 
 .meeting-activity-header{
     //background: #f4f2f3;
-    background:#980e06;
-    padding-top: 2.8%;
-    padding-bottom: 2.8%;
+    background:#AF2127;
+    // padding-top: 2.8%;
+    // padding-bottom: 2.8%;
 }
 
 .attendee-name{
@@ -565,7 +569,7 @@ span.step {
     padding: 1.3%;
     text-align: center;
     font-weight: bold;
-    color:#980e06;
+    color:#AF2127;
 }
 
 .initial-letter-attendee{
@@ -579,11 +583,11 @@ span.step {
 
 .sidebar-contact{
     position:fixed;
-    top:50%;
+    top:70px;
     right:-40%;
-    transform:translateY(-50%);
-    width:40%;
-    height:84vh;
+   // transform:translateY(-50%);
+    width:40vw;
+    height:auto;
     // padding:40px;
     background:#fff;
     box-shadow: 0 20px 50px rgba(0,0,0,.5);
@@ -622,24 +626,28 @@ span.step {
   }
   .toggle{
     position:absolute;
-    height:48px;
-    width:48px;
+    height:50px;
+    width:50px;
     text-align:center;
     cursor:pointer;
-    background:#f00;
-    top:0%;
+    background:#4b6584;
+    top:0.19%;
     left:-48px;
     line-height:48px;
   }
   .toggle:before{
-    content:'\f060';
+    background:#4b6584;
+    content:'\f0c9';
     font-family:fontAwesome;
     font-size:18px;
     color:#fff;
   }
   .toggle.active:before{
+     // background-color: #eeedee;
     content:'\f00d';
+   // color:#AF2127;
   }
+  
   @media(max-width:768px)
   {
     .sidebar-contact{
@@ -664,4 +672,11 @@ span.step {
       overflow-y:auto;
     }
 
+  }
+
+  .hamb-top,
+  .hamb-middle,
+  .hamb-bottom {
+      background-color:#000;
+      ;
   }

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
-import { environment } from 'environments/environment';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage } from '../../../../shared/errorMessageConstants';
 import { Utils } from '../../../../shared/utilis';
 @Component({
     selector: 'app-default-meeting',
@@ -109,7 +109,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl || data.warningFl) {
                 this.loggedInUser = {};
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             }  else {
                 this.loggedInUserSuccessAction(data);
             }
@@ -177,17 +177,19 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     private getMeetingsByDate() {
         if (this.selectedfromDate === null || this.selectedfromDate === undefined || this.selectedfromDate === '' ) {
-            this.alertService.warning('Please select from date.', 'Wanning');
-            this.filteredFutureMeetingList = this.futureMeetingList;
-            return false;
+            this.dateValidation(ErrorMessageConstants.SelectFromDate);
         } else if (this.selectedtoDate === null || this.selectedtoDate === '' || this.selectedtoDate === undefined) {
-            this.alertService.warning('Please select to date.', 'Wanning');
-            this.filteredFutureMeetingList = this.futureMeetingList;
-            return false;
+            return this.dateValidation(ErrorMessageConstants.SelectToDate);
         } else {
             this.getMeetingBySelectedPeriod();
         }
     }
+    private dateValidation(message) {
+        this.alertService.warning(message, TypeOfError.Warning);
+        this.filteredFutureMeetingList = this.futureMeetingList;
+        return false;
+    }
+
     private setDefaultMeetings() {
         this.activeToday = false;
         this.activeAll = true ;
@@ -268,7 +270,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._meetingService.cancelMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.recentMeeting = {};
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 return this.setCancelMeetingSuccessAction();
             }
@@ -282,15 +284,14 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         if (this.futureMeetingList.indexOf(this.selectedMeeting) !== -1) {
             this.futureMeetingList.splice(this.futureMeetingList.indexOf(this.selectedMeeting), 1);
         }
-        return this.alertService.success('Meeting has cancelled', 'Cancel Meeting');
+        return this.alertService.success(SuccessMessage.CancelledMeeting, SuccessMessage.SuccessHeader);
     }
 
     copyToOutLook(event) {
-     //   const payload = { userCode: this.loggedInUser.userCode };
         this._meetingService.getRemeberEmails().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.rememberEmailList = [];
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 this.setRememberEmailList(data);
             }
@@ -315,8 +316,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been copied. Kindly share via your preferred email id.',
-            'Copy Meeting Details');
+        return this.alertService.success(SuccessMessage, SuccessMessage.SuccessHeader);
     }
     joinMeetingNow() {
         const payload = this.setMeetNowPayload();
@@ -328,7 +328,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this._meetingService.scheduleMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.meetNowMeeting = {};
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 return this.meetNowSuccessAction(data);
             }
@@ -340,7 +340,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowModal.open();
         //  this.futureMeetingList.push(this.meetNowMeeting);
         this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
-        return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
+        return this.alertService.success(SuccessMessage.ScheduleMeeting, SuccessMessage.SuccessHeader);
     }
 
     private setMeetNowPayload() {
@@ -368,7 +368,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
     sendEmail(e) {
         if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
-            return this.alertService.warning('Please enter attendee email id', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.AttendeeEmail, TypeOfError.Warning);
         } else {
             const payload = this.setSendEmailPaylod();
             this.sendMeetingInvitationApiCall(payload);
@@ -377,7 +377,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     private sendMeetingInvitationApiCall(payload: { toAttendees: any; ccAttendees: any; meetingDetailsBody: string; meeting: any; }) {
         this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 return this.setMeetingInvitationSuccessAction();
             }
@@ -388,7 +388,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowOutlookModal.close();
         this.clearOutlookField();
         this.router.navigate(['/meeting'], { queryParams: { meetingCode: this.meetNowMeeting.meetingCode } });
-        return this.alertService.success('Meeting invitation has sent successfully', 'Meeting Invitation');
+        return this.alertService.success(SuccessMessage.MeetingInvitation, SuccessMessage.SuccessHeader);
     }
 
     private setSendEmailPaylod() {

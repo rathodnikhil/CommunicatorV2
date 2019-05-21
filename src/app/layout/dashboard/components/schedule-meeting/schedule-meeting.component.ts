@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { DatePipe } from '@angular/common';
 import { Utils } from '../../../../shared/utilis';
+import { SuccessMessage, ErrorMessageConstants, TypeOfError, StaticLabels } from 'app/shared/errorMessageConstants';
 @Component({
     selector: 'app-schedule-meeting',
     templateUrl: './schedule-meeting.component.html',
@@ -71,7 +72,6 @@ export class ScheduleMeetingComponent implements OnInit {
             this.loggedInUser = data;
         });
         this.setDefaultValueForScheduleMeetingFields();
-        // current date and time
         this.currentDate = Date.now();
     }
     private setDefaultValueForScheduleMeetingFields() {
@@ -100,13 +100,13 @@ export class ScheduleMeetingComponent implements OnInit {
             this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
         const today = new Date();
         if (this.subject === null || typeof this.subject === 'undefined' || this.subject.trim() === '') {
-            return this.alertService.warning('Please enter meeting subject', 'Warning');
-        } else if (this.meeting.selectedDuration === 'Select Duration') {
-            return this.alertService.warning('Please select meeting duration', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.Subject, TypeOfError.Warning);
+        } else if (this.meeting.selectedDuration === StaticLabels.DurationLbl) {
+            return this.alertService.warning(ErrorMessageConstants.Duration, TypeOfError.Warning);
         } else if (this.timezoneSelect === undefined || this.timezoneSelect === '') {
-            return this.alertService.warning('Please select timezone', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.Timezone, TypeOfError.Warning);
         } else if (date <= today) {
-            return this.alertService.warning('Please select future meeting date or time', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.FutureDateTime, TypeOfError.Warning);
         } else {
             const payload = this.createNewMeetingPayload();
             this.scheduleMeetingApiCall(payload);
@@ -116,7 +116,7 @@ export class ScheduleMeetingComponent implements OnInit {
      'recurringType': any;  'timeZone': any; 'timeType': string; 'meetingId': any; 'createdBy': any; }) {
         this._meetingService.scheduleMeeting(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 if (this.futureMeetingList === undefined || this.futureMeetingList.length <= 0) {
                     this.futureMeetingList = [];
@@ -128,7 +128,7 @@ export class ScheduleMeetingComponent implements OnInit {
                 this.filteredFutureMeetingList.splice(0, 0, data);
                 this.meetingObj = data;
                 this.scheduleMeetingModal.open();
-                return this.alertService.success('Meeting has scheduled successfully', 'Schedule Meeting');
+                return this.alertService.success(SuccessMessage.ScheduleMeeting, SuccessMessage.SuccessHeader);
             }
         });
     }
@@ -154,8 +154,8 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     clearAllMeetingField() {
         this.subject = '';
-        this.meeting.selectedDuration = 'Select Duration';
-        this.meeting.selectedTimeZone = 'Select Timezone';
+        this.meeting.selectedDuration = StaticLabels.DurationLbl;
+        this.meeting.selectedTimeZone = StaticLabels.TimezoneLbl;
         this.meeting.callType = 1;
         this.meeting.isRecurring = 1;
         const today = new Date();
@@ -167,11 +167,10 @@ export class ScheduleMeetingComponent implements OnInit {
         this.meeting.meridianTime = { hour: today.getHours(), minute: today.getMinutes() };
     }
     copyToOutLook(event) {
-    //    const payload = {userCode: this.loggedInUser.userCode};
         this._meetingService.getRemeberEmails().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
               this.rememberEmailList = [];
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
               this.rememberEmailList = data;
               this.outlookModal.open();
@@ -195,8 +194,7 @@ export class ScheduleMeetingComponent implements OnInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success('Meeting Details has been copied. Kindly share via your preferred email id.'
-        , 'Copy Meeting Details');
+        return this.alertService.success(SuccessMessage.copyMeetingDetails , SuccessMessage.SuccessHeader);
     }
     changeTimeZone(timezone) {
         this.meeting.selectedTimeZone = timezone;
@@ -240,7 +238,7 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     sendEmail(e) {
         if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
-            return this.alertService.warning('Please enter attendee email id', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.AttendeeEmail, TypeOfError.Warning);
         } else {
             if (this.ccAttendees !== '') {
                 this.selectedCcEmails =  this.ccAttendees;
@@ -251,10 +249,10 @@ export class ScheduleMeetingComponent implements OnInit {
             };
             this._meetingService.sendMeetingInvitationMail(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
-                    return this.alertService.warning(data.message, 'Warning');
+                    return this.alertService.warning(data.message, TypeOfError.Warning);
                 } else {
                     this.closeOutLookMailPopup();
-                    return this.alertService.success('Meeting Invitation sent successfully', 'Meeting Invitation');
+                    return this.alertService.success(SuccessMessage.MeetingInvitation , SuccessMessage.SuccessHeader);
                 }
             });
         }

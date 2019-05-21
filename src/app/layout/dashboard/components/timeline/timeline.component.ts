@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { DOCUMENT } from '@angular/common';
+import { TypeOfError  } from '../../../../shared/errorMessageConstants';
 @Component({
     selector: 'app-timeline',
     templateUrl: './timeline.component.html',
@@ -43,7 +44,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.loggedInUser = {};
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 this.getLoggedInUserSuccessAction(data);
             }
@@ -63,7 +64,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             if (broadcastData.length > 0) {
                 if (broadcastData[0].errorFl || broadcastData[0].warningFl) {
                     this.broadcastMsgList = [];
-                    return this.alertService.warning(broadcastData[0].message, 'Warning');
+                    return this.alertService.warning(broadcastData[0].message, TypeOfError.Warning);
                 }  else {
                     this.broadcastMsgList = broadcastData;
                 }
@@ -78,7 +79,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             if (chatHistoryData.length > 0) {
                 if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
                     this.chattingHistoryList = [];
-                    return this.alertService.warning(chatHistoryData[0].message, 'Warning');
+                    return this.alertService.warning(chatHistoryData[0].message, TypeOfError.Warning);
                 }  else {
                     this.chattingHistoryList = chatHistoryData;
                 }
@@ -124,11 +125,11 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             chatMsg: this.chatMsg
         };
         if (this.chatMsg === '' || this.chatMsg === null || typeof this.chatMsg === 'undefined') {
-            this.alertService.warning('Enter Message', 'Warning');
+            this.alertService.warning('Enter Message', TypeOfError.Warning);
         } else {
             this._chatService.saveChat(payload).subscribe(data => {
                 if (data[0].errorFl === true || data[0].warningFl === true) {
-                    return this.alertService.warning(data.message, 'Warning');
+                    return this.alertService.warning(data.message, TypeOfError.Warning);
                 }
             });
         }
