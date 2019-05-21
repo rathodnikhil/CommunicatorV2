@@ -3,6 +3,7 @@ import { UserService } from 'app/services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'app/services/alert.service';
 import { DOCUMENT } from '@angular/common';
+import { ErrorMessageConstants, TypeOfError , StaticLabels, SuccessMessage} from '../../shared/errorMessageConstants';
 @Component({
   selector: 'app-join-meeting',
   templateUrl: './join-meeting.component.html',
@@ -60,14 +61,15 @@ export class JoinMeetingComponent implements OnInit {
       || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
       return this.alertService.error('Please close popup to continue', 'Error');
     } else if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
-      return this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id', 'Warning');
+      return this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id', TypeOfError.Warning);
     } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-      return this.validationMsgAndField(this.usernameField , 'Enter Full name', 'Warning');
+      return this.validationMsgAndField(this.usernameField , 'Enter Full name', TypeOfError.Warning);
     } else if (!NAME_REGEXP.test(this.userName)) {
-      return this.validationMsgAndField(this.usernameField , 'Please enter alphabats only ', 'Warning');
+      return this.validationMsgAndField(this.usernameField , 'Please enter alphabets only ', TypeOfError.Warning);
+    } else {
+        const payload = this.setDefaultGuestValuesAndCreatePayload();
+        this.getLoggedInUserApiCall(payload);
     }
-    const payload = this.setDefaultGuestValuesAndCreatePayload();
-    this.getLoggedInUserApiCall(payload);
   }
   private validationMsgAndField(elementFocus: ElementRef , validationMsg: String , flag: String) {
     elementFocus.nativeElement.focus();

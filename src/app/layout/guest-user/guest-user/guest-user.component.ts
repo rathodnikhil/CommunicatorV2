@@ -3,6 +3,7 @@ import { PaginationInstance } from 'ngx-pagination';
 import { UserService } from '../../../services/user.service';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 import { AlertService } from '../../../services/alert.service';
+import { TypeOfError } from '../../../shared/errorMessageConstants';
 
 @Component({
   selector: 'app-guest-user',
@@ -48,7 +49,7 @@ export class GuestUserComponent implements OnInit {
     this._userService.getLoggedInUserObj().subscribe(data => {
       if (data.errorFl === true || data.warningFl === true) {
         this.guestUserSpinnerMod.hideSpinner();
-        return this.alertService.warning(data.message, 'Warning');
+        return this.alertService.warning(data.message, TypeOfError.Warning);
       } else {
         this.loggedInUser = data;
         this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
@@ -66,7 +67,7 @@ loadMore(year, month) {
     this._userService.getGuestUsersByLoggedInUser(payload).subscribe(data => {
       this.setMonThAndYear(month, year);
       if (data[0].errorFl || data[0].warningFl) {
-        this.alertService.warning(data[0].message, 'Warning');
+        this.alertService.warning(data[0].message, TypeOfError.Warning);
       }  else {
         this.guestUserList = this.guestUserList.concat(data);
       }

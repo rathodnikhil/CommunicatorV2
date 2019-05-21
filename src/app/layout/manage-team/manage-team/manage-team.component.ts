@@ -443,12 +443,12 @@ export class ManageTeamComponent implements OnInit {
             this.updatedFirstName.trim() === '') {
             return this.alertService.warning('Please enter first name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
-            return this.alertService.warning('Please enter alphabats only ', 'Warning');
+            return this.alertService.warning('Please enter alphabets only ', 'Warning');
          } else if (this.updatedLastName === null || typeof this.updatedLastName === 'undefined' ||
             this.updatedLastName.trim() === '') {
             return this.alertService.warning('Please enter last name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.updatedLastName)) {
-            return this.alertService.warning('Please enter alphabats only ', 'Warning');
+            return this.alertService.warning('Please enter alphabets only ', 'Warning');
         } else if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
             return this.alertService.warning('Please enter email', 'Warning');
         } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
@@ -500,7 +500,6 @@ export class ManageTeamComponent implements OnInit {
     }
 
     private setUpdateUserPayload() {
-        debugger;
         const currentDisplayStatus = this.getStatusByUser(this.updatedUserStatus);
         const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
         const payload = {

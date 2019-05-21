@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '../../../../node_modules/@angular/common';
 import { AlertService } from '../../services/alert.service';
 import { MeetingService } from '../../services/meeting-service';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage } from '../../shared/errorMessageConstants';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -61,7 +62,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private loggedInUserObjApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             }  else {
                 this.setLoggedInUserobjSuccessAction(data);
             }
@@ -109,7 +110,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     // save broadcast message
     broadcastMessages() {
         if (this.broadcastMessage === '' || this.broadcastMessage === null || typeof this.broadcastMessage === 'undefined') {
-            return this.alertService.warning('Please enter message', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.EnterMsg, TypeOfError.Warning);
         } else {
             const payload = { 'broadcastMessage': this.broadcastMessage, generatedBy: this.loggedInUserObj };
             this.saveBroadcastMsgApiCall(payload);
@@ -120,9 +121,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private saveBroadcastMsgApiCall(payload: { 'broadcastMessage': string; generatedBy: any; }) {
         this._groupService.saveBroadcastMessage(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
-                return this.alertService.success('Message has been broadcast successfully', 'Success');
+                return this.alertService.success(SuccessMessage.broadcastMsg, SuccessMessage.SuccessHeader);
             }
         });
     }
@@ -143,7 +144,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
             if (data.errorFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 this.reloadPage();
             }
