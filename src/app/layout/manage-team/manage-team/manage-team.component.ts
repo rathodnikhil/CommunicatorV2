@@ -262,7 +262,7 @@ export class ManageTeamComponent implements OnInit {
 
     // add new member
     addMember() {
-        const NAME_REGEXP = /^[a-zA-Z]+$/i;
+        const NAME_REGEXP = /^[a-zA-Z ]+$/i;
         if (this.firstName === null || typeof this.firstName === 'undefined' || this.firstName.trim() === '') {
             return this.alertService.warning('Please enter first name ', 'Warning');
         } else if (!NAME_REGEXP.test(this.firstName)) {
@@ -436,7 +436,7 @@ export class ManageTeamComponent implements OnInit {
 
     updateMemberDetails() {
         const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-        const NAME_REGEXP = /^[a-zA-Z]+$/i;
+        const NAME_REGEXP = /^[a-zA-Z ]+$/i;
         if (this.updatedUserCode === null || typeof this.updatedUserCode === 'undefined' || this.updatedUserCode.trim() === '') {
             this.updatedUserCode = this.newMemberUserCode;
         } else if (this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' ||

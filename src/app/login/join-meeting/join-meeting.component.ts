@@ -56,7 +56,7 @@ export class JoinMeetingComponent implements OnInit {
     }
   }
   guestLogin() {
-    const NAME_REGEXP = /^[a-zA-Z]+$/i;
+    const NAME_REGEXP = /^[a-zA-Z ]+$/i;
     if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
       || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
       return this.alertService.error('Please close popup to continue', 'Error');

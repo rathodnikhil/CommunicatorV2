@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.verifyUserApiCall(payload);
     }
     private verifyGuest() {
-        const NAME_REGEXP = /^[a-zA-Z]+$/i;
+        const NAME_REGEXP = /^[a-zA-Z ]+$/i;
         if (this.loginMeetingCode === null || typeof this.loginMeetingCode === StaticLabels.Undefined
             || this.loginMeetingCode.trim() === '') {
             this.validationMsgAndField(this.meetingCodeField, ErrorMessageConstants.EnterMeetingId, TypeOfError.Warning);
@@ -129,9 +129,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
             return this.validationMsgAndField(this.usernameField, ErrorMessageConstants.EnterFullName, TypeOfError.Warning);
         } else if (!NAME_REGEXP.test(this.userName)) {
             return this.validationMsgAndField(this.usernameField, ErrorMessageConstants.EnterAlphabatesOnly, TypeOfError.Warning);
-        }
+        } else {
         this.meetingCode = this.loginMeetingCode;
         this.guestLoggedInActions();
+        }
     }
     private verifyUserApiCall(payload: { 'name': any; 'password': string; }) {
         this._userService.verifyUser(payload).subscribe(resp => {
@@ -216,7 +217,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     private loggedInUserApiCall(payload: { firstName: String; isGuest: boolean; userCode: string; email: string; meetingCode: any; }) {
         this._userService.setLoggedInUserObj(payload).subscribe(res => {
-            debugger;
             if (typeof (this.previousResponseValue) !== typeof (res)) {
                 if (res === 'invalid' && !this.isMeetingCodeInValid) {
                     this.previousResponseValue = res;

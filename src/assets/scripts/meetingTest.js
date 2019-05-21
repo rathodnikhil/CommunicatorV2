@@ -418,18 +418,10 @@ connection.onstream = function (event) {
         }
     }
     video.srcObject = event.stream;
-    // video.height = Math.round(window.innerHeight * 0.30) - 10;
-    // video.width = Math.round(window.innerHeight * 0.30) - 10;
     video.setAttribute("style", 'float:left;height:18vh;width:100%');
-    // video.style.padding = '5';
     var outerCustomDiv = document.createElement('div');
     outerCustomDiv.setAttribute("class" , "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
     var customDiv = document.createElement('div');
-    // customDiv.setAttribute("style" , "background-color: #DC143C;  background-position: center center; border: 1px solid rgba(0, 0, 0, 0.8);max-width: 100%;");
-    // customDiv.style.height = Math.round(window.innerHeight * 0.30);
-    // customDiv.style.width = Math.round(window.innerHeight * 0.30);
-    // customDiv.style.padding = '5';
-    // customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + (Math.round(window.innerHeight * 0.30) + 40) + 'px;padding:8px;text-align: center; float:left;');
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
     var viewerNameString = null;
@@ -441,20 +433,16 @@ connection.onstream = function (event) {
         var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
             + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
     }
-    // style="font-size: 0.8vw;"   font-size: 1.1vw;
     heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash fa-lg pull-right" style="display:none;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
-     //   heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-image: linear-gradient(to right,#fd7a2a,orange);color:#fff;margin-bottom: -30px;');
-        customDiv.setAttribute("style" , "  background-color: #eeedee; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #AF2127; ");
+        customDiv.setAttribute("style" , "  background-color: #ffeeed; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
         heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
         if (event.stream.isVideo == 0) {
-            // heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -30px;');
-            customDiv.setAttribute("style" , "background-color: #e5f8f6; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #131313;");
-            heading.setAttribute("style", "background-color:#131313;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
+            customDiv.setAttribute("style" , "background-color: #e2f4f5; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #088B92; color:#088B92;");
+            heading.setAttribute("style", "background-color:#088B92;;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
-            // heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#a201ff;color:#fff;margin-bottom: -25px;');
             heading.setAttribute("style", ' padding: 1.3%;  text-align: center;');
         }
     }
@@ -471,10 +459,8 @@ connection.onstream = function (event) {
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if (initialsDiv.innerHTML === "You") {
-            // initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#f1f0ea;border:1px solid #fd7a2a;color:#fd7a2a ;margin-top: 30px;font-size: 4.0vw;');
             initialsDiv.setAttribute("style" , "  text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
         } else {
-            // initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#faf2ff;color:#a201ff;margin-top: 30px;font-size: 4.0vw;border: 1px solid #a201ff;');
             initialsDiv.setAttribute("style" , " text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
         }
         customDiv.appendChild(initialsDiv);
