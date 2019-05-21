@@ -31,7 +31,7 @@
     </div>
 </div>   
     <div><h5 class="searched-title team-member" ><b>Team Members</b></h5></div>
-    <div class="member-list" style="background-color: #ffffff;border-top: 1px  solid #F9E0FF;border-width:80%;">
+    <div class="member-list" style="background-color: #ffffff;border-top: 1px  solid #d2d0d2;border-width:80%;">
         <div>
             <div class="selected-criteria-div">
                 <h4 class="selected-criteria">Total Members ({{userList.length}})</h4>             
@@ -49,7 +49,7 @@
         <div style="margin-bottom: 2%; background-color: #f6f6f6; padding: 7px;">
             <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchMemText">
                 <a style="color: gray;" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
-                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left:1.25rem;">
+                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left:1.25rem;border: 1px solid #efebef;">
                     <span class="first-letter"> {{user.firstLetter}}</span>
                       <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null || user.onlineStatus != '1'}"></div>
                     <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
@@ -60,7 +60,7 @@
         <div><h5 class="searched-title team-member"><b>Groups</b></h5></div>
         <div>
             <div class="group-criteria-div">
-                <h4 class="group-criteria">Total Group ({{groupList.length}})</h4>             
+                <h4 class="group-criteria">Total Groups ({{groupList.length}})</h4>             
                 <div class="row">
                     <div class="col-md-5">
                     </div>
@@ -74,7 +74,7 @@
         </div> 
             <div style="background-color: #f6f6f6;padding: 7px;">
                     <a *ngFor="let group of groupList | genericSearchAllProp : searchGroupText" href="#" [routerLink]="['chat']"
-                    style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;"
+                    style="background-color:#ffffff;margin-bottom: 5px;border-radius:3px; color: gray;border: 1px solid #efebef;"
                     (click)="viewGroupDetails(group.groupId)" class="list-group-item clearfix d-block">
                     <img src="/assets/images/group.png" style="width: 30px; height: 30px;"/>
                     <span style="padding-left: 1rem; color:#000;">{{group.groupId.groupName}}&nbsp;</span>
