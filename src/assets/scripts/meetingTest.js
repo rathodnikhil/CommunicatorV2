@@ -475,8 +475,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'background-color:#131313;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
-            video.setAttribute("style", "background: #e0ecee;border: 1px solid #AF2127;border-top:none;float:left;height:18vh;width:100%");
+            heading.setAttribute("style", 'background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
+            video.setAttribute("style", "background:  #e2f4f5;border: 1px solid #4b6584;border-top:none;float:left;height:18vh;width:100%");
             screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');

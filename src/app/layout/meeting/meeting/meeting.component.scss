@@ -578,6 +578,9 @@ div.scrollmenu a:hover {
   }
   .sidebar-contact.active{
     right:0;
+    #outer-icon-bar{
+        display: none;
+    }
   }
   .sidebar-contact input,
   .sidebar-contact textarea{
@@ -605,7 +608,7 @@ div.scrollmenu a:hover {
     font-size:18px;
   }
   .toggle{
-    position:absolute;
+     position:absolute;
    // height:86.3vh;
     width:80px;
     text-align:center;

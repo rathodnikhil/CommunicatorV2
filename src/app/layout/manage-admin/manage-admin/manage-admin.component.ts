@@ -1,11 +1,11 @@
 import { UserService } from '../../../services/user.service';
 import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
-import { Component, OnInit, Output, ViewChild, ViewContainerRef , ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild , ElementRef } from '@angular/core';
 import { TeamService } from '../../../services/team.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
-import { ErrorMessageConstants, TypeOfError , SuccessMessage } from '../../../shared/errorMessageConstants';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage , StaticLabels} from '../../../shared/errorMessageConstants';
 @Component({
   selector: 'app-manage-admin',
   templateUrl: './manage-admin.component.html',
@@ -101,7 +101,7 @@ deleteMemberFlag = 1;
     this.config.currentPage = number;
 }
 deleteAdmin(selectedAdmin) {
-    if (selectedAdmin.status.status === 'ACTIVE') {
+    if (selectedAdmin.status.status === StaticLabels.Active) {
         this.deleteAdminActiveStatusAction(selectedAdmin);
     } else {
         return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
@@ -145,7 +145,7 @@ deleteAdminNow() {
     private setAdminStatusValue(flag: any, editDeletelag: any, obj: any) {
         let statusVal;
         if (flag === 1 || (editDeletelag === 2 && flag === 2)) {
-            statusVal = 'INACTIVE';
+            statusVal = StaticLabels.InActive;
             this.deleteMemberFlag = 1;
         } else if (editDeletelag === 1) {
             statusVal = obj.status.status;
@@ -170,12 +170,12 @@ editAdmin(user) {
     }
 
     private setStatusAndMeetingStatus(user: any) {
-        if (user.status.status === 'ACTIVE') {
+        if (user.status.status === StaticLabels.Active) {
             this.updatedUserStaus = true;
         } else {
             this.updatedUserStaus = false;
         }
-        if (user.meetingPermissionStatus.status === 'ACTIVE') {
+        if (user.meetingPermissionStatus.status === StaticLabels.Active) {
             this.updatedMeetingPermissionStatus = true;
         } else {
             this.updatedMeetingPermissionStatus = false;
@@ -185,18 +185,19 @@ editAdmin(user) {
 updateAdmin() {
     const EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
     const NAME_REGEXP = /^[a-zA-Z ]+$/i;
-    if ( this.updatedFirstName === null || typeof this.updatedFirstName === 'undefined' || this.updatedFirstName.trim() === '') {
-        return this.validationMsgAndField(this.updatedFirstNameField , 'Please enter first name', TypeOfError.Warning);
+    if ( this.updatedFirstName === null || typeof this.updatedFirstName === StaticLabels.Undefined || this.updatedFirstName.trim() === '') {
+        return this.validationMsgAndField(this.updatedFirstNameField , ErrorMessageConstants.FirstName, TypeOfError.Warning);
       } else if (!NAME_REGEXP.test(this.updatedFirstName)) {
-        this.validationMsgAndField(this.updatedFirstNameField , 'Please enter alphabatss only' , TypeOfError.Warning);
-      }   else if ( this.updatedLastName === null || typeof this.updatedLastName === 'undefined' || this.updatedLastName.trim() === '' ) {
-        return this.validationMsgAndField(this.updatedLastNameField , 'Please enter last name', TypeOfError.Warning);
+        this.validationMsgAndField(this.updatedFirstNameField , ErrorMessageConstants.EnterAlphabatesOnly , TypeOfError.Warning);
+      }   else if ( this.updatedLastName === null || typeof this.updatedLastName === StaticLabels.Undefined ||
+         this.updatedLastName.trim() === '' ) {
+        return this.validationMsgAndField(this.updatedLastNameField , ErrorMessageConstants.LastName, TypeOfError.Warning);
       } else if (!NAME_REGEXP.test(this.updatedLastName)) {
-        this.validationMsgAndField(this.updatedLastNameField , 'Please enter alphabatss only' , TypeOfError.Warning);
-      } else  if (this.updatedEmail === null || typeof this.updatedEmail === 'undefined' || this.updatedEmail.trim() === '') {
-        return this.validationMsgAndField(this.updatedEmailField , 'Please enter email' , TypeOfError.Warning);
+        this.validationMsgAndField(this.updatedLastNameField , ErrorMessageConstants.EnterAlphabatesOnly , TypeOfError.Warning);
+      } else  if (this.updatedEmail === null || typeof this.updatedEmail === StaticLabels.Undefined || this.updatedEmail.trim() === '') {
+        return this.validationMsgAndField(this.updatedEmailField , ErrorMessageConstants.Email , TypeOfError.Warning);
       } else if (!EMAIL_REGEXP.test(this.updatedEmail)) {
-        return this.validationMsgAndField( this.updatedEmailField , 'Please enter valid email', TypeOfError.Warning);
+        return this.validationMsgAndField( this.updatedEmailField , ErrorMessageConstants.ValidEmail, TypeOfError.Warning);
     } else {
         return this.updateAdminSuccessAction();
     }
@@ -212,14 +213,14 @@ updateAdmin() {
         const payload = this.createUpdateUserPayload(currentDisplayStatus, currentDisplayMeetingStatus);
         this.updateUserDetailsApiCall(payload);
         this.editMemberModal.close();
-        return this.alertService.success('Admin has updated successfully', 'Success');
+        return this.alertService.success(SuccessMessage.AdminUpdate, SuccessMessage.SuccessHeader);
     }
 
     private updateUserDetailsApiCall(payload: { firstName: any; lastName: any; email: any; status: { status: any; };
          userCode: any; team: { teamName: any; }; meetingPermissionStatus: { status: any; }; }) {
         this._userService.updateUserDetails(payload).subscribe(data => {
             if (data.warningFl === true) {
-                return this.validationMsgAndField(this.updatedFirstNameField, 'Username already exist', TypeOfError.Warning);
+                return this.validationMsgAndField(this.updatedFirstNameField, ErrorMessageConstants.ExistUserName, TypeOfError.Warning);
             } else if (data.errorFl === true) {
                 return this.validationMsgAndField(this.updatedEmailField , data.message, TypeOfError.Warning);
             } else {
@@ -249,9 +250,9 @@ private getStatusByUser(updatedStaus) {
     let currentDisplayStatus;
     if (updatedStaus === true) {
 
-        currentDisplayStatus = 'ACTIVE';
+        currentDisplayStatus = StaticLabels.Active;
     } else {
-        currentDisplayStatus = 'INACTIVE';
+        currentDisplayStatus = StaticLabels.InActive;
     }
     return currentDisplayStatus;
 }
