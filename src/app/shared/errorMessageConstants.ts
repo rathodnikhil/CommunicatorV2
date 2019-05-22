@@ -5,7 +5,7 @@ export class ErrorMessageConstants {
     public static ClosePopup = 'Please close popup to continue';
     public static EnterMeetingId = 'Please enter Meeting Id';
     public static EnterFullName = 'Please enter Full Name ';
-    public static EnterAlphabatesOnly = 'Please enter alphabatss only ';
+    public static EnterAlphabatesOnly = 'Please enter alphabats only';
     public static EnterPassword = 'Please enter Password';
     public static ValidUserName = 'Please enter valid username';
     public static ValidPassword = 'Please enter valid password';
@@ -59,7 +59,7 @@ export class SuccessMessage {
     public static AddUser = 'User has been added successfully';
 
 // Dashboard Component
-   public static broadcastMsg = 'Message has been broadcast successfully';;
+   public static broadcastMsg = 'Message has been broadcast successfully';
 }
 
 export class StaticLabels {
