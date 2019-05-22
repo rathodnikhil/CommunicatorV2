@@ -22,7 +22,8 @@
                     </div>
 
                 </div>
-                <div class="attendee-row">
+               
+                <div class="attendee-row" style="padding-right: 80px;">
                         <h4></h4>
                     <div class="demo-one"style="overflow-y:auto;">
                         <div class="row main-div" #videos_container id="videos_container">
@@ -30,13 +31,13 @@
                     </div>
                 </div>
                    
-                <div class="row parent">
+                <div class="row parent" style="padding-right: 80px;">
                     <div class="col-md-12" style="text-align: center;">
                             <h4 style="margin-bottom:0px;padding:0.1% 0% 0.2% 1%;">Shared Screen</h4>
                     </div>
                    <div id="shareScreen-container" class="row main-div"></div>
                 </div>
-                <div style="height: calc(100vh*.06);">
+                <div style="height: calc(100vh*.06); padding-right: 80px;">
                     <div class="col-md-12" style="padding-bottom: 0px;">
                                         <div id="room-urls" style="display: none; float: left;padding-top:6px;">
                                         <button type="button" data-toggle="tooltip" title="Copy Meeting Link"
@@ -114,25 +115,6 @@
                 </div>
             </div>
             <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}">
-                <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}">
-                    <div id="outer-icon-bar" class="icon-bar">
-                        <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
-                            [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
-                        <a href="javascript:void(0)" (click)="switchTab('mom')"
-                            [ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i
-                                class="fa fa-sticky-note-o"></i></a>
-                        <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')"
-                            [ngClass]="{'selected': currentTab=='viewers'}" title="Viewers"><i
-                                class="fa fa-user-o"></i></a>
-                        <a id="downloadedFilesAnchor" href="javascript:void(0)"
-                            (click)="switchTab('downloadedFiles')"
-                            [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i
-                                class="fa fa-file-text-o"></i></a>
-                         <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
-                        <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> 
-                        <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
-                                src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
-                    </div>
                 </div>
                
                 <div class="card">
@@ -145,29 +127,11 @@
                         </div>
                     </div>
                     <div class="card-body" style="padding-right:65px;">
-                        <div class="icon-bar">
-                            <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
-                                [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i>
-                                <span id="messageCount" class="step"></span></a>
-                            <a href="javascript:void(0)" (click)="switchTab('mom')"
-                                [ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i
-                                    class="fa fa-sticky-note-o"></i></a>
-                            <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')"
-                                [ngClass]="{'selected': currentTab=='viewers'}" title="Viewers"><i
-                                    class="fa fa-user-o"></i></a>
-                            <a id="downloadedFilesAnchor" href="javascript:void(0)"
-                                (click)="switchTab('downloadedFiles')"
-                                [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i
-                                    class="fa fa-file-text-o"></i></a>
-                             <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
-                            <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> 
-                            <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
-                                    src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
-                        </div>
                         <ul role="tablist" class="nav nav-tabs justify-content-start">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
-                                    Chat<span id="messageCount" class="step"></span>
+                                    Chat
+                                    <!-- <span id="messageCount" class="step"></span> -->
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
@@ -177,7 +141,8 @@
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('viewers')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='viewers'}">
-                                    Viewers<span id="viewerCount" class="step"></span>
+                                    Viewers
+                                   
                                 </span>
                             </li>
                             <li class="nav-item ng-star-inserted" (click)="switchTab('downloadedFiles')">
@@ -222,6 +187,25 @@
                     </div>
                 </div>
             </div>
+            <div class="icon-bar">
+                    <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
+                        [ngClass]="{'selected': currentTab=='chat'}"> <div id="messageCount" class="step"></div><i class="fa fa-comments-o"></i></a>
+                    <a href="javascript:void(0)" (click)="switchTab('mom')"
+                        [ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i
+                            class="fa fa-sticky-note-o"></i></a>
+                    <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')"
+                        [ngClass]="{'selected': currentTab=='viewers'}" title="Viewers"><div id="viewerCount" class="step"></div>
+                  
+                        <i class="fa fa-user-o"></i></a>
+                    <a id="downloadedFilesAnchor" href="javascript:void(0)"
+                        (click)="switchTab('downloadedFiles')"
+                        [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i
+                            class="fa fa-file-text-o"></i></a>
+                     <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
+                    <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> 
+                    <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
+                            src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
+                </div> 
 
         </div>
     </div>
