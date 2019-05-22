@@ -43,11 +43,17 @@ export class ErrorMessageConstants {
         public static AlredayDeactivateAndEdit = 'Selected group has deactivated, you can not edit group';
         public static SelectMember = 'Please select members';
 
-// Manage Team Component
+//  Manage Team Component
         public static TeamName = 'Please enter team name';
         public static AlreadyTeamDeactivate = 'Selected team has already deactivated';
         public static AlreadyDeactivatedTeamAndEdit = 'Selected team has deactivated, you can not edit team';
         public static AlreadyDeactivateAndAddMember = 'Selected team has deactivated , you can not add member in this team ';
+
+//  Meeting Component
+        public static InvalidMeetingCode = 'MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.';
+        public static MeetingOver = 'Meeting start time has already elapsed';
+        public static EnterMOM = 'Please enter meeting notes(MOM)';
+        public static GuestViewAttendee =  'Guest user does not have permission for viewing attendees';
     }
 export class TypeOfError {
         public static Error = 'Error';
@@ -89,6 +95,10 @@ export class SuccessMessage {
         public static DeleteTeam = 'Team has deleted successfully';
         public static UpdateTeam = 'Team has updated successfully';
         public static SaveMember = 'Member has saved successfully';
+
+// Meeting Component
+        public static DownloadMom = 'File has been downloaded.';
+        public static EndMeeting = 'Meeting has ended.';
 }
 
 export class StaticLabels {
@@ -100,4 +110,11 @@ export class StaticLabels {
         public static Active = 'ACTIVE';
         public static InActive = 'INACTIVE';
         public static Cancel = 'CANCEL';
+        public static OverMeeting = 'Meeting Over';
+        public static True = 'true';
+        public static False = 'false';
+        public static UnMute = 'Unmute';
+        public static Mute = 'Mute';
+        public static VideoOn = 'Video On';
+        public static VideoOff = 'Video Off';
 }
