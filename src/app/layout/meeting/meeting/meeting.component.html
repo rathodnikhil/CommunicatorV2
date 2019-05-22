@@ -11,7 +11,7 @@
                                 <h6 *ngIf="meetingDetails.subject!=undefined" style="">
                                         <b>{{meetingDetails.subject}}</b>
                                     </h6>
-                            <label class="meeting-id-color" style="color:#AF2127;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                            <label (click)="copyMeetingId()" class="meeting-id-color" style="color:#AF2127;cursor: pointer;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                         </div>
                         <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2"style="text-align:right;color:#AF2127;padding-right:3%;">
                                 <h4>
