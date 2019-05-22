@@ -67,7 +67,7 @@ export class MyProfileComponent implements OnInit {
     }
 
     updateProfile() {
-        const NAME_REGEXP = /^[a-zA-Z]+$/i;
+        const NAME_REGEXP = /^[a-zA-Z ]+$/i;
         if (this.loggedInUserObj.firstName === null ||
             typeof this.loggedInUserObj.firstName === 'undefined' || this.loggedInUserObj.firstName.trim() === '' ) {
             return this.validationMsgAndField(this.firstNameField , ErrorMessageConstants.FirstName, TypeOfError.Warning);

@@ -163,7 +163,7 @@ div.scrollmenu a:hover {
       width: 37px;
       height:37px;  }
       .img-fluid{
-        max-width: 100%;
+        max-width: 90%;
         height:auto;
     }
     }
@@ -175,7 +175,7 @@ div.scrollmenu a:hover {
       height:40px;
     }
     .img-fluid{
-        max-width: 100%;
+        max-width: 90%;
         height:auto;
     }
     }
@@ -198,7 +198,7 @@ div.scrollmenu a:hover {
               height:30px;
             }
             .img-fluid{
-                max-width: 100%;
+                max-width: 90%;
                 height:auto;
             }
             }
@@ -404,7 +404,7 @@ span.step {
   }
   .btn-url{
     border: 1px solid #039085 ;
-    background: #0fb9b1;
+    background: #088B92;
     font-weight: bold;
     color: #fff;
   }
@@ -414,17 +414,16 @@ span.step {
     color: #ffffff;
     padding: 0.375rem 0.75rem;
     border-radius: 28px;
-    border: 1px solid #0fb9b1;
-    background-color: #0fb9b1;
+    border: 1px solid #088B92;
+    background-color: #088B92;
 }
 .btn-sec:hover{
-
-    box-shadow: 0px 0px 17px -2px #AF2127;
+    box-shadow: 0px 0px 17px -2px #01baac;
    color:#0fb9b1;
    background-color: #fff;
  }
 
- .btn-danger{
+ .btn-danger-end-meeting{
     cursor: pointer;
     font: bold 13px Arial, Helvetica;
     color: #ffffff;
@@ -439,12 +438,12 @@ span.step {
     box-shadow: 0px 0px 17px -2px #9c4141;
  }
   .btn-unmute{
-    background-color: #0fb9b1;
+    background-color: #088B92;
       color: #fff;
       border: 1px solid #039085;
   }
   .btn-mute{
-    background-color: #0fb9b1;
+    background-color: #088B92;
     color: #fff;
     border: 1px solid #039085;
 
@@ -453,7 +452,7 @@ span.step {
   .btn-mute:hover{
     border-radius: 28px;
     box-shadow: 0px 0px 17px -2px #AF2127;
-    color:#0fb9b1;
+    color:#088B92;
    background-color: #fff;
   }
   .subject-line{
@@ -494,7 +493,7 @@ span.step {
     cursor:pointer;
     border: 1px solid #039085;
     color: #FFF;
-    background-color: #0fb9b1;
+    background-color: #088B92;
     padding: .375rem .75rem;
 }
 .generate-mom-btn:hover
@@ -583,7 +582,7 @@ span.step {
 
 .sidebar-contact{
     position:fixed;
-    top:70px;
+    top:72px;
     right:-40%;
    // transform:translateY(-50%);
     width:40vw;
@@ -626,17 +625,21 @@ span.step {
   }
   .toggle{
     position:absolute;
-    height:50px;
+    height:51px;
     width:50px;
     text-align:center;
     cursor:pointer;
     background:#4b6584;
-    top:0.19%;
+    top:0.2%;
     left:-48px;
     line-height:48px;
   }
+  .toggle.active{
+    background: #AF2127;
+    border: 1px solid #AF2127;
+  }
   .toggle:before{
-    background:#4b6584;
+    
     content:'\f0c9';
     font-family:fontAwesome;
     font-size:18px;
@@ -645,6 +648,7 @@ span.step {
   .toggle.active:before{
      // background-color: #eeedee;
     content:'\f00d';
+    color:#fff;
    // color:#AF2127;
   }
   
@@ -672,11 +676,4 @@ span.step {
       overflow-y:auto;
     }
 
-  }
-
-  .hamb-top,
-  .hamb-middle,
-  .hamb-bottom {
-      background-color:#000;
-      ;
   }
