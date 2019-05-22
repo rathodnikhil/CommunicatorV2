@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
-import { ErrorMessageConstants, TypeOfError , SuccessMessage } from '../../../../shared/errorMessageConstants';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage , StaticLabels} from '../../../../shared/errorMessageConstants';
 import { Utils } from '../../../../shared/utilis';
 @Component({
     selector: 'app-default-meeting',
@@ -316,7 +316,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success(SuccessMessage, SuccessMessage.SuccessHeader);
+        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
     }
     joinMeetingNow() {
         const payload = this.setMeetNowPayload();
@@ -367,7 +367,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         return (offset < 0 ? '+' : '-') + ('00' + Math.floor(o / 60)).slice(-2) + ':' + ('00' + (o % 60)).slice(-2);
     }
     sendEmail(e) {
-        if (this.selectedEmails === null || typeof this.selectedEmails === 'undefined' || this.selectedEmails.trim() === '') {
+        if (this.selectedEmails === null || typeof this.selectedEmails === StaticLabels.Undefined || this.selectedEmails.trim() === '') {
             return this.alertService.warning(ErrorMessageConstants.AttendeeEmail, TypeOfError.Warning);
         } else {
             const payload = this.setSendEmailPaylod();
@@ -441,7 +441,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
             this.selectedEmails += ',' + this.toAttendees.trim();
         }
         if (this.selectedEmails.find === undefined) {
-            this.selectedEmails = this.selectedEmails.replace('undefined', '');
+            this.selectedEmails = this.selectedEmails.replace(StaticLabels.Undefined, '');
             this.selectedEmails = this.selectedEmails.replace(/^,/, '');
         }
         this.toAttendees = '';
@@ -450,8 +450,8 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         if (this.ccAttendees.trim() !== '') {
             this.selectedCcEmails += ',' + this.ccAttendees.trim();
         }
-        if (typeof this.selectedCcEmails.find === 'undefined') {
-            this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');
+        if (typeof this.selectedCcEmails.find === StaticLabels.Undefined) {
+            this.selectedCcEmails = this.selectedCcEmails.replace(StaticLabels.Undefined, '');
             this.selectedCcEmails = this.selectedCcEmails.replace(/^,/, '');
         }
         this.ccAttendees = '';

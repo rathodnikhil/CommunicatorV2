@@ -5,14 +5,7 @@
                 <div class="card-header" style="margin-bottom: -2px;box-shadow: -5px 5px 5px #e4dadb;">
                     <div class="row">
                         <div class="col-md-3">
-                            <!-- <h5 *ngIf="meetingDetails.createdBy!=undefined"
-                                style="overflow-wrap: break-word; margin-left: 10%;"><b>Host:
-                                    {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
-                            </h5> -->
                               <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" style="margin-left:10%;" />
-                            <!-- <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-left: 10%;">
-                                <b>{{meetingDetails.subject}}</b>
-                            </h6> -->
                         </div>
                         <div class="col-md-7" style="text-align: center;color:#AF2127;">
                                 <h6 *ngIf="meetingDetails.subject!=undefined" style="">
@@ -20,14 +13,6 @@
                                     </h6>
                             <label class="meeting-id-color" style="color:#AF2127;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                         </div>
-                        <!-- <div class="col-md-2">
-                            <div id="room-urls" style="display: none; float: right;">
-                                <button type="button" data-toggle="tooltip" title="Copy Meeting Link"
-                                    class="btn btn-url" id="copyGuestMeetingLink">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
-                                </button>
-                            </div>
-                        </div> -->
                         <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2"style="text-align:right;color:#AF2127;padding-right:3%;">
                                 <h4>
                                     <i class="fa fa-clock-o"></i>&nbsp;
@@ -42,17 +27,18 @@
                     <div class="demo-one"style="overflow-y:auto;">
                         <div class="row main-div" #videos_container id="videos_container">
                         </div>
-                        <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
                     </div>
-                    <!-- <p  id="muteIcon"> </p>  -->
                 </div>
-                    <h4 style="margin-bottom:0px;background-color:#4b6584;color:#ffffff;padding:0.1% 0% 0.2% 1%;text-align: center;">Shared Screen</h4>
+                   
                 <div class="row parent">
+                    <div class="col-md-12" style="text-align: center;">
+                            <h4 style="margin-bottom:0px;padding:0.1% 0% 0.2% 1%;">Shared Screen</h4>
+                    </div>
                    <div id="shareScreen-container" class="row main-div"></div>
                 </div>
                 <div style="height: calc(100vh*.06);">
                     <div class="col-md-12" style="padding-bottom: 0px;">
-                                        <div id="room-urls" style="display: none; float: right;padding-top:6px;">
+                                        <div id="room-urls" style="display: none; float: left;padding-top:6px;">
                                         <button type="button" data-toggle="tooltip" title="Copy Meeting Link"
                                             class="btn btn-url" id="copyGuestMeetingLink">
                                             <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
@@ -128,27 +114,41 @@
                 </div>
             </div>
             <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}">
-                <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}"></div>
+                <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}">
+                    <div id="outer-icon-bar" class="icon-bar">
+                        <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
+                            [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
+                        <a href="javascript:void(0)" (click)="switchTab('mom')"
+                            [ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i
+                                class="fa fa-sticky-note-o"></i></a>
+                        <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')"
+                            [ngClass]="{'selected': currentTab=='viewers'}" title="Viewers"><i
+                                class="fa fa-user-o"></i></a>
+                        <a id="downloadedFilesAnchor" href="javascript:void(0)"
+                            (click)="switchTab('downloadedFiles')"
+                            [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i
+                                class="fa fa-file-text-o"></i></a>
+                         <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
+                        <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> 
+                        <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
+                                src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
+                    </div>
+                </div>
+               
                 <div class="card">
                     <div class="card-header col-md-12 meeting-activity-header">
                         <div class="col-md-8" style="float: left;transform: translateY(20%);">
-                            <!-- <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" /> -->
                               <h5 *ngIf="meetingDetails.createdBy!=undefined"
                                 style="overflow-wrap: break-word;"><b>Host:
                                     {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
                         </div>
-                        <!-- <div *ngIf="meetingDetails.subject!=undefined" class="col-md-4"style="float: right;color:#000;">
-                            <h4>
-                                <i class="fa fa-clock-o"></i>&nbsp;
-                                {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
-                            </h4>
-                        </div> -->
                     </div>
                     <div class="card-body" style="padding-right:65px;">
                         <div class="icon-bar">
                             <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
-                                [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i></a>
+                                [ngClass]="{'selected': currentTab=='chat'}"><i class="fa fa-comments-o"></i>
+                                <span id="messageCount" class="step"></span></a>
                             <a href="javascript:void(0)" (click)="switchTab('mom')"
                                 [ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i
                                     class="fa fa-sticky-note-o"></i></a>
@@ -159,8 +159,8 @@
                                 (click)="switchTab('downloadedFiles')"
                                 [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i
                                     class="fa fa-file-text-o"></i></a>
-                            <!-- <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
-                            <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> -->
+                             <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
+                            <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> 
                             <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
                                     src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
                         </div>
