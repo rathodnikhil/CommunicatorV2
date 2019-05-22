@@ -45,17 +45,15 @@ div.scrollmenu a:hover {
 }
 
 .parent {
-    background-color: f1f1f1;
     position: relative;
     height: calc(100vh*0.28);
     border: 1px solid #dedede;
-    //border-radius: 8px;
-    background: rgb(238, 235, 235);
+    background-color: #f6f6f6;
     padding: 5px;
-   // margin: 2px;
    margin: 1px;
-   margin-top: 0px;
+   margin-top: 8px;
    overflow-y:auto;
+   border-radius: 7px;
 }
 
 .child {
@@ -346,7 +344,7 @@ div.scrollmenu a:hover {
     top: 51px;
     right: 0;
     bottom: auto;
-    height: 94.4%;
+    height: 86.3vh;
     background-color: #4b6584;
     width:65px;
 }
@@ -540,27 +538,8 @@ span.step {
     display: block;
     padding: 0.5rem 1.5rem;
 }
-
-// /*media queries for meeting page logo*/
-// @media (min-width: 768px) and (max-width:1366px){
-//     .img-fluid{
-//             max-width: 100%;
-//           height: auto;
-//          }
-// }
-
-// @media (min-width: 1370px){
-//     .img-fluid{
-//             max-width: 60%;
-//           height: auto;
-//          }
-// }
-
 .meeting-activity-header{
-    //background: #f4f2f3;
     background:#AF2127;
-    // padding-top: 2.8%;
-    // padding-bottom: 2.8%;
 }
 
 .attendee-name{
@@ -584,10 +563,8 @@ span.step {
     position:fixed;
     top:72px;
     right:-40%;
-   // transform:translateY(-50%);
     width:40vw;
     height:auto;
-    // padding:40px;
     background:#fff;
     box-shadow: 0 20px 50px rgba(0,0,0,.5);
     box-sizing:border-box;
@@ -595,6 +572,9 @@ span.step {
   }
   .sidebar-contact.active{
     right:0;
+    #outer-icon-bar{
+        display: none;
+    }
   }
   .sidebar-contact input,
   .sidebar-contact textarea{
@@ -611,8 +591,6 @@ span.step {
     padding:0;
   }
   .sidebar-contact textarea{
-    // height:60px;
-    // resize:none;
     height: calc(100vh*.55);
   }
 
@@ -625,13 +603,13 @@ span.step {
   }
   .toggle{
     position:absolute;
-    height:51px;
-    width:50px;
+   // height:86.3vh;
+    width:65px;
     text-align:center;
     cursor:pointer;
     background:#4b6584;
     top:0.2%;
-    left:-48px;
+    left:-65px;
     line-height:48px;
   }
   .toggle.active{
@@ -644,12 +622,11 @@ span.step {
     font-family:fontAwesome;
     font-size:18px;
     color:#fff;
+    
   }
   .toggle.active:before{
-     // background-color: #eeedee;
     content:'\f00d';
     color:#fff;
-   // color:#AF2127;
   }
   
   @media(max-width:768px)
