@@ -5,6 +5,7 @@ import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage , StaticLabels} from '../../../shared/errorMessageConstants';
 
 @Component({
     selector: 'app-manage-group',
@@ -66,6 +67,7 @@ export class ManageGroupComponent implements OnInit {
     viewMsg = false;
     @ViewChild('emailField') emailField: ElementRef;
     @ViewChild('deleteGroupField') deleteGroupField: ElementRef;
+    @ViewChild('groupNameField') groupNameField: ElementRef;
     @ViewChild('manageGroupSpinner') manageGroupSpinnerMod: SpinnerComponent;
     @ViewChild('addNewGroupModal') public addNewGroupModal: CustomModalComponent;
     newGroup: CustomModalModel = {
@@ -122,7 +124,7 @@ export class ManageGroupComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             this.loggedInUserObj = data;
             if (data.errorFl === true || data.warningFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                this._groupService.setGroupList();
                 this.groupListApiCall();
@@ -134,7 +136,7 @@ export class ManageGroupComponent implements OnInit {
                 if (groupData.warningFl === true || groupData.errorFl === true || groupData === undefined) {
                     this.groupList = [];
                     this.manageGroupSpinnerMod.hideSpinner();
-                    return this.alertService.warning(groupData.message, 'Warning');
+                    return this.alertService.warning(groupData.message, TypeOfError.Warning);
                 } else {
                    // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
                    this.groupList = [];
@@ -201,18 +203,22 @@ export class ManageGroupComponent implements OnInit {
         this.addNewGroupModal.open();
     }
     addGroup() {
-        if (this.newGroupName === null || typeof this.newGroupName === 'undefined' || this.newGroupName.trim() === '') {
-            return this.alertService.warning('Please enter group name', 'Warning');
+        if (this.newGroupName === null || typeof this.newGroupName === StaticLabels.Undefined || this.newGroupName.trim() === '') {
+            return this.validationMsgAndField(this.groupNameField , ErrorMessageConstants.GroupName, TypeOfError.Warning);
         } else {
            const payload = { 'groupName': this.newGroupName, 'user': this.loggedInUserObj };
             this.addGroupApiCall(payload);
         }
     }
+    private validationMsgAndField(elementFocus: ElementRef, validationMsg: String, flag: String) {
+        elementFocus.nativeElement.focus();
+        return this.alertService.warning(validationMsg, flag);
+    }
     private addGroupApiCall(payload: { 'groupName': any; 'user': any; }) {
         this._groupService.saveGroupDetails(payload).subscribe((res) => {
             if (res.errorFl === true || res.warningFl === true) {
                 this.newGroupName = '';
-                return this.alertService.warning(res.message, 'Warning');
+                return this.alertService.warning(res.message, TypeOfError.Warning);
             } else {
                 return this.setSucessResponseOnAddGroup(res);
             }
@@ -222,7 +228,7 @@ export class ManageGroupComponent implements OnInit {
     private setSucessResponseOnAddGroup(res: any) {
         this.groupList.push(res);
         this.newGroupName = '';
-        return this.alertService.success('Group has been added successfully', 'Success');
+        return this.alertService.success(SuccessMessage.AddGroup, SuccessMessage.SuccessHeader);
     }
 
     displayGroupDetails(group, index) {
@@ -238,7 +244,7 @@ export class ManageGroupComponent implements OnInit {
     }
     private getSelectedGroupObjectValue(group: any) {
         if (group.groupId.groupId === '' || group.groupId.groupId === null ||
-            typeof group.groupId.groupId === 'undefined') {
+            typeof group.groupId.groupId === StaticLabels.Undefined) {
             this.selectedGroupObj = this.selectedNewGroupObj;
         } else {
             this.selectedGroupObj = group.groupId;
@@ -246,7 +252,7 @@ export class ManageGroupComponent implements OnInit {
     }
 
     private setMemberPermission() {
-        if (this.selectedGroupObj.status.status === 'CANCEL') {
+        if (this.selectedGroupObj.status.status === StaticLabels.Cancel) {
             this.addMemPermission = 2;
         } else {
             this.addMemPermission = 1;
@@ -256,7 +262,7 @@ export class ManageGroupComponent implements OnInit {
     private groupsByLoggedInUserIdApiCall(groupObjPayload: { groupId: any; }) {
         this._groupService.getGroupListObjByLoggedInUserId(groupObjPayload).subscribe(groupObjData => {
             if (groupObjData[0].errorFl === true || groupObjData[0].warningFl === true) {
-                return this.alertService.warning(groupObjData[0].message, 'Warning');
+                return this.alertService.warning(groupObjData[0].message, TypeOfError.Warning);
              } else {
                 this.groupMemberObjList = groupObjData;
             }
@@ -301,7 +307,7 @@ export class ManageGroupComponent implements OnInit {
             this.deleteGroupModal.open();
             this.groupList.splice(this.groupList.indexOf(this.selectedGroupObjFromList), 1);
         } else {
-            return this.alertService.warning('Selected group has already deactivated', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.AlreadyDeactivatedGroup, TypeOfError.Warning);
         }
     }
     deleteGroupDetails() {
@@ -311,7 +317,7 @@ export class ManageGroupComponent implements OnInit {
     private deleteGroupApiCall(payload: { groupCode: any; }) {
         this._groupService.deleteGroup(payload).subscribe(res => {
             if (res.errorFl === true || res.warningFl === true) {
-                return this.alertService.warning(res.message, 'Warning');
+                return this.alertService.warning(res.message, TypeOfError.Warning);
             } else {
                 return this.setDeleteGroupSuccessResponse();
             }
@@ -321,7 +327,7 @@ export class ManageGroupComponent implements OnInit {
     private setDeleteGroupSuccessResponse() {
         this.showSelectedGroup = false;
         this.deleteGroupModal.close();
-        return this.alertService.success('Group has been deleted successfully', 'Success');
+        return this.alertService.success(SuccessMessage.DeleteGroup, SuccessMessage.SuccessHeader);
     }
 
     deleteMemberPopup(member) {
@@ -334,7 +340,7 @@ export class ManageGroupComponent implements OnInit {
     private memberInactiveAction(member: any) {
         this.viewMsg = false;
         return this.alertService.warning('Member ' + member.firstName + ' ' + member.lastName +
-            '  is already inactive', 'Inactive Member');
+            '  is already inactive', StaticLabels.InvalidData);
     }
 
     private deleteMemberAction(member: any) {
@@ -353,7 +359,7 @@ export class ManageGroupComponent implements OnInit {
         this._groupService.deleteMember(payload).subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.viewMsg = false;
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 return this.setDeleteMemberSuccessResponse(data);
             }
@@ -370,7 +376,7 @@ export class ManageGroupComponent implements OnInit {
         this.deleteMemberModal.close();
         return this.alertService.success('Member ' + data.userId.firstName
             + ' ' + data.userId.lastName +
-            ' has been deleted successfully', 'Delete Member');
+            ' has been deleted successfully', SuccessMessage.SuccessHeader);
     }
 
     private updateDeletedMemDetailsInDataTable(data: any) {
@@ -390,7 +396,7 @@ export class ManageGroupComponent implements OnInit {
     }
 
     private deleteMemberValidation() {
-        if (this.selectedMember.userCode === null || typeof this.selectedMember.userCode === 'undefined'
+        if (this.selectedMember.userCode === null || typeof this.selectedMember.userCode === StaticLabels.Undefined
             || this.selectedMember.userCode.trim() === '') {
             this.selectedMember.userCode = this.newMemberUserCode;
             this.viewMsg = false;
@@ -401,7 +407,7 @@ export class ManageGroupComponent implements OnInit {
         if (this.addMemPermission !== 2) {
             this.editGroupAction();
         } else {
-            return this.alertService.warning('Selected group has deactivated, you can not edit group', 'Warning');
+            return this.alertService.warning(ErrorMessageConstants.AlredayDeactivateAndEdit, TypeOfError.Warning);
         }
     }
     private editGroupAction() {
@@ -411,8 +417,8 @@ export class ManageGroupComponent implements OnInit {
     }
 
     updateGroupDetails() {
-        if (this.updateGroupName === null || typeof this.updateGroupName === 'undefined' || this.updateGroupName.trim() === '') {
-            return this.alertService.warning('Please enter group name', 'Warning');
+        if (this.updateGroupName === null || typeof this.updateGroupName === StaticLabels.Undefined || this.updateGroupName.trim() === '') {
+            return this.validationMsgAndField(this.groupNameField , ErrorMessageConstants.GroupName, TypeOfError.Warning);
         } else {
             this.updateGroupValidAction();
         }
@@ -428,7 +434,7 @@ export class ManageGroupComponent implements OnInit {
     private updateGroupApiCall(payload: { groupName: any; groupId: any; }) {
         this._groupService.saveGroupDetails(payload).subscribe((res) => {
             if (res.errorFl === true || res.warningFl === true) {
-                return this.alertService.warning(res.message, 'Warning');
+                return this.alertService.warning(res.message, TypeOfError.Warning);
             } else {
                 return this.setUpdateGroupSucessResponse();
             }
@@ -439,12 +445,12 @@ export class ManageGroupComponent implements OnInit {
         this.selectedGroupObj.groupName = this.updateGroupName;
         this.selectedGroupName = this.updateGroupName;
         this.addUpdateGroupModal.close();
-        return this.alertService.success('Group has been updated successfully', 'Success');
+        return this.alertService.success(SuccessMessage.UpdateGroup, SuccessMessage.SuccessHeader);
     }
 
     updateMembers() {
             if (this.selectedMemberIds === null || this.selectedMemberIds === undefined || this.selectedMemberIds.length === 0) {
-                return this.alertService.warning('Please select members', 'Warning');
+                return this.alertService.warning(ErrorMessageConstants.SelectMember, TypeOfError.Warning);
             } else {
                 this.updatememberSucessResponse();
                 }
@@ -472,7 +478,7 @@ export class ManageGroupComponent implements OnInit {
         this.selectedItems = [];
         this.selectedMemberIds = [];
         this.manageGroupSpinnerMod.hideSpinner();
-        return this.alertService.success('Members has been updated successfully', 'Success');
+        return this.alertService.success(SuccessMessage.UpdateMember, SuccessMessage.SuccessHeader);
     }
 
     private filterGroupMemberobjList(notAddedMemberList: any[]) {
