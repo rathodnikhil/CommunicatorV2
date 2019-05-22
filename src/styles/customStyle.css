@@ -79,7 +79,7 @@
         border: 1px solid #bdb9b9;
         text-align: left;
         padding: 8px;
-        background: #834845;
+        background: #707070;
         opacity: 0.85;
         color: #ffffff;
     }
@@ -108,9 +108,8 @@
     cursor: pointer;
     }
     .btn.btn-secondary {
-        background:  #AF2127;
-        /* color:  #353535; */
-        border-color:  #1d7bb9;
+        background:  #039085;
+        border-color:  #016b62;
         border-radius: 0px 5px 5px 0px;
     }
     .form-control {
@@ -320,15 +319,15 @@ color: red;
 }
 .btn-primary{
     color: #fff;
-    background-color: #AF2127;
-    border-color: #AF2127;
+    background-color: #4b6584;
+    border-color: #4b6584;
     font-weight: bold;
 }
 
 .btn-primary:hover{
-    background-color:#e5f8f6;
-    color:#131313;
-    border:1px solid #131313;
+    background-color:#2199e8;
+    color:#fff;
+    border:1px solid #0773bb;
 }
 
 .fa-3x{

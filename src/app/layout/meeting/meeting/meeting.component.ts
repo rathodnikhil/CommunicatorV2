@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
+import { StaticLabels, ErrorMessageConstants ,TypeOfError, SuccessMessage } from 'app/shared/errorMessageConstants';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -51,8 +52,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isVideoEnabled = false;
     toggleMeeting = false;
     actualMeetingTime: any;
-    muteBtnTitle = 'Mute';
-    videoBtnTitle = 'Video On';
+    muteBtnTitle = StaticLabels.Mute;
+    videoBtnTitle = StaticLabels.VideoOn;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, loginService: LoginService, meetingService: MeetingService, private alertService: AlertService,
         private activatedRoute: ActivatedRoute, public router: Router) {
@@ -107,7 +108,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     private setAuthenticateUserValidation(data: any) {
-        this.alertService.error('MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.', 'Invalid meeting code');
+        this.alertService.error(ErrorMessageConstants.InvalidMeetingCode, StaticLabels.InvalidData);
         if (data.isGuest === true) {
             this.router.navigate(['/login']);
             // window.location.reload();
@@ -126,7 +127,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                 this.onMeetingAlreadyOver(data2);
             } else {
                 this.isHost = false;
-                this.document.getElementById('isHost').innerHTML = 'false';
+                this.document.getElementById('isHost').innerHTML = StaticLabels.False;
             }
         });
     }
@@ -140,10 +141,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.startTimer();
         // }
         if ((duration - delta) < 0) {
-            this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
+            this.alertService.error(ErrorMessageConstants.MeetingOver, StaticLabels.OverMeeting);
         }
         this.isHost = true;
-        this.document.getElementById('isHost').innerHTML = 'true';
+        this.document.getElementById('isHost').innerHTML = StaticLabels.True;
     }
 
     private onMeetingAlreadyOver(data2: any) {
@@ -156,10 +157,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         // }
         // this.startTimer();
         if ((duration - delta) < 0) {
-            this.alertService.error('Meeting start time has already elapsed', 'Meeting Over');
+            this.alertService.error(ErrorMessageConstants.MeetingOver, StaticLabels.OverMeeting);
         }
         this.isHost = false;
-        this.document.getElementById('isHost').innerHTML = 'false';
+        this.document.getElementById('isHost').innerHTML = StaticLabels.False;
     }
 
     ngAfterViewInit(): void {
@@ -191,8 +192,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === 'undefined') {
-            return this.alertService.warning('Please enter minutes of meeting(MOM)', 'Warning');
+        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === StaticLabels.Undefined) {
+            return this.alertService.warning(ErrorMessageConstants.EnterMOM, TypeOfError.Warning);
         } else {
             if (!this.isHost) {
                 this.momForHostAndRegisterUser();
@@ -206,7 +207,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this._meetingService.saveMomDetails(payload).subscribe(resp => {
             this.errorFl = resp.errorFl;
             if (this.errorFl === true) {
-                return this.alertService.warning(resp.message, 'Warning');
+                return this.alertService.warning(resp.message, TypeOfError.Warning);
             } else {
                 const attendeePayload = { meetingCode: this.meetingDetails.meetingCode };
                 let attendeeList;
@@ -225,7 +226,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     private momForHostAndRegisterUser() {
         if (this.isGuest) {
-            this.downloadFile(this.momTxt, this.meetingDetails, 'Guest user does not have permission for viewing attendees');
+            this.downloadFile(this.momTxt, this.meetingDetails, ErrorMessageConstants.GuestViewAttendee);
         } else {
             const payload = { meetingCode: this.meetingDetails.meetingCode };
             this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
@@ -251,9 +252,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        return this.alertService.success('File has been downloaded.', 'MOM Download');
+        return this.alertService.success(SuccessMessage.DownloadMom, SuccessMessage.SuccessHeader);
     }
-
 
     switchTab(tab) {
         this.currentTab = tab;
@@ -284,11 +284,11 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
-                this.alertService.warning(resp.message, 'Warning');
+                this.alertService.warning(resp.message, TypeOfError.Warning);
             } else {
                 this.document.getElementById('btn-leave-room').click();
                 this.stopTimer();
-                this.alertService.success('Meeting has ended.', 'End Meeting');
+                this.alertService.success(SuccessMessage.EndMeeting, SuccessMessage.SuccessHeader);
             }
         });
     }
@@ -302,9 +302,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     mute() {
         this.isMute = !this.isMute;
         if (this.isMute) {
-            this.muteBtnTitle = 'Unmute';
+            this.muteBtnTitle = StaticLabels.UnMute;
         } else {
-            this.muteBtnTitle = 'Mute';
+            this.muteBtnTitle = StaticLabels.Mute;
         }
     }
     shareScreen() {
@@ -313,9 +313,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     viewVideo() {
         this.isVideoEnabled = !this.isVideoEnabled;
         if (this.isVideoEnabled) {
-            this.videoBtnTitle = 'Video Off';
+            this.videoBtnTitle = StaticLabels.VideoOff;
         } else {
-            this.videoBtnTitle = 'Video On';
+            this.videoBtnTitle = StaticLabels.VideoOn;
         }
     }
     calculateTimeSpan() {
@@ -335,6 +335,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     startMeeting() {
         this.isMeetingStarted = !this.isMeetingStarted;
        // this.startTimer();
+    }
+    copyMeetingId() {
+        const el = document.createElement('textarea');
+        el.value = this.meetingDetails.meetingCode;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
     }
 }
 
