@@ -189,7 +189,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /*css for chat background*/
 .chat-background-attendee {
-    margin: 10px 10px 10px 40px;
+    margin: 10px 10px 10px 60px;
     display: inline-block;
     position: relative;
     height: auto;
