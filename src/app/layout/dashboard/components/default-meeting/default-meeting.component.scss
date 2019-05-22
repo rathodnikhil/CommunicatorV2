@@ -119,7 +119,7 @@ $border-color: #e0e0e0;
 
 .card-body {
     background-color:#f6f6f6;
-    border-bottom: 1px  solid #F9E0FF; 
+    border-bottom: 1px  solid #d2d0d2; 
 }
 
 .meetingHeader{
@@ -210,16 +210,17 @@ $border-color: #e0e0e0;
 	width: 100%;
     display: block;
     font-size: 14px;
-    background-color: #AF2127;
+    background-color: #4b6584;
+    border: 1px solid #537092;
     padding: 10px;
     color:#fff;
 }
 
-.accordion-label:hover{
-    background-color: #f3c0c2;
-    color:#AF2127;
-    border: 1px solid #AF2127;
-}
+// .accordion-label:hover{
+//     background-color: #f3c0c2;
+//     color:#710308;
+//     border: 1px solid #AF2127;
+// }
 
 .accordion-child{
   transition: all 0.8s ;
