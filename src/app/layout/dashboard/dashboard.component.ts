@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '../../../../node_modules/@angular/common';
 import { AlertService } from '../../services/alert.service';
 import { MeetingService } from '../../services/meeting-service';
-import { ErrorMessageConstants, TypeOfError , SuccessMessage } from '../../shared/errorMessageConstants';
+import { ErrorMessageConstants, TypeOfError , SuccessMessage , StaticLabels} from '../../shared/errorMessageConstants';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
     // save broadcast message
     broadcastMessages() {
-        if (this.broadcastMessage === '' || this.broadcastMessage === null || typeof this.broadcastMessage === 'undefined') {
+        if (this.broadcastMessage === '' || this.broadcastMessage === null || typeof this.broadcastMessage === StaticLabels.Undefined) {
             return this.alertService.warning(ErrorMessageConstants.EnterMsg, TypeOfError.Warning);
         } else {
             const payload = { 'broadcastMessage': this.broadcastMessage, generatedBy: this.loggedInUserObj };

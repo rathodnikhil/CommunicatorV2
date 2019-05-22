@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { GroupService } from '../../../services/group.service';
 import { LoginService } from '../../../services/login.service';
 import { AlertService } from '../../../services/alert.service';
+import { ErrorMessageConstants, TypeOfError } from 'app/shared/errorMessageConstants';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -105,7 +106,7 @@ export class HeaderComponent implements OnInit {
         const payload = { userCode: this.loggedInUserObj.userCode };
         this._userService.logoutApplication(payload).subscribe(data => {
             if (data.errorFl === true) {
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                 this.router.navigate(['/login']);
                 window.location.reload();
