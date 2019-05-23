@@ -11,7 +11,7 @@
                                 <h6 *ngIf="meetingDetails.subject!=undefined" style="">
                                         <b>{{meetingDetails.subject}}</b>
                                     </h6>
-                            <label (click)="copyMeetingId()" class="meeting-id-color" style="color:#AF2127;cursor: pointer;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                            <label class="meeting-id-color" style="color:#AF2127;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                         </div>
                         <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2"style="text-align:right;color:#AF2127;padding-right:3%;">
                                 <h4>
@@ -115,6 +115,7 @@
                 </div>
             </div>
             <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}">
+                <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}">   
                 </div>
                
                 <div class="card">
@@ -154,7 +155,7 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='chat'?'block':'none'}">
                             <div id="chat-container" class="chat-output">
                             </div>
-
+  
                             <div class="row">
                                 <textarea placeholder="Type Message Here.." id="input-text-chat"
                                     style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;"></textarea>
@@ -184,23 +185,17 @@
                             <div id="file-container" class="row content-tab">
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
             <div class="icon-bar">
-                    <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat"
-                        [ngClass]="{'selected': currentTab=='chat'}"> <div id="messageCount" class="step"></div><i class="fa fa-comments-o"></i></a>
-                    <a href="javascript:void(0)" (click)="switchTab('mom')"
-                        [ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i
-                            class="fa fa-sticky-note-o"></i></a>
-                    <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')"
-                        [ngClass]="{'selected': currentTab=='viewers'}" title="Viewers"><div id="viewerCount" class="step"></div>
-                  
-                        <i class="fa fa-user-o"></i></a>
-                    <a id="downloadedFilesAnchor" href="javascript:void(0)"
-                        (click)="switchTab('downloadedFiles')"
-                        [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files"><i
-                            class="fa fa-file-text-o"></i></a>
+                    <a id="chatAnchor" href="javascript:void(0)" (click)="switchTab('chat')" title="Chat" [ngClass]="{'selected': currentTab=='chat'}">
+                         <div id="messageCount" class="step"></div><i class="fa fa-comments-o"></i></a>
+                    <a href="javascript:void(0)" (click)="switchTab('mom')"[ngClass]="{'selected': currentTab=='mom'}" title="Notes"><i class="fa fa-sticky-note-o"></i></a>
+                    <a id="viewerAnchor" href="javascript:void(0)" (click)="switchTab('viewers')" [ngClass]="{'selected': currentTab=='viewers'}" title="Viewers">
+                        <div id="viewerCount" class="step"></div><i class="fa fa-user-o"></i></a>
+                    <a id="downloadedFilesAnchor" href="javascript:void(0)"(click)="switchTab('downloadedFiles')"[ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files">
+                        <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i></a>
                      <a href="http://www.xanadutec.com/FAQ.html" target="_blank" title="FAQ's"><i class="fa fa-question"></i></a>
                     <a href="http://www.xanadutec.com/communicator.html" target="_blank" title="Info"><i class="fa fa-info"></i></a> 
                     <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img

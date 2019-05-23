@@ -257,6 +257,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     switchTab(tab) {
         this.currentTab = tab;
+        this.toggleMeeting = true;
     }
     exitMeeting() {
         this.exitMeetingConfirmModal.open();

@@ -315,8 +315,7 @@ function appendDIV(event) {
 
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
-
-    document.getElementById('chatAnchor').click();
+  //  document.getElementById('chatAnchor').click();
     document.getElementById('input-text-chat').focus();
 }
 
@@ -440,7 +439,7 @@ connection.onstream = function (event) {
         heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
         if (event.stream.isVideo == 0) {
-            customDiv.setAttribute("style" , "background-color: #e2f4f5; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #2199e8; color:#2199e8;");
+            customDiv.setAttribute("style" , "background-color: #e1f3ff; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #2199e8; color:#2199e8;");
             heading.setAttribute("style", "background-color:#2199e8;;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
             heading.setAttribute("style", ' padding: 1.3%;  text-align: center;');
@@ -667,7 +666,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             break;
     }
     viewer.innerHTML = html;
-    document.getElementById('viewerAnchor').click();
+   // document.getElementById('viewerAnchor').click();
     return viewer;
 }
 
