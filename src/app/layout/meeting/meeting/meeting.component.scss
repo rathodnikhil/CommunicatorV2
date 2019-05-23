@@ -407,7 +407,7 @@ div.scrollmenu a:hover {
     border-color: rgb(201, 9, 19);
   }
   .btn-url{
-    border: 1px solid #039085 ;
+    border: 1px solid #1394eb ;
     background: #2199e8;
     font-weight: bold;
     color: #fff;
@@ -418,12 +418,12 @@ div.scrollmenu a:hover {
     color: #ffffff;
     padding: 0.375rem 0.75rem;
     border-radius: 28px;
-    border: 1px solid #2199e8;
+    border: 1px solid #1394eb;
     background-color: #2199e8;
 }
 .btn-sec:hover{
-    box-shadow: 0px 0px 17px -2px #01baac;
-   color:#0fb9b1;
+    box-shadow: 0px 0px 17px -2px #2199e8;
+   color:#2199e8;
    background-color: #fff;
  }
 
@@ -442,21 +442,22 @@ div.scrollmenu a:hover {
     box-shadow: 0px 0px 17px -2px #9c4141;
  }
   .btn-unmute{
-    background-color: #2199e8;
+    background-color: #017500;
       color: #fff;
-      border: 1px solid #039085;
+      border: 1px solid rgb(8, 105, 8);
   }
+ 
   .btn-mute{
-    background-color: #2199e8;
+    background-color: #AF2127;
     color: #fff;
-    border: 1px solid #039085;
+    border: 1px solid rgb(141, 16, 22);
 
   }
 
   .btn-mute:hover{
     border-radius: 28px;
     box-shadow: 0px 0px 17px -2px #AF2127;
-    color:#2199e8;
+    color:#AF2127;
    background-color: #fff;
   }
   .subject-line{
@@ -495,7 +496,7 @@ div.scrollmenu a:hover {
     cursor: pointer;
     font: bold 13px Arial,Helvetica;
     cursor:pointer;
-    border: 1px solid #039085;
+    border: 1px solid #1394eb;
     color: #FFF;
     background-color: #2199e8;
     padding: .375rem .75rem;
@@ -621,8 +622,11 @@ div.scrollmenu a:hover {
   .toggle.active{
     background: #AF2127;
     border: 1px solid #AF2127;
-    width: 54px;
-    left: -51px;
+    width: 80px;
+    left: 80px;
+    float: right;
+    position: initial;
+    height:auto;
   }
   .toggle:before{
     
@@ -662,3 +666,12 @@ div.scrollmenu a:hover {
     }
 
   }
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+    height: 6px;
+}
+  ::-webkit-scrollbar-thumb {
+    background-color: #da945b;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+}
