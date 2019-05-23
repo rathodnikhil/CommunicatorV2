@@ -375,6 +375,9 @@ div.scrollmenu a:hover {
     border-right: 2px solid #fff;
     
 }
+.selected{
+    .toggle.active{}
+}
 .selected .step {
     transform: translate(-4px,8px);
 }
