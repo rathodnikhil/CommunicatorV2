@@ -128,7 +128,7 @@ export class ManageGroupComponent implements OnInit {
             } else {
                this._groupService.setGroupList();
                this.manageGroupSpinnerMod.showSpinner();
-                this.groupListApiCall();
+               this.groupListApiCall();
             }
         });
     }
@@ -145,7 +145,7 @@ export class ManageGroupComponent implements OnInit {
                         this.groupList.push(groupData[key]);
                     }
                         // this.groupList = groupData;
-                    this.manageGroupSpinnerMod.hideSpinner();
+                        this.manageGroupSpinnerMod.hideSpinner();
                 }
             });
     }
