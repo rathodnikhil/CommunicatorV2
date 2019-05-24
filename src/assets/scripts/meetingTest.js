@@ -443,7 +443,7 @@ connection.onstream = function (event) {
         customDiv.setAttribute("style" , "  background-color: #ffeeed; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
         heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
-        customDiv.setAttribute("style" , "background-color: #edf3fb; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
+        customDiv.setAttribute("style" , "background-color: #edf3fb; margin-bottom: 15px; height:20vh; position: relative; color:#4b6584;");
         if (event.stream.isVideo == 0) {
             heading.setAttribute("style", "background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {

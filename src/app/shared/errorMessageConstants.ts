@@ -61,6 +61,9 @@ export class ErrorMessageConstants {
 
 // Past Meeting component
         public static NoMom = 'No MOM for this meeting has been added';
+
+//  My-Calendar Component
+        public static NoMeetings = 'There are no meetings.';
     }
 export class TypeOfError {
         public static Error = 'Error';
