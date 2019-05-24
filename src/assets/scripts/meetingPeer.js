@@ -23,7 +23,7 @@ var isShareScreen = false;
 
 
 var connection = new RTCMultiConnection();
-// debugger;
+
 connection.socketCustomEvent = 'Peer2PeerConnection';
 // to make sure file-saver dialog is not invoked.
 connection.autoSaveToDisk = false;

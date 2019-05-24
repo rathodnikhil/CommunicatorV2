@@ -127,26 +127,27 @@ export class ManageGroupComponent implements OnInit {
                 return this.alertService.warning(data.message, TypeOfError.Warning);
             } else {
                this._groupService.setGroupList();
+               this.manageGroupSpinnerMod.showSpinner();
                 this.groupListApiCall();
             }
         });
     }
     private groupListApiCall() {
-        this._groupService.getGroupList().subscribe(groupData => {
+            this._groupService.getGroupList().subscribe(groupData => {
                 if (groupData.warningFl === true || groupData.errorFl === true || groupData === undefined) {
                     this.groupList = [];
                     this.manageGroupSpinnerMod.hideSpinner();
                     return this.alertService.warning(groupData.message, TypeOfError.Warning);
                 } else {
-                   // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
-                   this.groupList = [];
+                    // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
+                    this.groupList = [];
                     for (let key in groupData) {
                         this.groupList.push(groupData[key]);
                     }
-                    // this.groupList = groupData;
+                        // this.groupList = groupData;
                     this.manageGroupSpinnerMod.hideSpinner();
                 }
-        });
+            });
     }
 
     private setVariableDefaultValues() {
@@ -272,7 +273,9 @@ export class ManageGroupComponent implements OnInit {
 
     private groupMemberByLocalGroupApiCall(payload: { groupId: any; }) {
         this._groupService.getMemberByLocalgroup(payload).subscribe(memberData => {
-             if (memberData[0].warningFl !== true || memberData !== undefined || memberData[0].errorFl !== true) {
+             if (memberData[0].warningFl === true || memberData === undefined || memberData[0].errorFl === true) {
+                return;
+            } else {
                 this.memberList = memberData;
             }
             this.manageGroupSpinnerMod.hideSpinner();

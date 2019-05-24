@@ -30,7 +30,10 @@ export class MyCalendarComponent implements OnInit {
             firstName: '',
             lastName: ''
         },
-        timeZone: ''
+        timeZone: '',
+        status: {
+            status: ''
+        }
     };
     calendarOptions: Options;
     displayEvent: any;
@@ -89,10 +92,14 @@ export class MyCalendarComponent implements OnInit {
 
     clickButton(model: any) {
         this.displayEvent = model;
-        if (model.buttonType === 'prev' || model.buttonType === 'next') {
-            this.clickedType = model.buttonType;
-            this.loadMore(this.meetingYear, this.meetingMonth);
-        }
+        // if (model.buttonType !== 'agendaWeek' || model.buttonType !== 'agendaDay' || model.buttonType !== 'listMonth') {
+            if (model.buttonType === 'prev' || model.buttonType === 'next') {
+                this.clickedType = model.buttonType;
+                this.loadMore(this.meetingYear, this.meetingMonth);
+            } else if (model.buttonType === 'today') {
+                this.loadTodaysMeetings();
+            }
+        // }
     }
     eventClick(model: any) {
         model = this.createModelObj(model, {});
@@ -129,6 +136,28 @@ export class MyCalendarComponent implements OnInit {
     exit() {
         this.meetingDetailsModal.close();
     }
+    loadTodaysMeetings() {
+        // const year = new Date().getFullYear();
+        // const month = new Date().getUTCMonth() + 1;
+        // const day = new Date().getUTCDate();
+        // const payload = { year: year, month: month, day: day };
+        // this.calenderMeetingSpinnerMod.showSpinner();
+        this.getTodaysMeetingApiCall();
+    }
+
+    private getTodaysMeetingApiCall() {
+        this._meetingService.getTodaysMeeting().subscribe(data => {
+            // this.setMeetingsSuccessResponse(data);
+            if (data[0].errorFl || data[0].warningFl) {
+                this.hideSpineer();
+                return this.alertService.warning(data[0].message, 'Warning');
+            } else {
+                this.setMeetingsSuccessResponse(data);
+            }
+            this.hideSpineer();
+        });
+    }
+
     loadMore(year, month) {
         ({ month, year } = this.setMonthAndYearValues(month, year));
         const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true };
@@ -156,7 +185,6 @@ export class MyCalendarComponent implements OnInit {
     }
 
     private setMeetingsSuccessResponse(data: any) {
-        // ;
         this.calenderMeetingSpinnerMod.hideSpinner();
         this.meetingList = [];
         this.meetingList = data;
