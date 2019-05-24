@@ -59,6 +59,13 @@ export class MeetingService {
     getRecentMeetingByUser() {
         return this.recentMeeting$;
     }
+    getTodaysMeeting() {
+        const url = environment.baseUrl + 'getTodaysMeeting';
+        this.apiRequest.post(url, null).subscribe(data => {
+            this.futureMeetingList$.next(data);
+            });
+        return this.apiRequest.post(url, null);
+    }
     getPastMeetingsByMonth(payload) {
         const url = environment.baseUrl + 'getPastMeetingsByMonth?lastMeetingYear=' +
         payload.lastMeetingYear + '&lastMeetingMonth=' + payload.lastMeetingMonth + '&calendarFl=' + payload.calendarFl;

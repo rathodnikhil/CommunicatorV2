@@ -141,7 +141,8 @@ export class PastMeetingsComponent implements OnInit {
     loadMore(year, month) {
         const payload = { lastMeetingYear: year,
              lastMeetingMonth: month, calendarFl: false};
-             this.hideSpinner();
+            //  this.hideSpinner();
+        this.pastMeetingSpinnerMod.showSpinner();
         this.pastmeetingApiCall(payload, month, year);
     }
 
