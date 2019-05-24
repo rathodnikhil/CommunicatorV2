@@ -57,15 +57,15 @@ export class JoinMeetingComponent implements OnInit {
   }
   guestLogin() {
     const NAME_REGEXP = /^[a-zA-Z ]+$/i;
-    if (this.document.getElementById('isRecordScreenPopupClosed').innerText === 'true'
-      || this.document.getElementById('isScreenSharePopupClosed').innerText === 'true') {
-      return this.alertService.error('Please close popup to continue', 'Error');
-    } else if (this.meetingCode === null || typeof this.meetingCode === 'undefined' || this.meetingCode.trim() === '') {
-      return this.validationMsgAndField(this.meetingCodeField , 'Please enter Meeting Id', TypeOfError.Warning);
-    } else if (this.userName === null || typeof this.userName === 'undefined' || this.userName.trim() === '') {
-      return this.validationMsgAndField(this.usernameField , 'Enter Full name', TypeOfError.Warning);
+    if (this.document.getElementById('isRecordScreenPopupClosed').innerText === StaticLabels.True
+      || this.document.getElementById('isScreenSharePopupClosed').innerText === StaticLabels.True) {
+      return this.alertService.error(ErrorMessageConstants.ClosePopup, TypeOfError.Error);
+    } else if (this.meetingCode === null || typeof this.meetingCode === StaticLabels.Undefined || this.meetingCode.trim() === '') {
+      return this.validationMsgAndField(this.meetingCodeField , ErrorMessageConstants.EnterMeetingId, TypeOfError.Warning);
+    } else if (this.userName === null || typeof this.userName === StaticLabels.Undefined || this.userName.trim() === '') {
+      return this.validationMsgAndField(this.usernameField , ErrorMessageConstants.FirstName, TypeOfError.Warning);
     } else if (!NAME_REGEXP.test(this.userName)) {
-      return this.validationMsgAndField(this.usernameField , 'Please enter alphabets only ', TypeOfError.Warning);
+      return this.validationMsgAndField(this.usernameField , ErrorMessageConstants.EnterAlphabatesOnly, TypeOfError.Warning);
     } else {
         const payload = this.setDefaultGuestValuesAndCreatePayload();
         this.getLoggedInUserApiCall(payload);
@@ -87,7 +87,7 @@ export class JoinMeetingComponent implements OnInit {
 
   private setMeetingCodeValidation() {
     this.isMeetingCodeInValid = true;
-    this.validationMsgAndField(this.meetingCodeField , 'Please enter valid Meeting Id', 'Invalid Data');
+    this.validationMsgAndField(this.meetingCodeField , ErrorMessageConstants.ValidMeetingId, StaticLabels.InvalidData);
     return false;
   }
 

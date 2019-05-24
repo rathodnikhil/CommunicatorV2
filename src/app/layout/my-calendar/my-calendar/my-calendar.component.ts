@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
-import { Title } from '@angular/platform-browser';
+import { ErrorMessageConstants, TypeOfError } from 'app/shared/errorMessageConstants';
 
 @Component({
     selector: 'app-my-calendar',
@@ -148,9 +148,9 @@ export class MyCalendarComponent implements OnInit {
     private getTodaysMeetingApiCall() {
         this._meetingService.getTodaysMeeting().subscribe(data => {
             // this.setMeetingsSuccessResponse(data);
-            if (data[0].errorFl || data[0].warningFl) {
+            if (data[0].errorFl || data[0].warningFl || data === null) {
                 this.hideSpineer();
-                return this.alertService.warning(data[0].message, 'Warning');
+                return this.alertService.warning(ErrorMessageConstants.NoMeetings, TypeOfError.Warning);
             } else {
                 this.setMeetingsSuccessResponse(data);
             }
@@ -192,7 +192,7 @@ export class MyCalendarComponent implements OnInit {
     }
 
     private iterateUcCalendarValues(data: any) {
-        let meetingListForcalendar = [];
+        const meetingListForcalendar = [];
         data.forEach(element => {
             const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
                 + parseInt(element.duration.split(' Min')[0]) * 60000);

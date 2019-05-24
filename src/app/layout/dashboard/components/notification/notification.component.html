@@ -1,6 +1,6 @@
 <app-spinner #notificationSpinner></app-spinner>
 <div class="card-body" >
-        <h5 class="searched-title team-member"><b>Filter Members</b></h5>
+        <h5 class="searched-title team-member">Filter Members</h5>
 <div class="notification-div">
     <div class="form-group input-group" style="padding-top:10px;">
         <input class="tBox username-password form-control" placeholder="&#xF002;  Search" (keyup)="onKey($event)"
@@ -13,7 +13,7 @@
     <div *ngIf="viewAllMemFl" style="background-color: #ffffff;">
         <div class="row" style="padding: 0px;margin:0px;">
         <div class="col-md-8">
-        <div style="color: #bd081c;padding:3.5%;"><h5 class="searched-title team-member" ><b>All Members List</b></h5></div>
+        <div style="color: #bd081c;padding:3.5%;"><h5 class="searched-title team-member" >All Members List</h5></div>
     </div>
     <div class="col-md-4" style="padding-top:2.5%;">
        <i class="fa fa-window-close close-list" aria-hidden="true" (click)="closeWholeMemList()" title="Close search"></i>
@@ -24,13 +24,13 @@
             <a class="col-md-10 list-group-item clearfix d-block">
             <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
             </a>
-            <i class="fa fa-lg fa-plus-circle add-member col-md-2" title="Add Member" data-toggle="tooltip" style="padding-top: 22px; color: #088B92; cursor: pointer;"
+            <i class="fa fa-lg fa-plus-circle add-member col-md-2" title="Add Member" data-toggle="tooltip" style="padding-top: 22px; color: #f95f3a; cursor: pointer;"
             (click)="addNewMembersInList(user)"></i> 
         </div>
     </div>  #088B92
     </div>
 </div>   
-    <div><h5 class="searched-title team-member" ><b>Team Members</b></h5></div>
+    <div><h5 class="searched-title team-member" >Team Members</h5></div>
     <div class="member-list" style="background-color: #ffffff;border-top: 1px  solid #d2d0d2;border-width:80%;">
         <div>
             <div class="selected-criteria-div">
@@ -57,7 +57,7 @@
                 </a>
             </div>
         </div>
-        <div><h5 class="searched-title team-member"><b>Groups</b></h5></div>
+        <div><h5 class="searched-title team-member">Groups</h5></div>
         <div>
             <div class="group-criteria-div">
                 <h4 class="group-criteria">Total Groups ({{groupList.length}})</h4>             
