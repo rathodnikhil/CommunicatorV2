@@ -66,30 +66,35 @@ export class NotificationComponent implements OnInit {
                 this.loggedInUser = data;
                 this.userListApiCall();
                 this.groupListApiCall();
-                this.notificationSpinnerMod.hideSpinner();
             }
         });
     }
 
     private groupListApiCall() {
+        this.notificationSpinnerMod.showSpinner();
         this._groupService.getGroupList().subscribe(groupData => {
             if (groupData.warningFl !== true && groupData.length > 0) {
                 this.groupList = groupData;
+                // this.notificationSpinnerMod.hideSpinner();
             }  else {
                 this.groupList = [];
                 if (groupData !== undefined && groupData.message !== undefined) {
                   //  return this.alertService.warning(groupData.message, TypeOfError.Warning);
+                //   this.notificationSpinnerMod.hideSpinner();
                 }
             }
         });
     }
 
     private userListApiCall() {
+        // this.notificationSpinnerMod.showSpinner();
         this._userService.getUserList().subscribe(userData => {
             if (userData !== undefined && userData.length > 0) {
                 this.userList = userData;
+                this.notificationSpinnerMod.hideSpinner();
             } else {
                 this.userList = [];
+                this.notificationSpinnerMod.hideSpinner();
             }
         });
     }
