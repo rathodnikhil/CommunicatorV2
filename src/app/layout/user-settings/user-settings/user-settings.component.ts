@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { AlertService } from '../../../services/alert.service';
 import { PaginationInstance } from 'ngx-pagination';
+import { SuccessMessage , TypeOfError} from 'app/shared/errorMessageConstants';
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
@@ -53,7 +54,7 @@ export class UserSettingsComponent implements OnInit {
 
   private getLoggedInUserValidationAction(data: any) {
     this.loggedInUserId = {};
-    return this.alertService.warning(data.message, 'Warning');
+    return this.alertService.warning(data.message, TypeOfError.Warning);
   }
 
   private createPayloadAndSetDefaultValues(data: any) {
@@ -67,7 +68,7 @@ export class UserSettingsComponent implements OnInit {
     this._userService.getUserSettingsByLoggedInUser(payload).subscribe(settingData => {
       if (settingData.errorFl === true || settingData.warningFl === true) {
         this.userSettings = {};
-        return this.alertService.warning(settingData.message, 'Warning');
+        return this.alertService.warning(settingData.message, TypeOfError.Warning);
       }  else {
         this.userSettings = settingData;
       }
@@ -78,9 +79,9 @@ export class UserSettingsComponent implements OnInit {
     const payload = this.createuserSettingPayload();
     this._userService.saveUserSettings(payload).subscribe(data => {
       if (data.errorFl === true || data.warningFl === true) {
-        return this.alertService.warning(data.message, 'Warning');
+        return this.alertService.warning(data.message, TypeOfError.Warning);
     } else {
-      return this.alertService.success('User settings has been updated successfully', 'Success');
+      return this.alertService.success(SuccessMessage.UserSetting, SuccessMessage.SuccessHeader);
      }
     });
   }

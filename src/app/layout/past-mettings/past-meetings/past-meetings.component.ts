@@ -5,6 +5,7 @@ import { PaginationInstance } from 'ngx-pagination';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
+import { ErrorMessageConstants , TypeOfError, SuccessMessage , StaticLabels} from 'app/shared/errorMessageConstants';
 @Component({
     selector: 'app-past-meetings',
     templateUrl: './past-meetings.component.html',
@@ -61,7 +62,7 @@ export class PastMeetingsComponent implements OnInit {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
                 this.pastMeetingSpinnerMod.hideSpinner();
-                return this.alertService.warning(data.message, 'Warning');
+                return this.alertService.warning(data.message, TypeOfError.Warning);
             }  else {
                 this.loggedInUser = data;
                 this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
@@ -70,8 +71,8 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     downloadMom(data) {
-        if (data.mom === '' || data.mom === null || typeof data.mom === 'undefined') {
-            return this.alertService.warning('No MOM for this meeting has been added', 'Warning');
+        if (data.mom === '' || data.mom === null || typeof data.mom === StaticLabels.Undefined) {
+            return this.alertService.warning(ErrorMessageConstants.NoMom, TypeOfError.Warning);
         } else {
             const payload = { meetingCode: data.meetingCode };
             this.getAttendeeApiCall(payload, data);
@@ -80,7 +81,7 @@ export class PastMeetingsComponent implements OnInit {
     private getAttendeeApiCall(payload: { meetingCode: any; }, data: any) {
         this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
             if (resp.errorFl) {
-                this.alertService.warning(resp.message, 'Warning');
+                this.alertService.warning(resp.message, TypeOfError.Warning);
             } else {
                 this.displayMomDetailsAction(resp, data);
             }
@@ -90,7 +91,7 @@ export class PastMeetingsComponent implements OnInit {
     private displayMomDetailsAction(resp: any, data: any) {
         const { momHeader, meetingDate } = this.setMomFileContent(resp, data);
         this.generateTxtFile(momHeader, data, meetingDate);
-        this.alertService.success('File has been downloaded.', 'MOM Download');
+        this.alertService.success(SuccessMessage.DownloadMom, SuccessMessage.SuccessHeader);
     }
 
     private setMomFileContent(resp: any, data: any) {
@@ -126,7 +127,7 @@ export class PastMeetingsComponent implements OnInit {
         const payload = { meetingCode: meeting.meetingCode };
         this._meetingService.getMeetingAttendee(payload).subscribe(resp => {
             if (resp.warningFl) {
-                this.alertService.warning(resp.message, 'Warning');
+                this.alertService.warning(resp.message, TypeOfError.Warning);
             } else {
                 this.attendeeListByMeeting = resp;
                 this.viewAttendeeModal.open();
@@ -150,7 +151,7 @@ export class PastMeetingsComponent implements OnInit {
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
             this.setMonthAndYear(month, year);
             if (data[0].errorFl || data[0].warningFl) {
-                this.alertService.warning(data[0].message, 'Warning');
+                this.alertService.warning(data[0].message, TypeOfError.Warning);
             } else {
                 this.pastMeetingList = this.pastMeetingList.concat(data);
             }
