@@ -5,7 +5,7 @@
                 <div class="card-header" style="margin-bottom: -2px;box-shadow: -5px 5px 5px #e4dadb;">
                     <div class="row">
                         <div class="col-md-3">
-                              <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" style="margin-left:10%;" />
+                              <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" style="margin-left:13%;" />
                         </div>
                         <div class="col-md-7" style="text-align: center;color:#AF2127;">
                                 <h6 *ngIf="meetingDetails.subject!=undefined" style="">
@@ -31,13 +31,13 @@
                     </div>
                 </div>
                    
-                <div class="row parent" style="padding-right: 80px;">
+                <div class="row parent" style="margin-right: 80px;">
                     <div class="col-md-12" style="text-align: center;">
                             <h4 style="margin-bottom:0px;padding:0.1% 0% 0.2% 1%;">Shared Screen</h4>
                     </div>
-                   <div id="shareScreen-container" class="row main-div"></div>
+                   <div id="shareScreen-container" class="row main-div" style="margin-top:0%;"></div>
                 </div>
-                <div style="height: calc(100vh*.06); padding-right: 80px;">
+                <div style="height: calc(100vh*.06); margin-right: 80px;">
                     <div class="col-md-12" style="padding-bottom: 0px;">
                                         <div id="room-urls" style="display: none; float: left;padding-top:6px;">
                                         <button type="button" data-toggle="tooltip" title="Copy Meeting Link"
@@ -120,14 +120,17 @@
                
                 <div class="card">
                     <div class="card-header col-md-12 meeting-activity-header">
-                        <div class="col-md-8" style="float: left;transform: translateY(20%);">
+                        <div class="col-md-11" style="float: left;transform: translateY(20%);">
                               <h5 *ngIf="meetingDetails.createdBy!=undefined"
                                 style="overflow-wrap: break-word;"><b>Host:
                                     {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
                             </h5>
                         </div>
+                        <div class="col-md-1">
+                                <i class="fa fa-times close-popup" (click)="closeToggle()"></i>
+                        </div>
                     </div>
-                    <div class="card-body" style="padding-right:65px;">
+                    <div class="card-body">
                         <ul role="tablist" class="nav nav-tabs justify-content-start">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
                                 <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">

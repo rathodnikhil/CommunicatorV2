@@ -148,7 +148,7 @@ div.scrollmenu a:hover {
 
 /*media queries added for buttons of meeting page(added by shruti)*/
 @media (max-width: 768px) {
-    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room{
+    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room,#open-room{
     font-size:8px;
       width: 35px;
       height: 35px;
@@ -156,7 +156,7 @@ div.scrollmenu a:hover {
     }
 
     @media (min-width: 768px) {
-    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room{
+    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room,#open-room{
     font-size:9px;
       width: 37px;
       height:37px;  }
@@ -167,7 +167,7 @@ div.scrollmenu a:hover {
     }
 
     @media (min-width: 992px) {
-    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
+    #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room ,#open-room{
     font-size:10px;
       width:40px;
       height:40px;
@@ -178,7 +178,7 @@ div.scrollmenu a:hover {
     }
     }
     @media (min-width: 1224px) {
-        #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
+        #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room ,#open-room{
         font-size:12px;
           width:50px;
           height:50px;
@@ -190,7 +190,7 @@ div.scrollmenu a:hover {
         }
 /*added for laptop*/
     @media (min-width: 1224px) and (max-height:768px) {
-            #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room {
+            #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#btn-leave-room,#open-room {
             font-size:8px;
               width:30px;
               height:30px;
@@ -280,8 +280,8 @@ div.scrollmenu a:hover {
    // margin-right: 30px;
     display: flex;
     overflow-x: auto;
-    min-height: calc(100vh*0.52);
-    max-height: calc(100vh*0.50)
+    min-height: calc(100vh*0.50);
+    max-height: calc(100vh*0.50);
 }
 
 // .demo-one video {
@@ -341,7 +341,7 @@ div.scrollmenu a:hover {
 
 .icon-bar {
     position: fixed;
-    top: 125px;
+    top: 123px;
     right: 0;
     bottom: auto;
     height: 86.3vh;
@@ -375,9 +375,7 @@ div.scrollmenu a:hover {
     border-right: 2px solid #fff;
     
 }
-.selected{
-    .toggle.active{}
-}
+
 .selected .step {
     transform: translate(-4px,8px);
 }
@@ -405,13 +403,13 @@ div.scrollmenu a:hover {
   }
   .btn-url:hover{
     color: #ffffff;
-    background-color: #AF2127;
+    background-color: #f7890b;
     font-weight: bold;
-    border-color: rgb(201, 9, 19);
+    border-color: #f95f3a;
   }
   .btn-url{
-    border: 1px solid #1394eb ;
-    background: #2199e8;
+    border: 1px solid #2d4b70 ;
+    background: #4b6584;
     font-weight: bold;
     color: #fff;
   }
@@ -451,9 +449,9 @@ div.scrollmenu a:hover {
   }
  
   .btn-mute{
-    background-color: #AF2127;
+    background: #f95f3a;
     color: #fff;
-    border: 1px solid rgb(141, 16, 22);
+    border-color: #f95f3a;
 
   }
 
@@ -470,11 +468,9 @@ div.scrollmenu a:hover {
     margin-left: 6%;
   }
   .btn-share-on{
-    //background-image: linear-gradient(to right,#fd7a2a,orange);
-    background: linear-gradient(to right, #f8dbde 0%, #f8dbde 100%);
-    // background-color: #f8dbde;
-    color: rgb(241, 34, 34);
-    border: 1px solid #f8dbde;
+    border: 1px solid #f12222;
+    background: linear-gradient(to bottom right, #c51205 0%, #f78982 100%);
+    color: #fff;
   }
 /*for scroll bar of meeting page*/
   ::-webkit-scrollbar {
@@ -562,11 +558,12 @@ div.scrollmenu a:hover {
 
 .initial-letter-attendee{
     text-align: center;
-    top: 20%;
+    top: 30%;
     font-size: 6vh;
     position: relative;
     color:#fff;
 }
+
 
 
 .sidebar-contact{
@@ -623,8 +620,8 @@ div.scrollmenu a:hover {
     line-height:48px;
   }
   .toggle.active{
-    background: #AF2127;
-    border: 1px solid #AF2127;
+    background: #4b6584;
+    border: 1px solid #4b6584;
     width: 80px;
     left: 80px;
     float: right;
@@ -639,10 +636,16 @@ div.scrollmenu a:hover {
     color:#fff;
     
   }
-  .toggle.active:before{
-    content:'\f00d';
-    color:#fff;
-  }
+//   .toggle.active:before{
+//     content:'\f00d';
+//     color:#fff;
+//   }
+.close-popup{
+    float: right;
+    cursor:pointer;
+    transform: translateY(20%);
+    font-size: 18px;
+}
   
   @media(max-width:768px)
   {
@@ -677,4 +680,54 @@ div.scrollmenu a:hover {
   ::-webkit-scrollbar-thumb {
     background-color: #da945b;
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+}
+
+.demo-content{
+    background-color: #ffeeed;
+    margin-bottom: 15px;
+    height: 20vh;
+    position: relative;
+    border: 1px solid #AF2127;
+    color: #AF2127;    
+}   
+
+.meeting-attendee-name{
+    background-color: #AF2127;
+    padding: 1.3%;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+.attendee-letter{
+    font-size: 3vh;
+    color:#AF2127;
+}
+.joined-attendee{
+    position: absolute;
+    left: 30%;
+    transform: translateY(15%);
+}
+#call-joined-attendee .demo-content{
+    background-color: #edf3fb;
+    margin-bottom: 15px;
+    border: 1px solid #4b6584;
+    color: #4b6584;
+    height:35vh;
+    position: relative;
+}
+
+#call-joined-attendee .meeting-attendee-name{
+    background-color: #4b6584;
+    padding: 1.3%;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+#call-joined-attendee .attendee-letter{
+    color:#4b6584;
+    font-size: 6vh;
+}
+.ongoing-call{
+    text-align:center;
+    font-weight: bold;
 }
