@@ -54,6 +54,9 @@ export class ErrorMessageConstants {
         public static MeetingOver = 'Meeting start time has already elapsed';
         public static EnterMOM = 'Please enter meeting notes(MOM)';
         public static GuestViewAttendee =  'Guest user does not have permission for viewing attendees';
+
+//  My-Calendar Component
+        public static NoMeetings = 'There are no meetings.';
     }
 export class TypeOfError {
         public static Error = 'Error';

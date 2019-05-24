@@ -116,13 +116,7 @@ placeholder="Select Members"
 <tr
 *ngFor="let memberObj of memberList | genericSearchAllProp:searchMember | paginate: config ;let srNo = index" >
 <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
-<ng-template [ngIf]="memberObj.status!=null && (memberObj.status.status === 'INACTIVE' || memberObj.team.status.status === 'CANCEL')">
-<td>{{memberObj.firstName}} {{memberObj.lastName}} (Inactive)</td>
-</ng-template>
-
-<ng-template #member [ngIf]="memberObj.status!=null">
 <td>{{memberObj.firstName}} {{memberObj.lastName}}</td>
-</ng-template>
 <td>{{memberObj.userCode}}</td>
 <td>
 <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(memberObj);" title="Delete member"></i>
