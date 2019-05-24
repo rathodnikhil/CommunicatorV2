@@ -16,6 +16,10 @@ export class ErrorMessageConstants {
         public static ExistUserName = 'Username already exist';
         public static ValidEmail = 'Please enter valid email';
 
+//  Reset Component
+        public static EnterConfirmPassword = 'Please enter confirm password';
+        public static PasswordMatch = 'Password and  confirm password does not match';
+
 //  Default Meeting Component
         public static SelectFromDate = 'Please select from date.';
         public static SelectToDate = 'Please select to date.';
@@ -54,6 +58,9 @@ export class ErrorMessageConstants {
         public static MeetingOver = 'Meeting start time has already elapsed';
         public static EnterMOM = 'Please enter meeting notes(MOM)';
         public static GuestViewAttendee =  'Guest user does not have permission for viewing attendees';
+
+// Past Meeting component
+        public static NoMom = 'No MOM for this meeting has been added';
 
 //  My-Calendar Component
         public static NoMeetings = 'There are no meetings.';
@@ -100,8 +107,14 @@ export class SuccessMessage {
         public static SaveMember = 'Member has saved successfully';
 
 // Meeting Component
-        public static DownloadMom = 'File has been downloaded.';
+        public static DownloadMom = 'File has downloaded.';
         public static EndMeeting = 'Meeting has ended.';
+
+// Setting Component
+        public static UserSetting = 'User settings has updated successfully';
+
+// Reset Component
+        public static RsetPassword = 'Password reset successfully';
 }
 
 export class StaticLabels {
