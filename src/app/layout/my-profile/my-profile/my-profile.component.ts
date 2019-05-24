@@ -4,7 +4,7 @@ import { MeetingService } from '../../../services/meeting-service';
 import { GroupService } from '../../../services/group.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
-import { ErrorMessageConstants , TypeOfError, SuccessMessage} from 'app/shared/errorMessageConstants';
+import { ErrorMessageConstants , TypeOfError, SuccessMessage , StaticLabels} from 'app/shared/errorMessageConstants';
 
 @Component({
     selector: 'app-my-profile',
@@ -113,7 +113,7 @@ export class MyProfileComponent implements OnInit {
             email: this.loggedInUserObj.email,
             userCode: this.loggedInUserObj.userCode,
             profileImgPath: this.loggedInUserObj.profileImgPath,
-            status: { status: 'ACTIVE' },
+            status: { status: StaticLabels.Active },
             team: this.loggedInUserObj.team,
             meetingPermissionStatus: { status: this.loggedInUserObj.meetingPermissionStatus.status }
         };

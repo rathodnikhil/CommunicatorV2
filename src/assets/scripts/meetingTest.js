@@ -1,4 +1,5 @@
 
+ var messageCounter = document.getElementById('messageCount').innerHTML;
 window.enableAdapter = true; // enable adapter.js
 //document.getElementById('btn-save-mom').disabled = true;
 //document.getElementById('input-text-chat').disabled = true;
@@ -305,17 +306,21 @@ function appendDIV(event) {
     } else {
         div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
+        messageCounter++;
     }
-    var messageCounter = document.getElementById('messageCount').innerHTML;
-    messageCounter++;
+ // var messageCounter = document.getElementById('messageCount').innerHTML;
+   
     var messageCounterEl = document.getElementById('messageCount');
-    messageCounterEl.innerHTML = messageCounter;
+    if(messageCounter > 0){
+        document.getElementById("messageCount").setAttribute("style", "display:block;");
+        messageCounterEl.innerHTML = messageCounter;
+    }
     html += formatDate(new Date()) + ' <i class="fa fa-user"></i>&nbsp; ' + firstNameUpperCase + '</span>'
     div.innerHTML = html;
 
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
-  //  document.getElementById('chatAnchor').click();
+  // document.getElementById('chatAnchor').click();
     document.getElementById('input-text-chat').focus();
 }
 
@@ -438,9 +443,9 @@ connection.onstream = function (event) {
         customDiv.setAttribute("style" , "  background-color: #ffeeed; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
         heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
-        customDiv.setAttribute("style" , "background-color: #e1f3ff; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #2199e8; color:#2199e8;");
+        customDiv.setAttribute("style" , "background-color: #edf3fb; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
         if (event.stream.isVideo == 0) {
-            heading.setAttribute("style", "background-color:#2199e8;;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
+            heading.setAttribute("style", "background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
             heading.setAttribute("style", ' padding: 1.3%;  text-align: center;');
         }
@@ -474,8 +479,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
-            video.setAttribute("style", "background:  #e2f4f5;border: 1px solid #4b6584;border-top:none;float:left;height:18vh;width:100%");
+            heading.setAttribute("style", 'background-color:#2199e8;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
+            video.setAttribute("style", "background:  #f6f6f6;border: 1px solid #2199e8;border-top:none;float:left;height:18vh;width:100%");
             screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -493,7 +498,7 @@ connection.onstream = function (event) {
                 var viewer = displayViewerList(event, viewerNameString, 0);
                 viewerListDiv.appendChild(viewer);
                 var vCounterEl = document.getElementById('viewerCount');
-                vCounterEl.innerText = viewerCounter
+                vCounterEl.innerText = viewerCounter;
 
             }
         }
@@ -507,6 +512,11 @@ connection.onstream = function (event) {
         mRecordRTC.startRecording();
     }
 };
+document.getElementById("chatAnchor").addEventListener("click", function(){
+    messageCounter = 0;
+    document.getElementById("messageCount").setAttribute("style", "display:none;");
+  });
+
 connection.onMediaError = function (event) {
     alertService.error(event.message + ', connect your device and refresh again', "Device error!");
     document.getElementById('btn-leave-room').disabled = true;

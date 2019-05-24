@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PasswordService } from '../../services/password.service';
 import { AlertService } from '../../services/alert.service';
+import { ErrorMessageConstants , TypeOfError, SuccessMessage , StaticLabels} from 'app/shared/errorMessageConstants';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -43,10 +44,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetPassword() {
-    if ( this.password === null || typeof this.password === 'undefined' || this.password.trim() === '') {
-        return this.validationMsgAndField(this.passwordField , 'Please enter password', 'Warning');
-    } else if (this.confirmPassword === '' || this.confirmPassword === null || typeof this.confirmPassword === 'undefined') {
-      return this.validationMsgAndField(this.confirmPasswordField , 'Please enter confirm password', 'Warning');
+    if ( this.password === null || typeof this.password === StaticLabels.Undefined || this.password.trim() === '') {
+        return this.validationMsgAndField(this.passwordField , ErrorMessageConstants.EnterPassword, TypeOfError.Warning);
+    } else if (this.confirmPassword === '' || this.confirmPassword === null || typeof this.confirmPassword === StaticLabels.Undefined) {
+      return this.validationMsgAndField(this.confirmPasswordField , ErrorMessageConstants.EnterConfirmPassword, TypeOfError.Warning);
     } else if (this.confirmPassword !== this.password) {
       return this.passwordValidation();
     } else {
@@ -61,14 +62,14 @@ export class ResetPasswordComponent implements OnInit {
   private passwordValidation() {
     this.password = '';
     this.confirmPassword = '';
-    return this.validationMsgAndField(this.passwordField , 'Password and  confirm password does not match', 'Warning');
+    return this.validationMsgAndField(this.passwordField , ErrorMessageConstants.PasswordMatch, TypeOfError.Warning);
   }
 
   private resetPasswordApiCall(payload: { passwordAuthToken: any; newPassword: string; }) {
     this._userService.resetpassword(payload).subscribe(res => {
       const data = res.json();
       if (data.warningFl || data.errorFl) {
-        return this.alertService.warning(data.message, 'Warning');
+        return this.alertService.warning(data.message, TypeOfError.Warning);
       }  else {
         this.resetPasswordSuccessAction();
         // window.location.reload();
@@ -79,7 +80,7 @@ export class ResetPasswordComponent implements OnInit {
   private resetPasswordSuccessAction() {
     this.password = '';
     this.confirmPassword = '';
-    this.alertService.success('Password reset successfully', 'Reset Success');
+    this.alertService.success(SuccessMessage.RsetPassword, SuccessMessage.SuccessHeader);
     this.router.navigate(['/login']);
   }
 }

@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from '../../dashboard/components/custom-modal/custom-modal.component';
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
-import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-my-calendar',
