@@ -132,7 +132,7 @@ export class ApiRequestService {
                     // me.router.navigate(['/login']);
                     me.leaveApplication();
                 }
-                return Observable.throw(error || 'Server error')
+                return Observable.throw(error || 'Server error');
             });
     }
 
