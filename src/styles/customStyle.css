@@ -283,9 +283,9 @@ color: red;
     border-radius: 5px;
     margin-top:4%;
     margin-right: 15px;
+    background-color: #AF2127;
     color: #fff;
-    background-color: #4b6584;
-    border: 1px solid #537092;
+    border: 1px solid #79282c;
   }
   .team-name
 {
@@ -325,9 +325,10 @@ color: red;
 }
 
 .btn-primary:hover{
-    background-color:#2199e8;
-    color:#fff;
-    border:1px solid #0773bb;
+    color: #ffffff;
+    background-color: #f7890b;
+    font-weight: bold;
+    border-color: #f95f3a;
 }
 
 .fa-3x{
