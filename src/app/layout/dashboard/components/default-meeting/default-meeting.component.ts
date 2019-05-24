@@ -202,7 +202,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     private getMeetingBySelectedPeriod() {
         this.selectedCriteria = 'Range';
         const fromDate = new Date(this.selectedfromDate.year, this.selectedfromDate.month - 1, this.selectedfromDate.day);
-        const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day);
+        const toDate = new Date(this.selectedtoDate.year, this.selectedtoDate.month - 1, this.selectedtoDate.day + 1);
         this.iterateMeetingsbyDatePeriod(toDate, fromDate);
     }
 

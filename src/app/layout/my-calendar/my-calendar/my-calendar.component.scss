@@ -152,8 +152,25 @@ a {
 .calender-img{
     color: #77736cf8; 
     text-align: center;
-    // color: linear-gradient(to right,#fd7a2a,orange);
-    // font-size: 8vh;
+}
+.calender-img-active{
+    color: #06a763de; 
+    text-align: center;
+}
+.status-active{
+    margin-top: 20px; 
+    color:#06a763de; 
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid #06a763de;
+}
+.status-inactive{
+    margin-top: 20px; 
+    color:#77736cf8; 
+    font-weight: bold;
+    border-radius: 1px solid #77736cf8;
+    border-radius: 3px;
+    border: 1px solid #77736cf8;
 }
 .title-meeting-details{
     text-align: center;

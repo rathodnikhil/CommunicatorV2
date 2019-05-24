@@ -338,7 +338,7 @@ function appendDIV(event) {
 
 
 var connection = new RTCMultiConnection();
-// debugger;
+
 connection.socketCustomEvent = window.params.meetingCode;
 // to make sure file-saver dialog is not invoked.
 connection.autoSaveToDisk = false;

@@ -216,7 +216,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     private loggedInUserApiCall(payload: { firstName: String; isGuest: boolean; userCode: string; email: string; meetingCode: any; }) {
         this._userService.setLoggedInUserObj(payload).subscribe(res => {
-            debugger;
             if (typeof (this.previousResponseValue) !== typeof (res)) {
                 if (res === 'invalid' && !this.isMeetingCodeInValid) {
                     this.previousResponseValue = res;
