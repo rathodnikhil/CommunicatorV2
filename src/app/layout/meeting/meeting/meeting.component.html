@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}">
-                <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}">   
+                <div class="toggle" (click)="toggleMeeting=!toggleMeeting;switchTab('chat');" [ngClass]="{'active': toggleMeeting}">   
                 </div>
                
                 <div class="card">
@@ -133,7 +133,7 @@
                     <div class="card-body">
                         <ul role="tablist" class="nav nav-tabs justify-content-start">
                             <li class="nav-item ng-star-inserted" (click)="switchTab('chat')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}">
+                                <span class="nav-link" [ngClass]="{'active': currentTab=='chat'}" id="chatTab">
                                     Chat
                                     <!-- <span id="messageCount" class="step"></span> -->
                                 </span>
