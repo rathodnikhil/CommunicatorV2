@@ -67,8 +67,8 @@
                     <button id="login" type="button" class=" btn btn-primary log-in"  (click)="login()">{{loginText}}</button>
                  </div>
                  <div class="col-md-7">
-                    <h5 (click)="backToLogin()" class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a >Login</a></b></h5>
-                    <h5 (click)="forgetPassword()" class="forgot" *ngIf="loginUiFlag && isGuest === false"><b><a>Forgot Password</a></b></h5> 
+                  <h5 class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a (click)="backToLogin()">Login</a></b></h5>
+                    <h5  class="forgot" *ngIf="loginUiFlag && isGuest === false"><b><a (click)="forgetPassword()">Forgot Password</a></b></h5> 
                  </div>
               </div>
            </div>

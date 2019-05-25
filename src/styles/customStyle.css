@@ -274,10 +274,7 @@ color: red;
         background-color: #f5f5f5;
     }
  */
-    ::-webkit-scrollbar-thumb {
-        height: 200px;
-        /* background-color: #555; */
-    }
+
 .guest-user{
     float: right;
     border-radius: 5px;
