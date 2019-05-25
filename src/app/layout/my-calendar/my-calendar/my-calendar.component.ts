@@ -198,7 +198,7 @@ export class MyCalendarComponent implements OnInit {
                 + parseInt(element.duration.split(' Min')[0]) * 60000);
             const meeting = {
                 title: element.subject + '(' + element.meetingCode + ')',
-                // url: '#/meeting?meetingCode=' + element.meetingCode,
+                // url: '#/login?meetingCode=' + element.meetingCode,
                 start: new Date(element.meetingStartDateTime),
                 end: endTime
             };

@@ -223,7 +223,7 @@ export class ScheduleMeetingComponent implements OnInit {
             + parseInt(this.meeting.meridianTime.hour, 10);
         const minutes = parseInt(this.meeting.meridianTime.minute, 10) < 10 ? '0' + parseInt(this.meeting.meridianTime.minute, 10) :
             '' + parseInt(this.meeting.meridianTime.minute, 10);
-        const meetingUrl = this.baseUrl + '#/meeting?meetingCode=';
+        const meetingUrl = this.baseUrl + '#/login?meetingCode=';
         const guestMeetingUrl = this.baseUrl + '#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + this.meeting.datePicker.year + '/' +
             this.meeting.datePicker.month + '/'

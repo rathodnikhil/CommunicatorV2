@@ -77,9 +77,14 @@ connection.onMediaError = function (event) {
 
 connection.connectSocket(function (socket) {
     connection.socket.on(connection.socketCustomEvent, function (message) {        
-        if (message.receiver == localStorage.getItem("loggedInuserName")) {            
-            document.getElementById(message.sender).click();
-            document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
+        if (message.receiver == localStorage.getItem("loggedInuserName")) {   
+            alertService.info('1 new message by ' + message.sender);
+            localStorage.setItem('P2PChatInitiated','Peer2PeerMeet_' + message.sender)
+            //TODO
+            // if(window.location.href.indexOf('chat')==-1&&window.location.href.indexOf('meeting')==-1){
+            //     document.getElementById(message.sender).click();
+            //     document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
+            // }                     
         }
     });
 });
