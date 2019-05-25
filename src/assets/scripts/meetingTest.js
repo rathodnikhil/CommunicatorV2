@@ -18,6 +18,10 @@ console.log('edge : ' + edge);
 var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
 var isFireFox = ua.indexOf("firefox") > -1;
 document.getElementById('share-screen').onclick = function () {
+    if(isShareScreen){
+        alertService.warning("Screen sharing already in progress. Kindly stop current screen share and try again.");
+        return false;
+    }
     try {
         isShareScreen = true;
         connection.addStream({
@@ -28,7 +32,7 @@ document.getElementById('share-screen').onclick = function () {
         console.log(error);
     }
     this.setAttribute('class', 'btn-share-on');
-    this.disabled = true;
+    // this.disabled = true;
 };
 
 document.getElementById('btn-mute').onclick = function () {
@@ -207,7 +211,7 @@ document.getElementById('disable-video').onclick = function () {
                     element.stream.mute("audio");
                 }
             });
-        }, 3000);
+        }, 6000);
     }
 }
 document.getElementById('btn-leave-room').onclick = function () {
@@ -354,7 +358,10 @@ connection.getScreenConstraints = function (callback) {
             screen_constraints = connection.modifyScreenConstraints(screen_constraints);
             callback(error, screen_constraints);
             return;
-        } else if (screen_constraints.mandatory) {
+        } else if(error=="PermissionDeniedError"){
+            isShareScreen=false;
+            document.getElementById("share-screen").setAttribute('class', 'btn-sec');
+        }else if (screen_constraints.mandatory) {
             document.getElementById('share-screen').disabled = false;
             var url = '/#/error/sharescreen';
             var popup_window = window.open(url, "myWindow", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=500, height=500");
@@ -571,6 +578,7 @@ connection.onstreamended = function (event) {
     }
     else {
         if (event.stream.isScreen) {
+            isShareScreen=false;
             document.getElementById("share-screen").disabled = false;
             document.getElementById("share-screen").setAttribute('class', 'btn-sec');
         }

@@ -119,7 +119,12 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
     afterScriptAdded() {
         // this.document.getElementById('setup-meeting').click();
-        this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
+        const ifMeetingWasInitiated = localStorage.getItem('P2PChatInitiated');
+        if (ifMeetingWasInitiated != null && ifMeetingWasInitiated.indexOf(this.selectedUser) >= 0) {
+            this.document.getElementById('room-id').value = localStorage.getItem('P2PChatInitiated');
+        } else {
+            this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
+        }
     }
 
     sendMessage() {

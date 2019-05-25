@@ -416,7 +416,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // get meeting details
     getMeetingDetails(newLine): string {
         let meetingUrl = '';
-        meetingUrl = this.baseurl + '#/meeting?meetingCode=';
+        meetingUrl = this.baseurl + '#/login?meetingCode=';
         const guestMeetingUrl =  this.baseurl + '#/login/GuestUserWithMeeting?meetingCode=';
         const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
             ' Please join my meeting from your computer using chrome browser ' + newLine + ' for  '
