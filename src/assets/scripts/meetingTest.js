@@ -507,10 +507,10 @@ connection.onstream = function (event) {
         video.play();
     }, 5000);
     video.id = event.streamid;
-    if (!event.stream.isScreen && isRecordingStarted) {
-        mRecordRTC.addStream(event.stream);
-        mRecordRTC.startRecording();
-    }
+    // if (!event.stream.isScreen) {
+    //     mRecordRTC.addStream(event.stream);
+    //     mRecordRTC.startRecording();
+    // }
 };
 document.getElementById("chatAnchor").addEventListener("click", function () {
     hideChatCounter();
@@ -519,7 +519,9 @@ document.getElementById("chatAnchor").addEventListener("click", function () {
 document.getElementById("chatTab").onclick = function () {
     hideChatCounter();
 };
-
+document.getElementById("toggleSidebar").onclick = function () {
+    hideChatCounter();
+};
 hideChatCounter = function () {
     messageCounter = 0;
     document.getElementById("messageCount").setAttribute("style", "display:none;");
