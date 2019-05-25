@@ -324,7 +324,9 @@ div.scrollmenu a:hover {
 .chat-output {
     // height: calc(100vh*0.60);
     height: calc(100vh*0.55);
-    overflow-y: scroll;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    margin-top:10px;
 }
 
 .MomTextBox {
@@ -341,10 +343,10 @@ div.scrollmenu a:hover {
 
 .icon-bar {
     position: fixed;
-    top: 123px;
+    top: 121px;
     right: 0;
     bottom: auto;
-    height: 86.3vh;
+    height: 86.5vh;
     background-color: #4b6584;
     width:80px;
     line-height:48px;
@@ -385,6 +387,7 @@ div.scrollmenu a:hover {
     height: 100%;
     padding: 8px;
     padding-bottom: 50px;
+    margin-top: 10px;
 }
 .step {
         background: #f95f3a;
@@ -637,8 +640,8 @@ div.scrollmenu a:hover {
     
   }
 //   .toggle.active:before{
-//     content:'\f00d';
-//     color:#fff;
+//   display: none;
+  
 //   }
 .close-popup{
     float: right;
