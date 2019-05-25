@@ -36,7 +36,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     isHost = false;
     previousHtml: any;
     isGuest = false;
-    currentTab = 'chat';
+    currentTab = '';
     notify: string;
     hour = 0;
     minute = 0;
