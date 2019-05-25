@@ -257,7 +257,7 @@
                             <div  class="col-md-2"style="text-align:right;color:#AF2127;padding-right:3%;">
                                     <h4>
                                         <i class="fa fa-clock-o"></i>&nbsp;
-                                        {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
+                                        <!-- {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}} -->
                                     </h4>
                                 </div>
                                 <div class="col-md-1">
@@ -311,8 +311,8 @@
                         </button>
 
                             <button id="btn-mute" class="btn-sec btn-unmute"
-                            [ngClass]="isMute?'btn-mute':'btn-sec'" placement="top" data-toggle="tooltip"
-                            title="{{muteBtnTitle}}" (click)='mute()'>
+                            [ngClass]="isMute?'btn-mute':'btn-sec'" placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}">
+                            <!-- (click)='mute()' -->
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn-sec" alt="Start Meeting" [ngClass]="isMeetingStarted?'default':'btn-success'"
@@ -416,9 +416,9 @@
                                     <textarea placeholder="Type MOM Here..."
                                         style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
                                         [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                    <button class="btn generate-mom-btn momBtn" id="btn-save-mom"
-                                        (click)="saveMom()">Generate
+                                    <button class="btn generate-mom-btn momBtn" id="btn-save-mom">Generate
                                         Meeting Notes</button>
+                                        <!-- (click)="saveMom() -->
                                 </div>
                             </div>
                             <div class="tab-content tab-content-srcoll"

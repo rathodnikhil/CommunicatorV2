@@ -1,5 +1,5 @@
 
- var messageCounter = document.getElementById('messageCount').innerHTML;
+var messageCounter = document.getElementById('messageCount').innerHTML;
 window.enableAdapter = true; // enable adapter.js
 //document.getElementById('btn-save-mom').disabled = true;
 //document.getElementById('input-text-chat').disabled = true;
@@ -306,21 +306,21 @@ function appendDIV(event) {
     } else {
         div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
-        messageCounter++;
-    }
- // var messageCounter = document.getElementById('messageCount').innerHTML;
-   
-    var messageCounterEl = document.getElementById('messageCount');
-    if(messageCounter > 0){
-        document.getElementById("messageCount").setAttribute("style", "display:block;");
-        messageCounterEl.innerHTML = messageCounter;
+        if (document.getElementById('chatTab').className.indexOf('active') == -1) {
+            messageCounter++;
+            var messageCounterEl = document.getElementById('messageCount');
+            if (messageCounter > 0) {
+                document.getElementById("messageCount").setAttribute("style", "display:block;");
+                messageCounterEl.innerHTML = messageCounter;
+            }
+        }
     }
     html += formatDate(new Date()) + ' <i class="fa fa-user"></i>&nbsp; ' + firstNameUpperCase + '</span>'
     div.innerHTML = html;
 
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
-  // document.getElementById('chatAnchor').click();
+    // document.getElementById('chatAnchor').click();
     document.getElementById('input-text-chat').focus();
 }
 
@@ -424,7 +424,7 @@ connection.onstream = function (event) {
     video.srcObject = event.stream;
     video.setAttribute("style", 'float:left;height:18vh;width:100%');
     var outerCustomDiv = document.createElement('div');
-    outerCustomDiv.setAttribute("class" , "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
+    outerCustomDiv.setAttribute("class", "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
     var customDiv = document.createElement('div');
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
@@ -440,10 +440,10 @@ connection.onstream = function (event) {
     heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash fa-lg pull-right" style="display:none;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
-        customDiv.setAttribute("style" , "  background-color: #ffeeed; margin-bottom: 15px; height:20vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
+        customDiv.setAttribute("style", "  background-color: #ffeeed; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
         heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
-        customDiv.setAttribute("style" , "background-color: #edf3fb; margin-bottom: 15px; height:20vh; position: relative; color:#4b6584;");
+        customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
         if (event.stream.isVideo == 0) {
             heading.setAttribute("style", "background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
@@ -463,9 +463,9 @@ connection.onstream = function (event) {
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if (initialsDiv.innerHTML === "You") {
-            initialsDiv.setAttribute("style" , "  text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
+            initialsDiv.setAttribute("style", "  text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
         } else {
-            initialsDiv.setAttribute("style" , " text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
+            initialsDiv.setAttribute("style", " text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
         }
         customDiv.appendChild(initialsDiv);
     }
@@ -480,7 +480,7 @@ connection.onstream = function (event) {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
             heading.setAttribute("style", 'background-color:#2199e8;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
-            video.setAttribute("style", "background:  #f6f6f6;border: 1px solid #2199e8;border-top:none;float:left;height:18vh;width:100%");
+            video.setAttribute("style", "background:  #f6f6f6; border-top:none;float:left;height:18vh;width:100%");
             screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -512,10 +512,18 @@ connection.onstream = function (event) {
         mRecordRTC.startRecording();
     }
 };
-document.getElementById("chatAnchor").addEventListener("click", function(){
+document.getElementById("chatAnchor").addEventListener("click", function () {
+    hideChatCounter();
+});
+
+document.getElementById("chatTab").onclick = function () {
+    hideChatCounter();
+};
+
+hideChatCounter = function () {
     messageCounter = 0;
     document.getElementById("messageCount").setAttribute("style", "display:none;");
-  });
+}
 
 connection.onMediaError = function (event) {
     alertService.error(event.message + ', connect your device and refresh again', "Device error!");
@@ -676,7 +684,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             break;
     }
     viewer.innerHTML = html;
-   // document.getElementById('viewerAnchor').click();
+    // document.getElementById('viewerAnchor').click();
     return viewer;
 }
 
@@ -790,7 +798,7 @@ if (roomid && roomid.length) {
 
 /** Record screen functionality */
 var video = document.getElementById('screenRecordVideo');
-if (typeof RecordRTC_Extension === 'undefined') {    
+if (typeof RecordRTC_Extension === 'undefined') {
     document.getElementById("btn-start-recording").display = 'none';
 }
 
@@ -799,7 +807,7 @@ var recorder = new RecordRTC_Extension();
 
 function stopRecordingCallback(blob) {
     video.src = video.srcObject = null;
-    video.src = URL.createObjectURL(blob);    
+    video.src = URL.createObjectURL(blob);
     if (recorder.screen)
         recorder.screen.stop();
     recorder.destroy();

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { DOCUMENT } from '@angular/common';
-import { TypeOfError  } from '../../../../shared/errorMessageConstants';
+import { TypeOfError , StaticLabels } from '../../../../shared/errorMessageConstants';
 @Component({
     selector: 'app-timeline',
     templateUrl: './timeline.component.html',
@@ -29,6 +29,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     isMeetingStarted = false;
     isScreenSharingStarted = false;
     isVideoEnabled = false;
+    toggleMeeting: any;
+    momTxt: any;
+    muteBtnTitle = StaticLabels.Mute;
+    videoBtnTitle = StaticLabels.VideoOn;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
@@ -149,7 +153,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     onNotify() {
         this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
     }
-
+    switchTab(tab) {
+        this.currentTab = tab;
+        this.toggleMeeting = true;
+    }
+    closeToggle() {
+        this.toggleMeeting = false;
+    }
     mute() {
         this.isMute = !this.isMute;
     }
@@ -158,5 +168,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
     viewVideo() {
         this.isVideoEnabled = !this.isVideoEnabled;
+    }
+    exitMeeting() {
+
     }
 }
