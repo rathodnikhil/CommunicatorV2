@@ -52,7 +52,6 @@ div.scrollmenu a:hover {
     padding: 5px;
    margin: 1px;
    margin-top: 8px;
-   overflow-y:auto;
    border-radius: 7px;
 }
 
@@ -161,7 +160,7 @@ div.scrollmenu a:hover {
       width: 37px;
       height:37px;  }
       .img-fluid{
-        max-width: 90%;
+        max-width: 80%;
         height:auto;
     }
     }
@@ -173,7 +172,7 @@ div.scrollmenu a:hover {
       height:40px;
     }
     .img-fluid{
-        max-width: 90%;
+        max-width: 80%;
         height:auto;
     }
     }
@@ -196,7 +195,7 @@ div.scrollmenu a:hover {
               height:30px;
             }
             .img-fluid{
-                max-width: 90%;
+                max-width: 80%;
                 height:auto;
             }
             }
@@ -343,13 +342,14 @@ div.scrollmenu a:hover {
 
 .icon-bar {
     position: fixed;
-    top: 121px;
+    top:calc(100vh*0.12);
     right: 0;
     bottom: auto;
     height: 86.5vh;
     background-color: #4b6584;
     width:80px;
     line-height:48px;
+    padding-top: 10px;
 }
 
 .icon-bar a {
@@ -396,12 +396,12 @@ div.scrollmenu a:hover {
         -webkit-border-radius: 0.8em;
         color: #ffffff;
          font-weight: bold;
-        line-height: 1.6em;
+        line-height: 1.8em;
         /* margin-right: 5px; */
         text-align: center;
-        width: 1.6em;
+        width: 1.8em;
         margin-left: 6px;
-        font-size: 0.7em;
+        font-size: 0.6em;
         transform: translate(-4px,18px);
   }
   .btn-url:hover{
@@ -571,7 +571,7 @@ div.scrollmenu a:hover {
 
 .sidebar-contact{
     position:fixed;
-    top:72px;
+    top:calc(100vh*0.08);
     right:-40%;
     width:40vw;
     height:auto;
@@ -618,7 +618,7 @@ div.scrollmenu a:hover {
     text-align:center;
     cursor:pointer;
     background:#4b6584;
-    top:0.2%;
+    top:0%;
     left:-80px;
     line-height:48px;
   }
