@@ -212,8 +212,7 @@ updateAdmin() {
         const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
         const payload = this.createUpdateUserPayload(currentDisplayStatus, currentDisplayMeetingStatus);
         this.updateUserDetailsApiCall(payload);
-        this.editMemberModal.close();
-        return this.alertService.success(SuccessMessage.AdminUpdate, SuccessMessage.SuccessHeader);
+       
     }
 
     private updateUserDetailsApiCall(payload: { firstName: any; lastName: any; email: any; status: { status: any; };
@@ -231,7 +230,9 @@ updateAdmin() {
 
     private updateUserDetailsSuccessResponse( data: any) {
         this.selectedAdmin = data;
-        this.teamArray.push(data.team);
+        this.editMemberModal.close();
+        return this.alertService.success(SuccessMessage.AdminUpdate, SuccessMessage.SuccessHeader);
+        // this.teamArray.push(data.team);
     }
 
     private createUpdateUserPayload(currentDisplayStatus: any, currentDisplayMeetingStatus: any) {

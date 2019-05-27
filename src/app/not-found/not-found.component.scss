@@ -1,0 +1,43 @@
+@import "../login/join-meeting/join-meeting.component.scss";
+
+.cfsfooter{
+    background-size: cover;
+    background-image: url(/assets/images/footer.png);
+    background-repeat: no-repeat;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:0 auto;
+    width:auto;
+    height:5%;
+    color:#fff;
+    //padding-top: 0.8%;
+    // padding-bottom: 10px;
+}
+
+.text-over-img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:#fff;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.four-not-four{
+    font-weight: bolder;
+    font-size:10vh;
+    color: #8c8888;
+    text-shadow: 5px 5px #bbb2b2;
+}
+.homepage{
+    color:#4b6584;
+    font-weight: bold;
+    font-size:1.5vh;
+    color:#e44d53
+}
+.container-bg{
+   background-color: #fff;
+}

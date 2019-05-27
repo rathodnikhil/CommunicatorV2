@@ -8,7 +8,7 @@
                               <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" style="margin-left:13%;" />
                         </div>
                         <div class="col-md-7" style="text-align: center;color:#AF2127;">
-                                <h6 *ngIf="meetingDetails.subject!=undefined" style="">
+                                <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;">
                                         <b>{{meetingDetails.subject}}</b>
                                     </h6>
                             <label class="meeting-id-color" style="color:#AF2127;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
@@ -74,12 +74,12 @@
                             (click)='startMeeting();'>
                             <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording"
+                        <button id="btn-start-recording" class="btn-danger-end-meeting btn-exit " alt="Start Recording"
                             style="display: none;">
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip"
                                 aria-hidden="true" id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
-                                style="color:#dc3545;display: none" id="rec_stop"></i>
+                                style="color:#fff;display: none" id="rec_stop"></i>
                         </button>
                         <button id="btn-stop-recording" class="btn-sec " alt="Start Recording"
                             style="display: none;"></button>
@@ -201,6 +201,7 @@
                         <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i></a>
                     <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
                             src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
+                            <a title="Exit Meeting"><span class="exit-meeting">Exit  <i class="fa fa-sign-out" aria-hidden="true"></i></span></a>
                 </div> 
         </div>
     </div>
