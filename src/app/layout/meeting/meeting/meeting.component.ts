@@ -260,6 +260,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.toggleMeeting = true;
     }
     closeToggle() {
+        this.currentTab = null;
         this.toggleMeeting = false;
     }
     exitMeeting() {
@@ -348,6 +349,14 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         document.execCommand('copy');
         document.body.removeChild(el);
         return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
+    }
+    switchTabAndToggle() {
+        if (!this.toggleMeeting) {
+            this.currentTab = 'chat';
+        } else {
+            this.currentTab = null;
+        }
+        this.toggleMeeting = !this.toggleMeeting;
     }
 }
 

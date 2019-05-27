@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}">
-                <div class="toggle" (click)="toggleMeeting=!toggleMeeting;switchTab('chat');" [ngClass]="{'active': toggleMeeting}">   
+                <div class="toggle" (click)="switchTabAndToggle()" [ngClass]="{'active': toggleMeeting}" id="toggleSidebar">   
                 </div>
                
                 <div class="card">
