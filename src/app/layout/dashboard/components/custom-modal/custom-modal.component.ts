@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter, ViewChild, Input, ElementRef, Inject } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DOCUMENT } from '@angular/common';
+import {OnInit , AfterViewInit} from '@angular/core';
+import { AlertService } from '../../../../services/alert.service';
 @Component({
   selector: 'app-custom-modal',
   templateUrl: './custom-modal.component.html',
@@ -24,7 +26,6 @@ export class CustomModalComponent {
             this.CancelEvent.emit(reason);
         });
     }
-
     private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
             return 'by pressing ESC';

@@ -9,7 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertService } from '../../../services/alert.service';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
-import { StaticLabels, ErrorMessageConstants ,TypeOfError, SuccessMessage } from 'app/shared/errorMessageConstants';
+import { StaticLabels, ErrorMessageConstants, TypeOfError, SuccessMessage } from 'app/shared/errorMessageConstants';
 @Component({
     selector: 'app-meeting',
     templateUrl: './meeting.component.html',
@@ -100,7 +100,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
                         email: this.loggedInUser.email
                     };
                     this.verifyUserApiCall(payload);
-                }  else {
+                } else {
                     this.setAuthenticateUserValidation(data);
                 }
             }
@@ -236,6 +236,9 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     downloadFile(data, meetingDetails, attendeeList) {
+        if (attendeeList === null) {
+            attendeeList = 'You are not host you need , you can download your MOM to your machine';
+        }
         const meetingDate = new Date();
         meetingDate.setTime(meetingDetails.meetingStartDateTime);
         const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
@@ -269,22 +272,22 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     completeExit() {
         this.exit();
         if (this.isGuest === true) {
-            this.router.navigate(['/login']);
-            window.location.reload();
+            this.downloadFile(this.momTxt, this.meetingDetails, null);
         } else {
-            this.router.navigate(['/dashboard']);
-            window.location.reload();
+            this.saveMom();
         }
-    }
-    exit() {
-        this.exitMeetingConfirmModal.close();
-        // this.stopTimer();
+        this.router.navigate(['/login']);
+        window.location.reload();
+        this.stopTimer();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         if (this.isGuest) {
             this.stopTimer();
             payload.userCode = this.loggedInUser.firstName;
         }
         this.endMeetingApiCall(payload);
+    }
+    exit() {
+        this.exitMeetingConfirmModal.close();
     }
     private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
         this._meetingService.endMeeting(payload).subscribe(resp => {
@@ -339,7 +342,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
     startMeeting() {
         this.isMeetingStarted = !this.isMeetingStarted;
-       // this.startTimer();
+        // this.startTimer();
     }
     copyMeetingId() {
         const el = document.createElement('textarea');
