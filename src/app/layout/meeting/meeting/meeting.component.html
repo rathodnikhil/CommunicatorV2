@@ -11,7 +11,7 @@
                                 <h6 *ngIf="meetingDetails.subject!=undefined" style="">
                                         <b>{{meetingDetails.subject}}</b>
                                     </h6>
-                            <label class="meeting-id-color" style="color:#AF2127;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                            <label (click)="copyMeetingId();" class="meeting-id-color" style="color:#AF2127;cursor: pointer;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                         </div>
                         <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2"style="text-align:right;color:#AF2127;padding-right:3%;">
                                 <h4>
@@ -49,7 +49,7 @@
                                 <div class="meeting-bottom">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button id="btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
+                        <button  class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
@@ -60,7 +60,7 @@
                                     activity click No?</label>
                             </div>
                             <div class="modal-footer popFooter">
-                                <button type="button" class="btn btn-primary" (click)="completeExit()">Yes</button>
+                                <button type="button" id="btn-leave-room" class="btn btn-primary" (click)="completeExit()">Yes</button>
                                 <button type="button" class="btn btn-danger" (click)="exit()">No</button>
                             </div>
                         </app-custom-modal>
