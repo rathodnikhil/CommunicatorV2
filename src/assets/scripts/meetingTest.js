@@ -3,7 +3,7 @@ var messageCounter = document.getElementById('messageCount').innerHTML;
 window.enableAdapter = true; // enable adapter.js
 //document.getElementById('btn-save-mom').disabled = true;
 //document.getElementById('input-text-chat').disabled = true;
-document.getElementById('btn-leave-room').disabled = true;
+// document.getElementById('btn-leave-room').disabled = true;
 // ......................................................
 // .......................UI Code........................
 // ......................................................
@@ -214,31 +214,16 @@ document.getElementById('disable-video').onclick = function () {
         }, 6000);
     }
 }
-document.getElementById('btn-leave-room').onclick = function () {
-    this.disabled = true;
-    // debugger;
-    connection.leave();
-    connection.attachStreams.forEach(function (stream) {
-        stream.stop();
-    });
-    //remove parent
-    connection.streamEvents.selectAll().forEach(function (streamEvent) {
-        var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
-        if (mediaElement) {
-            streamEvent.stream.stop();
-            mediaElement.parentNode.removeChild(mediaElement);
-        }
-    });
-    document.getElementById('meeting-error').innerText = 'You have left the meeting.';
-    document.getElementById('share-file').style.display = 'none';
-    document.getElementById('disable-video').style.display = 'none';
-    document.getElementById('share-screen').style.display = 'none';
-    document.getElementById('btn-start-recording').style.display = 'none';
-    document.getElementById('input-text-chat').disabled = true;
-    document.getElementById('btn-mute').disabled = true;
-    document.getElementById('open-room').disabled = true;
-};
-
+// document.getElementById('btn-leave-room').onclick = function () {
+//    // this.disabled = true;
+//     // debugger;
+//     exitMeeting();
+// };
+document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "btn-leave-room"){
+        exitMeeting();
+    }
+  });
 // ......................................................
 // ................FileSharing/TextChat Code.............
 // ......................................................
@@ -275,6 +260,29 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 };
 
 var chatContainer = document.querySelector('.chat-output');
+
+function exitMeeting() {
+    connection.leave();
+    connection.attachStreams.forEach(function (stream) {
+        stream.stop();
+    });
+    //remove parent
+    connection.streamEvents.selectAll().forEach(function (streamEvent) {
+        var mediaElement = document.getElementById(streamEvent.streamid + 'parent');
+        if (mediaElement) {
+            streamEvent.stream.stop();
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    });
+    document.getElementById('meeting-error').innerText = 'You have left the meeting.';
+    document.getElementById('share-file').style.display = 'none';
+    document.getElementById('disable-video').style.display = 'none';
+    document.getElementById('share-screen').style.display = 'none';
+    document.getElementById('btn-start-recording').style.display = 'none';
+    document.getElementById('input-text-chat').disabled = true;
+    document.getElementById('btn-mute').disabled = true;
+    document.getElementById('open-room').disabled = true;
+}
 
 function formatDate(date) {
     var hours = date.getHours();
@@ -315,7 +323,11 @@ function appendDIV(event) {
             var messageCounterEl = document.getElementById('messageCount');
             if (messageCounter > 0) {
                 document.getElementById("messageCount").setAttribute("style", "display:block;");
-                messageCounterEl.innerHTML = messageCounter;
+                if(messageCounter > 99) {
+                    messageCounterEl.innerHTML = "99+";
+                } else{
+                    messageCounterEl.innerHTML = messageCounter;
+                }
             }
         }
     }
@@ -428,8 +440,6 @@ connection.onstream = function (event) {
             });
         }
     }
-    video.srcObject = event.stream;
-    video.setAttribute("style", 'float:left;height:18vh;width:100%');
     var outerCustomDiv = document.createElement('div');
     outerCustomDiv.setAttribute("class", "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
     var customDiv = document.createElement('div');
@@ -450,7 +460,7 @@ connection.onstream = function (event) {
         customDiv.setAttribute("style", "  background-color: #ffeeed; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
         heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
     } else {
-        customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
+        customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px;height:19vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
         if (event.stream.isVideo == 0) {
             heading.setAttribute("style", "background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
@@ -536,7 +546,7 @@ hideChatCounter = function () {
 
 connection.onMediaError = function (event) {
     alertService.error(event.message + ', connect your device and refresh again', "Device error!");
-    document.getElementById('btn-leave-room').disabled = true;
+   // document.getElementById('btn-leave-room').disabled = true;
     //  document.getElementById('open-room').disabled = false;
 
 }
@@ -623,10 +633,10 @@ connection.onopen = function () {
     document.getElementById('disable-video').style.display = 'inline-block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost) {
-        document.getElementById('btn-leave-room').disabled = false;
+     //   document.getElementById('btn-leave-room').disabled = false;
         document.querySelector('h1').innerHTML = 'You are connected with: ' + connection.getAllParticipants().join(', ');
     } else {
-        document.getElementById('btn-leave-room').disabled = false;
+     //   document.getElementById('btn-leave-room').disabled = false;
     }
 };
 
@@ -643,7 +653,7 @@ connection.onEntireSessionClosed = function (event) {
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
-    document.getElementById('btn-leave-room').disabled = true;
+   // document.getElementById('btn-leave-room').disabled = true;
     document.getElementById('open-or-join-room').disabled = false;
     document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = false;
@@ -786,7 +796,7 @@ if (roomid && roomid.length) {
             document.getElementById('open-room').disabled = false;
             document.getElementById('open-room').click();
             // /document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
-            document.getElementById('btn-leave-room').disabled = false;
+          //  document.getElementById('btn-leave-room').disabled = false;
             return;
         } else if (!isHost) {
             // document.getElementById('btn-leave-room').disabled = true;
