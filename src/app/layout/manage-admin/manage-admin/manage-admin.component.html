@@ -11,13 +11,14 @@
 </div>
 <div class="main">
   <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-8">
         <h3>Admin Details</h3>
-        <a  [routerLink]="['/RegisterAdmin']" class="btn btn-search" style="margin-bottom: 10px;"><i class="fa fa-user-plus"></i></a>
+      </div>
+      <div class="col-md-1">
+        <a  [routerLink]="['/RegisterAdmin']" class="btn btn-primary add-admin"><i class="fa fa-user-plus"></i></a>
       </div>
        <div class="align-center" class="col-md-3" >
-          
-           <div class="form-group input-group"style="padding-top:5px;">
+            <div class="form-group input-group"style="padding-top:5px;">
              <input class="tBox username-password form-control" placeholder="&#xF002;  Name/Email/Status" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
          </div>
        </div>
@@ -102,5 +103,5 @@
         [screenReaderPageLabel]="labels.screenReaderPageLabel" [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
         (pageChange)="onPageChange($event)"></pagination-controls>
 </div>
-</div>
+</div>  
 <app-footer></app-footer>

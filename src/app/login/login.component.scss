@@ -1,11 +1,5 @@
 @import "styles/customStyle.css";
 
-// body, html {
-// width: 100%;
-// height: 100%;
-// margin: 0;
-// }
-
 .logo-background{
 background-size: cover;
 background-repeat: no-repeat;
@@ -23,17 +17,10 @@ height: 35px;
 width: 235px;
 margin:10px;
 } 
-figure{
-//margin-right: 1%; 
-}
+
 figcaption
 {
 padding-top:10px;
-}
-
-.login-img{
-max-width: 100%;
-height: 100%;
 }
 
 .imgr{
@@ -62,7 +49,6 @@ height:auto;
   }
   #login{
     padding:4px 20px;
-    
   }
   .guest-user{
     margin-top: 4%;
@@ -227,7 +213,6 @@ padding:5px;
 }
 } 
 
-
 .about{
 text-align:right;
 margin-top: 15px;
@@ -236,7 +221,6 @@ margin-top: 15px;
 
 .about a{
 color:darkslategrey;
-//text-decoration: none;
 }
 
 .faq{
@@ -246,12 +230,10 @@ margin-top: 15px;
 }
 .faq a{
 color:darkslategrey;
-//text-decoration: none;
 }
 
 .main1{
 margin-left: 5%;
-//margin-top:20%;
 }
 
 .main1 h6{
@@ -287,7 +269,6 @@ font-size:15px;
 
 .feature{
 margin-top: 18%;
-//margin-left:1%;
 }
 
 .red-color{
@@ -301,17 +282,13 @@ color: #111;
 }
 
 .login-block{
-//padding: 40px;
 margin-bottom: 40px;
 border: 1px solid #c9c4c5;
 box-shadow: 10px 10px 10px 10px #c9cacc;
 background-color: #fff;
 margin-right:15%; 
 transition: 0.4s;
-//margin-top:20%;
 }
-
-
 
 .feature-wrap i {
 font-size: 25px;
@@ -321,12 +298,8 @@ margin: 3px;
 border-radius: 100%;
 line-height: 55px;
 text-align: center;
-// background: #f26359;
 background: linear-gradient(to bottom right, #c51205 0%, #f78982 100%);
 color: #fff;
-//border: 3px solid #ffffff;
-//box-shadow: inset 0 0 0 5px #f2f2f2;
-//-webkit-box-shadow: inset 0 0 0 5px #f2f2f2;
 -webkit-transition: 500ms;
 -moz-transition: 500ms;
 -o-transition: 500ms;
@@ -346,7 +319,7 @@ margin: 0;
 }
 
 header { 
-background-color: #000;
+background-color: #fff;
 height: 100px; 
 }
 

@@ -14,7 +14,6 @@
     ::-webkit-scrollbar {
         display: none;
     }
-    //background-image: url(/assets/images/Coreflex-solutions-sidepannel.jpg);
     background: linear-gradient(to bottom, #980e06 -6%, #f9e0e2 100%);
     background-position-x: center;
     background-repeat: no-repeat;
@@ -70,7 +69,6 @@
         &:active,
         &:focus {
             text-decoration: none;
-            //background-color: #e8f0fc  !important;
             background-color: #fff;
             border : 1px solid #115c7d;
         
@@ -80,14 +78,11 @@
         height: auto;
         font-size: 20px;
         line-height: 44px;
-        //background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
         background-color: #fff;
         &:hover,
         &:active,
         &:focus {
             background-color: #fff;
-         //  background: linear-gradient(to left, #01baac 32%, #115c7d 100%);
-            //background-image: url(/assets/images/Coreflex-solutions-header.jpg);
         }
     }
 }
@@ -189,10 +184,8 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0; // background-color: rgba(1, 45, 68,0.8);
+    bottom: 0; 
     background: #000000;
-    // background: -webkit-linear-gradient(to left, #57c4d8, #0575E6);
-    // background: linear-gradient(to left, #57c4d8, #0575E6);
     opacity: 0.8;
     z-index: 101;
 }

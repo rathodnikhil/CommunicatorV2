@@ -1,6 +1,5 @@
 @import "styles/customStyle.css";
 .meetingHeader {
-    // background: linear-gradient(to right, #AF2127 -6%, #eeedee 100%);
     background:linear-gradient(to right, #4b6584 41%, #f4f4f4 110%);
     color: #FFFFFF;
     border-radius: 5px 5px 0px 0px;
@@ -13,12 +12,6 @@
 
 .form-control {
     border-radius: 5px 5px 5px 5px;
-}
-
-.align-center {
-    margin: auto;
-    width: 100%;
-    color: #848484;
 }
 
 .d-inline-block {
@@ -42,12 +35,6 @@
     background-color: #e4e4e4; border-top:1px solid  #19191a;
     }
     
-    .popTitle{
-    font-size: 22px;
-    }
-    .btn-border-radius{
-        border-radius: 5px;
-    }
    .span-font span{
        font-weight: bold;
    }
@@ -71,23 +58,21 @@
     text-align: center;
 }
 .timzone-select{
-    border: 1px solid #AF2127;
-    color: #AF2127;
+    border: 1px solid #2980b9;
+    color: #2980b9;
     background: transparent; 
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #AF2127;
+    color: #2980b9;
     opacity: 1; /* Firefox */
   }
 .timzone-select:hover{
     background:transparent;
-    // color: #fff;
 }
 
 @media (max-width: 768px) {
     .btn-responsive {
     font-size:1.5vh;
-    //line-height: 1;
     border-radius:3px;
     overflow-wrap: break-word;
     padding: 0.3rem 0.3rem;
@@ -97,7 +82,6 @@
 @media (min-width: 769px) and (max-width: 992px) {
     .btn-responsive {
     font-size:1.7vh;
-    //line-height: 1.2;
     overflow-wrap: break-word;
     padding: 0.3rem 0.3rem;
     }

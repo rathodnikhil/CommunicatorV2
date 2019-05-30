@@ -9,19 +9,9 @@
     padding: 0.3rem 0 2.0rem 1rem;
     overflow-x: hidden;
 }
-
-.searched-list{
-    text-align: center; 
-    background-color: #05588f; 
-    margin-right: -1.25rem;
-    margin-left:-5px;
-}
-
 .searched-title{
-    //padding:5px;
     color: white;
 }
-
 .member-list{
     height:100%;  
     overflow-y: auto;
@@ -52,11 +42,6 @@
     border-radius: 5px 0px 0px 5px;
 }
 
-.list-group-partition {
-    width: 100%;
-    margin-top: 8px;
-    margin-bottom: 0px;
-}
 .add-member{
     color: #ffffff; 
     padding-left: 10px;
@@ -69,55 +54,25 @@
     color:#fff;
  }
 
-//  .btn-search:hover{
-//     background-color: #f3c0c2;
-//     color:#710308;
-//     border: 1px solid #AF2127;
-//  }
  .list-item-padding{
     padding-left: 1%;
     padding-right: 1%;
     background-color: #f6f6f6;
     border-bottom:1px solid #f8c8cb;
  }
-::-webkit-scrollbar {
-    width: 6px;
-    background-color: #f5f5f5;
-}
+
 .team-member{
     color: #131313;
     font-weight: bold;
     padding-left: 3.5%; 
     padding-top: 2px;
 }
-
 .tBox{  
     background-position:right;   
     background-repeat:no-repeat;   
     border-radius: 5px;
     margin: 0 3% 0 3%;
     }
-
-    ::-webkit-input-placeholder {
-        text-align: left;
-        padding-left: 2%;
-     }
-     
-     :-moz-placeholder {
-        text-align: left;
-        padding-left: 2%; 
-     }
-     
-     ::-moz-placeholder {
-        text-align: left;  
-        padding-left: 2%;
-     }
-     
-     :-ms-input-placeholder {  
-        text-align: left; 
-        padding-left: 2%;
-     }
-
      .username-password{
         width:90%;
         margin-bottom: 1%;
@@ -184,7 +139,6 @@
           }
           ::-webkit-scrollbar-thumb {
             height: 200px;
-            /* background-color: #555; */
         }
 
           
