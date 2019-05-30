@@ -194,7 +194,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     saveMom() {
             if (!this.isHost) {
                 if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === StaticLabels.Undefined) {
-                    this.momTxt = 'Meeting notes not has added';
+                    this.momTxt = ErrorMessageConstants.EnterMOM;
                 }
                 this.momForHostAndRegisterUser();
             } else {
@@ -238,7 +238,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         debugger;
         if (this.isGuest) {
             attendeeList = 'Your are guest , you cant view attendee';
-            data = ErrorMessageConstants.EnterMOM;
         } else {
             data = data.split('\n');
             data = data.join('\r\n ');
