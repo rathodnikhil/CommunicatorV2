@@ -366,14 +366,8 @@ div.scrollmenu a:hover {
     //border-bottom: 1px solid #fff;
 }
 
-.icon-bar a:hover {
-    //background-color: #be2419;
 
-}
-
-
-
-.selected i {
+.selected i , .icon-bar a i:hover{
     padding: 8px 10px 8px 15px;
     background-color: #a1b0c1;
     border-top-left-radius: 10px;
@@ -394,7 +388,7 @@ div.scrollmenu a:hover {
     margin-top: 10px;
 }
 .step {
-        background: #f95f3a;
+        background: #f18000;
         border-radius: 0.8em;
         -moz-border-radius: 0.8em;
         -webkit-border-radius: 0.8em;
@@ -410,9 +404,9 @@ div.scrollmenu a:hover {
   }
   .btn-url:hover{
     color: #ffffff;
-    background-color: #f7890b;
+    background-color: #ffa640;
     font-weight: bold;
-    border-color: #f95f3a;
+    border-color: #f87d0a;
   }
   .btn-url{
     border: 1px solid #2d4b70 ;
@@ -426,12 +420,12 @@ div.scrollmenu a:hover {
     color: #ffffff;
     padding: 0.375rem 0.75rem;
     border-radius: 28px;
-    border: 1px solid #1394eb;
-    background-color: #2199e8;
+    border: 1px solid #d67200;
+    background-color: #f18000;
 }
 .btn-sec:hover{
-    box-shadow: 0px 0px 17px -2px #2199e8;
-   color:#2199e8;
+    box-shadow: 0px 0px 17px -2px #d67200;
+   color:#f18000;
    background-color: #fff;
  }
 
@@ -450,22 +444,21 @@ div.scrollmenu a:hover {
     box-shadow: 0px 0px 17px -2px #9c4141;
  }
   .btn-unmute{
-    background-color: #017500;
-      color: #fff;
-      border: 1px solid rgb(8, 105, 8);
+    background-color: #17ad16;
+    color: #fff;
+    border: 1px solid #047904;
   }
  
   .btn-mute{
-    background: #f95f3a;
+    border: 1px solid #44576d;
+    background: linear-gradient(to bottom right, #4b6584 0%, #92a7bf 100%);
     color: #fff;
-    border-color: #f95f3a;
-
   }
 
   .btn-mute:hover{
     border-radius: 28px;
-    box-shadow: 0px 0px 17px -2px #AF2127;
-    color:#AF2127;
+    box-shadow: 0px 0px 17px -2px #047904;
+    color:#17ad16;
    background-color: #fff;
   }
   .subject-line{
@@ -475,8 +468,8 @@ div.scrollmenu a:hover {
     margin-left: 6%;
   }
   .btn-share-on{
-    border: 1px solid #f12222;
-    background: linear-gradient(to bottom right, #c51205 0%, #f78982 100%);
+    border: 1px solid #44576d;
+    background: linear-gradient(to bottom right, #4b6584 0%, #92a7bf 100%);
     color: #fff;
   }
 /*for scroll bar of meeting page*/
