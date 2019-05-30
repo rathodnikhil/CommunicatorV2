@@ -323,6 +323,7 @@ function appendDIV(event) {
             var messageCounterEl = document.getElementById('messageCount');
             if (messageCounter > 0) {
                 document.getElementById("messageCount").setAttribute("style", "display:block;");
+                alertService.info("You have new message" , "Notification");
                 if(messageCounter > 99) {
                     messageCounterEl.innerHTML = "99+";
                 } else{
@@ -497,7 +498,7 @@ connection.onstream = function (event) {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
             heading.setAttribute("style", 'background-color:#2199e8;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
-            video.setAttribute("style", "background:  #f6f6f6; border-top:none;float:left;height:18vh;width:100%");
+            video.setAttribute("style", "background:  #f6f6f6; border-top:none;float:left;height:19vh;width:100%");
             screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -516,7 +517,7 @@ connection.onstream = function (event) {
                 viewerListDiv.appendChild(viewer);
                 var vCounterEl = document.getElementById('viewerCount');
                 vCounterEl.innerText = viewerCounter;
-
+                alertService.info("New viewer has joined meeting" , "Notification");
             }
         }
     }
@@ -690,6 +691,7 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             break;
         case 2:
             html += '<i class="fa fa-sign-out"></i>&nbsp;' + ' Left the meeting</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
+            alertService.info("has left the meeting" , "Notification");
             break;
         case 3:
             html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Stopped shared screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';

@@ -49,15 +49,13 @@
                                 <div class="meeting-bottom">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button  class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
+                        <!-- <button  class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
                             data-toggle="tooltip" title="Exit Meeting">
                             <i class="fa fa-2x fa-power-off"></i>
-                        </button>
+                        </button> -->
                         <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
                             <div>
-                                <label style="padding: 10px; ">Are you sure you want to completely exit meeting click
-                                    yes or to save MOM and other meeting
-                                    activity click No?</label>
+                                <label style="padding: 10px; ">Are you sure you want to completely exit meeting ?</label>
                             </div>
                             <div class="modal-footer popFooter">
                                 <button type="button" id="btn-leave-room" class="btn btn-primary" (click)="completeExit()">Yes</button>
@@ -94,7 +92,7 @@
                             data-toggle="tooltip" title="Share Screen" (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec " alt="Disable video"
+                        <button id="disable-video" class="btn-sec " alt="Disable video"  [ngClass]="isVideoEnabled?'btn-mute':'btn-sec'" 
                             style="display: none; margin-top: 1px;" (click)='viewVideo()' [value]="isVideoEnabled"
                             title="{{videoBtnTitle}}" data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
@@ -201,7 +199,7 @@
                         <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i></a>
                     <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
                             src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
-                            <a title="Exit Meeting"><span class="exit-meeting">Exit  <i class="fa fa-sign-out" aria-hidden="true"></i></span></a>
+                    <a title="Exit Meeting" (click)="exitMeeting();"><span class="exit-meeting">Exit  <i class="fa fa-sign-out" aria-hidden="true"></i></span></a>
                 </div> 
         </div>
     </div>
