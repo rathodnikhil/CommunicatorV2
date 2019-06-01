@@ -306,12 +306,15 @@ function appendDIV(event) {
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
     var senderNameArray = setAttendeeName(user);
-    if (senderNameArray.length < 3) {
-        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
-    } else {
-        var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
-            + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
+    if (senderNameArray.length > 0) {
+        if (senderNameArray.length < 3) {
+            var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1);
+        } else {
+            var firstNameUpperCase = senderNameArray[0].charAt(0).toUpperCase() + senderNameArray[0].slice(1) + ' '
+                + senderNameArray[2].charAt(0).toUpperCase() + senderNameArray[2].slice(1);
+        }
     }
+    
     if (firstNameUpperCase === 'You') {
         div.className = 'chat-background-attendee';
         html += '<span class="time-right">';
@@ -441,6 +444,7 @@ connection.onstream = function (event) {
             });
         }
     }
+    video.srcObject = event.stream;
     var outerCustomDiv = document.createElement('div');
     outerCustomDiv.setAttribute("class", "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
     var customDiv = document.createElement('div');
@@ -575,12 +579,14 @@ connection.onstreamended = function (event) {
         var attendeeFullName = event.extra;
         var viewerNameString = null;
         var attendeeFullNameArray = setAttendeeName(attendeeFullName);
-        if (attendeeFullNameArray.length < 3) {
-            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
-        } else {
-            var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
-                + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
-        }
+        if(attendeeFullNameArray.length>0){
+            if (attendeeFullNameArray.length < 3) {
+                var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
+            } else {
+                var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
+                    + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
+            }
+        }        
         viewerNameString = '<p>' + firstNameUpperCase + '</p>';
         var viewer = null;
         if (event.stream.isScreen) { viewer = displayViewerList(event, viewerNameString, 3); }
@@ -608,12 +614,14 @@ connection.onleave = function (event) {
             var attendeeFullName = event.extra;
             var viewerNameString = null;
             var attendeeFullNameArray = setAttendeeName(attendeeFullName);
-            if (attendeeFullNameArray.length < 3) {
-                var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
-            } else {
-                var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
-                    + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
-            }
+            if(attendeeFullNameArray.length>0){
+                if (attendeeFullNameArray.length < 3) {
+                    var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1);
+                } else {
+                    var firstNameUpperCase = attendeeFullNameArray[0].charAt(0).toUpperCase() + attendeeFullNameArray[0].slice(1) + ' '
+                        + attendeeFullNameArray[2].charAt(0).toUpperCase() + attendeeFullNameArray[2].slice(1);
+                }
+            }            
             viewerNameString = '<p>' + firstNameUpperCase + '</p>';
             var viewer = null;
             viewer = displayViewerList(event, viewerNameString, 2);
@@ -672,6 +680,21 @@ connection.onEntireSessionClosed = function (event) {
 connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
+connection.onPeerStateChanged = function (state) {   
+        if (state.iceConnectionState.search(/closed|failed/gi) !== -1) {
+            // debugger;
+            // connection.close();
+            // connection = new RTCMultiConnection();
+            if (connection.isOnline) {
+                connection.openOrJoin(roomid);
+            }
+            else {
+                alertService.error("It seems that you are not connected to internet. Kindly check your internet settings and try again.", "No internet");
+            }
+            // console.error('Peer connection is closed between you & ', state.userid, state.extra, 'state:', state.iceConnectionState);
+        }  
+};
+
 
 function displayViewerList(event, viewerNameString, sharedScreenFlag) {
     var viewer = null;
@@ -711,15 +734,18 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
 }
 
 function setAttendeeName(attendeeFullName) {
-    attendeeFullName = attendeeFullName.split(" ");
-    var attendeeFullNameArray = new Array();
-    for (var i = 0; i < attendeeFullName.length; i++) {
-        attendeeFullNameArray.push(attendeeFullName[i]);
-        if (i != attendeeFullName.length - 1) {
-            attendeeFullNameArray.push(" ");
+    if (attendeeFullName != undefined) {
+        attendeeFullName = attendeeFullName.split(" ");
+        var attendeeFullNameArray = new Array();
+        for (var i = 0; i < attendeeFullName.length; i++) {
+            attendeeFullNameArray.push(attendeeFullName[i]);
+            if (i != attendeeFullName.length - 1) {
+                attendeeFullNameArray.push(" ");
+            }
         }
+        return attendeeFullNameArray;
     }
-    return attendeeFullNameArray;
+    return "";
 }
 
 function disableInputButtons() {
@@ -739,6 +765,12 @@ function showRoomURL(roomid) {
     var roomURLsDiv = document.getElementById('room-urls');
     // roomURLsDiv.innerHTML = html;
     roomURLsDiv.style.display = 'block';
+    connection.socket.on('disconnect', function () {
+        if (connection.enableLogs) {
+            connection = new RTCMultiConnection();
+            connection.openOrJoin(roomid);           
+        }
+    });
 }
 
 // document.getElementById("copyMeetingLink").onclick = function () {
