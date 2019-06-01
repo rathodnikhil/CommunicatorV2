@@ -192,16 +192,15 @@ export class MeetingComponent implements OnInit, AfterViewInit {
 
     // save mom details
     saveMom() {
-        if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === StaticLabels.Undefined) {
-            return this.alertService.warning(ErrorMessageConstants.EnterMOM, TypeOfError.Warning);
-        } else {
             if (!this.isHost) {
+                if (this.momTxt === '' || this.momTxt === null || typeof this.momTxt === StaticLabels.Undefined) {
+                    this.momTxt = ErrorMessageConstants.EnterMOM;
+                }
                 this.momForHostAndRegisterUser();
             } else {
                 const payload = { meetingCode: this.meetingCode, momDescription: this.momTxt, userCode: this.loggedInUser.userCode };
                 this.saveMomApiCall(payload);
             }
-        }
     }
     private saveMomApiCall(payload: { meetingCode: string; momDescription: any; userCode: any; }) {
         this._meetingService.saveMomDetails(payload).subscribe(resp => {
@@ -236,15 +235,17 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     downloadFile(data, meetingDetails, attendeeList) {
-        if (attendeeList === null) {
-            attendeeList = 'You are not host you need , you can download your MOM to your machine';
+        debugger;
+        if (this.isGuest) {
+            attendeeList = 'Your are guest , you cant view attendee';
+        } else {
+            data = data.split('\n');
+            data = data.join('\r\n ');
         }
         const meetingDate = new Date();
         meetingDate.setTime(meetingDetails.meetingStartDateTime);
         const momHeader = 'Date of Meeting: ' + meetingDate.toString().slice(0, 24) + '\r\n\r\n' + 'Subject: ' + meetingDetails.subject +
             '\r\n\r\n' + 'Attendees: ' + attendeeList + '\r\n\r\n';
-        data = data.split('\n');
-        data = data.join('\r\n ');
         const fileType = 'text/json';
         const a = document.createElement('a');
         document.body.appendChild(a);
@@ -255,7 +256,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        return this.alertService.success(SuccessMessage.DownloadMom, SuccessMessage.SuccessHeader);
+        //  return this.alertService.success(SuccessMessage.DownloadMom, SuccessMessage.SuccessHeader);
     }
 
     switchTab(tab) {
@@ -270,35 +271,38 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.exitMeetingConfirmModal.open();
     }
     completeExit() {
+        debugger;
         this.exit();
-        if (this.isGuest === true) {
-            this.downloadFile(this.momTxt, this.meetingDetails, null);
-        } else {
-            this.saveMom();
-        }
-        this.router.navigate(['/login']);
-        window.location.reload();
-        this.stopTimer();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-        if (this.isGuest) {
-            this.stopTimer();
+        this.saveMom();
+        if (this.isGuest === true) {
+            // this.downloadFile(this.momTxt, this.meetingDetails, null);
             payload.userCode = this.loggedInUser.firstName;
+            this.closeRmainigMeetingActivity();
+        } else {
+            this.endMeetingApiCall(payload);
         }
-        this.endMeetingApiCall(payload);
     }
     exit() {
         this.exitMeetingConfirmModal.close();
     }
     private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
+        debugger;
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, TypeOfError.Warning);
             } else {
-                this.document.getElementById('btn-leave-room').click();
-                this.stopTimer();
+                //   this.document.getElementById('btn-leave-room').click();
+                this.closeRmainigMeetingActivity();
                 this.alertService.success(SuccessMessage.EndMeeting, SuccessMessage.SuccessHeader);
             }
         });
+    }
+
+    private closeRmainigMeetingActivity() {
+        this.stopTimer();
+        this.router.navigate(['/login']);
+        window.location.reload();
     }
 
     stopTimer() {
