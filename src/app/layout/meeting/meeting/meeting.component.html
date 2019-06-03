@@ -44,7 +44,16 @@
                                             class="btn btn-url" id="copyGuestMeetingLink">
                                             <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
                                         </button>
+                                        <div style="margin-top: 6px;">
+                                            <h6>
+                                                <i class="fa fa-clock-o"></i>&nbsp;
+                                                {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}&nbsp;
+                                                <label style="color:#AF2127;font-weight: bold;"> Recording is going on</label>
+                                            </h6>
+                                           
+                                        </div>
                                     </div>
+                                  
                              
                                 <div class="meeting-bottom">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off

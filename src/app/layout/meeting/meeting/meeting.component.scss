@@ -336,16 +336,17 @@
     cursor: pointer;
     font: bold 13px Arial,Helvetica;
     cursor:pointer;
-    border: 1px solid #1394eb;
+    border: 1px solid #2d4b70;
     color: #FFF;
-    background-color: #2199e8;
+    background-color: #4b6584;
     padding: .375rem .75rem;
 }
 .generate-mom-btn:hover
 {
-    background-color:#AF2127;
-    color:#fff;
-    border:1px solid rgb(201, 9, 19);
+  color: #ffffff;
+  background-color: #f7890b;
+  font-weight: bold;
+  border-color: #f95f3a;
 }
 .meeting-id-color{
   margin-left: 10px;
@@ -564,7 +565,7 @@
 }
 .timer{
   text-align:right;
-  color:#AF2127;
+  color:#6b6767;
   padding-right:3%;
 }
 .share-screen-title{
