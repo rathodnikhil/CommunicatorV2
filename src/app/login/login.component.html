@@ -1,113 +1,125 @@
-<header>
-  <div class="logo-background">
-     <img src="assets/images/header.png" alt="Responsive image" height="50" width="100%">
-     <div class="col-md-12 ">
-        <div class="row">
-           <div class="col-md-9 col-sm-4 col-6">
-              <img src="assets/images/logo.png" class="logo imgr center" alt="Responsive image"/>
-           </div>
-           <div class="col-md-2 col-sm-5 col-4 about">
-              <b><a href="http://xanadutec.com/communicator.html" target="_blank">ABOUT COMMUNICATOR</a> </b>
-           </div>
-           <div class="col-md-1 col-sm-3 col-2 faq">
-              <a href="http://xanadutec.com/faq.html" target="_blank"><b>FAQs</b> </a> 
-           </div>
-        </div>
-     </div>
-  </div>
-</header>
-<main>
-  <div class=" row" style="margin-left:0px;margin-right:0px;">
-     <div class=" col-lg-5 col-md-6" style="background-color:#f4f2f3;padding-right: 0px;
-        padding-left: 0px;">
-        <button *ngIf="!isGuest && !forgetPasswordFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
-        <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
-        </i> Join with Meeting ID (Guest User) </button>
+<div id="header"> 
+      <div class="logo-background">
+      <img src="assets/images/header.png" alt="Responsive image" height="50" width="100%">
+      <div class="col-md-12 ">
+      <div class="row">
+      <div class="col-md-9 col-sm-4 col-6">
+      <img src="assets/images/logo.png" class="logo imgr center" alt="Responsive image"/>
+      </div>
+      <div class="col-md-2 col-sm-5 col-4 about">
+      <b><a href="http://xanadutec.com/communicator.html" target="_blank">ABOUT COMMUNICATOR</a> </b>
+      </div>
+      <div class="col-md-1 col-sm-3 col-2 faq">
+      <a href="http://xanadutec.com/faq.html" target="_blank"><b>FAQs</b> </a> 
+      </div>
+      </div>
+      </div>
+      </div> 
+      </div> 
+      <div id="content"> 
+      <div class="login-page-img"></div>
+      <div class="login-page" style="background-color:#f4f2f3;">
+     <button *ngIf="loginUiFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
+      <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
+      </i> Join with Meeting ID (Guest User) </button>
         <div class="main1">
-           <div class="login-block">
-              <div *ngIf="loginUiFlag">
-                 <h4 class="red-color"><b>{{loginHeader}}</b></h4>
-                 <h6>Kindly enter details</h6>
-                 <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
-                    <div class="input-group-prepend">
-                       <span class="input-group-text">
-                       <img src="/assets/images/user-img.png" alt="user img" height="15px" width="15px">
-                       </span>
-                    </div>
-                    <input type="text" id="username" autofocus type="text"
-                    placeholder="{{UserNameText}}" class="form-control" #usernameField
-                    [(ngModel)]="userName" name="userName" (keyup)="onKey($event)" required >
-                 </div>
-                 <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
-                    <div class="input-group-prepend">
-                       <span class="input-group-text">
-                       <img *ngIf="!isGuest" src="/assets/images/password.png" alt="password img" height="15px" width="15px">
-                       <img *ngIf="isGuest" src="/assets/images/meetingId.png" alt="password img" height="15px" width="15px">
-                       </span>
-                    </div>
-                    <input *ngIf="!isGuest" type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" #passwordField
-                    [(ngModel)]="password" name="password" placeholder="Password" required >
-                    <input *ngIf="isGuest" type="text" class="form-control" id="loginMeetingCode" (keyup)="onKey($event)" #meetingCodeField
-                    [(ngModel)]="loginMeetingCode" name="loginMeetingCode" placeholder="Meeting Id" required >
-                 </div>
-              </div>
-              <div *ngIf="forgetPasswordFlag">
-                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                       <span class="input-group-text">
-                       <i class="fa fa-envelope fa-fw"></i>
-                       </span>
-                    </div>
-                    <input class="form-control" type="text" placeholder="Enter Email" #forgotEmailField [(ngModel)]="forgetEmail" name="forgetEmail" (keyup)="onKeyUp($event)"
-                    required />
-                 </div>
-              </div>
-              <div class="row" style="margin-top: 5%">
-                 <div class="col-md-5">
-                    <button id="login" type="button" class=" btn btn-primary log-in"  (click)="login()">{{loginText}}</button>
-                 </div>
-                 <div class="col-md-7">
-                  <h5 class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a (click)="backToLogin()">Login</a></b></h5>
-                    <h5  class="forgot" *ngIf="loginUiFlag && isGuest === false"><b><a (click)="forgetPassword()">Forgot Password</a></b></h5> 
-                 </div>
-              </div>
-           </div>
-           <div id="feature1" class="row col-md-12 feature feature-wrap ">
-              <figure class="col-md-2">
-                 <i id="calendar" class="fa fa-calendar" aria-hidden="true" ></i>
-                 <figcaption > Schedule <br> Meeting </figcaption>
-              </figure>
-              <figure class="col-md-2">
-                 <i id="calendar2" class="fa fa-desktop" aria-hidden="true"  ></i>
-                 <figcaption > Screen Share <br> (Multiple) </figcaption>
-              </figure>
-              <figure class="col-md-2" >
-                 <i id="calendar3" class="fa fa-file-text-o" aria-hidden="true" ></i>
-                 <figcaption > File <br> Sharing </figcaption>
-              </figure>
-              <figure class="col-md-2">
-                 <i id="calendar4" class="fa fa-comments-o" aria-hidden="true" ></i>
-                 <figcaption > Meeting <br> Chat & Notes </figcaption>
-              </figure>
-              <figure class="col-md-2">
-                 <i id="calendar5" class="fa fa-microphone" aria-hidden="true" ></i>
-                 <figcaption > Meeting <br> Recording </figcaption>
-              </figure>
-              <figure class="col-md-2">
-                 <i id="calendar1"class="fa fa-video-camera" aria-hidden="true" ></i>
-                 <figcaption > Video/Audio <br> Conferencing </figcaption>
-              </figure>
-           </div>
-        </div>
-     </div>
-     <div class="col-lg-7 col-md-6"style="background-color:bisque;padding-right: 0px;
-        padding-left: 0px;">
-        <img src="/assets/images/login.png" style="width:100%;height:100vh;" alt="my img" >
-     </div>
-     <div style="display: none;">
-        <label id="isScreenSharePopupClosed"></label>
-        <label id="isRecordScreenPopupClosed"></label>
-     </div>
-  </div>
-</main>
-<app-footer></app-footer>
+      <div class="login-block">
+         <div *ngIf="loginUiFlag">
+            <h4 class="red-color"><b>{{loginHeader}}</b></h4>
+            <h6>Kindly enter details</h6>
+            <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
+               <div class="input-group-prepend">
+                  <span class="input-group-text">
+                  <img src="/assets/images/user-img.png" alt="user img" height="15px" width="15px">
+                  </span>
+               </div>
+               <input type="text" id="username" autofocus type="text"
+               placeholder="{{UserNameText}}" class="form-control" #usernameField
+               [(ngModel)]="userName" name="userName" (keyup)="onKey($event)" required >
+            </div>
+            <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
+               <div class="input-group-prepend">
+                  <span class="input-group-text">
+                  <img *ngIf="!isGuest" src="/assets/images/password.png" alt="password img" height="15px" width="15px">
+                  <img *ngIf="isGuest" src="/assets/images/meetingId.png" alt="password img" height="15px" width="15px">
+                  </span>
+               </div>
+               <input *ngIf="!isGuest" type="password" class="form-control" id="loginPass" (keyup)="onKey($event)" #passwordField
+               [(ngModel)]="password" name="password" placeholder="Password" required >
+               <input *ngIf="isGuest" type="text" class="form-control" id="loginMeetingCode" (keyup)="onKey($event)" #meetingCodeField
+               [(ngModel)]="loginMeetingCode" name="loginMeetingCode" placeholder="Meeting Id" required >
+            </div>
+         </div>
+         <div *ngIf="forgetPasswordFlag">
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                  <span class="input-group-text">
+                  <i class="fa fa-envelope fa-fw"></i>
+                  </span>
+               </div>
+               <input class="form-control" type="text" placeholder="Enter Email" #forgotEmailField [(ngModel)]="forgetEmail" name="forgetEmail" (keyup)="onKeyUp($event)"
+               required />
+            </div>
+         </div>
+         <div class="row" style="margin-top: 5%">
+            <div class="col-md-5">
+               <button id="login" type="button" class=" btn btn-primary log-in"  (click)="login()">{{loginText}}</button>
+            </div>
+            <div class="col-md-7">
+             <h5 class="forgot" *ngIf="forgetPasswordFlag || isGuest"><b><a (click)="backToLogin()">Login</a></b></h5>
+               <h5  class="forgot" *ngIf="loginUiFlag && isGuest === false"><b><a (click)="forgetPassword()">Forgot Password</a></b></h5> 
+            </div>
+         </div>
+      </div>
+      <div style="position:absolute;bottom:10%;left:1%;right:0px;">
+         <img src="/assets/images/features.png" alt="feature-img" style="width:37.9vw;height:auto;">
+      </div>
+      <!-- <div id="feature1" class="row col-md-12 feature feature-wrap ">
+      <figure class="col-md-2">
+      <i id="calendar" class="fa fa-calendar" aria-hidden="true" ></i>
+      <figcaption > Schedule <br> Meeting </figcaption>
+      </figure>
+      <figure class="col-md-2">
+      <i id="calendar2" class="fa fa-desktop" aria-hidden="true" ></i>
+      <figcaption > Screen Share <br> (Multiple) </figcaption>
+      </figure>
+      <figure class="col-md-2" >
+      <i id="calendar3" class="fa fa-file-text-o" aria-hidden="true" ></i>
+      <figcaption > File <br> Sharing </figcaption>
+      </figure>
+      <figure class="col-md-2">
+      <i id="calendar4" class="fa fa-comments-o" aria-hidden="true" ></i>
+      <figcaption > Meeting <br> Chat & Notes </figcaption>
+      </figure>
+      <figure class="col-md-2">
+      <i id="calendar5" class="fa fa-microphone" aria-hidden="true" ></i>
+      <figcaption > Meeting <br> Recording </figcaption>
+      </figure>
+      <figure class="col-md-2">
+      <i id="calendar1"class="fa fa-video-camera" aria-hidden="true" ></i>
+      <figcaption > Video/Audio <br> Conferencing </figcaption>
+      </figure>
+      </div> -->
+      </div>
+      </div>
+      <div style="display: none;">
+         <label id="isScreenSharePopupClosed"></label>
+         <label id="isRecordScreenPopupClosed"></label>
+      </div>
+      </div> 
+      <div id="footer"> 
+      <app-footer></app-footer>
+      </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

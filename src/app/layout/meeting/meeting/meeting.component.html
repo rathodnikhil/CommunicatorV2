@@ -7,13 +7,13 @@
                         <div class="col-md-3">
                               <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" style="margin-left:13%;" />
                         </div>
-                        <div class="col-md-7" style="text-align: center;color:#AF2127;">
+                        <div class="col-md-7 subject">
                                 <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;">
                                         <b>{{meetingDetails.subject}}</b>
                                     </h6>
-                            <label (click)="copyMeetingId();" class="meeting-id-color" style="color:#AF2127;cursor: pointer;">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
+                                    <label (click)="copyMeetingId();" class="meeting-id-color">[ Meeting Id: {{meetingDetails.meetingCode}} ]</label>
                         </div>
-                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2"style="text-align:right;color:#AF2127;padding-right:3%;">
+                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2 timer">
                                 <h4>
                                     <i class="fa fa-clock-o"></i>&nbsp;
                                     {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
@@ -25,7 +25,7 @@
                
                 <div class="attendee-row" style="padding-right: 80px;">
                         <h4></h4>
-                    <div class="demo-one"style="overflow-y:auto;">
+                    <div class="demo-one">
                         <div class="row main-div" #videos_container id="videos_container">
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                    
                 <div class="row parent" style="margin-right: 80px;">
                     <div class="col-md-12" style="text-align: center;">
-                            <h4 style="margin-bottom:0px;padding:0.1% 0% 0.2% 1%;">Shared Screen</h4>
+                            <h4 class="share-screen-title">Shared Screen</h4>
                     </div>
                    <div id="shareScreen-container" class="row main-div" style="margin-top:0%;overflow-y: auto;height: 23vh;"></div>
                 </div>
@@ -44,6 +44,14 @@
                                             class="btn btn-url" id="copyGuestMeetingLink">
                                             <i class="fa fa-clipboard" aria-hidden="true"></i> Meeting Link
                                         </button>
+                                        <div style="margin-top: 6px;">
+                                                <h6>
+                                                    <i class="fa fa-clock-o"></i>&nbsp;
+                                                    {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}&nbsp;
+                                                    <label style="color:#AF2127;font-weight: bold;"> Recording is going on</label>
+                                                </h6>
+                                               
+                                            </div>
                                     </div>
                              
                                 <div class="meeting-bottom">
@@ -98,8 +106,7 @@
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
-                        <span id="meeting-error"
-                            style="float: right;font-weight: bolder; color: rgb(13, 75, 36)"></span>
+                        <span id="meeting-error"></span>
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <button id="recording_hidden" style="display:none;">HIdden stuff for recor</button>
@@ -199,7 +206,7 @@
                         <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i></a>
                     <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
                             src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
-                    <a title="Exit Meeting" (click)="exitMeeting();"><span class="exit-meeting">Exit  <i class="fa fa-sign-out" aria-hidden="true"></i></span></a>
+                    <a title="Exit Meeting" (click)="exitMeeting();"><img src="/assets/images/exit-meeting.png"></a>
                 </div> 
         </div>
     </div>
