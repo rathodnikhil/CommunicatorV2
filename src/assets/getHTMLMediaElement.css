@@ -175,8 +175,6 @@ input[type="range"]::-webkit-slider-thumb {
 .chat-background {
     margin: 10px 10px;
     display: inline-block;
-    /* position: relative; */
-    /* height: auto; */
     background-color: #ffeeed;
     border-radius: 5px;
     padding: 10px;   
@@ -209,7 +207,6 @@ input[type="range"]::-webkit-slider-thumb {
     width: 0;
     height: 0;
     right: -10px;
-    /* right: auto; */
     top: 0px;
     bottom: auto;
     border: 15px solid;
@@ -219,12 +216,8 @@ input[type="range"]::-webkit-slider-thumb {
 
 /*css for share file,viewers*/
 .chat-background-invitee {
-    /* border: 1px solid #AF2127; */
-    background-color: #e2f4f5;
+    background-color: #edf3fb;
     margin: 0px 0px 20px 10px;
-    /* display: inline-block; */
-    /* position: relative; */
-    /* height: auto; */
     border-radius: 5px;
     padding: 10px;   
     line-height:normal;
@@ -232,12 +225,11 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: bold;
     min-width:90%; 
     max-width: 90%;
-    box-shadow: 5px 5px 5px #cee2e1;
+    box-shadow: 5px 5px 5px  #e4e7ec;
 }
 /*css for chat background*/
 .chat-background-invitee-attendee {
-    /* border: 1px solid #AF2127; */
-    background-color: #e2f4f5;
+    background-color: #edf3fb;
     margin: 10px 10px;
     display: inline-block;
     position: relative;
@@ -249,7 +241,7 @@ input[type="range"]::-webkit-slider-thumb {
     font-weight: bold;
     min-width:80%; 
     max-width: 80%;
-    box-shadow: 5px 5px 5px #cee2e1;
+    box-shadow: 5px 5px 5px  #e4e7ec;
 }
 
 .chat-background-invitee-attendee::after{ 
@@ -262,23 +254,19 @@ input[type="range"]::-webkit-slider-thumb {
     top: 0px;
     bottom: auto;
     border: 15px solid;
-    border-color: #e2f4f5 transparent transparent transparent;
+    border-color: #edf3fb transparent transparent transparent;
 }
 
 .time-left {
     float: right;
     color: #686868;
     font-weight: bold;
-    /* font-size: 0.7vw; */
-    /* font-size: calc(0.5vw + 0.5vh); */
 }
 
 .time-right {
     float: right;
     color:#606766;;
     font-weight: bold;
-    /* font-size: 0.7vw; */
-    /* font-size: calc(0.5vw + 0.5vh); */
 }
 .btn-sec {
     -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;

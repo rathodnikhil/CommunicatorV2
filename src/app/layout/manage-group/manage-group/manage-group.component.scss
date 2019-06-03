@@ -1,38 +1,7 @@
 @import "styles/customStyle.css";
 
-
-.member-details{
-height: 100%; border: 1px solid #ccd1d4;
-box-shadow: 5px 5px 5px 5px #ccd1d4;
-background: #e5efff;
-padding:10px;
-margin:15px;
-width: 100%;
-}
-.search-member{
-//background-color: #e5efff;
-height:50px;
-margin :15px;
-border: 1px solid #ccd1d4;
-}
-.search-box-container input {
-padding: 2px;
-margin-bottom:5px;
-}
-
-.search-box-container:after {
-content: "\f00d";
-font-family: FontAwesome;
-font-weight: bold;
-margin-left: -25px;
-margin-right: 25px;
-color: #eb223d;
-}
 .row-label label{
 font-weight: bold;
-}
-.selected-team{
-color:#353535; 
 }
 .row-label input{
 margin: 8px;
@@ -48,49 +17,6 @@ margin: auto;
 width: 100%;
 }
 
-.main-container{
-height:100%; 
-width:100%; 
-//overflow: auto;
-}
-
-.main-header{
-position:absolute; 
-top:0; 
-left:0;
-}
-
-// .fixed-header {
-// width: 100%;
-// position: fixed; 
-// background-image: url(/assets/images/Coreflex-solutions-header.jpg);
-// height: 9.5%;
-// top: 0;
-// color: #fff;
-// }
-
-.responsive1
-{
-// max-width: 100%;
-height: auto !important;
-margin-left:45px;
-}
-
-.logo-img{
-float: left; 
-padding-top: 15px;
-}
-
-.content-div{
-// position:absolute; 
-top:9.5%; 
-left:0px;
-// right:4%; 
-// margin-left: 5px; 
-height: 82%; 
-background-color: #f7f7f7;
-}
-
 .group-name-list{
 height:77vh; 
 overflow: auto;
@@ -98,14 +24,9 @@ padding-bottom: 100px;
 }
 
 .filter-list{
-//border-right: 1px solid rgba(0, 0, 0, 0.125);
 height: 100%;
-
-//padding-left: 1.5%;
 padding-right: 0px;
 overflow-x: hidden;
-// margin-top:0.3%;
-// margin-bottom: 10%;
 }
 
 .filter-list ul{
@@ -122,58 +43,6 @@ border-radius: 2px;
 cursor: pointer;
 }
 
-.left {
-width: auto;
-float:left;
-//background: linear-gradient(to left, #AF2127 32%, #115c7d 100%);
-color: #000;
-font-weight: bold;
-padding-top: 0px;
-// overflow: hidden;
-}
-
-.manage-group-title{
-margin-top: 20px;
-font-size: 2.5vh;
-}
-
-.header{
-position:absolute; 
-top:0px; left:0px; 
-height:70px; 
-right:0px;
-padding-top: 20px;
-color: white;
-overflow:hidden;
-text-align: center;
-background-image: url(/assets/images/header.png);
-}
-
-.body-container{
-position:absolute; 
-top:70px; 
-bottom:75px; 
-left:0px; 
-right:0px; 
-margin-right: 20px;
-// overflow:auto;
-// height: 83%;
-// width: calc(100% - 50px);
-}
-
-.footer{
-position:absolute; 
-bottom:0px; 
-// height:100px; 
-left:0px; 
-right:0px; 
-overflow:hidden;
-}
-.btn-search{
-background-color: #AF2127;
-border-color: #AF2127;
-color:black;
-}
 .btn-edit{
 color: #fff;
 background-color:green;
@@ -241,7 +110,6 @@ margin-top: .5rem;
 
 .username-password{
 width:90%;
-//margin-bottom: 1%;
 height:35px;
 }
 
@@ -249,12 +117,9 @@ height:35px;
 height: 100%;
 width: 25%;
 position: fixed;
-//z-index: 1;
 top: 70px;
 left: 0;
 background-color: #f6f6f6;
-//overflow-x: hidden;
-//padding-top: 20px;
 bottom:5%;
 }
 .group-member{
@@ -269,7 +134,7 @@ padding: 5px 10px;
 }
 
 @media screen and (max-height: 450px) {
-.sidenav {//padding-top: 15px;
+.sidenav {
 }
 .sidenav a {font-size: 18px;}
 }
