@@ -22,43 +22,6 @@
     overflow:auto;
 }
 
-.footer{
-    position:absolute; 
-    bottom:0px; 
-    left:0px; 
-    right:0px; 
-    overflow:hidden;
-}
-
-.setting-headings
-{
-    border-bottom: 1px solid #AF2127;
-    color: #AF2127;
-    padding: 10px; 
-    font-weight:bold; 
-    text-align: center;
-    background-color: #FFF9FB;
-}
-
-.setting-headings-icon
-{
-    margin-right:10px;
-    font-size: 16px;
-    color: #AF2127; 
-}
-
-.setting-details-footer
-{
-    text-align:center;
-    padding:20px;
-    background: #FFF9FB;
-    border-top:1px solid #AF2127;
-}
-
-.margin-top-20{
-    margin-top: 20px;
-}
-
 #leftPanel{
     background-color:rgb(252, 223, 223);
     color:#464646;
@@ -72,7 +35,6 @@
     border: 1px solid #bd081c; 
     border-left: none; 
     padding: 8px; 
-   // text-align: center;
    background-color: #f8f8f8;
 }
 
@@ -87,22 +49,17 @@
   background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #AF2127 25%, #AF2127 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #AF2127 25%, #AF2127 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
-
 .profile-img{
     width: 200px; 
     height: 200px;
     padding: 10px;
 }
-
 .bBox{
     padding: 40px 40px;
     margin-bottom: 40px;
-    /* border: 1px solid #0f73a7; */
-    /* box-shadow: 3px 10px 10px 5px #c9cacc; */
     background: #fff;
     transition: 0.4s;
 }
-
 .button-div{
     margin-top: 4%;
     margin-left: 3%;
@@ -110,9 +67,4 @@
 .meetReminder{
     margin-left: 6%; 
     font-size: 13px;
-}
-.setting-div{
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 7%;
 }

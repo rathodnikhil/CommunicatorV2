@@ -1,32 +1,6 @@
 @import "styles/customStyle.css";
 
-.top {
-    height: 105px;
-    padding: 15px; // border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    background: #AF2127;
-   // color: #ffffff;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-image: url(/assets/images/logobg.png);
-    background-position-y: bottom;
-}
-
-.left {
-    width: 15%;
-    float: left;
-    padding: 0px 15px 15px 15px;
-    background: #e5efff;
-    .filler{
-        height:40px;
-        background: #AF2127;
-        margin: 0px -17px -15px -15px;
-    border-right: none;
-    }
-}
-
 .main1 {
-    // margin-left: 15%;
     padding: 0px 15px 0px 15px;
     border: 1px solid #ccd1d4;
     border-top: none;
@@ -39,64 +13,10 @@
     width: 100%;
 }
 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    padding: 30px;
-}
-
-td,
-th {
-    // border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-th {
-    //border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-.main table tr td a {
-    cursor: pointer;
-    color: #353535;
-    text-decoration: underline;
-}
-
-.filter-list {
-    border-right: 1px solid rgba(0, 0, 0, 0.125);
-    height: 90vh;
-}
-
-.date-period-select {
-    border-left: 2px solid #999;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 15%;
-    cursor: pointer;
-}
-
-// .fc-toolbar{
-//     height: 20px !important;
-// }
 a {
     color: #ffffff;
     cursor: pointer;
 }
-
-// .header{
-//     position:absolute; 
-//     top:0px; left:0px; 
-//     height:105px; 
-//     right:0px;
-//     padding-top: 20px;
-//     color: white;
-//     overflow:hidden;
-//     text-align: center;
-//     background-image: url(/assets/images/Coreflex-solutions-header.jpg);
-// }
 
 .header{
     position:absolute; 
@@ -119,16 +39,6 @@ a {
     left:0px; 
     right:0px; 
     overflow:auto;
-    // background-color: #fff1f2;
-}
-
-.footer{
-    position:absolute; 
-    bottom:0px; 
-    height:100px; 
-    left:0px; 
-    right:0px; 
-    overflow:hidden;
 }
 
 .main-container{
@@ -137,7 +47,6 @@ a {
   }
 .view-meeting-popup-body{
     padding: 20px 30px 20px 30px;
-    // text-align: center;
 }
 .meetingDetails div label{
     width: 30%;

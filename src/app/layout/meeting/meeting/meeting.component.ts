@@ -43,6 +43,10 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     second = 0;
     tick = 0;
     timeLeft = 0;
+    recordingHour = 0;
+    recordingMinute = 0;
+    recordingSecond = 0;
+    recordingTick = 0;
     leftNavDisabled = false;
     rightNavDisabled = false;
     index = 0;
@@ -343,6 +347,24 @@ export class MeetingComponent implements OnInit, AfterViewInit {
             this.second += 1;
         }
         this.tick++;
+    }
+    calculateTimeSpanForRecording() {
+        debugger;
+        if (this.recordingSecond === 59) {
+            if (this.recordingMinute === 59) {
+                this.recordingHour += 1;
+                this.recordingMinute = 0;
+            } else {
+                this.recordingMinute += 1;
+            }
+            this.recordingSecond = 0;
+        } else {
+            this.recordingSecond += 1;
+        }
+        this.recordingTick++;
+    }
+    startRecordingTimer() {
+        setInterval(() => { this.calculateTimeSpanForRecording(); }, 1000);
     }
     startMeeting() {
         this.isMeetingStarted = !this.isMeetingStarted;
