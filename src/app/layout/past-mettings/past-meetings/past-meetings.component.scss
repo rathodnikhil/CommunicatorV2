@@ -1,7 +1,7 @@
 @import "styles/customStyle.css";
 
 .download-file{
-    color: #088B92;
+    color: #AF2127;
     font-size: 18px;
     cursor: pointer;
     font-weight: bold;
@@ -27,16 +27,7 @@
     bottom:5%; 
     left:0px; 
     right:0px; 
-    //margin-right: 20px;
     overflow:auto;
-}
-.footer{
-    position:absolute; 
-    bottom:0px; 
-    // height:100px; 
-    left:0px; 
-    right:0px; 
-    overflow:hidden;
 }
 .attendee-list{
     overflow-y: auto;
@@ -48,7 +39,7 @@
 .view-attendee-icon
 {
     cursor: pointer; 
-    color: #088B92;
+    color: #AF2127;
 }
 .padding-top-10
 {
