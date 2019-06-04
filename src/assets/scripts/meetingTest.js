@@ -423,6 +423,11 @@ connection.onstream = function (event) {
     event.mediaElement.removeAttribute('srcObject');
 
     var video = document.createElement('video');
+    // video.setAttribute('height', '16.5vh');
+    // video.setAttribute('width ', '100%');
+    // video.height = 19 +'vh';
+    // video.width = 100 + '%';
+    video.setAttribute("style", "height:16.3vh; width:100%");
     var viewerCounter = document.getElementById('viewerCount').innerHTML;
     if (typeof viewerCounter === undefined) {
         viewerCounter = 0;
@@ -463,18 +468,18 @@ connection.onstream = function (event) {
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
         customDiv.setAttribute("style", "  background-color: #ffeeed; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
-        heading.setAttribute("style", " background-color:#AF2127;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
+        heading.setAttribute("style", " background-color:#AF2127;text-align: center;height: 2.5vh;  font-weight: bold; color:#ffffff;");
     } else {
         customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px;height:19vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
         if (event.stream.isVideo == 0) {
-            heading.setAttribute("style", "background-color:#4b6584;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;");
+            heading.setAttribute("style", "background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;");
         } else {
-            heading.setAttribute("style", ' padding: 1.3%;  text-align: center;');
+            heading.setAttribute("style", 'background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;');
         }
     }
     customDiv.appendChild(heading);
     if (event.stream.isVideo == 0) {
-        video.setAttribute("style", "display:none; ");
+        video.setAttribute("style", "display:none;");
         video.hidden = true;
         var attendeeNameLetter = null;
         if (attendeeFullNameArray.length < 3) {
@@ -880,6 +885,7 @@ document.getElementById('btn-start-recording').onclick = function () {
             ispermission = true;
             document.getElementById('rec_start').style.display = 'none';
             document.getElementById('rec_stop').style.display = 'inline-block';
+            document.getElementById('display-recording').style.display = 'inline-block';
         });
         setTimeout(function () {
             if (!this.ispermission) {
@@ -892,5 +898,6 @@ document.getElementById('btn-start-recording').onclick = function () {
         recorder.stopRecording(stopRecordingCallback);
         document.getElementById('rec_start').style.display = 'inline-block';
         document.getElementById('rec_stop').style.display = 'none';
+        document.getElementById('display-recording').style.display = 'none';
     }
 };

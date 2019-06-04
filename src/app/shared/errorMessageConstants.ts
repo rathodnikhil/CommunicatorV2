@@ -56,7 +56,7 @@ export class ErrorMessageConstants {
 //  Meeting Component
         public static InvalidMeetingCode = 'MeetingCode not present. Kindly contact the host/Admin for valid meeting Code.';
         public static MeetingOver = 'Meeting start time has already elapsed';
-        public static EnterMOM = 'Meeting notes has not added';
+        public static EnterMOM = 'No notes has added for this meeting';
         public static GuestViewAttendee =  'Guest user does not have permission for viewing attendees';
 
 // Past Meeting component
