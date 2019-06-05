@@ -468,13 +468,13 @@ connection.onstream = function (event) {
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
     if (event.type === 'local') {
         customDiv.setAttribute("style", "  background-color: #ffeeed; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
-        heading.setAttribute("style", " background-color:#AF2127;text-align: center;height: 2.5vh;  font-weight: bold; color:#ffffff;");
+        heading.setAttribute("style", " background-color:#AF2127;text-align: center;height: 2.5vh;  font-weight: bold; color:#ffffff;font-size: 0.7vw;");
     } else {
         customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px;height:19vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
         if (event.stream.isVideo == 0) {
-            heading.setAttribute("style", "background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;");
+            heading.setAttribute("style", "background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;font-size: 0.7vw;");
         } else {
-            heading.setAttribute("style", 'background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;');
+            heading.setAttribute("style", 'background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;font-size: 0.7vw;');
         }
     }
     customDiv.appendChild(heading);
@@ -506,8 +506,10 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'background-color:#2199e8;padding: 1.3%;text-align: center;  font-weight: bold; color:#ffffff;');
-            video.setAttribute("style", "background:  #f6f6f6; border-top:none;float:left;height:19vh;width:100%");
+            heading.setAttribute("style", 'background-color:#2199e8;padding:1.3%;text-align: center; font-weight: bold; color:#ffffff;border-top:1px solid #4b6584;border-right:1px solid #4b6584;border-left:1px solid #4b6584;');
+            video.setAttribute("style", "background: #f6f6f6;float:left;width:100%;border: 1px solid #4b6584;");
+            customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px; position: relative;color:#4b6584;");
+            outerCustomDiv.setAttribute("style","margin-bottom:15px;");
             screenShareContainer.appendChild(outerCustomDiv);
             if (document.getElementById(event.userid + 'viewer') !== null) {
                 var viewer = document.getElementById(event.userid + 'viewer');
@@ -565,7 +567,7 @@ connection.onmute = function (event) {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
         // font-size: 1.1vw;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:5px;");
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:5px;margin-right:2px;");
     }
 };
 connection.onunmute = function (event) {
@@ -719,7 +721,6 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             break;
         case 2:
             html += '<i class="fa fa-sign-out"></i>&nbsp;' + ' Left the meeting</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
-            alertService.info("has left the meeting" , "Notification");
             break;
         case 3:
             html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Stopped shared screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
