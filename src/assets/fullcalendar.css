@@ -606,6 +606,10 @@ tr:first-child > td > .fc-day-grid-event {
 	white-space: nowrap;
 	overflow: hidden;
 }
+.fc-content:hover { /* force events to be one-line tall */
+	white-space: nowrap;
+	overflow: visible;
+}
 
 .fc-day-grid-event .fc-time {
 	font-weight: bold;
@@ -1076,7 +1080,9 @@ NOTE: use percentage font sizes or else old IE chokes
 	background-color: #f2f2f2;
 	color: #808080;
 }
-
+.fc-agendaWeek-button{
+	display: none;
+}
 /* when week/day number have own column */
 
 .fc-basic-view td.fc-week-number {
@@ -1285,7 +1291,7 @@ be a descendant of the grid when it is being dragged.
 .fc-time-grid-event.fc-selected {
 	/* need to allow touch resizers to extend outside event's bounding box */
 	/* common fc-selected styles hide the fc-bg, so don't need this anyway */
-	overflow: visible;
+	/* overflow: visible; */
 }
 
 .fc-time-grid-event.fc-selected .fc-bg {
@@ -1516,3 +1522,28 @@ be a descendant of the grid when it is being dragged.
 }
 
 
+.fc-content {
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+  }
+  
+  .fc-content:hover::before,
+  .fc-content:hover::after {
+	opacity: 1;
+	-webkit-transition: all 0.75s ease;
+	transition: all 0.75s ease;
+	
+	position: absolute;
+	/* top: -64px; */
+	left: -4px;
+	background-color: gray;
+	border-radius: 5px;
+	color: #fff;
+	content: attr(data-tooltip);
+	padding: 1px 5px 1px 45px;
+	text-transform: none;
+	-webkit-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	width: auto;
+  }

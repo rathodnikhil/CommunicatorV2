@@ -235,7 +235,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     }
 
     downloadFile(data, meetingDetails, attendeeList) {
-        debugger;
         if (this.isGuest) {
             attendeeList = 'Your are guest , you cant view attendee';
         } else {
@@ -271,7 +270,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.exitMeetingConfirmModal.open();
     }
     completeExit() {
-        debugger;
         this.exit();
         const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
         this.saveMom();
@@ -287,7 +285,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.exitMeetingConfirmModal.close();
     }
     private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
-        debugger;
         this._meetingService.endMeeting(payload).subscribe(resp => {
             if (resp.errorFl) {
                 this.alertService.warning(resp.message, TypeOfError.Warning);

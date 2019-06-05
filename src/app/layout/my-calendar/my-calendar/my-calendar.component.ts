@@ -76,6 +76,11 @@ export class MyCalendarComponent implements OnInit {
         });
         this.setCalendarOptions();
     }
+    //Add tooltip to events  
+    eventrender(event) {
+        event.element[0].querySelectorAll(".fc-content")[0].setAttribute("data-tooltip", event.event.title);
+    }
+
     private setCalendarOptions() {
         this.calendarOptions = {
             // theme: true,
@@ -92,14 +97,12 @@ export class MyCalendarComponent implements OnInit {
 
     clickButton(model: any) {
         this.displayEvent = model;
-        // if (model.buttonType !== 'agendaWeek' || model.buttonType !== 'agendaDay' || model.buttonType !== 'listMonth') {
             if (model.buttonType === 'prev' || model.buttonType === 'next') {
                 this.clickedType = model.buttonType;
                 this.loadMore(this.meetingYear, this.meetingMonth);
             } else if (model.buttonType === 'today') {
                 this.loadTodaysMeetings();
             }
-        // }
     }
     eventClick(model: any) {
         model = this.createModelObj(model, {});
@@ -195,7 +198,7 @@ export class MyCalendarComponent implements OnInit {
         const meetingListForcalendar = [];
         data.forEach(element => {
             const endTime = new Date(new Date(element.meetingStartDateTime).getTime()
-                + parseInt(element.duration.split(' Min')[0]) * 60000);
+                + parseInt(element.duration.split('Min')[0]) * 60000);
             const meeting = {
                 title: element.subject + '(' + element.meetingCode + ')',
                 // url: '#/login?meetingCode=' + element.meetingCode,

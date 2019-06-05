@@ -10,9 +10,14 @@
     </div>
     <div id="content" class="body-container">
         <div class="main1">
-            <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" data-toggle="tooltip" title="{{hovertext}}"
+            <!-- <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" data-toggle="tooltip" title="{{hovertext}}"
                 (eventDrop)="updateEvent($event.detail)" (eventResize)="updateEvent($event.detail)" (eventMouseOver) ="hover($event.detail)"
                 (clickButton)="clickButton($event.detail)" style="cursor: pointer;" [eventsModel]="MeetingData">
+            </ng-fullcalendar> -->
+            <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
+                (eventRender)="eventrender($event.detail)"
+                (eventDrop)="updateEvent($event.detail)" (eventResize)="updateEvent($event.detail)"
+                (clickButton)="clickButton($event.detail)" [eventsModel]="MeetingData">
             </ng-fullcalendar>
         </div>
         <div>

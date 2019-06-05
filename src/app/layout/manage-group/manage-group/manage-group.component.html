@@ -29,10 +29,9 @@
 </div>
 <div class="group-name-list">
         <ul *ngFor="let group of groupList | genericSearchAllProp:searchGroup;let groupCount = index">
-            <li>
+            <li (click)="displayGroupDetails(group, groupCount)">
                 <img _ngcontent-c10="" src="/assets/images/group.png" style="width: 20px; height:20px;margin-right: 6%;">
-                <label *ngIf="group.groupId.status.status === 'ACTIVE'" style="cursor: pointer;"
-                 (click)="displayGroupDetails(group, groupCount)">
+                <label *ngIf="group.groupId.status.status === 'ACTIVE'" style="cursor: pointer;">
                     {{group.groupId.groupName}}
                 </label>
             </li>

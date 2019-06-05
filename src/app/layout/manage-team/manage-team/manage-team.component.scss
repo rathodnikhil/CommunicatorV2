@@ -45,6 +45,15 @@
         border: 1px solid green;
       }
     
+      .btn-enable{
+        background-color:#17a2b8;
+        color:white;
+      }
+
+      .btn-disable{
+        background-color:orange;
+        color:white;
+      }
       .team-name{
         padding-top: 2px;
         padding-right: 30px;
@@ -72,6 +81,18 @@
         background-repeat:no-repeat;   
         border-radius: 5px;
         margin: 0 3% 0 3%;
+        }
+        .enable-team{
+          color: #4b6584;
+          float: right; 
+          margin: 0.5rem; 
+          margin-top: .8rem;
+        }
+        .disable-team{
+          color: red;
+          float: right; 
+          margin: 0.5rem; 
+          margin-top: .8rem;
         }
         .username-password{
             width:90%;
