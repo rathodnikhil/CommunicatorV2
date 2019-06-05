@@ -10,7 +10,7 @@
                                 style="margin-left:13%;" />
                         </div>
                         <div class="col-md-7 subject">
-                            <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;">
+                            <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;line-height: 1;">
                                 <b>{{meetingDetails.subject}}</b>
                             </h6>
                             <label (click)="copyMeetingId();" class="meeting-id-color">[ Meeting Id:
@@ -105,7 +105,7 @@
                                     *ngIf="!isVideoEnabled" class="fa fa-2x fa-ban"></i>
                             </button>
                             <span id="meeting-error"></span>
-                            <span id="display-recording" style="margin-top: 6px; display: none;">
+                            <span id="display-recording" style="margin-top: 6px; display: none;float:right;">
                                     <i class="fa fa-clock-o"></i>&nbsp; <label style="color:#AF2127;font-weight: bold;">
                                         On going recording for </label>
                                     {{recordingHour| number:'2.0-0'}}:{{recordingMinute| number:'2.0-0'}}:{{recordingSecond| number:'2.0-0'}}&nbsp;
