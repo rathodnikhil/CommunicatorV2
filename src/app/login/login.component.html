@@ -19,7 +19,7 @@
       <div id="content"> 
       <div class="login-page-img"></div>
       <div class="login-page" style="background-color:#f4f2f3;">
-     <button *ngIf="loginUiFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
+         <button *ngIf="!isGuest && !forgetPasswordFlag" type="button" (click)="guestLogin()" class="btn btn-responsive guest-user" >
       <i class="fa fa-sign-in" aria-hidden="true" style="padding-right: 5px;">
       </i> Join with Meeting ID (Guest User) </button>
         <div class="main1">
