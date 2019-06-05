@@ -719,7 +719,6 @@ function displayViewerList(event, viewerNameString, sharedScreenFlag) {
             break;
         case 2:
             html += '<i class="fa fa-sign-out"></i>&nbsp;' + ' Left the meeting</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
-            alertService.info("has left the meeting" , "Notification");
             break;
         case 3:
             html += '<i class="fa fa-desktop"></i>&nbsp;' + ' Stopped shared screen</span><span style="color: #7d7d7f" class="currentTime">' + formatDate(new Date()) + '</span>';
