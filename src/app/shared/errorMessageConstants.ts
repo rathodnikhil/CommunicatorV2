@@ -37,7 +37,7 @@ export class ErrorMessageConstants {
 //  My Profile Component
         public static FirstName = 'Please enter first name';
         public static LastName = 'Please enter last name';
-        public static Email = 'Please enater email';
+        public static Email = 'Please enter email';
         public static FileNotSupported = 'File not supported, please select image below 700KB.';
         public static InvalidImgFormat = 'Invalid Image format';
 
