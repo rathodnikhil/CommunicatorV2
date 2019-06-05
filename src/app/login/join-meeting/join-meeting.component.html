@@ -42,7 +42,7 @@
           <div class="row" style="margin-top: 5%;margin-bottom:5%;">
               <div class="col-md-5">
               <button  value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;" [disabled]="isMeetingCodeInValid ? 'disabled' : null"
-              id="continue" type="button" class=" btn btn-default continue"><b>Continue</b></button>
+              id="continue" type="button" class=" btn btn-primary continue"><b>Continue</b></button>
             </div>
               <div class="col-md-7">
               <h5 class="forgot"><b><a [routerLink]="['/login']" [queryParams]={meetingCode:meetingCode}>I am a registered user</a></b></h5>

@@ -6,6 +6,7 @@
 }
 .popHeaderMeeting p{
     font-size: 12px; 
+    margin-bottom: 0.6rem;
 }
 .btn.btn-secondary {
     background: #AF2127;
@@ -20,7 +21,8 @@ background-color: #e5efff; border-top:1px solid  #19191a;
 }
 
 .popTitle{
-font-size: 22px;
+// font-size: 22px;
+font-weight: bold;
 }
 .btn-border-radius{ 
     border-radius: 5px;
