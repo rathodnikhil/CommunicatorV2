@@ -28,12 +28,16 @@
                     </div> 
                 </div>
                 <div class="team-name-list">
-                    <ul *ngFor="let userPermission of userPermissionList  | genericSearchAllProp:searchTeam ;let teamIndex = index">
-                        <li *ngIf="userPermission.team.status.status === 'ACTIVE'">
+                    <ul *ngFor="let userPermission of userPermissionList | genericSearchAllProp:searchTeam ;let teamIndex = index">
+                        <li (click)="displayTeamDetails(userPermission , teamIndex)">
                             <div class="first-letter"><i class="fa fa-users" aria-hidden="true" ></i> </div>
-                            <label style=" cursor: pointer;"  (click)="displayTeamDetails(userPermission , teamIndex)">
+
+                            <label style=" cursor: pointer;"  >
                                 {{userPermission.team.teamName}}
                             </label>
+
+                            <!-- <i *ngIf="userPermission.team.status.status === 'ACTIVE'" class="fa fa-eye enable-team" aria-hidden="true"></i> -->
+                            <i *ngIf="userPermission.team.status.status === 'INACTIVE'" class="fa fa-ban disable-team" aria-hidden="true"></i>
                         </li>
                     </ul>
                 </div>
@@ -69,10 +73,19 @@
                     <button (click)="editTeam()" class="btn btn-edit" style="margin-right: 5px;" title="Edit team name" #editTeamField>
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
-                    <button (click)="deleteSelectedTeam()" class="btn btn-danger" title="Delete team" #deleteTeamField>
+                    <button (click)="deleteSelectedTeam()" style="margin-right: 5px;" class="btn btn-danger" title="Delete team" #deleteTeamField>
                         <i class="fa fa-trash-o"></i>
                     </button>
-                    
+
+                    <button *ngIf="selectedTeamStatus === 'INACTIVE'" (click)="enableSelectedTeam()" 
+                    class="btn btn-enable" title="Enable team" #enableTeamField>
+                        <i class="fa fa-eye"></i>
+                    </button>
+                    <button *ngIf="selectedTeamStatus === 'ACTIVE'" (click)="disableSelectedTeam()" 
+                    class="btn btn-disable" title="Disable team" #disableTeamField>
+                        <i class="fa fa-eye-slash"></i>
+                    </button>
+
                     <button class="btn btn-primary" style="margin-top:4px;position: absolute; right: 10px;" (click)="openMemberPopup()" #addMemField title="Add Member">+Member</button>
                     <hr>
                 </div>
@@ -154,6 +167,24 @@
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="deleteTeamDetails()">Yes</button>
                         <button type="button" class="btn btn-danger" (click)="deleteTeamModal.close()">No</button>
+                    </div>
+                </app-custom-modal>
+                <app-custom-modal #disableTeamModal [model]="disableTeam" (CancelEvent)="teamCloseDisablePopup(2)">
+                    <div>
+                        <label style="padding: 10px;">Are you sure you want to disable this team?</label>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="disableTeamDetails()">Yes</button>
+                        <button type="button" class="btn btn-danger" (click)="disableTeamModal.close()">No</button>
+                    </div>
+                </app-custom-modal>
+                <app-custom-modal #enableTeamModal [model]="enableTeam" (CancelEvent)="teamCloseEnablePopup(2)">
+                    <div>
+                        <label style="padding: 10px;">Are you sure you want to enable this team?</label>
+                    </div>
+                    <div class="modal-footer popFooter">
+                        <button type="button" class="btn btn-primary" (click)="enableTeamDetails()">Yes</button>
+                        <button type="button" class="btn btn-danger" (click)="enableTeamModal.close()">No</button>
                     </div>
                 </app-custom-modal>
 
