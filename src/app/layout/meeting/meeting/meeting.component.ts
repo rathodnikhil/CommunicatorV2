@@ -346,7 +346,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.tick++;
     }
     calculateTimeSpanForRecording() {
-        debugger;
         if (this.recordingSecond === 59) {
             if (this.recordingMinute === 59) {
                 this.recordingHour += 1;
