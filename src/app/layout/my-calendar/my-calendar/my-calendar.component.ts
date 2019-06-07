@@ -76,9 +76,10 @@ export class MyCalendarComponent implements OnInit {
         });
         this.setCalendarOptions();
     }
-    //Add tooltip to events  
+
+    // Add tooltip to events
     eventrender(event) {
-        event.element[0].querySelectorAll(".fc-content")[0].setAttribute("data-tooltip", event.event.title);
+        event.element[0].querySelectorAll('.fc-content')[0].setAttribute('data-tooltip', event.event.title);
     }
 
     private setCalendarOptions() {
