@@ -294,7 +294,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private forgotPasswordEmailApiCall(payload: { email: any; }) {
         this._userService.forgotPasswordSendMail(payload).subscribe(res => {
             if (res.json().errorFl === true || res.json().warningFl === true) {
-                return this.validationMsgAndField(this.forgotEmailField, ErrorMessageConstants.RegisterEmail, TypeOfError.Error);
+                return this.validationMsgAndField(this.forgotEmailField, ErrorMessageConstants.RegisterEmail, TypeOfError.Warning);
             } else {
                 return this.alertService
                     .success(SuccessMessage.ForgotPasswordEmail, SuccessMessage.SuccessHeader);
