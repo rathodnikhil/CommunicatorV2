@@ -775,7 +775,20 @@ function showRoomURL(roomid) {
         }
     });
 }
+connection.onfailed = function(event) {
+    event.peer.getConnectionStats(function(result) {
+        // read more here, https://cdn.webrtc-experiment.com/getConnectionStats.js
+        // result.connectionType
+        // result.audio --- for audio tracks
+        // result.video ---- for video tracks
+    });
+    // use `redial` method
+    // it is same as: connection.peers[event.userid].redial();
+    event.peer.redial();
 
+    // you can even use `renegotiate`
+    // event.peer.renegotiate();
+};
 // document.getElementById("copyMeetingLink").onclick = function () {
 //     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
 //     copyToClipBoard(roomQueryStringURL, 'Meeting link has been copied. Kindly share via your preferred email id.',
