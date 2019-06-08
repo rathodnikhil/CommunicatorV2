@@ -13,7 +13,7 @@
                             <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;line-height: 1;">
                                 <b>{{meetingDetails.subject}}</b>
                             </h6>
-                            <label (click)="copyMeetingId();" class="meeting-id-color">[ Meeting Id:
+                            <label (click)="copyMeetingId();" class="meeting-id-color" data-toggle="tooltip" title="Click to copy Meeting code">[ Meeting Id:
                                 {{meetingDetails.meetingCode}} ]</label>
                         </div>
                         <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2 timer">
