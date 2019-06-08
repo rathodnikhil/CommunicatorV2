@@ -29,13 +29,14 @@
                 </div>
                 <div class="team-name-list">
                     <ul *ngFor="let userPermission of userPermissionList | genericSearchAllProp:searchTeam ;let teamIndex = index">
-                        <li (click)="displayTeamDetails(userPermission , teamIndex)">
+                        <li (click)="displayTeamDetails(userPermission, teamIndex)">
                             <div class="first-letter"><i class="fa fa-users" aria-hidden="true" ></i> </div>
 
                             <label style=" cursor: pointer;"  >
                                 {{userPermission.team.teamName}}
                             </label>
 
+                            <!-- <i *ngIf="selectedTeamStatus === 'INACTIVE'" class="fa fa-ban disable-team" aria-hidden="true"></i> -->
                             <!-- <i *ngIf="userPermission.team.status.status === 'ACTIVE'" class="fa fa-eye enable-team" aria-hidden="true"></i> -->
                             <i *ngIf="userPermission.team.status.status === 'INACTIVE'" class="fa fa-ban disable-team" aria-hidden="true"></i>
                         </li>

@@ -438,19 +438,18 @@ export class ManageTeamComponent implements OnInit {
             if (res.errorFl === true || res.warningFl === true) {
                 return this.alertService.warning(res.message, TypeOfError.Warning);
             } else {
-                return this.enableTeamSuccessResponse();
+                return this.enableTeamSuccessResponse(res);
             }
         });
     }
     disableTeamDetails() {
         const payload = { 'teamCode': this.selectedTeamObj.teamCode,
                            'status': 'INACTIVE' };
-                        //    this.userPermissionList.splice(this.selectedTeamIndex, 1);
         this._teamService.deleteTeam(payload).subscribe(res => {
             if (res.errorFl === true || res.warningFl === true) {
                 return this.alertService.warning(res.message, TypeOfError.Warning);
             } else {
-                return this.disableTeamSuccessResponse();
+                return this.disableTeamSuccessResponse(res);
             }
         });
     }
@@ -460,17 +459,17 @@ export class ManageTeamComponent implements OnInit {
         this.deleteTeamModal.close();
         return this.alertService.success(SuccessMessage.DeleteTeam, SuccessMessage.SuccessHeader);
     }
-    private enableTeamSuccessResponse() {
-        this.selectedUserPermissionObj = { team: { status: { status: StaticLabels.Active },
-        teamName: this.selectedTeamName }};
-        this.selectedTeamStatus = this.selectedUserPermissionObj.team.status.status;
+    private enableTeamSuccessResponse(res: any) {
+        this.selectedTeamStatus = res.status.status;
+        this.selectedNewTeamObj = res;
+        this.selectedUserPermissionObj.team = res;
         this.enableTeamModal.close();
         return this.alertService.success('Team has enabled successfully', SuccessMessage.SuccessHeader);
     }
-    private disableTeamSuccessResponse() {
-        this.selectedUserPermissionObj = { team: { status: { status: StaticLabels.InActive },
-        teamName: this.selectedTeamName }};
-        this.selectedTeamStatus = this.selectedUserPermissionObj.team.status.status;
+    private disableTeamSuccessResponse(res: any) {
+        this.selectedTeamStatus = res.status.status;
+        this.selectedNewTeamObj = res;
+        this.selectedUserPermissionObj.team = res;
         this.disableTeamModal.close();
         return this.alertService.success('Team has disabled successfully', SuccessMessage.SuccessHeader);
     }
@@ -696,18 +695,18 @@ export class ManageTeamComponent implements OnInit {
         }
     }
     teamCloseDisablePopup(flag) {
-        if (flag === 2 && this.showSelectedTeam === true) {
+        // if (flag === 2 && this.showSelectedTeam === true) {
             this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
-        } else {
-            this.disableTeamModal.close();
-        }
+        // } else {
+        //     this.disableTeamModal.close();
+        // }
     }
     teamCloseEnablePopup(flag) {
-        if (flag === 2 && this.showSelectedTeam === true) {
+        // if (flag === 2 && this.showSelectedTeam === true) {
             this.userPermissionList.splice(this.selectedTeamIndex , 0 , this.selectedUserPermissionObj);
-        } else {
-            this.enableTeamModal.close();
-        }
+        // } else {
+        //     this.enableTeamModal.close();
+        // }
     }
     cancelEditPopup() {
         const memObj = this.selectedmemObj(this.selectedMember, 1, 2);

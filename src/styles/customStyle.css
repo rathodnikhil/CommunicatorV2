@@ -240,16 +240,15 @@ color: red;
     color: #fff;
     background-color: #4b6584;
     border-color: #4b6584;
-    font-weight: bold;
 }
 
 .btn-primary:hover{
     color: #ffffff;
     background-color: #f7890b;
-    font-weight: bold;
     border-color: #f95f3a;
 }
 
 .fa-3x{
     font-size: 2.5em;
 }
+
