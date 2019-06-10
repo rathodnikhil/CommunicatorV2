@@ -309,14 +309,27 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
-        const meetingDetails = 'Meet now: ' + new Date().toDateString() + newLine + this.getMeetingDetails(newLine);
+        const meetingDetails =  'Meet now: ' + new Date().toDateString() + newLine + this.getMeetingDetails(newLine);
+        this.copyOntentToClipboard(meetingDetails);
+        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
+    }
+    private copyOntentToClipboard(content: string) {
         const el = document.createElement('textarea');
-        el.value = meetingDetails;
+        el.value = content;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
+    }
+    copyMeetingLink(userTypeFlag) {
+        let contetnt = '';
+        if (userTypeFlag === 1) {
+            contetnt = this.baseurl + '#/login?meetingCode=' + this.meetNowMeeting.meetingCode;
+        } else {
+            contetnt = this.baseurl + '#/login/GuestUserWithMeeting?meetingCode=' + this.meetNowMeeting.meetingCode;
+        }
+        this.copyOntentToClipboard(contetnt);
+        return this.alertService.success(SuccessMessage.meetingLinkCopy, SuccessMessage.SuccessHeader);
     }
     joinMeetingNow() {
         const payload = this.setMeetNowPayload();

@@ -15,7 +15,6 @@ import { DefaultMeetingComponent } from './components/default-meeting/default-me
 import { ScheduleMeetingComponent } from './components/schedule-meeting/schedule-meeting.component';
 import { BsComponentModule } from '../bs-component/bs-component.module';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { CustomModalComponent } from './components/custom-modal/custom-modal.component';
 import { SearchMemberPipe } from './components/notification/search-member.pipe';
 import { BroadcastMessageComponent } from './broadcast-message/broadcast-message.component';
