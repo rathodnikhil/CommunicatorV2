@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image"
-                                style="margin-left:13%;" />
+                                [ngStyle]="{'margin-left': !isGuest ? '13%' : '0' }" />
                         </div>
                         <div class="col-md-7 subject">
                             <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;line-height: 1;">
