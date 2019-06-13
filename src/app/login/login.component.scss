@@ -14,7 +14,7 @@ background-color: #fff;
 
 .logo{
 height: 35px;
-width: 235px;
+width: 250px;
 margin:10px;
 } 
 
@@ -26,13 +26,14 @@ height:auto;
   position:absolute;
   top:0px;
   left:0px;
-  height:100px;
+  height:70px;
   right:0px;
   overflow:hidden;
+  padding-top: 0.3%;
 }
 #content{
   position:absolute; 
-  top:100px; 
+  top:70px; 
   bottom:5%; 
   left:0px; 
   right:0px;
@@ -47,6 +48,34 @@ height:auto;
 }
 
 /* media queries for features which are shown on login page*/
+
+@media screen and (max-width: 768px){
+  // #feature1{
+  // margin-top:0%;
+  // }
+  #calendar, #calendar1, #calendar2, #calendar3, #calendar4, #calendar5, #calendar6,#calendar figcaption, #calendar1 figcaption, #calendar2 figcaption, #calendar3 figcaption, #calendar4 figcaption, #calendar5 figcaption, #calendar6 figcaption{
+  font-size:12px;
+  width: 20px;
+  height:20px;
+  line-height: 20px;
+  margin-left: 3px; 
+  }
+  // figure{
+  // margin-right:0%;
+  // }
+  // .login-block{
+  // margin-top: 12%;
+  // padding: 20px;
+  // }
+  #login{
+    padding:5px;
+  }
+  .guest-user{
+    margin-top: 4%;
+  }
+  }
+
+
 @media screen and (min-width: 768px){
   // #feature1{
   // margin-top:0%;
@@ -214,6 +243,7 @@ height:auto;
 border-radius:3px;
 overflow-wrap: break-word;
 padding: 2px;
+float:left;
 }
 }
 
@@ -231,23 +261,24 @@ padding:5px;
 }
 } 
 
-.about{
+.download-rec-steps{
 text-align:right;
 margin-top: 15px;
 
 }
 
-.about a{
-color:darkslategrey;
+.download-rec-steps a{
+color:#AF2127;
 }
 
-.faq{
-text-align:left;
-margin-top: 15px;
+.plugin-install{
+  text-align: left;
+  margin-top: 15px;
+  padding-left: 2%;
 
 }
-.faq a{
-color:darkslategrey;
+.plugin-install a{
+color:#AF2127;
 }
 
 .main1 h6{
@@ -302,12 +333,12 @@ padding-top:10px;
 .login-block{
 margin-bottom: 40px;
 border: 1px solid #c9c4c5;
-box-shadow: 5px 5px 5px 5px lightgrey;
+box-shadow: 5px 5px 5px 5px #e4e0e0;
 background-color: #fff;
 margin-right:15%; 
 transition: 0.4s;
 padding:5%;
-transform: translateY(15vh);
+transform: translateY(20vh);
 margin-left: 5%;
 }
 
@@ -373,3 +404,12 @@ width:100%;
   height:-webkit-fill-available; 
   }
   
+//   .text-over-img {
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-180%);
+//     color: #fff;
+//     font-size: 13px;
+//     font-weight: bold;
+//     right: 2%;
+// }

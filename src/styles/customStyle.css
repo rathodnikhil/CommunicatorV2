@@ -56,8 +56,8 @@
         border: 1px solid #bdb9b9;
         text-align: left;
         padding: 8px;
-        background: #707070;
-        opacity: 0.85;
+        background:#4b6584;
+        /* opacity: 0.85; */
         color: #ffffff;
     }
     tr:nth-child(even) {
@@ -230,7 +230,8 @@ color: red;
     color: white;
     overflow:hidden;
     text-align: center;
-    background-image: url(/assets/images/header.png);
+    /* background-image: url(/assets/images/header.png); */
+    background-color: #4b6584;
 }
 .text-center
 {
@@ -240,12 +241,14 @@ color: red;
     color: #fff;
     background-color: #4b6584;
     border-color: #4b6584;
+    font-weight: unset;
 }
 
 .btn-primary:hover{
     color: #ffffff;
     background-color: #f7890b;
     border-color: #f95f3a;
+    font-weight: unset;
 }
 
 .fa-3x{

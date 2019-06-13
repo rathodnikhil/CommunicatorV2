@@ -571,7 +571,7 @@ connection.onmute = function (event) {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
         // font-size: 1.1vw;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:5px;margin-right:2px;");
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:2%;margin-right:2px;");
     }
 };
 connection.onunmute = function (event) {
