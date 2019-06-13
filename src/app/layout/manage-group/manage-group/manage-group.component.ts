@@ -137,7 +137,7 @@ export class ManageGroupComponent implements OnInit {
                 if (groupData.warningFl === true || groupData.errorFl === true || groupData === undefined) {
                     this.groupList = [];
                     this.manageGroupSpinnerMod.hideSpinner();
-                    return this.alertService.warning(groupData.message, TypeOfError.Warning);
+                    // return this.alertService.warning(groupData.message, TypeOfError.Warning);
                 } else {
                     // this code for avoid error onPageLoad of Cannot find a differ supporting object '[object Object]'
                     this.groupList = [];

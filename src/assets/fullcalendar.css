@@ -931,7 +931,7 @@ NOTE: use percentage font sizes or else old IE chokes
     background: transparent;
     color: #ffffff;
     position: fixed;
-    width: 98%;
+    width: 88%;
     top: 70px;
 }
 
@@ -1081,6 +1081,15 @@ NOTE: use percentage font sizes or else old IE chokes
 	color: #808080;
 }
 .fc-agendaWeek-button{
+	display: none;
+}
+.fc-agendaDay-button{
+	display: none;
+}
+.fc-listMonth-button{
+	display: none;
+}
+.fc-month-button{
 	display: none;
 }
 /* when week/day number have own column */

@@ -48,6 +48,7 @@ newTeamName: any;
 selectedIndex: any;
 selectedDefaultTeam: any;
 deleteMemberFlag = 1;
+profileImgPath: any;
   constructor(userService: UserService, public alertService: AlertService , teamService: TeamService) {
     this._userService = userService;
     this._teamService = teamService;
@@ -59,10 +60,10 @@ deleteMemberFlag = 1;
   @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
   deleteAdminPop: CustomModalModel = {
       titleIcon: '<i class="fa fa-trash"></i>',
-      title: 'Delete Admin',
-      smallHeading: 'You can delete admin here',
+      title: 'Inactive Admin',
+      smallHeading: 'You can Inactive admin here',
       body: '',
-      Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete Admin',
+      Button1Content: '<i class="fa fa-user"></i>&nbsp;Inactive Admin',
       Button2Content: ''
   };
   @ViewChild('editMemberModal') public editMemberModal: CustomModalComponent;
@@ -103,6 +104,9 @@ deleteMemberFlag = 1;
 deleteAdmin(selectedAdmin) {
     if (selectedAdmin.status.status === StaticLabels.Active) {
         this.deleteAdminActiveStatusAction(selectedAdmin);
+    } else if (selectedAdmin.status.status === 'CANCEL') {
+            return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
+            '  is already deleted', TypeOfError.Warning);
     } else {
         return this.alertService.warning('Admin ' + selectedAdmin.firstName + ' ' + selectedAdmin.lastName +
          '  is already inactive', TypeOfError.Warning);
@@ -154,10 +158,15 @@ deleteAdminNow() {
     }
 
 editAdmin(user) {
-    this.setStatusAndMeetingStatus(user);
-    this.editMemberModal.open();
-    this.allAdminList.splice(this.allAdminList.indexOf(user), 1);
-    this.setUpdatedValueToModel(user);
+    if (user.team.status.status === 'CANCEL') {
+        return this.alertService.warning('Admin ' + user.firstName + ' ' + user.lastName +
+        '  is already deleted', TypeOfError.Warning);
+    } else {
+        this.setStatusAndMeetingStatus(user);
+        this.editMemberModal.open();
+        this.allAdminList.splice(this.allAdminList.indexOf(user), 1);
+        this.setUpdatedValueToModel(user);
+    }
 }
     private setUpdatedValueToModel(user: any) {
         this.updatedFirstName = user.firstName;
@@ -167,6 +176,7 @@ editAdmin(user) {
         this.updatedUserCode = user.userCode;
         this.selectedDefaultTeam = user.team.teamName;
         this.selectedAdmin = user;
+        this.profileImgPath = user.profileImgPath
     }
 
     private setStatusAndMeetingStatus(user: any) {
@@ -212,7 +222,6 @@ updateAdmin() {
         const currentDisplayMeetingStatus = this.getStatusByUser(this.updatedMeetingPermissionStatus);
         const payload = this.createUpdateUserPayload(currentDisplayStatus, currentDisplayMeetingStatus);
         this.updateUserDetailsApiCall(payload);
-       
     }
 
     private updateUserDetailsApiCall(payload: { firstName: any; lastName: any; email: any; status: { status: any; };
@@ -244,6 +253,7 @@ updateAdmin() {
             userCode: this.updatedUserCode,
             team: { teamName: this.selectedDefaultTeam },
             meetingPermissionStatus: { status: currentDisplayMeetingStatus },
+            profileImgPath: this.profileImgPath
         };
     }
 

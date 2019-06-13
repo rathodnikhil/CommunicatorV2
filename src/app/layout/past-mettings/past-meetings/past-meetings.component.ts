@@ -22,6 +22,10 @@ export class PastMeetingsComponent implements OnInit {
     public responsive: Boolean = false;
     lastMeetingYear: any;
     lastMeetingMonth: any;
+    pastMeetingMonth: any;
+    currentMonth: any;
+    monthNames: any[];
+    meetingYear: any;
     public config: PaginationInstance = {
         id: 'meetingCode',
         itemsPerPage: 10,
@@ -55,6 +59,9 @@ export class PastMeetingsComponent implements OnInit {
         Button2Content: ''
     };
     ngOnInit() {
+        this.monthNames  = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+                ];
         // loggedInuser Object webservice call
         this.getLoggedInUserApiCall();
     }
@@ -66,6 +73,8 @@ export class PastMeetingsComponent implements OnInit {
             }  else {
                 this.loggedInUser = data;
                 this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
+                // this.currentMonth = this.monthNames[new Date().getMonth()];
+                // this.pastMeetingMonth = this.monthNames[new Date().getMonth()];
             }
         });
     }
@@ -153,6 +162,9 @@ export class PastMeetingsComponent implements OnInit {
             if (data[0].errorFl || data[0].warningFl) {
                 this.alertService.warning(data[0].message, TypeOfError.Warning);
             } else {
+                this.meetingYear = year;
+                this.currentMonth = this.monthNames[new Date().getMonth()];
+                this.pastMeetingMonth = this.monthNames[month - 1];
                 this.pastMeetingList = this.pastMeetingList.concat(data);
             }
             this.hideSpinner();

@@ -37,6 +37,7 @@ export class ScheduleMeetingComponent implements OnInit {
     timezoneSelect: any;
     selectedTime: any;
     baseUrl: any;
+    date: any;
     @Output() CurrentRoute = new EventEmitter();
     @ViewChild('closeBtn') closeBtn: ElementRef;
     @ViewChild('scheduleMeetingModal') public scheduleMeetingModal: CustomModalComponent;
@@ -96,20 +97,24 @@ export class ScheduleMeetingComponent implements OnInit {
         this.CurrentRoute.emit(value);
     }
     scheduleMeeting() {
-        const date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
-            this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
-        const today = new Date();
-        if (this.subject === null || typeof this.subject === 'undefined' || this.subject.trim() === '') {
-            return this.alertService.warning(ErrorMessageConstants.Subject, TypeOfError.Warning);
-        } else if (this.meeting.selectedDuration === StaticLabels.DurationLbl) {
-            return this.alertService.warning(ErrorMessageConstants.Duration, TypeOfError.Warning);
-        } else if (this.timezoneSelect === undefined || this.timezoneSelect === '') {
-            return this.alertService.warning(ErrorMessageConstants.Timezone, TypeOfError.Warning);
-        } else if (date <= today) {
+        if (this.meeting.datePicker === '' || this.meeting.datePicker === null || this.meeting.datePicker === undefined) {
             return this.alertService.warning(ErrorMessageConstants.FutureDateTime, TypeOfError.Warning);
         } else {
-            const payload = this.createNewMeetingPayload();
-            this.scheduleMeetingApiCall(payload);
+            this.date = new Date(this.meeting.datePicker.year, this.meeting.datePicker.month - 1,
+                this.meeting.datePicker.day, this.meeting.meridianTime.hour, this.meeting.meridianTime.minute);
+            const today = new Date();
+            if (this.subject === null || typeof this.subject === 'undefined' || this.subject.trim() === '') {
+                return this.alertService.warning(ErrorMessageConstants.Subject, TypeOfError.Warning);
+            } else if (this.meeting.selectedDuration === StaticLabels.DurationLbl) {
+                return this.alertService.warning(ErrorMessageConstants.Duration, TypeOfError.Warning);
+            } else if (this.timezoneSelect === undefined || this.timezoneSelect === '') {
+                return this.alertService.warning(ErrorMessageConstants.Timezone, TypeOfError.Warning);
+            } else if (this.date <= today) {
+                return this.alertService.warning(ErrorMessageConstants.FutureDateTime, TypeOfError.Warning);
+            } else {
+                const payload = this.createNewMeetingPayload();
+                this.scheduleMeetingApiCall(payload);
+            }
         }
     }
     private scheduleMeetingApiCall(payload: { 'meetingDate': Date; 'meetingStartDateTime': Date; 'subject': any; 'duration': any;
