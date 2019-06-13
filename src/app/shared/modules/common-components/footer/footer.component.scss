@@ -1,7 +1,7 @@
 .cfsfooter{
     background-size: cover;
-    background-image: url(/assets/images/footer.png);
-    background-repeat: no-repeat;
+    // background-image: url(/assets/images/footer.png);
+    // background-repeat: no-repeat;
     position:fixed;
     bottom:0;
     left:0;
@@ -9,21 +9,36 @@
     margin:0 auto;
     width:auto;
     height:5%;
-    color:#fff;
+    color:#AF2127;
+    background-color:#fff;
 }
 
 .footer-label{
     position: absolute;
-    top: 50%;
+    // top: 50%;
     left:2%;
-    -webkit-transform: translate(0%, -50%);
-    transform: translate(-0%, -50%);
+    -webkit-transform: translate(0%, 1.5vh);
+    transform: translate(0%, 1.5vh);
 }
-.version{
-    position: absolute;
-    top: 50%;
-    right: 2%;
-    -webkit-transform: translate(0%, -50%);
-    transform: translate(0%, -50%);
-    float: right;
-}
+
+.about{
+    text-align:right;
+    transform: translate(0%, 1.5vh);
+    }
+    
+    .about a{
+    color:#AF2127;
+    font-weight: bold;
+    }
+    
+    .faq{
+      text-align: left;
+      transform: translate(0%, 1.5vh);
+      padding-left: 2%;
+    
+    }
+    .faq a{
+    color:#AF2127;
+    font-weight: bold;
+    }
+    
