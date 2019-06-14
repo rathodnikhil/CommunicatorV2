@@ -33,7 +33,7 @@
       <th>Status</th>
       <th>Meeting Permission</th>
       <th>Edit</th>
-      <th>Delete</th>
+      <th>Inactive</th>
     </tr>
      <tr *ngFor="let admin of allAdminList | genericSearchAllProp:searchText |  paginate: config ;let srNo = index">
           <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
@@ -51,10 +51,10 @@
   </table>
   <app-custom-modal #deleteMemberModal [model]="deleteAdminPop" (CancelEvent)="closeDeletePopup(2)">
     <div class="modal-body row-label">
-       <label>Are Sure you want to delete this admin?</label>
+       <label>Are you sure you want to inactive this admin?</label>
     </div>
     <div class="modal-footer popFooter">
-        <button type="button" class="btn btn-sec" (click)="deleteAdminNow()">Delete</button>
+        <button type="button" class="btn btn-sec" (click)="deleteAdminNow()">Inactive</button>
         <button type="button" class="btn btn-danger" (click)="deleteMemberModal.close()">Close</button>
     </div>
 </app-custom-modal>

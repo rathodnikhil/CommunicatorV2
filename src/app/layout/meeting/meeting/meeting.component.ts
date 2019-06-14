@@ -241,6 +241,8 @@ export class MeetingComponent implements OnInit, AfterViewInit {
     downloadFile(data, meetingDetails, attendeeList) {
         if (this.isGuest) {
             attendeeList = 'Your are guest , you cant view attendee';
+        } if (data === undefined || data === '' || data === null) {
+            data = 'You have not added any meeting notes.';
         } else {
             data = data.split('\n');
             data = data.join('\r\n ');
@@ -346,7 +348,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         this.tick++;
     }
     calculateTimeSpanForRecording() {
-        debugger;
         if (this.recordingSecond === 59) {
             if (this.recordingMinute === 59) {
                 this.recordingHour += 1;

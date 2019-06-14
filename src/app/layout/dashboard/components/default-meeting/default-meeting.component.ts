@@ -302,25 +302,38 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowOutlookModal.open();
         const newLine = '\r\n\r\n';
         this.outLookBody = this.getMeetingDetails(newLine);
-        this.outLookSubject = 'Meet now: ' + new Date().toDateString();
+        this.outLookSubject = 'Meet now: ' + new Date(this.meetNowMeeting.meetingStartDateTime);
         this.closePopup('meetNow');
     }
 
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
-        const meetingDetails = 'Meet now: ' + new Date().toDateString() + newLine + this.getMeetingDetails(newLine);
+        const meetingDetails = 'Meet now: ' + new Date(this.meetNowMeeting.meetingStartDateTime) +
+         newLine + this.getMeetingDetails(newLine);
+        this.copyOntentToClipboard(meetingDetails);
+        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
+    }
+    private copyOntentToClipboard(content: string) {
         const el = document.createElement('textarea');
-        el.value = meetingDetails;
+        el.value = content;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
+    }
+    copyMeetingLink(userTypeFlag) {
+        let contetnt = '';
+        if (userTypeFlag === 1) {
+            contetnt = this.baseurl + '#/login?meetingCode=' + this.meetNowMeeting.meetingCode;
+        } else {
+            contetnt = this.baseurl + '#/login/GuestUserWithMeeting?meetingCode=' + this.meetNowMeeting.meetingCode;
+        }
+        this.copyOntentToClipboard(contetnt);
+        return this.alertService.success(SuccessMessage.meetingLinkCopy, SuccessMessage.SuccessHeader);
     }
     joinMeetingNow() {
         const payload = this.setMeetNowPayload();
-
         this.setMeetNowApiCall(payload);
     }
     private setMeetNowApiCall(payload: { 'meetingDate': Date; 'meetingStartDateTime': Date; 'subject': string; 'duration': string;
@@ -340,6 +353,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.meetNowModal.open();
         //  this.futureMeetingList.push(this.meetNowMeeting);
         this.futureMeetingList.splice(0, 0, this.meetNowMeeting);
+        this.filteredFutureMeetingList = this.futureMeetingList;
         return this.alertService.success(SuccessMessage.ScheduleMeeting, SuccessMessage.SuccessHeader);
     }
 
@@ -418,11 +432,11 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         let meetingUrl = '';
         meetingUrl = this.baseurl + '#/login?meetingCode=';
         const guestMeetingUrl =  this.baseurl + '#/login/GuestUserWithMeeting?meetingCode=';
-        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date().toString().slice(0, 24) + newLine +
-            ' Please join my meeting from your computer using chrome browser ' + newLine + ' for  '
-            + this.meetNowMeeting.duration + newLine + 'Registered user use below URL for meeting :' + newLine
-            + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below URL for meeting:' + newLine + guestMeetingUrl +
-            this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
+        const meetingDetails = 'Dear Attendees,' + newLine + 'Date :  ' + new Date(this.meetNowMeeting.meetingStartDateTime) + ' for '
+        + this.meetNowMeeting.duration + newLine + ' Please join my meeting from your computer using chrome browser '
+        + newLine + 'Registered user use below URL for meeting :' + newLine
+        + meetingUrl + this.meetNowMeeting.meetingCode + newLine + 'Guest user use below URL for meeting:' + newLine + guestMeetingUrl +
+        this.meetNowMeeting.meetingCode + newLine + 'Meeting Id :  ' + this.meetNowMeeting.meetingCode;
         return meetingDetails;
     }
     closePopup(popType) {

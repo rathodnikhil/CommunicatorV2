@@ -76,9 +76,10 @@ export class MyCalendarComponent implements OnInit {
         });
         this.setCalendarOptions();
     }
-    //Add tooltip to events  
+
+    // Add tooltip to events
     eventrender(event) {
-        event.element[0].querySelectorAll(".fc-content")[0].setAttribute("data-tooltip", event.event.title);
+        event.element[0].querySelectorAll('.fc-content')[0].setAttribute('data-tooltip', event.event.title);
     }
 
     private setCalendarOptions() {
@@ -101,7 +102,8 @@ export class MyCalendarComponent implements OnInit {
                 this.clickedType = model.buttonType;
                 this.loadMore(this.meetingYear, this.meetingMonth);
             } else if (model.buttonType === 'today') {
-                this.loadTodaysMeetings();
+                // this.loadTodaysMeetings();
+                this.loadMore(new Date().getFullYear(), new Date().getUTCMonth() + 1);
             }
     }
     eventClick(model: any) {
@@ -151,6 +153,8 @@ export class MyCalendarComponent implements OnInit {
     private getTodaysMeetingApiCall() {
         this._meetingService.getTodaysMeeting().subscribe(data => {
             // this.setMeetingsSuccessResponse(data);
+            this.meetingYear = new Date().getFullYear();
+            this.meetingMonth = new Date().getUTCMonth() + 1;
             if (data[0].errorFl || data[0].warningFl || data === null) {
                 this.hideSpineer();
                 return this.alertService.warning(ErrorMessageConstants.NoMeetings, TypeOfError.Warning);
@@ -166,6 +170,7 @@ export class MyCalendarComponent implements OnInit {
         const payload = { lastMeetingYear: year, lastMeetingMonth: month, calendarFl: true };
         this.calenderMeetingSpinnerMod.showSpinner();
         this.getmeetingsByMonthAndYearApiCall(payload, year, month);
+        this.clickedType = undefined;
     }
 
     private getmeetingsByMonthAndYearApiCall(payload: { lastMeetingYear: any; lastMeetingMonth: any; calendarFl: boolean; },

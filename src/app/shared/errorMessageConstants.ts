@@ -81,6 +81,7 @@ export class SuccessMessage {
         public static copyMeetingDetails = 'Meeting Details has been copied. Kindly share via your preferred email id.';
         public static ScheduleMeeting = 'Meeting has scheduled successfully';
         public static MeetingInvitation = 'Meeting invitation has sent successfully';
+        public static meetingLinkCopy = 'Meeting link has copied successfully';
 
 //  Myprofile Component
         public static UpdateProfile = 'User profile has updated successfully';

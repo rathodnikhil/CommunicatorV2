@@ -409,7 +409,11 @@ connection.session = {
     video: true,
     data: true
 };
-
+connection.bandwidth = {
+    audio: 50,  // 50 kbps    audio bitrates. Minimum 6 kbps and maximum 510 kbps
+    video: 256, // 256 kbps   video framerates. Minimum 100 kbps; maximum 2000 kbps
+    screen: 300 // 300 kbps  screen framerates. Minimum 300 kbps; maximum 4000 kbps
+};
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
@@ -567,7 +571,7 @@ connection.onmute = function (event) {
         var mediaElement = document.getElementById(event.streamid)
         mediaElement.muted = true;
         // font-size: 1.1vw;
-        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:5px;margin-right:2px;");
+        document.getElementById(event.streamid + 'muteIcon').setAttribute("style", "display:block;padding-top:2%;margin-right:2px;");
     }
 };
 connection.onunmute = function (event) {
@@ -687,19 +691,12 @@ connection.onEntireSessionClosed = function (event) {
 connection.onUserIdAlreadyTaken = function (useridAlreadyTaken, yourNewUserId) {
     connection.join(useridAlreadyTaken);
 };
-connection.onPeerStateChanged = function (state) {   
-        if (state.iceConnectionState.search(/closed|failed/gi) !== -1) {
-            // debugger;
-            // connection.close();
-            // connection = new RTCMultiConnection();
-            if (connection.isOnline) {
-                connection.openOrJoin(roomid);
-            }
-            else {
-                alertService.error("It seems that you are not connected to internet. Kindly check your internet settings and try again.", "No internet");
-            }
-            // console.error('Peer connection is closed between you & ', state.userid, state.extra, 'state:', state.iceConnectionState);
-        }  
+connection.onPeerStateChanged = function (state) {
+    if (state.iceConnectionState.search(/closed|failed/gi) !== -1) {
+        if (!connection.isOnline) {
+            alertService.error("It seems that you are not connected to internet. Kindly check your internet settings and try again.", "No internet");
+        }
+    }
 };
 
 
@@ -778,7 +775,20 @@ function showRoomURL(roomid) {
         }
     });
 }
+connection.onfailed = function(event) {
+    event.peer.getConnectionStats(function(result) {
+        // read more here, https://cdn.webrtc-experiment.com/getConnectionStats.js
+        // result.connectionType
+        // result.audio --- for audio tracks
+        // result.video ---- for video tracks
+    });
+    // use `redial` method
+    // it is same as: connection.peers[event.userid].redial();
+    event.peer.redial();
 
+    // you can even use `renegotiate`
+    // event.peer.renegotiate();
+};
 // document.getElementById("copyMeetingLink").onclick = function () {
 //     var roomQueryStringURL = window.location.href.split('?')[0] + '?meetingCode=' + roomid;
 //     copyToClipBoard(roomQueryStringURL, 'Meeting link has been copied. Kindly share via your preferred email id.',
