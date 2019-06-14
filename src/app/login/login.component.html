@@ -4,8 +4,8 @@
       <div class="col-md-8 col-sm-4 col-6">
       <a href="http://xanadutec.com/communicator.html" target="_blank"><img src="assets/images/logo.png" class="logo imgr" alt="Responsive image"/></a>
       </div>
-      <div class="col-md-2 col-sm-5 col-4 download-rec-steps">
-         <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording" style="font-weight:bold;">DOWNLOAD RECORDING </a>
+      <div class="col-md-2 col-sm-5 col-3 download-rec-steps">
+        <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording">DOWNLOAD RECORDING</a>
       </div>
       <div class="col-md-2 col-sm-3 col-2 plugin-install">
             <a [routerLink]="['/error/plugininstallation']" target="_blank" ><b>PLUGIN INSTALLATION</b> </a> 
@@ -22,8 +22,8 @@
         <div class="main1">
       <div class="login-block">
          <div *ngIf="loginUiFlag">
-            <h4 class="red-color"><b>{{loginHeader}}</b></h4>
-            <h6>Kindly enter details</h6>
+            <div><h4 class="red-color"><b>{{loginHeader}}</b></h4></div>
+            <span><h6>Kindly enter details</h6></span>
             <div class="input-group mb-3" style="padding:0px 15px 10px 0px;">
                <div class="input-group-prepend">
                   <span class="input-group-text">

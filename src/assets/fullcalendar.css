@@ -407,7 +407,7 @@ temporary rendered events).
 
 .fc-event,
 .fc-event-dot {
-	background-color: #eeedee; /* default BACKGROUND color */
+	background-color: #fcdfdf; /* default BACKGROUND color */
 
 }
 
@@ -725,7 +725,7 @@ TODO: more distinction between this file and common.css
 }
 
 .fc-unthemed td.fc-today {
-	background: #bdf5f0;  
+	background: #edf3fb;  
 }
 
 .fc-unthemed .fc-disabled-day {
