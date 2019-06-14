@@ -4,6 +4,7 @@ import { ServerErrorComponent } from './server-error.component';
 import { ShareScreenComponent } from './share-screen/share-screen.component';
 import { RecordScreenComponent } from './record-screen/record-screen.component';
 import { RecordScreenStepsComponent } from './record-screen-steps/record-screen-steps.component';
+import { PluginInstallationComponent } from './plugin-installation/plugin-installation/plugin-installation.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,9 @@ const routes: Routes = [
     },
     {
         path: 'recordscreensteps', component: RecordScreenStepsComponent
+    } ,
+    {
+        path: 'plugininstallation', component: PluginInstallationComponent
     }
 ];
 

@@ -17,9 +17,9 @@
                             <span style="font-weight: bold;">{{meetNowMeeting.duration}} </span>
                         </p>
                         <p style="padding-top: 20px;"> Please join my meeting from your computer using chrome browser
-                            <label>Registered user use below URL for meeting:<br><span class="link-url">
+                            <label >Registered user use below URL for meeting:<br><span class="link-url" (click)="copyMeetingLink(1)">
                             {{baseurl}}#/login?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
-                                <label>Guest user use below URL for meeting:<br/><span  class="link-url">
+                                <label >Guest user use below URL for meeting:<br/><span (click)="copyMeetingLink(2)"  class="link-url">
                                     {{baseurl}}#/login/GuestUserWithMeeting?meetingCode={{meetNowMeeting.meetingCode}}</span></label>
                         </p>
                         <h5 style="margin-top: 40px;">Meeting Id     :
