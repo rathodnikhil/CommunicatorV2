@@ -71,7 +71,7 @@
                     <h4 class="team-name">{{selectedTeamName}}
                         <span>&nbsp;[{{filterMemberList.length}} Members]</span>
                     </h4>
-                    <button (click)="editTeam()" class="btn btn-edit" style="margin-right: 5px;" title="Edit team name" #editTeamField>
+                    <button *ngIf="selectedTeamStatus === 'ACTIVE'" (click)="editTeam()" class="btn btn-edit" style="margin-right: 5px;" title="Edit team name" #editTeamField>
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
                     <button (click)="deleteSelectedTeam()" style="margin-right: 5px;" class="btn btn-danger" title="Delete team" #deleteTeamField>
@@ -79,15 +79,16 @@
                     </button>
 
                     <button *ngIf="selectedTeamStatus === 'INACTIVE'" (click)="enableSelectedTeam()" 
-                    class="btn btn-enable" title="Enable team" #enableTeamField>
+                    class="btn btn-enable" title="Active team" #enableTeamField>
                         <i class="fa fa-eye"></i>
                     </button>
                     <button *ngIf="selectedTeamStatus === 'ACTIVE'" (click)="disableSelectedTeam()" 
-                    class="btn btn-disable" title="Disable team" #disableTeamField>
+                    class="btn btn-disable" title="Inactive team" #disableTeamField>
                         <i class="fa fa-eye-slash"></i>
                     </button>
 
-                    <button class="btn btn-primary" style="margin-top:4px;position: absolute; right: 10px;" (click)="openMemberPopup()" #addMemField title="Add Member">+Member</button>
+                    <button *ngIf="selectedTeamStatus === 'ACTIVE'" class="btn btn-primary" 
+                    style="margin-top:4px;position: absolute; right: 10px;" (click)="openMemberPopup()" #addMemField title="Add Member">+Member</button>
                     <hr>
                 </div>
                 <!-- <div class="row">
@@ -120,7 +121,7 @@
                         <th>Status</th>
                         <th>Meeting Permission</th>
                         <th>Edit</th>
-                        <th>Delete</th> 
+                        <th>Inactive</th> 
                     </tr>
                     <tr *ngFor="let userMemPermission of filterMemberList  | genericSearchAllProp:searchTableText | paginate: config ;let srNo = index">
                         <td> {{ config.itemsPerPage * (config.currentPage - 1) + srNo + 1 }}</td>
@@ -133,7 +134,7 @@
                             <i class="fa fa-pencil-square-o edit-icon" (click)="editMember(userMemPermission);" title="Edit member"></i>
                         </td>
                         <td>
-                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);" title="Delete member"></i>
+                            <i class="fa fa-trash-o delete-icon" (click)="deleteMemberPopup(userMemPermission);" title="Inactive member"></i>
                         </td>
                     </tr>
                 </table>
@@ -172,7 +173,7 @@
                 </app-custom-modal>
                 <app-custom-modal #disableTeamModal [model]="disableTeam" (CancelEvent)="teamCloseDisablePopup(2)">
                     <div>
-                        <label style="padding: 10px;">Are you sure you want to disable this team?</label>
+                        <label style="padding: 10px;">Are you sure you want to inactive this team?</label>
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="disableTeamDetails()">Yes</button>
@@ -271,7 +272,7 @@
                 </app-custom-modal>
                 <app-custom-modal #deleteMemberModal [model]="deleteMember" (CancelEvent)="cancelDeletePopup(2 , 1)">
                     <div>
-                        <label style="padding: 10px; ">Are you sure you want to delete this member?</label>
+                        <label style="padding: 10px; ">Are you sure you want to inactive this member?</label>
                     </div>
                     <div class="modal-footer popFooter">
                         <button type="button" class="btn btn-primary" (click)="deleteMemberDetails()">Yes</button>
@@ -281,7 +282,5 @@
             </div>
             </div>   
     </div>
-    <div id="footer" style="position:absolute; bottom:0px; height:5%; left:0px; right:0px; overflow:hidden;"> 
-            <app-footer></app-footer> 
-            </div>
+   
 

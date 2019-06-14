@@ -111,10 +111,10 @@ export class ManageTeamComponent implements OnInit {
     @ViewChild('disableTeamModal') public disableTeamModal: CustomModalComponent;
     disableTeam: CustomModalModel = {
         titleIcon: '<i class="fas fa-trash-alt"></i>',
-        title: 'Disable Team',
-        smallHeading: 'You can disable team here',
+        title: 'Inactive Team',
+        smallHeading: 'You can inactive team here',
         body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Disable Team',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Inactive Team',
         Button2Content: ''
     };
     @ViewChild('deleteTeamModal') public deleteTeamModal: CustomModalComponent;
@@ -147,10 +147,10 @@ export class ManageTeamComponent implements OnInit {
     @ViewChild('deleteMemberModal') public deleteMemberModal: CustomModalComponent;
     deleteMember: CustomModalModel = {
         titleIcon: '<i class="fas fa-trash-alt"></i>',
-        title: 'Delete member',
-        smallHeading: 'You can delete member details here',
+        title: 'Inactive member',
+        smallHeading: 'You can inactive member details here',
         body: '',
-        Button1Content: '<i class="fa fa-user"></i>&nbsp;Delete member',
+        Button1Content: '<i class="fa fa-user"></i>&nbsp;Inactive member',
         Button2Content: ''
     };
 
@@ -474,10 +474,14 @@ export class ManageTeamComponent implements OnInit {
         return this.alertService.success('Team has disabled successfully', SuccessMessage.SuccessHeader);
     }
     editMember(member) {
-        this.updateUserAndMeetingStatus(member);
-        const index = this.filterMemberList.indexOf(member);
-        this.openPopUpAndRemoveEntryFromTable(index);
-        this.setUpdatedvaluesToModel(member, index);
+        if (this.selectedTeamStatus === 'INACTIVE') {
+            return this.alertService.warning('Team is disabled, you cannot edit this member.', TypeOfError.Warning);
+        } else {
+            this.updateUserAndMeetingStatus(member);
+            const index = this.filterMemberList.indexOf(member);
+            this.openPopUpAndRemoveEntryFromTable(index);
+            this.setUpdatedvaluesToModel(member, index);
+        }
     }
     private openPopUpAndRemoveEntryFromTable(index: number) {
         this.filterMemberList.splice(index, 1);
@@ -599,14 +603,18 @@ export class ManageTeamComponent implements OnInit {
     }
 
     deleteMemberPopup(member) {
-        if (member.userId.status.status === StaticLabels.Active) {
-            this.setActiveMemStatus(member);
+        if (this.selectedTeamStatus === 'INACTIVE') {
+            return this.alertService.warning('Team is disabled, you cannot delete this member.', TypeOfError.Warning);
         } else {
-            return this.alertService.warning('Member ' + member.userId.firstName + ' ' + member.userId.lastName +
-                '  is already inactive', 'Inactive Member');
+            if (member.userId.status.status === StaticLabels.Active) {
+                this.setActiveMemStatus(member);
+            } else {
+                return this.alertService.warning('Member ' + member.userId.firstName + ' ' + member.userId.lastName +
+                    '  is already inactive', 'Inactive Member');
+            }
+            this.selectedMemIndex = this.filterMemberList.indexOf(member);
+            this.selectedMember = member;
         }
-        this.selectedMemIndex = this.filterMemberList.indexOf(member);
-        this.selectedMember = member;
     }
     private setActiveMemStatus(member: any) {
         this.deleteMemberModal.open();

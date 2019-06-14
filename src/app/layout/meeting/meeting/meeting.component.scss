@@ -312,9 +312,10 @@
 
   .btn-mute:hover{
     border-radius: 28px;
-    box-shadow: 0px 0px 17px -2px #047904;
-    color:#17ad16;
-   background-color: #fff;
+    border: 1px solid #44576d;
+    box-shadow: 0px 0px 17px -2px #4b6584;
+    color:#fff;
+  // background-color: #fff;
   }
   .btn-share-on{
     border: 1px solid #44576d;
