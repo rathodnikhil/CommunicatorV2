@@ -494,9 +494,9 @@ connection.onstream = function (event) {
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if (initialsDiv.innerHTML === "You") {
-            initialsDiv.setAttribute("style", "  text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
+            initialsDiv.setAttribute("style", "  text-align: center;font-size:2.5vw;font-weight: 600; position: absolute;left: 0;right: 0; top: 30%; ");
         } else {
-            initialsDiv.setAttribute("style", " text-align: center;font-size:2.5vw;font-weight: bold; position: absolute;left: 0;right: 0; top: 30%; ");
+            initialsDiv.setAttribute("style", " text-align: center;font-size:2.5vw;font-weight: 600; position: absolute;left: 0;right: 0; top: 30%; ");
         }
         customDiv.appendChild(initialsDiv);
     }

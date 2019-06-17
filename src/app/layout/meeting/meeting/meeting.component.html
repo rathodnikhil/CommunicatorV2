@@ -81,8 +81,8 @@
                                 (click)="startRecordingTimer();" alt="Start Recording" style="display: none;">
                                 <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip"
                                     aria-hidden="true" id="rec_start"></i>
-                                <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording"
-                                    data-toggle="tooltip" style="color:#fff;display: none" id="rec_stop"></i>
+                                <i class="fa fa-2x fa-stop rec-stop" aria-hidden="true" title="Stop Recording"
+                                    data-toggle="tooltip" style="display: none" id="rec_stop"></i>
                             </button>
                             <button id="btn-stop-recording" class="btn-sec " alt="Start Recording"
                                 style="display: none;"></button>
@@ -130,8 +130,8 @@
                 <div class="card">
                     <div class="card-header col-md-12 meeting-activity-header">
                         <div class="col-md-11" style="float: left;transform: translateY(20%);">
-                            <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word;"><b>Host:
-                                    {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}</b>
+                            <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word;">Host:
+                                    {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}
                             </h5>
                         </div>
                         <div>
