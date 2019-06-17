@@ -401,7 +401,7 @@ temporary rendered events).
 	font-size: 1em;
 	line-height: 1.3;
 	border-radius: 3px;
-	border: 1px solid #b47800;; /* default BORDER color */
+	border: 1px solid #b47800; /* default BORDER color */
 
 }
 
@@ -606,10 +606,6 @@ tr:first-child > td > .fc-day-grid-event {
 	white-space: nowrap;
 	overflow: hidden;
 }
-.fc-content:hover { /* force events to be one-line tall */
-	white-space: nowrap;
-	overflow: visible;
-}
 
 .fc-day-grid-event .fc-time {
 	font-weight: bold;
@@ -730,7 +726,7 @@ TODO: more distinction between this file and common.css
 
 .fc-unthemed .fc-disabled-day {
 	background: #d7d7d7;
-	opacity: .3;
+	/* opacity: .3; */
 }
 
 
@@ -1534,20 +1530,20 @@ be a descendant of the grid when it is being dragged.
 }
 
 
-.fc-content {
+/* .fc-content {
 	cursor: pointer;
 	position: relative;
 	overflow: hidden;
   }
   
-  .fc-content:hover::before,
-  .fc-content:hover::after {
+  .fc-content:hover::before
+  {
 	opacity: 1;
-	-webkit-transition: all 0.75s ease;
+	/* -webkit-transition: all 0.75s ease;
 	transition: all 0.75s ease;
-	
+	 
 	position: absolute;
-	/* top: -64px; */
+	 top: -64px; 
 	left: -4px;
 	background-color: gray;
 	border-radius: 5px;
@@ -1558,4 +1554,73 @@ be a descendant of the grid when it is being dragged.
 	-webkit-transition: all 0.5s ease;
 	transition: all 0.5s ease;
 	width: auto;
+  } */
+
+  .fc-content {
+	cursor: pointer;
+	position: relative;
+	overflow:hidden;
   }
+  
+  /* .fc-content::before {
+	position: absolute;
+	top:-24px;
+	left: -4px;
+	background-color: #fcdfdf;
+	border: 1px solid #b47800;
+	border-radius: 5px;
+	color: #000;
+	content: attr(data-tooltip);
+	padding: 0.2rem;
+	text-transform: none;
+	-webkit-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	width:220px;
+	word-break: break-all;
+	white-space: normal;	
+  } */
+  
+  .fc-content::after {
+	position: absolute;
+	top: -4px;
+	right: 0px;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #000;
+	content: " ";
+	font-size: 0;
+	line-height: 0;
+	margin-left: -5px;
+	width: 0;
+
+  }
+  
+  /* .fc-content::before,
+  .fc-content::after {
+	font-family: monospace;
+	font-size: 16px;
+	opacity: 0;
+	pointer-events: none;
+	text-align: center;
+	word-break: break-all;
+	white-space: normal;
+	
+  } */
+  
+  /* .fc-content:hover::before,
+  .fc-content:hover::after {
+	opacity: 1;
+	-webkit-transition: all 0.75s ease;
+	transition: all 0.75s ease;
+	word-break: break-all;
+	white-space: normal;
+  } */
+ 
+  .fc-content:hover{
+	  overflow: visible;
+	word-break: break-all;
+	white-space: normal;
+	
+  }
+
+  

@@ -196,7 +196,7 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 10px;   
     line-height: normal;
     color : #000;
-    font-weight: bold;
+    font-weight: 600;
     min-width:80%; 
     max-width:80%;
     box-shadow: -5px 5px 5px #e4dadb;
@@ -238,7 +238,7 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 10px;   
     line-height:normal;
     color : #000;
-    font-weight: bold;
+    font-weight: 600;
     min-width:80%; 
     max-width: 80%;
     box-shadow: 5px 5px 5px  #e4e7ec;
