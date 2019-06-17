@@ -1562,9 +1562,9 @@ be a descendant of the grid when it is being dragged.
 	overflow:hidden;
   }
   
-  .fc-content::before {
+  /* .fc-content::before {
 	position: absolute;
-	top: 50px;
+	top:-24px;
 	left: -4px;
 	background-color: #fcdfdf;
 	border: 1px solid #b47800;
@@ -1575,10 +1575,10 @@ be a descendant of the grid when it is being dragged.
 	text-transform: none;
 	-webkit-transition: all 0.5s ease;
 	transition: all 0.5s ease;
-	width:auto;
+	width:220px;
 	word-break: break-all;
 	white-space: normal;	
-  }
+  } */
   
   .fc-content::after {
 	position: absolute;
@@ -1595,7 +1595,7 @@ be a descendant of the grid when it is being dragged.
 
   }
   
-  .fc-content::before,
+  /* .fc-content::before,
   .fc-content::after {
 	font-family: monospace;
 	font-size: 16px;
@@ -1605,16 +1605,16 @@ be a descendant of the grid when it is being dragged.
 	word-break: break-all;
 	white-space: normal;
 	
-  }
+  } */
   
-  .fc-content:hover::before,
+  /* .fc-content:hover::before,
   .fc-content:hover::after {
 	opacity: 1;
 	-webkit-transition: all 0.75s ease;
 	transition: all 0.75s ease;
 	word-break: break-all;
 	white-space: normal;
-  }
+  } */
  
   .fc-content:hover{
 	  overflow: visible;
