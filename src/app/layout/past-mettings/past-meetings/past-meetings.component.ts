@@ -159,7 +159,6 @@ export class PastMeetingsComponent implements OnInit {
 
     private pastmeetingApiCall(payload: { lastMeetingYear: any; lastMeetingMonth: any; calendarFl: boolean; }, month: any, year: any) {
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            debugger;
             this.setMonthAndYear(year, month);
             this.toMeetingYear = new Date().getFullYear();
             this.fromMeetingYear = year;
@@ -179,7 +178,6 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     private setMonthAndYear(year: any, month: any) {
-        debugger;
         if (month === 1) {
             this.lastMeetingYear = year - 1;
             this.lastMeetingMonth = 12;
