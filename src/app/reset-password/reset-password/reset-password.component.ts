@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild , ElementRef } from '@angular/core';
+import { Component, OnInit , ViewChild , ElementRef, AfterViewInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PasswordService } from '../../services/password.service';
@@ -10,7 +10,7 @@ import { ErrorMessageConstants , TypeOfError, SuccessMessage , StaticLabels} fro
   styleUrls: ['./reset-password.component.scss'],
   providers: [PasswordService , AlertService]
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, AfterViewInit {
   _passwordService: PasswordService;
   emailSuccessFlag: boolean;
   emailValidationFlag: boolean;
@@ -33,6 +33,11 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
     this.activateroute();
   }
+
+  ngAfterViewInit(): void {
+    this.passwordField.nativeElement.focus();
+  }
+
   private activateroute() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.token = params['token'];
