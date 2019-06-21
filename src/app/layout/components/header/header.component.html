@@ -1,8 +1,8 @@
 <button *ngIf="!guestFlag" type="button" class="hamburger is-closed" data-toggle="offcanvas" [ngClass]="{'is-open': !isClosed}"
     [ngStyle]="{'margin':isClosed &&this.router.url.toString().indexOf('meeting')>0?'5px 0px 0px 20px':'' }" (click)="hamburger_cross()">
-    <span class="hamb-top"></span>
-    <span class="hamb-middle"></span>
-    <span class="hamb-bottom"></span>
+    <span [ngClass]="{'hamb-top-color': isClosed &&this.router.url.toString().indexOf('meeting')>0}" class="hamb-top"></span>
+    <span [ngClass]="{'hamb-middle-color': isClosed &&this.router.url.toString().indexOf('meeting')>0}" class="hamb-middle"></span>
+    <span [ngClass]="{'hamb-bottom-color': isClosed &&this.router.url.toString().indexOf('meeting')>0}" class="hamb-bottom"></span>
 </button>
 <div class="overlay" [hidden]="isClosed"></div>
 <!-- Sidebar -->
