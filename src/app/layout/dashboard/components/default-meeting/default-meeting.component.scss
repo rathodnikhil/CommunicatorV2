@@ -197,6 +197,12 @@ $border-color: #e0e0e0;
     color:#fff;
 }
 
+.accordion-label:hover{
+   color: #4b6584;
+    background-color:#fff;
+    border: 1px solid #537092;
+}
+
 .accordion-child{
   transition: all 0.8s ;
   opacity: 0;
