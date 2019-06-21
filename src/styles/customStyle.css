@@ -241,17 +241,20 @@ color: red;
     color: #fff;
     background-color: #4b6584;
     border-color: #4b6584;
-    font-weight: unset;
+    font-weight: 600;
 }
 
 .btn-primary:hover{
-    color: #ffffff;
-    background-color: #f7890b;
-    border-color: #f95f3a;
-    font-weight: unset;
+    color: #4b6584;
+    background-color: #fff;
+    border-color: #4b6584;
 }
 
 .fa-3x{
     font-size: 2.5em;
+}
+
+.btn-danger{
+    font-weight:600;
 }
 

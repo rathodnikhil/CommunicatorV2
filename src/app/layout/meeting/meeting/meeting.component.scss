@@ -67,13 +67,26 @@
 /*media queries added for buttons of meeting page(added by shruti)*/
 @media (max-width: 768px) {
     #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#open-room{
-    font-size:8px;
-      width: 35px;
-      height: 35px;
+      font-size: 6px;
+      width: 30px;
+      height: 30px;
+    }
+    .subject{
+      font-size: 0.6rem;
+    h6{
+        font-size: 0.5rem;
+      }
+    }
+    .timer h4,.timer{
+      font-size: 0.85rem;
     }
     .img-fluid{
-        max-width: 80%;
+        max-width: 100%;
         height:auto;
+    }
+    .btn-url{
+      font-size: 2vw;
+      padding: 2px;
     }
     }
 
@@ -282,6 +295,7 @@
     box-shadow: 0px 0px 17px -2px #f95959;
    color:#f95959;
    background-color: #fff;
+   border: 1px solid #f95959;
  }
 
  .btn-danger-end-meeting{
@@ -295,18 +309,18 @@
  }
 
  .btn-danger-end-meeting:hover{
-   border: 1px solid #af0919;
+   border: 1px solid #dc3545;
   background-color: #fff;
-  color:#af0919;
+  color:#dc3545;
   box-shadow: 0px 0px 17px -2px #af0919;
 }
 
- .btn-exit:hover{
-  border: 1px solid #af0919;
-  background-color: #fff;
-  color:#af0919;
-  box-shadow: 0px 0px 17px -2px #af0919;
- }
+//  .btn-exit:hover{
+//   border: 1px solid #af0919;
+//   background-color: #fff;
+//   color:#af0919;
+//   box-shadow: 0px 0px 17px -2px #af0919;
+//  }
 
  .rec-stop:hover{
   color:#fff;
@@ -342,7 +356,6 @@
     color: #fff;
   }
   .btn-share-on:hover{
-    border: 1px solid #1fad9f;
     //background: linear-gradient(to bottom right, #4b6584 0%, #92a7bf 100%);
     background-color:#fff;
     color: #1fad9f;
@@ -370,18 +383,18 @@
 {
     box-shadow: 0 0 1px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.3) inset;
     cursor: pointer;
-    font: bold 13px Arial,Helvetica;
+    font: 600 13px Arial,Helvetica;
     cursor:pointer;
-    border: 1px solid #2d4b70;
+    border: 1px solid #4b6584;
     color: #FFF;
     background-color: #4b6584;
     padding: .375rem .75rem;
 }
 .generate-mom-btn:hover
 {
-    color: #ffffff;
-  background-color: #f7890b;
-  border-color: #f95f3a;
+  background-color:#fff;
+  color: #4b6584;
+  border-color: #4b6584;
 }
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
     color: #000;
@@ -495,14 +508,10 @@
   @media(max-width:768px)
   {
     .sidebar-contact{
-      width:100%;
       height:100%;
-      left:-100%;
     }
-    .sidebar-contact .toggle{
-      top:50%;
-      transform:translateY(-50%);
-      transition:0.5s;
+    .sidebar-contact.active{
+      width:100%;
     }
     .sidebar-contact.active .toggle
     {

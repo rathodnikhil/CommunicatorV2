@@ -5,18 +5,18 @@
                 <div class="card-header"
                     style="margin-bottom: -2px;box-shadow: -5px 5px 5px #e4dadb;height: calc(100vh*0.08);">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-5">
                             <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image"
                                 [ngStyle]="{'margin-left': !isGuest ? '13%' : '0' }" />
                         </div>
-                        <div class="col-md-7 subject">
+                        <div class="col-md-7 col-4 subject">
                             <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;line-height: 1;">
                                 <b>{{meetingDetails.subject}}</b>
                             </h6>
                             <label (click)="copyMeetingId();" class="meeting-id-color" data-toggle="tooltip" title="Click to copy Meeting code">[ Meeting Id:
                                 {{meetingDetails.meetingCode}} ]</label>
                         </div>
-                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2 timer">
+                        <div *ngIf="meetingDetails.subject!=undefined" class="col-md-2 col-3 timer">
                             <h4>
                                 <i class="fa fa-clock-o"></i>&nbsp;
                                 {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
@@ -77,7 +77,7 @@
                                 placement="top" (click)='startMeeting();'>
                                 <i class="fa fa-2x fa-play" aria-hidden="true"></i>
                             </button>
-                            <button id="btn-start-recording" class="btn-danger-end-meeting btn-exit "
+                            <button id="btn-start-recording" class="btn-danger-end-meeting"
                                 (click)="startRecordingTimer();" alt="Start Recording" style="display: none;">
                                 <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip"
                                     aria-hidden="true" id="rec_start"></i>
@@ -129,7 +129,7 @@
 
                 <div class="card">
                     <div class="card-header col-md-12 meeting-activity-header">
-                        <div class="col-md-11" style="float: left;transform: translateY(20%);">
+                        <div style="float: left;transform: translateY(20%);">
                             <h5 *ngIf="meetingDetails.createdBy!=undefined" style="overflow-wrap: break-word;">Host:
                                     {{meetingDetails.createdBy.firstName}}&nbsp;{{meetingDetails.createdBy.lastName}}
                             </h5>

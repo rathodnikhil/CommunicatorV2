@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // script.
         s.onload = function () { __this.afterScriptAdded(); };
         this.elementRef.nativeElement.appendChild(s);
+        this.usernameField.nativeElement.focus();
     }
     afterScriptAdded() {
         // this.document.getElementById('room-id').value = this.meetingCode === undefined ? 'Enter Meeting Id' : this.meetingCode;
@@ -90,6 +91,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.UserNameText = this.isGuest ? 'Full Name' : 'UserName';
         this.userName = '';
         this.password = '';
+        setTimeout(() => this.usernameField.nativeElement.focus());
     }
     login() {
         if (this.forgetPasswordFlag === true) {
@@ -217,7 +219,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     private loggedInUserApiCall(payload: { firstName: String; isGuest: boolean; userCode: string; email: string; meetingCode: any; }) {
         this._userService.setLoggedInUserObj(payload).subscribe(res => {
-            if (typeof (this.previousResponseValue) !== typeof (res)) {
+            if (typeof (this.previousResponseValue) !== typeof (res) || this.previousResponseValue === 'invalid') {
                 if (res === 'invalid' && !this.isMeetingCodeInValid) {
                     this.previousResponseValue = res;
                     return this.meetingCodeValidation();
@@ -263,6 +265,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
         this.clearInputBoxes();
+        setTimeout(() => this.forgotEmailField.nativeElement.focus());
     }
     backToLogin() {
         this.forgetPasswordFlag = false;
@@ -270,6 +273,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.isGuest = false;
         this.clearInputBoxes();
         this.changePlaceHolderText();
+        setTimeout(() => this.usernameField.nativeElement.focus());
     }
     onKey(event) {
         this.isMeetingCodeInValid = false;

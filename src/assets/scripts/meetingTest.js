@@ -19,7 +19,7 @@ var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
 var isFireFox = ua.indexOf("firefox") > -1;
 document.getElementById('share-screen').onclick = function () {
     if(isShareScreen){
-        alertService.warning("Screen sharing already in progress. Kindly stop current screen share and try again.");
+        alertService.warning("Screen sharing already in progress. Kindly stop current shared screen and try again.");
         return false;
     }
     try {
@@ -510,8 +510,8 @@ connection.onstream = function (event) {
         if (screenshareCheck != event.stream.id && event.type !== 'local') {
             screenshareCheck = event.stream.id;
             var screenShareContainer = document.getElementById('shareScreen-container');
-            heading.setAttribute("style", 'background-color:#2199e8;padding:1.3%;text-align: center; font-weight: bold; color:#ffffff;border-top:1px solid #4b6584;border-right:1px solid #4b6584;border-left:1px solid #4b6584;');
-            video.setAttribute("style", "background: #f6f6f6;float:left;width:100%;border: 1px solid #4b6584;");
+            heading.setAttribute("style", 'background-color:#AF2127;padding:1.3%;text-align: center; font-weight: bold; color:#ffffff;border-top:1px solid #AF2127;border-right:1px solid #AF2127;border-left:1px solid #AF2127;');
+            video.setAttribute("style", "background: #f6f6f6;float:left;width:100%;border: 1px solid #AF2127;");
             customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px; position: relative;color:#4b6584;");
             outerCustomDiv.setAttribute("style","margin-bottom:15px;");
             screenShareContainer.appendChild(outerCustomDiv);
@@ -796,8 +796,8 @@ connection.onfailed = function(event) {
 // };
 document.getElementById("copyGuestMeetingLink").onclick = function () {
     var roomQueryStringURL = window.location.origin + '/#/login/GuestUserWithMeeting?meetingCode=' + roomid;
-    copyToClipBoard(roomQueryStringURL, 'Meeting link for guest has been copied. Kindly share via your preferred email id.',
-        'Copy Guest Meeting Link')
+    copyToClipBoard(roomQueryStringURL, 'Meeting link for guest user has been copied. Kindly share via your preferred email id.',
+        'Copy Guest User Meeting Link')
 };
 // document.getElementById("copyMeetingId").onclick = function () {
 //     copyToClipBoard(roomid, 'Meeting id has been copied. Kindly share via your preferred email id.',
