@@ -240,14 +240,14 @@ color: red;
 .btn-primary{
     color: #fff;
     background-color: #4b6584;
-    border-color: #4b6584;
+    border: 2px solid #4b6584;
     font-weight: 600;
 }
 
 .btn-primary:hover{
-    color: #4b6584;
+    color: #416590;
+    border: 2px solid #4b6584;
     background-color: #fff;
-    border-color: #4b6584;
 }
 
 .fa-3x{
