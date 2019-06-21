@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MeetingComponent } from './meeting/meeting.component';
-
 const routes: Routes = [
     {
         path: '',
