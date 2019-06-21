@@ -95,6 +95,12 @@ height:auto;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   }
+  .download-rec-steps a{
+    display:none;
+  } 
+  .plugin-install a{
+    display:none;
+  } 
   }
 
 
@@ -144,6 +150,7 @@ height:auto;
     float:left;
     height:100%; 
     }
+    
   }
 
 @media screen and (min-width: 1200px) and (max-height:1024px){
