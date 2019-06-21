@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
@@ -18,8 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiRequestService } from './services/api-request.service';
 import { GroupService } from './services/group.service';
 import { ChatService } from './services/chat.service';
-import { AlertService } from './services/alert.service';
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -35,6 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
         HttpModule,
         FormsModule,
         HttpClientModule,
+        NgxDropzoneModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
