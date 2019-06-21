@@ -159,14 +159,14 @@ export class PastMeetingsComponent implements OnInit {
 
     private pastmeetingApiCall(payload: { lastMeetingYear: any; lastMeetingMonth: any; calendarFl: boolean; }, month: any, year: any) {
         this._meetingService.getPastMeetingsByMonth(payload).subscribe(data => {
-            debugger;
             this.setMonthAndYear(year, month);
             this.toMeetingYear = new Date().getFullYear();
             this.fromMeetingYear = year;
             this.currentMonth = this.monthNames[new Date().getMonth()];
             this.pastMeetingMonth = this.monthNames[month - 1];
             if (data[0].errorFl || data[0].warningFl) {
-                this.alertService.warning(data[0].message, TypeOfError.Warning);
+                this.alertService.warning(data[0].message + ' for ' + this.pastMeetingMonth + ' ' 
+                + this.fromMeetingYear, TypeOfError.Warning);
             } else {
                 this.pastMeetingList = this.pastMeetingList.concat(data);
             }
@@ -179,7 +179,6 @@ export class PastMeetingsComponent implements OnInit {
     }
 
     private setMonthAndYear(year: any, month: any) {
-        debugger;
         if (month === 1) {
             this.lastMeetingYear = year - 1;
             this.lastMeetingMonth = 12;

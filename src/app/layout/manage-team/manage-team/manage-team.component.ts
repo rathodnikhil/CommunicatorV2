@@ -680,7 +680,7 @@ export class ManageTeamComponent implements OnInit {
                 break;
             case 'addNewMember':
                 this.clearMemPopupField();
-                this.addNewMemberModal.close();
+                // this.addNewMemberModal.close();
                 break;
         }
     }
