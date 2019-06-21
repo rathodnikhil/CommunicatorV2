@@ -17,6 +17,7 @@ var edge = ua.indexOf("edge") > -1;
 console.log('edge : ' + edge);
 var safari = (ua.indexOf("safari") > -1) && (ua.indexOf("chrome") === -1);
 var isFireFox = ua.indexOf("firefox") > -1;
+const mq = window.matchMedia( "(max-width: 768px)" );
 document.getElementById('share-screen').onclick = function () {
     if(isShareScreen){
         alertService.warning("Screen sharing already in progress. Kindly stop current shared screen and try again.");
@@ -455,7 +456,7 @@ connection.onstream = function (event) {
     }
     video.srcObject = event.stream;
     var outerCustomDiv = document.createElement('div');
-    outerCustomDiv.setAttribute("class", "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-4");
+    outerCustomDiv.setAttribute("class", "col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6");
     var customDiv = document.createElement('div');
     var heading = document.createElement('div');
     var attendeeFullName = event.extra;
@@ -470,6 +471,22 @@ connection.onstream = function (event) {
     }
     heading.innerHTML = '<span>' + (event.type === 'local' ? 'You' : firstNameUpperCase) + '</span><i id="' + (event.streamid + 'muteIcon') + '" class="fa fa-microphone-slash fa-lg pull-right" style="display:none;"></i>';
     viewerNameString = '<p>' + firstNameUpperCase + '</p>';
+
+    if(mq.matches){
+    if (event.type === 'local') {
+        customDiv.setAttribute("style", "  background-color: #ffeeed; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
+        heading.setAttribute("style", " background-color:#AF2127;text-align: center;height: 2.5vh;  font-weight: bold; color:#ffffff;font-size:2.5vw;");
+    } else {
+        customDiv.setAttribute("style", "background-color: #edf3fb; margin-bottom: 15px;height:19vh; position: relative; border: 1px solid #4b6584; color:#4b6584;");
+        if (event.stream.isVideo == 0) {
+            heading.setAttribute("style", "background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;font-size: 2.5vw;");
+        } else {
+            heading.setAttribute("style", 'background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;font-size: 2.5vw;');
+        }
+    }
+}
+
+else{
     if (event.type === 'local') {
         customDiv.setAttribute("style", "  background-color: #ffeeed; margin-bottom: 15px; height:19vh; position: relative; border: 1px solid #AF2127; color:#AF2127;");
         heading.setAttribute("style", " background-color:#AF2127;text-align: center;height: 2.5vh;  font-weight: bold; color:#ffffff;font-size: 0.7vw;");
@@ -481,6 +498,7 @@ connection.onstream = function (event) {
             heading.setAttribute("style", 'background-color:#4b6584;height: 2.5vh;text-align: center;  font-weight: bold; color:#ffffff;font-size: 0.7vw;');
         }
     }
+}
     customDiv.appendChild(heading);
     if (event.stream.isVideo == 0) {
         video.setAttribute("style", "display:none;");
@@ -493,11 +511,20 @@ connection.onstream = function (event) {
         }
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
+        if(mq.matches){
+            if (initialsDiv.innerHTML === "You") {
+                initialsDiv.setAttribute("style", "  text-align: center;font-size:15px;font-weight: 600; position: absolute;left: 0;right: 0; top: 40%; ");
+            } else {
+                initialsDiv.setAttribute("style", " text-align: center;font-size:15px;font-weight: 600; position: absolute;left: 0;right: 0; top: 40%; ");
+            }
+        }
+        else{
         if (initialsDiv.innerHTML === "You") {
             initialsDiv.setAttribute("style", "  text-align: center;font-size:2.5vw;font-weight: 600; position: absolute;left: 0;right: 0; top: 30%; ");
         } else {
             initialsDiv.setAttribute("style", " text-align: center;font-size:2.5vw;font-weight: 600; position: absolute;left: 0;right: 0; top: 30%; ");
         }
+    }
         customDiv.appendChild(initialsDiv);
     }
 
