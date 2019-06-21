@@ -7,6 +7,7 @@ import { CustomModalComponent, CustomModalModel } from '../custom-modal/custom-m
 import { SpinnerComponent } from 'app/shared/modules/common-components/spinner/spinner.component';
 import { ErrorMessageConstants, TypeOfError , SuccessMessage , StaticLabels} from '../../../../shared/errorMessageConstants';
 import { Utils } from '../../../../shared/utilis';
+import { Time } from '@angular/common';
 @Component({
     selector: 'app-default-meeting',
     templateUrl: './default-meeting.component.html',
@@ -442,6 +443,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     closePopup(popType) {
         switch (popType) {
             case 'meetNow':
+                this.activeToday = false;
+                this.activeAll = true ;
+                this.activeTomorrow = false;
+                this.selectedCriteria = 'All';
                 this.meetNowModal.close();
                 break;
             case 'cancel':

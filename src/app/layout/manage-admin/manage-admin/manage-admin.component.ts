@@ -49,6 +49,7 @@ selectedIndex: any;
 selectedDefaultTeam: any;
 deleteMemberFlag = 1;
 profileImgPath: any;
+statusVal: any;
   constructor(userService: UserService, public alertService: AlertService , teamService: TeamService) {
     this._userService = userService;
     this._teamService = teamService;
@@ -138,26 +139,26 @@ deleteAdminNow() {
     }
 
     private selectedAdminObj(obj , editDeletelag , flag) {
-        const statusVal = this.setAdminStatusValue(flag, editDeletelag, obj);
+        this.statusVal = this.setAdminStatusValue(flag, editDeletelag, obj);
         return {
             firstName: obj.firstName, lastName: obj.lastName, email: obj.email,
              meetingPermissionStatus: { status: obj.meetingPermissionStatus.status }, name: obj.name, userCode: obj.userCode,
-             status: { status: statusVal }, team: { teamName: obj.team.teamName }
+             status: { status: this.statusVal }, team: { teamName: obj.team.teamName, status: { status: this.statusVal } }
             };
     }
 
     private setAdminStatusValue(flag: any, editDeletelag: any, obj: any) {
-        let statusVal;
+        // let statusVal;
         if (flag === 1 || (editDeletelag === 2 && flag === 2)) {
-            statusVal = StaticLabels.InActive;
+            this.statusVal = StaticLabels.InActive;
             this.deleteMemberFlag = 1;
         } else if (editDeletelag === 1) {
-            statusVal = obj.status.status;
+            this.statusVal = obj.status.status;
         }
-        return statusVal;
+        return this.statusVal;
     }
 
-editAdmin(user) {
+editAdmin(user) {  
     if (user.team.status.status === 'CANCEL') {
         return this.alertService.warning('Admin ' + user.firstName + ' ' + user.lastName +
         '  is already deleted', TypeOfError.Warning);

@@ -165,7 +165,8 @@ export class PastMeetingsComponent implements OnInit {
             this.currentMonth = this.monthNames[new Date().getMonth()];
             this.pastMeetingMonth = this.monthNames[month - 1];
             if (data[0].errorFl || data[0].warningFl) {
-                this.alertService.warning(data[0].message, TypeOfError.Warning);
+                this.alertService.warning(data[0].message + ' for ' + this.pastMeetingMonth + ' ' 
+                + this.fromMeetingYear, TypeOfError.Warning);
             } else {
                 this.pastMeetingList = this.pastMeetingList.concat(data);
             }

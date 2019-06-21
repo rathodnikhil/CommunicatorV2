@@ -10,6 +10,12 @@
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #cad6fd 12.5%, #cad7fd 25%, #AF2127 25%, #AF2127 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
 
+.logo-background{
+  text-align: center;
+  box-shadow: 5px 5px 5px #e4dadb;
+  padding: 5px;
+}
+
 .logo-img{
   text-align: center; 
   margin: 10px;  
@@ -17,10 +23,12 @@
 
 .content{
   padding: 10px; 
-  margin: 40px; 
+  margin: 80px 40px 10px 40px; 
   border: 1px solid #c0c0c0; 
   background-color: #fff7f7; 
   text-align: center;
+  word-break: break-all;
+	white-space: normal;
 }
 
 .content-font{

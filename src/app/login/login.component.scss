@@ -456,6 +456,14 @@ font-size: 15px;
 background-color: #4b6584;
 border: 1px solid #537092;
 color:#fff;
+font-weight:600;
+}
+
+.log-in:hover
+{
+color: #4b6584;
+border: 1px solid #537092;
+background-color:#fff;
 }
 .forgot{
 margin:7px 10px 0px 20px;
@@ -548,3 +556,9 @@ width:100%;
 //     font-weight: bold;
 //     right: 2%;
 // }
+.abc input:focus{
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}

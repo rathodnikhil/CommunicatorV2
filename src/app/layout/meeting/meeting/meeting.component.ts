@@ -190,10 +190,6 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         }
     }
 
-    toggleMOM() {
-        this.isMOMvisible = !this.isMOMvisible;
-    }
-
     // save mom details
     saveMom() {
             if (!this.isHost) {
@@ -375,7 +371,7 @@ export class MeetingComponent implements OnInit, AfterViewInit {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        return this.alertService.success(SuccessMessage.copyMeetingDetails, SuccessMessage.SuccessHeader);
+        return this.alertService.success(SuccessMessage.copyMeetingIDDetails, SuccessMessage.SuccessHeader);
     }
     switchTabAndToggle() {
         if (!this.toggleMeeting) {
