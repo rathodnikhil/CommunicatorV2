@@ -28,18 +28,28 @@
                 </div>
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-12" style="height:80vh;">
-                            <div id="chat-container" class="chat-output" style="height: calc(100vh*0.70)">
+                        <div class="col-md-6" style="height:80vh;" [ngClass]="{'col-md-12':!isCallInProcess}">
+                            <div class="chat-output" style="height: calc(100vh*0.70)">
+                                <div *ngFor="let chatMessage of chattingHistoryList">
+                                    <div class="chat-background-attendee" *ngIf="chatMessage.userId.userCode==loggedInUser.userCode">
+                                        <p>{{chatMessage.chatmsg}}</p><span class="time-right">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}} <i class="fa fa-user"></i>&nbsp; You</span>
+                                    </div>
+                                    <div class="chat-background-invitee-attendee" *ngIf="chatMessage.userId.userCode!=loggedInUser.userCode">
+                                        <p>{{chatMessage.chatmsg}}</p><span class="time-left">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}} <i class="fa fa-user"></i>&nbsp; {{chatMessage.userId.firstName+' '+chatMessage.userId.lastName}}</span>
+                                    </div>
+                                </div>
+                                
+                                <div id="chat-container"></div>
                             </div>
         
                             <div class="row">
                                 <textarea placeholder="Type Message Here.." id="input-text-chat"
-                                    style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;"></textarea>
+                                    style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;" [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea>
                                 <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat"
-                                    style="margin-left: 10px;"></i>
+                                    style="margin-left: 10px;" (click)="sendMessage()"></i>
                             </div>
                         </div>
-                        <div class="col-md-6" style="display:none;">
+                        <div class="col-md-6" [ngStyle]="{'display':isCallInProcess?'block':'none'}">
                             <div class="attendee-row" style="padding-right: 80px;">
                                 <h4></h4>
                                 <div class="demo-one" style="overflow-y:auto;">
@@ -72,7 +82,7 @@
                             placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}">
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
-                        <button id="open-room" class="btn-sec" alt="Start Meeting"
+                        <button id="open-room" class="btn-sec" alt="Start Meeting" (click)="isCallInProcess=!isCallInProcess"
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" title="Call">
                             <i class="fa fa-2x fa-phone"></i>
                         </button>

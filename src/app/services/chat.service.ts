@@ -15,20 +15,17 @@ export class ChatService {
     constructor(private apiRequest: ApiRequestService) { }
 
     // save individual chatting
-    saveChat(payload): Observable<any> {
+    saveChat(payload) {
+        debugger;
         const url = environment.baseUrl + 'saveChat';
-        const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
-        this.apiRequest.post(url, payload).subscribe(data => {
-            resp.next(data);
-        });
-        return resp;
+        // const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
+        return this.apiRequest.post(url, payload);
+        // return resp;
     }
 
     getChattingHistoryList(payload) {
         const url = environment.baseUrl + 'getChatHistoryBySelecteduser';
-        this.apiRequest.post(url, payload).subscribe(data => {
-            this.chattingHistoryList$.next(data);
-        });
+        return this.apiRequest.post(url, payload);
     }
     setChattingHistoryList() {
         return this.chattingHistoryList$;
