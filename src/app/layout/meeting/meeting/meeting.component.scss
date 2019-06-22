@@ -72,9 +72,9 @@
       height: 30px;
     }
     .subject{
-      font-size: 0.6rem;
+      font-size: 0.4rem;
     h6{
-        font-size: 0.5rem;
+        font-size: 0.4rem;
       }
     }
     .timer h4,.timer{
@@ -613,4 +613,14 @@
     float: right;
     font-weight: bolder; 
     color: rgb(13, 75, 36)
+  }
+  .exit-meeting{
+    background-color: #AF2127;
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    left: 0px;
+  }
+  .exit-meeting i:hover{
+   display:none;
   }
