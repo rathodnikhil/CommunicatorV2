@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ApiRequestService } from './services/api-request.service';
 import { GroupService } from './services/group.service';
 import { ChatService } from './services/chat.service';
-import { NgxDropzoneModule } from 'ngx-dropzone';
+// import { NgxDropzoneModule } from 'ngx-dropzone';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
     // for development
@@ -33,7 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
         HttpModule,
         FormsModule,
         HttpClientModule,
-        NgxDropzoneModule,
+        // NgxDropzoneModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
