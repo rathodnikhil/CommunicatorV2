@@ -33,6 +33,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     momTxt: any;
     muteBtnTitle = StaticLabels.Mute;
     videoBtnTitle = StaticLabels.VideoOn;
+    isCallInProcess = false;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
@@ -58,7 +59,12 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     private getLoggedInUserSuccessAction(data: any) {
         this.loggedInUser = data;
         this.chattingHistoryList = [];
-        this.setChattingHistoryApiCall();
+        const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
+        this._chatService.getChattingHistoryList(payload).subscribe(chatList => {
+            if (!chatList[0].errorFl || chatList[0].warningFl) {
+                this.chattingHistoryList = chatList;
+            }
+        });
         this.broadcastMsgList = [];
         this.broadcastmsgByloggedInUserApiCall();
     }
@@ -78,20 +84,20 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private setChattingHistoryApiCall() {
-        this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
-            if (chatHistoryData.length > 0) {
-                if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
-                    this.chattingHistoryList = [];
-                    return this.alertService.warning(chatHistoryData[0].message, TypeOfError.Warning);
-                }  else {
-                    this.chattingHistoryList = chatHistoryData;
-                }
-            } else {
-                this.chattingHistoryList = [];
-            }
-        });
-    }
+    // private setChattingHistoryApiCall() {
+    //     this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
+    //         if (chatHistoryData.length > 0) {
+    //             if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
+    //                 this.chattingHistoryList = [];
+    //                 return this.alertService.warning(chatHistoryData[0].message, TypeOfError.Warning);
+    //             }  else {
+    //                 this.chattingHistoryList = chatHistoryData;
+    //             }
+    //         } else {
+    //             this.chattingHistoryList = [];
+    //         }
+    //     });
+    // }
 
     private getSelecteduserApiCall() {
         this._userService.getSelectedUser().subscribe(res => {
@@ -137,13 +143,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             this.alertService.warning('Enter Message', TypeOfError.Warning);
         } else {
             this._chatService.saveChat(payload).subscribe(data => {
-                if (data[0].errorFl === true || data[0].warningFl === true) {
+                if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, TypeOfError.Warning);
                 }
             });
         }
     }
-    onKey(chatMessage) {
+    onKey(event) {
         this.sendMessage();
     }
     onFinished() {

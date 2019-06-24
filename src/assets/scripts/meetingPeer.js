@@ -71,7 +71,7 @@ connection.sdpConstraints.mandatory = {
 };
 var screenshareCheck = {};
 
-connection.onMediaError = function (event) {
+connection.onMediaError = function (event) {    
     alertService.error(event.message, "Device error!");
 }
 
@@ -81,10 +81,10 @@ connection.connectSocket(function (socket) {
             alertService.info('1 new message by ' + message.sender);
             localStorage.setItem('P2PChatInitiated','Peer2PeerMeet_' + message.sender)
             //TODO
-            // if(window.location.href.indexOf('chat')==-1&&window.location.href.indexOf('meeting')==-1){
-            //     document.getElementById(message.sender).click();
-            //     document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
-            // }                     
+            if (window.location.href.indexOf('chat') == -1 && window.location.href.indexOf('meeting') == -1) {
+                document.getElementById(message.sender).click();
+                document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
+            }                     
         }
     });
 });

@@ -1,9 +1,12 @@
+var InitiatedChatRoomId = localStorage.getItem('P2PChatInitiated');
+if (InitiatedChatRoomId == null) {
+    connection.socket.emit(connection.socketCustomEvent, {
+        sender: localStorage.getItem('loggedInuserName'),
+        receiver: localStorage.getItem('selectedUser'),
+        customMessage: 'initiatedChat'
+    });
+}
 
-connection.socket.emit(connection.socketCustomEvent, {
-    sender: localStorage.getItem('loggedInuserName'),
-    receiver: localStorage.getItem('selectedUser'),
-    customMessage: 'initiatedChat'
-});
 
 // ......................................................
 // ................FileSharing/TextChat Code.............
@@ -47,9 +50,11 @@ document.getElementById('open-room').onclick = function () {
         return false;
     }
     disableInputButtons();
-    connection.openOrJoin(document.getElementById('room-id').value, function () {
-        showRoomURL(connection.sessionid);
-        document.getElementById('meeting-error').display = none;
+    connection.openOrJoin(document.getElementById('room-id').value, function (isRoomExists, roomid) {
+        if (!isRoomExists) {
+            showRoomURL(roomid);
+        }
+        document.getElementById('meeting-error').display = 'none';
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;
         document.getElementById('btn-leave-room').disabled = false;
@@ -72,7 +77,7 @@ document.getElementById('open-or-join-room').onclick = function () {
 
 document.getElementById('btn-end-meeting').onclick = function () {
     connection.closeEntireSession(function () {
-       alertService.error('Entire session has been closed.');
+        alertService.error('Entire session has been closed.');
     });
 }
 
@@ -92,8 +97,8 @@ document.getElementById('disable-video').onclick = function () {
     }, 6000);
     var videoValue = this.value == "true";
     if (connection.streamEvents.selectFirst({
-            local: true
-        }) != undefined) {
+        local: true
+    }) != undefined) {
         connection.streamEvents.selectFirst({
             local: true
         }).stream.stop();
@@ -211,6 +216,7 @@ function appendDIV(event) {
 
     document.getElementById('input-text-chat').focus();
 }
+connection.videosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
     event.mediaElement.removeAttribute('src');
     event.mediaElement.removeAttribute('srcObject');
@@ -392,4 +398,120 @@ function disableInputButtons() {
     document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = true;
     document.getElementById('room-id').disabled = true;
+}
+
+function onDetectRTCLoaded() {
+    var videoValue = DetectRTC.hasWebcam;
+    if (!videoValue) {
+        alertService.warning('Switching to audio mode.', 'Web Cam not detected');
+        document.getElementById('disable-video').style.visibility = 'hidden';
+        //document.getElementById('disable-video').style.display = 'none';
+    }
+    videoValue = false;
+    connection.session = {
+        audio: true,
+        video: videoValue,
+        data: true
+    };
+
+    connection.mediaConstraints = {
+        audio: true,
+        video: videoValue
+    };
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: true
+    };
+}
+
+function reloadDetectRTC(callback) {
+    DetectRTC.load(function () {
+        onDetectRTCLoaded();
+
+        if (callback && typeof callback == 'function') {
+            callback();
+        }
+    });
+}
+
+DetectRTC.load(function () {
+    reloadDetectRTC();
+
+    try {
+        if (DetectRTC.MediaDevices[0] && DetectRTC.MediaDevices[0].isCustomLabel) {
+            navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: true
+            }).then(function (stream) {
+                var video;
+                try {
+                    video = document.createElement('video');
+                    video.muted = true;
+                    video.volume = 0;
+                    video.src = URL.createObjectURL(stream);
+                    video.style.display = 'none';
+                    video.style.opacity = 0;
+                    (document.body || document.documentElement).appendChild(video);
+                } catch (e) { }
+
+                reloadDetectRTC(function () {
+                    // release camera
+                    stream.getTracks().forEach(function (track) {
+                        track.stop();
+                    });
+
+                    if (video && video.parentNode) {
+                        video.parentNode.removeChild(video);
+                    }
+                });
+            }).catch(reloadDetectRTC);
+            return;
+        }
+    } catch (e) { }
+
+    onDetectRTCLoaded();
+});
+
+var roomid = document.getElementById('room-id').value;
+if (InitiatedChatRoomId != null && ifMeetingWasInitiated.indexOf(localStorage.getItem('selectedUser')) >= 0) {
+    roomid = localStorage.getItem('P2PChatInitiated');    
+} else {
+    roomid = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
+}
+
+if (roomid && roomid.length) {
+    document.getElementById('room-id').value = roomid;
+    localStorage.setItem(connection.socketMessageEvent, roomid);
+    (function reCheckRoomPresence() {
+        document.getElementById('meeting-error').innerText = '';
+        disableInputButtons();
+        // document.getElementById('open-room').disabled = false;
+        // document.getElementById('open-room').click();
+        // isHost = document.getElementById('isHost').innerText === "true";
+        // if (isHost) {
+        //     document.getElementById('open-room').disabled = false;
+        //     document.getElementById('open-room').click();
+        //     // /document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
+        //   //  document.getElementById('btn-leave-room').disabled = false;
+        //     return;
+        // } else if (!isHost) {
+        //     // document.getElementById('btn-leave-room').disabled = true;
+        // }
+        if (roomid == 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName')) {
+            document.getElementById('open-room').disabled = false;
+            document.getElementById('open-room').click();
+        }
+        connection.checkPresence(roomid, function (isRoomExists) {
+            if (isRoomExists) {
+                document.getElementById('meeting-error').innerText = '';
+                connection.join(roomid);
+                document.getElementById('btn-save-mom').disabled = false;
+                document.getElementById('input-text-chat').disabled = false;
+                showRoomURL(roomid);
+                return;
+            }
+            document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
+            setTimeout(reCheckRoomPresence, 5000);
+        });
+    })();
 }
