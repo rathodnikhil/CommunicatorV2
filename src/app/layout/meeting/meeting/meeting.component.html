@@ -217,7 +217,7 @@
                     [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files">
                     <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i>
                 </a>
-                <a title="Exit Meeting" (click)="exitMeeting();"><img src="/assets/images/exit-meeting.png"></a>
+                <a title="Exit Meeting" (click)="exitMeeting();" class="exit-meeting" style="padding:10px;"><i class="fa fa-sign-out" aria-hidden="true" style="color:#fff;"></i> Exit</a>
             </div>
         </div>
     </div>

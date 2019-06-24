@@ -110,7 +110,7 @@ export class SuccessMessage {
 // Meeting Component
         public static DownloadMom = 'File has downloaded.';
         public static EndMeeting = 'Meeting has ended.';
-        public static copyMeetingIDDetails = 'Meeting Id has copied successfully';
+        public static copyMeetingIDDetails = 'Meeting Id copied successfully';
 
 // Setting Component
         public static UserSetting = 'User settings has updated successfully';
