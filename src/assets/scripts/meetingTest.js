@@ -317,8 +317,15 @@ function appendDIV(event) {
     }
     
     if (firstNameUpperCase === 'You') {
+        if(mq.matches){
+        div.className = 'chat-background-attendee';
+        div.setAttribute("style"," margin: 10px 10px 10px 30px;");
+        html += '<span class="time-right">';
+        }
+        else{
         div.className = 'chat-background-attendee';
         html += '<span class="time-right">';
+        }
     } else {
         div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
@@ -411,8 +418,8 @@ connection.session = {
     data: true
 };
 connection.bandwidth = {
-    audio: 50,  // 50 kbps    audio bitrates. Minimum 6 kbps and maximum 510 kbps
-    video: 256, // 256 kbps   video framerates. Minimum 100 kbps; maximum 2000 kbps
+    audio: 25,  // 50 kbps    audio bitrates. Minimum 6 kbps and maximum 510 kbps
+    video: 128, // 256 kbps   video framerates. Minimum 100 kbps; maximum 2000 kbps
     screen: 300 // 300 kbps  screen framerates. Minimum 300 kbps; maximum 4000 kbps
 };
 connection.sdpConstraints.mandatory = {
