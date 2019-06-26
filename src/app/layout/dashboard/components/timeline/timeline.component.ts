@@ -1,10 +1,11 @@
-import { Component, OnInit, Inject, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, AfterViewInit, ViewChild, } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { DOCUMENT } from '@angular/common';
 import { TypeOfError , StaticLabels } from '../../../../shared/errorMessageConstants';
+import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-timeline',
     templateUrl: './timeline.component.html',
@@ -20,7 +21,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     _chatService: ChatService;
     enterMsgFlag: boolean;
     chattingHistoryList = [];
-    chattingHistoryObj: any;
+   // chattingHistoryObj: any;
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
@@ -34,14 +35,29 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     muteBtnTitle = StaticLabels.Mute;
     videoBtnTitle = StaticLabels.VideoOn;
     isCallInProcess = false;
+    hour = 0;
+    minute = 0;
+    second = 0;
+    tick = 0;
+    actualMeetingTime: any;
     constructor(@Inject(DOCUMENT) private document, private elementRef: ElementRef,
         userService: UserService, private router: Router, chatService: ChatService, public alertService: AlertService) {
         this._userService = userService;
         this._chatService = chatService;
     }
-
+    @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
+    leaveMeeting: CustomModalModel = {
+        titleIcon: '<i class="fas fa-sign-out-alt"></i>',
+        title: 'Exit Meeting',
+        smallHeading: 'You can exit meeting here',
+        body: '',
+        Button1Content: '',
+        Button2Content: ''
+    };
     ngOnInit() {
+        debugger;
         this.selectedUser = {};
+        this.chattingHistoryList = [];
         this.getSelecteduserApiCall();
         this.setLoggedInUserApiCall();
     }
@@ -83,22 +99,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             }
         });
     }
-
-    // private setChattingHistoryApiCall() {
-    //     this._chatService.setChattingHistoryList().subscribe(chatHistoryData => {
-    //         if (chatHistoryData.length > 0) {
-    //             if (chatHistoryData[0].errorFl || chatHistoryData[0].warningFl) {
-    //                 this.chattingHistoryList = [];
-    //                 return this.alertService.warning(chatHistoryData[0].message, TypeOfError.Warning);
-    //             }  else {
-    //                 this.chattingHistoryList = chatHistoryData;
-    //             }
-    //         } else {
-    //             this.chattingHistoryList = [];
-    //         }
-    //     });
-    // }
-
     private getSelecteduserApiCall() {
         this._userService.getSelectedUser().subscribe(res => {
             if (res == null || res === undefined || res.length || res.length === 0) {
@@ -161,9 +161,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             window.location.reload();
         }, 180000);
     }
-    onNotify() {
-        this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
-    }
+    // onNotify() {
+    //     this.alertService.warning('Meeting will end in 5 mins and you will be redirected to login page.', 'Meeting about to end!');
+    // }
     switchTab(tab) {
         this.currentTab = tab;
         this.toggleMeeting = true;
@@ -181,6 +181,72 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.isVideoEnabled = !this.isVideoEnabled;
     }
     exitMeeting() {
+        this.exitMeetingConfirmModal.open();
+    }
+    completeExit() {
+        this.exitMeetingConfirmModal.close();
+        this.isCallInProcess = false;
+        // const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
+        this.downloadFile();
+        // if (this.isGuest === true) {
+            // this.downloadFile(this.momTxt, this.meetingDetails, null);
+            // payload.userCode = this.loggedInUser.firstName;
+            this.closeRmainigMeetingActivity();
+        // } else {
+        //     this.endMeetingApiCall(payload);
+        // }
+    }
+    // private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
+    //     this._meetingService.endMeeting(payload).subscribe(resp => {
+    //         if (resp.errorFl) {
+    //             this.alertService.warning(resp.message, TypeOfError.Warning);
+    //         } else {
+    //             //   this.document.getElementById('btn-leave-room').click();
+    //             this.closeRmainigMeetingActivity();
+    //             this.alertService.success(SuccessMessage.EndMeeting, SuccessMessage.SuccessHeader);
+    //         }
+    //     });
+    // }
+    downloadFile() {
+        const meetingDate = new Date();
+        const momHeader = 'Date: ' + new Date().toString().slice(0, 24);
+        const fileType = 'text/json';
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Notes: ' + '\r\n\r\n' + this.momTxt)}`);
+        // a.href = url;
+        a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
+        a.click();
+        // window.URL.revokeObjectURL(url);
+        a.remove(); // remove the element
+        //  return this.alertService.success(SuccessMessage.DownloadMom, SuccessMessage.SuccessHeader);
+    }
 
+    private closeRmainigMeetingActivity() {
+        this.stopTimer();
+        this.router.navigate(['/dashboard']);
+        window.location.reload();
+    }
+
+    stopTimer() {
+        clearInterval(this.actualMeetingTime);
+    }
+    startTimer() {
+        this.actualMeetingTime = setInterval(() => { this.calculateTimeSpan(); }, 1000);
+    }
+    calculateTimeSpan() {
+        if (this.second === 59) {
+            if (this.minute === 59) {
+                this.hour += 1;
+                this.minute = 0;
+            } else {
+                this.minute += 1;
+            }
+            this.second = 0;
+        } else {
+            this.second += 1;
+        }
+        this.tick++;
     }
 }

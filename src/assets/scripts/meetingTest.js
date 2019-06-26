@@ -215,11 +215,6 @@ document.getElementById('disable-video').onclick = function () {
         }, 6000);
     }
 }
-// document.getElementById('btn-leave-room').onclick = function () {
-//    // this.disabled = true;
-//     // debugger;
-//     exitMeeting();
-// };
 document.addEventListener("click", function(e){
     if(e.target && e.target.id === "btn-leave-room"){
         exitMeeting();
