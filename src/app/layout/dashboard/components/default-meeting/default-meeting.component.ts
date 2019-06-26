@@ -290,16 +290,18 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
 
     copyToOutLook(event) {
         this._meetingService.getRemeberEmails().subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
+            if (data[0].errorFl === true || data[0].warningFl === true) {
                 this.rememberEmailList = [];
-                return this.alertService.warning(data.message, TypeOfError.Warning);
+                this.setRememberEmailList();
+                return this.alertService.warning(data[0].message, TypeOfError.Warning);
             } else {
-                this.setRememberEmailList(data);
+                this.rememberEmailList = data;
+                this.setRememberEmailList();
             }
         });
     }
-    private setRememberEmailList(data: any) {
-        this.rememberEmailList = data;
+    private setRememberEmailList() {
+        // this.rememberEmailList = data;
         this.meetNowOutlookModal.open();
         const newLine = '\r\n\r\n';
         this.outLookBody = this.getMeetingDetails(newLine);
@@ -456,8 +458,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
 
     onEmailSelect() {
-        if (this.toAttendees.trim() !== '') {
-            this.selectedEmails += ',' + this.toAttendees.trim();
+        if (this.toAttendees !== '') {
+            if (this.toAttendees !== undefined) {
+                this.selectedEmails += ',' + this.toAttendees.trim();
+            }
         }
         if (this.selectedEmails.find === undefined) {
             this.selectedEmails = this.selectedEmails.replace(StaticLabels.Undefined, '');
@@ -466,8 +470,10 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
         this.toAttendees = '';
     }
     selectedCcEmail() {
-        if (this.ccAttendees.trim() !== '') {
-            this.selectedCcEmails += ',' + this.ccAttendees.trim();
+        if (this.ccAttendees !== '') {
+            if (this.ccAttendees !== undefined) {
+                this.selectedCcEmails += ',' + this.ccAttendees.trim();
+            }
         }
         if (typeof this.selectedCcEmails.find === StaticLabels.Undefined) {
             this.selectedCcEmails = this.selectedCcEmails.replace(StaticLabels.Undefined, '');
