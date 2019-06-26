@@ -21,7 +21,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     _chatService: ChatService;
     enterMsgFlag: boolean;
     chattingHistoryList = [];
-    // chattingHistoryObj: any;
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
@@ -190,7 +189,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         // if (this.isGuest === true) {
         // this.downloadFile(this.momTxt, this.meetingDetails, null);
         // payload.userCode = this.loggedInUser.firstName;
-        this.closeRmainigMeetingActivity();
+        // if (this.isGuest === true) {
+            // this.downloadFile(this.momTxt, this.meetingDetails, null);
+            // payload.userCode = this.loggedInUser.firstName;
+            this.closeRmainigMeetingActivity();
         // } else {
         //     this.endMeetingApiCall(payload);
         // }
@@ -207,7 +209,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     //     });
     // }
     downloadFile() {
-        debugger;
         if (typeof this.momTxt === 'undefined' || this.momTxt === null || this.momTxt === '') {
             this.momTxt = 'No notes added';
         }
