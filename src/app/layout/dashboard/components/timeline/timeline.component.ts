@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
 import { AlertService } from '../../../../services/alert.service';
 import { DOCUMENT } from '@angular/common';
-import { TypeOfError , StaticLabels } from '../../../../shared/errorMessageConstants';
+import { TypeOfError, StaticLabels } from '../../../../shared/errorMessageConstants';
 import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/components/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-timeline',
@@ -21,7 +21,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     _chatService: ChatService;
     enterMsgFlag: boolean;
     chattingHistoryList = [];
-   // chattingHistoryObj: any;
+    // chattingHistoryObj: any;
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
@@ -91,10 +91,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 if (broadcastData[0].errorFl || broadcastData[0].warningFl) {
                     this.broadcastMsgList = [];
                     return this.alertService.warning(broadcastData[0].message, TypeOfError.Warning);
-                }  else {
+                } else {
                     this.broadcastMsgList = broadcastData;
                 }
-            }  else {
+            } else {
                 this.broadcastMsgList = [];
             }
         });
@@ -106,7 +106,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
             } else {
                 if (res.userCode === undefined) {
                     this.router.navigate(['/dashboard/default']);
-                }  else {
+                } else {
                     this.selectedUser = res;
                 }
             }
@@ -187,11 +187,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.exitMeetingConfirmModal.close();
         this.isCallInProcess = false;
         // const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-        this.downloadFile();
         // if (this.isGuest === true) {
-            // this.downloadFile(this.momTxt, this.meetingDetails, null);
-            // payload.userCode = this.loggedInUser.firstName;
-            this.closeRmainigMeetingActivity();
+        // this.downloadFile(this.momTxt, this.meetingDetails, null);
+        // payload.userCode = this.loggedInUser.firstName;
+        this.closeRmainigMeetingActivity();
         // } else {
         //     this.endMeetingApiCall(payload);
         // }
@@ -208,6 +207,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     //     });
     // }
     downloadFile() {
+        debugger;
+        if (typeof this.momTxt === 'undefined' || this.momTxt === null || this.momTxt === '') {
+            this.momTxt = 'No notes added';
+        }
         const meetingDate = new Date();
         const momHeader = 'Date: ' + new Date().toString().slice(0, 24);
         const fileType = 'text/json';
@@ -224,9 +227,11 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     private closeRmainigMeetingActivity() {
+        this.downloadFile();
         this.stopTimer();
         this.router.navigate(['/dashboard']);
-        window.location.reload();
+        document.getElementById('btn-leave-room').click();
+        //    window.location.reload();
     }
 
     stopTimer() {
