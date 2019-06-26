@@ -146,9 +146,9 @@ export class NotificationComponent implements OnInit {
     private setSelectedUserSuccessResponse(data: any) {
         if (this.selectedUser != null && this.selectedUser.userCode !== data.userCode) {
             this.selectedUser = data;
-            const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
-            this._chatService.getChattingHistoryList(payload);
-            this._chatService.setBroadcastMsgByLoggedInuserId(payload);
+            // const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
+            // this._chatService.getChattingHistoryList(payload);
+            // this._chatService.setBroadcastMsgByLoggedInuserId(payload);
         }
     }
     getChattingHistoryBySelectedGroup() {

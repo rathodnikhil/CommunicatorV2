@@ -17,11 +17,12 @@
                         <div class="col-md-2" style="text-align:right;color:#AF2127;padding-right:3%;">
                             <h4>
                                 <i class="fa fa-clock-o"></i>&nbsp;
+                                {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
                             </h4>
                         </div>
                         <div class="col-md-1">
                             <h4 style="cursor: pointer;float: right;color:#AF2127;">
-                                <i class="fa fa-times" [routerLink]="['/dashboard']"></i>
+                                <i class="fa fa-times" (click)="exitMeeting()"></i>
                             </h4>
                         </div>
                     </div>
@@ -29,7 +30,8 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6" style="height:80vh;" [ngClass]="{'col-md-12':!isCallInProcess}">
-                            <div class="chat-output" style="height: calc(100vh*0.70)">
+                            <div class="chat-output" style="height: calc(100vh*0.70)" >
+                                <div *ngIf="chattingHistoryList.lenght > 0">
                                 <div *ngFor="let chatMessage of chattingHistoryList">
                                     <div class="chat-background-attendee" *ngIf="chatMessage.userId.userCode==loggedInUser.userCode">
                                         <p>{{chatMessage.chatmsg}}</p><span class="time-right">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}} <i class="fa fa-user"></i>&nbsp; You</span>
@@ -38,10 +40,9 @@
                                         <p>{{chatMessage.chatmsg}}</p><span class="time-left">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}} <i class="fa fa-user"></i>&nbsp; {{chatMessage.userId.firstName+' '+chatMessage.userId.lastName}}</span>
                                     </div>
                                 </div>
-                                
                                 <div id="chat-container"></div>
                             </div>
-        
+                            </div>  
                             <div class="row">
                                 <textarea placeholder="Type Message Here.." id="input-text-chat"
                                     style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;" [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea>
@@ -67,29 +68,40 @@
                         </div>
                     </div>
                 </div>
-               
+                <app-custom-modal #exitMeetingConfirmModal [model]="leaveMeeting">
+                                <div>
+                                    <label style="padding: 10px; ">Are you sure you want to completely exit meeting
+                                        ?</label>
+                                </div>
+                                <div class="modal-footer popFooter">
+                                    <button type="button" id="btn-leave-room" class="btn btn-primary"
+                                        (click)="completeExit()">Yes</button>
+                                    <button type="button" class="btn btn-danger" (click)="exit()">No</button>
+                                </div>
+                            </app-custom-modal>
                
                 <div style="height: calc(100vh*.06); margin-right: 85px;">
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
                         <button id="btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
-                            data-toggle="tooltip" title="Exit Meeting">
+                            data-toggle="tooltip" title="Exit Meeting" *ngIf="isCallInProcess">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
 
-                        <button id="btn-mute" class="btn-sec btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'"
+                        <button id="btn-mute" class="btn-sec btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'" *ngIf="isCallInProcess"
                             placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}">
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
-                        <button id="open-room" class="btn-sec" alt="Start Meeting" (click)="isCallInProcess=!isCallInProcess"
+                        <!-- <button id="open-room" class="btn-sec" alt="Start Meeting" (click)="isCallInProcess=!isCallInProcess" -->
+                                <button id="open-room" class="btn-sec" alt="Start Meeting" (click)="isCallInProcess=!isCallInProcess"
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" title="Call">
                             <i class="fa fa-2x fa-phone"></i>
                         </button>
                         <button id="join-room" class="btn default " style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording">
+                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording" *ngIf="isCallInProcess">
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip"
                                 aria-hidden="true" id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
@@ -100,22 +112,22 @@
                         <button id="share-file" class="btn-sec" title="Share File" data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
-                        <button id="share-screen" class=" btn-sec" style=" margin-top: 1px;" data-toggle="tooltip"
+                        <button id="share-screen" class=" btn-sec" style=" margin-top: 1px;" data-toggle="tooltip" *ngIf="isCallInProcess"
                             title="Share Screen" (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec " alt="Disable video" style=" margin-top: 1px;"
+                        <button id="disable-video" class="btn-sec " alt="Disable video" style=" margin-top: 1px;" 
                             (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}"
                             data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
                                 class="fa fa-2x fa-ban"></i>
                         </button>
-                        <span id="meeting-error" style="float: right;font-weight: bolder;"></span>
+                        <!-- <span id="meeting-error" style="float: right;font-weight: bolder;"></span> -->
                         <button id="open-or-join-room" style="display:none;">Auto Open Or Join Room</button>
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <div style="display: none;" id="isHost"></div>
                         <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
-                        <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
+                        <button style="display:none;" class="btn btn-danger btn-lg" *ngIf="isCallInProcess" ngbTooltip="Exit Meeting">Exit
                             Meeting
                         </button>
                     </div>
@@ -151,7 +163,7 @@
                                 <textarea placeholder="Type MOM Here..."
                                     style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
-                                <button class="btn generate-mom-btn momBtn" id="btn-save-mom">Generate
+                                <button class="btn generate-mom-btn momBtn" (click)="downloadFile()" id="btn-save-mom">Generate
                                     Meeting Notes</button>
                             </div>
                         </div>                        
@@ -171,8 +183,8 @@
                     [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files">
                     <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i>
                 </a>
-                <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
-                        src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a>
+                <!-- <a [routerLink]="['/error/recordscreensteps']" target="_blank" title="Recording Info"><img
+                        src="assets/images/rec_edited.png" class="img-fluid" alt="Responsive image" /> </a> -->
             </div>
         </div>
     </div>

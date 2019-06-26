@@ -1,1 +1,19 @@
 @import "../timeline/timeline.component.scss";
+ .title-label{
+    padding-left: 30px;
+    font-weight: 700;
+ }
+ .user-details{
+    border-bottom: 1px solid #969696;
+    margin-left:10px;
+ }
+ .edit-user-profile {
+   display: inline-block;
+   width: 110px;
+   height: 110px;
+   border-radius: 50%;
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-size: cover;
+   border:1px solid #111;
+ }

@@ -12,38 +12,18 @@ if (InitiatedChatRoomId == null) {
 // ................FileSharing/TextChat Code.............
 // ......................................................
 
-document.getElementById('share-screen').onclick = function () {
-    try {
-        isShareScreen = true;
-        var shareScreenEl = document.getElementById('share-screen');
-        shareScreenEl.className = 'btn-primary';
-        connection.addStream({
-            screen: true,
-            oneway: true
-        });
-    } catch (error) {
-        console.log(error);
-    }
 
-};
-document.getElementById('btn-mute').onclick = function () {
-    try {
-        var streamid = connection.streamEvents.selectFirst().streamid;
-        if (!isMute || document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0) {
-            connection.streamEvents.selectFirst({
-                local: true
-            }).stream.mute("audio");
-            isMute = true;
-        } else {
-            connection.streamEvents.selectFirst({
-                local: true
-            }).stream.unmute();
-            isMute = false;
-        }
-    } catch (error) {
-        console.log(error);
+document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "share-screen"){
+        shareScreenAction();
     }
-};
+  });
+  document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "share-screen"){
+        muteAction();
+    }
+  });
+
 document.getElementById('open-room').onclick = function () {
     if (document.getElementById('room-id').value === 'Enter Meeting Id') {
         alert('Enter valid meeting Id');
@@ -54,7 +34,7 @@ document.getElementById('open-room').onclick = function () {
         if (!isRoomExists) {
             showRoomURL(roomid);
         }
-        document.getElementById('meeting-error').display = 'none';
+     //   document.getElementById('meeting-error').display = 'none';
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;
         document.getElementById('btn-leave-room').disabled = false;
@@ -80,48 +60,11 @@ document.getElementById('btn-end-meeting').onclick = function () {
         alertService.error('Entire session has been closed.');
     });
 }
-
-document.getElementById('disable-video').onclick = function () {
-    this.disabled = true;
-    if (isMute) {
-        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone";
-        isMute = false;
-        alertService.warning('You will have to mute yourself again!', 'unmute');
+document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "disable-video"){
+        disableVideoAction();
     }
-    if (isShareScreen) {
-        isShareScreen = false;
-        alertService.warning('You will have to share screen again!', 'screen share');
-    }
-    setTimeout(function () {
-        document.getElementById('disable-video').disabled = false;
-    }, 6000);
-    var videoValue = this.value == "true";
-    if (connection.streamEvents.selectFirst({
-        local: true
-    }) != undefined) {
-        connection.streamEvents.selectFirst({
-            local: true
-        }).stream.stop();
-    }
-    connection.session = {
-        audio: true,
-        video: videoValue,
-        data: true
-    };
-
-    connection.mediaConstraints = {
-        audio: true,
-        video: videoValue
-    };
-    connection.sdpConstraints.mandatory = {
-        OfferToReceiveAudio: true,
-        OfferToReceiveVideo: videoValue
-    };
-    connection.addStream({
-        audio: true,
-        video: videoValue
-    });
-}
+  });
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
     // debugger;
@@ -137,13 +80,13 @@ document.getElementById('btn-leave-room').onclick = function () {
             mediaElement.parentNode.removeChild(mediaElement);
         }
     });
-    document.getElementById('meeting-error').innerText = 'You have left the meeting.';
+  //  document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
-    document.getElementById('open-room').disabled = true;
+   // document.getElementById('open-room').disabled = true;
 };
 
 // ......................................................
@@ -183,6 +126,83 @@ document.getElementById('alternate-send-chat').onclick = function (e) {
 
 var chatContainer = document.querySelector('.chat-output');
 
+function muteAction() {
+    try {
+        var streamid = connection.streamEvents.selectFirst().streamid;
+        if (!isMute || document.getElementById('btn-mute').children[0].className.indexOf('fa-microphone-slash') >= 0) {
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.mute("audio");
+            isMute = true;
+        }
+        else {
+            connection.streamEvents.selectFirst({
+                local: true
+            }).stream.unmute();
+            isMute = false;
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+function disableVideoAction() {
+    this.disabled = true;
+    if (isMute) {
+        document.getElementById('btn-mute').children[0].className = "fa fa-2x fa-microphone";
+        isMute = false;
+        alertService.warning('You will have to mute yourself again!', 'unmute');
+    }
+    if (isShareScreen) {
+        isShareScreen = false;
+        alertService.warning('You will have to share screen again!', 'screen share');
+    }
+    setTimeout(function () {
+        document.getElementById('disable-video').disabled = false;
+    }, 6000);
+    var videoValue = this.value == "true";
+    if (connection.streamEvents.selectFirst({
+        local: true
+    }) != undefined) {
+        connection.streamEvents.selectFirst({
+            local: true
+        }).stream.stop();
+    }
+    connection.session = {
+        audio: true,
+        video: videoValue,
+        data: true
+    };
+    connection.mediaConstraints = {
+        audio: true,
+        video: videoValue
+    };
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: videoValue
+    };
+    connection.addStream({
+        audio: true,
+        video: videoValue
+    });
+}
+
+function shareScreenAction() {
+    try {
+        isShareScreen = true;
+        var shareScreenEl = document.getElementById('share-screen');
+        shareScreenEl.className = 'btn-primary';
+        connection.addStream({
+            screen: true,
+            oneway: true
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 function formatDate(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -197,12 +217,11 @@ function formatDate(date) {
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    //   div.className = 'chat-background';
     var message = event.data || event;
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
     if (user === 'You') {
-        div.className = 'chat-background';
+        div.className = 'chat-background-attendee';
         html += '<span class="time-right">';
     } else {
         div.className = 'chat-background-invitee';
@@ -369,7 +388,7 @@ connection.onEntireSessionClosed = function (event) {
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
     document.getElementById('open-or-join-room').disabled = false;
-    document.getElementById('open-room').disabled = true;
+   // document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = false;
     document.getElementById('room-id').disabled = false;
 
@@ -395,7 +414,7 @@ function showRoomURL(roomid) {
 }
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
-    document.getElementById('open-room').disabled = true;
+   // document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = true;
     document.getElementById('room-id').disabled = true;
 }
@@ -433,8 +452,7 @@ function reloadDetectRTC(callback) {
         }
     });
 }
-
-DetectRTC.load(function () {
+    DetectRTC.load(function () {
     reloadDetectRTC();
 
     try {
@@ -472,6 +490,7 @@ DetectRTC.load(function () {
     onDetectRTCLoaded();
 });
 
+
 var roomid = document.getElementById('room-id').value;
 if (InitiatedChatRoomId != null && ifMeetingWasInitiated.indexOf(localStorage.getItem('selectedUser')) >= 0) {
     roomid = localStorage.getItem('P2PChatInitiated');    
@@ -483,7 +502,7 @@ if (roomid && roomid.length) {
     document.getElementById('room-id').value = roomid;
     localStorage.setItem(connection.socketMessageEvent, roomid);
     (function reCheckRoomPresence() {
-        document.getElementById('meeting-error').innerText = '';
+     //   document.getElementById('meeting-error').innerText = '';
         disableInputButtons();
         // document.getElementById('open-room').disabled = false;
         // document.getElementById('open-room').click();
@@ -499,18 +518,18 @@ if (roomid && roomid.length) {
         // }
         if (roomid == 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName')) {
             document.getElementById('open-room').disabled = false;
-            document.getElementById('open-room').click();
+          //  document.getElementById('open-room').click();
         }
         connection.checkPresence(roomid, function (isRoomExists) {
             if (isRoomExists) {
-                document.getElementById('meeting-error').innerText = '';
+          //      document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
                 document.getElementById('btn-save-mom').disabled = false;
                 document.getElementById('input-text-chat').disabled = false;
                 showRoomURL(roomid);
                 return;
             }
-            document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
+         //   document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();

@@ -173,22 +173,28 @@ export class ScheduleMeetingComponent implements OnInit {
     }
     copyToOutLook(event) {
         this._meetingService.getRemeberEmails().subscribe(data => {
-            if (data.errorFl === true || data.warningFl === true) {
-              this.rememberEmailList = [];
-                return this.alertService.warning(data.message, TypeOfError.Warning);
+            if (data[0].errorFl === true || data[0].warningFl === true) {
+                this.rememberEmailList = [];
+                this.setRememberEmailList();
+                return this.alertService.warning(data[0].message, TypeOfError.Warning);
             } else {
-              this.rememberEmailList = data;
-              this.outlookModal.open();
-              const newLine = '\r\n\r\n';
-              this.outLookBody = this.getMeetingDetails(newLine);
-              this.outLookSubject = this.subject;
-              const newLineJson = '<br><br>';
-              this.outLookBodyJson = this.getMeetingDetails(newLineJson);
-              this.closeMeetingPopup('scheduleMeetings', false);
+                this.rememberEmailList = data;
+                this.setRememberEmailList();
               }
         });
 
     }
+
+    private setRememberEmailList() {
+        this.outlookModal.open();
+        const newLine = '\r\n\r\n';
+        this.outLookBody = this.getMeetingDetails(newLine);
+        this.outLookSubject = this.subject;
+        const newLineJson = '<br><br>';
+        this.outLookBodyJson = this.getMeetingDetails(newLineJson);
+        this.closeMeetingPopup('scheduleMeetings', false);
+    }
+
     // copy meeting content
     copyToClipboard() {
         const newLine = '\r\n\r\n';
@@ -273,8 +279,10 @@ export class ScheduleMeetingComponent implements OnInit {
         this.switchRoute(0);
     }
     onEmailSelect() {
-        if (this.toAttendees.trim() !== '') {
-            this.selectedEmails += ',' + this.toAttendees.trim();
+        if (this.toAttendees !== '') {
+            if (this.toAttendees !== undefined) {
+                this.selectedEmails += ',' + this.toAttendees.trim();
+            }
         }
         if (this.selectedEmails.find === undefined) {
             this.selectedEmails = this.selectedEmails.replace('undefined', '');
@@ -283,8 +291,10 @@ export class ScheduleMeetingComponent implements OnInit {
         this.toAttendees = '';
     }
     selectedCcEmail() {
-        if (this.ccAttendees.trim() !== '') {
-            this.selectedCcEmails += ',' + this.ccAttendees.trim();
+        if (this.ccAttendees !== '') {
+            if (this.ccAttendees !== undefined) {
+                this.selectedCcEmails += ',' + this.ccAttendees.trim();
+            }
         }
         if (typeof this.selectedCcEmails.find === 'undefined') {
             this.selectedCcEmails = this.selectedCcEmails.replace('undefined', '');

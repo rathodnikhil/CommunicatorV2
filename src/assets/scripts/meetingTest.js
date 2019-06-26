@@ -215,11 +215,6 @@ document.getElementById('disable-video').onclick = function () {
         }, 6000);
     }
 }
-// document.getElementById('btn-leave-room').onclick = function () {
-//    // this.disabled = true;
-//     // debugger;
-//     exitMeeting();
-// };
 document.addEventListener("click", function(e){
     if(e.target && e.target.id === "btn-leave-room"){
         exitMeeting();
@@ -520,9 +515,9 @@ else{
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
         if(mq.matches){
             if (initialsDiv.innerHTML === "You") {
-                initialsDiv.setAttribute("style", "  text-align: center;font-size:15px;font-weight: 600; position: absolute;left: 0;right: 0; top: 40%; ");
+                initialsDiv.setAttribute("style", "  text-align: center;font-size:15px;font-weight: 600; position: absolute;left: 0;right: 0; top: 45%; ");
             } else {
-                initialsDiv.setAttribute("style", " text-align: center;font-size:15px;font-weight: 600; position: absolute;left: 0;right: 0; top: 40%; ");
+                initialsDiv.setAttribute("style", " text-align: center;font-size:15px;font-weight: 600; position: absolute;left: 0;right: 0; top: 45%; ");
             }
         }
         else{
