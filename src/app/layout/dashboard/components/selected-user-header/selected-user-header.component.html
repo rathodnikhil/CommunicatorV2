@@ -3,39 +3,34 @@
         <a id="view-profile" (click)="open()">(View Full Profile)</a>    
 </div>
 <app-custom-modal #viewProfileModal [model]="viewProfile">
-    <div class="modal-body row-label">
-        <div class="row">
-            <div class="col-md-4">
-                <label>FullName</label>
-            </div>
-            <div class="col-md-8"><label>{{SelectedUser.firstName}} &nbsp; {{SelectedUser.lastName}}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <label>UserName</label>
-            </div>
-            <div class="col-md-8"><label>{{SelectedUser.name}}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <label>Email</label>
-            </div>
-            <div class="col-md-8"><label>{{SelectedUser.email}}</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <label>Team Name</label>
-            </div>
-            <!-- <div class="col-md-8"><label>{{SelectedUser.team.teamName}}</label></div> -->
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <label>Display Picture</label></div>
+    <div class="modal-body row-label col-md-12">
+            <div class="row">
+                    <div class="col-md-4" style="padding-left: 10%;">
+                        <p><img *ngIf='SelectedUser.profileImgPath' [src]="SelectedUser.profileImgPath" alt="Responsive image"
+                            class="edit-user-profile" style="padding:10px;" />
+                            <img *ngIf="SelectedUser.profileImgPath === null || SelectedUser.profileImgPath === '' || SelectedUser.profileImgPath === 'undefined'"
+                            src="assets/images/default-profile.jpg" alt="Responsive image"
+                            class="edit-user-profile" style="padding:10px;" /></p>
+             </div>
             <div class="col-md-8">
-                <i class="fa fa-user" style="font-size:80px;"></i>
+            <div class="row ">
+                    <label class="title-label">Full Name:</label>
+                    <label class="user-details">{{SelectedUser.firstName}} &nbsp; {{SelectedUser.lastName}}</label>
+            </div>
+            <div class="row">
+                    <label class="title-label">Username:</label>
+                    <label class="user-details">{{SelectedUser.name}}</label>
+            </div>
+            <div class="row">
+                    <label class="title-label">Email:</label>
+                    <label class="user-details">{{SelectedUser.email}}</label>
+            </div>
+            <div class="row">
+                    <label class="title-label">Team Name:</label>
+                    <label class="user-details">{{SelectedUser.team.teamName}}</label>
             </div>
         </div>
+      </div>
     </div>
     <div class="modal-footer popFooter">
         <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
