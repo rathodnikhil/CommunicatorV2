@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6" style="height:80vh;" [ngClass]="{'col-md-12':!isCallInProcess}">
                             <div class="chat-output" style="height: calc(100vh*0.70)">
-                                <div *ngIf="chattingHistoryList.length > 0">
+                                <div *ngIf="!isMessageExist">
                                     <div *ngFor="let chatMessage of chattingHistoryList">
                                         <div class="chat-background-attendee"
                                             *ngIf="chatMessage.userId.userCode==loggedInUser.userCode">
@@ -47,8 +47,9 @@
                                                 {{chatMessage.userId.firstName+' '+chatMessage.userId.lastName}}</span>
                                         </div>
                                     </div>
+                                    <div id="chat-container"></div>
                                 </div>
-                                <div id="chat-container"></div>
+                             
                             </div>
                             <div class="row">
                                 <textarea placeholder="Type Message Here.." id="input-text-chat"
@@ -102,7 +103,7 @@
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn-sec" alt="Start Meeting"
-                            (click)="initiatedCall();"
+                            (click)="isCallInProcess = !isCallInProcess"
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" title="Call">
                             <i class="fa fa-2x fa-phone"></i>
                         </button>
