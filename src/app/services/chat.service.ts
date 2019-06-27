@@ -16,7 +16,6 @@ export class ChatService {
 
     // save individual chatting
     saveChat(payload) {
-        debugger;
         const url = environment.baseUrl + 'saveChat';
         // const resp: ReplaySubject<any> = new ReplaySubject<any>(1);
         return this.apiRequest.post(url, payload);

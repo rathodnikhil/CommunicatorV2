@@ -54,7 +54,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         Button2Content: ''
     };
     ngOnInit() {
-        debugger;
         this.selectedUser = {};
         this.chattingHistoryList = [];
         this.getSelecteduserApiCall();

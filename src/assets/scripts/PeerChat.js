@@ -67,7 +67,6 @@ document.addEventListener("click", function(e){
   });
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
-    // debugger;
     connection.leave();
     connection.attachStreams.forEach(function (stream) {
         stream.stop();
@@ -221,8 +220,10 @@ function appendDIV(event) {
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
     if (user === 'You') {
+        div.setAttribute("style",'min-width:0%; max-width:80%;');
         div.className = 'chat-background-attendee';
         html += '<span class="time-right">';
+       
     } else {
         div.className = 'chat-background-invitee';
         html += '<span class="time-left">';
