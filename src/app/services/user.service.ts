@@ -78,6 +78,7 @@ export class UserService {
     setSelectedUser(user) {
         // localStorage.setItem('selectedUser', this.userName);
         localStorage.setItem('selectedUser', user.firstName + ' ' + user.lastName);
+        localStorage.setItem('selectedUserCode' , user.userCode);
         this.selectedUser$.next(user);
     }
     getSelectedUser() {
@@ -90,7 +91,6 @@ export class UserService {
         return this.selectedGroup$;
     }
     getLoggedInUserObj() {
-        console.log(' this.loggedInUserObj$' + this.loggedInUserObj$);
         return this.loggedInUserObj$;
     }
     setLoggedInUserObj(payload): Observable<any> {
@@ -111,6 +111,7 @@ export class UserService {
             const url = environment.baseUrl + 'loggedInUser?userName=' + payload.userName;
             this.apiRequest.post(url, payload).subscribe(data => {
                 this.loggedInUserObj$.next(data);
+                localStorage.setItem('loggedInUserCode', data.userCode);
                 localStorage.setItem('loggedInuserName', data.firstName + ' ' + data.lastName);
                 return this.loggedInUserObj$;
             });

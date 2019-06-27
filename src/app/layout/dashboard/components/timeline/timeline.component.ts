@@ -34,6 +34,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     muteBtnTitle = StaticLabels.Mute;
     videoBtnTitle = StaticLabels.VideoOn;
     isCallInProcess = false;
+    isMessageExist = false;
     hour = 0;
     minute = 0;
     second = 0;
@@ -71,13 +72,16 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     private getLoggedInUserSuccessAction(data: any) {
+        debugger;
         this.loggedInUser = data;
         this.chattingHistoryList = [];
+        this.isMessageExist = false;
         const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
         this._chatService.getChattingHistoryList(payload).subscribe(chatList => {
-            if (!chatList[0].errorFl || chatList[0].warningFl) {
+            // if (!chatList[0].errorFl || !chatList[0].warningFl) {
                 this.chattingHistoryList = chatList;
-            }
+                this.isMessageExist = this.chattingHistoryList[0].warningFl;
+         // }
         });
         this.broadcastMsgList = [];
         this.broadcastmsgByloggedInUserApiCall();
@@ -127,9 +131,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         if (ifMeetingWasInitiated != null && ifMeetingWasInitiated.indexOf(this.selectedUser) >= 0) {
             this.document.getElementById('room-id').value = localStorage.getItem('P2PChatInitiated');
         } else {
-            this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
+            this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode');
         }
-    } 
+    }
     sendMessage() {
         if (typeof this.chatMsg === 'undefined' || this.chatMsg.trim() === '' || this.chatMsg.trim() === null) {
             this.alertService.warning('Enter Message', TypeOfError.Warning);
@@ -209,8 +213,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     private closeRmainigMeetingActivity() {
-        if (typeof this.momTxt !== 'undefined' || this.momTxt !== null || this.momTxt !== '') {
-            this.downloadFile();
+        if (this.momTxt !== null || this.momTxt !== '') {
+            if (this.momTxt !== undefined) {
+                this.downloadFile();
+            }
         }
         this.stopTimer();
         this.router.navigate(['/dashboard']);
