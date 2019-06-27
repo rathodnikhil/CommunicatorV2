@@ -47,8 +47,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     @ViewChild('exitMeetingConfirmModal') public exitMeetingConfirmModal: CustomModalComponent;
     leaveMeeting: CustomModalModel = {
         titleIcon: '<i class="fas fa-sign-out-alt"></i>',
-        title: 'Exit Meeting',
-        smallHeading: 'You can exit meeting here',
+        title: 'End Call',
+        smallHeading: 'You can end call here',
         body: '',
         Button1Content: '',
         Button2Content: ''
@@ -130,17 +130,16 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         } else {
             this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
         }
-    }
-
+    } 
     sendMessage() {
-        const payload = {
-            userFrom: this.loggedInUser.userCode,
-            userTo: this.selectedUser.userCode,
-            chatMsg: this.chatMsg
-        };
-        if (this.chatMsg === '' || this.chatMsg === null || typeof this.chatMsg === 'undefined') {
+        if (typeof this.chatMsg === 'undefined' || this.chatMsg.trim() === '' || this.chatMsg.trim() === null) {
             this.alertService.warning('Enter Message', TypeOfError.Warning);
         } else {
+            const payload = {
+                userFrom: this.loggedInUser.userCode,
+                userTo: this.selectedUser.userCode,
+                chatMsg: this.chatMsg
+            };
             this._chatService.saveChat(payload).subscribe(data => {
                 if (data.errorFl === true || data.warningFl === true) {
                     return this.alertService.warning(data.message, TypeOfError.Warning);
@@ -180,59 +179,43 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.isVideoEnabled = !this.isVideoEnabled;
     }
     exitMeeting() {
-        this.exitMeetingConfirmModal.open();
+        if (this.isCallInProcess) {
+            this.exitMeetingConfirmModal.open();
+        } else {
+            this.router.navigate(['/dashboard']);
+        }
+    }
+    exit() {
+        this.exitMeetingConfirmModal.close();
     }
     completeExit() {
-        this.exitMeetingConfirmModal.close();
+        this.exit();
         this.isCallInProcess = false;
-        // const payload = { userCode: this.loggedInUser.userCode, meetingCode: this.meetingCode };
-        // if (this.isGuest === true) {
-        // this.downloadFile(this.momTxt, this.meetingDetails, null);
-        // payload.userCode = this.loggedInUser.firstName;
-        // if (this.isGuest === true) {
-            // this.downloadFile(this.momTxt, this.meetingDetails, null);
-            // payload.userCode = this.loggedInUser.firstName;
-            this.closeRmainigMeetingActivity();
-        // } else {
-        //     this.endMeetingApiCall(payload);
-        // }
+        this.closeRmainigMeetingActivity();
     }
-    // private endMeetingApiCall(payload: { userCode: any; meetingCode: string; }) {
-    //     this._meetingService.endMeeting(payload).subscribe(resp => {
-    //         if (resp.errorFl) {
-    //             this.alertService.warning(resp.message, TypeOfError.Warning);
-    //         } else {
-    //             //   this.document.getElementById('btn-leave-room').click();
-    //             this.closeRmainigMeetingActivity();
-    //             this.alertService.success(SuccessMessage.EndMeeting, SuccessMessage.SuccessHeader);
-    //         }
-    //     });
-    // }
     downloadFile() {
-        if (typeof this.momTxt === 'undefined' || this.momTxt === null || this.momTxt === '') {
-            this.momTxt = 'No notes added';
-        }
         const meetingDate = new Date();
         const momHeader = 'Date: ' + new Date().toString().slice(0, 24);
         const fileType = 'text/json';
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
-        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + 'Notes: ' + '\r\n\r\n' + this.momTxt)}`);
+        a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + '\r\n\r\n' +
+        'Notes: ' + '\r\n\r\n' + this.momTxt)}`);
         // a.href = url;
         a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();
         // window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        //  return this.alertService.success(SuccessMessage.DownloadMom, SuccessMessage.SuccessHeader);
     }
 
     private closeRmainigMeetingActivity() {
-        this.downloadFile();
+        if (typeof this.momTxt !== 'undefined' || this.momTxt !== null || this.momTxt !== '') {
+            this.downloadFile();
+        }
         this.stopTimer();
         this.router.navigate(['/dashboard']);
         document.getElementById('btn-leave-room').click();
-        //    window.location.reload();
     }
 
     stopTimer() {
