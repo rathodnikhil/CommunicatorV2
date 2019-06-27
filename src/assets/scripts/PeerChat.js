@@ -1,7 +1,7 @@
 var InitiatedChatRoomId = localStorage.getItem('P2PChatInitiated');
 if (InitiatedChatRoomId == null) {
     connection.socket.emit(connection.socketCustomEvent, {
-        sender: localStorage.getItem('loggedInuserName'),
+        sender: localStorage.getItem('loggedInUserCode'),
         receiver: localStorage.getItem('selectedUser'),
         customMessage: 'initiatedChat'
     });
@@ -67,7 +67,7 @@ document.addEventListener("click", function(e){
   });
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
-    // debugger;
+    debugger;
     connection.leave();
     connection.attachStreams.forEach(function (stream) {
         stream.stop();
@@ -423,7 +423,7 @@ function onDetectRTCLoaded() {
     var videoValue = DetectRTC.hasWebcam;
     if (!videoValue) {
         alertService.warning('Switching to audio mode.', 'Web Cam not detected');
-        document.getElementById('disable-video').style.visibility = 'hidden';
+      //  document.getElementById('disable-video').style.visibility = 'hidden';
         //document.getElementById('disable-video').style.display = 'none';
     }
     videoValue = false;
@@ -495,7 +495,7 @@ var roomid = document.getElementById('room-id').value;
 if (InitiatedChatRoomId != null && ifMeetingWasInitiated.indexOf(localStorage.getItem('selectedUser')) >= 0) {
     roomid = localStorage.getItem('P2PChatInitiated');    
 } else {
-    roomid = 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName');
+    roomid = 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode');
 }
 
 if (roomid && roomid.length) {
@@ -516,7 +516,7 @@ if (roomid && roomid.length) {
         // } else if (!isHost) {
         //     // document.getElementById('btn-leave-room').disabled = true;
         // }
-        if (roomid == 'Peer2PeerMeet_' + localStorage.getItem('loggedInuserName')) {
+        if (roomid == 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode')) {
             document.getElementById('open-room').disabled = false;
           //  document.getElementById('open-room').click();
         }
