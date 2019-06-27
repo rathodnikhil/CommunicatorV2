@@ -6,21 +6,21 @@
                 <div class="card-header"
                     style="padding-top:14px; padding-bottom:14px;margin-bottom: -2px;box-shadow: 5px 5px 5px #e4dadb;">
                     <div class="row">
-                        <div class="col-md-3">
-                            <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image" />
+                        <div class="col-md-3 col-4">
+                            <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image"/>
                         </div>
-                        <div class="col-md-6" style="float:right;color:#AF2127;">
-                            <app-selected-user-header [SelectedUser]="selectedUser" style="float: right;">
+                        <div class="col-md-6 col-5">
+                            <app-selected-user-header [SelectedUser]="selectedUser" class="selected-user">
                             </app-selected-user-header>
                         </div>
 
-                        <div class="col-md-2" style="text-align:right;color:#AF2127;padding-right:3%;">
+                        <div class="col-md-2 col-2" style="text-align:right;color:#AF2127;padding-right:3%;">
                             <h4 *ngIf="isCallInProcess">
                                 <i class="fa fa-clock-o"></i>&nbsp;
                                 {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
                             </h4>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1 col-1">
                             <h4 style="cursor: pointer;float: right;color:#AF2127;">
                                 <i class="fa fa-times" (click)="exitMeeting()"></i>
                             </h4>
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6" style="height:80vh;" [ngClass]="{'col-md-12':!isCallInProcess}">
                             <div class="chat-output" style="height: calc(100vh*0.70)">
-                                <div *ngIf="chattingHistoryList.length > 0">
+                                <div *ngIf="!isMessageExist">
                                     <div *ngFor="let chatMessage of chattingHistoryList">
                                         <div class="chat-background-attendee"
                                             *ngIf="chatMessage.userId.userCode==loggedInUser.userCode">
@@ -47,8 +47,9 @@
                                                 {{chatMessage.userId.firstName+' '+chatMessage.userId.lastName}}</span>
                                         </div>
                                     </div>
+                                    <div id="chat-container"></div>
                                 </div>
-                                <div id="chat-container"></div>
+                             
                             </div>
                             <div class="row">
                                 <textarea placeholder="Type Message Here.." id="input-text-chat"
@@ -102,7 +103,7 @@
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn-sec" alt="Start Meeting"
-                            (click)="initiatedCall();"
+                            (click)="isCallInProcess = !isCallInProcess"
                             [ngClass]="isMeetingStarted?'default':'btn-success'" placement="top" title="Call">
                             <i class="fa fa-2x fa-phone"></i>
                         </button>
