@@ -1,4 +1,4 @@
-@import "../../../meeting/meeting/meeting.component.scss"
+@import "../../../meeting/meeting/meeting.component.scss";
 // @import "styles/customStyle.css";
 // .timeline {
 //     position: relative;
@@ -205,3 +205,35 @@
 //     font-weight: bold;
 //     margin: 8px;
 //    }
+@media (max-width:768px){
+    .img-fluid{
+        max-width: 100%;
+    }
+    .selected-user{
+        float:left;
+    }
+  
+}
+@media (min-width:768px){
+    .img-fluid{
+        max-width: 80%;
+    }
+    .selected-user{
+        float:right;
+    }
+}
+.selected-user{
+    color:#AF2127;
+}
+
+.toggle{
+    top:2.1%;
+}
+
+.chat-background-attendee{
+    max-width:80%;
+    min-width: 0%;
+}
+.chat-output{
+    margin-right:70px;
+}
