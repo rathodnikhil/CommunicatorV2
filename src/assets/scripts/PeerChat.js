@@ -225,7 +225,7 @@ function appendDIV(event) {
         html += '<span class="time-right">';
        
     } else {
-        div.className = 'chat-background-invitee';
+        div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
     }
 
@@ -268,9 +268,9 @@ connection.onstream = function (event) {
     customDiv.style.height = Math.round(window.innerHeight * 0.30);
     customDiv.style.width = Math.round(window.innerHeight * 0.30);
     customDiv.style.padding = '5';
-    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.30) + 'px;height:' + Math.round(window.innerHeight * 0.30) + 'px;padding:5px;text-align: center; float:left;');
+    customDiv.setAttribute("style", 'width:' + Math.round(window.innerHeight * 0.15) + 'px;height:' + Math.round(window.innerHeight * 0.15) + 'px;padding:5px;text-align: center; float:left;position: absolute;bottom: 32%;right: 85px;');
     var heading = document.createElement('div');
-    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:30px;padding:5px;text-align: center;background-color:#212529;color:#fff;margin-bottom: -30px;');
+    heading.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.15) - 10) + 'px;height:23px;padding:2px;text-align: center;background-color:#AF2127;color:#fff;margin-bottom: -30px;border:1px solid #AF2127;font-weight:bold;');
     var attendeeFullName = event.extra;
     attendeeFullName = attendeeFullName.split(" ");
     var attendeeFullNameArray = new Array();
@@ -293,7 +293,7 @@ connection.onstream = function (event) {
         }
         var initialsDiv = document.createElement('div');
         initialsDiv.innerHTML = event.type === 'local' ? 'You' : attendeeNameLetter;
-        initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.30) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.30) - 40) + 'px;padding-top:20%;text-align: center;background-color:#bc151b;color:#fff;margin-top: 30px;font-size: 4.0vw;');
+        initialsDiv.setAttribute("style", 'width:' + (Math.round(window.innerHeight * 0.15) - 10) + 'px;height:' + (Math.round(window.innerHeight * 0.15) - 40) + 'px;padding-top:17%;text-align: center;background-color:#ffeeed;color:#AF2127;margin-top: 30px;font-size:3vh;border:1px solid #AF2127;font-weight: 600;');
         customDiv.appendChild(initialsDiv);
     }
 
