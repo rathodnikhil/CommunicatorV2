@@ -234,6 +234,44 @@
     max-width:80%;
     min-width: 0%;
 }
+.chat-background-invitee-attendee{
+    background-color:#d6f9f5;
+    min-width: 0%;
+    max-width: 80%;
+}
+.chat-background-invitee-attendee::after{
+    border-color:#d6f9f5 transparent transparent transparent;
+}
 .chat-output{
     margin-right:70px;
 }
+    .initial-letter-attendee{
+    text-align: center;
+    font-weight: 600;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top:30%;
+    }
+         
+    .demo-one{
+    min-height: calc(100vh*0.55);
+    max-height: calc(100vh*0.55);
+    margin-left:0px;
+    
+    }
+    .attendee-row{
+        margin-top:0.5%;
+    }
+    .parent{
+        height: calc(100vh*0.22);
+    }
+    .meeting-bottom{
+        margin-left:10px;
+    }
+    .chat-box-div{
+    padding: 5%;
+    background-color: #eeedee;
+    margin-right: 70px;
+    margin-left: 5px;
+    }

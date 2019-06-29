@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6" style="height:80vh;" [ngClass]="{'col-md-12':!isCallInProcess}">
-                            <div class="chat-output" style="height: calc(100vh*0.70)">
+                            <div class="chat-output" style="height: calc(100vh*0.63)">
                                 <div *ngIf="!isMessageExist">
                                     <div *ngFor="let chatMessage of chattingHistoryList">
                                         <div class="chat-background-attendee"
@@ -51,29 +51,50 @@
                                 </div>
                              
                             </div>
-                            <div class="row">
+                            <div class="row chat-box-div">
                                 <textarea placeholder="Type Message Here.." id="input-text-chat"
-                                    style="width:70%;height:60px;overflow:auto;resize:none;margin-left:3%;"
+                                    style="width:90%;height:60px;overflow:auto;resize:none;"
                                     [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea>
-                                <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-left: 10px;"
+                                <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-left: 18px;margin-top: 1%;"
                                     (click)="sendMessage()"></i>
                             </div>
                         </div>
-                        <div class="col-md-6" [ngStyle]="{'display':isCallInProcess?'block':'none'}">
-                            <div class="attendee-row" style="padding-right: 80px;">
+                        <div class="col-md-6" [ngStyle]="{'display':isCallInProcess?'block':'none'}" style="padding-right: 82px;">
+                            <div class="attendee-row">
+
                                 <h4></h4>
-                                <div class="demo-one" style="overflow-y:auto;">
-                                    <div class="row main-div" #videos_container id="videos_container">
-                                    </div>
+            
+                                 <div class="demo-one" style="overflow-y:auto;">
+            
+                                        <div class="row main-div" #videos_container id="videos_container" style="margin-left:0px;">
+                                                <div id="call-joined-attendee" class="joined-attendee">
+                                                        <div class="demo-content">
+                                                        <div class="meeting-attendee-name">Avinash Prachand</div>
+                                                        <div class="initial-letter-attendee attendee-letter">AP</div>
+                                                        </div>
+                                                        <div class="ongoing-call">Ongoing Call</div>
+                                                        </div>
+                                                <!-- <div class=" col-xl-3 col-lg-3 col-md-3 col-sm-4 col-4" style="position:absolute;right:85px;bottom:30%;" >
+                                                        <div class="demo-content">
+                                                        <div class="meeting-attendee-name" >YOU</div>
+                                                        <div class="initial-letter-attendee attendee-letter">YOU</div>
+                                                        </div>
+                                                    </div> -->
+                                               
+                                                </div>
+            
+                                    <!-- <video drag-scroll-item *ngFor="let image of imagelist" class="dummyVideoPlaceHolders"></video> -->
+            
                                 </div>
+            
                             </div>
 
-                            <div class="row parent" style="margin-right: 80px;">
+                            <div class="row parent" >
                                 <div class="col-md-12" style="text-align: center;">
                                     <h4 style="margin-bottom:0px;padding:0.1% 0% 0.2% 1%;">Shared Screen</h4>
                                 </div>
                                 <div id="shareScreen-container" class="row main-div"
-                                    style="margin-top:0%;overflow-y: auto;height: 23vh;"></div>
+                                    style="margin-top:0%;overflow-y: auto;height: 18vh;"></div>
                             </div>
                         </div>
                     </div>
@@ -93,7 +114,7 @@
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button id="btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
+                        <button id="exit-btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
                             data-toggle="tooltip" title="Exit Meeting" *ngIf="isCallInProcess">
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
@@ -158,7 +179,7 @@
                         <ul role="tablist" class="nav nav-tabs justify-content-start">
 
                             <li class="nav-item ng-star-inserted" (click)="switchTab('mom')">
-                                <span class="nav-link" [ngClass]="{'active': currentTab=='mom'}">
+                                <span class="nav-link active"  [ngClass]="{'active': currentTab=='mom'}">
                                     Notes
                                 </span>
                             </li>

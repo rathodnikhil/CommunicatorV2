@@ -72,7 +72,6 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     private getLoggedInUserSuccessAction(data: any) {
-        debugger;
         this.loggedInUser = data;
         this.chattingHistoryList = [];
         this.isMessageExist = false;
