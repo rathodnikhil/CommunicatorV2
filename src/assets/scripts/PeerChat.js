@@ -2,7 +2,7 @@ var InitiatedChatRoomId = localStorage.getItem('P2PChatInitiated');
 if (InitiatedChatRoomId == null) {
     connection.socket.emit(connection.socketCustomEvent, {
         sender: localStorage.getItem('loggedInUserCode'),
-        receiver: localStorage.getItem('selectedUser'),
+        receiver: localStorage.getItem('selectedUserCode'),
         customMessage: 'initiatedChat'
     });
 }
@@ -13,16 +13,16 @@ if (InitiatedChatRoomId == null) {
 // ......................................................
 
 
-document.addEventListener("click", function(e){
-    if(e.target && e.target.id === "share-screen"){
+document.addEventListener("click", function (e) {
+    if (e.target && e.target.id === "share-screen") {
         shareScreenAction();
     }
-  });
-  document.addEventListener("click", function(e){
-    if(e.target && e.target.id === "share-screen"){
+});
+document.addEventListener("click", function (e) {
+    if (e.target && e.target.id === "share-screen") {
         muteAction();
     }
-  });
+});
 
 document.getElementById('open-room').onclick = function () {
     if (document.getElementById('room-id').value === 'Enter Meeting Id') {
@@ -34,7 +34,7 @@ document.getElementById('open-room').onclick = function () {
         if (!isRoomExists) {
             showRoomURL(roomid);
         }
-     //   document.getElementById('meeting-error').display = 'none';
+        //   document.getElementById('meeting-error').display = 'none';
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;
         document.getElementById('btn-leave-room').disabled = false;
@@ -60,11 +60,11 @@ document.getElementById('btn-end-meeting').onclick = function () {
         alertService.error('Entire session has been closed.');
     });
 }
-document.addEventListener("click", function(e){
-    if(e.target && e.target.id === "disable-video"){
+document.addEventListener("click", function (e) {
+    if (e.target && e.target.id === "disable-video") {
         disableVideoAction();
     }
-  });
+});
 document.getElementById('btn-leave-room').onclick = function () {
     this.disabled = true;
     connection.leave();
@@ -79,13 +79,13 @@ document.getElementById('btn-leave-room').onclick = function () {
             mediaElement.parentNode.removeChild(mediaElement);
         }
     });
-  //  document.getElementById('meeting-error').innerText = 'You have left the meeting.';
+    //  document.getElementById('meeting-error').innerText = 'You have left the meeting.';
     document.getElementById('share-file').style.display = 'none';
     document.getElementById('disable-video').style.display = 'none';
     document.getElementById('share-screen').style.display = 'none';
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-mute').disabled = true;
-   // document.getElementById('open-room').disabled = true;
+    // document.getElementById('open-room').disabled = true;
 };
 
 // ......................................................
@@ -376,11 +376,11 @@ connection.onopen = function () {
 };
 
 connection.onclose = function () {
-    if (connection.getAllParticipants().length) {
-        document.querySelector('h1').innerHTML = 'You are still connected with: ' + connection.getAllParticipants().join(', ');
-    } else {
-        document.querySelector('h1').innerHTML = 'Seems session has been closed or all participants left.';
-    }
+    // if (connection.getAllParticipants().length) {
+    //     document.querySelector('h1').innerHTML = 'You are still connected with: ' + connection.getAllParticipants().join(', ');
+    // } else {
+    //     document.querySelector('h1').innerHTML = 'Seems session has been closed or all participants left.';
+    // }
 };
 connection.onEntireSessionClosed = function (event) {
     document.getElementById('share-file').style.display = 'none';
@@ -389,7 +389,7 @@ connection.onEntireSessionClosed = function (event) {
     document.getElementById('input-text-chat').disabled = true;
     document.getElementById('btn-leave-room').disabled = true;
     document.getElementById('open-or-join-room').disabled = false;
-   // document.getElementById('open-room').disabled = true;
+    // document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = false;
     document.getElementById('room-id').disabled = false;
 
@@ -415,7 +415,7 @@ function showRoomURL(roomid) {
 }
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
-   // document.getElementById('open-room').disabled = true;
+    // document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = true;
     document.getElementById('room-id').disabled = true;
 }
@@ -424,10 +424,11 @@ function onDetectRTCLoaded() {
     var videoValue = DetectRTC.hasWebcam;
     if (!videoValue) {
         alertService.warning('Switching to audio mode.', 'Web Cam not detected');
-      //  document.getElementById('disable-video').style.visibility = 'hidden';
+        //  document.getElementById('disable-video').style.visibility = 'hidden';
         //document.getElementById('disable-video').style.display = 'none';
     }
     videoValue = false;
+    audioValue = false;
     connection.session = {
         audio: true,
         video: videoValue,
@@ -453,7 +454,7 @@ function reloadDetectRTC(callback) {
         }
     });
 }
-    DetectRTC.load(function () {
+DetectRTC.load(function () {
     reloadDetectRTC();
 
     try {
@@ -493,44 +494,38 @@ function reloadDetectRTC(callback) {
 
 
 var roomid = document.getElementById('room-id').value;
-if (InitiatedChatRoomId != null && ifMeetingWasInitiated.indexOf(localStorage.getItem('selectedUser')) >= 0) {
-    roomid = localStorage.getItem('P2PChatInitiated');    
+if (InitiatedChatRoomId != null && InitiatedChatRoomId.indexOf(localStorage.getItem('selectedUserCode')) >= 0) {
+    roomid = localStorage.getItem('P2PChatInitiated');
 } else {
-    roomid = 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode');
+    roomid = 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode') + '_' + localStorage.getItem('selectedUserCode');
 }
 
 if (roomid && roomid.length) {
     document.getElementById('room-id').value = roomid;
     localStorage.setItem(connection.socketMessageEvent, roomid);
     (function reCheckRoomPresence() {
-     //   document.getElementById('meeting-error').innerText = '';
         disableInputButtons();
-        // document.getElementById('open-room').disabled = false;
-        // document.getElementById('open-room').click();
-        // isHost = document.getElementById('isHost').innerText === "true";
-        // if (isHost) {
-        //     document.getElementById('open-room').disabled = false;
-        //     document.getElementById('open-room').click();
-        //     // /document.getElementById('meeting-error').innerText = 'You are the host. Kindly start the meeting.';
-        //   //  document.getElementById('btn-leave-room').disabled = false;
-        //     return;
-        // } else if (!isHost) {
-        //     // document.getElementById('btn-leave-room').disabled = true;
-        // }
-        if (roomid == 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode')) {
+        if (roomid == 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode') + '_' + localStorage.getItem('selectedUserCode')) {
             document.getElementById('open-room').disabled = false;
-          //  document.getElementById('open-room').click();
+            connection.openOrJoin(document.getElementById('room-id').value, function (isRoomExists, roomid) {
+                if (!isRoomExists) {
+                    showRoomURL(roomid);
+                }
+                document.getElementById('btn-save-mom').disabled = false;
+                document.getElementById('input-text-chat').disabled = false;
+                document.getElementById('btn-leave-room').disabled = false;
+                return;
+            });
+
         }
         connection.checkPresence(roomid, function (isRoomExists) {
             if (isRoomExists) {
-          //      document.getElementById('meeting-error').innerText = '';
                 connection.join(roomid);
                 document.getElementById('btn-save-mom').disabled = false;
                 document.getElementById('input-text-chat').disabled = false;
                 showRoomURL(roomid);
                 return;
             }
-         //   document.getElementById('meeting-error').innerText = 'Wait for host to start the meeting';
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();

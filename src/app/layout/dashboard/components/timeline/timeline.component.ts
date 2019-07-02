@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ElementRef, AfterViewInit, ViewChild, } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, AfterViewInit, ViewChild, OnDestroy, } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../../../../services/chat.service';
@@ -12,7 +12,8 @@ import { CustomModalComponent, CustomModalModel } from 'app/layout/dashboard/com
     styleUrls: ['./timeline.component.scss'],
     providers: [AlertService]
 })
-export class TimelineComponent implements OnInit, AfterViewInit {
+export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
+
 
     selectedUser: any;
     selectedGroup: any;
@@ -60,6 +61,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.getSelecteduserApiCall();
         this.setLoggedInUserApiCall();
     }
+    ngOnDestroy(): void {
+        this.document.getElementById('btn-leave-room').click();
+    }
     private setLoggedInUserApiCall() {
         this._userService.getLoggedInUserObj().subscribe(data => {
             if (data.errorFl === true || data.warningFl === true) {
@@ -78,9 +82,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         const payload = { userFrom: this.loggedInUser.userCode, userTo: this.selectedUser.userCode, chatMsg: null };
         this._chatService.getChattingHistoryList(payload).subscribe(chatList => {
             // if (!chatList[0].errorFl || !chatList[0].warningFl) {
-                this.chattingHistoryList = chatList;
-                this.isMessageExist = this.chattingHistoryList[0].warningFl;
-         // }
+            this.chattingHistoryList = chatList;
+            this.isMessageExist = this.chattingHistoryList[0].warningFl;
+            // }
         });
         this.broadcastMsgList = [];
         this.broadcastmsgByloggedInUserApiCall();
@@ -127,10 +131,11 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     afterScriptAdded() {
         // this.document.getElementById('setup-meeting').click();
         const ifMeetingWasInitiated = localStorage.getItem('P2PChatInitiated');
-        if (ifMeetingWasInitiated != null && ifMeetingWasInitiated.indexOf(this.selectedUser) >= 0) {
+        if (ifMeetingWasInitiated != null && ifMeetingWasInitiated.split('_')[2] === this.selectedUser.userCode) {
             this.document.getElementById('room-id').value = localStorage.getItem('P2PChatInitiated');
         } else {
-            this.document.getElementById('room-id').value = 'Peer2PeerMeet_' + localStorage.getItem('loggedInUserCode');
+            this.document.getElementById('room-id').value = 'Peer2PeerMeet_' +
+                localStorage.getItem('loggedInUserCode') + '_' + this.selectedUser.userCode;
         }
     }
     sendMessage() {
@@ -203,7 +208,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
         a.setAttribute('href', `data:${fileType};charset=utf-8,${encodeURIComponent(momHeader + '\r\n\r\n' +
-        'Notes: ' + '\r\n\r\n' + this.momTxt)}`);
+            'Notes: ' + '\r\n\r\n' + this.momTxt)}`);
         // a.href = url;
         a.download = 'MOM' + '(' + meetingDate.toString().slice(0, 24) + ').txt';
         a.click();
