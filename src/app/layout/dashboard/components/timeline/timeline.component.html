@@ -121,12 +121,12 @@
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
-                        <button id="exit-btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
+                        <button id="exit-btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()" style="display:none;"
                             data-toggle="tooltip" title="Exit Meeting" >
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
 
-                        <button id="btn-mute" class="btn-sec btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'"
+                        <button id="btn-mute" class="btn-sec btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'" style="display:none;"
                              placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}">
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
@@ -138,7 +138,7 @@
                         <button id="join-room" class="btn default " style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording">
+                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording" style="display:none;">
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip"
                                 aria-hidden="true" id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
@@ -149,11 +149,11 @@
                         <button id="share-file" class="btn-sec" title="Share File" data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
-                        <button id="share-screen" class=" btn-sec" style=" margin-top: 1px;" data-toggle="tooltip" title="Share Screen"
+                        <button id="share-screen" class=" btn-sec" style=" margin-top: 1px;display:none;" data-toggle="tooltip" title="Share Screen"
                             (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec " alt="Disable video" style=" margin-top: 1px;" 
+                        <button id="disable-video" class="btn-sec " alt="Disable video" style=" margin-top: 1px;display:none;" 
                             (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}"
                             data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
