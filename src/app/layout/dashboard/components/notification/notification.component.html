@@ -49,7 +49,7 @@
         <div style="margin-bottom: 2%; background-color: #f6f6f6; padding: 7px;">
             <div class="user-list" *ngFor="let user of userList | genericSearchAllProp : searchMemText">
                 <a style="color: gray;" href="#" [routerLink]="['chat']" (click)="viewMemeberDetails(user)"
-                    class="list-group-item clearfix d-block" id='{{user.firstName+" "+ user.lastName}}' style="padding-left:1.25rem;border: 1px solid #efebef;">
+                    class="list-group-item clearfix d-block" id='{{user.userCode}}' style="padding-left:1.25rem;border: 1px solid #efebef;">
                     <span class="first-letter"> {{user.firstLetter}}</span>
                       <div [ngClass]=" {'circleOnline': user.onlineStatus!=null && user.onlineStatus === '1', 'circleOffline' : user.onlineStatus !=null || user.onlineStatus != '1'}"></div>
                     <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})
