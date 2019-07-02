@@ -220,11 +220,18 @@ function appendDIV(event) {
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
     if (user === 'You') {
+<<<<<<< HEAD
         div.setAttribute("style", 'min-width:0%; max-width:80%;');
         div.className = 'chat-background-attendee';
         html += '<span class="time-right">';
 
+=======
+        div.setAttribute("style",'min-width:0%; max-width:80%;');
+        div.className ='chat-background-attendee';
+        html += '<span class="time-right">';
+>>>>>>> 3b9760cfc79a7909c0f3f3871bdeb74ab74c2ea4
     } else {
+        div.setAttribute("style",'min-width:0%; max-width:80%;background-color: #d6f9f5;');
         div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
     }
@@ -233,8 +240,8 @@ function appendDIV(event) {
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
-
     document.getElementById('input-text-chat').focus();
+    
 }
 connection.videosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {

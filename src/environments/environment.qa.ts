@@ -6,5 +6,9 @@
 export const environment = {
   production: true,
   environmentName: 'qa',
+<<<<<<< HEAD
   baseUrl: 'https://cfscommunicator.com:8443/testing/'
+=======
+  baseUrl: 'https://104.211.206.97:8443/testing/'
+>>>>>>> 3b9760cfc79a7909c0f3f3871bdeb74ab74c2ea4
 };

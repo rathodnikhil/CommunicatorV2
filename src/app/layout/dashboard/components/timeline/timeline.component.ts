@@ -25,7 +25,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     emptyHistoryFlag: boolean;
     broadcastMsgList = [];
     chatMsg: any;
-    currentTab = 'chat';
+    currentTab = 'downloadedFiles';
     isMute = false;
     isMeetingStarted = false;
     isScreenSharingStarted = false;
@@ -140,7 +140,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     sendMessage() {
         if (typeof this.chatMsg === 'undefined' || this.chatMsg.trim() === '' || this.chatMsg.trim() === null) {
-            this.alertService.warning('Enter Message', TypeOfError.Warning);
+            this.alertService.warning('Please enter message', TypeOfError.Warning);
         } else {
             const payload = {
                 userFrom: this.loggedInUser.userCode,
