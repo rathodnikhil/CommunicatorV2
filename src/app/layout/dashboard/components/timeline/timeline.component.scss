@@ -212,6 +212,15 @@
     .selected-user{
         float:left;
     }
+    .sidebar-contact{
+        position:absolute;
+    }
+    .toggle{
+        left: -86px;
+    }
+    .chat-box-div{
+        margin-right:85px;
+    }
   
 }
 @media (min-width:768px){
@@ -233,11 +242,13 @@
 .chat-background-attendee{
     max-width:80%;
     min-width: 0%;
+    word-break: break-all;
 }
 .chat-background-invitee-attendee{
     background-color:#d6f9f5;
     min-width: 0%;
     max-width: 80%;
+    word-break: break-all;
 }
 .chat-background-invitee-attendee::after{
     border-color:#d6f9f5 transparent transparent transparent;
@@ -270,8 +281,9 @@
         margin-left:10px;
     }
     .chat-box-div{
-    padding: 5%;
     background-color: #eeedee;
-    margin-right: 70px;
-    margin-left: 5px;
+    margin:10px 70px 0px 5px;
+    }
+    .icon-bar{
+        position: absolute;
     }
