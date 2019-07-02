@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6" style="height:80vh;" [ngClass]="{'col-md-12':!isCallInProcess}" [ngStyle]="{'padding-right':isCallInProcess?'0px':'15px'}">
+                        <div class="col-md-6" style="height:80vh;padding-left: 0px;" [ngClass]="{'col-md-12':!isCallInProcess}" [ngStyle]="{'padding-right':isCallInProcess?'0px':'15px'}">
                             <div class="chat-output" [ngStyle]="{'height':isCallInProcess?'calc(100vh*0.63)':'calc(100vh*0.68)','margin-right':isCallInProcess?'0px':'70px'}">
                                     <button class="btn btn-primary btn-responsive" type="button" style="float:right;">Load more</button>
                                 <div *ngIf="!isMessageExist">
@@ -52,7 +52,7 @@
                                 </div>
                              
                             </div>
-                            <div class="row chat-box-div" [ngStyle]="{'padding':isCallInProcess?'5%':'1% 1% 1% 3%','margin-right':isCallInProcess?'0.5px':'70px'}">
+                            <div class="row chat-box-div" style="margin-left:0px;" [ngStyle]="{'padding':isCallInProcess?'5%':'1% 1% 1% 2.5%','margin-right':isCallInProcess?'0px':'65px'}">
                                 <!-- <textarea placeholder="Type Message Here.." id="input-text-chat"
                                     style="height:60px;overflow:auto;resize:none;" [ngStyle]="{'max-width':isCallInProcess?'90%':'96%','min-width':isCallInProcess?'85%':'94%'}"
                                     [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea> -->
@@ -60,7 +60,7 @@
                                     <textarea placeholder="Type Message Here.." id="input-text-chat"
                                     style="height:60px; width:100%;overflow:auto;resize:none;"[(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea>
                                 </div>
-                                <div class="col-md-1 col-2">
+                                <div class="col-md-1 col-2" style="text-align: center;">
                                 <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-top: 15%; cursor: pointer;"
                                     (click)="sendMessage()"></i>
                                 </div>
