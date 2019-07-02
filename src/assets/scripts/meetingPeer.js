@@ -60,8 +60,8 @@ connection.extra = localStorage.getItem('loggedInuserName');
 connection.enableFileSharing = true; // by default, it is "false".
 
 connection.session = {
-    audio: true,
-    video: true,
+    audio: false,
+    video: false,
     data: true
 };
 
@@ -77,13 +77,13 @@ connection.onMediaError = function (event) {
 
 connection.connectSocket(function (socket) {
     connection.socket.on(connection.socketCustomEvent, function (message) {        
-        if (message.receiver == localStorage.getItem("loggedInuserName")) {   
-            alertService.info('1 new message by ' + message.sender);
-            localStorage.setItem('P2PChatInitiated','Peer2PeerMeet_' + message.sender)
+        if (message.receiver == localStorage.getItem("loggedInUserCode")) {   
+            // alertService.info('1 new message by ' + message.sender);            
+            localStorage.setItem('P2PChatInitiated','Peer2PeerMeet_' + message.sender+'_'+message.receiver);
             //TODO
             if (window.location.href.indexOf('chat') == -1 && window.location.href.indexOf('meeting') == -1) {
                 document.getElementById(message.sender).click();
-                document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
+                // document.getElementById('room-id').value = 'Peer2PeerMeet_' + message.sender;
             }                     
         }
     });

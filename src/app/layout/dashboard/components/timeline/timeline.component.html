@@ -115,12 +115,12 @@
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
                         <button id="exit-btn-leave-room" class=" btn-danger-end-meeting btn-exit" (click)="exitMeeting()"
-                            data-toggle="tooltip" title="Exit Meeting" *ngIf="isCallInProcess">
+                            data-toggle="tooltip" title="Exit Meeting" >
                             <i class="fa fa-2x fa-power-off"></i>
                         </button>
 
                         <button id="btn-mute" class="btn-sec btn-unmute" [ngClass]="isMute?'btn-mute':'btn-sec'"
-                            *ngIf="isCallInProcess" placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}">
+                             placement="top" data-toggle="tooltip" title="{{muteBtnTitle}}">
                             <i class="fa fa-2x " [ngClass]="isMute?'fa-microphone-slash':'fa-microphone'"></i>
                         </button>
                         <button id="open-room" class="btn-sec" alt="Start Meeting"
@@ -131,7 +131,7 @@
                         <button id="join-room" class="btn default " style="display: none;">
                             <i class="fa fa-2x fa-sign-in" aria-hidden="true"></i>
                         </button>
-                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording" *ngIf="isCallInProcess">
+                        <button id="btn-start-recording" class="btn-sec " alt="Start Recording">
                             <i class="fa fa-2x fa-circle" title="Start Recording" data-toggle="tooltip"
                                 aria-hidden="true" id="rec_start"></i>
                             <i class="fa fa-2x fa-stop" aria-hidden="true" title="Stop Recording" data-toggle="tooltip"
@@ -142,11 +142,11 @@
                         <button id="share-file" class="btn-sec" title="Share File" data-toggle="tooltip">
                             <i class="fa fa-2x fa-file-text"></i>
                         </button>
-                        <button id="share-screen" class=" btn-sec" style=" margin-top: 1px;" data-toggle="tooltip"
-                            *ngIf="isCallInProcess" title="Share Screen" (click)="shareScreen()">
+                        <button id="share-screen" class=" btn-sec" style=" margin-top: 1px;" data-toggle="tooltip" title="Share Screen"
+                            (click)="shareScreen()">
                             <i class="fa fa-2x fa-desktop"></i>
                         </button>
-                        <button id="disable-video" class="btn-sec " alt="Disable video" style=" margin-top: 1px;" *ngIf="isCallInProcess"
+                        <button id="disable-video" class="btn-sec " alt="Disable video" style=" margin-top: 1px;" 
                             (click)='viewVideo()' [value]="isVideoEnabled" title="{{videoBtnTitle}}"
                             data-toggle="tooltip">
                             <i *ngIf="isVideoEnabled" class="fa fa-2x fa-video-camera"></i> <i *ngIf="!isVideoEnabled"
@@ -157,8 +157,7 @@
                         <button id="btn-end-meeting" style="display:none;">Auto End meeting</button>
                         <div style="display: none;" id="isHost"></div>
                         <div style="display: none;" id="isVideoEnabled">{{isVideoEnabled}}</div>
-                        <button style="display:none;" class="btn btn-danger btn-lg" *ngIf="isCallInProcess"
-                            ngbTooltip="Exit Meeting">Exit
+                        <button style="display:none;" class="btn btn-danger btn-lg" ngbTooltip="Exit Meeting">Exit
                             Meeting
                         </button>
                     </div>
