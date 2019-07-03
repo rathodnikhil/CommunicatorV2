@@ -28,17 +28,19 @@
     width: 13px;
     height: 13px;
     background: transparent;
-    float: right;
-    margin-top: 2%;
+    float: left;
+    // margin-top: 2%;
+    transform: translate(5px, -63px);
 }
 .circleOnline {
     position: relative;
     border-radius: 50%;
     width: 13px;
     height: 13px;
-    float: right;
+     float: left;
     background:#05c305;
-    margin-top: 2%;
+    // margin-top: 2%;
+    transform: translate(5px, -63px);
 }
 .form-control {
     border-radius: 5px 0px 0px 5px;
@@ -148,6 +150,21 @@
           }
           ::-webkit-scrollbar-thumb {
             height: 200px;
+        }
+        .chat-count{
+        display: inline-block;
+        font-size: 1em;
+        width: 1.8em;
+        height: 1.8em;
+        line-height: 1.8em;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #f95959;
+        vertical-align: middle;
+        margin-right: 1em;
+        color: white;
+        float: right;
+        margin-top:1.2%;
         }
 
           
