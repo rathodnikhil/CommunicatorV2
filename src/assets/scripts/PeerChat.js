@@ -46,7 +46,6 @@ document.getElementById('open-room').onclick = function () {
         document.getElementById('disable-video').style.display = 'inline-block';
     });
 };
-
 document.getElementById('join-room').onclick = function () {
     disableInputButtons();
     connection.join(document.getElementById('room-id').value);
