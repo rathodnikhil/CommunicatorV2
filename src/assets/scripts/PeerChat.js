@@ -37,10 +37,15 @@ document.getElementById('open-room').onclick = function () {
         //   document.getElementById('meeting-error').display = 'none';
         document.getElementById('btn-save-mom').disabled = false;
         document.getElementById('input-text-chat').disabled = false;
-        document.getElementById('btn-leave-room').disabled = false;
+        document.getElementById('exit-btn-leave-room').style.display = 'inline-block';
+        document.getElementById('input-text-chat').disabled = false;
+        document.getElementById('share-screen').style.display = 'none';
+        document.getElementById('btn-mute').style.display = 'inline-block';
+        document.getElementById('share-file').style.display = 'inline-block';
+        document.getElementById('share-screen').style.display = 'inline-block';
+        document.getElementById('disable-video').style.display = 'inline-block';
     });
 };
-
 document.getElementById('join-room').onclick = function () {
     disableInputButtons();
     connection.join(document.getElementById('room-id').value);

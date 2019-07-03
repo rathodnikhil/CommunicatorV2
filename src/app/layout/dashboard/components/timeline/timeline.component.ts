@@ -223,7 +223,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         }
         this.stopTimer();
-        this.router.navigate(['/dashboard']);
+      //  this.router.navigate(['/dashboard']);
         document.getElementById('btn-leave-room').click();
     }
 
