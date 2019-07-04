@@ -3,8 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 meeting-activity">
-                <div class="card-header"
-                    style="padding-top:14px; padding-bottom:14px;margin-bottom: -2px;box-shadow: 5px 5px 5px #e4dadb;">
+                <div class="card-header" style="padding-top:14px; padding-bottom:14px;margin-bottom: -2px;box-shadow: 5px 5px 5px #e4dadb;">
                     <div class="row">
                         <div class="col-md-3 col-4">
                             <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image"/>
@@ -14,14 +13,14 @@
                             </app-selected-user-header>
                         </div>
 
-                        <div class="col-md-2 col-2" style="text-align:right;color:#AF2127;padding-right:3%;">
+                        <div class="col-md-2 col-2 timer">
                             <h4 *ngIf="isCallInProcess">
                                 <i class="fa fa-clock-o"></i>&nbsp;
                                 {{hour| number:'2.0-0'}}:{{minute| number:'2.0-0'}}:{{second| number:'2.0-0'}}
                             </h4>
                         </div>
                         <div class="col-md-1 col-1">
-                            <h4 style="cursor: pointer;float: right;color:#AF2127;">
+                            <h4  class="close-meeting"style="">
                                 <i class="fa fa-times" (click)="exitMeeting()"></i>
                             </h4>
                         </div>
@@ -30,8 +29,10 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6" style="height:80vh;padding-left: 0px;" [ngClass]="{'col-md-12':!isCallInProcess}" [ngStyle]="{'padding-right':isCallInProcess?'0px':'15px'}">
-                            <div class="chat-output" [ngStyle]="{'height':isCallInProcess?'calc(100vh*0.63)':'calc(100vh*0.68)','margin-right':isCallInProcess?'0px':'70px'}">
-                                    <button class="btn btn-primary btn-responsive" type="button" style="float:right;">Load more</button>
+                            <div [ngClass]="isCallInProcess?'call-chat-output':'chat-output'">
+                                    <!-- <button class="btn btn-primary btn-responsive" type="button" style="float:right;">Load more</button> -->
+                                    <span class="load-more" title="Load More">
+                                    <i aria-hidden="true" class="fa fa-angle-up fa-3x" style="cursor: pointer;font-weight: bold"></i></span>
                                 <div *ngIf="!isMessageExist">
                                     <div *ngFor="let chatMessage of chattingHistoryList">
                                         <div class="chat-background-attendee"
@@ -52,7 +53,7 @@
                                 </div>
                              
                             </div>
-                            <div class="row chat-box-div" style="margin-left:0px;" [ngStyle]="{'padding':isCallInProcess?'5%':'1% 1% 1% 2.5%','margin-right':isCallInProcess?'0px':'65px'}">
+                            <div class="row" style="margin-left:0px;" [ngClass]="isCallInProcess?'call-chat-box-div':'chat-box-div'">
                                 <!-- <textarea placeholder="Type Message Here.." id="input-text-chat"
                                     style="height:60px;overflow:auto;resize:none;" [ngStyle]="{'max-width':isCallInProcess?'90%':'96%','min-width':isCallInProcess?'85%':'94%'}"
                                     [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea> -->
@@ -116,7 +117,7 @@
                     </div>
                 </app-custom-modal>
 
-                <div style="height: calc(100vh*.06); margin-right: 85px; margin-top:1%;">
+                <div class="meeting-button-div">
                     <div class="col-md-12 meeting-bottom" style="padding-bottom: 0px;">
                         <input type="text" id="room-id" class="customIp" value="Enter Meeting Id" autocorrect=off
                             autocapitalize=off size=10 style="display:none;">
@@ -169,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}" style="top: 58px;">
+            <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}" style="">
                 <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}">
                 </div>
 
@@ -195,7 +196,7 @@
                         </ul>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center;">
-                                <textarea placeholder="Type MOM Here..."
+                                <textarea  id="mom-textbox" placeholder="Type MOM Here..."
                                     style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn generate-mom-btn momBtn" (click)="downloadFile()"
@@ -212,7 +213,7 @@
                 </div>
             </div>
 
-            <div class="icon-bar" style="top: 108px;">
+            <div class="icon-bar">
                 <a id="downloadedFilesAnchor" href="javascript:void(0)" (click)="switchTab('downloadedFiles')"
                     [ngClass]="{'selected': currentTab=='downloadedFiles'}" title="Shared Files">
                     <div id="fileCount" class="step"></div><i class="fa fa-file-text-o"></i>

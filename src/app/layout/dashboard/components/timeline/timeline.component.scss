@@ -213,15 +213,57 @@
         float:left;
     }
     .sidebar-contact{
-        position:absolute;
+        position: absolute;
+        bottom: 0px;
     }
     .toggle{
         left: -86px;
     }
-    .chat-box-div{
-        margin-right:85px;
+    .chat-background-attendee{
+        margin: 10px 15px 10px 60px;
     }
-  
+    .chat-background-invitee-attendee{
+        margin: 10px 30px;
+    }
+    .icon-bar{
+    position: absolute;
+    height: 100%;
+    }
+    .timer {
+        font-size:0.7rem;
+    }
+    .close-meeting{
+        font-size: 1rem;
+        float:unset;
+    }
+    .chat-box-div{
+        background-color: #eeedee;
+        margin:10px 65px 0px 5px;
+        padding:1% 1% 1% 2.5%;
+        }
+    
+        .call-chat-box-div{
+            background-color: #eeedee;
+            margin: 10px 80px 0px 5px;
+            padding:5%; 
+        }
+    .meeting-button-div{
+        height: calc(100vh*.06); 
+        margin-right: 85px; 
+        margin-top:2.5%;
+    }
+    .call-chat-output{
+        height:calc(100vh*0.63);
+        margin-right:82px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+    .chat-output{
+        height:calc(100vh*0.67);
+        margin-right:67px;
+    }
+
 }
 @media (min-width:768px){
     .img-fluid{
@@ -230,13 +272,43 @@
     .selected-user{
         float:right;
     }
+    .sidebar-contact{
+       top:calc(100vh*0.08);
+    } 
+    .chat-box-div{
+        background-color: #eeedee;
+        margin:10px 65px 0px 5px;
+        padding:1% 1% 1% 2.5%;
+        }
+        .chat-background-invitee-attendee{
+            margin: 10px 15px;
+        }
+    
+        .call-chat-box-div{
+            background-color: #eeedee;
+            margin:10px 0px 0px 5px;
+            padding:5%; 
+        }
+        .chat-output{
+            height:calc(100vh*0.67);
+            margin-right:70px;
+        }
+        .call-chat-output{
+            height:calc(100vh*0.63);
+            margin-right:0px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+    .meeting-button-div{
+        height: calc(100vh*.06); 
+        margin-right: 85px; 
+        margin-top:1%;
+    }  
 }
 .selected-user{
     color:#AF2127;
-}
-
-.toggle{
-    top:2.1%;
 }
 
 .chat-background-attendee{
@@ -252,9 +324,6 @@
 }
 .chat-background-invitee-attendee::after{
     border-color:#d6f9f5 transparent transparent transparent;
-}
-.chat-output{
-    margin-right:70px;
 }
     .initial-letter-attendee{
     text-align: center;
@@ -280,10 +349,30 @@
     .meeting-bottom{
         margin-left:10px;
     }
-    .chat-box-div{
-    background-color: #eeedee;
-    margin:10px 70px 0px 5px;
-    }
-    .icon-bar{
-        position: absolute;
-    }
+       
+    .load-more{
+        display: inline-block;
+        font-size: 1em;
+        width: 2.8em;
+        height: 2.8em;
+        line-height: 1.8em;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #1fad9f;
+        vertical-align: middle;
+        margin-right: 1em;
+        color: white;
+        float: right;
+        margin-top:1.2%;
+        }
+        .close-meeting{
+            cursor: pointer;
+            float: right;
+            color:#AF2127;
+        }
+        .timer{
+            text-align:right;
+            color:#AF2127;
+            padding-right:3%;
+        }
+      
