@@ -23,24 +23,22 @@
     background-color:#f6f6f6;
 }
 .circleOffline {
-    position: relative;
     border-radius: 50%;
     width: 13px;
     height: 13px;
     background: transparent;
     float: left;
     // margin-top: 2%;
-    transform: translate(5px, -63px);
+    transform: translate(5px,-1px);
 }
 .circleOnline {
-    position: relative;
-    border-radius: 50%;
     width: 13px;
     height: 13px;
      float: left;
     background:#05c305;
-    // margin-top: 2%;
-    transform: translate(5px, -63px);
+    border-radius: 50%;
+    -webkit-transform: translate(5px,-1px);
+    transform: translate(5px,-1px);
 }
 .form-control {
     border-radius: 5px 0px 0px 5px;
@@ -159,7 +157,7 @@
         line-height: 1.8em;
         text-align: center;
         border-radius: 50%;
-        background-color: #f95959;
+        background-color: #1fad9f;
         vertical-align: middle;
         margin-right: 1em;
         color: white;
