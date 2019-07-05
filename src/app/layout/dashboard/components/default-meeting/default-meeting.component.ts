@@ -150,6 +150,7 @@ export class DefaultMeetingComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+
         this.chatBody.nativeElement.style.height = (this.chatPanel.nativeElement.offsetHeight
             - (this.chatBody.nativeElement.offsetTop + 30)) + 'px';
     }

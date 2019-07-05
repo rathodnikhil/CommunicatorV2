@@ -1,6 +1,5 @@
 <div class="row">
-        <div [ngClass]="loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE'?'col-lg-7':'col-lg-12'" style="padding:0px; background-color: #f4f2f3;">
-                
+        <div class="outer-div" [ngClass]="loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE'?'col-lg-7':'col-lg-12'" style="padding:0px; background-color: #f4f2f3;">   
             <div class="background">
                     <ng-template [ngIf]="loggedInUserObj.meetingPermissionStatus.status === 'INACTIVE'" [ngIfElse]="notAdmin">
                             <img class="header-img-notAdmin" src="assets\images\logo.png">
@@ -30,7 +29,7 @@
             </div>
         </div>
     
-        <div class="col-lg-5" style="padding:1rem; height: 98vh;" *ngIf="(loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE')">
+        <div class="col-lg-5 meeting-permission" style="padding:1rem; height: 98vh;" *ngIf="(loggedInUserObj.meetingPermissionStatus.status === 'ACTIVE')">
             <div [ngSwitch]="currentRoute">
                 <app-default-meeting *ngSwitchCase="0" (CurrentRoute)="switchRoute($event)"></app-default-meeting>
                 <app-schedule-meeting *ngSwitchCase="1" (CurrentRoute)="switchRoute($event)"></app-schedule-meeting>
