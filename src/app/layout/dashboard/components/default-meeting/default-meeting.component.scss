@@ -365,4 +365,17 @@ $border-color: #e0e0e0;
     .fa-2x{
         font-size:1.8em;
     }
-   
+    .cursorPointer{
+        cursor: pointer;
+    }
+    .btn-primary{
+        color: #fff;
+        background-color: #4b6584;
+        border: 2px solid #4b6584;
+        font-weight: 600;
+    }
+    .btn-primary:hover{
+        color: #416590;
+        border: 2px solid #4b6584;
+        background-color: #fff;
+    }

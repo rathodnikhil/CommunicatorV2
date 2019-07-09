@@ -39,11 +39,11 @@
             (keyup)="onKey($event)" required>
           </div>
           <div class="row" style="margin-top: 5%;margin-bottom:5%;">
-              <div class="col-md-5">
+              <div class="col-md-5 col-3">
               <button  value="Continue" (click)="guestLogin()" style="margin-bottom: 1%;" [disabled]="isMeetingCodeInValid ? 'disabled' : null"
               id="continue" type="button" class=" btn btn-primary continue">Continue</button>
             </div>
-              <div class="col-md-7">
+              <div class="col-md-7 col-9">
               <h5 class="forgot"><b><a [routerLink]="['/login']" [queryParams]={meetingCode:meetingCode}>I am a registered user</a></b></h5>
             </div>
       </div>

@@ -163,5 +163,21 @@
         float: right;
         margin-top:1.2%;
         }
+        .search-list-div{   
+          overflow-y: scroll;
+          overflow-x: hidden;  
+          }
 
-          
+    @media(max-width:768px){
+      .search-list-div{   
+        height: 65vh;
+        padding-bottom: 10%
+        }
+    }
+    @media(min-width:768px){
+      .search-list-div{   
+        height: 70vh;
+        padding-bottom: 30%
+        }
+    }
+       

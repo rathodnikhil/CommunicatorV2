@@ -41,7 +41,7 @@
                     <div id="shareScreen-container" class="row main-div"
                         style="margin-top:0%;overflow-y: auto;height: 23vh;"></div>
                 </div>
-                <div style="height: calc(100vh*.10); margin-right: 80px;">
+                <div  class="meeting-button-div"style="height: calc(100vh*.10); margin-right: 80px;">
                     <div class="col-md-12" style="padding-bottom: 0px;">
                         <div id="room-urls" style="display: none; float: left;padding-top:6px;">
                             <button type="button" data-toggle="tooltip" title="Copy Meeting Link" class="btn btn-url"
@@ -176,9 +176,7 @@
                         </div>
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center;">
-                                <textarea placeholder="Type MOM Here..."
-                                    style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
-                                    [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
+                                <textarea placeholder="Type MOM Here..." [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn generate-mom-btn momBtn" id="btn-save-mom"
                                     (click)="saveMom()">Generate
                                     Meeting Notes</button>

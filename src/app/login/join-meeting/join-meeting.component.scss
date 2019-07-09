@@ -13,8 +13,6 @@
     box-shadow: 5px 5px 5px 5px #e4e0e0;
     border: 1px solid #c9c4c5;
      background-color: #fff;
-     margin-top:10%;
-     padding:1.5% 1.5% 0% 1.5%;
    }
 .continue{
     border-radius: 5px;
@@ -38,7 +36,7 @@
       border-radius:3px;
      overflow-wrap: break-word;
      padding:4px 12px 4px 12px;
-     font-size:1.3vh;
+     font-size:1.5vh;
          }
       .download-rec-steps a{
         display:none;
@@ -46,14 +44,22 @@
       .plugin-install a{
         display:none;
       } 
+      .guest-user-login{
+        padding:1.5% 5% 0% 5%;
+        margin-top: 35%;
+      }
      }
                  
      @media (min-width: 769px) and (max-width: 992px) {
        #continue {
        overflow-wrap: break-word;
        padding:6px 15px 6px 15px;
-       font-size:1.4vh;
+       font-size:1.6vh;
        }
+       .guest-user-login{
+        padding:1.5% 1.5% 0% 1.5%;
+        margin-top:10%;
+      }
    }
 
    @media (min-width: 992px){
@@ -62,6 +68,10 @@
        padding:8px 20px 8px 20px; 
         
        }
+       .guest-user-login{
+        padding:1.5% 1.5% 0% 1.5%;
+        margin-top:10%;
+      }
    }   
    
    .guest{

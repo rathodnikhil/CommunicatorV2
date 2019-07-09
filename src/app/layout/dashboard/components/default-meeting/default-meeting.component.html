@@ -45,8 +45,8 @@
                                 <datalist id="rememberEmailListEl">
                                         <option *ngFor="let email of rememberEmailList" value="{{email}}"></option>
                                 </datalist>
-                                <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" 
-                                style="width: 12%; text-align: center;" aria-hidden="true"></i>
+                                <i (click)="editToAttendees()" class="cursorPointer fa fa-2x fa-pencil-square-o edit-icon" 
+                                style="width: 12%; text-align: center;" aria-hidden="true" title="Edit email id"></i>
                             </div>
                             <div class="row">
                                 <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" 
@@ -61,7 +61,7 @@
                                 <datalist id="rememberCcEmailListEl">
                                         <option *ngFor="let email of rememberEmailList" value="{{email}}" ></option>
                                 </datalist>
-                                <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>
+                                <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon  cursorPointer " aria-hidden="true" title="Edit email id"></i>
                             </div>
                             <div class="row">
                                 <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
@@ -141,11 +141,11 @@
 <div class="selected-criteria-div">
  <h4 class="selected-criteria">{{selectedCriteria}}</h4>             
  <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-5">
             <i class="fa fa-calendar"></i>
             <span style="font-weight: bold; font-size: 14px;">{{currentDate | date:'fullDate'}}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-7">
             <div class="form-group input-group">
                 <input class="tBox username-password form-control" placeholder="&#xF002;  Search" style="font-family:Arial, FontAwesome" [(ngModel)]="searchText" >
             </div>

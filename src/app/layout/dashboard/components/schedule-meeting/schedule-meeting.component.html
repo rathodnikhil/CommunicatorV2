@@ -131,7 +131,7 @@
                                             <option *ngFor="let email of rememberEmailList" value="{{email}}">
                                         </datalist>
             
-                                        <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" style="width: 12%; text-align: center;" aria-hidden="true"></i>
+                                        <i (click)="editToAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon  cursorPointer" style="width: 12%; text-align: center;" aria-hidden="true" title="Edit email id"></i>
                                     </div>
                                     <div class="row">
                                         <textarea value="{{selectedEmails}}" rows="4" class="email-list" *ngIf="selectedEmails" readonly style="width: 68%; margin-left: 20%;"></textarea>
@@ -148,7 +148,7 @@
                                             <option *ngFor="let email of rememberEmailList" value="{{email}}" >
                                         </datalist>
                 
-                                        <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon" aria-hidden="true"></i>
+                                        <i (click)="editCcAttendees()" class="fa fa-2x fa-pencil-square-o edit-icon cursorPointer" aria-hidden="true" title="Edit email id"></i>
                                     </div>
                                     <div class="row">
                                         <textarea value="{{selectedCcEmails}}" rows="4" class="email-list" *ngIf="selectedCcEmails" readonly></textarea>
