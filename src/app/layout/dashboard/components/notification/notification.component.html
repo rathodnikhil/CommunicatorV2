@@ -12,19 +12,19 @@
     </div>  
     <div *ngIf="viewAllMemFl" style="background-color: #ffffff;">
         <div class="row" style="padding: 0px;margin:0px;">
-        <div class="col-md-8">
+        <div class="col-md-8 col-10">
         <div style="color: #AF2127;padding:3.5%;"><h5 class="searched-title team-member" >All Members List</h5></div>
     </div>
-    <div class="col-md-4" style="padding-top:2.5%;">
+    <div class="col-md-4 col-2" style="padding-top:2.5%;">
        <i class="fa fa-window-close close-list" aria-hidden="true" (click)="closeWholeMemList()" title="Close search"></i>
     </div>
  </div>
-        <div style="overflow-y: scroll;height: 70vh;overflow-x: hidden;"> 
+        <div class="search-list-div"> 
         <div class="row list-item-padding" *ngFor="let user of searchWholeMemberList | genericSearchAllProp : searchAllText" >
-            <a class="col-md-10 list-group-item clearfix d-block">
+            <a class="col-md-10 col-10 list-group-item clearfix d-block">
             <span style="padding-left: 1rem; color:#000;">{{user.firstName}}&nbsp;{{user.lastName}}&nbsp;({{user.team.teamName}})</span>
             </a>
-            <i class="fa fa-lg fa-plus-circle add-member col-md-2" title="Add Member" data-toggle="tooltip" style="padding-top: 22px; color: #f95f3a; cursor: pointer;"
+            <i class="fa fa-lg fa-plus-circle add-member col-md-2 col-2" title="Add Member" data-toggle="tooltip" style="padding-top: 22px; color: #f95f3a; cursor: pointer;"
             (click)="addNewMembersInList(user)"></i> 
         </div>
     </div>

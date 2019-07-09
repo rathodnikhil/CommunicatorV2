@@ -45,6 +45,7 @@
         border-collapse: collapse;
         width: 100%;
         padding:30px;
+        word-break: break-all;
     }
 
     td, th {
@@ -149,7 +150,7 @@ color: red;
 .home-icon{
     color: white; 
     text-align:center; 
-    width: 6%;
+    /* width: 6%; */
 }
 .page-title{
     position: absolute;

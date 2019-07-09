@@ -58,8 +58,8 @@
                                     style="height:60px;overflow:auto;resize:none;" [ngStyle]="{'max-width':isCallInProcess?'90%':'96%','min-width':isCallInProcess?'85%':'94%'}"
                                     [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea> -->
                                     <div class=" col-xl-11 col-lg-11 col-md-11 col-10">
-                                    <textarea placeholder="Type Message Here.." id="input-text-chat"
-                                    style="height:60px; width:100%;overflow:auto;resize:none;"[(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea>
+                                    <textarea placeholder="Type Message Here.."id="input-text-chat"
+                                    style="height:60px; width:100%;overflow:auto;resize:none;"[(ngModel)]="chatMsg" (keyup.enter)="onKey($event)" #myInput></textarea>{{ myInput.focus()}}
                                 </div>
                                 <div class="col-md-1 col-2" style="text-align: center;">
                                 <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-top: 15%; cursor: pointer;"
@@ -197,7 +197,7 @@
                         <div class="tab-content" [ngStyle]="{'display':currentTab=='mom'?'block':'none'}">
                             <div class="row content-tab" style="text-align:center;">
                                 <textarea  id="mom-textbox" placeholder="Type MOM Here..."
-                                    style="width:100%;margin:4%;overflow:auto;resize:none;margin-right:10%;"
+                                    style=""
                                     [(ngModel)]="momTxt" required class="MomTextBox"></textarea>
                                 <button class="btn generate-mom-btn momBtn" (click)="downloadFile()"
                                     id="btn-save-mom">Generate

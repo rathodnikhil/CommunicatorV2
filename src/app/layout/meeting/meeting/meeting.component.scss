@@ -38,8 +38,6 @@
     height: auto;  
 }
 
-
-
 .meeting-activity {
     padding: 0px;
 }
@@ -88,34 +86,71 @@
       padding: 2px;
     }
     .icon-bar{
-      height: calc(100vh*0.72);
+      height: auto;
+      bottom: 0;
     }
     .demo-one{
-      min-height: calc(100vh*0.45);
-      max-height: calc(100vh*0.45);
+      min-height: calc(100vh*0.48);
+      max-height: calc(100vh*0.48);
       }
       .parent{
-        height: calc(100vh*0.23);
+        height: calc(100vh*0.25);
       }
       .chat-output{
-        height: calc(100vh*0.40);
+        height: calc(100vh*0.47);
       }
-      .meeting-activity-div{
-        height:unset;
+      // .meeting-activity-div{
+      //   height:unset;
+      //height: calc(100vh*0.75);
+      // }
+      .card{
+        border: none;
       }
+      .meeting-button-div{
+        margin-top:2%;
+      }
+      .MomTextBox{
+        margin: 4% 4% 4% 5%;
+       // margin-right:10%;
+    }
+    .sidebar-contact{
+      height:100%;
+    }
+    .sidebar-contact.active{
+      width:100%;
+    }
+    .sidebar-contact.active .toggle
+    {
+      top:0;
+      right:0;
+      transform:translateY(0);
+    }
+    .scroll{
+      width:100%;
+      height:100%;
+      overflow-y:auto;
+    }
+    .tab-content-srcoll{
+      padding-bottom: calc(100vh*0.1);
+      padding-top: 8px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
     }
 
     @media (min-width: 768px) {
     #share-screen,#btn-mute,#btn-start-recording,#btn-stop-recording,#share-file,#disable-video,#open-room,#exit-btn-leave-room{
     font-size:9px;
       width: 37px;
-      height:37px;  }
+      height:37px;  
+    }
       .img-fluid{
         max-width: 80%;
         height:auto;
     }
     .icon-bar{
       height: 86.5vh;
+      bottom:auto;
     }
     .demo-one{
     min-height: calc(100vh*0.50);
@@ -127,6 +162,19 @@
     .chat-output{
       height: calc(100vh*0.55);
     }
+    .card{
+      border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    .MomTextBox{
+      margin:4%;
+     // margin-right:10%;
+  }
+  .tab-content-srcoll{
+    padding-bottom: calc(100vh*0.05);
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
     }
 
     @media (min-width: 992px) {
@@ -236,13 +284,15 @@
 
 .MomTextBox {
     height: calc(100vh*0.55);
+    width:100%;
+    overflow:auto;
+    resize:none;
 }
 
 .icon-bar {
     position: fixed;
     top:calc(100vh*0.13);
     right: 0;
-    bottom: auto;
     background-color: #4b6584;
     width:80px;
     padding-top: 10px;
@@ -275,8 +325,7 @@
 .tab-content-srcoll{
     overflow-y: auto;
     height: 100%;
-    padding: 8px;
-    padding-bottom: 50px;
+    // padding-bottom: 50px;
     margin-top: 10px;
 }
 .step {
@@ -527,28 +576,6 @@
     transform: translateY(20%);
     font-size: 18px;
 }
-  
-  @media(max-width:768px)
-  {
-    .sidebar-contact{
-      height:100%;
-    }
-    .sidebar-contact.active{
-      width:100%;
-    }
-    .sidebar-contact.active .toggle
-    {
-      top:0;
-      right:0;
-      transform:translateY(0);
-    }
-    .scroll{
-      width:100%;
-      height:100%;
-      overflow-y:auto;
-    }
-
-  }
   ::-webkit-scrollbar {
     width: 8px;
     background-color: #f5f5f5;

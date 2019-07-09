@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
     private changePlaceHolderText() {
         this.loginText = this.isGuest ? 'Continue' : 'Login';
-        this.loginHeader = this.isGuest ? 'Join Meeting' : 'Log In';
+        this.loginHeader = this.isGuest ? 'Join Meeting with ID  ' : 'Log In';
         this.UserNameText = this.isGuest ? 'Full Name' : 'UserName';
         this.userName = '';
         this.password = '';
@@ -261,7 +261,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     forgetPassword() {
         this.loginText = 'Reset Password';
-        this.loginHeader = 'Join Meeting';
+        this.loginHeader = 'Join Meeting with ID ';
         this.forgetPasswordFlag = true;
         this.loginUiFlag = false;
         this.clearInputBoxes();

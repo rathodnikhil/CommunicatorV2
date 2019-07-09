@@ -225,11 +225,11 @@ function appendDIV(event) {
     var user = event.extra || 'You';
     html = '<p>' + message + '</p>';
     if (user === 'You') {
-        div.setAttribute("style",'min-width:0%; max-width:80%;');
+        div.setAttribute("style",'min-width:0%; max-width:80%;float:right;clear:both;');
         div.className ='chat-background-attendee';
         html += '<span class="time-right">';
     } else {
-        div.setAttribute("style",'min-width:0%; max-width:80%;background-color: #d6f9f5;');
+        div.setAttribute("style",'min-width:0%; max-width:80%;background-color: #d6f9f5;float:left;clear:both;');
         div.className = 'chat-background-invitee-attendee';
         html += '<span class="time-left">';
     }

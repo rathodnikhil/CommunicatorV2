@@ -34,7 +34,7 @@
   padding-bottom:20px;
   padding-left: 15px;
   padding-top: 20px;
-  background-color: #e6f3f7;
+  background-color: #eeedee;
 }
 #number li::before {
   content: counter(my-awesome-counter);
@@ -84,9 +84,13 @@ padding-bottom:20px;
   
 }
 b{
-    font-weight:inherit;
-    color:#111;
-    background-color: yellow;
+  font-weight: 500;
+  color: #fff;
+  background-color: #4b6584;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  padding-right:3px;
+  margin: 1px;
 }
 .steps{
   margin-left: 20px;
