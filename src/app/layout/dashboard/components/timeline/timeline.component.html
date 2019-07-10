@@ -46,7 +46,7 @@
                                             <p>{{chatMessage.chatmsg}}</p><span
                                                 class="time-left">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}}
                                                 <i class="fa fa-user"></i>&nbsp;
-                                                {{chatMessage.userId.firstName+' '+chatMessage.userId.lastName}}</span>
+                                                {{chatMessage.userId.firstName}}</span>
                                         </div>
                                     </div>
                                     <div id="chat-container"></div>
@@ -59,7 +59,7 @@
                                     [(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea> -->
                                     <div class=" col-xl-11 col-lg-11 col-md-11 col-10">
                                     <textarea placeholder="Type Message Here.."id="input-text-chat"
-                                    style="height:60px; width:100%;overflow:auto;resize:none;"[(ngModel)]="chatMsg" (keyup.enter)="onKey($event)" #myInput></textarea>{{ myInput.focus()}}
+                                    style="height:60px; width:100%;overflow:auto;resize:none;"[(ngModel)]="chatMsg" (keyup.enter)="onKey($event)"></textarea>
                                 </div>
                                 <div class="col-md-1 col-2" style="text-align: center;">
                                 <i class="fa fa-paper-plane fa-3x" id="alternate-send-chat" style="margin-top: 15%; cursor: pointer;"
@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}" style="">
+            <div class="sidebar-contact" [ngClass]="{'active': toggleMeeting}">
                 <div class="toggle" (click)="toggleMeeting=!toggleMeeting" [ngClass]="{'active': toggleMeeting}">
                 </div>
 

@@ -88,6 +88,7 @@
     .icon-bar{
       height: auto;
       bottom: 0;
+      top: calc(100vh*.14);
     }
     .demo-one{
       min-height: calc(100vh*0.48);
@@ -131,10 +132,14 @@
       overflow-y:auto;
     }
     .tab-content-srcoll{
-      padding-bottom: calc(100vh*0.1);
+      //padding-bottom: calc(100vh*0.1);
       padding-top: 8px;
       padding-left: 8px;
       padding-right: 8px;
+      height: calc(100vh*.60);
+    }
+    .sidebar-contact textarea{
+      height: calc(100vh*.50);
     }
     }
 
@@ -149,6 +154,7 @@
         height:auto;
     }
     .icon-bar{
+      top: calc(100vh*.13);
       height: 86.5vh;
       bottom:auto;
     }
@@ -174,6 +180,10 @@
     padding-top: 8px;
     padding-left: 8px;
     padding-right: 8px;
+    height:100%;
+  }
+  .sidebar-contact textarea{
+    height: calc(100vh*.55);
   }
     }
 
@@ -291,7 +301,7 @@
 
 .icon-bar {
     position: fixed;
-    top:calc(100vh*0.13);
+    // top:calc(100vh*0.13);
     right: 0;
     background-color: #4b6584;
     width:80px;
@@ -324,7 +334,7 @@
 
 .tab-content-srcoll{
     overflow-y: auto;
-    height: 100%;
+    //height: 100%;
     // padding-bottom: 50px;
     margin-top: 10px;
 }
@@ -519,7 +529,7 @@
   .sidebar-contact input,
   .sidebar-contact textarea{
     width:100%;
-    height:36px;
+    // height:36px;
     padding:5px;
     margin-bottom:10px;
     box-sizing:border-box;
@@ -530,10 +540,7 @@
     margin:0 0 20px;
     padding:0;
   }
-  .sidebar-contact textarea{
-    height: calc(100vh*.55);
-  }
-
+  
   .sidebar-contact input[type="submit"]{
     background:#00bcd4;
     color:#fff;
