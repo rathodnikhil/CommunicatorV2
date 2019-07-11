@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-md-3 col-5">
                             <img src="assets/images/logo.png" class="img-fluid" alt="Responsive image"
-                                [ngStyle]="{'margin-left': !isGuest ? '13%' : '0' }" />
+                                [ngClass]="!isGuest?'logo-margin':'logo-margin-guest'" />
                         </div>
                         <div class="col-md-7 col-4 subject">
                             <h6 *ngIf="meetingDetails.subject!=undefined" style="margin-bottom:0.25rem;line-height: 1;">
@@ -184,14 +184,14 @@
                         </div>
                         <div class="tab-content tab-content-srcoll"
                             [ngStyle]="{'display':currentTab=='viewers'?'block':'none'}">
-                            <div class="row content-tab">
+                            <div class=" content-tab">
                                 <div id="viewersList" class="col-md-12"></div>
 
                             </div>
                         </div>
                         <div class="tab-content tab-content-srcoll"
                             [ngStyle]="{'display':currentTab=='downloadedFiles'?'block':'none'}">
-                            <div id="file-container" class="row content-tab">
+                            <div id="file-container" class=" content-tab">
                                     <!-- <ngx-dropzone (filesAdded)="onFilesAdded($event)" 
                                         (filesRejected)="onFilesRejected($event)">
                                     </ngx-dropzone> -->
