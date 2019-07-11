@@ -141,6 +141,12 @@
     .sidebar-contact textarea{
       height: calc(100vh*.50);
     }
+    .logo-margin{
+      margin-left:25%;
+    }
+    .logo-margin-guest{
+      margin-left:0%;
+    }
     }
 
     @media (min-width: 768px) {
@@ -184,6 +190,12 @@
   }
   .sidebar-contact textarea{
     height: calc(100vh*.55);
+  }
+  .logo-margin{
+    margin-left:13%;
+  }
+  .logo-margin-guest{
+    margin-left:0%;
   }
     }
 
