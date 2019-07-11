@@ -22,3 +22,18 @@
     margin-top:5%;
 }
 
+@media(min-width:768px){
+    .set-center{
+        margin:auto;
+        width:50%;
+    }
+}
+
+@media(max-width:768px){
+    .set-center{
+        margin:auto;
+        width:auto;
+    }
+}
+
+
