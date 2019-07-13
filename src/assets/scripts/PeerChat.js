@@ -368,9 +368,9 @@ connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 
 connection.onopen = function () {
-    document.getElementById('share-file').style.display = 'block';
-    document.getElementById('share-screen').style.display = 'block';
-    document.getElementById('disable-video').style.display = 'block';
+    document.getElementById('share-file').style.display = 'inline-block';
+    document.getElementById('share-screen').style.display = 'inline-block';
+    document.getElementById('disable-video').style.display = 'inline-block';
     document.getElementById('input-text-chat').disabled = false;
     if (isHost) {
         document.getElementById('btn-leave-room').disabled = false;
