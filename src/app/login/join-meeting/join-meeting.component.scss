@@ -49,6 +49,15 @@
         margin-top: 35%;
       }
      }
+
+     @media(max-width:768px) and (max-height:400px){
+      #continue{
+        font-size: 2.5vh;
+    }
+    .guest-user-login{
+      margin-top:10%;
+     }
+    }
                  
      @media (min-width: 769px) and (max-width: 992px) {
        #continue {
