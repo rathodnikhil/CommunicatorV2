@@ -239,7 +239,7 @@ function appendDIV(event) {
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
     document.getElementById('input-text-chat').focus();
-    
+
 }
 connection.videosContainer = document.getElementById('videos_container');
 connection.onstream = function (event) {
@@ -435,14 +435,14 @@ function onDetectRTCLoaded() {
     videoValue = false;
     audioValue = false;
     connection.session = {
-        audio: true,
-        video: videoValue,
+        audio: false,
+        video: false,
         data: true
     };
 
     connection.mediaConstraints = {
         audio: true,
-        video: videoValue
+        video: true
     };
     connection.sdpConstraints.mandatory = {
         OfferToReceiveAudio: true,
