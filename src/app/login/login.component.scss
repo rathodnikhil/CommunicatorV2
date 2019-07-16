@@ -106,10 +106,10 @@ height:auto;
     display:none;
     }
   }
-  @media (max-width: 768px) and (max-height: 400px ){
+  @media (max-width: 768px) and (max-height: 530px ){
     .login-block{
-      transform: translateY(10vh);
-      padding:5% 5% 3px 5%;
+      transform: translateY(15vh);
+      padding:5% 5% 3% 5%;
     }
   }
 @media screen and (min-width: 768px){
