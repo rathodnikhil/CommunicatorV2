@@ -65,7 +65,7 @@
 #number1 li {
 counter-increment: my-awesome-counter;
 margin: 0.25rem;
-padding-bottom:20px;
+padding-bottom:0px;
 
 }
 
@@ -94,7 +94,7 @@ b{
 }
 .steps{
   margin-left: 20px;
-  font-weight: bold; 
+  font-weight: 600; 
   font-size: 18px;
   padding-bottom: 10px;
 }

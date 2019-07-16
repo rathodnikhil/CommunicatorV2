@@ -164,7 +164,7 @@
   }
     }
 /*These media queries are used when when user opens the keypad in the mobile*/
-    @media (max-width: 768px) and (max-height: 400px ){
+    @media (max-width: 768px) and (max-height: 530px ){
       .chat-output{
         height: calc(100vh*.27);
         }

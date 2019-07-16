@@ -279,7 +279,7 @@
     }
 }
 
-@media (max-width: 768px) and (max-height: 400px ){
+@media (max-width: 768px) and (max-height: 530px ){
     .close-meeting i{
         float: right;
         margin-right: 10px;
@@ -329,10 +329,10 @@
     .parent h4{
         font-size: 0.8rem;
     }
-    .sidebar-contact{
-        position: absolute;
-        height: 90%;
-    }
+    // .sidebar-contact{
+    //     position: absolute;
+    //     height:auto;
+    // }
 }
 
 @media (min-width:768px){
