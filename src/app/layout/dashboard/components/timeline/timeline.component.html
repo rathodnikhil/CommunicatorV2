@@ -37,13 +37,13 @@
                                     <div *ngFor="let chatMessage of chattingHistoryList">
                                         <div class="chat-background-attendee"
                                             *ngIf="chatMessage.userId.userCode==loggedInUser.userCode">
-                                            <p>{{chatMessage.chatmsg}}</p><span
+                                            <p class="chat-message-newline">{{chatMessage.chatmsg}}</p><span
                                                 class="time-right">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}}
                                                 <i class="fa fa-user"></i>&nbsp; You</span>
                                         </div>
                                         <div class="chat-background-invitee-attendee"
                                             *ngIf="chatMessage.userId.userCode!=loggedInUser.userCode">
-                                            <p>{{chatMessage.chatmsg}}</p><span
+                                            <p class="chat-message-newline">{{chatMessage.chatmsg}}</p><span
                                                 class="time-left">{{chatMessage.msgDate | date:'yyyy-MM-dd HH:mm:ss'}}
                                                 <i class="fa fa-user"></i>&nbsp;
                                                 {{chatMessage.userId.firstName}}</span>

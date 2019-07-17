@@ -194,12 +194,13 @@ input[type="range"]::-webkit-slider-thumb {
     background-color: #ffeeed;
     border-radius: 5px;
     padding: 10px;   
-    line-height: normal;
+    line-height: inherit;
     color : #000;
     font-weight: 500;
     min-width:80%; 
     max-width:80%;
     box-shadow: -5px 5px 5px #e4dadb;
+    word-wrap: break-word;
 }
 .chat-background-attendee::after{ 
     content: ' ';
@@ -226,6 +227,7 @@ input[type="range"]::-webkit-slider-thumb {
     min-width:90%; 
     max-width: 90%;
     box-shadow: 5px 5px 5px  #e4e7ec;
+    word-wrap: break-word;
 }
 /*css for chat background*/
 .chat-background-invitee-attendee {
@@ -236,12 +238,13 @@ input[type="range"]::-webkit-slider-thumb {
     height: auto;
     border-radius: 5px;
     padding: 10px;   
-    line-height:normal;
+    line-height:inherit;
     color : #000;
     font-weight: 500;
     min-width:80%; 
     max-width: 80%;
     box-shadow: 5px 5px 5px  #e4e7ec;
+    word-wrap: break-word;
 }
 
 .chat-background-invitee-attendee::after{ 
@@ -265,7 +268,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .time-right {
     float: right;
-    color:#606766;;
+    color:#606766;
     font-weight: bold;
 }
 .btn-sec {
