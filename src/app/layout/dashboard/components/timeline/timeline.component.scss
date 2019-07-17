@@ -300,7 +300,7 @@
         padding-top:0px;
     }
    .icon-bar{
-        top: calc(100vh*.20);
+        top: calc(100vh*.17);
     }
     .timer, .timer h4 {
         font-size: .5rem;
@@ -466,6 +466,19 @@
         color:#AF2127;
         padding-right:3%;
         }
+
+.time-left {
+        font-weight: 640;
+        }
+        
+.time-right {
+        font-weight: 640;
+        }
+.chat-message-newline{
+        white-space: pre-wrap;
+        margin-bottom: 0.8rem;
+}        
+        
       
         // #input-text-chat:focus:active,#input-text-chat:focus,#input-text-chat:active {
         //     -webkit-box-shadow: none;

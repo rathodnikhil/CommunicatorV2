@@ -223,7 +223,8 @@ function appendDIV(event) {
     var div = document.createElement('div');
     var message = event.data || event;
     var user = event.extra || 'You';
-    html = '<p>' + message + '</p>';
+    // message = message.split("\n").join("<br />");
+    html = '<p style="margin-bottom:0.8rem; white-space: pre-wrap;">' + message + '</p>';
     if (user === 'You') {
         div.setAttribute("style",'min-width:0%; max-width:80%;float:right;clear:both;margin: 10px 20px 10px 60px;');
         div.className ='chat-background-attendee';
@@ -231,10 +232,13 @@ function appendDIV(event) {
     } else {
         div.setAttribute("style",'min-width:0%; max-width:80%;background-color: #d6f9f5;float:left;clear:both;margin: 10px 15px 10px 20px;');
         div.className = 'chat-background-invitee-attendee';
+        var AfterTagStyle = document.createElement("style");
+        AfterTagStyle.innerHTML= ".chat-background-invitee-attendee::after{border-color:#d6f9f5 transparent transparent transparent;}";
+        document.head.appendChild(AfterTagStyle);
         html += '<span class="time-left">';
     }
 
-    html += '<i class="fa fa-user"></i>&nbsp;' + user + ' ' + formatDate(new Date()) + '</span>'
+    html += formatDate(new Date()) +'&nbsp; <i class="fa fa-user"></i> &nbsp;' + user + '' + '</span>'
     div.innerHTML = html;
     chatContainer.insertBefore(div, chatContainer.lastChild);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
